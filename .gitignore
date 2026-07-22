@@ -1,0 +1,14 @@
+# Emperor Time runtime artifacts — generated per task, not part of the skill
+.emperor/
+
+# Holy Chain triage snapshots (no-VCS fallback copies)
+*.holy-*
+
+# OS noise
+.DS_Store
+Thumbs.db
+
+# Editor noise
+*.swp
+.idea/
+.vscode/

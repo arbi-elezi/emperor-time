@@ -1,0 +1,14 @@
+# Emperor Time persona for a local model.
+# 1) Set FROM to a model you have pulled (ollama list).
+# 2) Replace the SYSTEM block body with the full contents of
+#    ../generic/EMPEROR_TIME.core.md  (models >= ~14B class)
+#    or only its "Vow card" top section (smaller models).
+# 3) ollama create emperor -f Modelfile.example
+
+FROM qwen3
+
+PARAMETER temperature 0.3
+
+SYSTEM """
+<PASTE EMPEROR_TIME.core.md (or just its Vow card section) HERE>
+"""
