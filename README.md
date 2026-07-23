@@ -2,21 +2,20 @@
 
 *Dowse. Dig. Verify. Pay in tokens.*
 
+<img src="assets/crossed-shovels.png" width="220" alt="crossed shovels crest, jolly-roger style">
+
 ```text
-▐██▌          ▐██▌   █████ █   █ ████  █████ ████   ███  ████
- ██            ██    █     ██ ██ █   █ █     █   █ █   █ █   █
-  ██          ██     ████  █ █ █ ████  ████  ████  █   █ ████
-   ██        ██      █     █   █ █     █     █ █   █   █ █ █
-    ██      ██       █████ █   █ █     █████ █  █   ███  █  █
-     ██    ██
-      ██  ██         █████ █████ █   █ █████
-       ████            █     █   ██ ██ █
-        ██             █     █   █ █ █ ████
-       ████            █     █   █   █ █
-    ████  ████         █     █   █   █ █████
-   ████    ████
-   ███      ███
-   ██        ██
+█████ █   █ ████  █████ ████   ███  ████
+█     ██ ██ █   █ █     █   █ █   █ █   █
+████  █ █ █ ████  ████  ████  █   █ ████
+█     █   █ █     █     █ █   █   █ █ █
+█████ █   █ █     █████ █  █   ███  █  █
+
+█████ █████ █   █ █████
+  █     █   ██ ██ █
+  █     █   █ █ █ ████
+  █     █   █   █ █
+  █     █   █   █ █████
 ```
 
 <img src="assets/scarlet-eyes.png" width="660" alt="pixel art: close-up of scarlet eyes under blond bangs, ringed pink irises with star glints">

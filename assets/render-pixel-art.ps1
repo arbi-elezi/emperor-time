@@ -238,3 +238,58 @@ foreach ($st in $strands) {
 $ey[45][54] = 'F'; $ey[46][55] = 'F'
 
 Render $ey $palE (Join-Path $PSScriptRoot 'scarlet-eyes.png') $Scale
+
+# ---------------- CROSSED SHOVELS CREST (76 x 58, transparent, jolly-roger) ----------------
+# Each shovel is drawn in its own rotated frame: u = along the 45-degree axis
+# (grip at negative u, blade tip at max u), v = perpendicular. True diagonals,
+# real spade blades - no axis-aligned compromises.
+function ShovelChar([double]$u, [double]$v) {
+    $gu = $u + 5.5   # grip: chunky D-block perpendicular to the shaft, rimmed hole
+    if ([math]::Abs($gu) -le 3.8 -and [math]::Abs($v) -le 4.6) {
+        if ([math]::Abs($gu) -le 1.0 -and [math]::Abs($v) -le 1.5) { return $null }
+        if ([math]::Abs($gu) -le 1.8 -and [math]::Abs($v) -le 2.3) { return 'k' }
+        if ([math]::Abs($gu) -ge 2.8 -or [math]::Abs($v) -ge 3.6) { return 'k' }
+        return 'w'
+    }
+    if ($u -gt -2 -and $u -le 30) {   # shaft: 3px wood core, 1px outline
+        $av = [math]::Abs($v)
+        if ($av -le 1.6) { if ($v -gt 0.4) { return 'W' } else { return 'w' } }
+        if ($av -le 2.8) { return 'k' }
+        return $null
+    }
+    $bu = $u - 30                     # blade: broad spade - shoulder ears, near-parallel sides, blunt point
+    if ($bu -ge 0 -and $bu -le 16.0) {
+        if ($bu -lt 1.3) { $hw = 8.6 }                                   # foot-rest ears at the socket
+        elseif ($bu -lt 9.5) { $hw = 7.5 - 1.0 * (($bu - 1.3) / 8.2) }   # near-parallel sides
+        else {
+            $tt = ($bu - 9.5) / 6.5
+            if ($tt -gt 1) { $tt = 1 }
+            $hw = 6.5 * [math]::Pow(1.0 - $tt, 0.65)                     # blunt rounded point
+        }
+        if ($hw -lt 0.7) { $hw = 0.7 }
+        $av = [math]::Abs($v)
+        if ($av -le $hw) {
+            if ($av -gt ($hw - 1.5) -or $bu -gt 15.0 -or $bu -lt 1.0) { return 'k' }
+            if ($v -gt ($hw * 0.30)) { return 'S' }
+            if ($v -lt (-$hw * 0.45)) { return 'h' }
+            return 's'
+        }
+        return $null
+    }
+    return $null
+}
+$CW = 76; $CH = 58
+$cr = New-Grid $CW $CH
+$rt2 = [math]::Sqrt(2.0)
+for ($y = 0; $y -lt $CH; $y++) {
+    for ($x = 0; $x -lt $CW; $x++) {
+        $uA = (($x - 21) + ($y - 15)) / $rt2; $vA = (($x - 21) - ($y - 15)) / $rt2
+        $cA = ShovelChar $uA $vA
+        $uB = ((55 - $x) + ($y - 15)) / $rt2; $vB = ((55 - $x) - ($y - 15)) / $rt2
+        $cB = ShovelChar $uB $vB
+        $cc = $cA
+        if ($null -ne $cB) { $cc = $cB }   # right shovel crosses in front
+        if ($null -ne $cc) { $cr[$y][$x] = $cc }
+    }
+}
+Render $cr $palS (Join-Path $PSScriptRoot 'crossed-shovels.png') $Scale
