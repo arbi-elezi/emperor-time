@@ -70,30 +70,28 @@ foreach ($r in 20..23) { Overlay $sh $r 16 'k'; Overlay $sh $r 17 'ww'; Overlay 
 foreach ($r in 24..27) { Overlay $sh $r 17 'k'; Overlay $sh $r 18 'ww'; Overlay $sh $r 20 'W'; Overlay $sh $r 21 'k' }
 foreach ($r in 28..31) { Overlay $sh $r 18 'k'; Overlay $sh $r 19 'ww'; Overlay $sh $r 21 'W'; Overlay $sh $r 22 'k' }
 Overlay $sh 32 19 'k'; Overlay $sh 32 20 'ww'; Overlay $sh 32 22 'W'; Overlay $sh 32 23 'k'
-# blade: smooth rounded spade, tip drifting slightly left, planted
-Overlay $sh 33 18 'k'; Overlay $sh 33 19 'sss'; Overlay $sh 33 22 'S'; Overlay $sh 33 23 'k'
+# blade: big symmetric spade, smooth curve to a centered point, planted upright
 $blade = @{
-    34=@(16,24);35=@(14,25);36=@(13,26);37=@(12,26);38=@(12,27);39=@(11,27);40=@(11,27)
-    41=@(11,26);42=@(12,26);43=@(12,25);44=@(12,25);45=@(13,24);46=@(13,23);47=@(14,22)
-    48=@(14,20);49=@(15,19);50=@(16,18)
+    33=@(18,24);34=@(16,26);35=@(14,27);36=@(13,28);37=@(12,28);38=@(12,29);39=@(11,29)
+    40=@(11,29);41=@(11,29);42=@(11,28);43=@(12,28);44=@(12,27);45=@(13,26);46=@(13,25)
+    47=@(14,24);48=@(15,23);49=@(16,21);50=@(17,20);51=@(18,19)
 }
 foreach ($br in ($blade.Keys | Sort-Object)) {
     $Lb = $blade[$br][0]; $Rb = $blade[$br][1]
     $body = ''
     for ($bc = $Lb + 1; $bc -le $Rb - 1; $bc++) {
-        if ($br -ge 35 -and $br -le 40 -and $bc -le ($Lb + 2)) { $body += 'h' }
+        if ($br -ge 35 -and $br -le 44 -and $bc -le ($Lb + 2)) { $body += 'h' }
         elseif ($bc -ge ($Rb - 2)) { $body += 'S' }
         else { $body += 's' }
     }
     Overlay $sh $br $Lb ('k' + $body + 'k')
 }
-Overlay $sh 51 16 'kk'
 # mound: row -> left,right of outline; drawn over blade's right side (mound in front)
 $mound = @{
     26=@(37,40);27=@(35,42);28=@(33,44);29=@(32,45);30=@(31,47);31=@(30,49);32=@(29,51)
-    33=@(28,53);34=@(27,54);35=@(26,55);36=@(26,56);37=@(27,57);38=@(26,58);39=@(25,58)
-    40=@(27,59);41=@(26,59);42=@(25,60);43=@(24,60);44=@(24,61);45=@(23,61);46=@(22,61)
-    47=@(23,62);48=@(23,62);49=@(22,62);50=@(22,62);51=@(22,62)
+    33=@(28,53);34=@(28,54);35=@(29,55);36=@(29,56);37=@(29,57);38=@(28,58);39=@(28,58)
+    40=@(28,59);41=@(28,59);42=@(27,60);43=@(27,60);44=@(26,61);45=@(25,61);46=@(24,61)
+    47=@(24,62);48=@(23,62);49=@(22,62);50=@(22,62);51=@(22,62)
 }
 foreach ($mr in ($mound.Keys | Sort-Object)) {
     # NB: PS variables are case-insensitive — $R would clobber a $r loop var
