@@ -66,6 +66,9 @@ G4 opens only on PASS or PASS-WITH-CONDITIONS.
 
 - [ ] Shipped the way this project ships (house rules followed; commits only
       if the client's workflow says so).
+- [ ] Commit messages carry no agent attribution trailers (`Co-Authored-By`,
+      `Generated-with`, …) — the history is the client's; provenance belongs
+      in the ledger. (Exception only if the client asked for the trailer.)
 - [ ] The report leads with the outcome and uses calibrated language mapped
       from claim statuses (the table in `references/scientific-method.md`).
 - [ ] Conditions from the verdict appear in the report — not just the ledger.

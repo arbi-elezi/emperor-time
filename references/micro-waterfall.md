@@ -91,6 +91,10 @@ the critique artifact.
 
 - Ship the change the way this project ships (commit/PR/patch/report — follow
   house rules; commit only if the client's workflow says so).
+- **The history belongs to the client**: commit messages follow the repo's own
+  conventions and carry **no agent attribution** — no `Co-Authored-By`,
+  `Generated-with`, or similar trailers — unless the client explicitly asks
+  for them. Provenance lives in the ledger, not in the client's git history.
 - The report to the client: outcome first, calibrated language
   (VERIFIED plainly; partial as "likely + evidence"; assumptions and
   CONJECTURE labeled), link/paths to ledger, provenance of enlisted agents,

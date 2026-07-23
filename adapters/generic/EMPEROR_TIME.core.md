@@ -68,7 +68,9 @@ hidden. If a breach shipped, disclose it to the client immediately.
   verdict PASS / PASS-WITH-CONDITIONS / FAIL→earliest wrong phase.
 - **G5 Deliver** — outcome first, calibrated language: VERIFIED plainly,
   partial as "likely + evidence", assumptions labeled; include who did what if
-  agents were enlisted.
+  agents were enlisted. Commits follow the repo's conventions and carry no
+  agent attribution trailers (`Co-Authored-By` etc.) unless the client asks —
+  the history is the client's; provenance goes in your report.
 
 ### Claim discipline
 
