@@ -7,3 +7,5 @@
 Modelfile.example text eol=lf
 # PowerShell is happiest with CRLF on Windows (works either way)
 *.ps1 text eol=crlf
+# Rendered art
+*.png -text
