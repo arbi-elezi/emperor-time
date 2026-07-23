@@ -149,66 +149,79 @@ $palE['o'] = C '#ff9668'   # warm sparkle
 $EW = 112; $EH = 48
 $ey = New-Grid $EW $EH
 $eyes = @(@(30.0, 29.0), @(82.0, 29.0))   # centers
-$ox = 15.0; $oy = 10.5                    # eye opening radii (almond: bottom pulled flatter)
-$irx = 8.2; $iry = 11.2                   # iris radii (taller than opening -> lids crop it)
+$ox = 17.0; $oy = 11.5                    # eye opening radii (bigger; almond bottom)
+$irx = 9.5; $iry = 12.5                   # iris radii (taller than opening -> lid crops it)
 
 for ($y = 0; $y -lt $EH; $y++) {
     for ($x = 0; $x -lt $EW; $x++) {
         $ch = 'f'
         foreach ($e in $eyes) {
-            $rdy = ($y - $e[1])
-            $dx = ($x - $e[0]) / $ox
+            $side = 1.0; if ($e[0] -gt 56) { $side = -1.0 }   # +1 = toward nose (inner)
+            $dxp = ($x - $e[0]); $rdy = ($y - $e[1])
+            $dx = $dxp / $ox
             $dyn = $rdy / $oy
-            if ($rdy -gt 0) { $dyn = $dyn * 1.28 }   # flatter lower curve -> almond, not circle
+            if ($rdy -gt 0) { $dyn = $dyn * 1.30 }            # flatter lower curve -> almond
             $t = [math]::Sqrt($dx * $dx + $dyn * $dyn)
-            if ($t -le 1.22) {
-                $idx = ($x - $e[0]) / $irx; $idy = $rdy / $iry
-                $it = [math]::Sqrt($idx * $idx + $idy * $idy)
-                if ($t -gt 0.76 -and $t -le 1.10 -and $rdy -lt (-0.18 * $oy)) { $ch = 'k' }          # upper lid: thick top arc only
-                elseif ($t -gt 0.94 -and $t -le 1.10 -and $rdy -lt (0.10 * $oy)) { $ch = 'k' }       # lid tapers toward corners
-                elseif ($t -gt 0.92 -and $t -le 1.06 -and $rdy -gt (0.30 * $oy)) { $ch = 'q' }       # lower lid: thin
-                elseif ($it -le 1.0 -and $t -le 1.02) {
+            if ($t -gt 1.22) { continue }
+            $ipx = ($dxp * $side) / $ox                        # -1 outer .. +1 inner
+            $lidY = -0.80 + 0.50 * $ipx                        # angry slant: pressed down toward nose
+            $idx = $dxp / $irx; $idy = $rdy / $iry
+            $it = [math]::Sqrt($idx * $idx + $idy * $idy)
+            if ($t -le 1.10 -and $dyn -ge $lidY -and $dyn -lt ($lidY + 0.24)) { $ch = 'k' }          # thin slanted upper lid
+            elseif ($t -le 1.10 -and $dyn -lt $lidY) { $ch = 'F' }                                   # brow shadow above the glare
+            elseif ($t -gt 0.94 -and $t -le 1.04 -and $dyn -gt 0.38) { $ch = 'q' }                   # thin lower lash
+            elseif ($dyn -ge ($lidY + 0.24)) {
+                if ($it -le 1.0 -and $t -le 1.04) {
                     $ang = [math]::Atan2($idy, $idx)
-                    if ($it -gt 0.80) { $ch = 'c' }
-                    elseif ($it -gt 0.56) {
+                    if ($it -gt 0.78) { $ch = 'c' }
+                    elseif ($it -gt 0.52) {
                         if (([math]::Floor(($ang + 3.2) * 4.45) % 2) -eq 0) { $ch = 'p' } else { $ch = 'P' }  # radial spokes
                     }
-                    elseif ($it -gt 0.34) { $ch = 'r' }
-                    else { $ch = 'u' }
-                    $gx = $x - ($e[0] - 2); $gy = $y - ($e[1] - 5.0)
-                    if (([math]::Abs($gx) + [math]::Abs($gy)) -le 2.8) { $ch = 'h' }     # four-point star glint
-                    if (($gx -eq 0 -and [math]::Abs($gy) -le 4) -or ($gy -eq 0 -and [math]::Abs($gx) -le 4)) { $ch = 'h' }  # star rays
-                    $sx = $x - ($e[0] + 4); $sy = $y - ($e[1] + 3.5)
+                    elseif ($it -gt 0.18) { $ch = 'r' }        # wide burning field
+                    else { $ch = 'u' }                         # small furious pupil
+                    $gx = $x - ($e[0] - 2); $gy = $y - ($e[1] - 5.5)
+                    if (([math]::Abs($gx) + [math]::Abs($gy)) -le 2.4) { $ch = 'h' }     # star glint
+                    if (($gx -eq 0 -and [math]::Abs($gy) -le 3) -or ($gy -eq 0 -and [math]::Abs($gx) -le 3)) { $ch = 'h' }
+                    $sx = $x - ($e[0] + 4); $sy = $y - ($e[1] + 4.0)
                     if (($sx * $sx + $sy * $sy) -le 1.1) { $ch = 'o' }                   # warm sparkle
                 }
                 elseif ($t -le 1.02) {
-                    if ($rdy -lt (-0.30 * $oy)) { $ch = 'N' } else { $ch = 'n' }         # sclera (shadowed under lid)
+                    if ($dyn -lt ($lidY + 0.46)) { $ch = 'N' } else { $ch = 'n' }        # sclera, shadowed at lid
                 }
-                elseif ($t -le 1.20 -and $rdy -gt (0.50 * $oy)) { if ($ch -eq 'f') { $ch = 'F' } }   # soft under-eye shade
+                elseif ($t -le 1.20 -and $dyn -gt 0.50) { if ($ch -eq 'f') { $ch = 'F' } }
             }
         }
         $ey[$y][$x] = $ch
     }
 }
-# hair: wavy base band with diagonal streaks, then sheared tapering strands
-# (drawn OVER lids like the reference; slanted swooshes, not icicles)
-for ($x = 0; $x -lt $EW; $x++) {
-    $depth = 8 + [math]::Round(3 * [math]::Sin(0.16 * $x + 1.2))
-    for ($y = 0; $y -lt $depth; $y++) {
-        $ch = 'y'
-        if (((($x + 2 * $y) % 9) + 9) % 9 -lt 2) { $ch = 'g' }
-        elseif (((($x - 3 * $y) % 13) + 13) % 13 -lt 1) { $ch = 'Y' }
-        $ey[$y][$x] = $ch
-    }
+# hair: fills the whole frame around the eyes (no dark corners, no bare oval)
+function HairColor([int]$hx, [int]$hy) {
+    $hc = 'y'
+    if (((($hx + 2 * $hy) % 13) + 13) % 13 -lt 2) { $hc = 'g' }
+    elseif (((($hx - 3 * $hy) % 19) + 19) % 19 -lt 1) { $hc = 'Y' }
+    return $hc
 }
-# strands: baseX, length, slope (shear per step), starting half-width
+# deep wavy fringe across the top
+for ($x = 0; $x -lt $EW; $x++) {
+    $depth = 12 + [math]::Round(4 * [math]::Sin(0.16 * $x + 1.2))
+    for ($y = 0; $y -lt $depth; $y++) { $ey[$y][$x] = (HairColor $x $y) }
+}
+# wide side locks framing the face, full height
+for ($y = 0; $y -lt $EH; $y++) {
+    $hwL = 12 - [math]::Floor($y * 0.18)
+    for ($x = 0; $x -lt $hwL; $x++) { $ey[$y][$x] = (HairColor $x $y) }
+    for ($x = 111; $x -gt (111 - $hwL); $x--) { $ey[$y][$x] = (HairColor $x $y) }
+}
+# sheared tapering strands, dense fringe (short over the irises, long elsewhere)
 $strands = @(
-    @(5,11,-0.5,2), @(17,14,0.45,3), @(29,9,-0.4,2), @(42,12,0.5,3), @(54,16,0.35,3),
-    @(67,11,-0.45,2), @(79,14,0.5,3), @(92,10,-0.4,2), @(102,12,0.45,2)
+    @(4,16,-0.5,3), @(9,14,0.5,2), @(14,18,0.4,3), @(24,12,0.5,2), @(34,10,-0.45,2),
+    @(39,11,-0.5,2), @(44,15,0.55,3), @(50,13,0.45,2), @(55,20,0.3,3), @(61,12,-0.4,2),
+    @(66,14,-0.5,3), @(71,13,0.5,2), @(77,10,0.45,2), @(83,9,-0.45,2), @(87,12,-0.4,2),
+    @(92,11,0.4,2), @(97,17,0.5,3), @(107,15,-0.45,3)
 )
 foreach ($st in $strands) {
     $bx = $st[0]; $len = $st[1]; $slope = $st[2]; $hw0 = $st[3]
-    $db = 6 + [math]::Round(3 * [math]::Sin(0.16 * $bx + 1.2))
+    $db = 10 + [math]::Round(4 * [math]::Sin(0.16 * $bx + 1.2)) - 2
     for ($d = 0; $d -le $len; $d++) {
         $yy = $db + $d
         if ($yy -ge $EH) { break }
@@ -218,22 +231,9 @@ foreach ($st in $strands) {
         for ($xx = $cx - $hw; $xx -le $cx + $hw; $xx++) {
             if ($xx -lt 0 -or $xx -ge $EW) { continue }
             $ch = 'y'
-            if ($xx -eq ($cx - $hw) -or $xx -eq ($cx + $hw)) { $ch = 'g' }
-            if ($d % 4 -eq 0 -and $hw -gt 0 -and $xx -eq $cx) { $ch = 'Y' }
+            if ($hw -gt 0 -and $xx -eq ($cx + $hw)) { $ch = 'g' }   # shadow edge on one side only
             $ey[$yy][$xx] = $ch
         }
-    }
-}
-# side hair: tapering locks
-for ($y = 0; $y -lt 28; $y++) {
-    $hw = 3 - [math]::Floor($y / 10)
-    for ($x = 0; $x -lt $hw; $x++) { $c2 = 'y'; if ($x -eq ($hw - 1)) { $c2 = 'g' }; $ey[$y][$x] = $c2 }
-    for ($x = 111; $x -gt (111 - $hw); $x--) { $c2 = 'y'; if ($x -eq (112 - $hw)) { $c2 = 'g' }; $ey[$y][$x] = $c2 }
-}
-# dark vignette corners
-for ($y = 0; $y -lt 14; $y++) {
-    for ($x = 0; $x -lt $EW; $x++) {
-        if (($x -lt 14 -and $y -lt (12 - 0.9 * $x)) -or ($x -gt 97 -and $y -lt (12 - 0.9 * (111 - $x)))) { $ey[$y][$x] = 'k' }
     }
 }
 # tiny nose hint
