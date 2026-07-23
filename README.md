@@ -180,5 +180,6 @@ scripts/
 
 ## License
 
-Pick one before publishing (MIT recommended for a skill meant to be captured,
-adapted, and re-bound by others — that is, after all, what Chain Jail does).
+[MIT](LICENSE) — maximally permissive on purpose: a skill meant to be
+captured, adapted, and re-bound by others should carry no chains of its own.
+(Chain Jail's license matrix would approve.)

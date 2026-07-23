@@ -10,6 +10,7 @@ description: >-
   missing skills from the web. Use when the user says "emperor time", asks for
   maximum rigor, zero-hallucination delivery, multi-agent orchestration of local
   CLIs, or asks the agent to find its own work.
+license: MIT
 metadata:
   version: 0.1.0
   homepage: https://github.com/ (this folder — publish where you like)
