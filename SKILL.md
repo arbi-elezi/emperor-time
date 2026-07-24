@@ -12,8 +12,8 @@ description: >-
   CLIs, or asks the agent to find its own work.
 license: MIT
 metadata:
-  version: 0.1.0
-  homepage: https://github.com/ (this folder — publish where you like)
+  version: 0.2.0
+  homepage: https://github.com/arbi-elezi/emperor-time
   standard: Agent Skills (SKILL.md)
 ---
 

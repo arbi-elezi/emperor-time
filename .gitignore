@@ -1,6 +1,9 @@
 # Emperor Time runtime artifacts — generated per task, not part of the skill
 .emperor/
 
+# Local Claude Code state from plugin test-installs (never publish)
+.claude/settings.local.json
+
 # Holy Chain triage snapshots (no-VCS fallback copies)
 *.holy-*
 

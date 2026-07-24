@@ -54,7 +54,19 @@ model via the adapters.
 
 ## Quickstart
 
-### Claude Code (native) — also covers Kimi CLI
+### Claude Code plugin (one line, any OS)
+
+This repo is its own plugin marketplace:
+
+```
+/plugin marketplace add arbi-elezi/emperor-time
+/plugin install emperor-time@emperor-time
+```
+
+Costs ~270 tokens of always-on context (just the trigger description); the
+doctrine loads only when a task engages it, one file at a time.
+
+### Claude Code (copy install) — also covers Kimi CLI
 
 ```powershell
 # user-level (all projects) — Kimi CLI reads this same directory
@@ -124,6 +136,9 @@ sentence. Iteration happens across tasks, not by skipping within one.
 ## Repo map
 
 ```
+.claude-plugin/
+  plugin.json                     Plugin manifest (marketplace packaging)
+  marketplace.json                Marketplace catalog — this repo publishes itself
 SKILL.md                          The master skill: vows, loop, and the Invocation
                                   Ritual (md-selection — load one file at a time)
 chains/                           Five chains — each a router SKILL.md + one MD per aspect
@@ -177,6 +192,24 @@ scripts/
   scripts, compatible with macOS's stock bash 3.2; zsh plugin for the macOS
   default shell). `.gitattributes` pins shell scripts to LF so a Windows-side
   clone can't break Unix shebangs. pwsh runs the `.ps1` variants anywhere.
+
+## Publishing
+
+The repo is both the **marketplace** and the **plugin** (`source: "./"` in
+`.claude-plugin/marketplace.json`), so one push publishes both — no separate
+catalog repo, and the plain skill-folder layout still works for the copy
+installs above.
+
+```bash
+claude plugin validate .        # check both manifests
+claude plugin tag .             # tag a release (verifies plugin.json ⇄ marketplace entry agree)
+gh repo create emperor-time --public --source=. --push
+```
+
+**Bump `version` in both manifests when you ship changes** — Claude Code pins
+to the version string, so users of an unbumped version keep the cached copy.
+Verified locally on Claude Code 2.1.218: manifests pass `validate`, and a test
+install registers exactly one skill (`emperor-time`) at ~270 always-on tokens.
 
 ## License
 
