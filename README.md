@@ -211,6 +211,12 @@ to the version string, so users of an unbumped version keep the cached copy.
 Verified locally on Claude Code 2.1.218: manifests pass `validate`, and a test
 install registers exactly one skill (`emperor-time`) at ~270 always-on tokens.
 
+## Privacy
+
+No data collection, no telemetry, no network calls of its own — see
+[PRIVACY.md](PRIVACY.md). The only content that ever leaves your machine is what
+you explicitly approve sending to another agent you chose to enlist.
+
 ## License
 
 [MIT](LICENSE) — maximally permissive on purpose: a skill meant to be
