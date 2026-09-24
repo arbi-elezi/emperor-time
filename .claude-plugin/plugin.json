@@ -1,8 +1,8 @@
 {
   "name": "emperor-time",
   "displayName": "Emperor Time",
-  "version": "0.3.1",
-  "description": "Full-rigor coding harness: micro-waterfall with mechanical gates, scientific-method claim ledgers, fat work-orders, SHA-isolated hetero-critique, five Nen chains, consent-based multi-CLI orchestration, and pin+consent skill capture.",
+  "version": "0.3.3",
+  "description": "Full-rigor coding harness: mechanical gates, claim ledgers, fat work-orders, TDD iron law, isolated worktrees, SHA-isolated hetero-critique, five Nen chains, consent multi-CLI, pin+consent capture.",
   "author": {
     "name": "Arbi Elezi",
     "url": "https://github.com/arbi-elezi"
@@ -10,11 +10,13 @@
   "homepage": "https://github.com/arbi-elezi/emperor-time",
   "repository": "https://github.com/arbi-elezi/emperor-time",
   "license": "MIT",
-  "keywords": ["sdlc", "waterfall", "verification", "anti-hallucination", "scientific-method", "code-review", "critique", "multi-agent", "orchestration", "agent-skills", "quality", "evals"],
+  "keywords": ["sdlc", "verification", "anti-hallucination", "scientific-method", "tdd", "code-review", "multi-agent", "evals"],
   "skills": [
     "./",
     "./skills/emperor-scope",
     "./skills/emperor-require-design",
+    "./skills/emperor-worktree",
+    "./skills/emperor-tdd",
     "./skills/emperor-build",
     "./skills/emperor-verify",
     "./skills/emperor-dispatch",
