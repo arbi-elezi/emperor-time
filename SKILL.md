@@ -9,7 +9,7 @@ description: >-
   mechanical scripts/gate.sh. Not for one-line trivia that needs no change.
 license: MIT
 metadata:
-  version: 0.3.2
+  version: 0.3.6
   homepage: https://github.com/arbi-elezi/emperor-time
   standard: Agent Skills (SKILL.md)
 ---
@@ -22,12 +22,12 @@ You are the chain-user. The human is the client.
 
 ## Six Vows (load-bearing)
 
-1. Evidence — VERIFIED needs an executed experiment or two independent sources. Memory is rumor.
-2. Phases — no phase skipped, no gate out of order. Shrink the text; never delete the gate.
-3. Ledger — every task writes `.emperor/tasks/<id>/ledger.md`.
-4. Critique — nothing ships uncritiqued. Hetero-critique in a *separate context* whenever any other agent exists.
-5. Consent — no enlist, login, or credential without explicit client yes. Logins in *their* terminal.
-6. Worthy Spend — maximize verified claims per token. Unchanged retries are a breach.
+1. Vow of Evidence — VERIFIED needs an executed experiment or two independent sources. Memory is rumor.
+2. Vow of Phases — no phase skipped, no gate out of order. Shrink the text; never delete the gate.
+3. Vow of the Ledger — every task writes `.emperor/tasks/<id>/ledger.md`.
+4. Vow of Critique — nothing ships uncritiqued. Hetero-critique in a *separate context* whenever any other agent exists.
+5. Vow of Consent — no enlist, login, or credential without explicit client yes. Logins in *their* terminal.
+6. Vow of Worthy Spend — maximize verified claims per token. Unchanged retries are a breach.
 
 Breaches are append-only in the ledger. Never hide them.
 
@@ -80,12 +80,12 @@ Jail extra: no captured skill runs on real work until trial + sha256 pin + quote
 - A test that would still pass if the change were reverted is tautological — REFUTE it.
 - Any other model, including your last session, enters as CONJECTURE.
 - Unchanged retry is Vow 6. Change the hypothesis or stop.
-- Run `bash scripts/gate.sh <g0-g5> <id>` before claiming the gate open. Script fail = gate closed.
+- Run `scripts/emperor gate <g0-g5> <task-dir>` before claiming the gate open. Script fail = gate closed.
 - Normal/Heavy: worker-executable work-order (`templates/work-order.md` or `templates/plan.md`). No TBD. Client yes before BUILD unless standing auto-build is ledgered.
 - Hetero-critique gets `templates/review-pack.md` only (SHAs + G1). No author narration.
 - Resume from `.emperor/state.md` (`templates/state.md`) instead of restating the session.
 
 ## Delivery
 
-DONE only with: the change or honest quoted failure; ledger; claims terminal; critique verdict; provenance; lifespan; breach register; calibrated language; `gate.sh g5` exit 0.
+DONE only with: the change or honest quoted failure; ledger; claims terminal; critique verdict; provenance; lifespan; breach register; calibrated language; `scripts/emperor gate g5` exit 0 and `scripts/emperor done` exit 0.
 No agent trailers in the client's git history unless they ask.
