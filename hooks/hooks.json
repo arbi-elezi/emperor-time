@@ -7,7 +7,7 @@
         "hooks": [
           {
             "type": "prompt",
-            "prompt": "Emperor Time dogma: purpose is autonomous DONE, not token theater. Read SKILL.md only if this is engineering work. Define DONE in .emperor/tasks/<id>/DONE.md and prove it with scripts/done.sh. No easy path. Swarm-emulate if the host has no swarm. Memory is CONJECTURE."
+            "prompt": "Emperor Time dogma: purpose is autonomous DONE, not token theater. Define DONE in .emperor/tasks/<id>/DONE.md. Prove it with scripts/emperor done (Unix) or pwsh -File scripts/emperor.ps1 done (Windows). No cmd.exe shim. No easy path. Swarm-emulate if the host has no swarm. Memory is CONJECTURE."
           }
         ]
       }
@@ -17,7 +17,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "if [ -d .emperor/tasks ]; then last=$(ls -1d .emperor/tasks/* 2>/dev/null | tail -n1); if [ -n \"$last\" ] && [ -f \"$last/DONE.md\" ]; then bash scripts/done.sh \"$last\" || echo '[Emperor Time] STOP: DONE.md probes failed — you are not done.'; else echo '[Emperor Time] STOP: no DONE.md — define DONE before claiming it.'; fi; fi"
+            "command": "last=''; if [ -d .emperor/tasks ]; then last=$(ls -1d .emperor/tasks/* 2>/dev/null | tail -n1); fi; if [ -n \"$last\" ] && [ -f \"$last/DONE.md\" ]; then if command -v pwsh >/dev/null 2>&1 && [ -f scripts/emperor.ps1 ]; then pwsh -NoProfile -File scripts/emperor.ps1 done \"$last\" || echo '[Emperor Time] STOP: DONE probes failed'; elif [ -f scripts/emperor ]; then bash scripts/emperor done \"$last\" || echo '[Emperor Time] STOP: DONE probes failed'; else bash scripts/done.sh \"$last\" || echo '[Emperor Time] STOP: DONE probes failed'; fi; elif [ -d .emperor/tasks ]; then echo '[Emperor Time] STOP: no DONE.md — define DONE before claiming it.'; fi"
           }
         ]
       }
