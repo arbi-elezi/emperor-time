@@ -1,19 +1,25 @@
 #!/usr/bin/env bash
-# Pick the host runtime. Usage: scripts/emperor <tool> [args...]
-# tool ∈ done gate eval review-pack dowse install worktree
+# bash front. Peer of emperor.zsh / emperor.ps1 / emperor.cmd.
+# Usage: scripts/emperor <tool> [args...]
 set -euo pipefail
 ROOT="$(cd "$(dirname "$0")" && pwd)"
+# shellcheck disable=SC1091
+. "$ROOT/lib/host.sh"
 TOOL="${1:-}"; shift || true
-[[ -n "$TOOL" ]] || { echo "usage: $0 <done|gate|eval|review-pack|dowse|install|worktree> [args]" >&2; exit 2; }
-
-win=0
-case "$(uname -s 2>/dev/null || echo unknown)" in
-  MINGW*|MSYS*|CYGWIN*|Windows_NT) win=1 ;;
-esac
-[[ "${OS:-}" == "Windows_NT" ]] && win=1
+[[ -n "$TOOL" ]] || { echo "usage: $0 <done|gate|eval|review-pack|dowse|install|worktree|host> [args]" >&2; exit 2; }
+if [[ "$TOOL" == host ]]; then emperor_host_report; exit 0; fi
 
 ps1="$ROOT/${TOOL}.ps1"
 sh="$ROOT/${TOOL}.sh"
+
+if [[ "$EMPEROR_WSL" -eq 1 && "${EMPEROR_FORCE_WIN:-0}" -eq 1 && -f "$ps1" ]]; then
+  _ps=$(emperor_win_ps) || { echo "emperor: WSL but no Windows PowerShell interop" >&2; exit 127; }
+  _winroot=$(emperor_to_win "$ROOT")
+  exec "$_ps" -NoProfile -File "${_winroot}\\${TOOL}.ps1" "$@"
+fi
+
+win=0
+case "$EMPEROR_OS" in gitbash|cygwin) win=1 ;; esac
 
 if [[ "$win" -eq 1 ]]; then
   if command -v pwsh >/dev/null 2>&1 && [[ -f "$ps1" ]]; then
