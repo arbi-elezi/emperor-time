@@ -1,13 +1,23 @@
 {
-  "description": "Emperor Time SessionStart: vows reminder only. Do not dump the tree.",
+  "description": "Emperor Time dogma hooks. Short. They bite.",
   "hooks": {
     "SessionStart": [
       {
         "matcher": "startup",
         "hooks": [
           {
+            "type": "prompt",
+            "prompt": "Emperor Time dogma: purpose is autonomous DONE, not token theater. Read SKILL.md only if this is engineering work. Define DONE in .emperor/tasks/<id>/DONE.md and prove it with scripts/done.sh. No easy path. Swarm-emulate if the host has no swarm. Memory is CONJECTURE."
+          }
+        ]
+      }
+    ],
+    "Stop": [
+      {
+        "hooks": [
+          {
             "type": "command",
-            "command": "echo '[Emperor Time] If this is engineering work: read SKILL.md as router only. Prefer skills/emperor-scope or emperor-require-design. TDD iron law before production code. gate.sh before declaring a gate open. Resume from .emperor/STATE.md if present. Captured skills stay Zetsu without pin+CONSENT+trial.'"
+            "command": "if [ -d .emperor/tasks ]; then last=$(ls -1d .emperor/tasks/* 2>/dev/null | tail -n1); if [ -n \"$last\" ] && [ -f \"$last/DONE.md\" ]; then bash scripts/done.sh \"$last\" || echo '[Emperor Time] STOP: DONE.md probes failed — you are not done.'; else echo '[Emperor Time] STOP: no DONE.md — define DONE before claiming it.'; fi; fi"
           }
         ]
       }
