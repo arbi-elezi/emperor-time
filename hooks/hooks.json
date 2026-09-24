@@ -1,0 +1,16 @@
+{
+  "description": "Emperor Time SessionStart: vows reminder only. Do not dump the tree.",
+  "hooks": {
+    "SessionStart": [
+      {
+        "matcher": "startup",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "echo '[Emperor Time] If this is engineering work: read SKILL.md as router only. Prefer skills/emperor-scope or emperor-require-design. TDD iron law before production code. gate.sh before declaring a gate open. Resume from .emperor/STATE.md if present. Captured skills stay Zetsu without pin+CONSENT+trial.'"
+          }
+        ]
+      }
+    ]
+  }
+}
