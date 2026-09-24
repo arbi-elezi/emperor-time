@@ -1,0 +1,18 @@
+{
+  "must_fire": [
+    {"phrase": "emperor time", "skill": "emperor-time"},
+    {"phrase": "maximum rigor", "skill": "emperor-time"},
+    {"phrase": "find your own work", "skill": "emperor-scope"},
+    {"phrase": "scope this task", "skill": "emperor-scope"},
+    {"phrase": "write a plan", "skill": "emperor-require-design"},
+    {"phrase": "review this diff", "skill": "emperor-verify"},
+    {"phrase": "are the tests passing", "skill": "emperor-verify"},
+    {"phrase": "use claude as a worker", "skill": "emperor-dispatch"},
+    {"phrase": "the build is red", "skill": "emperor-heal"},
+    {"phrase": "we are missing a skill", "skill": "emperor-capture"}
+  ],
+  "must_not_fire_master_wholesale": [
+    {"phrase": "fix the typo in the footer year", "note": "right-size; do not load Steal Chain or Chain Jail"},
+    {"phrase": "what is 2+2", "note": "not a coding task"}
+  ]
+}

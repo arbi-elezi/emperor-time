@@ -1,29 +1,23 @@
 {
   "name": "emperor-time",
   "displayName": "Emperor Time",
-  "version": "0.2.0",
-  "description": "Full-rigor coding discipline: micro-waterfall SDLC with hard gates, scientific-method claim ledgers to cut hallucination, mandatory self/hetero critique, task dowsing, consent-based orchestration of other local coding agents, and Chain Jail capture of missing skills.",
-  "author": {
-    "name": "Arbi Elezi",
-    "url": "https://github.com/arbi-elezi"
-  },
+  "version": "0.3.3",
+  "description": "Full-rigor coding harness: mechanical gates, TDD iron law, worktrees, fat work-orders, claim ledgers, isolated critique, five Nen chains, consent multi-CLI, pin+consent skill capture.",
+  "author": {"name": "Arbi Elezi", "url": "https://github.com/arbi-elezi"},
   "homepage": "https://github.com/arbi-elezi/emperor-time",
   "repository": "https://github.com/arbi-elezi/emperor-time",
   "license": "MIT",
-  "keywords": [
-    "sdlc",
-    "waterfall",
-    "verification",
-    "anti-hallucination",
-    "scientific-method",
-    "code-review",
-    "critique",
-    "multi-agent",
-    "orchestration",
-    "agent-skills",
-    "quality"
-  ],
+  "keywords": ["sdlc", "verification", "tdd", "anti-hallucination", "scientific-method", "multi-agent", "agent-skills"],
   "skills": [
-    "./"
+    "./",
+    "./skills/emperor-scope",
+    "./skills/emperor-require-design",
+    "./skills/emperor-build",
+    "./skills/emperor-tdd",
+    "./skills/emperor-worktree",
+    "./skills/emperor-verify",
+    "./skills/emperor-dispatch",
+    "./skills/emperor-heal",
+    "./skills/emperor-capture"
   ]
 }

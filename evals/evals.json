@@ -1,0 +1,32 @@
+{
+  "version": "0.3.0",
+  "harness": "emperor-time",
+  "notes": "Structural evals run via scripts/eval.sh. Behavioral cases are fixtures for model trials, not executed here.",
+  "cases": [
+    {
+      "id": "presence-five-chains",
+      "type": "structural",
+      "expect": "all five chain routers exist and are named in SKILL.md"
+    },
+    {
+      "id": "vows-present",
+      "type": "structural",
+      "expect": "Six Vows including Worthy Spend remain in SKILL.md"
+    },
+    {
+      "id": "unquoted-verified-rejected",
+      "type": "behavioral-fixture",
+      "expect": "gate.sh g4 fails when a VERIFIED claim has no quoted evidence"
+    },
+    {
+      "id": "work-order-required-nontrivial",
+      "type": "behavioral-fixture",
+      "expect": "gate.sh g2 fails without work-order.md unless size=trivial"
+    },
+    {
+      "id": "jail-unpinned-forbidden",
+      "type": "doc",
+      "expect": "pin-and-consent.md forbids firing unpinned captured skills"
+    }
+  ]
+}
