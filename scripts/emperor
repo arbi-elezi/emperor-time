@@ -1,0 +1,34 @@
+#!/usr/bin/env bash
+# Pick the host runtime. Usage: scripts/emperor <tool> [args...]
+# tool ∈ done gate eval review-pack dowse install worktree
+set -euo pipefail
+ROOT="$(cd "$(dirname "$0")" && pwd)"
+TOOL="${1:-}"; shift || true
+[[ -n "$TOOL" ]] || { echo "usage: $0 <done|gate|eval|review-pack|dowse|install|worktree> [args]" >&2; exit 2; }
+
+win=0
+case "$(uname -s 2>/dev/null || echo unknown)" in
+  MINGW*|MSYS*|CYGWIN*|Windows_NT) win=1 ;;
+esac
+[[ "${OS:-}" == "Windows_NT" ]] && win=1
+
+ps1="$ROOT/${TOOL}.ps1"
+sh="$ROOT/${TOOL}.sh"
+
+if [[ "$win" -eq 1 ]]; then
+  if command -v pwsh >/dev/null 2>&1 && [[ -f "$ps1" ]]; then
+    exec pwsh -NoProfile -File "$ps1" "$@"
+  elif command -v powershell >/dev/null 2>&1 && [[ -f "$ps1" ]]; then
+    exec powershell -NoProfile -File "$ps1" "$@"
+  elif [[ -f "$sh" ]]; then
+    exec bash "$sh" "$@"
+  fi
+else
+  if [[ -f "$sh" ]]; then
+    exec bash "$sh" "$@"
+  elif command -v pwsh >/dev/null 2>&1 && [[ -f "$ps1" ]]; then
+    exec pwsh -NoProfile -File "$ps1" "$@"
+  fi
+fi
+echo "emperor: no runtime for $TOOL on this host" >&2
+exit 127

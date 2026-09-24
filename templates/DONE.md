@@ -1,27 +1,9 @@
-# DONE — defined by the agent, tested by the script
+# DONE — <task-id>
 
-Copy to `.emperor/tasks/<id>/DONE.md`. You write the probes. `scripts/done.sh` runs them.
+Authored by the agent from G1. `scripts/emperor done <task-dir>` runs every pair.
 
-## Acceptance (from G1, quoted)
+probe: <command that must print the expect substring>
+expect: <exact substring>
 
-1.
-
-## Probes (command → expected substring in stdout/stderr)
-
-```
-probe: <command>
-expect: <literal substring>
-```
-
-```
-probe: <command>
-expect: <literal substring>
-```
-
-## Out of scope (scope-guard)
-
--
-
-## Why these probes (rationale)
-
--
+probe: <second command>
+expect: <substring>
