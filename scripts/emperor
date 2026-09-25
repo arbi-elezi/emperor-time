@@ -1,13 +1,29 @@
 #!/usr/bin/env bash
 # bash front. Peer of emperor.zsh / emperor.ps1 / emperor.cmd.
-# Usage: scripts/emperor <tool> [args...]
 set -euo pipefail
 ROOT="$(cd "$(dirname "$0")" && pwd)"
 # shellcheck disable=SC1091
 . "$ROOT/lib/host.sh"
-TOOL="${1:-}"; shift || true
-[[ -n "$TOOL" ]] || { echo "usage: $0 <done|gate|eval|review-pack|dowse|install|worktree|queue|forge|identify|host> [args]" >&2; exit 2; }
-if [[ "$TOOL" == host ]]; then emperor_host_report; exit 0; fi
+# Host + survey live on disk. Client is never asked to identify the box.
+if [[ ! -f .emperor/host.env ]]; then
+  bash "$ROOT/boot.sh" >/dev/null 2>&1 || true
+fi
+TOOL="${1:-}"
+if [[ -z "$TOOL" ]]; then
+  echo "usage: $0 <done|gate|eval|review-pack|dowse|install|worktree|queue|forge|boot> [args]" >&2
+  exit 2
+fi
+shift || true
+if [[ "$TOOL" == host || "$TOOL" == boot ]]; then
+  bash "$ROOT/boot.sh" >/dev/null 2>&1 || true
+  [[ "${EMPEROR_BOOT_VERBOSE:-0}" == 1 ]] && cat .emperor/host.env 2>/dev/null || true
+  exit 0
+fi
+# identify is an internal name for boot's survey. Same silence.
+if [[ "$TOOL" == identify ]]; then
+  bash "$ROOT/boot.sh" >/dev/null 2>&1 || true
+  exit 0
+fi
 
 ps1="$ROOT/${TOOL}.ps1"
 sh="$ROOT/${TOOL}.sh"
