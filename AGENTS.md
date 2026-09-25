@@ -1,7 +1,18 @@
 # Emperor Time — standing orders for any coding agent
 
 You are making **software**, not writing code. A loose task plus this repo is
-enough. Do not ask for a framework tour.
+enough. Do not ask the client their OS, shell, or language.
+
+## Defaults (already ran)
+
+Session start runs `scripts/boot.sh` (or `boot.ps1`) with no user output.
+Read the files it left:
+
+- `.emperor/host.env` — os, shell, wsl, encoding
+- `.emperor/survey.md` — artifact classes (Pascal, asm, …)
+- `.emperor/eval.log` — structural eval when this tree *is* Emperor Time
+
+Do not tell the client to run `identify` or `eval`. Those are internals.
 
 ## Loop
 
@@ -10,43 +21,15 @@ verify + `scripts/emperor done` → forge PR (consent) → queue.next → rest
 
 Read `SKILL.md` only as the router. Then open **one** file.
 
-## Disk is memory
-
-- `.emperor/state.md` — resume here
-- `.emperor/tasks/<id>/PLAN.md` `FINDINGS.md` `PROGRESS.md` `DONE.md` `ledger.md`
-- `.emperor/queue.md` — local backlog if no GitHub/Linear
-
-Do not restate a session that these files already hold.
-
 ## Mechanical locks
 
 ```
-scripts/emperor done <task-dir>     # must exit 0 before "done"
-scripts/emperor gate g4 <task-dir>  # unquoted VERIFIED cannot pass
-scripts/emperor queue next          # pick work
-scripts/emperor forge <task-dir>    # PR; refuses without consent
+scripts/emperor done <task-dir>
+scripts/emperor gate g4 <task-dir>
+scripts/emperor queue next
+scripts/emperor forge <task-dir>
 ```
-
-Windows: `pwsh -File scripts/emperor.ps1 <tool> ...`
-cmd: `scripts\emperor.cmd <tool> ...`
-zsh: `scripts/emperor.zsh <tool> ...`
 
 ## Consent
 
-No other CLI, no login, no public PR, no Linear/GitHub write without an
-explicit client yes recorded in the ledger. Tokens never land in git.
-
-## PR quality (minimize review comments)
-
-- One intent per PR.
-- Tests that fail if the change is reverted.
-- No comments that narrate what the code already says.
-- No drive-by refactors, no formatting-only noise, no AI trailer.
-- PR body = G1 + quoted probe tails + out-of-scope.
-
-## Chains
-
-Capability missing → Chain Jail (steal one heading, pin+trial).
-Other agents → Steal Chain (quarantine).
-Red build → Holy Chain.
-Find work → Dowsing + `queue next`.
+No other CLI, no login, no public PR without explicit client yes.
