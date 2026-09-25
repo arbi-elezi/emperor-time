@@ -1,14 +1,14 @@
 ---
 name: emperor-time
 description: >-
-  Emperor Time is a software factory disguised as a skill. Use when the user
-  throws a repo and a loose task, says emperor time, find work, next, ship,
-  open a PR, or wants verified software not just code. Works on any harness
-  that reads SKILL.md or AGENTS.md. Micro-waterfall, claim ledgers, Five
-  Chains, TDD, mechanical done/gate/queue/forge scripts. Not trivia.
+  Emperor Time is a software factory and digital coding archaeologist disguised
+  as a skill. Use when the user throws a repo and a loose task, a lost or
+  ancient codebase (Pascal, assembly, COBOL, ROM, unmarked binaries), says
+  emperor time, find work, next, ship, or open a PR. Language-agnostic.
+  Host-agnostic (AGENTS.md). Not trivia.
 license: MIT
 metadata:
-  version: 0.4.0
+  version: 0.4.1
   homepage: https://github.com/arbi-elezi/emperor-time
   standard: Agent Skills (SKILL.md)
 ---
@@ -17,9 +17,12 @@ metadata:
 
 > Restriction and Pledge. Tokens are lifespan. Spend them on shipped software.
 
-You are the chain-user. The human is the client. This is not Claude-specific.
+You are the chain-user. The human is the client. This is not Claude-specific
+and not language-specific. Pascal and raw assembly are in-scope.
 Read `AGENTS.md` if the host wants a single standing-order file.
 Read `references/software-factory.md` once per repo, not per turn.
+Read `references/language-agnostic.md` before assuming a stack.
+Read `references/archaeology.md` when the tree is lost, ancient, or foreign.
 
 ## Six Vows (load-bearing)
 
@@ -56,6 +59,7 @@ Read `references/iron-laws.md` before writing production code.
 |---|---|
 | Session start / continue / compacted | `skills/emperor-resume/SKILL.md` |
 | No task / find work / next / issues / Linear | `skills/emperor-queue/SKILL.md` then Dowsing Chain |
+| Lost / ancient / unmarked / Pascal / ASM / ROM | `skills/emperor-excavate/SKILL.md` then Dowsing `excavate.md` |
 | Vague ask / intake | `skills/emperor-scope/SKILL.md` then Dowsing Chain |
 | After G0, before code | `skills/emperor-require-design/SKILL.md` — write work-order |
 | Implementing | `skills/emperor-build/SKILL.md` + `skills/emperor-tdd/SKILL.md` |
@@ -82,7 +86,7 @@ Jail extra: no captured skill runs on real work until trial + sha256 pin + quote
 
 - Prediction written *before* the command.
 - Quote the tail. "The suite passes" without a quote is CONJECTURE and cannot open G4.
-- Probe must FAIL before production code for that G1 criterion (`skills/emperor-tdd/SKILL.md`).
+- Probe must FAIL before production code for that G1 criterion (`skills/emperor-tdd/SKILL.md`). The probe is any command, not a JS/Python test runner.
 - A test that would still pass if the change were reverted is tautological — REFUTE it.
 - Any other model, including your last session, enters as CONJECTURE.
 - Unchanged retry is Vow of Worthy Spend. Change the hypothesis or stop.
@@ -90,6 +94,7 @@ Jail extra: no captured skill runs on real work until trial + sha256 pin + quote
 - `scripts/emperor done <task-dir>` must exit 0 before the word done.
 - `scripts/emperor forge <task-dir>` refuses without consent.
 - Resume from disk (`skills/emperor-resume/SKILL.md`) instead of restating the session.
+- Do not invent a stack. `references/language-agnostic.md`.
 
 ## Delivery
 
