@@ -7,7 +7,7 @@
         "hooks": [
           {
             "type": "prompt",
-            "prompt": "Emperor Time dogma: purpose is autonomous DONE, not token theater. Define DONE in .emperor/tasks/<id>/DONE.md. Prove it with scripts/emperor done (Unix) or pwsh -File scripts/emperor.ps1 done (Windows). No cmd.exe shim. No easy path. Swarm-emulate if the host has no swarm. Memory is CONJECTURE."
+            "prompt": "Emperor Time dogma: purpose is autonomous DONE, not token theater. Define DONE in .emperor/tasks/<id>/DONE.md. Prove it with scripts/emperor done (bash/zsh), scripts/emperor.ps1 done (PowerShell), or scripts/emperor.cmd done (cmd.exe). Four fronts, same tools, user picks. Swarm-emulate if the host has no swarm. Memory is CONJECTURE."
           }
         ]
       }
