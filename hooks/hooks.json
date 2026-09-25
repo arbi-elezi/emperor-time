@@ -7,7 +7,7 @@
         "hooks": [
           {
             "type": "prompt",
-            "prompt": "Emperor Time dogma: purpose is autonomous DONE, not token theater. Define DONE in .emperor/tasks/<id>/DONE.md. Prove it with scripts/emperor done (bash/zsh), scripts/emperor.ps1 done (PowerShell), or scripts/emperor.cmd done (cmd.exe). Four fronts, same tools, user picks. Swarm-emulate if the host has no swarm. Memory is CONJECTURE."
+            "prompt": "Emperor Time: software factory + archaeologist. Not Claude-specific, no home language. Read AGENTS.md. If no task: scripts/emperor queue next. Lost/Pascal/ASM tree: skills/emperor-excavate then scripts/emperor identify. DONE is scripts/emperor done (or emperor.ps1 / emperor.cmd). Forge PR only with consent. Memory is CONJECTURE."
           }
         ]
       }

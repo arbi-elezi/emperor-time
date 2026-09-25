@@ -1,14 +1,13 @@
 ---
 name: dowsing-chain
 description: >-
-  Emperor Time's ring-finger chain — intuition made procedure. Router for three
-  aspects: task dowsing (find your own work from repo evidence), system dowsing
-  (scan the machine for counterpart coding agents), and lie detection (flag
-  contradictions between what is said and what is observed). Use when asked to
-  "find your own tasks", scope vague work, or "see what agents are on this
-  machine". Load one aspect file at a time per the Invocation Ritual.
+  Emperor Time's ring-finger chain — intuition made procedure. Router for four
+  aspects: task dowsing, system dowsing, lie detection, and excavate (lost or
+  alien codebases). Use when asked to find work, scan for agents, rule on
+  contradictions, or survey Pascal/ASM/COBOL/ROM trees. Load one aspect file
+  at a time per the Invocation Ritual.
 metadata:
-  version: 0.2.0
+  version: 0.4.1
   part-of: emperor-time
   kind: router
 ---
@@ -27,12 +26,12 @@ is a hallucination wearing a pendulum.
 | Your situation | Aspect file |
 |---|---|
 | "Find something worth doing" / vague goal to scope / between tasks with standing self-assign authority / triaging a codebase | `task-dowsing.md` |
+| Lost / ancient / unmarked tree / Pascal / assembly / COBOL / ROM / floppy image | `excavate.md` |
 | Building the enlistable-agent roster / "what agents are on this machine?" / pre-Steal-Chain scan / an unknown CLI needs profiling | `system-dowsing.md` |
 | A source contradicts another (docs vs code, comment vs behavior, agent claim vs observation, memory vs terminal) and you must rule | `lie-detection.md` |
 
 Multiple situations at once → run them as separate selections in sequence
-(task dowsing often *triggers* lie detection; finish the sweep, then rule on
-the contradictions it surfaced).
+(excavate often *triggers* lie detection when a comment disagrees with a binary).
 
 ## Chain-wide laws (apply in every aspect)
 
@@ -43,8 +42,9 @@ the contradictions it surfaced).
    in. Anything worth changing becomes a task candidate for the client (or the
    waterfall), never an in-place edit "while scanning".
 3. **One artifact per session** — a dowsing run ends in exactly one output
-   (candidate table / roster / ruling), recorded in the ledger. An unrecorded
-   sweep is lifespan spent on nothing (Vow 6).
+   (candidate table / roster / ruling / SURVEY.md), recorded in the ledger. An unrecorded
+   sweep is lifespan spent on nothing (Vow of Worthy Spend).
 4. **Skipped probes are declared** — inapplicable or unrunnable probes are
    listed as skipped in the artifact, so absence of findings is never mistaken
    for absence of problems.
+5. **No home language** — `references/language-agnostic.md`. The files pick the language.
