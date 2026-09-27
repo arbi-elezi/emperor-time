@@ -86,6 +86,7 @@ mean **disk + eval**, not live multi-vendor win rates.
 | diagnose (intake+cite HARD-GATE) | `scripts/lib/diagnose.py` + thin twins + `skills/emperor-heal/diagnosing.md` + `emperor diagnose` | TESTED |
 | root-cause tracing (HARD-GATE) | `scripts/lib/root_cause.py` + thin twins + `skills/emperor-heal/root-cause-tracing.md` + `emperor trace` | TESTED |
 | defense-in-depth (HARD-GATE) | `scripts/lib/defense.py` + thin twins + `skills/emperor-heal/defense-in-depth.md` + `emperor defense` | TESTED |
+| condition-based-waiting (HARD-GATE) | `scripts/lib/condition_wait.py` + thin twins + `skills/emperor-heal/condition-based-waiting.md` + `emperor wait` | TESTED |
 
 Honesty helper: `scripts/lib/bakeoff_honesty.py` fails if this inventory
 drifts from disk or if live-defect-rate is mislabeled.
@@ -103,7 +104,7 @@ drifts from disk or if live-defect-rate is mislabeled.
 ## Verdict
 
 ET wins this slice on *mechanical lock-in* (eval owns the rows; leaf gates
-above are on disk and eval-locked through v0.4.40).
+above are on disk and eval-locked through v0.4.41).
 Activation *mechanism* is closed on disk (v0.4.5–0.4.6); wild-agent
 activation without a tell stays **UNVERIFIABLE** until a marketplace re-run.
 Live defect-rate vs Superpowers stays **UNVERIFIABLE** — do not invent %.

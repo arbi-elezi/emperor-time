@@ -34,6 +34,8 @@ scripts/emperor trace --check-chain "A → called by B → called by C"
 ## Out of scope
 
 - Whole `systematic-debugging` skill folder
-- `find-polluter.sh`, condition-based-waiting, pressure / academic packs
+- `find-polluter.sh`, pressure / academic packs
 - Whole defense-in-depth essay from Superpowers (ET owns a Chain Jail
   leaf: `skills/emperor-heal/defense-in-depth.md` + `emperor defense`)
+- Whole condition-based-waiting essay from Superpowers (ET owns a Chain Jail
+  leaf: `skills/emperor-heal/condition-based-waiting.md` + `emperor wait`)

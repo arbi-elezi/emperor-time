@@ -5,7 +5,8 @@ Leaf adapted from obra/superpowers skills/systematic-debugging
 defense-in-depth.md (MIT) — Validate at every layer / Four layers only.
 Emperor Time + Holy Chain stay the orchestrator; do not announce the
 foreign skill name. Does not vendor whole systematic-debugging (no
-find-polluter.sh, condition-based-waiting, or pressure tests).
+find-polluter.sh or pressure tests). condition-based-waiting is a
+separate Chain Jail leaf (`emperor wait`).
 
 Prints DEFENSE / LAYER / MUST lines.
 --reject-single-layer and --reject-unlayered always fail (HARD-GATE helpers).
@@ -97,7 +98,8 @@ def format_card() -> str:
         "MUST-NOT: ship a single-layer guard as the whole fix; skip layers "
         "because 'entry validation is enough'; use layered checks instead of "
         "tracing to the source; load whole systematic-debugging "
-        "(find-polluter, condition-based-waiting, pressure tests). "
+        "(find-polluter, pressure tests). "
+        "condition-based-waiting is a separate leaf (`emperor wait`). "
         "ET + Holy Chain remain the orchestrator."
     )
     return "\n".join(lines) + "\n"

@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.4.41
+- Condition-based-waiting HARD-GATE leaf: `scripts/lib/condition_wait.py` prints WAIT / COND / MUST card (wait for the actual condition / not a guess about timing)
+- Thin `condition-wait.sh` / `condition-wait.ps1`; emperor peers gain `wait`; `--reject-sleep` / `--reject-unguessed` HARD-GATEs; `--check-condition` validator (strong tokens / waitFor pattern)
+- Skill leaf `skills/emperor-heal/condition-based-waiting.md` + `references/condition-based-waiting.md` cite obra/superpowers MIT (systematic-debugging condition-based-waiting aspect); does **not** vendor whole systematic-debugging
+- Route/triggers for CBW phrases → emperor-heal; Phase-4 flaky/timing companion after defense-in-depth; eval/bakeoff/honesty lockstep
+- Plugin, marketplace, and SKILL.md at 0.4.41
+
 ## 0.4.40
 - Defense-in-depth HARD-GATE leaf: `scripts/lib/defense.py` prints DEFENSE / LAYER / MUST card (validate at every layer / four layers)
 - Thin `defense.sh` / `defense.ps1`; emperor peers gain `defense`; `--reject-single-layer` / `--reject-unlayered` HARD-GATEs; `--check-layers` validator (≥2 distinct layer ids)

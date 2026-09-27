@@ -2015,8 +2015,12 @@ def run_evals(root: Path) -> int:
     h.require_contains("defense.py", "evals/bakeoff.md", "bakeoff.md missing defense.py inventory")
     h.require_contains("defense.py", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing defense.py")
     h.require_contains("0.4.40", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing 0.4.40 tip")
-    h.require_contains("0.4.40", ".claude-plugin/plugin.json", "plugin.json not at 0.4.40")
     h.require_contains("0.4.40", "CHANGELOG.md", "CHANGELOG missing 0.4.40")
+    h.require_contains("condition_wait.py", "evals/bakeoff.md", "bakeoff.md missing condition_wait.py inventory")
+    h.require_contains("condition_wait.py", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing condition_wait.py")
+    h.require_contains("0.4.41", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing 0.4.41 tip")
+    h.require_contains("0.4.41", ".claude-plugin/plugin.json", "plugin.json not at 0.4.41")
+    h.require_contains("0.4.41", "CHANGELOG.md", "CHANGELOG missing 0.4.41")
 
     # session-discovery
     h.section("session-discovery locate HARD-GATE leaf")
@@ -2565,6 +2569,156 @@ def run_evals(root: Path) -> int:
     else:
         h.pass_msg("route.py defense in depth → emperor-heal")
 
+
+
+
+    # condition-based-waiting HARD-GATE
+    h.section("condition-based-waiting HARD-GATE leaf")
+    h.need("skills/emperor-heal/condition-based-waiting.md")
+    h.need("references/condition-based-waiting.md")
+    h.need("scripts/lib/condition_wait.py")
+    h.need("scripts/condition-wait.sh")
+    h.need("scripts/condition-wait.ps1")
+    h.bash_n("scripts/condition-wait.sh", "condition-wait.sh syntax")
+    h.py_compile("scripts/lib/condition_wait.py", "condition_wait.py compile")
+    h.require_contains(
+        "condition_wait.py",
+        "scripts/condition-wait.sh",
+        "condition-wait.sh does not call condition_wait.py",
+    )
+    h.require_contains(
+        "condition_wait.py",
+        "scripts/condition-wait.ps1",
+        "condition-wait.ps1 does not call condition_wait.py",
+    )
+    h.require_contains(
+        "wait",
+        "scripts/emperor",
+        "emperor bash missing wait",
+    )
+    h.require_contains(
+        "'wait'",
+        "scripts/emperor.ps1",
+        "emperor.ps1 missing wait",
+    )
+    h.require_contains(
+        "wait",
+        "scripts/emperor.cmd",
+        "emperor.cmd missing wait",
+    )
+    h.require_contains(
+        "wait",
+        "scripts/emperor.zsh",
+        "emperor.zsh missing wait",
+    )
+    h.require_contains(
+        "condition-based-waiting.md",
+        "skills/emperor-heal/SKILL.md",
+        "emperor-heal missing condition-based-waiting leaf",
+    )
+    h.require_contains(
+        "HARD-GATE",
+        "skills/emperor-heal/condition-based-waiting.md",
+        "condition-based-waiting leaf missing HARD-GATE heading",
+    )
+    h.require_contains(
+        "systematic-debugging",
+        "skills/emperor-heal/condition-based-waiting.md",
+        "condition-based-waiting leaf missing source skill",
+    )
+    h.require_contains(
+        "condition-based-waiting.md",
+        "skills/emperor-heal/condition-based-waiting.md",
+        "condition-based-waiting leaf missing source file cite",
+    )
+    h.require_contains(
+        "obra/superpowers",
+        "references/condition-based-waiting.md",
+        "condition-based-waiting reference missing obra/superpowers cite",
+    )
+    h.require_contains(
+        "2026-09-27",
+        "references/condition-based-waiting.md",
+        "condition-based-waiting reference missing access date",
+    )
+    h.require_contains(
+        "e89fec8400d6cd50f43407cec9fab50976ba4d55d0ec2eb51c0bd68036b54c26",
+        "references/condition-based-waiting.md",
+        "condition-based-waiting reference missing sha256",
+    )
+    h.require_contains(
+        "NO ARBITRARY SLEEP",
+        "skills/emperor-heal/condition-based-waiting.md",
+        "condition-based-waiting leaf missing iron law text",
+    )
+    h.require_contains(
+        "condition based waiting",
+        "evals/triggers.json",
+        "triggers missing condition based waiting phrase",
+    )
+    h.require_contains(
+        "arbitrary sleep",
+        "evals/triggers.json",
+        "triggers missing arbitrary sleep phrase",
+    )
+    h.require_contains(
+        "condition-based-waiting.md",
+        "chains/chain-jail/extract-aspect.md",
+        "extract-aspect missing condition-based-waiting leaf",
+    )
+    _, wait_out = h.run_py("scripts/lib/condition_wait.py")
+    if not re.search(r"^WAIT checklist=yes", wait_out, re.M):
+        h.fail_msg("condition_wait missing checklist=yes")
+    if not re.search(r"^COND \d+ id=", wait_out, re.M):
+        h.fail_msg("condition_wait missing COND line")
+    if not re.search(r"^MUST:", wait_out, re.M):
+        h.fail_msg("condition_wait missing MUST line")
+    if "NO_ARBITRARY_SLEEP" not in wait_out:
+        h.fail_msg("condition_wait missing iron law token")
+    rc, _ = h.run_py("scripts/lib/condition_wait.py", "--reject-sleep")
+    if rc == 0:
+        h.fail_msg("condition_wait --reject-sleep should exit non-zero")
+    else:
+        _, reject = h.run_py("scripts/lib/condition_wait.py", "--reject-sleep")
+        if not re.search(r"^REJECT SLEEP:", reject, re.M):
+            h.fail_msg("reject-sleep missing REJECT line")
+        else:
+            h.pass_msg("condition_wait --reject-sleep hard-gates")
+    rc, _ = h.run_py("scripts/lib/condition_wait.py", "--reject-unguessed")
+    if rc == 0:
+        h.fail_msg("condition_wait --reject-unguessed should exit non-zero")
+    else:
+        _, reject = h.run_py("scripts/lib/condition_wait.py", "--reject-unguessed")
+        if not re.search(r"^REJECT UNGUESSED:", reject, re.M):
+            h.fail_msg("reject-unguessed missing REJECT line")
+        else:
+            h.pass_msg("condition_wait --reject-unguessed hard-gates")
+    rc, cond_ok = h.run_py(
+        "scripts/lib/condition_wait.py",
+        "--check-condition",
+        "waitFor ready state",
+    )
+    if rc != 0 or "CONDITION OK:" not in cond_ok:
+        h.fail_msg("condition_wait --check-condition should accept real condition")
+    else:
+        h.pass_msg("condition_wait --check-condition accepts real condition")
+    rc, cond_bad = h.run_py(
+        "scripts/lib/condition_wait.py",
+        "--check-condition",
+        "sleep 50ms and hope",
+    )
+    if rc == 0 or "CONDITION FAIL:" not in cond_bad:
+        h.fail_msg("condition_wait --check-condition should reject bare sleep")
+    else:
+        h.pass_msg("condition_wait --check-condition rejects bare sleep")
+    _, wait_sh = h.run_sh("scripts/condition-wait.sh")
+    if not re.search(r"^WAIT checklist=yes", wait_sh, re.M):
+        h.fail_msg("condition-wait.sh missing checklist card")
+    _, rout_wait = h.run_py("scripts/lib/route.py", "condition based waiting")
+    if "emperor-heal" not in rout_wait:
+        h.fail_msg("route.py condition based waiting → heal")
+    else:
+        h.pass_msg("route.py condition based waiting → emperor-heal")
 
 
     if h.fail != 0:

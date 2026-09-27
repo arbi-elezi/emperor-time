@@ -187,6 +187,26 @@
     {
       "phrase": "no single layer validation",
       "skill": "emperor-heal"
+    },
+    {
+      "phrase": "condition based waiting",
+      "skill": "emperor-heal"
+    },
+    {
+      "phrase": "condition-based waiting",
+      "skill": "emperor-heal"
+    },
+    {
+      "phrase": "wait for condition",
+      "skill": "emperor-heal"
+    },
+    {
+      "phrase": "arbitrary sleep",
+      "skill": "emperor-heal"
+    },
+    {
+      "phrase": "flaky timeout",
+      "skill": "emperor-heal"
     }
   ],
   "must_not_fire_master_wholesale": [
@@ -311,7 +331,12 @@
         "validate at every layer",
         "multi-layer validation",
         "no single layer validation",
-        "single layer validation"
+        "single layer validation",
+        "condition based waiting",
+        "condition-based waiting",
+        "wait for condition",
+        "arbitrary sleep",
+        "flaky timeout"
       ],
       "tags": [
         "heal",
@@ -326,10 +351,13 @@
         "root-cause-tracing",
         "defense",
         "defense-in-depth",
-        "layers"
+        "layers",
+        "wait",
+        "condition-based-waiting",
+        "flaky"
       ],
       "target": "skills/emperor-heal/SKILL.md",
-      "reason": "red build / derail \u2014 Holy Chain / session-discovery locate / diagnosing intake+cite / root-cause tracing / defense-in-depth multi-layer validation"
+      "reason": "red build / derail \u2014 Holy Chain / session-discovery locate / diagnosing intake+cite / root-cause tracing / defense-in-depth multi-layer validation / condition-based-waiting HARD-GATE"
     },
     {
       "id": "verify",

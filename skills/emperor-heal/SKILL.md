@@ -7,7 +7,8 @@ description: >-
   or you need to locate a harness session transcript before diagnosing,
   or diagnose why a session went wrong (intake + path:line citations),
   or trace a deep-stack bug backward to its original trigger before fixing,
-  or add multi-layer validation after a source fix so invalid data cannot recur.
+  or add multi-layer validation after a source fix so invalid data cannot recur,
+  or replace arbitrary sleep/setTimeout waits with condition-based waiting for flaky tests.
 license: MIT
 metadata:
   version: 0.4.7
@@ -75,6 +76,19 @@ mechanical DEFENSE / LAYER / MUST card).
 No single-layer guard as the whole fix. Layers are additive after the source
 fix. Do not load whole `systematic-debugging`; ET + Holy Chain orchestrate.
 
+
+
+## MUST — condition-based waiting instead of arbitrary sleep
+
+When a test or async path waits (flaky timeouts, sleep/setTimeout guesses), open
+`skills/emperor-heal/condition-based-waiting.md`
+(Chain Jail leaf from Superpowers `systematic-debugging` → **Wait for the actual
+condition / not a guess about timing only**) and/or run `scripts/emperor wait`
+(prints the mechanical WAIT / COND / MUST card).
+
+No arbitrary sleep as the wait. Name the condition; always timeout. Do not load
+whole `systematic-debugging`; ET + Holy Chain orchestrate.
+
 ## Steps
 
 1. Run `scripts/emperor heal` → quote `DEBUG four_phases=yes`. Advance phases
@@ -95,11 +109,15 @@ fix. Do not load whole `systematic-debugging`; ET + Holy Chain orchestrate.
    `DEFENSE checklist=yes`. Single-layer-only →
    `scripts/emperor defense --reject-single-layer`. Unlayered ship →
    `--reject-unlayered` (HARD-GATE exit 1).
-6. Read `chains/holy-chain/SKILL.md` → one aspect
+6. When waits are flaky or use arbitrary sleep/setTimeout: run
+   `scripts/emperor wait` → quote `WAIT checklist=yes`. Arbitrary sleep →
+   `scripts/emperor wait --reject-sleep`. Wait without a named condition →
+   `--reject-unguessed` (HARD-GATE exit 1).
+7. Read `chains/holy-chain/SKILL.md` → one aspect
    (`triage.md` | `reproduce-and-bisect.md` | `heal-and-verify.md` |
    `process-healing.md`) matching the current phase (see leaf table).
-7. Snapshot. Reproduce. One hypothesis per step. Prediction before probe.
-8. Minimal heal. Verify the cause, not the symptom (verification triad).
-9. Postmortem line on the ledger: BROKE / CAUSE / HEAL / CAUGHT-BY /
+8. Snapshot. Reproduce. One hypothesis per step. Prediction before probe.
+9. Minimal heal. Verify the cause, not the symptom (verification triad).
+10. Postmortem line on the ledger: BROKE / CAUSE / HEAL / CAUGHT-BY /
    WOULD-HAVE-CAUGHT-SOONER.
-10. If the *process* broke, re-enter at the earliest unsatisfied gate.
+11. If the *process* broke, re-enter at the earliest unsatisfied gate.
