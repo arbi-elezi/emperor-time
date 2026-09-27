@@ -1,10 +1,12 @@
+# Silent session defaults. User never types this.
+# Twin of boot.sh — writes .emperor/host.env, survey.md, optional eval.log.
 param()
 $ErrorActionPreference = 'SilentlyContinue'
 $here = $PSScriptRoot
+# Dot-source host twin (parity with boot.sh → lib/host.sh).
+. (Join-Path $here 'lib/host.ps1')
 if (-not (Test-Path '.emperor')) { New-Item -ItemType Directory -Path '.emperor' | Out-Null }
-$os = if ($env:OS -eq 'Windows_NT') { 'windows' } else { 'posix' }
-$shell = 'powershell'
-Set-Content -Path '.emperor/host.env' -Value "os=$os shell=$shell wsl=0 encoding=UTF-8"
+Write-EmperorHostReport | Set-Content -Path '.emperor/host.env' -Encoding utf8
 if (Test-Path (Join-Path $here 'identify.ps1')) {
   & (Join-Path $here 'identify.ps1') . | Out-File -FilePath '.emperor/survey.md' -Encoding utf8
 }
