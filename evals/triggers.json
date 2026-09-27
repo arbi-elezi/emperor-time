@@ -1,136 +1,341 @@
 {
   "must_fire": [
-    {"phrase": "emperor time", "skill": "emperor-time"},
-    {"phrase": "maximum rigor", "skill": "emperor-time"},
-    {"phrase": "find your own work", "skill": "emperor-scope"},
-    {"phrase": "scope this task", "skill": "emperor-scope"},
-    {"phrase": "write a plan", "skill": "emperor-require-design"},
-    {"phrase": "review this diff", "skill": "emperor-verify"},
-    {"phrase": "are the tests passing", "skill": "emperor-verify"},
-    {"phrase": "use claude as a worker", "skill": "emperor-dispatch"},
-    {"phrase": "the build is red", "skill": "emperor-heal"},
-    {"phrase": "we are missing a skill", "skill": "emperor-capture"},
-    {"phrase": "blocked task", "skill": "emperor-queue"},
-    {"phrase": "wip limit", "skill": "emperor-queue"},
-    {"phrase": "red build", "skill": "emperor-heal"},
-    {"phrase": "missing capability", "skill": "emperor-capture"}
+    {
+      "phrase": "emperor time",
+      "skill": "emperor-time"
+    },
+    {
+      "phrase": "maximum rigor",
+      "skill": "emperor-time"
+    },
+    {
+      "phrase": "find your own work",
+      "skill": "emperor-scope"
+    },
+    {
+      "phrase": "scope this task",
+      "skill": "emperor-scope"
+    },
+    {
+      "phrase": "write a plan",
+      "skill": "emperor-require-design"
+    },
+    {
+      "phrase": "review this diff",
+      "skill": "emperor-verify"
+    },
+    {
+      "phrase": "are the tests passing",
+      "skill": "emperor-verify"
+    },
+    {
+      "phrase": "use claude as a worker",
+      "skill": "emperor-dispatch"
+    },
+    {
+      "phrase": "the build is red",
+      "skill": "emperor-heal"
+    },
+    {
+      "phrase": "we are missing a skill",
+      "skill": "emperor-capture"
+    },
+    {
+      "phrase": "blocked task",
+      "skill": "emperor-queue"
+    },
+    {
+      "phrase": "wip limit",
+      "skill": "emperor-queue"
+    },
+    {
+      "phrase": "red build",
+      "skill": "emperor-heal"
+    },
+    {
+      "phrase": "missing capability",
+      "skill": "emperor-capture"
+    },
+    {
+      "phrase": "finish the branch",
+      "skill": "emperor-forge"
+    },
+    {
+      "phrase": "implementation complete",
+      "skill": "emperor-forge"
+    }
   ],
   "must_not_fire_master_wholesale": [
-    {"phrase": "fix the typo in the footer year", "note": "right-size; do not load Steal Chain or Chain Jail"},
-    {"phrase": "what is 2+2", "note": "not a coding task"}
+    {
+      "phrase": "fix the typo in the footer year",
+      "note": "right-size; do not load Steal Chain or Chain Jail"
+    },
+    {
+      "phrase": "what is 2+2",
+      "note": "not a coding task"
+    }
   ],
   "routes": [
     {
       "id": "excavate",
       "patterns": [
-        "lost", "ancient", "unmarked", "vintage", "archaeology", "excavate",
-        "pascal", "pas ", ".pas", "turbo pascal", "delphi",
-        "assembly", "assembler", "nasm", " asm", "asm ", ".asm", ".s ",
-        "cobol", ".cbl", ".cob",
-        "rom", ".rom", "floppy", "bitsavers", "foreign tree", "dead compiler"
+        "lost",
+        "ancient",
+        "unmarked",
+        "vintage",
+        "archaeology",
+        "excavate",
+        "pascal",
+        "pas ",
+        ".pas",
+        "turbo pascal",
+        "delphi",
+        "assembly",
+        "assembler",
+        "nasm",
+        " asm",
+        "asm ",
+        ".asm",
+        ".s ",
+        "cobol",
+        ".cbl",
+        ".cob",
+        "rom",
+        ".rom",
+        "floppy",
+        "bitsavers",
+        "foreign tree",
+        "dead compiler"
       ],
-      "tags": ["archaeology", "excavate", "lost", "pascal", "asm", "nasm", "cobol", "rom", "vintage"],
+      "tags": [
+        "archaeology",
+        "excavate",
+        "lost",
+        "pascal",
+        "asm",
+        "nasm",
+        "cobol",
+        "rom",
+        "vintage"
+      ],
       "target": "skills/emperor-excavate/SKILL.md",
-      "reason": "lost/ancient/foreign tree — excavate before modernizing"
+      "reason": "lost/ancient/foreign tree \u2014 excavate before modernizing"
     },
     {
       "id": "heal",
       "patterns": [
-        "build is red", "the build is red", "red build", "build red",
-        "derail", "heal", "on fire", "ci red", "failing build",
-        "tests are red", "ci failing"
+        "build is red",
+        "the build is red",
+        "red build",
+        "build red",
+        "derail",
+        "heal",
+        "on fire",
+        "ci red",
+        "failing build",
+        "tests are red",
+        "ci failing"
       ],
-      "tags": ["heal", "red-build"],
+      "tags": [
+        "heal",
+        "red-build"
+      ],
       "target": "skills/emperor-heal/SKILL.md",
-      "reason": "red build / derail — Holy Chain"
+      "reason": "red build / derail \u2014 Holy Chain"
     },
     {
       "id": "verify",
       "patterns": [
-        "tests pass", "tests passing", "are the tests passing",
-        "review this diff", "review the diff", "about to say done", "verify"
+        "tests pass",
+        "tests passing",
+        "are the tests passing",
+        "review this diff",
+        "review the diff",
+        "about to say done",
+        "verify"
       ],
-      "tags": ["verify", "review", "g4"],
+      "tags": [
+        "verify",
+        "review",
+        "g4"
+      ],
       "target": "skills/emperor-verify/SKILL.md",
-      "reason": "done/tests/review — Judgment Chain"
+      "reason": "done/tests/review \u2014 Judgment Chain"
     },
     {
       "id": "forge",
-      "patterns": ["open a pr", "ship it", "merge", "forge", "create a pr", "pull request"],
-      "tags": ["forge", "ship", "pr"],
+      "patterns": [
+        "open a pr",
+        "ship it",
+        "merge",
+        "forge",
+        "create a pr",
+        "pull request",
+        "finish the branch",
+        "finish branch",
+        "implementation complete",
+        "merge locally"
+      ],
+      "tags": [
+        "forge",
+        "ship",
+        "pr",
+        "finish"
+      ],
       "target": "skills/emperor-forge/SKILL.md",
-      "reason": "ship / PR — consent required"
+      "reason": "ship / finish menu / PR \u2014 consent for public PR"
     },
     {
       "id": "queue",
       "patterns": [
-        "queue next", "find work", "find your own work", "what should i do",
-        "backlog", "next issue", "pick next", "no task", "linear",
-        "blocked task", "blocked", "wip", "wip limit", "work in progress"
+        "queue next",
+        "find work",
+        "find your own work",
+        "what should i do",
+        "backlog",
+        "next issue",
+        "pick next",
+        "no task",
+        "linear",
+        "blocked task",
+        "blocked",
+        "wip",
+        "wip limit",
+        "work in progress"
       ],
-      "tags": ["queue", "next", "find-work", "blocked", "wip"],
+      "tags": [
+        "queue",
+        "next",
+        "find-work",
+        "blocked",
+        "wip"
+      ],
       "target": "skills/emperor-queue/SKILL.md",
       "reason": "no task / pick next work"
     },
     {
       "id": "capture",
       "patterns": [
-        "missing a skill", "we are missing a skill", "capture a skill", "steal a skill",
-        "missing capability", "capability missing", "missing a capability",
-        "we are missing a capability", "no skill for", "chain jail"
+        "missing a skill",
+        "we are missing a skill",
+        "capture a skill",
+        "steal a skill",
+        "missing capability",
+        "capability missing",
+        "missing a capability",
+        "we are missing a capability",
+        "no skill for",
+        "chain jail"
       ],
-      "tags": ["capture", "jail"],
+      "tags": [
+        "capture",
+        "jail"
+      ],
       "target": "skills/emperor-capture/SKILL.md",
-      "reason": "capability missing — Chain Jail"
+      "reason": "capability missing \u2014 Chain Jail"
     },
     {
       "id": "dispatch",
-      "patterns": ["use claude as a worker", "dispatch", "enlist", "as a worker"],
-      "tags": ["dispatch", "worker"],
+      "patterns": [
+        "use claude as a worker",
+        "dispatch",
+        "enlist",
+        "as a worker"
+      ],
+      "tags": [
+        "dispatch",
+        "worker"
+      ],
       "target": "skills/emperor-dispatch/SKILL.md",
-      "reason": "other local CLI as worker — Steal Chain"
+      "reason": "other local CLI as worker \u2014 Steal Chain"
     },
     {
       "id": "require-design",
-      "patterns": ["write a plan", "work order", "require design", "design before code"],
-      "tags": ["design", "g1", "g2", "work-order"],
+      "patterns": [
+        "write a plan",
+        "work order",
+        "require design",
+        "design before code"
+      ],
+      "tags": [
+        "design",
+        "g1",
+        "g2",
+        "work-order"
+      ],
       "target": "skills/emperor-require-design/SKILL.md",
-      "reason": "after G0, before code — write work-order"
+      "reason": "after G0, before code \u2014 write work-order"
     },
     {
       "id": "worktree",
-      "patterns": ["worktree", "isolated git", "isolated workspace"],
-      "tags": ["worktree"],
+      "patterns": [
+        "worktree",
+        "isolated git",
+        "isolated workspace"
+      ],
+      "tags": [
+        "worktree"
+      ],
       "target": "skills/emperor-worktree/SKILL.md",
       "reason": "isolated git workspace"
     },
     {
       "id": "resume",
-      "patterns": ["session start", "continue", "compacted", "resume"],
-      "tags": ["resume"],
+      "patterns": [
+        "session start",
+        "continue",
+        "compacted",
+        "resume"
+      ],
+      "tags": [
+        "resume"
+      ],
       "target": "skills/emperor-resume/SKILL.md",
-      "reason": "session continue / compacted — resume from disk"
+      "reason": "session continue / compacted \u2014 resume from disk"
     },
     {
       "id": "scope",
-      "patterns": ["scope this task", "scope", "vague", "intake"],
-      "tags": ["scope", "intake"],
+      "patterns": [
+        "scope this task",
+        "scope",
+        "vague",
+        "intake"
+      ],
+      "tags": [
+        "scope",
+        "intake"
+      ],
       "target": "skills/emperor-scope/SKILL.md",
-      "reason": "vague ask / intake — Dowsing"
+      "reason": "vague ask / intake \u2014 Dowsing"
     },
     {
       "id": "build",
-      "patterns": ["implementing", "tdd", "write the code", "build it"],
-      "tags": ["build", "tdd", "g3"],
+      "patterns": [
+        "implementing",
+        "tdd",
+        "write the code",
+        "build it"
+      ],
+      "tags": [
+        "build",
+        "tdd",
+        "g3"
+      ],
       "target": "skills/emperor-build/SKILL.md",
-      "reason": "implementing — build + TDD"
+      "reason": "implementing \u2014 build + TDD"
     },
     {
       "id": "master",
-      "patterns": ["emperor time", "maximum rigor"],
-      "tags": ["emperor-time", "master"],
+      "patterns": [
+        "emperor time",
+        "maximum rigor"
+      ],
+      "tags": [
+        "emperor-time",
+        "master"
+      ],
       "target": "SKILL.md",
-      "reason": "master skill — name situation then open one phase file"
+      "reason": "master skill \u2014 name situation then open one phase file"
     }
   ]
 }

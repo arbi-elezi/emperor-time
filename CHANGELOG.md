@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.4.4
+- Finish menu: Superpowers finish-branch aspect adapted into `skills/emperor-forge/finish-menu.md` (merge locally / PR / keep; typed `discard`; owned-worktree cleanup)
+- `scripts/finish.sh` / `finish.ps1` twins detect env and print the menu (no merge/push); `emperor finish` wired on bash/ps1/zsh/cmd peers
+- Route triggers: finish the branch / implementation complete / merge locally → forge; eval locks the aspect + script output
+
 ## 0.4.3
 - Silent-boot PS parity: `boot.ps1` sources `lib/host.ps1` + `Write-EmperorHostReport` (same host.env keys as bash); `emperor.ps1` auto-boots when `.emperor/host.env` missing; Cursor adapter documents `emperor boot` / Windows silent-boot contract
 - Archaeology: Jail-pin NASM 2.16.03 §7.3 SECTION for FOO.ASM (`references/archaeology-asm-manual.md`)
