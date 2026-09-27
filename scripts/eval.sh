@@ -25,6 +25,7 @@ for f in \
   templates/work-order.md \
   scripts/gate.sh scripts/gate.ps1 \
   scripts/lib/gate.py \
+  scripts/lib/identify.py \
   scripts/done.sh scripts/done.ps1 \
   scripts/eval.sh scripts/eval.ps1 \
   scripts/emperor scripts/emperor.ps1 scripts/emperor.cmd scripts/emperor.zsh \
@@ -87,6 +88,20 @@ else
   echo "EVAL PASS: gate.py refuses unordered g1"
 fi
 rm -rf "$TMPG"
+
+echo "== identify.py Python core =="
+need "scripts/lib/identify.py"
+python3 -m py_compile "$ROOT/scripts/lib/identify.py" || { echo "EVAL FAIL: identify.py compile"; fail=1; }
+grep -q 'lib/identify.py' "$ROOT/scripts/identify.sh" || { echo "EVAL FAIL: identify.sh thin twin missing identify.py"; fail=1; }
+grep -q 'lib/identify.py' "$ROOT/scripts/identify.ps1" || { echo "EVAL FAIL: identify.ps1 thin twin missing identify.py"; fail=1; }
+grep -q 'shebang' "$ROOT/scripts/lib/identify.py" || { echo "EVAL FAIL: identify.py missing shebang survey"; fail=1; }
+grep -q '\*\.f90' "$ROOT/scripts/lib/identify.py" || { echo "EVAL FAIL: identify.py missing *.f90 fossil"; fail=1; }
+grep -q 'scripts/lib/identify.py' "$ROOT/references/archaeology.md" || { echo "EVAL FAIL: archaeology.md missing identify.py"; fail=1; }
+# thin twin still finds fossils
+ID_OUT="$(bash "$ROOT/scripts/identify.sh" "$ROOT/evals/fixtures/lost-pas" 2>&1)" || true
+echo "$ID_OUT" | grep -E -q '[0-9]+ \*\.pas' || { echo "EVAL FAIL: identify.py twin missed *.pas"; fail=1; }
+echo "$ID_OUT" | grep -q -- '-- shebangs --' || { echo "EVAL FAIL: identify.py twin missing shebangs section"; fail=1; }
+echo "EVAL PASS: identify.py thin twins + shebangs"
 
 echo "== fixture: unquoted VERIFIED must fail g4 =="
 TMP="$(mktemp -d)"

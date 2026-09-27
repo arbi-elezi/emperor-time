@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.4.17
+- Artifact survey Python core: `scripts/lib/identify.py` owns extensions + named fossils + shebangs (always exit 0)
+- Thin `identify.sh` / `identify.ps1` twins — closes bash↔ps1 twin drift (ps1 had dropped shebangs section; fossil/Makefile counting diverged)
+- `excavate` stays alias through the thin twin; boot survey + archaeology fixtures consume one core
+- `references/archaeology.md` + bakeoff inventory point at the Python survey; eval locks compile + thin twins + shebangs + lost-pas smoke
+- Plugin, marketplace, and SKILL.md at 0.4.17
+
 ## 0.4.16
 - Mechanical gates Python core: `scripts/lib/gate.py` owns G0–G5 (prior stamps, plan-header via `work_order.py`, G4 quoted-VERIFIED hard fail + CONJECTURE warn)
 - Thin `gate.sh` / `gate.ps1` twins — closes bash↔ps1 twin drift (ps1 had dropped CONJECTURE warn)
