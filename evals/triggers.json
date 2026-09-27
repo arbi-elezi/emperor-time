@@ -371,7 +371,16 @@
         ".ads",
         ".ada",
         " adb",
-        "adb "
+        "adb ",
+        "pforth",
+        "gforth",
+        ".fs",
+        ".fth",
+        ".4th",
+        " forth",
+        "forth ",
+        " fth",
+        "fth "
       ],
       "tags": [
         "archaeology",
@@ -393,7 +402,11 @@
         "adb",
         "ads",
         "gnat",
-        "gnatmake"
+        "gnatmake",
+        "pforth",
+        "gforth",
+        "fth",
+        "4th"
       ],
       "target": "skills/emperor-excavate/SKILL.md",
       "reason": "lost/ancient/foreign tree \u2014 excavate before modernizing"

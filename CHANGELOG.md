@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.4.48
+- Archaeology Forth leaf: `evals/fixtures/lost-fs/HELLO.FS` + identify smoke; pForth V2.0.0 boot probe VERIFIED (`pforth -q`); dialect labels honest (CONJECTURE / UNVERIFIABLE where due)
+- Jail pin `references/archaeology-forth-manual.md` — pForth README How to Run (INCLUDE / `pforth myprogram.fth`)
+- Catalog + SKILL.md + archaeology.md link the seventh pin alongside Pascal, ASM, COBOL, Fortran, VHDL, and Ada; route triggers gain `pforth` / `gforth` / `.fs` / `.fth` / `.4th` (space-padded `forth` to avoid `fortran` substring); eval locks `*.fs` identify on lost-fs
+- Plugin, marketplace, and SKILL.md at 0.4.48
+
 ## 0.4.47
 - Skill-discovery (SDO) HARD-GATE leaf: `scripts/lib/sdo.py` prints SDO / PRIN / GATE / MUST card (Description = When to Use, NOT What the Skill Does)
 - Thin `sdo.sh` / `sdo.ps1`; emperor peers gain `sdo`; `--reject-workflow-summary` / `--reject-no-trigger` HARD-GATEs; `--check-description` validator (Use when / trigger signals, reject workflow-summary tokens)
