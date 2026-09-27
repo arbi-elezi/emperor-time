@@ -6,6 +6,9 @@ No preferred stack. Always exits 0.
 Thin twins: scripts/identify.sh / scripts/identify.ps1 — same CLI:
   identify.py [root]
 
+Excavate thin aliases (scripts/excavate.sh / excavate.ps1) call this core
+directly (no hop through identify twins).
+
 Preserves identify.sh semantics (extensions + named fossils + shebangs)
 so bash/ps1 cannot drift. excavate/boot consume this survey.
 """

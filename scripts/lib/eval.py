@@ -1868,6 +1868,49 @@ def run_evals(root: Path) -> int:
                         h.pass_msg("worktree.py create + EXISTS smoke")
     h.pass_msg("worktree.py thin twins + create helper")
 
+    # ---- excavate thin alias → identify.py ----
+    h.section("excavate thin alias → identify.py")
+    h.need("scripts/excavate.sh")
+    h.need("scripts/excavate.ps1")
+    h.bash_n("scripts/excavate.sh", "excavate.sh syntax")
+    h.require_contains(
+        "lib/identify.py",
+        "scripts/excavate.sh",
+        "excavate.sh thin alias missing identify.py",
+    )
+    h.require_contains(
+        "lib/identify.py",
+        "scripts/excavate.ps1",
+        "excavate.ps1 thin alias missing identify.py",
+    )
+    ex_sh = h.read("scripts/excavate.sh")
+    ex_ps1 = h.read("scripts/excavate.ps1")
+    # Refuse live hops (exec/call), not doc comments naming the old path.
+    if re.search(r"(exec\s+bash\s+.*identify\.sh|\$ROOT/identify\.sh)", ex_sh):
+        h.fail_msg("excavate.sh must not hop through identify.sh")
+    if re.search(r"(identify\.ps1['\"]|Join-Path.*identify\.ps1)", ex_ps1):
+        h.fail_msg("excavate.ps1 must not hop through identify.ps1")
+    ex_sh_lines = len(ex_sh.splitlines())
+    ex_ps1_lines = len(ex_ps1.splitlines())
+    if ex_sh_lines > 20:
+        h.fail_msg("excavate.sh should be thin alias (<=20 lines)")
+    if ex_ps1_lines > 40:
+        h.fail_msg("excavate.ps1 should be thin alias (<=40 lines)")
+    fixture = str(root / "evals/fixtures/lost-pas")
+    rc_i, out_i = h.run_py("scripts/lib/identify.py", fixture)
+    rc_e, out_e = h.run_sh("scripts/excavate.sh", fixture)
+    if rc_i != 0 or rc_e != 0:
+        h.fail_msg("excavate/identify smoke non-zero exit")
+    elif "== identify" not in out_e:
+        h.fail_msg("excavate.sh missing identify survey header")
+    elif out_i.splitlines()[:1] != out_e.splitlines()[:1]:
+        h.fail_msg("excavate.sh header drifted from identify.py")
+    elif out_i != out_e:
+        h.fail_msg("excavate.sh survey drifted from identify.py")
+    else:
+        h.pass_msg("excavate≡identify survey parity")
+    h.pass_msg("excavate thin alias → identify.py")
+
     # bakeoff honesty
     h.section("bakeoff honesty (mechanism inventory + UNVERIFIABLE live rate)")
     h.need("evals/bakeoff.md")
@@ -1910,6 +1953,9 @@ def run_evals(root: Path) -> int:
     h.require_contains("worktree.py", "evals/bakeoff.md", "bakeoff.md missing worktree.py inventory")
     h.require_contains("worktree.py", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing worktree.py")
     h.require_contains("0.4.33", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing 0.4.33 tip")
+    h.require_contains("excavate thin", "evals/bakeoff.md", "bakeoff.md missing excavate thin alias inventory")
+    h.require_contains("excavate", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing excavate")
+    h.require_contains("0.4.34", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing 0.4.34 tip")
 
     if h.fail != 0:
         print("EVALS FAILED")

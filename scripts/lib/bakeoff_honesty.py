@@ -91,6 +91,11 @@ LEAVES: list[tuple[str, str, tuple[str, ...]]] = [
         "scripts/lib/worktree.py",
         ("worktree.py", "worktree"),
     ),
+    (
+        "excavate-alias",
+        "scripts/excavate.sh",
+        ("excavate thin", "identify.py"),
+    ),
 ]
 
 
