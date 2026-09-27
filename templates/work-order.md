@@ -15,6 +15,31 @@
 - **Governing aspect files:** <router + one aspect per step already taken>
 - **Size:** trivial | standard | heavy
 
+## Plan header (agentic handoff)
+
+> Leaf from obra/superpowers `writing-plans` Plan Document Header (MIT).
+> Fill before BUILD. Zero-context workers read this first.
+
+**Goal:** <one sentence describing what this builds>
+
+**Architecture:** <2-3 sentences about approach>
+
+**Tech Stack:** <key technologies / languages / tools>
+
+**Spec:** <path to ledger G1 / design doc this order implements>
+
+## Global Constraints
+
+- <version floors, naming, platform, consent limits — one line each; or `none (checked)`>
+
+## Review Focus
+
+Failure modes / input classes the acceptance criteria imply but no task probe
+yet exercises — most likely to bite a user first. Each line should name the
+input and the expected behavior. Or `none (checked)`.
+
+- <input or condition> → <expected behavior>
+
 ## Contract (interfaces between tasks)
 
 State what Task N may assume Task N-1 left on disk. No TBD. If unknown,

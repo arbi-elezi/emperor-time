@@ -27,6 +27,11 @@
       "id": "jail-unpinned-forbidden",
       "type": "doc",
       "expect": "pin-and-consent.md forbids firing unpinned captured skills"
+    },
+    {
+      "id": "plan-header-required-nontrivial",
+      "type": "behavioral-fixture",
+      "expect": "work_order.py / gate g2 rejects non-trivial work-order missing Plan Document Header (Goal/Architecture/Tech Stack/Spec/Global Constraints/Review Focus)"
     }
   ]
 }

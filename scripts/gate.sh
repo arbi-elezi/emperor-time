@@ -61,6 +61,8 @@ case "$GATE" in
     [[ -f "$ORDER" ]] || fail "non-trivial task missing work-order.md"
     has "Expected:" "$ORDER" || fail "work-order has no Expected: lines"
     has "Acceptance criteria" "$ORDER" || fail "work-order missing acceptance criteria"
+    ROOT="$(cd "$(dirname "$0")/.." && pwd)"
+    python3 "$ROOT/scripts/lib/work_order.py" "$ORDER" || fail "plan header (work_order.py)"
     mark; ok "$ORDER"
     ;;
   g3)

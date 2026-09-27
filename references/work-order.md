@@ -22,6 +22,20 @@ execute.
 5. Planned dispatches attach to a work-order task, not to a vibe.
 6. Right-size by shrinking text, not by deleting sections.
 
+
+## Plan header (Superpowers leaf)
+
+Non-trivial work orders **must** include the Plan Document Header fields
+adapted from obra/superpowers `skills/writing-plans` (MIT), heading
+"Plan Document Header" only — not the whole skill:
+
+- `**Goal:**` / `**Architecture:**` / `**Tech Stack:**` / `**Spec:**`
+- `## Global Constraints`
+- `## Review Focus` (five uncovered failure modes, or `none (checked)`)
+
+`scripts/lib/work_order.py` enforces this at G2. Empty Review Focus without
+an explicit `none (checked)` fails the gate.
+
 ## Gate hook
 
 `scripts/gate.sh g2` fails if:
@@ -29,6 +43,7 @@ execute.
 - the work order is missing on size=standard|heavy
 - any task step lacks an `Expected:` line
 - acceptance criteria is empty
+- plan header fields missing / Review Focus empty without `none (checked)` (`scripts/lib/work_order.py`)
 
 ## Relation to chains
 

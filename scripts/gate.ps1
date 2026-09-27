@@ -48,6 +48,10 @@ switch ($Gate) {
         if (-not (Test-Path $order)) { Fail 'non-trivial task missing work-order.md' }
         if (-not (Has 'Expected:' $order)) { Fail 'work-order has no Expected: lines' }
         if (-not (Has 'Acceptance criteria' $order)) { Fail 'work-order missing acceptance criteria' }
+        $root = (Resolve-Path (Join-Path $PSScriptRoot '..')).Path
+        $py = Join-Path $root 'scripts/lib/work_order.py'
+        & python3 $py $order
+        if ($LASTEXITCODE -ne 0) { Fail 'plan header (work_order.py)' }
         Mark; Ok $order
     }
     'g3' {

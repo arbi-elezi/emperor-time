@@ -17,7 +17,11 @@ metadata:
    `.emperor/tasks/<id>/work-order.md`.
 3. Every non-trivial task step must include: real paths, exact commands,
    `Expected: FAIL` then `Expected: PASS` strings. No TBD.
-4. Rejected alternative is mandatory (one line).
-5. Run `scripts/gate.sh g2 <task-dir>` and quote the tail before BUILD.
-6. Judgment on the design (does the work order match G1?) uses
+4. Fill the Plan header: Goal, Architecture, Tech Stack, Spec,
+   Global Constraints, Review Focus (or `none (checked)`). Leaf from
+   obra/superpowers writing-plans Plan Document Header — not the whole skill.
+5. Rejected alternative is mandatory (one line).
+6. Run `scripts/gate.sh g2 <task-dir>` (calls `scripts/lib/work_order.py`)
+   and quote the tail before BUILD.
+7. Judgment on the design (does the work order match G1?) uses
    `chains/judgment-chain/SKILL.md` → `gatekeeping.md` only.
