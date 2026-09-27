@@ -42,6 +42,7 @@ could hand a worker. Examples of legal slices:
 - Superpowers `test-driven-development` → only The Iron Law / Red-Green-Refactor (HARD-GATE).
 - Superpowers `test-driven-development` → writing-good-tests Name-the-Break / Exercise-the-Real-Thing only (`skills/emperor-tdd/writing-good-tests.md`).
 - Superpowers `writing-skills` → testing-skills-with-subagents Combined-Pressure / Watch-Baseline-Fail / Explicit-Negation only (`chains/chain-jail/testing-skills.md`).
+- Superpowers `writing-skills` → persuasion-principles Authority / Commitment / Scarcity / Social-Proof / Unity only (`chains/chain-jail/persuasion-principles.md`).
 - Addy review skill → only the five-axis table.
 - Superpowers `requesting-code-review` → When / How / Act-on-feedback only (`skills/emperor-verify/request-review-checklist.md`).
 - Superpowers `verification-before-completion` → The Iron Law / The Gate Function only (`skills/emperor-verify/verification-checklist.md`).

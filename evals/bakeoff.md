@@ -91,6 +91,7 @@ mean **disk + eval**, not live multi-vendor win rates.
 | pressure/academic (HARD-GATE) | `scripts/lib/pressure.py` + thin twins + `skills/emperor-heal/pressure-academic.md` + `emperor pressure` | TESTED |
 | writing-good-tests (HARD-GATE) | `scripts/lib/good_tests.py` + thin twins + `skills/emperor-tdd/writing-good-tests.md` + `emperor good-tests` | TESTED |
 | testing-skills (HARD-GATE) | `scripts/lib/skill_test.py` + thin twins + `chains/chain-jail/testing-skills.md` + `emperor skill-test` | TESTED |
+| persuasion-principles (HARD-GATE) | `scripts/lib/persuasion.py` + thin twins + `chains/chain-jail/persuasion-principles.md` + `emperor persuasion` | TESTED |
 
 Honesty helper: `scripts/lib/bakeoff_honesty.py` fails if this inventory
 drifts from disk or if live-defect-rate is mislabeled.

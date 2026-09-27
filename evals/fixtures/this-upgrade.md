@@ -1,34 +1,35 @@
-# Task Ledger — emperor-time self-application (testing-skills HARD-GATE)
+# Task Ledger — emperor-time self-application (persuasion-principles HARD-GATE)
 
-- **Task:** Add testing-skills HARD-GATE leaf for Chain Jail authoring (Combined Pressure / Watch Baseline Fail / Verbatim Rationalizations / Explicit Negation / Stay Green): Python card + thin twins + skill/reference + route/eval/honesty lockstep. Companion when pressure-testing a skill after authoring RGR.
-- **Client quote:** Soft-ET consented Worthy Spend after v0.4.44 writing-good-tests. Ship testing-skills leaf (v0.4.45). Chain Jail leaf only; do not vendor foreign whole skills.
+- **Task:** Add persuasion-principles HARD-GATE leaf for Chain Jail authoring (Authority / Commitment / Scarcity / Social Proof / Unity / Reciprocity / Liking): Python card + thin twins + skill/reference + route/eval/honesty lockstep. Companion when wording critical practices after authoring RGR and alongside skill-test pressure.
+- **Client quote:** Soft-ET consented Worthy Spend after v0.4.45 testing-skills. Ship persuasion-principles leaf (v0.4.46). Chain Jail leaf only; do not vendor foreign whole skills.
 - **Origin:** assigned
 - **Size:** standard
-- **Governing files:** SKILL.md → emperor-capture / Chain Jail → testing-skills.md → skill_test.py → route/triggers → eval
-- **Tip at spend:** v0.4.45 (branch `et-manager/testing-skills-with-subagents`)
+- **Governing files:** SKILL.md → emperor-capture / Chain Jail → persuasion-principles.md → persuasion.py → route/triggers → eval
+- **Tip at spend:** v0.4.46 (branch `et-manager/persuasion-principles`)
 
 ## G0
-Quoted ask above. Ambiguity resolved: ship testing-skills HARD-GATE only. Skip embeddings, emperor.py dispatcher, full writing-skills vendoring, persuasion-principles, other archaeology pins this turn. Do not re-announce or re-ship #33–#61 leaves.
+Quoted ask above. Ambiguity resolved: ship persuasion-principles HARD-GATE only. Skip embeddings, emperor.py dispatcher, full writing-skills vendoring, graphviz / anthropic-best-practices dumps, systematic-debugging leaves, other archaeology pins this turn. Do not re-announce or re-ship #33–#62 leaves.
 
 ## G1 Acceptance criteria
-1. SKILL.md version ≥ 0.4.45; `scripts/lib/skill_test.py` prints SKILLTEST / PRIN / GATE / MUST card.
-2. Thin `skill-test.sh` / `skill-test.ps1` call `skill_test.py`; emperor peers (bash/ps1/cmd/zsh) gain `skill-test`.
-3. `--reject-academic-only` and `--reject-skip-red` always exit non-zero; `--check-pressure-baseline` accepts combined-pressure + watch-baseline + quality signals and rejects bare academic claims.
-4. Skill leaf `chains/chain-jail/testing-skills.md` + `references/testing-skills.md` cite obra/superpowers writing-skills testing-skills-with-subagents.md (URL + access date 2026-09-27 + sha256).
-5. Route triggers include testing-skills phrases → emperor-capture; extract-aspect names the leaf.
-6. Catalog + authoring-checklist + capture SKILL link the card; bakeoff + honesty name skill_test.py / skill-test.
-7. Plugin/marketplace/SKILL lockstep 0.4.45; CHANGELOG has 0.4.45.
+1. SKILL.md version ≥ 0.4.46; `scripts/lib/persuasion.py` prints PERSUADE / PRIN / GATE / MUST card.
+2. Thin `persuasion.sh` / `persuasion.ps1` call `persuasion.py`; emperor peers (bash/ps1/cmd/zsh) gain `persuasion`.
+3. `--reject-hedge` and `--reject-optional` always exit non-zero; `--check-persuasion` accepts authority + commitment + boost signals and rejects bare hedge claims.
+4. Skill leaf `chains/chain-jail/persuasion-principles.md` + `references/persuasion-principles.md` cite obra/superpowers writing-skills persuasion-principles.md (URL + access date 2026-09-27 + sha256).
+5. Route triggers include persuasion phrases → emperor-capture; extract-aspect names the leaf.
+6. Catalog + authoring-checklist + capture SKILL link the card; bakeoff + honesty name persuasion.py / persuasion.
+7. Plugin/marketplace/SKILL lockstep 0.4.46; CHANGELOG has 0.4.46.
 8. Eval locks new files/version/triggers; suite green.
 9. Live defect-rate vs Superpowers stays **UNVERIFIABLE**.
 
 ## Out of scope
 - embeddings / emperor.py unified dispatcher
 - Full writing-skills skill vendoring
-- Persuasion-principles / graphviz / anthropic-best-practices dumps
+- graphviz / anthropic-best-practices dumps
+- systematic-debugging leaves
 - Other people's PRs
 - Another archaeology language pin this turn
 - Live multi-vendor bake-off numbers
-- Redo of #33–#61
+- Redo of #33–#62
 
 ## G2
 Rejected alternative: vendor whole writing-skills under skills/.
@@ -37,26 +38,26 @@ Why: standing rule — Chain Jail leaf only (HARD-GATE card + one aspect heading
 Rejected alternative: emperor.py unified dispatcher.
 Why: larger surface than one authoring companion leaf; out of scope.
 
-Rejected alternative: fold testing-skills into authoring-checklist.md without a card.
-Why: authoring RGR already requires a baseline; agents still ship academic-only skill "tests" without a mechanical pressure gate.
+Rejected alternative: fold persuasion into authoring-checklist.md without a card.
+Why: agents still ship hedge language for critical practices without a mechanical persuasion gate.
 
-Rejected alternative: copy testing-skills-with-subagents.md verbatim as foreign skill.
+Rejected alternative: copy persuasion-principles.md verbatim as foreign skill.
 Why: adapt aspect into ET card + leaf; do not announce foreign skill name.
 
 ## G3
-skill_test.py + skill-test twins + testing-skills.md + references + route/eval/honesty/bakeoff lockstep on `et-manager/testing-skills-with-subagents`. See git log. Prior leaves retained: dowse.py (v0.4.26), install.py (v0.4.31), boot.py (v0.4.32), worktree.py (v0.4.33), excavate (v0.4.34), session_discovery.py (v0.4.36), diagnose.py (v0.4.37), lost-ada (v0.4.38), root_cause.py (v0.4.39), defense.py (v0.4.40), condition_wait.py (v0.4.41), polluter.py (v0.4.42), pressure.py (v0.4.43), good_tests.py (v0.4.44).
+persuasion.py + persuasion twins + persuasion-principles.md + references + route/eval/honesty/bakeoff lockstep on `et-manager/persuasion-principles`. See git log. Prior leaves retained: dowse.py (v0.4.26), install.py (v0.4.31), boot.py (v0.4.32), worktree.py (v0.4.33), excavate (v0.4.34), session_discovery.py (v0.4.36), diagnose.py (v0.4.37), lost-ada (v0.4.38), root_cause.py (v0.4.39), defense.py (v0.4.40), condition_wait.py (v0.4.41), polluter.py (v0.4.42), pressure.py (v0.4.43), good_tests.py (v0.4.44), skill_test.py (v0.4.45).
 
 ## G4
 Claims:
 
 | Claim | Status | Evidence |
 |---|---|---|
-| SKILL.md is 0.4.45 orchestrator | TESTED | frontmatter `version: 0.4.45` on branch HEAD |
-| skill_test.py prints SKILLTEST checklist | TESTED | `SKILLTEST checklist=yes` + PRIN / GATE / MUST lines |
-| --reject-academic-only / --reject-skip-red hard-gate | TESTED | exit non-zero + REJECT lines |
-| --check-pressure-baseline needs pressure + baseline + quality | TESTED | SKILLTEST OK / SKILLTEST FAIL paths |
-| Jail leaf cites Superpowers testing-skills-with-subagents | TESTED | testing-skills-with-subagents.md URL + 2026-09-27 + sha256 |
-| Route testing-skills phrases → capture | TESTED | route.py + triggers.json |
+| SKILL.md is 0.4.46 orchestrator | TESTED | frontmatter `version: 0.4.46` on branch HEAD |
+| persuasion.py prints PERSUADE checklist | TESTED | `PERSUADE checklist=yes` + PRIN / GATE / MUST lines |
+| --reject-hedge / --reject-optional hard-gate | TESTED | exit non-zero + REJECT lines |
+| --check-persuasion needs authority + commitment + boost | TESTED | PERSUADE OK / PERSUADE FAIL paths |
+| Jail leaf cites Superpowers persuasion-principles | TESTED | persuasion-principles.md URL + 2026-09-27 + sha256 |
+| Route persuasion phrases → capture | TESTED | route.py + triggers.json |
 | Eval suite still green | TESTED | `bash scripts/eval.sh` → EVALS PASSED |
 | Live defect-rate vs Superpowers | UNVERIFIABLE | no shared-task three-vendor bake-off run in this session |
 
@@ -78,4 +79,5 @@ PASS-WITH-CONDITIONS: local mechanism TESTED; live bake-off defect-rate stays UN
 - shared-state / leftover files still invited guessing which test polluted after condition-based-waiting. Remediation: polluter.py (v0.4.42).
 - emergency / sunk-cost / authority pressure still invited skipping four phases after find-polluter. Remediation: pressure.py (v0.4.43).
 - after RGR iron-law, mirror assertions / change detectors / mock-existence checks still shipped as "tests". Remediation: good_tests.py (v0.4.44).
-- after authoring iron-law, skills still shipped on academic-only quizzes without watching a baseline FAIL under combined pressure. Remediation: this leaf (v0.4.45).
+- after authoring iron-law, skills still shipped on academic-only quizzes without watching a baseline FAIL under combined pressure. Remediation: skill_test.py (v0.4.45).
+- after testing-skills pressure, critical practices still shipped with hedge language ("consider" / "when feasible") or optional framing. Remediation: this leaf (v0.4.46).
