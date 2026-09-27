@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.4.53
+- Archaeology REXX leaf: `evals/fixtures/lost-rex/HELLO.REX` + identify smoke; Regina 3.9.5 boot probe VERIFIED (`rexx HELLO.REX`); dialect labels honest (CONJECTURE / UNVERIFIABLE where due); identify fossils `*.rex` / `*.rexx`
+- Jail pin `references/archaeology-rexx-manual.md` — Classic Rexx `SAY` (default output stream)
+- Catalog + SKILL.md + archaeology.md + language-agnostic.md link the twelfth pin alongside Pascal, ASM, COBOL, Fortran, VHDL, Ada, Forth, Common Lisp, Prolog, Tcl, and Erlang; route triggers gain `regina` / `.rex` / `.rexx` (space-padded `rexx`; bare English `say` refused); eval locks `*.rex` identify on lost-rex
+- Plugin, marketplace, and SKILL.md at 0.4.53
+
 ## 0.4.52
 - Archaeology Erlang leaf: `evals/fixtures/lost-erl/HELLO.ERL` + identify smoke; OTP 27 boot probe VERIFIED (`escript HELLO.ERL`); dialect labels honest (CONJECTURE / UNVERIFIABLE where due); identify fossils `*.erl` / `*.hrl`
 - Jail pin `references/archaeology-erlang-manual.md` — escript `main/1` (batch / application file run)

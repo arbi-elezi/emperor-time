@@ -406,7 +406,12 @@
         ".erl",
         ".hrl",
         " erlang",
-        "erlang "
+        "erlang ",
+        "regina",
+        ".rex",
+        ".rexx",
+        " rexx",
+        "rexx "
       ],
       "tags": [
         "archaeology",
@@ -448,7 +453,10 @@
         "erlc",
         "erlang",
         "erl",
-        "hrl"
+        "hrl",
+        "regina",
+        "rexx",
+        "rex"
       ],
       "target": "skills/emperor-excavate/SKILL.md",
       "reason": "lost/ancient/foreign tree \u2014 excavate before modernizing"
