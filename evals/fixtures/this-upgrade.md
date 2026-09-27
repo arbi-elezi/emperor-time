@@ -1,48 +1,52 @@
-# Task Ledger — emperor-time self-application (boot/host Python core)
+# Task Ledger — emperor-time self-application (worktree create Python core)
 
-- **Task:** Close bash↔ps1 silent-boot twin drift by extracting host detect + boot sequence into `scripts/lib/host.py` + `scripts/lib/boot.py` + thin boot twins; host report helpers delegate to Python; eval + version lockstep.
-- **Client quote:** Soft-ET consented Worthy Spend after v0.4.31 install-python-core. Superpowers method leaves closed on disk. NEXT: crank ET strength — boot.py/host.py silent-boot unify (deferred on install spend; diagnosing-superpowers still waits on session-discovery).
+- **Task:** Close bash↔ps1 worktree-create twin drift by extracting create logic into `scripts/lib/worktree.py` + thin worktree twins; eval + version lockstep. Isolation HARD-GATE (`worktree_iso.py` / `emperor iso`) unchanged.
+- **Client quote:** Soft-ET consented Worthy Spend after v0.4.32 boot/host Python core. Superpowers method leaves closed on disk. NEXT: crank ET strength — worktree.py twin unify (diagnosing-superpowers still waits on session-discovery; excavate thin-alias polish deferred).
 - **Origin:** assigned
 - **Size:** standard
-- **Governing files:** SKILL.md → scripts/lib/host.py → scripts/lib/boot.py → thin boot.sh/boot.ps1 → portability.md
-- **Tip at spend:** v0.4.32 (branch `et-manager/boot-host-python-core`)
+- **Governing files:** SKILL.md → scripts/lib/worktree.py → thin worktree.sh/worktree.ps1 → emperor-worktree
+- **Tip at spend:** v0.4.33 (branch `et-manager/worktree-python-core`)
 
 ## G0
-Quoted ask above. Ambiguity resolved: ship host.py + boot.py Python core. Skip diagnosing-superpowers / embeddings / archaeology / emperor.py dispatcher this turn. Do not re-announce or re-ship #33–#48 leaves.
+Quoted ask above. Ambiguity resolved: ship worktree.py Python core. Skip diagnosing-superpowers / embeddings / excavate thin-alias / emperor.py dispatcher this turn. Do not re-announce or re-ship #33–#49 leaves.
 
 ## G1 Acceptance criteria
-1. SKILL.md version ≥ 0.4.32 and names five chains + six vows.
-2. `scripts/lib/host.py` owns host detect + host.env report line (`os`/`shell`/`wsl`/`win_interop`/`encoding`/`mnt`/`win_root`) and `--as-json`.
-3. `scripts/lib/boot.py` writes `.emperor/host.env` + survey.md (+ optional eval.log); supports `--skip-eval` / `--skip-identify`.
-4. Thin `boot.sh` / `boot.ps1` call boot.py; `emperor_host_report` / `Write-EmperorHostReport` delegate to host.py.
-5. Plugin/marketplace/SKILL lockstep 0.4.32; bakeoff + honesty name the leaf; CHANGELOG has 0.4.32.
-6. Eval locks compile + thin twins + report keys + boot smoke + suite green.
-7. Live defect-rate vs Superpowers stays **UNVERIFIABLE**.
+1. SKILL.md version ≥ 0.4.33 and names five chains + six vows.
+2. `scripts/lib/worktree.py` owns create: `.worktrees/<id>`, branch `emperor/<id>`, EXISTS short-circuit, usage exit 2, not-a-repo exit 1.
+3. Thin `worktree.sh` / `worktree.ps1` call worktree.py; preserve exit codes.
+4. Plugin/marketplace/SKILL lockstep 0.4.33; bakeoff + honesty name the leaf; CHANGELOG has 0.4.33.
+5. Eval locks compile + thin twins + usage/not-repo refuse + tempfile create/EXISTS smoke + suite green.
+6. Live defect-rate vs Superpowers stays **UNVERIFIABLE**.
 
 ## Out of scope
 - emperor.py dispatcher / route embeddings
 - diagnosing-superpowers session diagnosis leaf (needs transcript-discovery infra)
-- Whole Superpowers diagnosing skill vendored into always-on prompt
-- Rewriting shell EMPEROR_* sourceable helpers / WSL path converters (stay in host.sh/ps1)
+- Whole Superpowers diagnosing / using-git-worktrees skill vendored into always-on prompt
+- Rewriting worktree_iso.py isolation HARD-GATE card
+- excavate thin-alias polish (still hops identify twins; deferred)
 - Live multi-vendor bake-off numbers
-- Redo of #33–#48 (gate/identify/finish/eval/done/queue/forge/review-pack/dowse/receive/execute/subagent/parallel/install/…)
+- Redo of #33–#49 (gate/identify/finish/eval/done/queue/forge/review-pack/dowse/receive/execute/subagent/parallel/install/boot/host/…)
 
 ## G2
 Rejected alternative: slim diagnosing-emperor HARD-GATE (citation iron law + intake-before-analysis).
-Why: Superpowers diagnosing still needs session-discovery paths ET lacks this turn; boot/host twins already drifted (encoding + WSL interop probes); Python preference + twin-drift remediation pattern after install.py.
+Why: Superpowers diagnosing still needs session-discovery paths ET lacks this turn; worktree.sh/ps1 still reimplemented create (last mutate twin without Python core besides excavate alias); Python preference + twin-drift remediation pattern after boot/host.
+
+Rejected alternative: excavate thin-alias polish (call identify.py directly).
+Why: excavate is already a 5-line alias; worktree create is the remaining duplicated mutate path and higher Worthy Spend.
 
 ## G3
-host.py + boot.py + thin boot twins on `et-manager/boot-host-python-core`. See git log.
+worktree.py + thin worktree twins on `et-manager/worktree-python-core`. See git log.
 
 ## G4
 Claims:
 
 | Claim | Status | Evidence |
 |---|---|---|
-| SKILL.md is 0.4.32 orchestrator | TESTED | frontmatter `version: 0.4.32` on branch HEAD |
-| host.py --report prints canonical keys | TESTED | exit 0 + os=/shell=/wsl=/win_interop=/encoding= |
-| boot.py --skip-eval writes host.env + survey.md | TESTED | tempfile smoke in eval |
-| bash and ps1 thin boot twins call boot.py | TESTED | both contain `lib/boot.py` |
+| SKILL.md is 0.4.33 orchestrator | TESTED | frontmatter `version: 0.4.33` on branch HEAD |
+| worktree.py refuses missing id (exit 2) | TESTED | usage line + exit 2 |
+| worktree.py refuses non-git cwd (exit 1) | TESTED | WORKTREE FAIL in tempfile |
+| worktree.py create + EXISTS smoke | TESTED | tempfile git init → WORKTREE: / WORKTREE EXISTS: |
+| bash and ps1 thin worktree twins call worktree.py | TESTED | both contain `lib/worktree.py` |
 | Eval suite still green | TESTED | `bash scripts/eval.sh` → EVALS PASSED |
 | Live defect-rate vs Superpowers | UNVERIFIABLE | no shared-task three-vendor bake-off run in this session |
 
@@ -67,4 +71,5 @@ PASS-WITH-CONDITIONS: local mechanism TESTED; live bake-off numbers UNVERIFIABLE
 - subagent-driven-development fresh-subagent / per-task-review card never extracted after executing-plans. Remediation: subagent.py (v0.4.29).
 - dispatching-parallel-agents independent-domains card never extracted after subagent-driven. Remediation: parallel.py (v0.4.30).
 - bash/ps1 install twins drifted (chain preview order; dowse.sh vs dowse.ps1 tip). Remediation: install.py (v0.4.31).
-- bash/ps1 silent-boot host report drifted (encoding + WSL interop probes). Remediation: this leaf (v0.4.32).
+- bash/ps1 silent-boot host report drifted (encoding + WSL interop probes). Remediation: host.py + boot.py (v0.4.32).
+- bash/ps1 worktree create twins reimplemented mutate path. Remediation: this leaf (v0.4.33).

@@ -1797,6 +1797,77 @@ def run_evals(root: Path) -> int:
         h.pass_msg("boot.sh thin twin runs")
     h.pass_msg("boot.py + host.py thin twins + report + smoke")
 
+
+    # ---- worktree.py create helper ----
+    h.section("worktree.py Python core")
+    h.need("scripts/lib/worktree.py")
+    h.need("scripts/worktree.sh")
+    h.need("scripts/worktree.ps1")
+    h.bash_n("scripts/worktree.sh", "worktree.sh syntax")
+    h.py_compile("scripts/lib/worktree.py", "worktree.py compile")
+    h.require_contains(
+        "lib/worktree.py",
+        "scripts/worktree.sh",
+        "worktree.sh thin twin missing worktree.py",
+    )
+    h.require_contains(
+        "lib/worktree.py",
+        "scripts/worktree.ps1",
+        "worktree.ps1 thin twin missing worktree.py",
+    )
+    wt_sh_lines = len(h.read("scripts/worktree.sh").splitlines())
+    wt_ps1_lines = len(h.read("scripts/worktree.ps1").splitlines())
+    if wt_sh_lines > 20:
+        h.fail_msg("worktree.sh should be thin twin (<=20 lines)")
+    if wt_ps1_lines > 30:
+        h.fail_msg("worktree.ps1 should be thin twin (<=30 lines)")
+    rc_u, out_u = h.run_py("scripts/lib/worktree.py")
+    if rc_u != 2 or "usage:" not in out_u:
+        h.fail_msg("worktree.py missing id should exit 2 with usage")
+    else:
+        h.pass_msg("worktree.py usage refuse")
+    with tempfile.TemporaryDirectory(prefix="et-wt-nongit-") as tmp:
+        rc_ng, out_ng = h.run_py(
+            "scripts/lib/worktree.py", "x", "--cwd", tmp
+        )
+        if rc_ng != 1 or "WORKTREE FAIL" not in out_ng:
+            h.fail_msg("worktree.py non-git cwd should exit 1")
+        else:
+            h.pass_msg("worktree.py not-a-repo refuse")
+    with tempfile.TemporaryDirectory(prefix="et-wt-") as tmp:
+        for cmd in (
+            ["git", "init", "-q"],
+            ["git", "config", "user.email", "et@test"],
+            ["git", "config", "user.name", "et"],
+        ):
+            rc_g, _ = h.run(cmd, cwd=tmp)
+            if rc_g != 0:
+                h.fail_msg(f"worktree smoke git setup failed: {cmd}")
+                break
+        else:
+            (Path(tmp) / "f").write_text("x\n", encoding="utf-8")
+            rc_a, _ = h.run(["git", "add", "f"], cwd=tmp)
+            rc_c, _ = h.run(["git", "commit", "-qm", "init"], cwd=tmp)
+            if rc_a != 0 or rc_c != 0:
+                h.fail_msg("worktree smoke commit failed")
+            else:
+                rc1, out1 = h.run_py(
+                    "scripts/lib/worktree.py", "t1", "--cwd", tmp
+                )
+                if rc1 != 0 or "WORKTREE: .worktrees/t1" not in out1:
+                    h.fail_msg("worktree.py create smoke failed")
+                elif not (Path(tmp) / ".worktrees" / "t1").is_dir():
+                    h.fail_msg("worktree.py did not create .worktrees/t1")
+                else:
+                    rc2, out2 = h.run_py(
+                        "scripts/lib/worktree.py", "t1", "--cwd", tmp
+                    )
+                    if rc2 != 0 or "WORKTREE EXISTS:" not in out2:
+                        h.fail_msg("worktree.py EXISTS short-circuit failed")
+                    else:
+                        h.pass_msg("worktree.py create + EXISTS smoke")
+    h.pass_msg("worktree.py thin twins + create helper")
+
     # bakeoff honesty
     h.section("bakeoff honesty (mechanism inventory + UNVERIFIABLE live rate)")
     h.need("evals/bakeoff.md")
@@ -1836,6 +1907,9 @@ def run_evals(root: Path) -> int:
     h.require_contains("host.py", "evals/bakeoff.md", "bakeoff.md missing host.py inventory")
     h.require_contains("boot.py", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing boot.py")
     h.require_contains("0.4.32", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing 0.4.32 tip")
+    h.require_contains("worktree.py", "evals/bakeoff.md", "bakeoff.md missing worktree.py inventory")
+    h.require_contains("worktree.py", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing worktree.py")
+    h.require_contains("0.4.33", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing 0.4.33 tip")
 
     if h.fail != 0:
         print("EVALS FAILED")

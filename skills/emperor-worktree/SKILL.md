@@ -7,7 +7,7 @@ description: >-
   prove a green baseline, then implement the work-order there.
 license: MIT
 metadata:
-  version: 0.4.10
+  version: 0.4.33
   part-of: emperor-time
 ---
 
@@ -38,7 +38,7 @@ No `git worktree add` without Step 1 detect. Do not load whole
    ```bash
    mkdir -p .worktrees
    git check-ignore -q .worktrees || { echo ".worktrees/" >> .gitignore; }
-   scripts/emperor worktree <task-id>
+   scripts/emperor worktree <task-id>  # Python core: scripts/lib/worktree.py
    # or: git worktree add .worktrees/<task-id> -b emperor/<task-id>
    ```
 4. Install project deps in the worktree. Run the baseline suite. Quote the tail.

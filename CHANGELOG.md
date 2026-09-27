@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.4.33
+- Worktree create Python core: `scripts/lib/worktree.py` owns id/base resolve, `.worktrees/<id>` layout, `emperor/<id>` branch, EXISTS short-circuit, and `git worktree add`
+- Thin `worktree.sh` / `worktree.ps1` twins — closes bash↔ps1 twin drift on the mutate path after isolation HARD-GATE (`emperor iso` / worktree_iso.py stays the checklist card)
+- Eval locks compile + thin twins + usage refuse + not-a-repo refuse + tempfile create/EXISTS smoke; bakeoff + honesty name the leaf
+- Plugin, marketplace, and SKILL.md at 0.4.33
+
+
 ## 0.4.32
 - Silent-boot Python core: `scripts/lib/host.py` owns host detect + host.env report line; `scripts/lib/boot.py` owns `.emperor/host.env` + survey.md + optional eval.log
 - Thin `boot.sh` / `boot.ps1` twins — closes bash↔ps1 twin drift (host.sh C.UTF-8 + cmd/powershell/pwsh WSL interop vs host.ps1 UTF-8 + cmd-only)

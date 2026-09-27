@@ -10,7 +10,7 @@
 **Contract:** before standard or heavy BUILD that mutates a client checkout, complete the isolation checklist. Detect first. Prefer native harness tools. Fall back to git worktree only when no native tool exists. Never create under an unignored directory. Prove a green baseline before implementing. Emperor Time stays the orchestrator via emperor-worktree + BUILD; do **not** announce or load whole `using-git-worktrees`.
 
 Mechanical card: `scripts/emperor iso` (Python: `scripts/lib/worktree_iso.py`).
-Create helper (after checklist): `scripts/emperor worktree <id>`.
+Create helper (after checklist): `scripts/emperor worktree <id>` (Python: `scripts/lib/worktree.py`).
 
 ## HARD-GATE — Detect before create
 
