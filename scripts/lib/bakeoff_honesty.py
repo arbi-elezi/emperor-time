@@ -73,10 +73,11 @@ LEAVES: list[tuple[str, str, tuple[str, ...]]] = [
     ("arch-ada", "evals/fixtures/lost-ada/HELLO.ADB", ("lost-ada",)),
     ("arch-fs", "evals/fixtures/lost-fs/HELLO.FS", ("lost-fs",)),
     ("arch-lisp", "evals/fixtures/lost-lisp/HELLO.LISP", ("lost-lisp",)),
+    ("arch-prolog", "evals/fixtures/lost-prolog/HELLO.PRO", ("lost-prolog",)),
     ("gate-py", "scripts/lib/gate.py", ("gate.py", "mechanical")),
     ("identify-py", "scripts/lib/identify.py", ("identify.py", "survey")),
     ("eval-py", "scripts/lib/eval.py", ("eval.py", "structural eval")),
-    ("route-py", "scripts/lib/route.py", ("route", "fortran", ".f90", "vhdl", ".vhd", "ada", ".adb", "forth", ".fs", "pforth", "lisp", ".lisp", "clisp")),
+    ("route-py", "scripts/lib/route.py", ("route", "fortran", ".f90", "vhdl", ".vhd", "ada", ".adb", "forth", ".fs", "pforth", "lisp", ".lisp", "clisp", "prolog", ".pro", "swipl")),
     ("done-py", "scripts/lib/done.py", ("done.py", "DONE probes")),
     (
         "silent-boot-zsh",

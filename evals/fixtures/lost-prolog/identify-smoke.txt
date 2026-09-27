@@ -1,0 +1,9 @@
+== identify evals/fixtures/lost-prolog ==
+-- extensions --
+      2 md
+      1 txt
+      1 pro
+-- named fossils --
+1 *.pro
+-- shebangs --
+identify: done (read-only)

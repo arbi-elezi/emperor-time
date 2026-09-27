@@ -46,6 +46,8 @@ FOSSIL_PATTERNS: tuple[str, ...] = (
     "*.lisp",
     "*.lsp",
     "*.cl",
+    "*.pro",
+    "*.prolog",
     "*.rel",
     "*.hex",
     "*.bin",

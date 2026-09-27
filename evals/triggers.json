@@ -389,7 +389,13 @@
         " lisp",
         "lisp ",
         " lsp",
-        "lsp "
+        "lsp ",
+        "swipl",
+        "gprolog",
+        ".pro",
+        ".prolog",
+        " prolog",
+        "prolog "
       ],
       "tags": [
         "archaeology",
@@ -419,7 +425,11 @@
         "clisp",
         "sbcl",
         "lisp",
-        "lsp"
+        "lsp",
+        "swipl",
+        "gprolog",
+        "prolog",
+        "pro"
       ],
       "target": "skills/emperor-excavate/SKILL.md",
       "reason": "lost/ancient/foreign tree — excavate before modernizing"
