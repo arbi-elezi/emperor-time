@@ -42,7 +42,7 @@ This table is a map, not memory.
 | PDF/docx/xlsx/pptx | document skills | `anthropics/skills` |
 | UI that does not look generic | `frontend-design` | official plugin marketplace / Anthropic frontend-design |
 | Domain X (k8s, SQL, SEO…) | `<domain> SKILL.md` | vendor orgs, `awesome-agent-skills`, GitHub topic `agent-skills` |
-| Skill-authoring craft | `writing-skills` | Local first: `authoring-checklist.md` + `emperor author` (Iron Law). Superpowers writing-skills only if still insufficient |
+| Skill-authoring craft | `writing-skills` | Local first: `authoring-checklist.md` + `emperor author` (Iron Law), `testing-skills.md` + `emperor skill-test`, `persuasion-principles.md` + `emperor persuasion`, `skill-discovery.md` + `emperor sdo` (SDO description triggers). Superpowers writing-skills only if still insufficient |
 | Completion / pass / fixed claims without fresh proof | `verification-before-completion` | Local first: `skills/emperor-verify/verification-checklist.md` + `emperor evidence`. Superpowers that skill only if still insufficient |
 
 Emperor Time already *is* the orchestrator. Do not steal `using-superpowers`

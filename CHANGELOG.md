@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.4.47
+- Skill-discovery (SDO) HARD-GATE leaf: `scripts/lib/sdo.py` prints SDO / PRIN / GATE / MUST card (Description = When to Use, NOT What the Skill Does)
+- Thin `sdo.sh` / `sdo.ps1`; emperor peers gain `sdo`; `--reject-workflow-summary` / `--reject-no-trigger` HARD-GATEs; `--check-description` validator (Use when / trigger signals, reject workflow-summary tokens)
+- Chain Jail leaf `chains/chain-jail/skill-discovery.md` + `references/skill-discovery.md` cite obra/superpowers writing-skills SKILL.md SDO heading (URL + 2026-09-27 + sha256)
+- Route/triggers → emperor-capture; bakeoff + honesty inventory; companion wiring on authoring-checklist / extract-aspect / capture / catalog; plugin/marketplace/SKILL lockstep 0.4.47
+
 ## 0.4.46
 - Persuasion-principles HARD-GATE leaf: `scripts/lib/persuasion.py` prints PERSUADE / PRIN / GATE / MUST card (Authority / Commitment / Scarcity / Social Proof / Unity / Reciprocity / Liking)
 - Thin `persuasion.sh` / `persuasion.ps1`; emperor peers gain `persuasion`; `--reject-hedge` / `--reject-optional` HARD-GATEs; `--check-persuasion` validator (authority + commitment plus scarcity / social-proof / unity signals)

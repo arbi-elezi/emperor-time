@@ -6,13 +6,15 @@
 - heading: Combined Pressure / Watch Baseline Fail / Verbatim Rationalizations / Explicit Negation / Stay Green (Testing Checklist)
 - license: MIT
 - access-date: 2026-09-27
-- issue-context: after authoring iron-law / skill RGR, agents still ship skills tested only academically or without watching a baseline FAIL; Chain Jail extract-aspect names testing-skills-with-subagents companion only (not whole writing-skills, persuasion-principles is a sibling leaf; not graphviz). Sibling leaf: authoring-checklist.
+- issue-context: after authoring iron-law / skill RGR, agents still ship skills tested only academically or without watching a baseline FAIL; Chain Jail extract-aspect names testing-skills-with-subagents companion only (not whole writing-skills, persuasion-principles is a sibling leaf; not graphviz). Sibling leaves: authoring-checklist, persuasion-principles, skill-discovery.
 
 **Contract:** before deploying or registering a discipline-enforcing skill, **face it with combined pressure** (3+) and **watch the baseline FAIL without the skill**. Capture rationalizations verbatim. Plug each loophole with an explicit negation. Stay green under max pressure. Emperor Time stays the orchestrator via Chain Jail authoring + emperor-capture; do **not** announce or load whole `writing-skills`.
 
 Mechanical card: `scripts/emperor skill-test` (Python: `scripts/lib/skill_test.py`).
 Companion reference: `references/testing-skills.md`.
 Authoring RGR companion: `chains/chain-jail/authoring-checklist.md` + `emperor author`.
+Persuasion companion: `chains/chain-jail/persuasion-principles.md` + `emperor persuasion`.
+SDO description companion: `chains/chain-jail/skill-discovery.md` + `emperor sdo`.
 
 ## HARD-GATE — Every skill faces combined pressure
 

@@ -2032,9 +2032,11 @@ def run_evals(root: Path) -> int:
     h.require_contains("skill_test.py", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing skill_test.py")
     h.require_contains("persuasion.py", "evals/bakeoff.md", "bakeoff.md missing persuasion.py inventory")
     h.require_contains("persuasion.py", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing persuasion.py")
-    h.require_contains("0.4.46", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing 0.4.46 tip")
-    h.require_contains("0.4.46", ".claude-plugin/plugin.json", "plugin.json not at 0.4.46")
-    h.require_contains("0.4.46", "CHANGELOG.md", "CHANGELOG missing 0.4.46")
+    h.require_contains("sdo.py", "evals/bakeoff.md", "bakeoff.md missing sdo.py inventory")
+    h.require_contains("sdo.py", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing sdo.py")
+    h.require_contains("0.4.47", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing 0.4.47 tip")
+    h.require_contains("0.4.47", ".claude-plugin/plugin.json", "plugin.json not at 0.4.47")
+    h.require_contains("0.4.47", "CHANGELOG.md", "CHANGELOG missing 0.4.47")
 
     # session-discovery
     h.section("session-discovery locate HARD-GATE leaf")
@@ -3502,6 +3504,163 @@ def run_evals(root: Path) -> int:
     else:
         h.pass_msg("route.py persuasion principles → emperor-capture")
 
+
+    # skill-discovery SDO HARD-GATE
+    h.section("skill-discovery SDO HARD-GATE leaf")
+    h.need("chains/chain-jail/skill-discovery.md")
+    h.need("references/skill-discovery.md")
+    h.need("scripts/lib/sdo.py")
+    h.need("scripts/sdo.sh")
+    h.need("scripts/sdo.ps1")
+    h.bash_n("scripts/sdo.sh", "sdo.sh syntax")
+    h.py_compile("scripts/lib/sdo.py", "sdo.py compile")
+    h.require_contains(
+        "sdo.py",
+        "scripts/sdo.sh",
+        "sdo.sh does not call sdo.py",
+    )
+    h.require_contains(
+        "sdo.py",
+        "scripts/sdo.ps1",
+        "sdo.ps1 does not call sdo.py",
+    )
+    h.require_contains(
+        "sdo",
+        "scripts/emperor",
+        "emperor bash missing sdo",
+    )
+    h.require_contains(
+        "'sdo'",
+        "scripts/emperor.ps1",
+        "emperor.ps1 missing sdo",
+    )
+    h.require_contains(
+        "sdo",
+        "scripts/emperor.cmd",
+        "emperor.cmd missing sdo",
+    )
+    h.require_contains(
+        "sdo",
+        "scripts/emperor.zsh",
+        "emperor.zsh missing sdo",
+    )
+    h.require_contains(
+        "skill-discovery.md",
+        "skills/emperor-capture/SKILL.md",
+        "emperor-capture missing skill-discovery leaf",
+    )
+    h.require_contains(
+        "skill-discovery.md",
+        "chains/chain-jail/authoring-checklist.md",
+        "authoring-checklist missing skill-discovery companion",
+    )
+    h.require_contains(
+        "HARD-GATE",
+        "chains/chain-jail/skill-discovery.md",
+        "skill-discovery leaf missing HARD-GATE heading",
+    )
+    h.require_contains(
+        "writing-skills",
+        "chains/chain-jail/skill-discovery.md",
+        "skill-discovery leaf missing source skill",
+    )
+    h.require_contains(
+        "Skill Discovery Optimization",
+        "chains/chain-jail/skill-discovery.md",
+        "skill-discovery leaf missing SDO heading cite",
+    )
+    h.require_contains(
+        "obra/superpowers",
+        "references/skill-discovery.md",
+        "skill-discovery reference missing obra/superpowers cite",
+    )
+    h.require_contains(
+        "2026-09-27",
+        "references/skill-discovery.md",
+        "skill-discovery reference missing access date",
+    )
+    h.require_contains(
+        "bbdfe742f853562e643a3d40d64476359d47881e39cef80a189283fa26d11ab9",
+        "references/skill-discovery.md",
+        "skill-discovery reference missing sha256",
+    )
+    h.require_contains(
+        "DESCRIPTION TRIGGERS NOT WORKFLOW",
+        "chains/chain-jail/skill-discovery.md",
+        "skill-discovery leaf missing iron law text",
+    )
+    h.require_contains(
+        "skill discovery optimization",
+        "evals/triggers.json",
+        "triggers missing skill discovery optimization phrase",
+    )
+    h.require_contains(
+        "description summarizes workflow",
+        "evals/triggers.json",
+        "triggers missing description summarizes workflow phrase",
+    )
+    h.require_contains(
+        "skill-discovery.md",
+        "chains/chain-jail/extract-aspect.md",
+        "extract-aspect missing skill-discovery leaf",
+    )
+    _, sdo_out = h.run_py("scripts/lib/sdo.py")
+    if not re.search(r"^SDO checklist=yes", sdo_out, re.M):
+        h.fail_msg("sdo missing checklist=yes")
+    if not re.search(r"^PRIN \d+ id=", sdo_out, re.M):
+        h.fail_msg("sdo missing PRIN line")
+    if not re.search(r"^MUST:", sdo_out, re.M):
+        h.fail_msg("sdo missing MUST line")
+    if not re.search(r"^GATE rule=", sdo_out, re.M):
+        h.fail_msg("sdo missing GATE line")
+    if "DESCRIPTION_TRIGGERS_NOT_WORKFLOW" not in sdo_out:
+        h.fail_msg("sdo missing iron law token")
+    rc, _ = h.run_py("scripts/lib/sdo.py", "--reject-workflow-summary")
+    if rc == 0:
+        h.fail_msg("sdo --reject-workflow-summary should exit non-zero")
+    else:
+        _, reject = h.run_py("scripts/lib/sdo.py", "--reject-workflow-summary")
+        if not re.search(r"^REJECT WORKFLOW-SUMMARY:", reject, re.M):
+            h.fail_msg("reject-workflow-summary missing REJECT line")
+        else:
+            h.pass_msg("sdo --reject-workflow-summary hard-gates")
+    rc, _ = h.run_py("scripts/lib/sdo.py", "--reject-no-trigger")
+    if rc == 0:
+        h.fail_msg("sdo --reject-no-trigger should exit non-zero")
+    else:
+        _, reject = h.run_py("scripts/lib/sdo.py", "--reject-no-trigger")
+        if not re.search(r"^REJECT NO-TRIGGER:", reject, re.M):
+            h.fail_msg("reject-no-trigger missing REJECT line")
+        else:
+            h.pass_msg("sdo --reject-no-trigger hard-gates")
+    rc, sdo_ok = h.run_py(
+        "scripts/lib/sdo.py",
+        "--check-description",
+        "Use when creating or editing skills and the YAML description "
+        "might summarize the workflow",
+    )
+    if rc != 0 or "SDO OK:" not in sdo_ok:
+        h.fail_msg("sdo --check-description should accept trigger descriptions")
+    else:
+        h.pass_msg("sdo --check-description accepts trigger descriptions")
+    rc, sdo_bad = h.run_py(
+        "scripts/lib/sdo.py",
+        "--check-description",
+        "Use when executing plans - dispatches subagent per task with "
+        "code review between tasks",
+    )
+    if rc == 0 or "SDO FAIL:" not in sdo_bad:
+        h.fail_msg("sdo --check-description should reject workflow summary")
+    else:
+        h.pass_msg("sdo --check-description rejects workflow summary")
+    _, sdo_sh = h.run_sh("scripts/sdo.sh")
+    if not re.search(r"^SDO checklist=yes", sdo_sh, re.M):
+        h.fail_msg("sdo.sh missing checklist card")
+    _, rout_sdo = h.run_py("scripts/lib/route.py", "skill discovery optimization")
+    if "emperor-capture" not in rout_sdo:
+        h.fail_msg("route.py skill discovery optimization → capture")
+    else:
+        h.pass_msg("route.py skill discovery optimization → emperor-capture")
 
 
     if h.fail != 0:

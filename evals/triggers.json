@@ -592,7 +592,12 @@
         "hedged skill language",
         "YOU MUST skill wording",
         "authority commitment scarcity",
-        "persuasion"
+        "persuasion",
+        "skill discovery optimization",
+        "description summarizes workflow",
+        "use when not what the skill does",
+        "SDO description",
+        "sdo"
       ],
       "tags": [
         "capture",
@@ -604,10 +609,12 @@
         "testing-skills",
         "combined-pressure",
         "persuasion",
-        "persuasion-principles"
+        "persuasion-principles",
+        "sdo",
+        "skill-discovery"
       ],
       "target": "skills/emperor-capture/SKILL.md",
-      "reason": "capability missing / author skill \u2014 Chain Jail + authoring iron-law / testing-skills HARD-GATE / persuasion-principles HARD-GATE"
+      "reason": "capability missing / author skill \u2014 Chain Jail + authoring iron-law / testing-skills HARD-GATE / persuasion-principles HARD-GATE / skill-discovery SDO HARD-GATE"
     },
     {
       "id": "dispatch",

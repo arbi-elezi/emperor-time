@@ -6,7 +6,7 @@
 - heading: Authority / Commitment / Scarcity / Social Proof / Unity / Reciprocity / Liking (Persuasion Principles for Skill Design)
 - license: MIT
 - access-date: 2026-09-27
-- issue-context: after authoring iron-law / skill RGR and testing-skills pressure, agents still ship critical practices with hedge language ("consider" / "when feasible") or optional framing; Chain Jail extract-aspect names persuasion-principles companion only (not whole writing-skills, not graphviz, not anthropic-best-practices). Sibling leaves: authoring-checklist, testing-skills.
+- issue-context: after authoring iron-law / skill RGR and testing-skills pressure, agents still ship critical practices with hedge language ("consider" / "when feasible") or optional framing; Chain Jail extract-aspect names persuasion-principles companion only (not whole writing-skills, not graphviz, not anthropic-best-practices). Sibling leaves: authoring-checklist, testing-skills, skill-discovery.
 
 **Contract:** when authoring **critical / discipline-enforcing** skill practices, **use persuasion principles** so agents comply under pressure. Authority + Commitment are required; add Scarcity, Social Proof, or Unity. Do **not** hedge. Do **not** use Liking for compliance. Emperor Time stays the orchestrator via Chain Jail authoring + emperor-capture; do **not** announce or load whole `writing-skills`.
 
@@ -14,6 +14,7 @@ Mechanical card: `scripts/emperor persuasion` (Python: `scripts/lib/persuasion.p
 Companion reference: `references/persuasion-principles.md`.
 Authoring RGR companion: `chains/chain-jail/authoring-checklist.md` + `emperor author`.
 Pressure-test companion: `chains/chain-jail/testing-skills.md` + `emperor skill-test`.
+SDO description companion: `chains/chain-jail/skill-discovery.md` + `emperor sdo`.
 
 ## HARD-GATE — Critical practice uses persuasion
 
