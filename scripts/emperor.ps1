@@ -27,11 +27,12 @@
   .\emperor.ps1 trace
   .\emperor.ps1 defense
   .\emperor.ps1 wait
+  .\emperor.ps1 polluter
 #>
 [CmdletBinding()]
 param(
     [Parameter(Mandatory = $true, Position = 0)]
-    [ValidateSet('done','gate','eval','review-pack','dowse','install','worktree','queue','forge','finish','activate','boot','identify','route','heal','grill','tdd','iso','review','author','evidence','receive','execute','subagent','parallel','excavate','session-discovery','diagnose','trace','defense','wait')]
+    [ValidateSet('done','gate','eval','review-pack','dowse','install','worktree','queue','forge','finish','activate','boot','identify','route','heal','grill','tdd','iso','review','author','evidence','receive','execute','subagent','parallel','excavate','session-discovery','diagnose','trace','defense','wait','polluter')]
     [string]$Tool,
     [Parameter(ValueFromRemainingArguments = $true)]
     [string[]]$ToolArgs
@@ -40,6 +41,8 @@ $ErrorActionPreference = 'Stop'
 $here = $PSScriptRoot
 # wait: first-class alias → condition-wait HARD-GATE card
 if ($Tool -eq 'wait') { $Tool = 'condition-wait' }
+# polluter: first-class alias → find-polluter HARD-GATE card
+if ($Tool -eq 'polluter') { $Tool = 'find-polluter' }
 $ps1 = Join-Path $here "$Tool.ps1"
 $sh  = Join-Path $here "$Tool.sh"
 $isWin = ($env:OS -eq 'Windows_NT')

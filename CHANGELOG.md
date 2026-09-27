@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.4.42
+- Find-polluter HARD-GATE leaf: `scripts/lib/polluter.py` prints POLLUTER / STEP / MUST card (find which test creates unwanted files/state / do not guess)
+- Thin `find-polluter.sh` / `find-polluter.ps1`; emperor peers gain `polluter`; `--reject-guess` / `--reject-unbisected` HARD-GATEs; `--check-found` validator (FOUND POLLUTER + path / identity signals)
+- Skill leaf `skills/emperor-heal/find-polluter.md` + `references/find-polluter.md` cite obra/superpowers MIT (systematic-debugging find-polluter.sh aspect); does **not** vendor whole systematic-debugging
+- Route/triggers for polluter phrases → emperor-heal; Phase-1/2 shared-state companion after condition-based-waiting; eval/bakeoff/honesty lockstep
+- Plugin, marketplace, and SKILL.md at 0.4.42
+
 ## 0.4.41
 - Condition-based-waiting HARD-GATE leaf: `scripts/lib/condition_wait.py` prints WAIT / COND / MUST card (wait for the actual condition / not a guess about timing)
 - Thin `condition-wait.sh` / `condition-wait.ps1`; emperor peers gain `wait`; `--reject-sleep` / `--reject-unguessed` HARD-GATEs; `--check-condition` validator (strong tokens / waitFor pattern)

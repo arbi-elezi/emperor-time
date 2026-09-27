@@ -5,8 +5,8 @@ Leaf adapted from obra/superpowers skills/systematic-debugging
 root-cause-tracing.md (MIT) — Trace backward / Fix at source / Never fix
 just the symptom only. Emperor Time + Holy Chain stay the orchestrator;
 do not announce the foreign skill name. Does not vendor whole
-systematic-debugging (no find-polluter.sh, defense-in-depth essay,
-condition-based-waiting, or pressure tests).
+systematic-debugging (no pressure/academic packs). Sibling leaves
+cover defense-in-depth, condition-based-waiting, and find-polluter.
 
 Prints TRACE / STEP / MUST lines.
 --reject-symptom-fix and --reject-untraced always fail (HARD-GATE helpers).

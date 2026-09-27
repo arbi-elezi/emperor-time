@@ -5,8 +5,9 @@ Leaf adapted from obra/superpowers skills/systematic-debugging
 condition-based-waiting.md (MIT) — Wait for the actual condition /
 not a guess about timing. Emperor Time + Holy Chain stay the
 orchestrator; do not announce the foreign skill name. Does not vendor
-whole systematic-debugging (no find-polluter.sh or pressure tests).
-condition-based-waiting is this Chain Jail leaf only.
+whole systematic-debugging (no pressure/academic packs).
+condition-based-waiting is this Chain Jail leaf only;
+find-polluter is a separate leaf (`emperor polluter`).
 
 Prints WAIT / COND / MUST lines.
 --reject-sleep and --reject-unguessed always fail (HARD-GATE helpers).

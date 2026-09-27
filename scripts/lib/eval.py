@@ -2019,8 +2019,12 @@ def run_evals(root: Path) -> int:
     h.require_contains("condition_wait.py", "evals/bakeoff.md", "bakeoff.md missing condition_wait.py inventory")
     h.require_contains("condition_wait.py", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing condition_wait.py")
     h.require_contains("0.4.41", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing 0.4.41 tip")
-    h.require_contains("0.4.41", ".claude-plugin/plugin.json", "plugin.json not at 0.4.41")
     h.require_contains("0.4.41", "CHANGELOG.md", "CHANGELOG missing 0.4.41")
+    h.require_contains("polluter.py", "evals/bakeoff.md", "bakeoff.md missing polluter.py inventory")
+    h.require_contains("polluter.py", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing polluter.py")
+    h.require_contains("0.4.42", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing 0.4.42 tip")
+    h.require_contains("0.4.42", ".claude-plugin/plugin.json", "plugin.json not at 0.4.42")
+    h.require_contains("0.4.42", "CHANGELOG.md", "CHANGELOG missing 0.4.42")
 
     # session-discovery
     h.section("session-discovery locate HARD-GATE leaf")
@@ -2719,6 +2723,155 @@ def run_evals(root: Path) -> int:
         h.fail_msg("route.py condition based waiting → heal")
     else:
         h.pass_msg("route.py condition based waiting → emperor-heal")
+
+
+    # find-polluter HARD-GATE
+    h.section("find-polluter HARD-GATE leaf")
+    h.need("skills/emperor-heal/find-polluter.md")
+    h.need("references/find-polluter.md")
+    h.need("scripts/lib/polluter.py")
+    h.need("scripts/find-polluter.sh")
+    h.need("scripts/find-polluter.ps1")
+    h.bash_n("scripts/find-polluter.sh", "find-polluter.sh syntax")
+    h.py_compile("scripts/lib/polluter.py", "polluter.py compile")
+    h.require_contains(
+        "polluter.py",
+        "scripts/find-polluter.sh",
+        "find-polluter.sh does not call polluter.py",
+    )
+    h.require_contains(
+        "polluter.py",
+        "scripts/find-polluter.ps1",
+        "find-polluter.ps1 does not call polluter.py",
+    )
+    h.require_contains(
+        "polluter",
+        "scripts/emperor",
+        "emperor bash missing polluter",
+    )
+    h.require_contains(
+        "'polluter'",
+        "scripts/emperor.ps1",
+        "emperor.ps1 missing polluter",
+    )
+    h.require_contains(
+        "polluter",
+        "scripts/emperor.cmd",
+        "emperor.cmd missing polluter",
+    )
+    h.require_contains(
+        "polluter",
+        "scripts/emperor.zsh",
+        "emperor.zsh missing polluter",
+    )
+    h.require_contains(
+        "find-polluter.md",
+        "skills/emperor-heal/SKILL.md",
+        "emperor-heal missing find-polluter leaf",
+    )
+    h.require_contains(
+        "HARD-GATE",
+        "skills/emperor-heal/find-polluter.md",
+        "find-polluter leaf missing HARD-GATE heading",
+    )
+    h.require_contains(
+        "systematic-debugging",
+        "skills/emperor-heal/find-polluter.md",
+        "find-polluter leaf missing source skill",
+    )
+    h.require_contains(
+        "find-polluter.sh",
+        "skills/emperor-heal/find-polluter.md",
+        "find-polluter leaf missing source file cite",
+    )
+    h.require_contains(
+        "obra/superpowers",
+        "references/find-polluter.md",
+        "find-polluter reference missing obra/superpowers cite",
+    )
+    h.require_contains(
+        "2026-09-27",
+        "references/find-polluter.md",
+        "find-polluter reference missing access date",
+    )
+    h.require_contains(
+        "dd7b8f13c4cc2a24b33ff87b18da9248f3e1c80a085c3316224f69ff0fa5c43c",
+        "references/find-polluter.md",
+        "find-polluter reference missing sha256",
+    )
+    h.require_contains(
+        "NO GUESS THE POLLUTER",
+        "skills/emperor-heal/find-polluter.md",
+        "find-polluter leaf missing iron law text",
+    )
+    h.require_contains(
+        "find polluter",
+        "evals/triggers.json",
+        "triggers missing find polluter phrase",
+    )
+    h.require_contains(
+        "test pollution",
+        "evals/triggers.json",
+        "triggers missing test pollution phrase",
+    )
+    h.require_contains(
+        "find-polluter.md",
+        "chains/chain-jail/extract-aspect.md",
+        "extract-aspect missing find-polluter leaf",
+    )
+    _, pol_out = h.run_py("scripts/lib/polluter.py")
+    if not re.search(r"^POLLUTER checklist=yes", pol_out, re.M):
+        h.fail_msg("polluter missing checklist=yes")
+    if not re.search(r"^STEP \d+ id=", pol_out, re.M):
+        h.fail_msg("polluter missing STEP line")
+    if not re.search(r"^MUST:", pol_out, re.M):
+        h.fail_msg("polluter missing MUST line")
+    if "NO_GUESS_THE_POLLUTER" not in pol_out:
+        h.fail_msg("polluter missing iron law token")
+    rc, _ = h.run_py("scripts/lib/polluter.py", "--reject-guess")
+    if rc == 0:
+        h.fail_msg("polluter --reject-guess should exit non-zero")
+    else:
+        _, reject = h.run_py("scripts/lib/polluter.py", "--reject-guess")
+        if not re.search(r"^REJECT GUESS:", reject, re.M):
+            h.fail_msg("reject-guess missing REJECT line")
+        else:
+            h.pass_msg("polluter --reject-guess hard-gates")
+    rc, _ = h.run_py("scripts/lib/polluter.py", "--reject-unbisected")
+    if rc == 0:
+        h.fail_msg("polluter --reject-unbisected should exit non-zero")
+    else:
+        _, reject = h.run_py("scripts/lib/polluter.py", "--reject-unbisected")
+        if not re.search(r"^REJECT UNBISECTED:", reject, re.M):
+            h.fail_msg("reject-unbisected missing REJECT line")
+        else:
+            h.pass_msg("polluter --reject-unbisected hard-gates")
+    rc, pol_ok = h.run_py(
+        "scripts/lib/polluter.py",
+        "--check-found",
+        "FOUND POLLUTER Test: src/foo.test.ts Created: .git",
+    )
+    if rc != 0 or "POLLUTER OK:" not in pol_ok:
+        h.fail_msg("polluter --check-found should accept FOUND POLLUTER + path")
+    else:
+        h.pass_msg("polluter --check-found accepts FOUND POLLUTER + path")
+    rc, pol_bad = h.run_py(
+        "scripts/lib/polluter.py",
+        "--check-found",
+        "probably the setup file",
+    )
+    if rc == 0 or "POLLUTER FAIL:" not in pol_bad:
+        h.fail_msg("polluter --check-found should reject bare guess")
+    else:
+        h.pass_msg("polluter --check-found rejects bare guess")
+    _, pol_sh = h.run_sh("scripts/find-polluter.sh")
+    if not re.search(r"^POLLUTER checklist=yes", pol_sh, re.M):
+        h.fail_msg("find-polluter.sh missing checklist card")
+    _, rout_pol = h.run_py("scripts/lib/route.py", "find polluter")
+    if "emperor-heal" not in rout_pol:
+        h.fail_msg("route.py find polluter → heal")
+    else:
+        h.pass_msg("route.py find polluter → emperor-heal")
 
 
     if h.fail != 0:

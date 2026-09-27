@@ -123,6 +123,11 @@ LEAVES: list[tuple[str, str, tuple[str, ...]]] = [
         "scripts/lib/condition_wait.py",
         ("condition_wait.py", "wait"),
     ),
+    (
+        "find-polluter",
+        "scripts/lib/polluter.py",
+        ("polluter.py", "polluter"),
+    ),
 ]
 
 
