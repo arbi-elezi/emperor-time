@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.4.5
+- Silent activation MUST-route: Superpowers `using-superpowers` 1% leaf adapted into `skills/emperor-resume/must-route.md` — SessionStart fires without waiting for "emperor time"
+- Python core `scripts/lib/activate.py` prints ACTIVATION/MUST card from disk state or utterance; thin `activate.sh` / `activate.ps1`; `emperor activate` on bash/ps1/zsh/cmd peers
+- SessionStart hook runs activate after boot; eval locks the card + utterance route smoke
+
 ## 0.4.4
 - Finish menu: Superpowers finish-branch aspect adapted into `skills/emperor-forge/finish-menu.md` (merge locally / PR / keep; typed `discard`; owned-worktree cleanup)
 - `scripts/finish.sh` / `finish.ps1` twins detect env and print the menu (no merge/push); `emperor finish` wired on bash/ps1/zsh/cmd peers
