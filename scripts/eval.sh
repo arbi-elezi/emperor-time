@@ -529,6 +529,24 @@ fi
 EVID_SH=$(bash "$ROOT/scripts/evidence.sh" 2>&1) || true
 echo "$EVID_SH" | grep -q '^EVIDENCE checklist=yes' || { echo "EVAL FAIL: evidence.sh missing checklist card"; fail=1; }
 
+echo "== bakeoff honesty (mechanism inventory + UNVERIFIABLE live rate) =="
+need "evals/bakeoff.md"
+need "evals/fixtures/this-upgrade.md"
+need "scripts/lib/bakeoff_honesty.py"
+python3 -m py_compile "$ROOT/scripts/lib/bakeoff_honesty.py" || { echo "EVAL FAIL: bakeoff_honesty.py compile"; fail=1; }
+HON_OUT=$(python3 "$ROOT/scripts/lib/bakeoff_honesty.py" --cwd "$ROOT" 2>&1) || {
+  echo "$HON_OUT"
+  echo "EVAL FAIL: bakeoff_honesty.py exit non-zero"
+  fail=1
+}
+echo "$HON_OUT" | grep -q '^BAKEOFF HONESTY OK' || { echo "EVAL FAIL: bakeoff honesty missing OK"; fail=1; }
+echo "$HON_OUT" | grep -q '^LIVE_DEFECT_RATE=UNVERIFIABLE' || { echo "EVAL FAIL: bakeoff honesty missing LIVE_DEFECT_RATE label"; fail=1; }
+grep -q 'UNVERIFIABLE' "$ROOT/evals/bakeoff.md" || { echo "EVAL FAIL: bakeoff.md missing UNVERIFIABLE"; fail=1; }
+grep -q 'TESTED' "$ROOT/evals/bakeoff.md" || { echo "EVAL FAIL: bakeoff.md missing TESTED"; fail=1; }
+grep -q 'lost-cbl' "$ROOT/evals/bakeoff.md" || { echo "EVAL FAIL: bakeoff.md missing lost-cbl inventory"; fail=1; }
+grep -q 'UNVERIFIABLE' "$ROOT/evals/fixtures/this-upgrade.md" || { echo "EVAL FAIL: this-upgrade.md missing UNVERIFIABLE"; fail=1; }
+grep -q '0.4.14' "$ROOT/evals/fixtures/this-upgrade.md" || { echo "EVAL FAIL: this-upgrade.md missing 0.4.14 tip"; fail=1; }
+
 if [[ "$fail" -ne 0 ]]; then
   echo "EVALS FAILED"
   exit 1

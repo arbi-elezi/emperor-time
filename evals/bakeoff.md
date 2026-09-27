@@ -1,4 +1,4 @@
-# Bake-off — 2026-09-25
+# Bake-off — 2026-09-25 (honesty refresh 2026-09-27)
 
 Three closed tasks on this repo. One agent. Not three isolated vendor sessions
 (that would be a different experiment). Lenses: Emperor Time (executed),
@@ -11,7 +11,8 @@ naked (what we would have shipped without a rite).
 2. SessionStart hook treats `emperor.cmd` as a peer, not “No cmd.exe shim”.
 3. `scripts/eval.sh` fails if (1) or (2) regress.
 
-Out of scope: spawning Claude with the Superpowers plugin; Windows live pwsh.
+Out of scope: spawning Claude with the Superpowers plugin; Windows live pwsh;
+live multi-vendor defect-rate numbers.
 
 ## ET path (executed)
 
@@ -31,29 +32,55 @@ Babysitting: one standing order (“do it”). No mid-flight questions.
 Would announce using-superpowers → writing-plans → TDD on eval.sh first.
 Would likely fix the same holes. Would not add claim-ledger states.
 Would ask design questions before the three-line patch (Socratic cost).
-Activation advantage: marketplace hook would have fired without this chat.
+Activation advantage *at the 2026-09-25 cut*: marketplace hook would have
+fired without this chat. That activation gap is **closing** on disk (below);
+live agent open-without-tell remains a re-run, not a number invented here.
 
 ## Naked lens (not executed — CONJECTURE)
 
 Would patch the router and stop. Would not grow eval.sh. Hook wording would
 stay stale. Regression next week.
 
+## Mechanism inventory on main (local — TESTED / VERIFIED)
+
+Local structural eval (`scripts/eval.sh`) owns these leaves. Status labels
+mean **disk + eval**, not live multi-vendor win rates.
+
+| Leaf | Path / command | Local status |
+|---|---|---|
+| plans (Plan Document Header) | `scripts/lib/work_order.py` + `evals/fixtures/plans-header/` | TESTED |
+| finish menu | `skills/emperor-forge/finish-menu.md` + `emperor finish` | TESTED |
+| activate / MUST-route | `skills/emperor-resume/must-route.md` + `scripts/lib/activate.py` | TESTED |
+| grill (brainstorm HARD-GATE) | `skills/emperor-require-design/grill-checklist.md` + `emperor grill` | TESTED |
+| debug four phases | `skills/emperor-heal/debug-four-phases.md` + `emperor heal` | TESTED |
+| TDD iron-law / RGR | `skills/emperor-tdd/red-green-refactor.md` + `emperor tdd` | TESTED |
+| worktree isolation | `skills/emperor-worktree/isolation-checklist.md` + `emperor iso` | TESTED |
+| request-review | `skills/emperor-verify/request-review-checklist.md` + `emperor review` | TESTED |
+| authoring iron-law | `chains/chain-jail/authoring-checklist.md` + `emperor author` | TESTED |
+| evidence / verification-before-completion | `skills/emperor-verify/verification-checklist.md` + `emperor evidence` | TESTED |
+| archaeology Pascal | `evals/fixtures/lost-pas/` + Jail pin | TESTED |
+| archaeology ASM | `evals/fixtures/lost-asm/` + Jail pin | TESTED |
+| archaeology COBOL | `evals/fixtures/lost-cbl/` + Jail pin | TESTED |
+
+Honesty helper: `scripts/lib/bakeoff_honesty.py` fails if this inventory
+drifts from disk or if live-defect-rate is mislabeled.
+
+## Claim ledger (bake-off axes)
+
+| Claim | Status | Evidence |
+|---|---|---|
+| Local mechanism leaves above exist and are eval-locked | TESTED | `bash scripts/eval.sh` → EVALS PASSED; honesty helper exit 0 |
+| Activation MUST-route fires from SessionStart without waiting for “emperor time” (hook + card contract) | TESTED | hooks.json → activate; `activate.py` prints `ACTIVATION next=` |
+| Agents *in the wild* open `ACTIVATION next=` without being told | UNVERIFIABLE | no marketplace re-run bakeoff in this session |
+| Live defect-rate vs Superpowers (shared tasks, isolated vendor sessions) | UNVERIFIABLE | no three-vendor third-repo bake-off run; **no fake numbers** |
+| ET wins *mechanical lock-in* on the 2026-09-25 slice (eval owns Steal rows + hook peer) | VERIFIED | STEAL_ROWS_OK + HOOK_PEER_OK + EVALS PASSED quoted in session |
+
 ## Verdict
 
-ET wins this slice on *mechanical lock-in* (eval now owns the rows).
-Superpowers still wins *activation* (we had to be told “do it”) — **closing:**
-v0.4.5 SessionStart runs `scripts/emperor activate` (MUST-route leaf from
-using-superpowers 1% rule; see `skills/emperor-resume/must-route.md`). Re-run
-bakeoff after marketplace install to verify agents open `ACTIVATION next=`
-without being told.
+ET wins this slice on *mechanical lock-in* (eval owns the rows; leaf gates
+above are on disk and eval-locked through v0.4.14).
+Activation *mechanism* is closed on disk (v0.4.5–0.4.6); wild-agent
+activation without a tell stays **UNVERIFIABLE** until a marketplace re-run.
+Live defect-rate vs Superpowers stays **UNVERIFIABLE** — do not invent %.
 Naked loses on (3).
 This is not a substitute for three isolated vendor sessions on a third repo.
-
-## Evidence lock (v0.4.14)
-
-Activation close (v0.4.5) remains. Completion-claim theater closes via
-`skills/emperor-verify/verification-checklist.md` + `scripts/emperor evidence`
-(Superpowers `verification-before-completion` Iron Law / Gate Function leaf).
-G4 unquoted-VERIFIED reject stays the mechanical teeth; the card is the
-pre-claim rite. Still not a three-vendor bake-off on a third repo.
-

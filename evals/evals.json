@@ -32,6 +32,11 @@
       "id": "plan-header-required-nontrivial",
       "type": "behavioral-fixture",
       "expect": "work_order.py / gate g2 rejects non-trivial work-order missing Plan Document Header (Goal/Architecture/Tech Stack/Spec/Global Constraints/Review Focus)"
+    },
+    {
+      "id": "bakeoff-honesty-labels",
+      "type": "structural",
+      "expect": "bakeoff.md + this-upgrade.md inventory leaves; label local mechanism TESTED/VERIFIED; live defect-rate vs Superpowers UNVERIFIABLE; bakeoff_honesty.py exit 0"
     }
   ]
 }
