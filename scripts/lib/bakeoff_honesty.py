@@ -77,10 +77,11 @@ LEAVES: list[tuple[str, str, tuple[str, ...]]] = [
     ("arch-tcl", "evals/fixtures/lost-tcl/HELLO.TCL", ("lost-tcl",)),
     ("arch-erl", "evals/fixtures/lost-erl/HELLO.ERL", ("lost-erl",)),
     ("arch-rex", "evals/fixtures/lost-rex/HELLO.REX", ("lost-rex",)),
+    ("arch-mod", "evals/fixtures/lost-mod/HELLO.MOD", ("lost-mod",)),
     ("gate-py", "scripts/lib/gate.py", ("gate.py", "mechanical")),
     ("identify-py", "scripts/lib/identify.py", ("identify.py", "survey")),
     ("eval-py", "scripts/lib/eval.py", ("eval.py", "structural eval")),
-    ("route-py", "scripts/lib/route.py", ("route", "fortran", ".f90", "vhdl", ".vhd", "ada", ".adb", "forth", ".fs", "pforth", "lisp", ".lisp", "clisp", "prolog", ".pro", "swipl", "tcl", ".tcl", "tclsh", "erlang", ".erl", "escript", "rexx", ".rex", "regina")),
+    ("route-py", "scripts/lib/route.py", ("route", "fortran", ".f90", "vhdl", ".vhd", "ada", ".adb", "forth", ".fs", "pforth", "lisp", ".lisp", "clisp", "prolog", ".pro", "swipl", "tcl", ".tcl", "tclsh", "erlang", ".erl", "escript", "rexx", ".rex", "regina", "modula", ".mod", "gm2")),
     ("done-py", "scripts/lib/done.py", ("done.py", "DONE probes")),
     (
         "silent-boot-zsh",

@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.4.54
+- Archaeology Modula-2 leaf: `evals/fixtures/lost-mod/HELLO.MOD` + identify smoke; GNU Modula-2 14.2.0 boot probe VERIFIED (`gm2 -g -x modula-2 HELLO.MOD`); dialect labels honest (CONJECTURE / UNVERIFIABLE where due); identify fossils `*.mod` / `*.def`
+- Jail pin `references/archaeology-modula2-manual.md` — GNU Modula-2 Example compile and link (`WriteString` / `gm2 -g hello.mod`)
+- Catalog + SKILL.md + archaeology.md + language-agnostic.md link the thirteenth pin alongside Pascal, ASM, COBOL, Fortran, VHDL, Ada, Forth, Common Lisp, Prolog, Tcl, Erlang, and REXX; route triggers gain `gm2` / `modula-2` / `modula2` / `.mod` / `.def` (space-padded `modula`; bare token `mod` refused); eval locks `*.mod` identify on lost-mod
+- Plugin, marketplace, and SKILL.md at 0.4.54
+
 ## 0.4.53
 - Archaeology REXX leaf: `evals/fixtures/lost-rex/HELLO.REX` + identify smoke; Regina 3.9.5 boot probe VERIFIED (`rexx HELLO.REX`); dialect labels honest (CONJECTURE / UNVERIFIABLE where due); identify fossils `*.rex` / `*.rexx`
 - Jail pin `references/archaeology-rexx-manual.md` — Classic Rexx `SAY` (default output stream)

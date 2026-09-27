@@ -1,0 +1,9 @@
+== identify evals/fixtures/lost-mod ==
+-- extensions --
+      2 md
+      1 txt
+      1 mod
+-- named fossils --
+1 *.mod
+-- shebangs --
+identify: done (read-only)
