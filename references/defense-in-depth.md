@@ -34,7 +34,7 @@ scripts/emperor defense --check-layers "entry + business + environment"
 ## Out of scope
 
 - Whole `systematic-debugging` skill folder
-- `find-polluter.sh`, pressure / academic packs
+- `find-polluter.sh` (sibling: `emperor polluter`); pressure/academic packs are sibling leaf `emperor pressure`
 - Whole condition-based-waiting essay from Superpowers (ET owns a Chain Jail
   leaf: `skills/emperor-heal/condition-based-waiting.md` + `emperor wait`)
 - Replacing root-cause tracing with layered guards

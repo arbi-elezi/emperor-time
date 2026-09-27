@@ -6,7 +6,7 @@
 - heading: Validate at every layer / The Four Layers
 - license: MIT
 - access-date: 2026-09-27
-- issue-context: after root-cause source fix, agents still ship a single guard at one site; Chain Jail extract-aspect names Validate-at-every-layer / Four-layers only (not whole systematic-debugging, not find-polluter.sh, not pressure tests). Sibling Chain Jail leaf: condition-based-waiting (`emperor wait`).
+- issue-context: after root-cause source fix, agents still ship a single guard at one site; Chain Jail extract-aspect names Validate-at-every-layer / Four-layers only (not whole systematic-debugging, not find-polluter.sh; pressure/academic is sibling leaf `emperor pressure`). Sibling Chain Jail leaf: condition-based-waiting (`emperor wait`).
 
 **Contract:** when a bug was caused by invalid data, after fixing at the source, add validation at **every layer** data passes through so the bug becomes structurally impossible. Emperor Time stays the orchestrator via Holy Chain / emperor-heal; do **not** announce or load whole `systematic-debugging`.
 

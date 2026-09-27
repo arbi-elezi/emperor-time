@@ -6,7 +6,7 @@
 - heading: Wait for the actual condition / not a guess about timing
 - license: MIT
 - access-date: 2026-09-27
-- issue-context: after defense-in-depth, flaky tests still guess at timing with arbitrary sleep/setTimeout; Chain Jail extract-aspect names Wait-for-the-actual-condition only (not whole systematic-debugging, not find-polluter.sh, not pressure tests). Sibling leaves: four-phases, root-cause-tracing, defense-in-depth.
+- issue-context: after defense-in-depth, flaky tests still guess at timing with arbitrary sleep/setTimeout; Chain Jail extract-aspect names Wait-for-the-actual-condition only (not whole systematic-debugging, not find-polluter.sh; pressure/academic is sibling leaf `emperor pressure`). Sibling leaves: four-phases, root-cause-tracing, defense-in-depth.
 
 **Contract:** when a test or async path waits, wait for the **actual condition** (event / state / count / file), not a guess about how long it takes. Always timeout; poll ~10ms; fresh getter inside the loop. Emperor Time stays the orchestrator via Holy Chain / emperor-heal; do **not** announce or load whole `systematic-debugging`.
 

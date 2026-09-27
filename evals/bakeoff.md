@@ -88,6 +88,7 @@ mean **disk + eval**, not live multi-vendor win rates.
 | defense-in-depth (HARD-GATE) | `scripts/lib/defense.py` + thin twins + `skills/emperor-heal/defense-in-depth.md` + `emperor defense` | TESTED |
 | condition-based-waiting (HARD-GATE) | `scripts/lib/condition_wait.py` + thin twins + `skills/emperor-heal/condition-based-waiting.md` + `emperor wait` | TESTED |
 | find-polluter (HARD-GATE) | `scripts/lib/polluter.py` + thin twins + `skills/emperor-heal/find-polluter.md` + `emperor polluter` | TESTED |
+| pressure/academic (HARD-GATE) | `scripts/lib/pressure.py` + thin twins + `skills/emperor-heal/pressure-academic.md` + `emperor pressure` | TESTED |
 
 Honesty helper: `scripts/lib/bakeoff_honesty.py` fails if this inventory
 drifts from disk or if live-defect-rate is mislabeled.

@@ -5,7 +5,7 @@ Leaf adapted from obra/superpowers skills/systematic-debugging
 root-cause-tracing.md (MIT) — Trace backward / Fix at source / Never fix
 just the symptom only. Emperor Time + Holy Chain stay the orchestrator;
 do not announce the foreign skill name. Does not vendor whole
-systematic-debugging (no pressure/academic packs). Sibling leaves
+systematic-debugging (pressure/academic is a sibling leaf). Sibling leaves
 cover defense-in-depth, condition-based-waiting, and find-polluter.
 
 Prints TRACE / STEP / MUST lines.
@@ -100,7 +100,7 @@ def format_card() -> str:
     lines.append(
         "MUST-NOT: fix only where the error appears; stack symptom patches; "
         "load whole systematic-debugging (find-polluter, defense-in-depth "
-        "essay, condition-based-waiting, pressure tests). "
+        "essay, condition-based-waiting; pressure/academic is sibling `emperor pressure`). "
         "ET + Holy Chain remain the orchestrator."
     )
     return "\n".join(lines) + "\n"

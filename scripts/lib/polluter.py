@@ -5,7 +5,7 @@ Leaf adapted from obra/superpowers skills/systematic-debugging
 find-polluter.sh (MIT) — Find which test creates unwanted files/state /
 do not guess the polluter. Emperor Time + Holy Chain stay the
 orchestrator; do not announce the foreign skill name. Does not vendor
-whole systematic-debugging (no pressure/academic packs). find-polluter
+whole systematic-debugging (pressure/academic is a sibling leaf). find-polluter
 is this Chain Jail leaf only.
 
 Prints POLLUTER / STEP / MUST lines.
@@ -121,7 +121,7 @@ def format_card() -> str:
     lines.append(
         "MUST-NOT: guess which test polluted; ship a cleanup elsewhere while "
         "the polluter stays dirty; keep running the whole suite hoping order "
-        "changes; load whole systematic-debugging (pressure/academic packs). "
+        "changes; load whole systematic-debugging (pressure/academic is a sibling leaf). "
         "ET + Holy Chain remain the orchestrator."
     )
     return "\n".join(lines) + "\n"

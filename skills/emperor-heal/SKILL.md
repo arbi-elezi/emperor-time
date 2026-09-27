@@ -103,6 +103,19 @@ creates unwanted files/state / do not guess the polluter only**) and/or run
 No guessing which test polluted. Name the marker; run candidates one-by-one.
 Do not load whole `systematic-debugging`; ET + Holy Chain orchestrate.
 
+
+## MUST — resist skip under pressure (academic self-check)
+
+When emergency, sunk-cost, or authority pressure tempts a shortcut, open
+`skills/emperor-heal/pressure-academic.md`
+(Chain Jail leaf from Superpowers `systematic-debugging` → **test-pressure-*.md
++ test-academic.md / resist skip under pressure only**) and/or run
+`scripts/emperor pressure` (prints the mechanical PRESSURE / CASE / MUST /
+ACADEMIC card).
+
+No Options B/C. Stay on four phases. Academic self-check before claiming the
+process. Do not load whole `systematic-debugging`; ET + Holy Chain orchestrate.
+
 ## Steps
 
 1. Run `scripts/emperor heal` → quote `DEBUG four_phases=yes`. Advance phases
@@ -131,11 +144,15 @@ Do not load whole `systematic-debugging`; ET + Holy Chain orchestrate.
    `scripts/emperor polluter` → quote `POLLUTER checklist=yes`. Guessing the
    polluter → `scripts/emperor polluter --reject-guess`. Ship without finding
    it → `--reject-unbisected` (HARD-GATE exit 1).
-8. Read `chains/holy-chain/SKILL.md` → one aspect
+8. When emergency / sunk-cost / authority pressure tempts a shortcut: run
+   `scripts/emperor pressure` → quote `PRESSURE checklist=yes`. Shortcut →
+   `scripts/emperor pressure --reject-shortcut`. Compromise-then-skip →
+   `--reject-compromise` (HARD-GATE exit 1).
+9. Read `chains/holy-chain/SKILL.md` → one aspect
    (`triage.md` | `reproduce-and-bisect.md` | `heal-and-verify.md` |
    `process-healing.md`) matching the current phase (see leaf table).
-9. Snapshot. Reproduce. One hypothesis per step. Prediction before probe.
-10. Minimal heal. Verify the cause, not the symptom (verification triad).
-11. Postmortem line on the ledger: BROKE / CAUSE / HEAL / CAUGHT-BY /
+10. Snapshot. Reproduce. One hypothesis per step. Prediction before probe.
+11. Minimal heal. Verify the cause, not the symptom (verification triad).
+12. Postmortem line on the ledger: BROKE / CAUSE / HEAL / CAUGHT-BY /
    WOULD-HAVE-CAUGHT-SOONER.
-12. If the *process* broke, re-enter at the earliest unsatisfied gate.
+13. If the *process* broke, re-enter at the earliest unsatisfied gate.

@@ -128,6 +128,11 @@ LEAVES: list[tuple[str, str, tuple[str, ...]]] = [
         "scripts/lib/polluter.py",
         ("polluter.py", "polluter"),
     ),
+    (
+        "pressure-academic",
+        "scripts/lib/pressure.py",
+        ("pressure.py", "pressure"),
+    ),
 ]
 
 

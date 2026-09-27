@@ -1,34 +1,33 @@
-# Task Ledger — emperor-time self-application (find-polluter HARD-GATE)
+# Task Ledger — emperor-time self-application (pressure/academic HARD-GATE)
 
-- **Task:** Add find-polluter HARD-GATE leaf for emperor-heal (Find which test creates unwanted files/state / do not guess the polluter): Python card + thin twins + skill/reference + route/eval/honesty lockstep. Companion for shared-state / leftover-file pollution (heal Phase 1–2).
-- **Client quote:** Soft-ET consented Worthy Spend after v0.4.41 condition-based-waiting. Ship find-polluter leaf (v0.4.42). Chain Jail leaf only; do not vendor foreign whole skills.
+- **Task:** Add pressure/academic HARD-GATE leaf for emperor-heal (Resist skip under emergency / sunk-cost / authority pressure; academic four-phase self-check): Python card + thin twins + skill/reference + route/eval/honesty lockstep. Companion when pressure tempts skipping heal phases.
+- **Client quote:** Soft-ET consented Worthy Spend after v0.4.42 find-polluter. Ship pressure/academic leaf (v0.4.43). Chain Jail leaf only; do not vendor foreign whole skills.
 - **Origin:** assigned
 - **Size:** standard
-- **Governing files:** SKILL.md → emperor-heal → find-polluter.md → polluter.py → route/triggers → eval
-- **Tip at spend:** v0.4.42 (branch `et-manager/find-polluter`)
+- **Governing files:** SKILL.md → emperor-heal → pressure-academic.md → pressure.py → route/triggers → eval
+- **Tip at spend:** v0.4.43 (branch `et-manager/pressure-academic`)
 
 ## G0
-Quoted ask above. Ambiguity resolved: ship find-polluter HARD-GATE only. Skip embeddings, emperor.py dispatcher, full systematic-debugging vendoring, pressure/academic packs, other archaeology pins this turn. Do not re-announce or re-ship #33–#58 leaves.
+Quoted ask above. Ambiguity resolved: ship pressure/academic HARD-GATE only. Skip embeddings, emperor.py dispatcher, full systematic-debugging vendoring, other archaeology pins this turn. Do not re-announce or re-ship #33–#59 leaves.
 
 ## G1 Acceptance criteria
-1. SKILL.md version ≥ 0.4.42; `scripts/lib/polluter.py` prints POLLUTER / STEP / MUST card.
-2. Thin `find-polluter.sh` / `find-polluter.ps1` call `polluter.py`; emperor peers (bash/ps1/cmd/zsh) gain `polluter`.
-3. `--reject-guess` and `--reject-unbisected` always exit non-zero; `--check-found` accepts FOUND POLLUTER + path and rejects bare guesses.
-4. Skill leaf `skills/emperor-heal/find-polluter.md` + `references/find-polluter.md` cite obra/superpowers systematic-debugging find-polluter.sh (URL + access date 2026-09-27 + sha256).
-5. Route triggers include polluter phrases → emperor-heal; extract-aspect names the leaf.
-6. Catalog + heal SKILL + debug-four-phases link the card; bakeoff + honesty name polluter.py / polluter.
-7. Plugin/marketplace/SKILL lockstep 0.4.42; CHANGELOG has 0.4.42.
+1. SKILL.md version ≥ 0.4.43; `scripts/lib/pressure.py` prints PRESSURE / CASE / MUST / ACADEMIC card.
+2. Thin `pressure.sh` / `pressure.ps1` call `pressure.py`; emperor peers (bash/ps1/cmd/zsh) gain `pressure`.
+3. `--reject-shortcut` and `--reject-compromise` always exit non-zero; `--check-academic` accepts four-phase + root-cause-first answers and rejects bare shortcuts.
+4. Skill leaf `skills/emperor-heal/pressure-academic.md` + `references/pressure-academic.md` cite obra/superpowers systematic-debugging test-pressure-*.md + test-academic.md (URL + access date 2026-09-27 + sha256).
+5. Route triggers include pressure/academic phrases → emperor-heal; extract-aspect names the leaf.
+6. Catalog + heal SKILL + debug-four-phases link the card; bakeoff + honesty name pressure.py / pressure.
+7. Plugin/marketplace/SKILL lockstep 0.4.43; CHANGELOG has 0.4.43.
 8. Eval locks new files/version/triggers; suite green.
 9. Live defect-rate vs Superpowers stays **UNVERIFIABLE**.
 
 ## Out of scope
 - embeddings / emperor.py unified dispatcher
-- Full systematic-debugging skill vendoring (pressure/academic packs)
+- Full systematic-debugging skill vendoring
 - Other people's PRs
 - Another archaeology language pin this turn
 - Live multi-vendor bake-off numbers
-- Redo of #33–#58
-- Hardcoding one test runner (npm-only); card stays runner-agnostic
+- Redo of #33–#59
 
 ## G2
 Rejected alternative: vendor whole systematic-debugging under skills/.
@@ -37,26 +36,26 @@ Why: standing rule — Chain Jail leaf only (HARD-GATE card + one aspect heading
 Rejected alternative: emperor.py unified dispatcher.
 Why: larger surface than one heal leaf; out of scope.
 
-Rejected alternative: pressure/academic packs this turn.
-Why: explicitly deferred; find-polluter is the named deferred companion after condition-based-waiting.
+Rejected alternative: ship only academic quiz without pressure cases.
+Why: Superpowers packs are listed together; highest-value gap is the combined resist-under-pressure aspect.
 
-Rejected alternative: copy npm-hardcoded find-polluter.sh verbatim.
-Why: ET is language-agnostic; Python HARD-GATE card + runner-agnostic steps match house pattern (#56–#58).
+Rejected alternative: copy test-pressure-*.md verbatim as foreign skill.
+Why: adapt aspect into ET card + leaf; do not announce foreign skill name.
 
 ## G3
-polluter.py + find-polluter twins + find-polluter.md + references + route/eval/honesty/bakeoff lockstep on `et-manager/find-polluter`. See git log.
+pressure.py + pressure twins + pressure-academic.md + references + route/eval/honesty/bakeoff lockstep on `et-manager/pressure-academic`. See git log. Prior leaves retained: dowse.py (v0.4.26), install.py (v0.4.31), boot.py (v0.4.32), worktree.py (v0.4.33), excavate (v0.4.34), session_discovery.py (v0.4.36), diagnose.py (v0.4.37), lost-ada (v0.4.38), root_cause.py (v0.4.39), defense.py (v0.4.40), condition_wait.py (v0.4.41), polluter.py (v0.4.42).
 
 ## G4
 Claims:
 
 | Claim | Status | Evidence |
 |---|---|---|
-| SKILL.md is 0.4.42 orchestrator | TESTED | frontmatter `version: 0.4.42` on branch HEAD |
-| polluter.py prints POLLUTER checklist | TESTED | `POLLUTER checklist=yes` + STEP / MUST lines |
-| --reject-guess / --reject-unbisected hard-gate | TESTED | exit non-zero + REJECT lines |
-| --check-found needs polluter identity | TESTED | POLLUTER OK / POLLUTER FAIL paths |
-| Jail leaf cites Superpowers find-polluter.sh | TESTED | find-polluter.md URL + 2026-09-27 + sha256 |
-| Route polluter phrases → heal | TESTED | route.py + triggers.json |
+| SKILL.md is 0.4.43 orchestrator | TESTED | frontmatter `version: 0.4.43` on branch HEAD |
+| pressure.py prints PRESSURE checklist | TESTED | `PRESSURE checklist=yes` + CASE / MUST / ACADEMIC lines |
+| --reject-shortcut / --reject-compromise hard-gate | TESTED | exit non-zero + REJECT lines |
+| --check-academic needs four-phase signals | TESTED | PRESSURE OK / PRESSURE FAIL paths |
+| Jail leaf cites Superpowers test-pressure / test-academic | TESTED | pressure-academic.md URL + 2026-09-27 + sha256 |
+| Route pressure phrases → heal | TESTED | route.py + triggers.json |
 | Eval suite still green | TESTED | `bash scripts/eval.sh` → EVALS PASSED |
 | Live defect-rate vs Superpowers | UNVERIFIABLE | no shared-task three-vendor bake-off run in this session |
 
@@ -91,4 +90,5 @@ PASS-WITH-CONDITIONS: local mechanism TESTED; live bake-off numbers UNVERIFIABLE
 - heal Phase 1 named "trace data flow" without a mechanical backward-chain HARD-GATE (symptom fixes still easy to ship). Remediation: root_cause.py (v0.4.39).
 - after source fix, single-layer guards still shipped as the whole invalid-data cure. Remediation: defense.py (v0.4.40).
 - flaky tests still guessed at timing with arbitrary sleep/setTimeout after defense-in-depth. Remediation: condition_wait.py (v0.4.41).
-- shared-state / leftover files still invited guessing which test polluted after condition-based-waiting. Remediation: this leaf (v0.4.42).
+- shared-state / leftover files still invited guessing which test polluted after condition-based-waiting. Remediation: polluter.py (v0.4.42).
+- emergency / sunk-cost / authority pressure still invited skipping four phases after find-polluter. Remediation: this leaf (v0.4.43).
