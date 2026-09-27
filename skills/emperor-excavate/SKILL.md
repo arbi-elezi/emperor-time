@@ -6,7 +6,7 @@ description: >-
   agent's fashion. Survey artifacts, hunt manuals, recover one runnable
   behavior. Language-agnostic.
 metadata:
-  version: 0.4.2
+  version: 0.4.3
   part-of: emperor-time
 ---
 

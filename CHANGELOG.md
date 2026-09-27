@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.4.3
+- Archaeology: Jail-pin NASM 2.16.03 §7.3 SECTION for FOO.ASM (`references/archaeology-asm-manual.md`)
+- Route trigger harden: blocked/WIP → queue; red build/derail → heal; missing capability/jail → capture; nasm/assembler → excavate
+- Catalog links: archaeology Jail pins (pascal + asm) from `archaeology.md`, skill-catalog, and SKILL.md
+- Queue empty UX: comment-only empty `.emperor/queue.md`; `queue.sh`/`queue.ps1` skip `(empty…)` / parentheses-only placeholder lines so `queue next` never promotes junk (WIP=1 kept)
+- Plugin, marketplace, SKILL.md, excavate + queue skill frontmatter at 0.4.3
+
 ## 0.4.2
 - Wave merge: CI eval workflow; adapter silent-boot parity; SDLC comparison; Pascal Jail pin (ISO 7185 §6.10)
 - Queue Kanban maturity (WIP=1 statuses); trigger→skill `route` MVP (sh/ps1 twins)

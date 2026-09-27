@@ -13,24 +13,32 @@ if (-not (Test-Path $Queue)) {
     @"
 # Emperor queue
 # WIP=1 — one [~] active at a time. Statuses: [ ] ready · [~] active · [x] done · [!] blocked
+#
+# Empty — add: - [ ] <task>  (or connect gh/Linear). Placeholder/parentheses-empty lines are ignored.
 
-- [ ] (empty — add a line or connect gh/Linear)
+Local backlog when GitHub issues / Linear are not connected.
 "@ | Set-Content $Queue
 }
+function IsPlaceholder([string]$line) {
+    if ($line -match '\(empty') { return $true }
+    if ($line -match '^- \[[ ~!]\] *$') { return $true }
+    if ($line -match '^- \[[ ~!]\] +\(.*\) *$') { return $true }
+    return $false
+}
 function LocalOpen {
-    Select-String -Path $Queue -Pattern '^- \[([ ~!])\]' | ForEach-Object { $_.Line }
+    Select-String -Path $Queue -Pattern '^- \[([ ~!])\]' | ForEach-Object { $_.Line } | Where-Object { -not (IsPlaceholder $_) }
 }
 function LocalReady {
-    Select-String -Path $Queue -Pattern '^- \[ \]' | ForEach-Object { $_.Line }
+    Select-String -Path $Queue -Pattern '^- \[ \]' | ForEach-Object { $_.Line } | Where-Object { -not (IsPlaceholder $_) }
 }
 function LocalActive {
-    Select-String -Path $Queue -Pattern '^- \[~\]' | ForEach-Object { $_.Line }
+    Select-String -Path $Queue -Pattern '^- \[~\]' | ForEach-Object { $_.Line } | Where-Object { -not (IsPlaceholder $_) }
 }
 function PromoteFirstReady {
     $c = Get-Content $Queue
     $promoted = $null
     $c = $c | ForEach-Object {
-        if ($null -eq $promoted -and $_ -match '^- \[ \]' -and $_ -notmatch '\(empty') {
+        if ($null -eq $promoted -and $_ -match '^- \[ \]' -and -not (IsPlaceholder $_)) {
             $promoted = ($_ -replace '^- \[ \]', '- [~]')
             $promoted
         } else { $_ }
@@ -64,7 +72,7 @@ switch ($Cmd) {
             exit 0
         }
         $line = @(LocalReady | Select-Object -First 1)
-        if ($line -and $line -notmatch '\(empty') {
+        if ($line) {
             $promoted = PromoteFirstReady
             if ($promoted) { Write-Host "NEXT local: $promoted"; exit 0 }
         }

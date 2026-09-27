@@ -114,6 +114,32 @@ if [[ -x "$ROOT/scripts/route.sh" || -f "$ROOT/scripts/route.sh" ]]; then
   fi
 fi
 
+
+echo "== queue empty UX =="
+bash -n "$ROOT/scripts/queue.sh" || { echo "EVAL FAIL: queue.sh syntax"; fail=1; }
+QTMP="$(mktemp)"
+cat > "$QTMP" <<'QEOF'
+# Emperor queue (eval fixture)
+# WIP=1 kept in comments only — no checkbox placeholder.
+QEOF
+if EMPEROR_QUEUE_SOURCE=local EMPEROR_QUEUE_FILE="$QTMP" bash "$ROOT/scripts/queue.sh" next >/tmp/et-queue-empty.out 2>&1; then
+  echo "EVAL FAIL: empty comment-only queue should exit non-zero"
+  fail=1
+else
+  grep -q "NEXT none" /tmp/et-queue-empty.out || { echo "EVAL FAIL: empty queue missing NEXT none"; fail=1; }
+fi
+cat > "$QTMP" <<'QEOF'
+# Emperor queue
+- [ ] (empty — replace this line with real work or connect gh)
+- [ ] ship the widget
+QEOF
+out=$(EMPEROR_QUEUE_SOURCE=local EMPEROR_QUEUE_FILE="$QTMP" bash "$ROOT/scripts/queue.sh" next 2>&1) || true
+echo "$out" | grep -q "ship the widget" || { echo "EVAL FAIL: queue next should promote real task past placeholder"; fail=1; }
+echo "$out" | grep -q "(empty" && { echo "EVAL FAIL: queue next promoted placeholder"; fail=1; }
+grep -q '^- \[~\] ship the widget' "$QTMP" || { echo "EVAL FAIL: placeholder queue file not promoted correctly"; fail=1; }
+grep -q '^- \[ \] (empty' "$QTMP" || { echo "EVAL FAIL: placeholder line should remain untouched"; fail=1; }
+rm -f "$QTMP" /tmp/et-queue-empty.out
+
 echo "== fixture: lost-pas identify finds *.pas =="
 need "evals/fixtures/lost-pas/HELLO.PAS"
 need "evals/fixtures/lost-pas/README.md"
