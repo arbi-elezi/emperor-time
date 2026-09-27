@@ -1,0 +1,10 @@
+== identify evals/fixtures/lost-erl ==
+-- extensions --
+      2 md
+      1 txt
+      1 erl
+-- named fossils --
+1 *.erl
+-- shebangs --
+evals/fixtures/lost-erl/HELLO.ERL: #!/usr/bin/env escript
+identify: done (read-only)

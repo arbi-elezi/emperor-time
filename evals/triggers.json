@@ -400,7 +400,13 @@
         ".tcl",
         ".tk",
         " tcl",
-        "tcl "
+        "tcl ",
+        "escript",
+        "erlc",
+        ".erl",
+        ".hrl",
+        " erlang",
+        "erlang "
       ],
       "tags": [
         "archaeology",
@@ -437,7 +443,12 @@
         "pro",
         "tclsh",
         "tcl",
-        "tk"
+        "tk",
+        "escript",
+        "erlc",
+        "erlang",
+        "erl",
+        "hrl"
       ],
       "target": "skills/emperor-excavate/SKILL.md",
       "reason": "lost/ancient/foreign tree \u2014 excavate before modernizing"
