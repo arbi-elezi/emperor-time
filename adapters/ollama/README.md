@@ -45,3 +45,24 @@ ollama run emperor "<scoped worker prompt>"  # one-shot, stdout
 Context windows are the constraint: keep worker prompts scoped (one file, one
 function, one question) and let the orchestrator hold the big picture. See the
 distillation ladder in `references/portability.md`.
+
+## Session boot (host-agnostic)
+
+Ollama has no Claude `SessionStart` hook. Do not ask the client their OS,
+shell, or language. Before dispatching a worker (or when `.emperor/` is
+missing), the orchestrator runs silent boot once, then reads what it wrote:
+
+```bash
+bash scripts/boot.sh   # or: scripts/emperor boot
+# Windows: pwsh -NoProfile -File scripts/boot.ps1
+```
+
+Then open:
+
+- `.emperor/host.env` — os, shell, wsl, encoding
+- `.emperor/survey.md` — artifact classes (do not ask the client their stack)
+- `.emperor/eval.log` — when this tree *is* Emperor Time
+
+Resume from STATE.md / `scripts/emperor queue next`. Do not tell the client
+to run `identify` or `eval`. Those are internals.
+Foreign/lost tree: `scripts/emperor identify <path>`.
