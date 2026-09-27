@@ -14,3 +14,5 @@ written. Before a hunt, confirm the repo still exists and list `skills/`.
 | Awesome lists found this session | Index of indexes | names + URLs only; still fetch SKILL.md |
 
 License still gates capture (`hunt.md`). No license = ideas only, then author.
+
+Archaeology Jail pins (manuals, not skills): `references/archaeology-pascal-manual.md`, `references/archaeology-asm-manual.md` — see `references/archaeology.md`.
