@@ -28,7 +28,7 @@ WORKTREE_PATH=$(git rev-parse --show-toplevel)
 BRANCH=$(git branch --show-current)
 ```
 
-Or: `scripts/emperor finish` (prints `ENV` / `MENU` / options).
+Or: `scripts/emperor finish` (Python core `scripts/lib/finish.py`; thin `finish.sh` / `finish.ps1` — prints `ENV` / `MENU` / options).
 
 | State | Menu | Cleanup after local merge |
 |---|---|---|

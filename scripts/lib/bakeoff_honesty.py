@@ -15,6 +15,7 @@ from pathlib import Path
 LEAVES: list[tuple[str, str, tuple[str, ...]]] = [
     ("plans", "scripts/lib/work_order.py", ("plans", "work_order")),
     ("finish", "skills/emperor-forge/finish-menu.md", ("finish",)),
+    ("finish-py", "scripts/lib/finish.py", ("finish.py", "finish menu")),
     ("activate", "scripts/lib/activate.py", ("activate", "must-route")),
     ("must-route", "skills/emperor-resume/must-route.md", ("must-route",)),
     ("grill", "skills/emperor-require-design/grill-checklist.md", ("grill",)),
