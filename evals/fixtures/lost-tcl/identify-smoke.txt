@@ -1,0 +1,9 @@
+== identify evals/fixtures/lost-tcl ==
+-- extensions --
+      2 md
+      1 txt
+      1 tcl
+-- named fossils --
+1 *.tcl
+-- shebangs --
+identify: done (read-only)

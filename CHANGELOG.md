@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.4.51
+- Archaeology Tcl leaf: `evals/fixtures/lost-tcl/HELLO.TCL` + identify smoke; Tcl 8.6.16 boot probe VERIFIED (`tclsh HELLO.TCL`); dialect labels honest (CONJECTURE / UNVERIFIABLE where due); identify fossils `*.tcl` / `*.tk`
+- Jail pin `references/archaeology-tcl-manual.md` — tclsh SCRIPT FILES (batch / application file run)
+- Catalog + SKILL.md + archaeology.md + language-agnostic.md link the tenth pin alongside Pascal, ASM, COBOL, Fortran, VHDL, Ada, Forth, Common Lisp, and Prolog; route triggers gain `tclsh` / `.tcl` / `.tk` (space-padded `tcl`); eval locks `*.tcl` identify on lost-tcl
+- Plugin, marketplace, and SKILL.md at 0.4.51
+
+
 ## 0.4.50
 - Archaeology Prolog leaf: `evals/fixtures/lost-prolog/HELLO.PRO` + identify smoke; SWI-Prolog 9.2.9 boot probe VERIFIED (`swipl -q -t halt`); dialect labels honest (CONJECTURE / UNVERIFIABLE where due); identify fossils `*.pro` / `*.prolog` only (no `*.pl` — Perl collision)
 - Jail pin `references/archaeology-prolog-manual.md` — SWI-Prolog `initialization/2` main role (batch / application file run)

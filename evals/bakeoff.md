@@ -71,11 +71,12 @@ mean **disk + eval**, not live multi-vendor win rates.
 | archaeology Forth | `evals/fixtures/lost-fs/` + Jail pin | TESTED |
 | archaeology Common Lisp | `evals/fixtures/lost-lisp/` + Jail pin | TESTED |
 | archaeology Prolog | `evals/fixtures/lost-prolog/` + Jail pin | TESTED |
+| archaeology Tcl | `evals/fixtures/lost-tcl/` + Jail pin | TESTED |
 | mechanical gates (Python core) | `scripts/lib/gate.py` + thin `gate.sh`/`gate.ps1` | TESTED |
 | identify survey (Python core) | `scripts/lib/identify.py` + thin `identify.sh`/`identify.ps1` | TESTED |
 | structural eval (Python core) | `scripts/lib/eval.py` + thin `eval.sh`/`eval.ps1` | TESTED |
 | DONE probes (Python core) | `scripts/lib/done.py` + thin `done.sh`/`done.ps1` + `evals/fixtures/done-probes/` | TESTED |
-| route MVP (Fortran/VHDL/Ada/Forth/Lisp/Prolog excavate) | `scripts/lib/route.py` + thin `route.sh`/`route.ps1` + triggers `.f90`/`fortran`/`gfortran`/`.vhd`/`vhdl`/`ghdl`/`.adb`/`ada`/`gnat`/`gnatmake`/`.fs`/`pforth`/`gforth`/`.fth`/`.lisp`/`clisp`/`sbcl`/`.pro`/`swipl`/`gprolog` | TESTED |
+| route MVP (Fortran/VHDL/Ada/Forth/Lisp/Prolog/Tcl excavate) | `scripts/lib/route.py` + thin `route.sh`/`route.ps1` + triggers `.f90`/`fortran`/`gfortran`/`.vhd`/`vhdl`/`ghdl`/`.adb`/`ada`/`gnat`/`gnatmake`/`.fs`/`pforth`/`gforth`/`.fth`/`.lisp`/`clisp`/`sbcl`/`.pro`/`swipl`/`gprolog`/`.tcl`/`tclsh` | TESTED |
 | silent-boot zsh parity | `scripts/emperor.zsh` host.env auto-boot + host/boot/identify/excavate specials (bash twin) | TESTED |
 | queue picker (Python core) | `scripts/lib/queue.py` + thin `queue.sh`/`queue.ps1` (WIP=1, placeholder skip, gh/Linear/local) | TESTED |
 | forge PR (Python core) | `scripts/lib/forge.py` + thin `forge.sh`/`forge.ps1` (consent, DONE, title/G1 body, DRY) | TESTED |
@@ -113,7 +114,7 @@ drifts from disk or if live-defect-rate is mislabeled.
 ## Verdict
 
 ET wins this slice on *mechanical lock-in* (eval owns the rows; leaf gates
-above are on disk and eval-locked through v0.4.50).
+above are on disk and eval-locked through v0.4.51).
 Activation *mechanism* is closed on disk (v0.4.5–0.4.6); wild-agent
 activation without a tell stays **UNVERIFIABLE** until a marketplace re-run.
 Live defect-rate vs Superpowers stays **UNVERIFIABLE** — do not invent %.
