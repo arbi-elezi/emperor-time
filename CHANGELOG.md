@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.4.25
+- Review-pack Python core: `scripts/lib/review_pack.py` owns meta SHAs, acceptance-criteria extract, diff/diffstat, claims copy
+- Thin `review-pack.sh` / `review-pack.ps1` twins — closes bash↔ps1 twin drift (ps1 copied entire work-order into criteria.md; bash awk kept only `## Acceptance criteria`)
+- Factory dogfood: mechanical-gates + emperor-verify + request-review checklist point at the Python lock; eval locks compile + thin twins + criteria extract (no Plan header / Out of scope leak) + meta SHAs
+- Plugin, marketplace, and SKILL.md at 0.4.25
+
+
 ## 0.4.24
 - Forge PR Python core: `scripts/lib/forge.py` owns consent (env or ledger), DONE probes, title + G1..G2 PR body, gh create / DRY
 - Thin `forge.sh` / `forge.ps1` twins — closes bash↔ps1 twin drift (ps1 hardcoded title and dumped full ledger into PR.md)

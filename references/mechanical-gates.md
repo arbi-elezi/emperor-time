@@ -13,13 +13,17 @@ A model writing "G4 PASS" in markdown is not a gate. An exit code is.
 | `scripts/gate.sh g3` | G3 | impact-map paths missing from `git diff --stat` (when in a git repo) |
 | `scripts/gate.sh g4` | G4 | claim rows still CONJECTURE; no critique file; listed probes not run |
 | `scripts/gate.sh g5` | G5 | verdict not PASS/PASS-WITH-CONDITIONS; breach hidden empty-header |
-| `scripts/review-pack.sh` | G4 hetero | cannot emit isolated pack |
+| `scripts/review-pack.sh` (Python core) | G4 hetero | cannot emit isolated pack |
 | `scripts/forge.sh` (Python core) | G5 deliver / consent PR | no consent; DONE fail; gh missing → DRY |
 | `scripts/eval.sh` (Python core) | harness health | an eval fixture fails |
 
 Python core: `scripts/lib/gate.py` owns G0–G5. Thin twins: `scripts/gate.sh`,
 `scripts/gate.ps1` (same exits). G2 still calls `work_order.py` for the plan
-header. Review-pack remains shell/ps1 until its own Python leaf.
+header.
+
+Review-pack Python core: `scripts/lib/review_pack.py` owns meta SHAs +
+acceptance-criteria extract + diff (thin `review-pack.sh` / `review-pack.ps1`).
+Closes bash↔ps1 drift on criteria (ps1 used to dump the full work-order).
 
 Forge Python core: `scripts/lib/forge.py` owns consent + DONE gate + title/G1 PR body (thin `forge.sh` / `forge.ps1`). Closes bash↔ps1 drift on title extraction and ledger dump.
 
