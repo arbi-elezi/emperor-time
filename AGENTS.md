@@ -13,6 +13,7 @@ Read the files it left:
 - `.emperor/eval.log` — structural eval when this tree *is* Emperor Time
 
 Do not tell the client to run `identify` or `eval`. Those are internals.
+For a foreign/lost tree the agent may run `scripts/emperor identify <path>`.
 
 ## Loop
 
