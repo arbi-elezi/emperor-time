@@ -4,7 +4,9 @@ description: >-
   Emperor Time TDD iron law. Use BEFORE writing or editing production code for
   a feature, bugfix, refactor, or behavior change. No production code without
   a failing probe first. Delete implementation written before the probe failed.
-  Prediction is ledgered before the command. Complements scientific-method.md.
+  Prediction is ledgered before the command. Also use when writing or changing
+  tests (name the break, exercise the real thing, no mirror assertions).
+  Complements scientific-method.md.
 license: MIT
 metadata:
   version: 0.4.9
@@ -30,11 +32,26 @@ and/or run `scripts/emperor tdd` (prints the mechanical TDD / STEP / MUST card).
 No jumping to production code without Step 2 FAIL observed and quoted.
 Do not load whole `test-driven-development`; ET + emperor-tdd orchestrate.
 
+## MUST — writing-good-tests when authoring or changing tests
+
+When writing or changing a test (mocks, helpers, expectations, cleanup), open
+`skills/emperor-tdd/writing-good-tests.md`
+(Chain Jail leaf from Superpowers `test-driven-development` → **Name the Break /
+Exercise the Real Thing / Gate Function / Mutation Check only**)
+and/or run `scripts/emperor good-tests` (prints the mechanical GOOD / PRIN /
+GATE / MUST card).
+
+No mirror assertions. No change detectors. No mock-existence checks.
+Do not load whole `test-driven-development`; ET + emperor-tdd orchestrate.
+
 ## Hard rules
 
 1. Run `scripts/emperor tdd` → quote `TDD checklist=yes`. Advance steps with
    `scripts/emperor tdd --advance N N+1` (skips fail). Jumping to prod →
    `scripts/emperor tdd --reject-prod` (HARD-GATE exit 1).
+1b. When writing/changing tests: run `scripts/emperor good-tests` → quote
+   `GOOD checklist=yes`. Mirror → `scripts/emperor good-tests --reject-mirror`
+   (HARD-GATE exit 1). Change-detector → `--reject-change-detector`.
 2. Write the probe (test or command) that must fail if the change is absent.
 3. Ledger a HYPOTHESIS row with the predicted signal.
 4. Run it. Watch it FAIL. Quote the tail. If it passes, the probe is wrong — fix the probe, not the product.

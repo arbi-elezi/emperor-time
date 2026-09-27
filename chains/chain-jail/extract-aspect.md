@@ -40,6 +40,7 @@ could hand a worker. Examples of legal slices:
 - Superpowers `diagnosing-superpowers` → Core principle citation iron law + Intake before analysis only (`skills/emperor-heal/diagnosing.md`).
 - Superpowers `brainstorming` → only the HARD-GATE (questions before code).
 - Superpowers `test-driven-development` → only The Iron Law / Red-Green-Refactor (HARD-GATE).
+- Superpowers `test-driven-development` → writing-good-tests Name-the-Break / Exercise-the-Real-Thing only (`skills/emperor-tdd/writing-good-tests.md`).
 - Addy review skill → only the five-axis table.
 - Superpowers `requesting-code-review` → When / How / Act-on-feedback only (`skills/emperor-verify/request-review-checklist.md`).
 - Superpowers `verification-before-completion` → The Iron Law / The Gate Function only (`skills/emperor-verify/verification-checklist.md`).

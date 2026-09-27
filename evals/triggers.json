@@ -251,6 +251,26 @@
     {
       "phrase": "no skip under pressure",
       "skill": "emperor-heal"
+    },
+    {
+      "phrase": "writing good tests",
+      "skill": "emperor-tdd"
+    },
+    {
+      "phrase": "name the break",
+      "skill": "emperor-tdd"
+    },
+    {
+      "phrase": "exercise the real thing",
+      "skill": "emperor-tdd"
+    },
+    {
+      "phrase": "mirror assertion",
+      "skill": "emperor-tdd"
+    },
+    {
+      "phrase": "change detector test",
+      "skill": "emperor-tdd"
     }
   ],
   "must_not_fire_master_wholesale": [
@@ -631,15 +651,25 @@
         "failing probe",
         "iron law",
         "watch it fail",
-        "no production code without"
+        "no production code without",
+        "writing good tests",
+        "name the break",
+        "exercise the real thing",
+        "mirror assertion",
+        "change detector test",
+        "good tests",
+        "mock earns no assertions"
       ],
       "tags": [
         "tdd",
         "rgr",
-        "iron-law"
+        "iron-law",
+        "good-tests",
+        "writing-good-tests",
+        "name-the-break"
       ],
       "target": "skills/emperor-tdd/SKILL.md",
-      "reason": "implementing \u2014 TDD iron-law / RGR HARD-GATE"
+      "reason": "implementing \u2014 TDD iron-law / RGR HARD-GATE / writing-good-tests HARD-GATE"
     },
     {
       "id": "execute",

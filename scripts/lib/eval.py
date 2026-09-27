@@ -2026,9 +2026,11 @@ def run_evals(root: Path) -> int:
     h.require_contains("0.4.42", "CHANGELOG.md", "CHANGELOG missing 0.4.42")
     h.require_contains("pressure.py", "evals/bakeoff.md", "bakeoff.md missing pressure.py inventory")
     h.require_contains("pressure.py", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing pressure.py")
-    h.require_contains("0.4.43", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing 0.4.43 tip")
-    h.require_contains("0.4.43", ".claude-plugin/plugin.json", "plugin.json not at 0.4.43")
-    h.require_contains("0.4.43", "CHANGELOG.md", "CHANGELOG missing 0.4.43")
+    h.require_contains("good_tests.py", "evals/bakeoff.md", "bakeoff.md missing good_tests.py inventory")
+    h.require_contains("good_tests.py", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing good_tests.py")
+    h.require_contains("0.4.44", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing 0.4.44 tip")
+    h.require_contains("0.4.44", ".claude-plugin/plugin.json", "plugin.json not at 0.4.44")
+    h.require_contains("0.4.44", "CHANGELOG.md", "CHANGELOG missing 0.4.44")
 
     # session-discovery
     h.section("session-discovery locate HARD-GATE leaf")
@@ -3028,6 +3030,158 @@ def run_evals(root: Path) -> int:
         h.fail_msg("route.py under pressure → heal")
     else:
         h.pass_msg("route.py under pressure → emperor-heal")
+
+
+    # writing-good-tests HARD-GATE
+    h.section("writing-good-tests HARD-GATE leaf")
+    h.need("skills/emperor-tdd/writing-good-tests.md")
+    h.need("references/writing-good-tests.md")
+    h.need("scripts/lib/good_tests.py")
+    h.need("scripts/good-tests.sh")
+    h.need("scripts/good-tests.ps1")
+    h.bash_n("scripts/good-tests.sh", "good-tests.sh syntax")
+    h.py_compile("scripts/lib/good_tests.py", "good_tests.py compile")
+    h.require_contains(
+        "good_tests.py",
+        "scripts/good-tests.sh",
+        "good-tests.sh does not call good_tests.py",
+    )
+    h.require_contains(
+        "good_tests.py",
+        "scripts/good-tests.ps1",
+        "good-tests.ps1 does not call good_tests.py",
+    )
+    h.require_contains(
+        "good-tests",
+        "scripts/emperor",
+        "emperor bash missing good-tests",
+    )
+    h.require_contains(
+        "'good-tests'",
+        "scripts/emperor.ps1",
+        "emperor.ps1 missing good-tests",
+    )
+    h.require_contains(
+        "good-tests",
+        "scripts/emperor.cmd",
+        "emperor.cmd missing good-tests",
+    )
+    h.require_contains(
+        "good-tests",
+        "scripts/emperor.zsh",
+        "emperor.zsh missing good-tests",
+    )
+    h.require_contains(
+        "writing-good-tests.md",
+        "skills/emperor-tdd/SKILL.md",
+        "emperor-tdd missing writing-good-tests leaf",
+    )
+    h.require_contains(
+        "HARD-GATE",
+        "skills/emperor-tdd/writing-good-tests.md",
+        "writing-good-tests leaf missing HARD-GATE heading",
+    )
+    h.require_contains(
+        "test-driven-development",
+        "skills/emperor-tdd/writing-good-tests.md",
+        "writing-good-tests leaf missing source skill",
+    )
+    h.require_contains(
+        "writing-good-tests.md",
+        "skills/emperor-tdd/writing-good-tests.md",
+        "writing-good-tests leaf missing source file cite",
+    )
+    h.require_contains(
+        "obra/superpowers",
+        "references/writing-good-tests.md",
+        "writing-good-tests reference missing obra/superpowers cite",
+    )
+    h.require_contains(
+        "2026-09-27",
+        "references/writing-good-tests.md",
+        "writing-good-tests reference missing access date",
+    )
+    h.require_contains(
+        "51471c853306ff92ca8bb41dcaea05f31c0e46b03651f8f3c99754b7172f4ae1",
+        "references/writing-good-tests.md",
+        "writing-good-tests reference missing sha256",
+    )
+    h.require_contains(
+        "EVERY TEST NAMES THE BREAK",
+        "skills/emperor-tdd/writing-good-tests.md",
+        "writing-good-tests leaf missing iron law text",
+    )
+    h.require_contains(
+        "name the break",
+        "evals/triggers.json",
+        "triggers missing name the break phrase",
+    )
+    h.require_contains(
+        "mirror assertion",
+        "evals/triggers.json",
+        "triggers missing mirror assertion phrase",
+    )
+    h.require_contains(
+        "writing-good-tests.md",
+        "chains/chain-jail/extract-aspect.md",
+        "extract-aspect missing writing-good-tests leaf",
+    )
+    _, gt_out = h.run_py("scripts/lib/good_tests.py")
+    if not re.search(r"^GOOD checklist=yes", gt_out, re.M):
+        h.fail_msg("good_tests missing checklist=yes")
+    if not re.search(r"^PRIN \d+ id=", gt_out, re.M):
+        h.fail_msg("good_tests missing PRIN line")
+    if not re.search(r"^MUST:", gt_out, re.M):
+        h.fail_msg("good_tests missing MUST line")
+    if not re.search(r"^GATE rule=", gt_out, re.M):
+        h.fail_msg("good_tests missing GATE line")
+    if "EVERY_TEST_NAMES_THE_BREAK" not in gt_out:
+        h.fail_msg("good_tests missing iron law token")
+    rc, _ = h.run_py("scripts/lib/good_tests.py", "--reject-mirror")
+    if rc == 0:
+        h.fail_msg("good_tests --reject-mirror should exit non-zero")
+    else:
+        _, reject = h.run_py("scripts/lib/good_tests.py", "--reject-mirror")
+        if not re.search(r"^REJECT MIRROR:", reject, re.M):
+            h.fail_msg("reject-mirror missing REJECT line")
+        else:
+            h.pass_msg("good_tests --reject-mirror hard-gates")
+    rc, _ = h.run_py("scripts/lib/good_tests.py", "--reject-change-detector")
+    if rc == 0:
+        h.fail_msg("good_tests --reject-change-detector should exit non-zero")
+    else:
+        _, reject = h.run_py("scripts/lib/good_tests.py", "--reject-change-detector")
+        if not re.search(r"^REJECT CHANGE-DETECTOR:", reject, re.M):
+            h.fail_msg("reject-change-detector missing REJECT line")
+        else:
+            h.pass_msg("good_tests --reject-change-detector hard-gates")
+    rc, gt_ok = h.run_py(
+        "scripts/lib/good_tests.py",
+        "--check-named-break",
+        "Name the break: wrong branch handler. Exercise the real component. "
+        "Hand-derived literal want. Mutation check for empty return.",
+    )
+    if rc != 0 or "GOOD OK:" not in gt_ok:
+        h.fail_msg("good_tests --check-named-break should accept named-break answers")
+    else:
+        h.pass_msg("good_tests --check-named-break accepts named-break answers")
+    rc, gt_bad = h.run_py(
+        "scripts/lib/good_tests.py",
+        "--check-named-break",
+        "just assert the mock exists",
+    )
+    if rc == 0 or "GOOD FAIL:" not in gt_bad:
+        h.fail_msg("good_tests --check-named-break should reject bare mock claim")
+    else:
+        h.pass_msg("good_tests --check-named-break rejects bare mock claim")
+    _, gt_sh = h.run_sh("scripts/good-tests.sh")
+    if not re.search(r"^GOOD checklist=yes", gt_sh, re.M):
+        h.fail_msg("good-tests.sh missing checklist card")
+    _, rout_gt = h.run_py("scripts/lib/route.py", "name the break")
+    if "emperor-tdd" not in rout_gt:
+        h.fail_msg("route.py name the break → tdd")
+    else:
+        h.pass_msg("route.py name the break → emperor-tdd")
 
 
     if h.fail != 0:

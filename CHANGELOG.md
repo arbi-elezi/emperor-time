@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.4.44
+- Writing-good-tests HARD-GATE leaf: `scripts/lib/good_tests.py` prints GOOD / PRIN / GATE / MUST card (name the break / exercise the real thing / hand-derived want / mutation check)
+- Thin `good-tests.sh` / `good-tests.ps1`; emperor peers gain `good-tests`; `--reject-mirror` / `--reject-change-detector` HARD-GATEs; `--check-named-break` validator (name-break + real-thing / hand-derived / mutation signals)
+- Skill leaf `skills/emperor-tdd/writing-good-tests.md` + `references/writing-good-tests.md` cite obra/superpowers MIT (test-driven-development writing-good-tests.md aspect); does **not** vendor whole test-driven-development
+- Route/triggers for writing-good-tests phrases → emperor-tdd; companion after RGR iron-law; eval/bakeoff/honesty lockstep
+- Plugin, marketplace, and SKILL.md at 0.4.44
+
 ## 0.4.43
 - Pressure/academic HARD-GATE leaf: `scripts/lib/pressure.py` prints PRESSURE / CASE / MUST / ACADEMIC card (resist skip under emergency / sunk-cost / authority; academic four-phase self-check)
 - Thin `pressure.sh` / `pressure.ps1`; emperor peers gain `pressure`; `--reject-shortcut` / `--reject-compromise` HARD-GATEs; `--check-academic` validator (four-phase + root-cause-first signals)
