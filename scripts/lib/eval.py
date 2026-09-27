@@ -195,6 +195,7 @@ def run_evals(root: Path) -> int:
         "receive",
         "execute",
         "subagent",
+        "parallel",
     ):
         h.need(f"scripts/{pair}.sh")
         h.need(f"scripts/{pair}.ps1")
@@ -1278,6 +1279,67 @@ def run_evals(root: Path) -> int:
     _, sub_sh = h.run_sh("scripts/subagent.sh")
     if not re.search(r"^SUBAGENT checklist=yes", sub_sh, re.M):
         h.fail_msg("subagent.sh missing checklist card")
+
+
+
+    # parallel-dispatch
+    h.section("dispatching-parallel-agents / parallel HARD-GATE leaf")
+    h.need("skills/emperor-dispatch/parallel-dispatch-checklist.md")
+    h.need("scripts/lib/parallel.py")
+    h.need("scripts/parallel.sh")
+    h.need("scripts/parallel.ps1")
+    h.bash_n("scripts/parallel.sh", "parallel.sh syntax")
+    h.py_compile("scripts/lib/parallel.py", "parallel.py compile")
+    h.require_contains("parallel.py", "scripts/parallel.sh", "parallel.sh does not call parallel.py")
+    h.require_contains("parallel.py", "scripts/parallel.ps1", "parallel.ps1 does not call parallel.py")
+    h.require_contains("parallel|", "scripts/emperor", "emperor bash missing parallel")
+    h.require_contains("'parallel'", "scripts/emperor.ps1", "emperor.ps1 missing parallel")
+    h.require_contains(
+        "parallel-dispatch-checklist.md",
+        "skills/emperor-dispatch/SKILL.md",
+        "emperor-dispatch missing parallel-dispatch leaf",
+    )
+    h.require_contains(
+        "HARD-GATE",
+        "skills/emperor-dispatch/parallel-dispatch-checklist.md",
+        "parallel leaf missing HARD-GATE heading",
+    )
+    h.require_contains(
+        "dispatching-parallel-agents",
+        "skills/emperor-dispatch/parallel-dispatch-checklist.md",
+        "parallel leaf missing source skill",
+    )
+    _, par_out = h.run_py("scripts/lib/parallel.py")
+    if not re.search(r"^PARALLEL checklist=yes", par_out, re.M):
+        h.fail_msg("parallel missing checklist=yes")
+    if not re.search(r"^STEP 1 ", par_out, re.M):
+        h.fail_msg("parallel missing STEP 1")
+    if not re.search(r"^STEP 6 ", par_out, re.M):
+        h.fail_msg("parallel missing STEP 6")
+    if not re.search(r"^MUST:", par_out, re.M):
+        h.fail_msg("parallel missing MUST line")
+    if "ONE_AGENT_PER_INDEPENDENT_DOMAIN_NO_SHARED_WRITABLE" not in par_out:
+        h.fail_msg("parallel missing iron law token")
+    rc, _ = h.run_py("scripts/lib/parallel.py", "--advance", "1", "3")
+    if rc == 0:
+        h.fail_msg("parallel should reject step skip 1→3")
+    else:
+        h.pass_msg("parallel rejects skip 1→3")
+    _, adv_ok = h.run_py("scripts/lib/parallel.py", "--advance", "2", "3")
+    if not re.search(r"^ADVANCE OK", adv_ok, re.M):
+        h.fail_msg("parallel 2→3 should OK")
+    rc, _ = h.run_py("scripts/lib/parallel.py", "--reject-shared-scope")
+    if rc == 0:
+        h.fail_msg("parallel --reject-shared-scope should exit non-zero")
+    else:
+        _, reject = h.run_py("scripts/lib/parallel.py", "--reject-shared-scope")
+        if not re.search(r"^REJECT SHARED-SCOPE:", reject, re.M):
+            h.fail_msg("reject-shared-scope missing REJECT line")
+        else:
+            h.pass_msg("parallel --reject-shared-scope hard-gates shared scope")
+    _, par_sh = h.run_sh("scripts/parallel.sh")
+    if not re.search(r"^PARALLEL checklist=yes", par_sh, re.M):
+        h.fail_msg("parallel.sh missing checklist card")
 
 
     # ---- done probes (Python core) ----

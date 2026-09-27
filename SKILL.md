@@ -9,7 +9,7 @@ description: >-
   waiting to be told.
 license: MIT
 metadata:
-  version: 0.4.29
+  version: 0.4.30
   homepage: https://github.com/arbi-elezi/emperor-time
   standard: Agent Skills (SKILL.md)
 ---
@@ -74,7 +74,7 @@ client to say "emperor time".
 | Isolated git workspace | `skills/emperor-worktree/SKILL.md` |
 | About to say done / tests pass / review / acting on review feedback | `skills/emperor-verify/SKILL.md` + Judgment Chain |
 | Ship / finish / PR / merge | `skills/emperor-forge/SKILL.md` (+ `finish-menu.md`) |
-| Client consented to other local CLIs | `skills/emperor-dispatch/SKILL.md` + Steal Chain |
+| Client consented to other local CLIs / parallel independent domains | `skills/emperor-dispatch/SKILL.md` (+ `parallel-dispatch-checklist.md`) + Steal Chain |
 | Red build / derail | `skills/emperor-heal/SKILL.md` + Holy Chain |
 | Capability missing | `skills/emperor-capture/SKILL.md` + Chain Jail |
 

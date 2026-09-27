@@ -33,6 +33,7 @@ This table is a map, not memory.
 |---|---|---|
 | Socratic design / visual mock before code | `brainstorming`, `grill`, `discuss` | `obra/superpowers` `skills/brainstorming`; Pocock grill skills |
 | Fat executable plan | `writing-plans`, `executing-plans`, `subagent-driven-development` | Local first: `scripts/lib/work_order.py` + `executing-plans-checklist.md` + `emperor execute` (inline) or `subagent-driven-checklist.md` + `emperor subagent` (independent tasks + subagent tool). Superpowers those folders only if still insufficient |
+| Parallel independent domains / concurrent agents | `dispatching-parallel-agents`, parallel dispatch | Local first: `parallel-dispatch-checklist.md` + `emperor parallel` (disjoint writable scopes). Sequential plan tasks stay `emperor subagent`. Steal Chain consent for external CLIs. Superpowers that folder only if still insufficient |
 | TDD / failing-probe / RGR order | `tdd`, `red-green`, `failing probe` | Local first: `skills/emperor-tdd/red-green-refactor.md` + `emperor tdd`. Superpowers TDD only if runner-specific aspect still missing |
 | Systematic debug for a stack | `systematic-debugging`, framework debug | Superpowers debugging; Holy Chain first |
 | Isolated reviewer / request-review before merge | `requesting-code-review`, review personas | Local first: `skills/emperor-verify/request-review-checklist.md` + `emperor review`. Osmani personas / Superpowers only if still insufficient |
