@@ -1,0 +1,9 @@
+== identify evals/fixtures/lost-lisp ==
+-- extensions --
+      2 md
+      1 txt
+      1 lisp
+-- named fossils --
+1 *.lisp
+-- shebangs --
+identify: done (read-only)

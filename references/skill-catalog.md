@@ -15,4 +15,4 @@ written. Before a hunt, confirm the repo still exists and list `skills/`.
 
 License still gates capture (`hunt.md`). No license = ideas only, then author.
 
-Archaeology Jail pins (manuals, not skills): `references/archaeology-pascal-manual.md`, `references/archaeology-asm-manual.md`, `references/archaeology-cobol-manual.md`, `references/archaeology-fortran-manual.md`, `references/archaeology-vhdl-manual.md`, `references/archaeology-ada-manual.md`, `references/archaeology-forth-manual.md` — see `references/archaeology.md`.
+Archaeology Jail pins (manuals, not skills): `references/archaeology-pascal-manual.md`, `references/archaeology-asm-manual.md`, `references/archaeology-cobol-manual.md`, `references/archaeology-fortran-manual.md`, `references/archaeology-vhdl-manual.md`, `references/archaeology-ada-manual.md`, `references/archaeology-forth-manual.md`, `references/archaeology-lisp-manual.md` — see `references/archaeology.md`.

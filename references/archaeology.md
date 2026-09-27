@@ -21,11 +21,11 @@ survey artifacts
 ## Survey (Dowsing — read-only)
 
 - Extensions, magic bytes, encodings, Makefiles, `.dpr` `.pas` `.asm` `.s`
-  `.inc` `.cbl` `.for` `.f90` `.vhd` `.adb` `.ads` `.fs` `.fth` `.4th` `.rel` object files, disk images.
+  `.inc` `.cbl` `.for` `.f90` `.vhd` `.adb` `.ads` `.fs` `.fth` `.4th` `.lisp` `.lsp` `.cl` `.rel` object files, disk images.
 - For *this* repo, read `.emperor/survey.md` (silent boot already wrote it).
   For a *foreign* tree: `scripts/emperor identify <path>` or `scripts/emperor excavate <path>` (alias; Python core `scripts/lib/identify.py`; thin identify + excavate twins call the core directly).
   Quote the tail. Do not guess "this is probably Node" because you like Node.
-- Utterance router: `scripts/emperor route "hello.f90"` / `"gfortran …"` / `"hello.vhd"` / `"ghdl …"` / `"hello.adb"` / `"gnatmake …"` / `"hello.fs"` / `"pforth …"` (Python `scripts/lib/route.py`, triggers excavate patterns) maps Fortran, VHDL, Ada, and Forth fossils to excavate — same as `.pas` / `.asm` / `.cbl`.
+- Utterance router: `scripts/emperor route "hello.f90"` / `"gfortran …"` / `"hello.vhd"` / `"ghdl …"` / `"hello.adb"` / `"gnatmake …"` / `"hello.fs"` / `"pforth …"` / `"hello.lisp"` / `"clisp …"` (Python `scripts/lib/route.py`, triggers excavate patterns) maps Fortran, VHDL, Ada, Forth, and Common Lisp fossils to excavate — same as `.pas` / `.asm` / `.cbl`.
 - Skipped probes are listed. Absence of a modern test runner is not a defect.
 
 ## Hunt (Jail, aimed at manuals not skills)
@@ -38,7 +38,7 @@ dialect. Hunt:
 
 Extract **one heading** that unblocks *this* probe. Pin the URL + date +
 quoted paragraph in the ledger. Memory of "how Pascal works" is CONJECTURE.
-Worked examples (Jail pins): [archaeology-pascal-manual.md](archaeology-pascal-manual.md) — ISO 7185 §6.10 program heading for HELLO.PAS; [archaeology-asm-manual.md](archaeology-asm-manual.md) — NASM 2.16.03 §7.3 SECTION pin for FOO.ASM; [archaeology-cobol-manual.md](archaeology-cobol-manual.md) — GnuCOBOL Programmer’s Guide §4 IDENTIFICATION DIVISION / PROGRAM-ID for HELLO.CBL; [archaeology-fortran-manual.md](archaeology-fortran-manual.md) — GNU Fortran Compiler §2.2 free-form dialect / `.f90` for HELLO.F90. [archaeology-vhdl-manual.md](archaeology-vhdl-manual.md) — GHDL Invoking GHDL Analysis/Elaboration/Run for HELLO.VHD; [archaeology-ada-manual.md](archaeology-ada-manual.md) — GNAT User's Guide Building with gnatmake for HELLO.ADB. [archaeology-forth-manual.md](archaeology-forth-manual.md) — pForth README How to Run INCLUDE / `pforth myprogram.fth` for HELLO.FS.
+Worked examples (Jail pins): [archaeology-pascal-manual.md](archaeology-pascal-manual.md) — ISO 7185 §6.10 program heading for HELLO.PAS; [archaeology-asm-manual.md](archaeology-asm-manual.md) — NASM 2.16.03 §7.3 SECTION pin for FOO.ASM; [archaeology-cobol-manual.md](archaeology-cobol-manual.md) — GnuCOBOL Programmer’s Guide §4 IDENTIFICATION DIVISION / PROGRAM-ID for HELLO.CBL; [archaeology-fortran-manual.md](archaeology-fortran-manual.md) — GNU Fortran Compiler §2.2 free-form dialect / `.f90` for HELLO.F90. [archaeology-vhdl-manual.md](archaeology-vhdl-manual.md) — GHDL Invoking GHDL Analysis/Elaboration/Run for HELLO.VHD; [archaeology-ada-manual.md](archaeology-ada-manual.md) — GNAT User's Guide Building with gnatmake for HELLO.ADB. [archaeology-forth-manual.md](archaeology-forth-manual.md) — pForth README How to Run INCLUDE / `pforth myprogram.fth` for HELLO.FS. [archaeology-lisp-manual.md](archaeology-lisp-manual.md) — CLISP Non-Interactive (Batch) Mode lisp-file run for HELLO.LISP.
 
 ## Recover
 
