@@ -1,20 +1,54 @@
 #!/usr/bin/env bash
 # Local / GitHub / Linear work picker. Read-only unless EMPEROR_CONSENT_TRACKER=1.
+# Kanban statuses (WIP=1): [ ] ready · [~] active · [x] done · [!] blocked
 set -euo pipefail
 ROOT="$(cd "$(dirname "$0")/.." && pwd)"
 CMD="${1:-next}"
 QUEUE="${EMPEROR_QUEUE_FILE:-$ROOT/.emperor/queue.md}"
 mkdir -p "$(dirname "$QUEUE")"
-[[ -f "$QUEUE" ]] || printf '# Emperor queue\n\n- [ ] (empty — add a line or connect gh/Linear)\n' > "$QUEUE"
+[[ -f "$QUEUE" ]] || printf '# Emperor queue\n# WIP=1 — one [~] active at a time. Statuses: [ ] ready · [~] active · [x] done · [!] blocked\n\n- [ ] (empty — add a line or connect gh/Linear)\n' > "$QUEUE"
 
-list_local() {
+# Incomplete local rows: ready, active, blocked (not done).
+list_open() {
+  grep -E '^- \[([ ~!])\]' "$QUEUE" 2>/dev/null || true
+}
+
+list_ready() {
   grep -E '^- \[ \]' "$QUEUE" 2>/dev/null || true
+}
+
+list_active() {
+  grep -E '^- \[~\]' "$QUEUE" 2>/dev/null || true
+}
+
+promote_first_ready() {
+  # Promote first non-empty [ ] → [~]. Prints the new active line on stdout.
+  local tmp out
+  tmp=$(mktemp)
+  out=$(mktemp)
+  awk '
+    BEGIN { promoted = 0 }
+    /^- \[ \]/ && !/\(empty/ && !promoted {
+      sub(/^- \[ \]/, "- [~]")
+      promoted = 1
+      print > outf
+    }
+    { print }
+  ' outf="$out" "$QUEUE" > "$tmp"
+  mv "$tmp" "$QUEUE"
+  if [[ -s "$out" ]]; then
+    cat "$out"
+    rm -f "$out"
+    return 0
+  fi
+  rm -f "$out"
+  return 1
 }
 
 case "$CMD" in
   list)
     echo "== local $QUEUE =="
-    list_local || true
+    list_open || true
     if command -v gh >/dev/null 2>&1 && git -C "$ROOT" rev-parse --is-inside-work-tree >/dev/null 2>&1; then
       echo "== gh issues (open, limit 10) =="
       gh issue list --state open --limit 10 2>/dev/null || echo "gh issue list failed (auth or no remote)"
@@ -36,10 +70,20 @@ case "$CMD" in
       echo "NEXT linear: key present — agent must query Linear with client consent; script will not ship tokens."
       exit 0
     fi
-    item=$(list_local | head -n1 || true)
-    if [[ -n "${item:-}" && "$item" != *'(empty'* ]]; then
-      echo "NEXT local: $item"
+    # WIP=1: if an active task exists, return it — refuse a second active.
+    active=$(list_active | head -n1 || true)
+    if [[ -n "${active:-}" ]]; then
+      echo "NEXT local (active): $active"
+      echo "WIP=1: refuse second active — finish current or: queue done <substring>"
       exit 0
+    fi
+    item=$(list_ready | head -n1 || true)
+    if [[ -n "${item:-}" && "$item" != *'(empty'* ]]; then
+      promoted=$(promote_first_ready) || true
+      if [[ -n "${promoted:-}" ]]; then
+        echo "NEXT local: $promoted"
+        exit 0
+      fi
     fi
     echo "NEXT none: queue empty. Add a line to $QUEUE or pass a task."
     exit 2
@@ -55,7 +99,7 @@ case "$CMD" in
     pat="${1:-}"
     [[ -n "$pat" ]] || { echo "usage: queue.sh done <substring>" >&2; exit 2; }
     tmp=$(mktemp)
-    awk -v p="$pat" 'BEGIN{done=0} /- \[ \]/ && index($0,p) && !done {$0=gensub(/- \[ \]/,"- [x]",1); done=1} {print}' "$QUEUE" > "$tmp"
+    awk -v p="$pat" 'BEGIN{done=0} /- \[[ ~!]\]/ && index($0,p) && !done { sub(/- \[[ ~!]\]/, "- [x]"); done=1 } {print}' "$QUEUE" > "$tmp"
     mv "$tmp" "$QUEUE"
     echo "CHECKED: $pat"
     ;;
