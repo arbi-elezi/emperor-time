@@ -1,5 +1,19 @@
 # Changelog
 
+## 0.4.28
+- Executing-plans HARD-GATE leaf: Superpowers `executing-plans` → Continuous execution / Four stops / Rulings not stalls / Task Loop / Completion contract only, adapted into `skills/emperor-build/executing-plans-checklist.md` (Chain Jail extract-aspect)
+- Python core `scripts/lib/execute.py` prints EXECUTE/STEP/MUST card, rejects step skips (`--advance`), hard-gates check-in theater (`--reject-checkin`); thin `execute.sh` / `execute.ps1`; `emperor execute` on bash/ps1/zsh/cmd peers
+- emperor-build MUST the checklist for inline plan runs; catalog + navigation point local-first; eval locks card + skip rejection + reject-checkin
+- Hygiene: backfill CHANGELOG 0.4.27 (missed on #44); `emperor.cmd` gains missed `receive` peer alongside `execute`
+- Plugin, marketplace, and SKILL.md at 0.4.28
+
+## 0.4.27
+- Receive-review HARD-GATE leaf: Superpowers `receiving-code-review` → The Response Pattern / Forbidden Responses / When To Push Back only, adapted into `skills/emperor-verify/receive-review-checklist.md` (Chain Jail extract-aspect)
+- Python core `scripts/lib/receive.py` prints RECEIVE/STEP/MUST card, rejects step skips (`--advance`), hard-gates blind implement (`--reject-blind-implement`); thin `receive.sh` / `receive.ps1`; `emperor receive` on bash/ps1/zsh peers
+- emperor-verify MUST the checklist before implementing review feedback; catalog + bakeoff + honesty name the leaf; eval locks card + skip rejection + reject-blind-implement
+- Plugin, marketplace, and SKILL.md at 0.4.27
+
+
 ## 0.4.26
 - Dowse Python core: `scripts/lib/dowse.py` owns read-only agent roster scan (PATH detect, bounded --version / auth probes, table + `--as-json`)
 - Thin `dowse.sh` / `dowse.ps1` twins — closes bash↔ps1 twin drift (ps1 had `-AsJson` + Binary/Headless/SignIn metadata; bash was table-only)

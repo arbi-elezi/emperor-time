@@ -193,6 +193,7 @@ def run_evals(root: Path) -> int:
         "author",
         "evidence",
         "receive",
+        "execute",
     ):
         h.need(f"scripts/{pair}.sh")
         h.need(f"scripts/{pair}.ps1")
@@ -1158,6 +1159,65 @@ def run_evals(root: Path) -> int:
     _, recv_sh = h.run_sh("scripts/receive.sh")
     if not re.search(r"^RECEIVE checklist=yes", recv_sh, re.M):
         h.fail_msg("receive.sh missing checklist card")
+
+    # execute-plans
+    h.section("executing-plans / execute HARD-GATE leaf")
+    h.need("skills/emperor-build/executing-plans-checklist.md")
+    h.need("scripts/lib/execute.py")
+    h.need("scripts/execute.sh")
+    h.need("scripts/execute.ps1")
+    h.bash_n("scripts/execute.sh", "execute.sh syntax")
+    h.py_compile("scripts/lib/execute.py", "execute.py compile")
+    h.require_contains("execute.py", "scripts/execute.sh", "execute.sh does not call execute.py")
+    h.require_contains("execute.py", "scripts/execute.ps1", "execute.ps1 does not call execute.py")
+    h.require_contains("execute|", "scripts/emperor", "emperor bash missing execute")
+    h.require_contains("'execute'", "scripts/emperor.ps1", "emperor.ps1 missing execute")
+    h.require_contains(
+        "executing-plans-checklist.md",
+        "skills/emperor-build/SKILL.md",
+        "emperor-build missing executing-plans leaf",
+    )
+    h.require_contains(
+        "HARD-GATE",
+        "skills/emperor-build/executing-plans-checklist.md",
+        "execute leaf missing HARD-GATE heading",
+    )
+    h.require_contains(
+        "executing-plans",
+        "skills/emperor-build/executing-plans-checklist.md",
+        "execute leaf missing source skill",
+    )
+    _, exec_out = h.run_py("scripts/lib/execute.py")
+    if not re.search(r"^EXECUTE checklist=yes", exec_out, re.M):
+        h.fail_msg("execute missing checklist=yes")
+    if not re.search(r"^STEP 1 ", exec_out, re.M):
+        h.fail_msg("execute missing STEP 1")
+    if not re.search(r"^STEP 6 ", exec_out, re.M):
+        h.fail_msg("execute missing STEP 6")
+    if not re.search(r"^MUST:", exec_out, re.M):
+        h.fail_msg("execute missing MUST line")
+    if "NO_CHECKIN_THEATER_FOUR_STOPS_ONLY" not in exec_out:
+        h.fail_msg("execute missing iron law token")
+    rc, _ = h.run_py("scripts/lib/execute.py", "--advance", "1", "3")
+    if rc == 0:
+        h.fail_msg("execute should reject step skip 1→3")
+    else:
+        h.pass_msg("execute rejects skip 1→3")
+    _, adv_ok = h.run_py("scripts/lib/execute.py", "--advance", "2", "3")
+    if not re.search(r"^ADVANCE OK", adv_ok, re.M):
+        h.fail_msg("execute 2→3 should OK")
+    rc, _ = h.run_py("scripts/lib/execute.py", "--reject-checkin")
+    if rc == 0:
+        h.fail_msg("execute --reject-checkin should exit non-zero")
+    else:
+        _, reject = h.run_py("scripts/lib/execute.py", "--reject-checkin")
+        if not re.search(r"^REJECT CHECKIN:", reject, re.M):
+            h.fail_msg("reject-checkin missing REJECT line")
+        else:
+            h.pass_msg("execute --reject-checkin hard-gates check-in theater")
+    _, exec_sh = h.run_sh("scripts/execute.sh")
+    if not re.search(r"^EXECUTE checklist=yes", exec_sh, re.M):
+        h.fail_msg("execute.sh missing checklist card")
 
 
     # ---- done probes (Python core) ----

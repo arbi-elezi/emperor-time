@@ -9,7 +9,7 @@ description: >-
   waiting to be told.
 license: MIT
 metadata:
-  version: 0.4.27
+  version: 0.4.28
   homepage: https://github.com/arbi-elezi/emperor-time
   standard: Agent Skills (SKILL.md)
 ---
@@ -70,7 +70,7 @@ client to say "emperor time".
 | Lost / ancient / unmarked / Pascal / ASM / ROM | `skills/emperor-excavate/SKILL.md` then Dowsing `excavate.md` |
 | Vague ask / intake | `skills/emperor-scope/SKILL.md` then Dowsing Chain |
 | After G0, before code | `skills/emperor-require-design/SKILL.md` — grill HARD-GATE then work-order |
-| Implementing | `skills/emperor-build/SKILL.md` + `skills/emperor-tdd/SKILL.md` |
+| Implementing / execute plan inline | `skills/emperor-build/SKILL.md` (+ `executing-plans-checklist.md`) + `skills/emperor-tdd/SKILL.md` |
 | Isolated git workspace | `skills/emperor-worktree/SKILL.md` |
 | About to say done / tests pass / review / acting on review feedback | `skills/emperor-verify/SKILL.md` + Judgment Chain |
 | Ship / finish / PR / merge | `skills/emperor-forge/SKILL.md` (+ `finish-menu.md`) |
@@ -102,6 +102,7 @@ Jail extra: no captured skill runs on real work until trial + sha256 pin + quote
 - `scripts/emperor done <task-dir>` must exit 0 before the word done.
 - `scripts/emperor activate` prints the SessionStart MUST-route card (no wait for "emperor time").
 - `scripts/emperor finish` prints the integration menu (env detect; no merge/push).
+- `scripts/emperor execute` prints the inline plan-execution card (no check-in theater; four stops only).
 - `scripts/emperor forge <task-dir>` refuses without consent.
 - Resume from disk (`skills/emperor-resume/SKILL.md`) instead of restating the session.
 - Do not invent a stack. `references/language-agnostic.md`.

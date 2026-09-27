@@ -6,7 +6,7 @@ description: >-
   Failing probe first. Tripwires observed before flags/APIs/paths are asserted.
 license: MIT
 metadata:
-  version: 0.4.10
+  version: 0.4.28
   part-of: emperor-time
 ---
 
@@ -26,3 +26,17 @@ metadata:
 8. Run `scripts/gate.sh g3 <task-dir>`.
 9. If enlisting another agent, stop and load `skills/emperor-dispatch/SKILL.md`.
 10. If something broke, load `skills/emperor-heal/SKILL.md` (Holy Chain).
+
+## MUST — executing-plans checklist for inline plan runs
+
+When executing a work-order / plan *inline* (client chose inline execution, or
+no subagent tool) — before Task 1 and between tasks — open
+`skills/emperor-build/executing-plans-checklist.md`
+(Chain Jail leaf from Superpowers `executing-plans` → Continuous execution /
+Four stops / Rulings not stalls / Task Loop / Completion contract only)
+and/or run `scripts/emperor execute` (prints the mechanical EXECUTE / STEP /
+MUST card).
+
+No check-in theater between tasks. Stop only for the four named stops.
+Do not load whole `executing-plans` or `subagent-driven-development`;
+ET + emperor-build orchestrate.

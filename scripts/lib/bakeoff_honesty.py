@@ -41,6 +41,11 @@ LEAVES: list[tuple[str, str, tuple[str, ...]]] = [
         ("receive-review", "receive"),
     ),
     (
+        "execute-plans",
+        "skills/emperor-build/executing-plans-checklist.md",
+        ("execute", "executing-plans"),
+    ),
+    (
         "author",
         "chains/chain-jail/authoring-checklist.md",
         ("authoring",),
