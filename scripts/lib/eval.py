@@ -1979,8 +1979,12 @@ def run_evals(root: Path) -> int:
     h.require_contains("session_discovery.py", "evals/bakeoff.md", "bakeoff.md missing session_discovery.py inventory")
     h.require_contains("session_discovery.py", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing session_discovery.py")
     h.require_contains("0.4.36", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing 0.4.36 tip")
-    h.require_contains("0.4.36", ".claude-plugin/plugin.json", "plugin.json not at 0.4.36")
     h.require_contains("0.4.36", "CHANGELOG.md", "CHANGELOG missing 0.4.36")
+    h.require_contains("diagnose.py", "evals/bakeoff.md", "bakeoff.md missing diagnose.py inventory")
+    h.require_contains("diagnose.py", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing diagnose.py")
+    h.require_contains("0.4.37", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing 0.4.37 tip")
+    h.require_contains("0.4.37", ".claude-plugin/plugin.json", "plugin.json not at 0.4.37")
+    h.require_contains("0.4.37", "CHANGELOG.md", "CHANGELOG missing 0.4.37")
 
     # session-discovery
     h.section("session-discovery locate HARD-GATE leaf")
@@ -2104,6 +2108,143 @@ def run_evals(root: Path) -> int:
         h.fail_msg("route.py session discovery → heal")
     else:
         h.pass_msg("route.py session discovery → emperor-heal")
+
+    # diagnose (intake + citation HARD-GATE)
+    h.section("diagnosing HARD-GATE leaf")
+    h.need("skills/emperor-heal/diagnosing.md")
+    h.need("references/diagnosing.md")
+    h.need("scripts/lib/diagnose.py")
+    h.need("scripts/diagnose.sh")
+    h.need("scripts/diagnose.ps1")
+    h.bash_n("scripts/diagnose.sh", "diagnose.sh syntax")
+    h.py_compile("scripts/lib/diagnose.py", "diagnose.py compile")
+    h.require_contains(
+        "diagnose.py",
+        "scripts/diagnose.sh",
+        "diagnose.sh does not call diagnose.py",
+    )
+    h.require_contains(
+        "diagnose.py",
+        "scripts/diagnose.ps1",
+        "diagnose.ps1 does not call diagnose.py",
+    )
+    h.require_contains(
+        "diagnose",
+        "scripts/emperor",
+        "emperor bash missing diagnose",
+    )
+    h.require_contains(
+        "'diagnose'",
+        "scripts/emperor.ps1",
+        "emperor.ps1 missing diagnose",
+    )
+    h.require_contains(
+        "diagnose",
+        "scripts/emperor.cmd",
+        "emperor.cmd missing diagnose",
+    )
+    h.require_contains(
+        "diagnose",
+        "scripts/emperor.zsh",
+        "emperor.zsh missing diagnose",
+    )
+    h.require_contains(
+        "diagnosing.md",
+        "skills/emperor-heal/SKILL.md",
+        "emperor-heal missing diagnosing leaf",
+    )
+    h.require_contains(
+        "HARD-GATE",
+        "skills/emperor-heal/diagnosing.md",
+        "diagnosing leaf missing HARD-GATE heading",
+    )
+    h.require_contains(
+        "diagnosing-superpowers",
+        "skills/emperor-heal/diagnosing.md",
+        "diagnosing leaf missing source skill",
+    )
+    h.require_contains(
+        "obra/superpowers",
+        "references/diagnosing.md",
+        "diagnosing reference missing obra/superpowers cite",
+    )
+    h.require_contains(
+        "2026-09-27",
+        "references/diagnosing.md",
+        "diagnosing reference missing access date",
+    )
+    h.require_contains(
+        "Intake before analysis",
+        "references/diagnosing.md",
+        "diagnosing reference missing intake iron",
+    )
+    h.require_contains(
+        "diagnose the session",
+        "evals/triggers.json",
+        "triggers missing diagnose the session phrase",
+    )
+    h.require_contains(
+        "intake before analysis",
+        "evals/triggers.json",
+        "triggers missing intake before analysis phrase",
+    )
+    _, diag_out = h.run_py("scripts/lib/diagnose.py")
+    if not re.search(r"^DIAGNOSE checklist=yes", diag_out, re.M):
+        h.fail_msg("diagnose missing checklist=yes")
+    if not re.search(r"^INTAKE field=", diag_out, re.M):
+        h.fail_msg("diagnose missing INTAKE line")
+    if not re.search(r"^CITE rule=", diag_out, re.M):
+        h.fail_msg("diagnose missing CITE line")
+    if not re.search(r"^MUST:", diag_out, re.M):
+        h.fail_msg("diagnose missing MUST line")
+    if "NO_FINDING_WITHOUT_PATH_LINE_CITATION" not in diag_out:
+        h.fail_msg("diagnose missing citation iron law token")
+    if "INTAKE_BEFORE_ANALYSIS" not in diag_out:
+        h.fail_msg("diagnose missing intake iron law token")
+    rc, _ = h.run_py("scripts/lib/diagnose.py", "--reject-uncited")
+    if rc == 0:
+        h.fail_msg("diagnose --reject-uncited should exit non-zero")
+    else:
+        _, reject = h.run_py("scripts/lib/diagnose.py", "--reject-uncited")
+        if not re.search(r"^REJECT UNCITED:", reject, re.M):
+            h.fail_msg("reject-uncited missing REJECT line")
+        else:
+            h.pass_msg("diagnose --reject-uncited hard-gates")
+    rc, _ = h.run_py("scripts/lib/diagnose.py", "--reject-skip-intake")
+    if rc == 0:
+        h.fail_msg("diagnose --reject-skip-intake should exit non-zero")
+    else:
+        _, reject = h.run_py("scripts/lib/diagnose.py", "--reject-skip-intake")
+        if not re.search(r"^REJECT SKIP INTAKE:", reject, re.M):
+            h.fail_msg("reject-skip-intake missing REJECT line")
+        else:
+            h.pass_msg("diagnose --reject-skip-intake hard-gates")
+    rc, cite_ok = h.run_py(
+        "scripts/lib/diagnose.py",
+        "--check-citation",
+        "scripts/lib/diagnose.py:12",
+    )
+    if rc != 0 or "CITE OK:" not in cite_ok:
+        h.fail_msg("diagnose --check-citation should accept path:line")
+    else:
+        h.pass_msg("diagnose --check-citation accepts path:line")
+    rc, cite_bad = h.run_py(
+        "scripts/lib/diagnose.py",
+        "--check-citation",
+        "obviously broken with no cite",
+    )
+    if rc == 0 or "CITE FAIL:" not in cite_bad:
+        h.fail_msg("diagnose --check-citation should reject uncited text")
+    else:
+        h.pass_msg("diagnose --check-citation rejects uncited text")
+    _, diag_sh = h.run_sh("scripts/diagnose.sh")
+    if not re.search(r"^DIAGNOSE checklist=yes", diag_sh, re.M):
+        h.fail_msg("diagnose.sh missing checklist card")
+    _, rout_diag = h.run_py("scripts/lib/route.py", "diagnose the session")
+    if "emperor-heal" not in rout_diag:
+        h.fail_msg("route.py diagnose the session → heal")
+    else:
+        h.pass_msg("route.py diagnose the session → emperor-heal")
 
 
     if h.fail != 0:

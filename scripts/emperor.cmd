@@ -6,7 +6,7 @@ chcp 65001 >nul
 set "HERE=%~dp0"
 set "EMPEROR_ENCODING=UTF-8"
 if "%~1"=="" (
-  echo usage: emperor.cmd ^<done^|gate^|eval^|review-pack^|dowse^|install^|worktree^|queue^|forge^|finish^|activate^|boot^|identify^|route^|heal^|grill^|tdd^|iso^|review^|author^|evidence^|receive^|execute^|subagent^|parallel^|excavate^|session-discovery^> [args]
+  echo usage: emperor.cmd ^<done^|gate^|eval^|review-pack^|dowse^|install^|worktree^|queue^|forge^|finish^|activate^|boot^|identify^|route^|heal^|grill^|tdd^|iso^|review^|author^|evidence^|receive^|execute^|subagent^|parallel^|excavate^|session-discovery^|diagnose^> [args]
   exit /b 2
 )
 if /I "%~1"=="host" (

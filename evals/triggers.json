@@ -139,6 +139,22 @@
     {
       "phrase": "session discovery",
       "skill": "emperor-heal"
+    },
+    {
+      "phrase": "diagnose the session",
+      "skill": "emperor-heal"
+    },
+    {
+      "phrase": "why did the session fail",
+      "skill": "emperor-heal"
+    },
+    {
+      "phrase": "intake before analysis",
+      "skill": "emperor-heal"
+    },
+    {
+      "phrase": "no citation no finding",
+      "skill": "emperor-heal"
     }
   ],
   "must_not_fire_master_wholesale": [
@@ -235,16 +251,24 @@
         "where is the session log",
         "session discovery",
         "session transcript",
-        "locate session"
+        "locate session",
+        "diagnose the session",
+        "why did the session fail",
+        "intake before analysis",
+        "no citation no finding",
+        "diagnose session"
       ],
       "tags": [
         "heal",
         "red-build",
         "session-discovery",
-        "transcript"
+        "transcript",
+        "diagnose",
+        "diagnosing",
+        "citation"
       ],
       "target": "skills/emperor-heal/SKILL.md",
-      "reason": "red build / derail \u2014 Holy Chain / session-discovery locate"
+      "reason": "red build / derail \u2014 Holy Chain / session-discovery locate / diagnosing intake+cite"
     },
     {
       "id": "verify",

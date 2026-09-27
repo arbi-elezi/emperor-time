@@ -1,56 +1,57 @@
-# Task Ledger — emperor-time self-application (session-discovery Python core)
+# Task Ledger — emperor-time self-application (diagnosing HARD-GATE)
 
-- **Task:** Add session-discovery Python core + thin twins + heal leaf + reference + route/eval lockstep so diagnosing can later HARD-GATE on verified transcript paths without vendoring whole diagnosing-superpowers.
-- **Client quote:** Soft-ET consented Worthy Spend after v0.4.35 archaeology VHDL. Superpowers method leaves mostly closed. Remaining Superpowers gap: diagnosing-superpowers, blocked on session-discovery. Ship session-discovery Python core (v0.4.36).
+- **Task:** Add diagnosing HARD-GATE Python core + thin twins + heal leaf + reference + route/eval lockstep for citation iron law + intake-before-analysis, without vendoring whole diagnosing-superpowers.
+- **Client quote:** Soft-ET consented Worthy Spend after v0.4.36 session-discovery. Remaining Superpowers gap: diagnosing-superpowers HARD-GATEs (citation + intake). Ship diagnose leaf (v0.4.37). Do not vendor full skill.
 - **Origin:** assigned
 - **Size:** standard
-- **Governing files:** SKILL.md → emperor-heal → session-discovery.md → session_discovery.py → references/session-discovery.md
-- **Tip at spend:** v0.4.36 (branch `et-manager/session-discovery-python-core`)
+- **Governing files:** SKILL.md → emperor-heal → diagnosing.md → diagnose.py → references/diagnosing.md
+- **Tip at spend:** v0.4.37 (branch `et-manager/diagnosing-hard-gate`)
 
 ## G0
-Quoted ask above. Ambiguity resolved: ship session-discovery Python core. Skip full diagnosing-emperor skill, embeddings, emperor.py dispatcher this turn. Do not re-announce or re-ship #33–#52 leaves (gate/identify/finish/eval/done/queue/forge/review-pack/dowse/receive/execute/subagent/parallel/install/boot.py/host.py/worktree.py/excavate thin-alias/archaeology VHDL/…).
+Quoted ask above. Ambiguity resolved: ship diagnosing HARD-GATE (intake + citation) only. Skip full diagnosing-emperor skill, analyst prompts, templates, bundles, embeddings, emperor.py dispatcher this turn. Do not re-announce or re-ship #33–#53 leaves.
 
 ## G1 Acceptance criteria
-1. SKILL.md version ≥ 0.4.36; `scripts/lib/session_discovery.py` prints SESSION / PATH / STATUS / MUST card.
-2. Thin `scripts/session-discovery.sh` / `session-discovery.ps1` exec the Python core; emperor peers dispatch `session-discovery`.
-3. Honesty: VERIFIED only when path exists; ABSENT/UNVERIFIABLE otherwise; `--reject-guess` HARD-GATE exit non-zero.
-4. Skill leaf `skills/emperor-heal/session-discovery.md` + `references/session-discovery.md` cite obra/superpowers MIT locate aspect (URL + access date 2026-09-27).
-5. Route triggers include session transcript locate phrases → emperor-heal; `route.py` matches.
-6. Plugin/marketplace/SKILL lockstep 0.4.36; bakeoff + honesty name session_discovery.py; CHANGELOG has 0.4.36.
+1. SKILL.md version ≥ 0.4.37; `scripts/lib/diagnose.py` prints DIAGNOSE / INTAKE / CITE / MUST card.
+2. Thin `scripts/diagnose.sh` / `diagnose.ps1` exec the Python core; emperor peers dispatch `diagnose`.
+3. Honesty: `--reject-uncited` and `--reject-skip-intake` HARD-GATE exit non-zero; `--check-citation` accepts path:line only.
+4. Skill leaf `skills/emperor-heal/diagnosing.md` + `references/diagnosing.md` cite obra/superpowers MIT Core principle + Intake before analysis (URL + access date 2026-09-27).
+5. Route triggers include diagnose phrases → emperor-heal; `route.py` matches.
+6. Plugin/marketplace/SKILL lockstep 0.4.37; bakeoff + honesty name diagnose.py; CHANGELOG has 0.4.37.
 7. Eval locks new files/version/triggers; suite green.
 8. Live defect-rate vs Superpowers stays **UNVERIFIABLE**.
 
 ## Out of scope
-- Full diagnosing-emperor / diagnosing-superpowers skill (analyst prompts, case/report templates, bundles)
+- Full diagnosing-emperor / diagnosing-superpowers skill (analyst prompts, case/report templates, bundles, GitHub issues, scrub)
 - emperor.py dispatcher / route embeddings
 - Mutating or scrubbing session transcript files
-- Rewriting resume / activate SessionStart paths
+- Rewriting session-discovery / debug-four-phases
 - Live multi-vendor bake-off numbers
-- Redo of #33–#52 (including VHDL archaeology / excavate thin-alias / worktree.py / boot.py / …)
+- Redo of #33–#53
 
 ## G2
 Rejected alternative: vendor whole diagnosing-superpowers under skills/.
-Why: standing rule — extract locate HARD-GATE only; full skill is prompts+templates ET does not need yet.
+Why: standing rule — extract citation + intake HARD-GATEs only; full skill is prompts+templates ET does not need yet.
 
 Rejected alternative: emperor.py unified dispatcher.
-Why: larger surface than one locate leaf; portability twins still required; out of scope.
+Why: larger surface than one HARD-GATE leaf; out of scope.
 
 Rejected alternative: another archaeology Jail pin.
-Why: VHDL just closed; diagnosing is the named remaining Superpowers gap and session-discovery unblocks it.
+Why: diagnosing is the named remaining Superpowers gap; session-discovery already unblocked it.
 
 ## G3
-session_discovery.py + thin twins + heal leaf + reference + triggers/eval/honesty/bakeoff lockstep on `et-manager/session-discovery-python-core`. See git log.
+diagnose.py + thin twins + heal leaf + reference + triggers/eval/honesty/bakeoff lockstep on `et-manager/diagnosing-hard-gate`. See git log.
 
 ## G4
 Claims:
 
 | Claim | Status | Evidence |
 |---|---|---|
-| SKILL.md is 0.4.36 orchestrator | TESTED | frontmatter `version: 0.4.36` on branch HEAD |
-| session_discovery.py prints checklist card | TESTED | `SESSION checklist=yes` + PATH/STATUS/MUST |
-| --reject-guess hard-gates | TESTED | exit non-zero + `REJECT GUESS:` line |
-| Thin twins call Python core | TESTED | session-discovery.sh/ps1 contain session_discovery.py |
-| Route session discovery → heal | TESTED | route.py + triggers.json |
+| SKILL.md is 0.4.37 orchestrator | TESTED | frontmatter `version: 0.4.37` on branch HEAD |
+| diagnose.py prints checklist card | TESTED | `DIAGNOSE checklist=yes` + INTAKE/CITE/MUST |
+| --reject-uncited / --reject-skip-intake hard-gate | TESTED | exit non-zero + REJECT lines |
+| --check-citation path:line | TESTED | OK with path:line; FAIL without |
+| Thin twins call Python core | TESTED | diagnose.sh/ps1 contain diagnose.py |
+| Route diagnose → heal | TESTED | route.py + triggers.json |
 | Eval suite still green | TESTED | `bash scripts/eval.sh` → EVALS PASSED |
 | Live defect-rate vs Superpowers | UNVERIFIABLE | no shared-task three-vendor bake-off run in this session |
 
@@ -79,4 +80,5 @@ PASS-WITH-CONDITIONS: local mechanism TESTED; live bake-off numbers UNVERIFIABLE
 - bash/ps1 worktree create twins reimplemented mutate path. Remediation: worktree.py (v0.4.33).
 - excavate thin aliases hopped identify.sh/ps1 instead of identify.py. Remediation: v0.4.34.
 - archaeology.md named `.vhd` and identify listed `*.vhd`/`*.vhdl` without fixture, Jail pin, route triggers, or eval lock. Remediation: v0.4.35.
-- diagnosing-superpowers blocked: ET lacked a mechanical session-discovery locate card with verified-path honesty. Remediation: this leaf (v0.4.36).
+- diagnosing-superpowers blocked: ET lacked a mechanical session-discovery locate card with verified-path honesty. Remediation: session_discovery.py (v0.4.36).
+- diagnosing-superpowers blocked: ET lacked mechanical intake-before-analysis + path:line citation HARD-GATEs after locate. Remediation: this leaf (v0.4.37).
