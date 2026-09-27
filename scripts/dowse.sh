@@ -59,7 +59,7 @@ printf '%-14s %-15s %-28s %s\n' 'AGENT' 'STATUS' 'VERSION' 'AUTH'
 printf '%-14s %-15s %-28s %s\n' '-----' '------' '-------' '----'
 
 DETECTED=0
-while IFS='|' read -r name bin authcmd login; do
+while IFS='|' read -r name bin authcmd _; do
   status='NOT INSTALLED'; version=''; auth='unchecked'
   if command -v "$bin" >/dev/null 2>&1; then
     status='DETECTED'; DETECTED=$((DETECTED+1))

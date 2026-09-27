@@ -13,3 +13,12 @@ jobs:
       - uses: actions/checkout@v4
       - name: Structural evals
         run: bash scripts/eval.sh
+
+  shellcheck:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install shellcheck
+        run: sudo apt-get update -qq && sudo apt-get install -y shellcheck
+      - name: ShellCheck scripts
+        run: shellcheck -S warning scripts/*.sh scripts/emperor
