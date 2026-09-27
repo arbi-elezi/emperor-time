@@ -6,7 +6,7 @@ description: >-
   Claude-specific. Writes .emperor/queue.md. Wraps Dowsing, does not replace it.
 license: MIT
 metadata:
-  version: 0.4.3
+  version: 0.4.23
   part-of: emperor-time
 ---
 
@@ -24,7 +24,7 @@ exists; finish or `queue done` first.
 | `[x]` | done |
 | `[!]` | blocked (optional; listed, never auto-picked) |
 
-`queue list` shows ready / active / blocked (skips empty placeholders). `queue next` returns the existing
+Python core: `scripts/lib/queue.py` (thin `scripts/queue.sh` / `queue.ps1`). `queue list` shows ready / active / blocked (skips empty placeholders). `queue next` returns the existing
 `[~]` if present (WIP refuse); otherwise promotes the first real ready `[ ]` → `[~]`.
 Empty queue = comment-only / no checkbox lines — `(empty…)` and parentheses-only titles are never promoted.
 `queue done <substring>` checks off `[ ]` / `[~]` / `[!]`.

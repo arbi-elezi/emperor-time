@@ -135,8 +135,11 @@ def run_evals(root: Path) -> int:
         "scripts/lib/finish.py",
         "scripts/lib/eval.py",
         "scripts/lib/done.py",
+        "scripts/lib/queue.py",
         "scripts/done.sh",
         "scripts/done.ps1",
+        "scripts/queue.sh",
+        "scripts/queue.ps1",
         "scripts/eval.sh",
         "scripts/eval.ps1",
         "scripts/emperor",
@@ -364,9 +367,31 @@ def run_evals(root: Path) -> int:
         else:
             h.pass_msg("route misses trivia")
 
-    # ---- queue empty UX ----
-    h.section("queue empty UX")
+    # ---- queue (Python core) + empty UX ----
+    h.section("queue (Python core) + empty UX")
+    h.need("scripts/lib/queue.py")
+    h.need("scripts/queue.sh")
+    h.need("scripts/queue.ps1")
     h.bash_n("scripts/queue.sh", "queue.sh syntax")
+    h.py_compile("scripts/lib/queue.py", "queue.py compile")
+    h.require_contains("lib/queue.py", "scripts/queue.sh", "queue.sh thin twin missing queue.py")
+    h.require_contains("lib/queue.py", "scripts/queue.ps1", "queue.ps1 thin twin missing queue.py")
+    queue_sh_lines = len((root / "scripts/queue.sh").read_text(encoding="utf-8").splitlines())
+    queue_ps_lines = len((root / "scripts/queue.ps1").read_text(encoding="utf-8").splitlines())
+    if queue_sh_lines > 20:
+        h.fail_msg("queue.sh should be thin twin (<=20 lines)")
+    if queue_ps_lines > 30:
+        h.fail_msg("queue.ps1 should be thin twin (<=30 lines)")
+    h.require_contains(
+        "scripts/lib/queue.py",
+        "references/software-factory.md",
+        "software-factory.md missing queue.py",
+    )
+    h.require_contains(
+        "queue.py",
+        "skills/emperor-queue/SKILL.md",
+        "emperor-queue skill missing queue.py",
+    )
     with tempfile.NamedTemporaryFile("w", encoding="utf-8", delete=False, suffix=".md") as qf:
         qpath = qf.name
         qf.write(
@@ -410,8 +435,39 @@ def run_evals(root: Path) -> int:
             h.fail_msg("placeholder queue file not promoted correctly")
         if not re.search(r"^- \[ \] \(empty", qbody, re.M):
             h.fail_msg("placeholder line should remain untouched")
+        # WIP=1 refuse second active
+        rc2, out2 = h.run_sh(
+            "scripts/queue.sh",
+            "next",
+            env={
+                "EMPEROR_QUEUE_SOURCE": "local",
+                "EMPEROR_QUEUE_FILE": qpath,
+            },
+        )
+        if rc2 != 0 or "WIP=1" not in out2 or "active" not in out2:
+            h.fail_msg("queue next should WIP-refuse while active exists")
+        else:
+            h.pass_msg("queue WIP=1 refuse")
+        # done substring
+        rc3, out3 = h.run_sh(
+            "scripts/queue.sh",
+            "done",
+            "widget",
+            env={
+                "EMPEROR_QUEUE_SOURCE": "local",
+                "EMPEROR_QUEUE_FILE": qpath,
+            },
+        )
+        if rc3 != 0 or "CHECKED:" not in out3:
+            h.fail_msg("queue done should CHECKED")
+        qbody2 = Path(qpath).read_text(encoding="utf-8")
+        if not re.search(r"^- \[x\] ship the widget", qbody2, re.M):
+            h.fail_msg("queue done should mark [x]")
+        else:
+            h.pass_msg("queue done marks [x]")
     finally:
         Path(qpath).unlink(missing_ok=True)
+    h.pass_msg("queue.py thin twins + empty UX + WIP + done")
 
     # ---- archaeology fixtures ----
     fixtures = [
@@ -1110,11 +1166,12 @@ def run_evals(root: Path) -> int:
         "evals/fixtures/this-upgrade.md",
         "this-upgrade.md missing UNVERIFIABLE",
     )
-    h.require_contains("0.4.21", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing 0.4.21 tip")
-    h.require_contains("done.py", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing done.py")
+    h.require_contains("0.4.23", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing 0.4.23 tip")
+    h.require_contains("queue.py", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing queue.py")
     h.require_contains("gate.py", "evals/bakeoff.md", "bakeoff.md missing gate.py inventory")
     h.require_contains("eval.py", "evals/bakeoff.md", "bakeoff.md missing eval.py inventory")
     h.require_contains("done.py", "evals/bakeoff.md", "bakeoff.md missing done.py inventory")
+    h.require_contains("queue.py", "evals/bakeoff.md", "bakeoff.md missing queue.py inventory")
 
     if h.fail != 0:
         print("EVALS FAILED")

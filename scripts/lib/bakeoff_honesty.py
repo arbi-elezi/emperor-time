@@ -59,6 +59,7 @@ LEAVES: list[tuple[str, str, tuple[str, ...]]] = [
         "scripts/emperor.zsh",
         ("emperor.zsh", "silent-boot"),
     ),
+    ("queue-py", "scripts/lib/queue.py", ("queue.py", "queue")),
 ]
 
 BAKEOFF = Path("evals/bakeoff.md")
