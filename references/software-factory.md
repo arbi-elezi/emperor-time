@@ -30,3 +30,5 @@ If `gh` is missing and the client consented to network tools, add the thinnest
 wrapper that lists issues. If Linear is the tracker and `LINEAR_API_KEY` is
 set by the *client*, use it. Never invent a tracker when `.emperor/queue.md`
 works. Never store tokens in the repo.
+
+Compare to other SDLC models → `references/sdlc-comparison.md`.
