@@ -44,5 +44,6 @@ scarcity / social-proof / unity.
 - Whole `writing-skills` skill vendoring
 - Authoring iron-law / skill RGR (sibling leaf `authoring-checklist.md`)
 - Testing-skills combined pressure (sibling leaf `testing-skills.md`)
+- Skill-discovery SDO description triggers (sibling leaf `skill-discovery.md`)
 - graphviz / anthropic-best-practices dumps
 - embeddings / emperor.py dispatcher

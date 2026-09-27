@@ -26,8 +26,12 @@ metadata:
    practices, open `chains/chain-jail/persuasion-principles.md` and/or run
    `scripts/emperor persuasion` (HARD-GATE: Authority + Commitment + boost).
    Hedge language → `scripts/emperor persuasion --reject-hedge`.
-6. **Pin + consent + trial are mandatory** before the captured skill may fire:
+6. **Skill-discovery (SDO) companion:** when writing YAML `description`,
+   open `chains/chain-jail/skill-discovery.md` and/or run
+   `scripts/emperor sdo` (HARD-GATE: description = when to use, not workflow).
+   Workflow summary → `scripts/emperor sdo --reject-workflow-summary`.
+7. **Pin + consent + trial are mandatory** before the captured skill may fire:
    read `chains/chain-jail/pin-and-consent.md` then `trial-and-register.md`.
-7. Captured skills live in `.emperor/captured-skills/` with provenance headers.
-8. A captured skill that fails trial stays quarantined. Using it is a Vow of
+8. Captured skills live in `.emperor/captured-skills/` with provenance headers.
+9. A captured skill that fails trial stays quarantined. Using it is a Vow of
    Evidence + Vow of Consent breach.

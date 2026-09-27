@@ -23,10 +23,15 @@ Hard rules (mechanical):
 2. Advance with `scripts/emperor author --advance N N+1` (skips fail).
 3. Jumping to skill prose → `scripts/emperor author --reject-untested`
    (HARD-GATE exit 1).
-4. Pressure-testing before trial → open `chains/chain-jail/testing-skills.md`
+4. Description triggers (SDO) → open `chains/chain-jail/skill-discovery.md`
+   and/or run `scripts/emperor sdo` (description = when to use, not workflow).
+   Workflow summary in description → `scripts/emperor sdo --reject-workflow-summary`.
+5. Critical-practice wording → open `chains/chain-jail/persuasion-principles.md`
+   and/or run `scripts/emperor persuasion` (Authority + Commitment + boost).
+6. Pressure-testing before trial → open `chains/chain-jail/testing-skills.md`
    and/or run `scripts/emperor skill-test` (combined pressure / watch baseline).
    Academic-only → `scripts/emperor skill-test --reject-academic-only`.
-4. Then continue with the anatomy steps below; hand to trial still mandatory.
+7. Then continue with the anatomy steps below; hand to trial still mandatory.
 
 ## The anatomy (what every authored skill contains)
 
@@ -39,17 +44,20 @@ Hard rules (mechanical):
 
 ## Step 1 — Write the description FIRST
 
-The description is the router. Write it before the body, in this grammar:
+The description is the router. Write it before the body. Prefer the
+SDO grammar (see `skill-discovery.md` / `scripts/emperor sdo`):
 
-> *What it does* (verb-first, concrete) + *when to use it* (the situations and
-> literal phrases that should trigger it).
+> *Use when...* (situations, symptoms, and literal phrases that should
+> trigger it). Name the capability hole; do **not** summarize the skill's
+> process or workflow in the description (agents follow that shortcut and
+> skip the body).
 
 Test: read your description as if you were the harness holding 40 skills.
 Would it fire on the client's phrasing from the task that spawned this? Would
 it *not* fire on neighboring capabilities that other skills own? A
 description that fires always or never is the most common authored-skill
-defect. (Second most common: describing the implementation instead of the
-capability.)
+defect. (Second most common: summarizing the workflow instead of the
+trigger.)
 
 ## Step 2 — Write the body as procedure, not essay
 
