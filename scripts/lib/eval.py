@@ -1638,6 +1638,79 @@ def run_evals(root: Path) -> int:
         h.pass_msg("dowse.sh AsJson parity")
     h.pass_msg("dowse.py thin twins + AsJson richer roster")
 
+    # ---- install.py harness deploy ----
+    h.section("install.py Python core")
+    h.need("scripts/lib/install.py")
+    h.need("scripts/install.sh")
+    h.need("scripts/install.ps1")
+    h.bash_n("scripts/install.sh", "install.sh syntax")
+    h.py_compile("scripts/lib/install.py", "install.py compile")
+    h.require_contains(
+        "lib/install.py",
+        "scripts/install.sh",
+        "install.sh thin twin missing install.py",
+    )
+    h.require_contains(
+        "lib/install.py",
+        "scripts/install.ps1",
+        "install.ps1 thin twin missing install.py",
+    )
+    h.require_contains("install|", "scripts/emperor", "emperor bash missing install")
+    h.require_contains("'install'", "scripts/emperor.ps1", "emperor.ps1 missing install")
+    for harness in (
+        "claude-code",
+        "kimi",
+        "codex",
+        "opencode",
+        "generic-agents",
+    ):
+        h.require_contains(
+            harness,
+            "scripts/lib/install.py",
+            f"install.py missing harness {harness}",
+        )
+    rc, dry = h.run_py(
+        "scripts/lib/install.py", "claude-code", "user", "--dry-run"
+    )
+    if rc != 0:
+        h.fail_msg("install.py --dry-run should exit 0")
+    if "=== EMPEROR TIME :: install ===" not in dry:
+        h.fail_msg("install.py dry-run missing banner")
+    if "(dry run - nothing copied)" not in dry:
+        h.fail_msg("install.py dry-run missing dry marker")
+    if "target :" not in dry:
+        h.fail_msg("install.py dry-run missing target")
+    rc2, dry2 = h.run_sh(
+        "scripts/install.sh", "opencode", "user", "--dry-run"
+    )
+    if rc2 != 0 or "(dry run - nothing copied)" not in dry2:
+        h.fail_msg("install.sh --dry-run should match python core")
+    else:
+        h.pass_msg("install.sh dry-run parity")
+    rc3, err = h.run_py("scripts/lib/install.py", "nope-harness", "--dry-run")
+    # argparse choices → exit 2 typically via SystemExit from parse_args
+    if rc3 == 0:
+        h.fail_msg("install.py unknown harness should fail")
+    else:
+        h.pass_msg("install.py rejects unknown harness")
+    rc4, out4 = h.run_py(
+        "scripts/lib/install.py",
+        "generic-agents",
+        "user",
+        "--with-chain-skills",
+        "--dry-run",
+    )
+    if rc4 != 0 or "chain  :" not in out4 or "planned" not in out4:
+        h.fail_msg("install.py --with-chain-skills dry-run should list planned chains")
+    else:
+        h.pass_msg("install.py with-chain-skills dry-run lists chains")
+    h.require_contains(
+        "scripts/emperor dowse",
+        "scripts/lib/install.py",
+        "install.py missing host-agnostic dowse tip",
+    )
+    h.pass_msg("install.py thin twins + dry-run + harness map")
+
     # bakeoff honesty
     h.section("bakeoff honesty (mechanism inventory + UNVERIFIABLE live rate)")
     h.need("evals/bakeoff.md")
@@ -1670,6 +1743,9 @@ def run_evals(root: Path) -> int:
     h.require_contains("forge.py", "evals/bakeoff.md", "bakeoff.md missing forge.py inventory")
     h.require_contains("review_pack.py", "evals/bakeoff.md", "bakeoff.md missing review_pack.py inventory")
     h.require_contains("dowse.py", "evals/bakeoff.md", "bakeoff.md missing dowse.py inventory")
+    h.require_contains("install.py", "evals/bakeoff.md", "bakeoff.md missing install.py inventory")
+    h.require_contains("install.py", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing install.py")
+    h.require_contains("0.4.31", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing 0.4.31 tip")
 
     if h.fail != 0:
         print("EVALS FAILED")

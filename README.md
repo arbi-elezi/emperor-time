@@ -160,7 +160,7 @@ adapters/
   claude-code/  kimi-cli/  opencode/  ollama/  generic/
 scripts/
   dowse.ps1  dowse.sh             Read-only machine scan for agent CLIs
-  install.ps1  install.sh         Deploy the skill into a harness
+  install.py (+ thin sh/ps1)      Deploy the skill into a harness
   emperor-time.plugin.zsh         zsh layer: `emperor` command (oh-my-zsh compatible)
   emperor-time.bash               bash layer: same command for ~/.bashrc
 ```
