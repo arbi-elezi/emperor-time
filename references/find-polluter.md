@@ -38,6 +38,6 @@ scripts/emperor polluter --check-found "FOUND POLLUTER Test: src/foo.test.ts Cre
 ## Out of scope
 
 - Whole `systematic-debugging` skill folder
-- Pressure / academic packs (`test-pressure-*.md`, `test-academic.md`)
+- Pressure / academic packs are a sibling leaf: `emperor pressure` / `skills/emperor-heal/pressure-academic.md`
 - Replacing root-cause tracing with a guessed cleanup elsewhere
 - Hardcoding one test runner (npm-only); ET card is runner-agnostic

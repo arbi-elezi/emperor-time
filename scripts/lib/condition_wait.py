@@ -5,7 +5,7 @@ Leaf adapted from obra/superpowers skills/systematic-debugging
 condition-based-waiting.md (MIT) — Wait for the actual condition /
 not a guess about timing. Emperor Time + Holy Chain stay the
 orchestrator; do not announce the foreign skill name. Does not vendor
-whole systematic-debugging (no pressure/academic packs).
+whole systematic-debugging (pressure/academic is a sibling leaf).
 condition-based-waiting is this Chain Jail leaf only;
 find-polluter is a separate leaf (`emperor polluter`).
 
@@ -114,7 +114,7 @@ def format_card() -> str:
         "MUST-NOT: ship arbitrary setTimeout / sleep / time.sleep as the wait; "
         "wait without a named condition; poll with no timeout; cache getters "
         "outside the loop; load whole systematic-debugging "
-        "(find-polluter, pressure tests). ET + Holy Chain remain the "
+        "(find-polluter; pressure/academic is sibling `emperor pressure`). ET + Holy Chain remain the "
         "orchestrator."
     )
     return "\n".join(lines) + "\n"

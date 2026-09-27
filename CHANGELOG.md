@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.4.43
+- Pressure/academic HARD-GATE leaf: `scripts/lib/pressure.py` prints PRESSURE / CASE / MUST / ACADEMIC card (resist skip under emergency / sunk-cost / authority; academic four-phase self-check)
+- Thin `pressure.sh` / `pressure.ps1`; emperor peers gain `pressure`; `--reject-shortcut` / `--reject-compromise` HARD-GATEs; `--check-academic` validator (four-phase + root-cause-first signals)
+- Skill leaf `skills/emperor-heal/pressure-academic.md` + `references/pressure-academic.md` cite obra/superpowers MIT (systematic-debugging test-pressure-*.md + test-academic.md aspect); does **not** vendor whole systematic-debugging
+- Route/triggers for pressure/academic phrases → emperor-heal; companion after find-polluter; eval/bakeoff/honesty lockstep
+- Plugin, marketplace, and SKILL.md at 0.4.43
+
 ## 0.4.42
 - Find-polluter HARD-GATE leaf: `scripts/lib/polluter.py` prints POLLUTER / STEP / MUST card (find which test creates unwanted files/state / do not guess)
 - Thin `find-polluter.sh` / `find-polluter.ps1`; emperor peers gain `polluter`; `--reject-guess` / `--reject-unbisected` HARD-GATEs; `--check-found` validator (FOUND POLLUTER + path / identity signals)

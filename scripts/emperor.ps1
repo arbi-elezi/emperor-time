@@ -28,11 +28,12 @@
   .\emperor.ps1 defense
   .\emperor.ps1 wait
   .\emperor.ps1 polluter
+  .\emperor.ps1 pressure
 #>
 [CmdletBinding()]
 param(
     [Parameter(Mandatory = $true, Position = 0)]
-    [ValidateSet('done','gate','eval','review-pack','dowse','install','worktree','queue','forge','finish','activate','boot','identify','route','heal','grill','tdd','iso','review','author','evidence','receive','execute','subagent','parallel','excavate','session-discovery','diagnose','trace','defense','wait','polluter')]
+    [ValidateSet('done','gate','eval','review-pack','dowse','install','worktree','queue','forge','finish','activate','boot','identify','route','heal','grill','tdd','iso','review','author','evidence','receive','execute','subagent','parallel','excavate','session-discovery','diagnose','trace','defense','wait','polluter','pressure')]
     [string]$Tool,
     [Parameter(ValueFromRemainingArguments = $true)]
     [string[]]$ToolArgs

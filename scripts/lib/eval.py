@@ -2023,8 +2023,12 @@ def run_evals(root: Path) -> int:
     h.require_contains("polluter.py", "evals/bakeoff.md", "bakeoff.md missing polluter.py inventory")
     h.require_contains("polluter.py", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing polluter.py")
     h.require_contains("0.4.42", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing 0.4.42 tip")
-    h.require_contains("0.4.42", ".claude-plugin/plugin.json", "plugin.json not at 0.4.42")
     h.require_contains("0.4.42", "CHANGELOG.md", "CHANGELOG missing 0.4.42")
+    h.require_contains("pressure.py", "evals/bakeoff.md", "bakeoff.md missing pressure.py inventory")
+    h.require_contains("pressure.py", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing pressure.py")
+    h.require_contains("0.4.43", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing 0.4.43 tip")
+    h.require_contains("0.4.43", ".claude-plugin/plugin.json", "plugin.json not at 0.4.43")
+    h.require_contains("0.4.43", "CHANGELOG.md", "CHANGELOG missing 0.4.43")
 
     # session-discovery
     h.section("session-discovery locate HARD-GATE leaf")
@@ -2872,6 +2876,158 @@ def run_evals(root: Path) -> int:
         h.fail_msg("route.py find polluter → heal")
     else:
         h.pass_msg("route.py find polluter → emperor-heal")
+
+
+    # pressure/academic HARD-GATE
+    h.section("pressure/academic HARD-GATE leaf")
+    h.need("skills/emperor-heal/pressure-academic.md")
+    h.need("references/pressure-academic.md")
+    h.need("scripts/lib/pressure.py")
+    h.need("scripts/pressure.sh")
+    h.need("scripts/pressure.ps1")
+    h.bash_n("scripts/pressure.sh", "pressure.sh syntax")
+    h.py_compile("scripts/lib/pressure.py", "pressure.py compile")
+    h.require_contains(
+        "pressure.py",
+        "scripts/pressure.sh",
+        "pressure.sh does not call pressure.py",
+    )
+    h.require_contains(
+        "pressure.py",
+        "scripts/pressure.ps1",
+        "pressure.ps1 does not call pressure.py",
+    )
+    h.require_contains(
+        "pressure",
+        "scripts/emperor",
+        "emperor bash missing pressure",
+    )
+    h.require_contains(
+        "'pressure'",
+        "scripts/emperor.ps1",
+        "emperor.ps1 missing pressure",
+    )
+    h.require_contains(
+        "pressure",
+        "scripts/emperor.cmd",
+        "emperor.cmd missing pressure",
+    )
+    h.require_contains(
+        "pressure",
+        "scripts/emperor.zsh",
+        "emperor.zsh missing pressure",
+    )
+    h.require_contains(
+        "pressure-academic.md",
+        "skills/emperor-heal/SKILL.md",
+        "emperor-heal missing pressure-academic leaf",
+    )
+    h.require_contains(
+        "HARD-GATE",
+        "skills/emperor-heal/pressure-academic.md",
+        "pressure-academic leaf missing HARD-GATE heading",
+    )
+    h.require_contains(
+        "systematic-debugging",
+        "skills/emperor-heal/pressure-academic.md",
+        "pressure-academic leaf missing source skill",
+    )
+    h.require_contains(
+        "test-pressure-1.md",
+        "skills/emperor-heal/pressure-academic.md",
+        "pressure-academic leaf missing source file cite",
+    )
+    h.require_contains(
+        "obra/superpowers",
+        "references/pressure-academic.md",
+        "pressure-academic reference missing obra/superpowers cite",
+    )
+    h.require_contains(
+        "2026-09-27",
+        "references/pressure-academic.md",
+        "pressure-academic reference missing access date",
+    )
+    h.require_contains(
+        "0b6a915db0054577819834c79be9eb614e97bddba10d73768e1fbe91cfed048a",
+        "references/pressure-academic.md",
+        "pressure-academic reference missing sha256",
+    )
+    h.require_contains(
+        "NO SKIP UNDER PRESSURE",
+        "skills/emperor-heal/pressure-academic.md",
+        "pressure-academic leaf missing iron law text",
+    )
+    h.require_contains(
+        "under pressure",
+        "evals/triggers.json",
+        "triggers missing under pressure phrase",
+    )
+    h.require_contains(
+        "resist shortcut",
+        "evals/triggers.json",
+        "triggers missing resist shortcut phrase",
+    )
+    h.require_contains(
+        "pressure-academic.md",
+        "chains/chain-jail/extract-aspect.md",
+        "extract-aspect missing pressure-academic leaf",
+    )
+    _, pr_out = h.run_py("scripts/lib/pressure.py")
+    if not re.search(r"^PRESSURE checklist=yes", pr_out, re.M):
+        h.fail_msg("pressure missing checklist=yes")
+    if not re.search(r"^CASE \d+ id=", pr_out, re.M):
+        h.fail_msg("pressure missing CASE line")
+    if not re.search(r"^MUST:", pr_out, re.M):
+        h.fail_msg("pressure missing MUST line")
+    if not re.search(r"^ACADEMIC \d+ q=", pr_out, re.M):
+        h.fail_msg("pressure missing ACADEMIC line")
+    if "NO_SKIP_UNDER_PRESSURE" not in pr_out:
+        h.fail_msg("pressure missing iron law token")
+    rc, _ = h.run_py("scripts/lib/pressure.py", "--reject-shortcut")
+    if rc == 0:
+        h.fail_msg("pressure --reject-shortcut should exit non-zero")
+    else:
+        _, reject = h.run_py("scripts/lib/pressure.py", "--reject-shortcut")
+        if not re.search(r"^REJECT SHORTCUT:", reject, re.M):
+            h.fail_msg("reject-shortcut missing REJECT line")
+        else:
+            h.pass_msg("pressure --reject-shortcut hard-gates")
+    rc, _ = h.run_py("scripts/lib/pressure.py", "--reject-compromise")
+    if rc == 0:
+        h.fail_msg("pressure --reject-compromise should exit non-zero")
+    else:
+        _, reject = h.run_py("scripts/lib/pressure.py", "--reject-compromise")
+        if not re.search(r"^REJECT COMPROMISE:", reject, re.M):
+            h.fail_msg("reject-compromise missing REJECT line")
+        else:
+            h.pass_msg("pressure --reject-compromise hard-gates")
+    rc, pr_ok = h.run_py(
+        "scripts/lib/pressure.py",
+        "--check-academic",
+        "Four phases: investigate pattern hypothesize implement. "
+        "Before any fix complete Phase 1 root cause. Never skip. Option A follow process.",
+    )
+    if rc != 0 or "PRESSURE OK:" not in pr_ok:
+        h.fail_msg("pressure --check-academic should accept four-phase answers")
+    else:
+        h.pass_msg("pressure --check-academic accepts four-phase answers")
+    rc, pr_bad = h.run_py(
+        "scripts/lib/pressure.py",
+        "--check-academic",
+        "just add a retry and ship",
+    )
+    if rc == 0 or "PRESSURE FAIL:" not in pr_bad:
+        h.fail_msg("pressure --check-academic should reject bare shortcut")
+    else:
+        h.pass_msg("pressure --check-academic rejects bare shortcut")
+    _, pr_sh = h.run_sh("scripts/pressure.sh")
+    if not re.search(r"^PRESSURE checklist=yes", pr_sh, re.M):
+        h.fail_msg("pressure.sh missing checklist card")
+    _, rout_pr = h.run_py("scripts/lib/route.py", "under pressure")
+    if "emperor-heal" not in rout_pr:
+        h.fail_msg("route.py under pressure → heal")
+    else:
+        h.pass_msg("route.py under pressure → emperor-heal")
 
 
     if h.fail != 0:

@@ -6,7 +6,7 @@
 - heading: Find which test creates unwanted files/state / do not guess the polluter
 - license: MIT
 - access-date: 2026-09-27
-- issue-context: after condition-based-waiting, shared-state / leftover files still invite guessing which test polluted; Chain Jail extract-aspect names find-polluter only (not whole systematic-debugging, not pressure/academic packs). Sibling leaves: four-phases, root-cause-tracing, defense-in-depth, condition-based-waiting.
+- issue-context: after condition-based-waiting, shared-state / leftover files still invite guessing which test polluted; Chain Jail extract-aspect names find-polluter only (not whole systematic-debugging, pressure/academic is a sibling leaf). Sibling leaves: four-phases, root-cause-tracing, defense-in-depth, condition-based-waiting, pressure-academic.
 
 **Contract:** when leftover files or shared state break later tests, **find which test creates the pollution** by running candidates one-by-one (or bisecting). Do not guess. Stop at the first creator; fix cleanup there. Emperor Time stays the orchestrator via Holy Chain / emperor-heal; do **not** announce or load whole `systematic-debugging`.
 

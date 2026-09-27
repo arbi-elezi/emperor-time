@@ -35,6 +35,7 @@ could hand a worker. Examples of legal slices:
 - Superpowers `systematic-debugging` → defense-in-depth Validate-at-every-layer / Four-layers only (`skills/emperor-heal/defense-in-depth.md`).
 - Superpowers `systematic-debugging` → condition-based-waiting Wait-for-the-actual-condition only (`skills/emperor-heal/condition-based-waiting.md`).
 - Superpowers `systematic-debugging` → find-polluter Find-which-test-creates-unwanted-state only (`skills/emperor-heal/find-polluter.md`).
+- Superpowers `systematic-debugging` → pressure/academic Resist-skip-under-pressure / academic four-phase check only (`skills/emperor-heal/pressure-academic.md`).
 - Superpowers `diagnosing-superpowers` → session-discovery locate aspect only (`skills/emperor-heal/session-discovery.md`).
 - Superpowers `diagnosing-superpowers` → Core principle citation iron law + Intake before analysis only (`skills/emperor-heal/diagnosing.md`).
 - Superpowers `brainstorming` → only the HARD-GATE (questions before code).

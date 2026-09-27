@@ -227,6 +227,30 @@
     {
       "phrase": "leftover files from tests",
       "skill": "emperor-heal"
+    },
+    {
+      "phrase": "under pressure",
+      "skill": "emperor-heal"
+    },
+    {
+      "phrase": "pressure test",
+      "skill": "emperor-heal"
+    },
+    {
+      "phrase": "skip under pressure",
+      "skill": "emperor-heal"
+    },
+    {
+      "phrase": "academic debugging check",
+      "skill": "emperor-heal"
+    },
+    {
+      "phrase": "resist shortcut",
+      "skill": "emperor-heal"
+    },
+    {
+      "phrase": "no skip under pressure",
+      "skill": "emperor-heal"
     }
   ],
   "must_not_fire_master_wholesale": [
@@ -362,7 +386,16 @@
         "test pollution",
         "which test created",
         "leftover files from tests",
-        "shared state pollution"
+        "shared state pollution",
+        "under pressure",
+        "pressure test",
+        "skip under pressure",
+        "academic debugging check",
+        "resist shortcut",
+        "no skip under pressure",
+        "pressure academic",
+        "sunk cost debugging",
+        "authority pressure fix"
       ],
       "tags": [
         "heal",
@@ -383,10 +416,13 @@
         "flaky",
         "polluter",
         "find-polluter",
-        "pollution"
+        "pollution",
+        "pressure",
+        "pressure-academic",
+        "academic"
       ],
       "target": "skills/emperor-heal/SKILL.md",
-      "reason": "red build / derail \u2014 Holy Chain / session-discovery locate / diagnosing intake+cite / root-cause tracing / defense-in-depth multi-layer validation / condition-based-waiting HARD-GATE / find-polluter HARD-GATE"
+      "reason": "red build / derail \u2014 Holy Chain / session-discovery locate / diagnosing intake+cite / root-cause tracing / defense-in-depth multi-layer validation / condition-based-waiting HARD-GATE / find-polluter HARD-GATE / pressure-academic HARD-GATE"
     },
     {
       "id": "verify",
