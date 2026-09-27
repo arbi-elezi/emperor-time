@@ -35,7 +35,7 @@ This table is a map, not memory.
 | Fat executable plan | `writing-plans`, `executing-plans` | `obra/superpowers` `skills/writing-plans`; GSD plan-phase |
 | TDD / failing-probe / RGR order | `tdd`, `red-green`, `failing probe` | Local first: `skills/emperor-tdd/red-green-refactor.md` + `emperor tdd`. Superpowers TDD only if runner-specific aspect still missing |
 | Systematic debug for a stack | `systematic-debugging`, framework debug | Superpowers debugging; Holy Chain first |
-| Isolated reviewer personality | review personas, security/perf checklists | Osmani agent-skills; Superpowers `requesting-code-review` |
+| Isolated reviewer / request-review before merge | `requesting-code-review`, review personas | Local first: `skills/emperor-verify/request-review-checklist.md` + `emperor review`. Osmani personas / Superpowers only if still insufficient |
 | Git worktree / finish-branch polish | `using-git-worktrees`, `finishing-a-development-branch` | Local first: `skills/emperor-forge/finish-menu.md` + `emperor finish`. Superpowers those folders only if still insufficient |
 | Current library API (not training data) | `doc-lookup`, Context7-style | Superpowers doc-lookup; vendor docs skills |
 | PDF/docx/xlsx/pptx | document skills | `anthropics/skills` |

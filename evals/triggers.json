@@ -63,6 +63,14 @@
     {
       "phrase": "implementation complete",
       "skill": "emperor-forge"
+    },
+    {
+      "phrase": "request code review",
+      "skill": "emperor-verify"
+    },
+    {
+      "phrase": "before merge review",
+      "skill": "emperor-verify"
     }
   ],
   "must_not_fire_master_wholesale": [

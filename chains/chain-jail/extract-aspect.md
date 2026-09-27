@@ -34,6 +34,7 @@ could hand a worker. Examples of legal slices:
 - Superpowers `brainstorming` → only the HARD-GATE (questions before code).
 - Superpowers `test-driven-development` → only The Iron Law / Red-Green-Refactor (HARD-GATE).
 - Addy review skill → only the five-axis table.
+- Superpowers `requesting-code-review` → When / How / Act-on-feedback only (`skills/emperor-verify/request-review-checklist.md`).
 - A domain SKILL.md → only the command recipe that matches `failing-signal`.
 
 Illegal slices:

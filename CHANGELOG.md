@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.4.11
+- Request-review HARD-GATE leaf: Superpowers `requesting-code-review` → When / How / Act-on-feedback only, adapted into `skills/emperor-verify/request-review-checklist.md` (Chain Jail extract-aspect)
+- Python core `scripts/lib/review_req.py` prints REVIEW/STEP/MUST card, rejects step skips (`--advance`), hard-gates author self-review (`--reject-self-review`); thin `review.sh` / `review.ps1`; `emperor review` on bash/ps1/zsh/cmd peers
+- emperor-verify MUST the checklist before merge / major feature / subagent task done; reuses `review-pack` at Step 3; eval locks card + skip rejection + reject-self-review
+
 ## 0.4.10
 - Worktree isolation leaf: Superpowers `using-git-worktrees` → detect / native-or-git / check-ignore / baseline HARD-GATE only, adapted into `skills/emperor-worktree/isolation-checklist.md` (Chain Jail extract-aspect)
 - Python core `scripts/lib/worktree_iso.py` prints WORKTREE/STEP/MUST card, rejects step skips (`--advance`), hard-gates blind create (`--reject-blind-create`); thin `iso.sh` / `iso.ps1`; `emperor iso` on bash/ps1/zsh/cmd peers

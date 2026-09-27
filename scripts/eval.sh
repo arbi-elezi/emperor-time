@@ -41,7 +41,7 @@ for c in "Dowsing Chain" "Chain Jail" "Judgment Chain" "Steal Chain" "Holy Chain
 done
 
 echo "== twins =="
-for pair in "done" gate eval review-pack dowse install worktree queue forge finish activate identify boot route excavate heal grill tdd iso; do
+for pair in "done" gate eval review-pack dowse install worktree queue forge finish activate identify boot route excavate heal grill tdd iso review; do
   need "scripts/${pair}.sh"
   need "scripts/${pair}.ps1"
 done
@@ -401,6 +401,45 @@ else
 fi
 ISO_SH=$(bash "$ROOT/scripts/iso.sh" 2>&1) || true
 echo "$ISO_SH" | grep -q '^WORKTREE checklist=yes' || { echo "EVAL FAIL: iso.sh missing checklist card"; fail=1; }
+
+echo "== request-review HARD-GATE leaf =="
+need "skills/emperor-verify/request-review-checklist.md"
+need "scripts/lib/review_req.py"
+need "scripts/review.sh"
+need "scripts/review.ps1"
+bash -n "$ROOT/scripts/review.sh" || { echo "EVAL FAIL: review.sh syntax"; fail=1; }
+python3 -m py_compile "$ROOT/scripts/lib/review_req.py" || { echo "EVAL FAIL: review_req.py compile"; fail=1; }
+grep -q 'review_req.py' "$ROOT/scripts/review.sh" || { echo "EVAL FAIL: review.sh does not call review_req.py"; fail=1; }
+grep -q 'review_req.py' "$ROOT/scripts/review.ps1" || { echo "EVAL FAIL: review.ps1 does not call review_req.py"; fail=1; }
+grep -q 'review|' "$ROOT/scripts/emperor" || { echo "EVAL FAIL: emperor bash missing review"; fail=1; }
+grep -q "'review'" "$ROOT/scripts/emperor.ps1" || { echo "EVAL FAIL: emperor.ps1 missing review"; fail=1; }
+grep -q 'request-review-checklist.md' "$ROOT/skills/emperor-verify/SKILL.md" || { echo "EVAL FAIL: emperor-verify missing request-review leaf"; fail=1; }
+grep -q 'HARD-GATE' "$ROOT/skills/emperor-verify/request-review-checklist.md" || { echo "EVAL FAIL: review leaf missing HARD-GATE heading"; fail=1; }
+grep -q 'requesting-code-review' "$ROOT/skills/emperor-verify/request-review-checklist.md" || { echo "EVAL FAIL: review leaf missing source skill"; fail=1; }
+REV_OUT=$(python3 "$ROOT/scripts/lib/review_req.py" 2>&1) || true
+echo "$REV_OUT" | grep -q '^REVIEW checklist=yes' || { echo "EVAL FAIL: review missing checklist=yes"; fail=1; }
+echo "$REV_OUT" | grep -q '^STEP 1 ' || { echo "EVAL FAIL: review missing STEP 1"; fail=1; }
+echo "$REV_OUT" | grep -q '^STEP 5 ' || { echo "EVAL FAIL: review missing STEP 5"; fail=1; }
+echo "$REV_OUT" | grep -q '^MUST:' || { echo "EVAL FAIL: review missing MUST line"; fail=1; }
+echo "$REV_OUT" | grep -q 'NO_PROCEED_WITHOUT_REQUESTED_REVIEW' || { echo "EVAL FAIL: review missing iron law token"; fail=1; }
+if python3 "$ROOT/scripts/lib/review_req.py" --advance 1 3 >/dev/null 2>&1; then
+  echo "EVAL FAIL: review should reject step skip 1→3"
+  fail=1
+else
+  echo "EVAL PASS: review rejects skip 1→3"
+fi
+ADV_OK=$(python3 "$ROOT/scripts/lib/review_req.py" --advance 2 3 2>&1) || true
+echo "$ADV_OK" | grep -q '^ADVANCE OK' || { echo "EVAL FAIL: review 2→3 should OK"; fail=1; }
+if python3 "$ROOT/scripts/lib/review_req.py" --reject-self-review >/dev/null 2>&1; then
+  echo "EVAL FAIL: review --reject-self-review should exit non-zero"
+  fail=1
+else
+  REJECT=$(python3 "$ROOT/scripts/lib/review_req.py" --reject-self-review 2>&1) || true
+  echo "$REJECT" | grep -q '^REJECT SELF-REVIEW:' || { echo "EVAL FAIL: reject-self-review missing REJECT line"; fail=1; }
+  echo "EVAL PASS: review --reject-self-review hard-gates self-review"
+fi
+REV_SH=$(bash "$ROOT/scripts/review.sh" 2>&1) || true
+echo "$REV_SH" | grep -q '^REVIEW checklist=yes' || { echo "EVAL FAIL: review.sh missing checklist card"; fail=1; }
 
 if [[ "$fail" -ne 0 ]]; then
   echo "EVALS FAILED"
