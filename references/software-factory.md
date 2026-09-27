@@ -15,6 +15,8 @@ Given a repo and a loose task (or no task):
 6. Open a PR **only** with client consent (`EMPEROR_CONSENT_PR=1` or quoted yes).
 7. Pick the next item. Stop when the queue is empty or the client says rest.
 
+Forge (consent PR): `scripts/emperor forge <task-dir>` — Python core `scripts/lib/forge.py` (thin `forge.sh` / `forge.ps1`) owns consent, DONE probes, title/G1 PR body. Never invent a public PR without consent.
+
 A comment on the PR is a process failure. Prevent it: small diff, tests that
 would fail if reverted, no drive-by refactors, no agent trailers, no leftover
 TODOs in the shipped path.

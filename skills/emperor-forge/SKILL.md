@@ -7,7 +7,7 @@ description: >-
   EMPEROR_CONSENT_PR or a quoted yes.
 license: MIT
 metadata:
-  version: 0.4.4
+  version: 0.4.24
   part-of: emperor-time
 ---
 
@@ -36,7 +36,7 @@ jump straight to a PR. Open `finish-menu.md` and/or run `scripts/emperor finish`
 2. `scripts/emperor gate g5 <task-dir>` must exit 0.
 3. Consent: ledger must contain a quoted client yes **or**
    `EMPEROR_CONSENT_PR=1`. Otherwise stop and ask.
-4. Run `scripts/emperor forge <task-dir>`.
+4. Run `scripts/emperor forge <task-dir>` (Python core `scripts/lib/forge.py`; thin `forge.sh` / `forge.ps1`).
 5. PR body is generated from G1 + DONE probes + out-of-scope. No essay.
 6. After the URL is printed, keep the worktree for review feedback, then
    `scripts/emperor queue next` when the client is done with this task.

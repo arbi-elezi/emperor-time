@@ -1,44 +1,45 @@
-# Task Ledger — emperor-time self-application (queue Python core)
+# Task Ledger — emperor-time self-application (forge Python core)
 
-- **Task:** Port queue list/next/add/done to `scripts/lib/queue.py` so bash↔ps1 cannot drift on the factory picker (WIP=1, placeholder skip, gh → Linear → local); thin twins; factory dogfood locks.
-- **Client quote:** Soft-ET consented Worthy Spend after v0.4.22 zsh silent-boot. Survey: emperor.cmd host special is intentional thin forward; heal/excavate already thin Python/alias; embeddings beyond JSON not justified; no new archaeology toolchain VERIFIED; **factory/queue dogfood** — real twin drift (queue.sh 145 vs queue.ps1 101; ps1 list lacked Linear notice + git worktree guard); host.sh/ps1 platform-sourced helpers not a clean Python win.
+- **Task:** Port forge consent / DONE / title / G1 PR body to `scripts/lib/forge.py` so bash↔ps1 cannot drift on the factory ship lock (ps1 hardcoded title + full-ledger PR dump); thin twins; factory dogfood locks.
+- **Client quote:** Soft-ET consented Worthy Spend after v0.4.23 queue.py. Survey: heal/excavate already thin; embeddings beyond JSON not justified; no new archaeology toolchain VERIFIED; host.sh/ps1 platform-sourced helpers not a clean Python win; cmd host special intentional thin forward; **forge twin drift** — forge.sh extracts title + G1..G2 while forge.ps1 hardcoded `emperor-time change` and dumped the entire ledger into PR.md (G0 leak). review-pack / dowse remain candidates; forge is the load-bearing consent ship lock.
 - **Origin:** assigned
 - **Size:** standard
-- **Governing files:** SKILL.md → software-factory.md → emperor-queue → queue.py
-- **Tip at spend:** v0.4.23 (branch `et-manager/queue-python-core`)
+- **Governing files:** SKILL.md → software-factory.md → emperor-forge → forge.py
+- **Tip at spend:** v0.4.24 (branch `et-manager/forge-python-core`)
 
 ## G0
-Quoted ask above. Ambiguity resolved: ship factory/queue Python core. Skip cmd redo / embeddings / archaeology / host unify this turn.
+Quoted ask above. Ambiguity resolved: ship forge Python core. Skip cmd redo / embeddings / archaeology / host unify / capture.py / review-pack / dowse this turn.
 
 ## G1 Acceptance criteria
-1. SKILL.md version ≥ 0.4.23 and names five chains + six vows.
-2. `scripts/lib/queue.py` owns list/next/add/done; thin `queue.sh` / `queue.ps1`.
-3. Empty comment-only queue → exit non-zero + `NEXT none`; placeholders never promoted; WIP=1 refuses second active; `queue done` marks `[x]`.
-4. Plugin/marketplace/SKILL lockstep 0.4.23; software-factory + emperor-queue point at queue.py.
-5. Eval locks compile + thin twins + empty UX + WIP + done; suite green.
+1. SKILL.md version ≥ 0.4.24 and names five chains + six vows.
+2. `scripts/lib/forge.py` owns consent + DONE + title/G1 PR body + gh/DRY; thin `forge.sh` / `forge.ps1`.
+3. Without consent → exit 3 `FORGE REFUSED`; with consent + DRY → title from ledger; PR.md has G1..G2 + DONE and no G0 leak.
+4. Plugin/marketplace/SKILL lockstep 0.4.24; software-factory + mechanical-gates + emperor-forge point at forge.py.
+5. Eval locks compile + thin twins + refuse + DRY + G1/DONE body; suite green.
 6. Live defect-rate vs Superpowers stays **UNVERIFIABLE**.
 
 ## Out of scope
 - emperor.cmd host special / emperor.py dispatcher / route embeddings
 - heal/excavate/boot/host unify redo
+- review-pack.py / dowse.py / capture.py HARD-GATE
 - New archaeology toolchain leaf
 - Live multi-vendor bake-off numbers
 
 ## G2
-Rejected alternative: emperor.cmd silent-boot (already forwards to ps1 which boots) or another Superpowers leaf.
-Why: queue twins still held full reimplementations after many Python cores — highest remaining factory drift on the standing intake lock.
+Rejected alternative: review-pack Python core (criteria awk vs full copy) or dowse AsJson unify.
+Why: forge is the consent-gated ship lock on the standing factory loop; title/G1 drift is already live on Windows peers.
 
 ## G3
-queue.py + thin twins on `et-manager/queue-python-core`. See git log.
+forge.py + thin twins on `et-manager/forge-python-core`. See git log.
 
 ## G4
 Claims:
 
 | Claim | Status | Evidence |
 |---|---|---|
-| SKILL.md is 0.4.23 orchestrator | TESTED | frontmatter `version: 0.4.23` on branch HEAD |
-| queue.py promotes past placeholder | TESTED | `EMPEROR_QUEUE_SOURCE=local` fixture → `NEXT local: - [~] ship the widget` |
-| WIP=1 refuse + done `[x]` | TESTED | second next prints WIP=1; done widget → `[x]` |
+| SKILL.md is 0.4.24 orchestrator | TESTED | frontmatter `version: 0.4.24` on branch HEAD |
+| forge.py refuses without consent | TESTED | exit 3 + `FORGE REFUSED` |
+| forge DRY extracts title + G1/DONE body | TESTED | `EMPEROR_CONSENT_PR=1 EMPEROR_FORGE_DRY=1` → title + PR.md without G0 |
 | Eval suite still green | TESTED | `bash scripts/eval.sh` → EVALS PASSED |
 | Live defect-rate vs Superpowers | UNVERIFIABLE | no shared-task three-vendor bake-off run in this session |
 
@@ -53,4 +54,5 @@ PASS-WITH-CONDITIONS: local mechanism TESTED; live bake-off numbers UNVERIFIABLE
 - route missed Fortran extensions. Remediation: triggers + thin twins (v0.4.20).
 - bash/ps1 done twins duplicated probe runner. Remediation: done.py (v0.4.21).
 - emperor.zsh missing silent-boot / identify / excavate specials vs bash. Remediation: v0.4.22.
-- bash/ps1 queue twins reimplemented picker (list Linear/git guard drift). Remediation: this leaf (v0.4.23).
+- bash/ps1 queue twins reimplemented picker (list Linear/git guard drift). Remediation: queue.py (v0.4.23).
+- bash/ps1 forge twins drifted (title hardcoded; full ledger dump). Remediation: this leaf (v0.4.24).

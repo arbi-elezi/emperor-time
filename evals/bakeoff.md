@@ -69,6 +69,7 @@ mean **disk + eval**, not live multi-vendor win rates.
 | route MVP (Fortran excavate) | `scripts/lib/route.py` + thin `route.sh`/`route.ps1` + triggers `.f90`/`fortran`/`gfortran` | TESTED |
 | silent-boot zsh parity | `scripts/emperor.zsh` host.env auto-boot + host/boot/identify/excavate specials (bash twin) | TESTED |
 | queue picker (Python core) | `scripts/lib/queue.py` + thin `queue.sh`/`queue.ps1` (WIP=1, placeholder skip, gh/Linear/local) | TESTED |
+| forge PR (Python core) | `scripts/lib/forge.py` + thin `forge.sh`/`forge.ps1` (consent, DONE, title/G1 body, DRY) | TESTED |
 
 Honesty helper: `scripts/lib/bakeoff_honesty.py` fails if this inventory
 drifts from disk or if live-defect-rate is mislabeled.
@@ -86,7 +87,7 @@ drifts from disk or if live-defect-rate is mislabeled.
 ## Verdict
 
 ET wins this slice on *mechanical lock-in* (eval owns the rows; leaf gates
-above are on disk and eval-locked through v0.4.23).
+above are on disk and eval-locked through v0.4.24).
 Activation *mechanism* is closed on disk (v0.4.5–0.4.6); wild-agent
 activation without a tell stays **UNVERIFIABLE** until a marketplace re-run.
 Live defect-rate vs Superpowers stays **UNVERIFIABLE** — do not invent %.
