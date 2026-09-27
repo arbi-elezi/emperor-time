@@ -1,0 +1,9 @@
+== identify evals/fixtures/lost-asm ==
+-- extensions --
+      2 md
+      1 txt
+      1 asm
+-- named fossils --
+1 *.asm
+-- shebangs --
+identify: done (read-only)
