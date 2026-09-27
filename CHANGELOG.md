@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.4.12
+- Archaeology COBOL leaf: `evals/fixtures/lost-cbl/HELLO.CBL` + identify smoke; GnuCOBOL 3.2 boot probe VERIFIED (`cobc -x`); dialect labels honest (CONJECTURE / UNVERIFIABLE where due)
+- Jail pin `references/archaeology-cobol-manual.md` — GnuCOBOL Programmer’s Guide §4 IDENTIFICATION DIVISION / PROGRAM-ID
+- Catalog + SKILL.md + archaeology.md link the third pin alongside Pascal and ASM; eval locks `*.cbl` identify on lost-cbl
+- Plugin, marketplace, and SKILL.md at 0.4.12
+
 ## 0.4.11
 - Request-review HARD-GATE leaf: Superpowers `requesting-code-review` → When / How / Act-on-feedback only, adapted into `skills/emperor-verify/request-review-checklist.md` (Chain Jail extract-aspect)
 - Python core `scripts/lib/review_req.py` prints REVIEW/STEP/MUST card, rejects step skips (`--advance`), hard-gates author self-review (`--reject-self-review`); thin `review.sh` / `review.ps1`; `emperor review` on bash/ps1/zsh/cmd peers

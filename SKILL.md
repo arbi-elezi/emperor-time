@@ -9,7 +9,7 @@ description: >-
   waiting to be told.
 license: MIT
 metadata:
-  version: 0.4.11
+  version: 0.4.12
   homepage: https://github.com/arbi-elezi/emperor-time
   standard: Agent Skills (SKILL.md)
 ---
@@ -23,7 +23,7 @@ and not language-specific. Pascal and raw assembly are in-scope.
 Read `AGENTS.md` if the host wants a single standing-order file.
 Read `references/software-factory.md` once per repo, not per turn.
 Read `references/language-agnostic.md` before assuming a stack.
-Read `references/archaeology.md` when the tree is lost, ancient, or foreign (Jail pins: `references/archaeology-pascal-manual.md`, `references/archaeology-asm-manual.md`).
+Read `references/archaeology.md` when the tree is lost, ancient, or foreign (Jail pins: `references/archaeology-pascal-manual.md`, `references/archaeology-asm-manual.md`, `references/archaeology-cobol-manual.md`).
 
 ## Six Vows (load-bearing)
 

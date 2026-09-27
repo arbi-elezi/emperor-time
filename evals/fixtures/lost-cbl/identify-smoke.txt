@@ -1,0 +1,9 @@
+== identify evals/fixtures/lost-cbl ==
+-- extensions --
+      2 md
+      1 txt
+      1 cbl
+-- named fossils --
+1 *.cbl
+-- shebangs --
+identify: done (read-only)
