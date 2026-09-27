@@ -56,6 +56,7 @@ mean **disk + eval**, not live multi-vendor win rates.
 | TDD iron-law / RGR | `skills/emperor-tdd/red-green-refactor.md` + `emperor tdd` | TESTED |
 | worktree isolation | `skills/emperor-worktree/isolation-checklist.md` + `emperor iso` | TESTED |
 | request-review | `skills/emperor-verify/request-review-checklist.md` + `emperor review` | TESTED |
+| receive-review | `skills/emperor-verify/receive-review-checklist.md` + `emperor receive` | TESTED |
 | authoring iron-law | `chains/chain-jail/authoring-checklist.md` + `emperor author` | TESTED |
 | evidence / verification-before-completion | `skills/emperor-verify/verification-checklist.md` + `emperor evidence` | TESTED |
 | archaeology Pascal | `evals/fixtures/lost-pas/` + Jail pin | TESTED |
@@ -89,7 +90,7 @@ drifts from disk or if live-defect-rate is mislabeled.
 ## Verdict
 
 ET wins this slice on *mechanical lock-in* (eval owns the rows; leaf gates
-above are on disk and eval-locked through v0.4.24).
+above are on disk and eval-locked through v0.4.27).
 Activation *mechanism* is closed on disk (v0.4.5–0.4.6); wild-agent
 activation without a tell stays **UNVERIFIABLE** until a marketplace re-run.
 Live defect-rate vs Superpowers stays **UNVERIFIABLE** — do not invent %.

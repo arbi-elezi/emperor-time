@@ -2,13 +2,13 @@
 name: emperor-verify
 description: >-
   Emperor Time — VERIFY / review / critique. Claim audit, eight-count
-  self-critique, isolated hetero-critique, request-review HARD-GATE,
+  self-critique, isolated hetero-critique, request-review HARD-GATE, receive-review HARD-GATE,
   verification-before-completion / evidence HARD-GATE, mechanical G4. Use when
   reviewing a diff, requesting code review, claiming tests pass, saying done /
   fixed / green, or before commit/PR/deliver/merge.
 license: MIT
 metadata:
-  version: 0.4.14
+  version: 0.4.27
   part-of: emperor-time
   chain: judgment-chain
 ---
@@ -26,6 +26,20 @@ card).
 
 No author self-review in place of dispatch. Do not load whole
 `requesting-code-review`; ET + emperor-verify orchestrate.
+
+
+## MUST — receive-review checklist when acting on feedback
+
+When receiving code-review feedback (human partner, external reviewer, or
+hetero-critique) — before implementing suggestions — open
+`skills/emperor-verify/receive-review-checklist.md`
+(Chain Jail leaf from Superpowers `receiving-code-review` → The Response
+Pattern / Forbidden Responses / When To Push Back only)
+and/or run `scripts/emperor receive` (prints the mechanical RECEIVE / STEP /
+MUST card).
+
+No blind implement. No performative agreement. Do not load whole
+`receiving-code-review`; ET + emperor-verify orchestrate.
 
 ## MUST — evidence checklist before completion claims
 
@@ -49,17 +63,21 @@ whole `verification-before-completion`; ET + emperor-verify orchestrate.
 2. Run `scripts/emperor review` → quote `REVIEW checklist=yes`. Advance with
    `scripts/emperor review --advance N N+1` (skips fail). Self-review skip →
    `scripts/emperor review --reject-self-review` (HARD-GATE exit 1).
-3. Read `chains/judgment-chain/SKILL.md` and select **one** aspect:
+3. When acting on review feedback, run `scripts/emperor receive` → quote
+   `RECEIVE checklist=yes`. Advance with `scripts/emperor receive --advance N N+1`
+   (skips fail). Blind implement → `scripts/emperor receive --reject-blind-implement`
+   (HARD-GATE exit 1).
+4. Read `chains/judgment-chain/SKILL.md` and select **one** aspect:
    `claim-audit.md` | `self-critique.md` | `hetero-critique.md` |
    `gatekeeping.md` | `verdicts-and-breaches.md`.
-4. Claim ledger: every VERIFIED row needs quoted evidence. Cross-agent rows
+5. Claim ledger: every VERIFIED row needs quoted evidence. Cross-agent rows
    start CONJECTURE.
-5. Self-critique uses `templates/critique.md`. "No findings" without named
+6. Self-critique uses `templates/critique.md`. "No findings" without named
    commands/paths is a fail.
-6. Hetero-critique: run `scripts/emperor review-pack <task-dir> <base> <head>` (Python core `scripts/lib/review_pack.py`; thin `review-pack.sh` / `review-pack.ps1`) and
+7. Hetero-critique: run `scripts/emperor review-pack <task-dir> <base> <head>` (Python core `scripts/lib/review_pack.py`; thin `review-pack.sh` / `review-pack.ps1`) and
    dispatch the pack to a **different** context (Steal Chain worker or a fresh
    subagent). The builder does not write the hetero verdict.
-7. Act on Critical immediately; Important before proceed; Minor noted; pushback
-   only with quoted evidence.
-8. Run `scripts/gate.sh g4 <task-dir>` and quote the tail.
-9. Deliver only after `scripts/gate.sh g5 <task-dir>`.
+8. Act on Critical immediately; Important before proceed; Minor noted; pushback
+   only with quoted evidence (run `emperor receive` when implementing feedback).
+9. Run `scripts/gate.sh g4 <task-dir>` and quote the tail.
+10. Deliver only after `scripts/gate.sh g5 <task-dir>`.

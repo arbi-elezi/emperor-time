@@ -192,6 +192,7 @@ def run_evals(root: Path) -> int:
         "review",
         "author",
         "evidence",
+        "receive",
     ):
         h.need(f"scripts/{pair}.sh")
         h.need(f"scripts/{pair}.ps1")
@@ -1098,6 +1099,65 @@ def run_evals(root: Path) -> int:
     _, evid_sh = h.run_sh("scripts/evidence.sh")
     if not re.search(r"^EVIDENCE checklist=yes", evid_sh, re.M):
         h.fail_msg("evidence.sh missing checklist card")
+
+    # receive-review
+    h.section("receiving-code-review / receive HARD-GATE leaf")
+    h.need("skills/emperor-verify/receive-review-checklist.md")
+    h.need("scripts/lib/receive.py")
+    h.need("scripts/receive.sh")
+    h.need("scripts/receive.ps1")
+    h.bash_n("scripts/receive.sh", "receive.sh syntax")
+    h.py_compile("scripts/lib/receive.py", "receive.py compile")
+    h.require_contains("receive.py", "scripts/receive.sh", "receive.sh does not call receive.py")
+    h.require_contains("receive.py", "scripts/receive.ps1", "receive.ps1 does not call receive.py")
+    h.require_contains("receive|", "scripts/emperor", "emperor bash missing receive")
+    h.require_contains("'receive'", "scripts/emperor.ps1", "emperor.ps1 missing receive")
+    h.require_contains(
+        "receive-review-checklist.md",
+        "skills/emperor-verify/SKILL.md",
+        "emperor-verify missing receive-review leaf",
+    )
+    h.require_contains(
+        "HARD-GATE",
+        "skills/emperor-verify/receive-review-checklist.md",
+        "receive leaf missing HARD-GATE heading",
+    )
+    h.require_contains(
+        "receiving-code-review",
+        "skills/emperor-verify/receive-review-checklist.md",
+        "receive leaf missing source skill",
+    )
+    _, recv_out = h.run_py("scripts/lib/receive.py")
+    if not re.search(r"^RECEIVE checklist=yes", recv_out, re.M):
+        h.fail_msg("receive missing checklist=yes")
+    if not re.search(r"^STEP 1 ", recv_out, re.M):
+        h.fail_msg("receive missing STEP 1")
+    if not re.search(r"^STEP 6 ", recv_out, re.M):
+        h.fail_msg("receive missing STEP 6")
+    if not re.search(r"^MUST:", recv_out, re.M):
+        h.fail_msg("receive missing MUST line")
+    if "NO_IMPLEMENT_WITHOUT_VERIFYING_REVIEW_FEEDBACK" not in recv_out:
+        h.fail_msg("receive missing iron law token")
+    rc, _ = h.run_py("scripts/lib/receive.py", "--advance", "1", "3")
+    if rc == 0:
+        h.fail_msg("receive should reject step skip 1→3")
+    else:
+        h.pass_msg("receive rejects skip 1→3")
+    _, adv_ok = h.run_py("scripts/lib/receive.py", "--advance", "2", "3")
+    if not re.search(r"^ADVANCE OK", adv_ok, re.M):
+        h.fail_msg("receive 2→3 should OK")
+    rc, _ = h.run_py("scripts/lib/receive.py", "--reject-blind-implement")
+    if rc == 0:
+        h.fail_msg("receive --reject-blind-implement should exit non-zero")
+    else:
+        _, reject = h.run_py("scripts/lib/receive.py", "--reject-blind-implement")
+        if not re.search(r"^REJECT BLIND-IMPLEMENT:", reject, re.M):
+            h.fail_msg("reject-blind-implement missing REJECT line")
+        else:
+            h.pass_msg("receive --reject-blind-implement hard-gates blind implement")
+    _, recv_sh = h.run_sh("scripts/receive.sh")
+    if not re.search(r"^RECEIVE checklist=yes", recv_sh, re.M):
+        h.fail_msg("receive.sh missing checklist card")
 
 
     # ---- done probes (Python core) ----
