@@ -1,13 +1,26 @@
 {
   "name": "emperor-time",
   "displayName": "Emperor Time",
-  "version": "0.4.3",
+  "version": "0.4.4",
   "description": "Software factory and digital coding archaeologist disguised as a skill. Language-agnostic. Host-agnostic.",
-  "author": {"name": "Arbi Elezi", "url": "https://github.com/arbi-elezi"},
+  "author": {
+    "name": "Arbi Elezi",
+    "url": "https://github.com/arbi-elezi"
+  },
   "homepage": "https://github.com/arbi-elezi/emperor-time",
   "repository": "https://github.com/arbi-elezi/emperor-time",
   "license": "MIT",
-  "keywords": ["sdlc", "verification", "tdd", "anti-hallucination", "scientific-method", "multi-agent", "agent-skills", "software-factory", "software-archaeology"],
+  "keywords": [
+    "sdlc",
+    "verification",
+    "tdd",
+    "anti-hallucination",
+    "scientific-method",
+    "multi-agent",
+    "agent-skills",
+    "software-factory",
+    "software-archaeology"
+  ],
   "skills": [
     "./",
     "./skills/emperor-resume",

@@ -8,7 +8,7 @@ description: >-
   Host-agnostic (AGENTS.md). Not trivia.
 license: MIT
 metadata:
-  version: 0.4.3
+  version: 0.4.4
   homepage: https://github.com/arbi-elezi/emperor-time
   standard: Agent Skills (SKILL.md)
 ---
@@ -37,7 +37,7 @@ Breaches are append-only in the ledger. Never hide them.
 
 ## Factory loop (make software)
 
-intake → queue.next (if no task) → DOWSE G0 → REQUIRE G1 → DESIGN G2 → BUILD G3 → VERIFY G4 → DELIVER G5 → forge PR (consent) → queue.next → REST
+intake → queue.next (if no task) → DOWSE G0 → REQUIRE G1 → DESIGN G2 → BUILD G3 → VERIFY G4 → DELIVER G5 → finish menu → forge PR (consent) → queue.next → REST
 
 A comment on the PR is a process failure. Prevent it: one intent, revert-sensitive probes, no drive-by, no agent trailers.
 
@@ -65,7 +65,7 @@ Read `references/iron-laws.md` before writing production code.
 | Implementing | `skills/emperor-build/SKILL.md` + `skills/emperor-tdd/SKILL.md` |
 | Isolated git workspace | `skills/emperor-worktree/SKILL.md` |
 | About to say done / tests pass / review | `skills/emperor-verify/SKILL.md` + Judgment Chain |
-| Ship / PR / merge | `skills/emperor-forge/SKILL.md` |
+| Ship / finish / PR / merge | `skills/emperor-forge/SKILL.md` (+ `finish-menu.md`) |
 | Client consented to other local CLIs | `skills/emperor-dispatch/SKILL.md` + Steal Chain |
 | Red build / derail | `skills/emperor-heal/SKILL.md` + Holy Chain |
 | Capability missing | `skills/emperor-capture/SKILL.md` + Chain Jail |
@@ -92,6 +92,7 @@ Jail extra: no captured skill runs on real work until trial + sha256 pin + quote
 - Unchanged retry is Vow of Worthy Spend. Change the hypothesis or stop.
 - Run `scripts/emperor gate <g0-g5> <task-dir>` before claiming the gate open. Script fail = gate closed.
 - `scripts/emperor done <task-dir>` must exit 0 before the word done.
+- `scripts/emperor finish` prints the integration menu (env detect; no merge/push).
 - `scripts/emperor forge <task-dir>` refuses without consent.
 - Resume from disk (`skills/emperor-resume/SKILL.md`) instead of restating the session.
 - Do not invent a stack. `references/language-agnostic.md`.

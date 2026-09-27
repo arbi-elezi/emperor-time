@@ -41,7 +41,7 @@ for c in "Dowsing Chain" "Chain Jail" "Judgment Chain" "Steal Chain" "Holy Chain
 done
 
 echo "== twins =="
-for pair in "done" gate eval review-pack dowse install worktree queue forge identify boot route excavate; do
+for pair in "done" gate eval review-pack dowse install worktree queue forge finish identify boot route excavate; do
   need "scripts/${pair}.sh"
   need "scripts/${pair}.ps1"
 done
@@ -188,6 +188,21 @@ else
   echo "EVAL PASS: complete plan header accepted"
 fi
 rm -f /tmp/et-wo-miss.out /tmp/et-wo-ok.out
+
+echo "== finish menu (forge aspect) =="
+need "skills/emperor-forge/finish-menu.md"
+need "scripts/finish.sh"
+need "scripts/finish.ps1"
+bash -n "$ROOT/scripts/finish.sh" || { echo "EVAL FAIL: finish.sh syntax"; fail=1; }
+grep -q "Merge back to" "$ROOT/skills/emperor-forge/finish-menu.md" || { echo "EVAL FAIL: finish-menu missing merge option"; fail=1; }
+grep -q "typed word" "$ROOT/skills/emperor-forge/finish-menu.md" || { echo "EVAL FAIL: finish-menu missing discard confirm"; fail=1; }
+grep -q "finish-menu.md" "$ROOT/skills/emperor-forge/SKILL.md" || { echo "EVAL FAIL: forge skill missing finish-menu"; fail=1; }
+grep -q 'finish|' "$ROOT/scripts/emperor" || { echo "EVAL FAIL: emperor bash missing finish"; fail=1; }
+FIN_OUT=$(bash "$ROOT/scripts/finish.sh" 2>&1) || true
+echo "$FIN_OUT" | grep -q '^ENV kind=' || { echo "EVAL FAIL: finish.sh missing ENV kind"; fail=1; }
+echo "$FIN_OUT" | grep -q '^MENU ' || { echo "EVAL FAIL: finish.sh missing MENU"; fail=1; }
+out=$(bash "$ROOT/scripts/route.sh" "finish the branch" 2>/dev/null || true)
+echo "$out" | grep -q "emperor-forge" || { echo "EVAL FAIL: route finish the branch → forge"; fail=1; }
 
 
 if [[ "$fail" -ne 0 ]]; then

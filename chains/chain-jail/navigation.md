@@ -36,7 +36,7 @@ This table is a map, not memory.
 | Language-specific TDD / fixtures | test skill for *this* stack | Superpowers TDD only if `emperor-tdd` cannot express the runner |
 | Systematic debug for a stack | `systematic-debugging`, framework debug | Superpowers debugging; Holy Chain first |
 | Isolated reviewer personality | review personas, security/perf checklists | Osmani agent-skills; Superpowers `requesting-code-review` |
-| Git worktree / finish-branch polish | `using-git-worktrees`, `finishing-a-development-branch` | Superpowers those folders — only if `emperor-worktree` / finish is insufficient |
+| Git worktree / finish-branch polish | `using-git-worktrees`, `finishing-a-development-branch` | Local first: `skills/emperor-forge/finish-menu.md` + `emperor finish`. Superpowers those folders only if still insufficient |
 | Current library API (not training data) | `doc-lookup`, Context7-style | Superpowers doc-lookup; vendor docs skills |
 | PDF/docx/xlsx/pptx | document skills | `anthropics/skills` |
 | UI that does not look generic | `frontend-design` | official plugin marketplace / Anthropic frontend-design |
