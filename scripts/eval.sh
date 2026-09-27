@@ -41,7 +41,7 @@ for c in "Dowsing Chain" "Chain Jail" "Judgment Chain" "Steal Chain" "Holy Chain
 done
 
 echo "== twins =="
-for pair in "done" gate eval review-pack dowse install worktree queue forge finish activate identify boot route excavate heal grill tdd iso review author; do
+for pair in "done" gate eval review-pack dowse install worktree queue forge finish activate identify boot route excavate heal grill tdd iso review author evidence; do
   need "scripts/${pair}.sh"
   need "scripts/${pair}.ps1"
 done
@@ -489,6 +489,45 @@ else
 fi
 AUTH_SH=$(bash "$ROOT/scripts/author.sh" 2>&1) || true
 echo "$AUTH_SH" | grep -q '^AUTHOR checklist=yes' || { echo "EVAL FAIL: author.sh missing checklist card"; fail=1; }
+
+echo "== verification-before-completion / evidence HARD-GATE leaf =="
+need "skills/emperor-verify/verification-checklist.md"
+need "scripts/lib/evidence.py"
+need "scripts/evidence.sh"
+need "scripts/evidence.ps1"
+bash -n "$ROOT/scripts/evidence.sh" || { echo "EVAL FAIL: evidence.sh syntax"; fail=1; }
+python3 -m py_compile "$ROOT/scripts/lib/evidence.py" || { echo "EVAL FAIL: evidence.py compile"; fail=1; }
+grep -q 'evidence.py' "$ROOT/scripts/evidence.sh" || { echo "EVAL FAIL: evidence.sh does not call evidence.py"; fail=1; }
+grep -q 'evidence.py' "$ROOT/scripts/evidence.ps1" || { echo "EVAL FAIL: evidence.ps1 does not call evidence.py"; fail=1; }
+grep -q 'evidence|' "$ROOT/scripts/emperor" || { echo "EVAL FAIL: emperor bash missing evidence"; fail=1; }
+grep -q "'evidence'" "$ROOT/scripts/emperor.ps1" || { echo "EVAL FAIL: emperor.ps1 missing evidence"; fail=1; }
+grep -q 'verification-checklist.md' "$ROOT/skills/emperor-verify/SKILL.md" || { echo "EVAL FAIL: emperor-verify missing evidence leaf"; fail=1; }
+grep -q 'HARD-GATE' "$ROOT/skills/emperor-verify/verification-checklist.md" || { echo "EVAL FAIL: evidence leaf missing HARD-GATE heading"; fail=1; }
+grep -q 'verification-before-completion' "$ROOT/skills/emperor-verify/verification-checklist.md" || { echo "EVAL FAIL: evidence leaf missing source skill"; fail=1; }
+EVID_OUT=$(python3 "$ROOT/scripts/lib/evidence.py" 2>&1) || true
+echo "$EVID_OUT" | grep -q '^EVIDENCE checklist=yes' || { echo "EVAL FAIL: evidence missing checklist=yes"; fail=1; }
+echo "$EVID_OUT" | grep -q '^STEP 1 ' || { echo "EVAL FAIL: evidence missing STEP 1"; fail=1; }
+echo "$EVID_OUT" | grep -q '^STEP 5 ' || { echo "EVAL FAIL: evidence missing STEP 5"; fail=1; }
+echo "$EVID_OUT" | grep -q '^MUST:' || { echo "EVAL FAIL: evidence missing MUST line"; fail=1; }
+echo "$EVID_OUT" | grep -q 'NO_COMPLETION_CLAIMS_WITHOUT_FRESH_VERIFICATION_EVIDENCE' || { echo "EVAL FAIL: evidence missing iron law token"; fail=1; }
+if python3 "$ROOT/scripts/lib/evidence.py" --advance 1 3 >/dev/null 2>&1; then
+  echo "EVAL FAIL: evidence should reject step skip 1→3"
+  fail=1
+else
+  echo "EVAL PASS: evidence rejects skip 1→3"
+fi
+ADV_OK=$(python3 "$ROOT/scripts/lib/evidence.py" --advance 2 3 2>&1) || true
+echo "$ADV_OK" | grep -q '^ADVANCE OK' || { echo "EVAL FAIL: evidence 2→3 should OK"; fail=1; }
+if python3 "$ROOT/scripts/lib/evidence.py" --reject-unverified >/dev/null 2>&1; then
+  echo "EVAL FAIL: evidence --reject-unverified should exit non-zero"
+  fail=1
+else
+  REJECT=$(python3 "$ROOT/scripts/lib/evidence.py" --reject-unverified 2>&1) || true
+  echo "$REJECT" | grep -q '^REJECT UNVERIFIED:' || { echo "EVAL FAIL: reject-unverified missing REJECT line"; fail=1; }
+  echo "EVAL PASS: evidence --reject-unverified hard-gates unverified claims"
+fi
+EVID_SH=$(bash "$ROOT/scripts/evidence.sh" 2>&1) || true
+echo "$EVID_SH" | grep -q '^EVIDENCE checklist=yes' || { echo "EVAL FAIL: evidence.sh missing checklist card"; fail=1; }
 
 if [[ "$fail" -ne 0 ]]; then
   echo "EVALS FAILED"

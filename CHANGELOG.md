@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.4.14
+- Verification-before-completion / evidence HARD-GATE leaf: Superpowers `verification-before-completion` → **The Iron Law** + **The Gate Function** only, adapted into `skills/emperor-verify/verification-checklist.md` (Chain Jail extract-aspect)
+- Python core `scripts/lib/evidence.py` prints EVIDENCE/STEP/MUST card, rejects step skips (`--advance`), hard-gates unverified completion claims (`--reject-unverified`); thin `evidence.sh` / `evidence.ps1`; `emperor evidence` on bash/ps1/zsh/cmd peers
+- emperor-verify MUST the checklist before any completion / pass / fixed / done claim; catalog + navigation point local-first; eval locks card + skip rejection + reject-unverified
+- Plugin, marketplace, and SKILL.md at 0.4.14
+
 ## 0.4.13
 - Authoring iron-law / skill-RGR leaf: Superpowers `writing-skills` → **The Iron Law (Same as TDD)** + skill RED-GREEN-REFACTOR only, adapted into `chains/chain-jail/authoring-checklist.md` (Chain Jail extract-aspect)
 - Python core `scripts/lib/author.py` prints AUTHOR/STEP/MUST card, rejects step skips (`--advance`), hard-gates untested skill writes (`--reject-untested`); thin `author.sh` / `author.ps1`; `emperor author` on bash/ps1/zsh/cmd peers

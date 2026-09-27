@@ -79,6 +79,18 @@
     {
       "phrase": "write a skill from scratch",
       "skill": "emperor-capture"
+    },
+    {
+      "phrase": "tests are green",
+      "skill": "emperor-verify"
+    },
+    {
+      "phrase": "verification before completion",
+      "skill": "emperor-verify"
+    },
+    {
+      "phrase": "claim without evidence",
+      "skill": "emperor-verify"
     }
   ],
   "must_not_fire_master_wholesale": [
@@ -168,12 +180,20 @@
         "review this diff",
         "review the diff",
         "about to say done",
-        "verify"
+        "verify",
+        "tests are green",
+        "should pass now",
+        "verification before completion",
+        "fresh verification",
+        "evidence checklist",
+        "claim tests pass"
       ],
       "tags": [
         "verify",
         "review",
-        "g4"
+        "g4",
+        "evidence",
+        "verification-before-completion"
       ],
       "target": "skills/emperor-verify/SKILL.md",
       "reason": "done/tests/review \u2014 Judgment Chain"

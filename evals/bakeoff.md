@@ -48,3 +48,12 @@ bakeoff after marketplace install to verify agents open `ACTIVATION next=`
 without being told.
 Naked loses on (3).
 This is not a substitute for three isolated vendor sessions on a third repo.
+
+## Evidence lock (v0.4.14)
+
+Activation close (v0.4.5) remains. Completion-claim theater closes via
+`skills/emperor-verify/verification-checklist.md` + `scripts/emperor evidence`
+(Superpowers `verification-before-completion` Iron Law / Gate Function leaf).
+G4 unquoted-VERIFIED reject stays the mechanical teeth; the card is the
+pre-claim rite. Still not a three-vendor bake-off on a third repo.
+
