@@ -17,11 +17,12 @@
   .\emperor.ps1 iso
   .\emperor.ps1 review
   .\emperor.ps1 author
+  .\emperor.ps1 evidence
 #>
 [CmdletBinding()]
 param(
     [Parameter(Mandatory = $true, Position = 0)]
-    [ValidateSet('done','gate','eval','review-pack','dowse','install','worktree','queue','forge','finish','activate','boot','identify','route','heal','grill','tdd','iso','review','author','excavate')]
+    [ValidateSet('done','gate','eval','review-pack','dowse','install','worktree','queue','forge','finish','activate','boot','identify','route','heal','grill','tdd','iso','review','author','evidence','excavate')]
     [string]$Tool,
     [Parameter(ValueFromRemainingArguments = $true)]
     [string[]]$ToolArgs
