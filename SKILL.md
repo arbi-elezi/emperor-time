@@ -9,7 +9,7 @@ description: >-
   waiting to be told.
 license: MIT
 metadata:
-  version: 0.4.5
+  version: 0.4.6
   homepage: https://github.com/arbi-elezi/emperor-time
   standard: Agent Skills (SKILL.md)
 ---
@@ -48,14 +48,18 @@ Read `references/iron-laws.md` before writing production code.
 
 ## Load law
 
+MUST: pick one governing skill or file before creative work, clarifying
+questions, or exploring the tree. Use the tables below, or run
+`scripts/emperor route "<utterance>"` (or `scripts/emperor activate` and open
+`ACTIVATION next=`). Emperor Time stays the orchestrator. Do not load a foreign
+master router. SessionStart already fired MUST-route; do not wait for the
+client to say "emperor time".
+
 1. Name the situation in one sentence.
-2. Open exactly one file from the tables below.
+2. Open exactly one file from the tables below (or the route / activate hit).
 3. Do not skim siblings.
 4. Record the governing file in the ledger.
 5. If the host cannot read on demand, use `adapters/generic/EMPEROR_TIME.core.md` or `AGENTS.md`.
-
-SessionStart already ran `scripts/emperor activate` (MUST-route). Do not wait
-for the client to say "emperor time". Open `ACTIVATION next=` first.
 
 ## Phase skills (wrap chains; do not replace them)
 

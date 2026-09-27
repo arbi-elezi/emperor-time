@@ -27,5 +27,9 @@ if ($skill -notmatch 'Vow of Evidence') { Write-Host 'EVAL FAIL: vows missing'; 
   if ($skill -notmatch [regex]::Escape($_)) { Write-Host "EVAL FAIL: $_ unnamed in SKILL.md"; $fail = 1 }
 }
 
+Write-Host '== route.py =='
+Need 'scripts/lib/route.py'
+if (-not (Test-Path (Join-Path $Root 'scripts/lib/route.py'))) { $fail = 1 }
+
 if ($fail -ne 0) { Write-Host 'EVALS FAILED'; exit 1 }
 Write-Host 'EVALS PASSED'

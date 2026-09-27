@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.4.6
+- MUST-route doctrine bite: Load law + AGENTS.md standing order require one governing skill/file (or `emperor route` / `emperor activate`) before creative work, clarifying questions, or exploring
+- Python-first router: `scripts/lib/route.py` owns matching; `route.sh` / `route.ps1` are thin twins (same exits 0/1/2)
+- Adapter SessionStart notes: cursor/codex/kimi-cli/ollama/opencode/generic document host-agnostic silent boot + MUST-route
+- Honest `references/sdlc-comparison.md` refresh: Router MVP, excavate alias, remote CI `eval.yml`, adapter MUST-route notes
+- Eval locks `route.py` presence + `finish the branch` → forge; SessionStart MUST-route language retained
+
 ## 0.4.5
 - Silent activation MUST-route: Superpowers `using-superpowers` 1% leaf adapted into `skills/emperor-resume/must-route.md` — SessionStart fires without waiting for "emperor time"
 - Python core `scripts/lib/activate.py` prints ACTIVATION/MUST card from disk state or utterance; thin `activate.sh` / `activate.ps1`; `emperor activate` on bash/ps1/zsh/cmd peers
