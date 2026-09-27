@@ -58,6 +58,7 @@ mean **disk + eval**, not live multi-vendor win rates.
 | request-review | `skills/emperor-verify/request-review-checklist.md` + `emperor review` | TESTED |
 | receive-review | `skills/emperor-verify/receive-review-checklist.md` + `emperor receive` | TESTED |
 | executing-plans | `skills/emperor-build/executing-plans-checklist.md` + `emperor execute` | TESTED |
+| subagent-driven | `skills/emperor-build/subagent-driven-checklist.md` + `emperor subagent` | TESTED |
 | authoring iron-law | `chains/chain-jail/authoring-checklist.md` + `emperor author` | TESTED |
 | evidence / verification-before-completion | `skills/emperor-verify/verification-checklist.md` + `emperor evidence` | TESTED |
 | archaeology Pascal | `evals/fixtures/lost-pas/` + Jail pin | TESTED |

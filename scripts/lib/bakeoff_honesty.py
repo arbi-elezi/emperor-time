@@ -46,6 +46,11 @@ LEAVES: list[tuple[str, str, tuple[str, ...]]] = [
         ("execute", "executing-plans"),
     ),
     (
+        "subagent-driven",
+        "skills/emperor-build/subagent-driven-checklist.md",
+        ("subagent", "subagent-driven"),
+    ),
+    (
         "author",
         "chains/chain-jail/authoring-checklist.md",
         ("authoring",),

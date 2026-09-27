@@ -6,7 +6,7 @@ description: >-
   Failing probe first. Tripwires observed before flags/APIs/paths are asserted.
 license: MIT
 metadata:
-  version: 0.4.28
+  version: 0.4.29
   part-of: emperor-time
 ---
 
@@ -40,3 +40,20 @@ MUST card).
 No check-in theater between tasks. Stop only for the four named stops.
 Do not load whole `executing-plans` or `subagent-driven-development`;
 ET + emperor-build orchestrate.
+
+## MUST — subagent-driven checklist for subagent plan runs
+
+When executing a work-order / plan with *independent tasks* and a subagent
+tool is available (client did **not** choose inline) — before Task 1 and
+between tasks — open
+`skills/emperor-build/subagent-driven-checklist.md`
+(Chain Jail leaf from Superpowers `subagent-driven-development` → Fresh
+subagent per task / Task review after each / Fix loop R of 5 / Final
+whole-branch review only)
+and/or run `scripts/emperor subagent` (prints the mechanical SUBAGENT / STEP /
+MUST card).
+
+Fresh implementer per task. Task review (spec + quality) before the next task.
+Controller coordinates; does not implement or skip review.
+Do not load whole `subagent-driven-development` or its prompt templates;
+ET + emperor-build orchestrate. Inline path stays `emperor execute`.
