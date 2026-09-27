@@ -23,6 +23,9 @@ Hard rules (mechanical):
 2. Advance with `scripts/emperor author --advance N N+1` (skips fail).
 3. Jumping to skill prose → `scripts/emperor author --reject-untested`
    (HARD-GATE exit 1).
+4. Pressure-testing before trial → open `chains/chain-jail/testing-skills.md`
+   and/or run `scripts/emperor skill-test` (combined pressure / watch baseline).
+   Academic-only → `scripts/emperor skill-test --reject-academic-only`.
 4. Then continue with the anatomy steps below; hand to trial still mandatory.
 
 ## The anatomy (what every authored skill contains)

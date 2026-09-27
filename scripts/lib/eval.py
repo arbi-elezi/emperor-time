@@ -2028,9 +2028,11 @@ def run_evals(root: Path) -> int:
     h.require_contains("pressure.py", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing pressure.py")
     h.require_contains("good_tests.py", "evals/bakeoff.md", "bakeoff.md missing good_tests.py inventory")
     h.require_contains("good_tests.py", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing good_tests.py")
-    h.require_contains("0.4.44", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing 0.4.44 tip")
-    h.require_contains("0.4.44", ".claude-plugin/plugin.json", "plugin.json not at 0.4.44")
-    h.require_contains("0.4.44", "CHANGELOG.md", "CHANGELOG missing 0.4.44")
+    h.require_contains("skill_test.py", "evals/bakeoff.md", "bakeoff.md missing skill_test.py inventory")
+    h.require_contains("skill_test.py", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing skill_test.py")
+    h.require_contains("0.4.45", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing 0.4.45 tip")
+    h.require_contains("0.4.45", ".claude-plugin/plugin.json", "plugin.json not at 0.4.45")
+    h.require_contains("0.4.45", "CHANGELOG.md", "CHANGELOG missing 0.4.45")
 
     # session-discovery
     h.section("session-discovery locate HARD-GATE leaf")
@@ -3182,6 +3184,165 @@ def run_evals(root: Path) -> int:
         h.fail_msg("route.py name the break → tdd")
     else:
         h.pass_msg("route.py name the break → emperor-tdd")
+
+
+    # testing-skills HARD-GATE
+    h.section("testing-skills HARD-GATE leaf")
+    h.need("chains/chain-jail/testing-skills.md")
+    h.need("references/testing-skills.md")
+    h.need("scripts/lib/skill_test.py")
+    h.need("scripts/skill-test.sh")
+    h.need("scripts/skill-test.ps1")
+    h.bash_n("scripts/skill-test.sh", "skill-test.sh syntax")
+    h.py_compile("scripts/lib/skill_test.py", "skill_test.py compile")
+    h.require_contains(
+        "skill_test.py",
+        "scripts/skill-test.sh",
+        "skill-test.sh does not call skill_test.py",
+    )
+    h.require_contains(
+        "skill_test.py",
+        "scripts/skill-test.ps1",
+        "skill-test.ps1 does not call skill_test.py",
+    )
+    h.require_contains(
+        "skill-test",
+        "scripts/emperor",
+        "emperor bash missing skill-test",
+    )
+    h.require_contains(
+        "'skill-test'",
+        "scripts/emperor.ps1",
+        "emperor.ps1 missing skill-test",
+    )
+    h.require_contains(
+        "skill-test",
+        "scripts/emperor.cmd",
+        "emperor.cmd missing skill-test",
+    )
+    h.require_contains(
+        "skill-test",
+        "scripts/emperor.zsh",
+        "emperor.zsh missing skill-test",
+    )
+    h.require_contains(
+        "testing-skills.md",
+        "skills/emperor-capture/SKILL.md",
+        "emperor-capture missing testing-skills leaf",
+    )
+    h.require_contains(
+        "testing-skills.md",
+        "chains/chain-jail/authoring-checklist.md",
+        "authoring-checklist missing testing-skills companion",
+    )
+    h.require_contains(
+        "HARD-GATE",
+        "chains/chain-jail/testing-skills.md",
+        "testing-skills leaf missing HARD-GATE heading",
+    )
+    h.require_contains(
+        "writing-skills",
+        "chains/chain-jail/testing-skills.md",
+        "testing-skills leaf missing source skill",
+    )
+    h.require_contains(
+        "testing-skills-with-subagents.md",
+        "chains/chain-jail/testing-skills.md",
+        "testing-skills leaf missing source file cite",
+    )
+    h.require_contains(
+        "obra/superpowers",
+        "references/testing-skills.md",
+        "testing-skills reference missing obra/superpowers cite",
+    )
+    h.require_contains(
+        "2026-09-27",
+        "references/testing-skills.md",
+        "testing-skills reference missing access date",
+    )
+    h.require_contains(
+        "c711346852c911b24a84aa161e0cff06a4cd7f4e2fa9e9c0a266cead5afcbade",
+        "references/testing-skills.md",
+        "testing-skills reference missing sha256",
+    )
+    h.require_contains(
+        "EVERY SKILL FACES COMBINED PRESSURE",
+        "chains/chain-jail/testing-skills.md",
+        "testing-skills leaf missing iron law text",
+    )
+    h.require_contains(
+        "testing skills with subagents",
+        "evals/triggers.json",
+        "triggers missing testing skills with subagents phrase",
+    )
+    h.require_contains(
+        "watch baseline fail without skill",
+        "evals/triggers.json",
+        "triggers missing watch baseline fail phrase",
+    )
+    h.require_contains(
+        "testing-skills.md",
+        "chains/chain-jail/extract-aspect.md",
+        "extract-aspect missing testing-skills leaf",
+    )
+    _, st_out = h.run_py("scripts/lib/skill_test.py")
+    if not re.search(r"^SKILLTEST checklist=yes", st_out, re.M):
+        h.fail_msg("skill_test missing checklist=yes")
+    if not re.search(r"^PRIN \d+ id=", st_out, re.M):
+        h.fail_msg("skill_test missing PRIN line")
+    if not re.search(r"^MUST:", st_out, re.M):
+        h.fail_msg("skill_test missing MUST line")
+    if not re.search(r"^GATE rule=", st_out, re.M):
+        h.fail_msg("skill_test missing GATE line")
+    if "EVERY_SKILL_FACES_COMBINED_PRESSURE" not in st_out:
+        h.fail_msg("skill_test missing iron law token")
+    rc, _ = h.run_py("scripts/lib/skill_test.py", "--reject-academic-only")
+    if rc == 0:
+        h.fail_msg("skill_test --reject-academic-only should exit non-zero")
+    else:
+        _, reject = h.run_py("scripts/lib/skill_test.py", "--reject-academic-only")
+        if not re.search(r"^REJECT ACADEMIC-ONLY:", reject, re.M):
+            h.fail_msg("reject-academic-only missing REJECT line")
+        else:
+            h.pass_msg("skill_test --reject-academic-only hard-gates")
+    rc, _ = h.run_py("scripts/lib/skill_test.py", "--reject-skip-red")
+    if rc == 0:
+        h.fail_msg("skill_test --reject-skip-red should exit non-zero")
+    else:
+        _, reject = h.run_py("scripts/lib/skill_test.py", "--reject-skip-red")
+        if not re.search(r"^REJECT SKIP-RED:", reject, re.M):
+            h.fail_msg("reject-skip-red missing REJECT line")
+        else:
+            h.pass_msg("skill_test --reject-skip-red hard-gates")
+    rc, st_ok = h.run_py(
+        "scripts/lib/skill_test.py",
+        "--check-pressure-baseline",
+        "Combined pressure: time + sunk cost + exhaustion. Watch baseline FAIL "
+        "without the skill. Capture rationalizations verbatim. Explicit negation "
+        "per loophole. Stay green under max pressure.",
+    )
+    if rc != 0 or "SKILLTEST OK:" not in st_ok:
+        h.fail_msg("skill_test --check-pressure-baseline should accept pressure answers")
+    else:
+        h.pass_msg("skill_test --check-pressure-baseline accepts pressure answers")
+    rc, st_bad = h.run_py(
+        "scripts/lib/skill_test.py",
+        "--check-pressure-baseline",
+        "just ask what the skill says",
+    )
+    if rc == 0 or "SKILLTEST FAIL:" not in st_bad:
+        h.fail_msg("skill_test --check-pressure-baseline should reject academic-only claim")
+    else:
+        h.pass_msg("skill_test --check-pressure-baseline rejects academic-only claim")
+    _, st_sh = h.run_sh("scripts/skill-test.sh")
+    if not re.search(r"^SKILLTEST checklist=yes", st_sh, re.M):
+        h.fail_msg("skill-test.sh missing checklist card")
+    _, rout_st = h.run_py("scripts/lib/route.py", "testing skills with subagents")
+    if "emperor-capture" not in rout_st:
+        h.fail_msg("route.py testing skills with subagents → capture")
+    else:
+        h.pass_msg("route.py testing skills with subagents → emperor-capture")
+
 
 
     if h.fail != 0:

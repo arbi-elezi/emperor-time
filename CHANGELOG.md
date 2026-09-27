@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.4.45
+- Testing-skills HARD-GATE leaf: `scripts/lib/skill_test.py` prints SKILLTEST / PRIN / GATE / MUST card (combined pressure / watch baseline fail / verbatim rationalizations / explicit negation / stay green)
+- Thin `skill-test.sh` / `skill-test.ps1`; emperor peers gain `skill-test`; `--reject-academic-only` / `--reject-skip-red` HARD-GATEs; `--check-pressure-baseline` validator (combined-pressure + watch-baseline / verbatim / explicit-negation / stay-green signals)
+- Skill leaf `chains/chain-jail/testing-skills.md` + `references/testing-skills.md` cite obra/superpowers writing-skills testing-skills-with-subagents.md (URL + 2026-09-27 + sha256); Chain Jail extract-aspect + authoring companion + capture SKILL + catalog lockstep
+- Route/triggers → emperor-capture; bakeoff + honesty inventory; plugin/marketplace/SKILL at 0.4.45
+
 ## 0.4.44
 - Writing-good-tests HARD-GATE leaf: `scripts/lib/good_tests.py` prints GOOD / PRIN / GATE / MUST card (name the break / exercise the real thing / hand-derived want / mutation check)
 - Thin `good-tests.sh` / `good-tests.ps1`; emperor peers gain `good-tests`; `--reject-mirror` / `--reject-change-detector` HARD-GATEs; `--check-named-break` validator (name-break + real-thing / hand-derived / mutation signals)
