@@ -41,7 +41,7 @@ for c in "Dowsing Chain" "Chain Jail" "Judgment Chain" "Steal Chain" "Holy Chain
 done
 
 echo "== twins =="
-for pair in done gate eval review-pack dowse install worktree; do
+for pair in done gate eval review-pack dowse install worktree queue forge identify boot; do
   need "scripts/${pair}.sh"
   need "scripts/${pair}.ps1"
 done

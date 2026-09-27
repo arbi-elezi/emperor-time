@@ -7,11 +7,11 @@
         "hooks": [
           {
             "type": "command",
-            "command": "if [ -f scripts/boot.sh ]; then bash scripts/boot.sh; elif [ -f scripts/emperor.ps1 ]; then pwsh -NoProfile -File scripts/boot.ps1; fi"
+            "command": "if [ -f scripts/boot.sh ]; then bash scripts/boot.sh; elif [ -f scripts/boot.ps1 ]; then pwsh -NoProfile -File scripts/boot.ps1; elif [ -f scripts/emperor.cmd ]; then cmd.exe /c scripts\\emperor.cmd boot; fi"
           },
           {
             "type": "prompt",
-            "prompt": "Emperor Time: make software. Do not ask the client their OS or language. Read .emperor/host.env and .emperor/survey.md (boot already wrote them). Resume .emperor/state.md. If no task: scripts/emperor queue next. Lost trees: skills/emperor-excavate. DONE is scripts/emperor done. Memory is CONJECTURE."
+            "prompt": "Emperor Time: make software. Do not ask the client their OS or language. Read .emperor/host.env and .emperor/survey.md (boot already wrote them). Resume .emperor/state.md. If no task: scripts/emperor queue next. Lost trees: skills/emperor-excavate; survey a foreign path with scripts/emperor identify <path>. DONE is scripts/emperor done (bash/zsh), scripts/emperor.ps1 done (PowerShell), or scripts/emperor.cmd done (cmd.exe). Memory is CONJECTURE."
           }
         ]
       }
@@ -21,7 +21,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "last=''; if [ -d .emperor/tasks ]; then last=$(ls -1d .emperor/tasks/* 2>/dev/null | tail -n1); fi; if [ -n \"$last\" ] && [ -f \"$last/DONE.md\" ]; then if command -v pwsh >/dev/null 2>&1 && [ -f scripts/emperor.ps1 ]; then pwsh -NoProfile -File scripts/emperor.ps1 done \"$last\" || echo '[Emperor Time] STOP: DONE probes failed'; elif [ -f scripts/emperor ]; then bash scripts/emperor done \"$last\" || echo '[Emperor Time] STOP: DONE probes failed'; else bash scripts/done.sh \"$last\" || echo '[Emperor Time] STOP: DONE probes failed'; fi; elif [ -d .emperor/tasks ]; then echo '[Emperor Time] STOP: no DONE.md'; fi"
+            "command": "last=''; if [ -d .emperor/tasks ]; then last=$(ls -1d .emperor/tasks/* 2>/dev/null | tail -n1); fi; if [ -n \"$last\" ] && [ -f \"$last/DONE.md\" ]; then if command -v pwsh >/dev/null 2>&1 && [ -f scripts/emperor.ps1 ]; then pwsh -NoProfile -File scripts/emperor.ps1 done \"$last\" || echo '[Emperor Time] STOP: DONE probes failed'; elif [ -f scripts/emperor ]; then bash scripts/emperor done \"$last\" || echo '[Emperor Time] STOP: DONE probes failed'; elif [ -f scripts/emperor.cmd ]; then cmd.exe /c scripts\\emperor.cmd done \"$last\" || echo '[Emperor Time] STOP: DONE probes failed'; else bash scripts/done.sh \"$last\" || echo '[Emperor Time] STOP: DONE probes failed'; fi; elif [ -d .emperor/tasks ]; then echo '[Emperor Time] STOP: no DONE.md'; fi"
           }
         ]
       }

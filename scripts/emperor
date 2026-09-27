@@ -10,7 +10,7 @@ if [[ ! -f .emperor/host.env ]]; then
 fi
 TOOL="${1:-}"
 if [[ -z "$TOOL" ]]; then
-  echo "usage: $0 <done|gate|eval|review-pack|dowse|install|worktree|queue|forge|boot> [args]" >&2
+  echo "usage: $0 <done|gate|eval|review-pack|dowse|install|worktree|queue|forge|boot|identify> [args]" >&2
   exit 2
 fi
 shift || true
@@ -19,9 +19,16 @@ if [[ "$TOOL" == host || "$TOOL" == boot ]]; then
   [[ "${EMPEROR_BOOT_VERBOSE:-0}" == 1 ]] && cat .emperor/host.env 2>/dev/null || true
   exit 0
 fi
-# identify is an internal name for boot's survey. Same silence.
+# identify: with a path → survey that tree (archaeology). No args → silent
+# (boot already wrote .emperor/survey.md). Not a user ritual.
 if [[ "$TOOL" == identify ]]; then
+  if [[ $# -gt 0 ]]; then
+    exec bash "$ROOT/identify.sh" "$@"
+  fi
   bash "$ROOT/boot.sh" >/dev/null 2>&1 || true
+  if [[ "${EMPEROR_BOOT_VERBOSE:-0}" == 1 ]]; then
+    cat .emperor/survey.md 2>/dev/null || true
+  fi
   exit 0
 fi
 
