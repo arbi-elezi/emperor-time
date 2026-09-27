@@ -155,6 +155,22 @@
     {
       "phrase": "no citation no finding",
       "skill": "emperor-heal"
+    },
+    {
+      "phrase": "trace root cause",
+      "skill": "emperor-heal"
+    },
+    {
+      "phrase": "root cause tracing",
+      "skill": "emperor-heal"
+    },
+    {
+      "phrase": "fix at the source not the symptom",
+      "skill": "emperor-heal"
+    },
+    {
+      "phrase": "trace backward through the call chain",
+      "skill": "emperor-heal"
     }
   ],
   "must_not_fire_master_wholesale": [
@@ -269,7 +285,12 @@
         "why did the session fail",
         "intake before analysis",
         "no citation no finding",
-        "diagnose session"
+        "diagnose session",
+        "trace root cause",
+        "root cause tracing",
+        "fix at the source not the symptom",
+        "trace backward through the call chain",
+        "symptom fix"
       ],
       "tags": [
         "heal",
@@ -278,10 +299,13 @@
         "transcript",
         "diagnose",
         "diagnosing",
-        "citation"
+        "citation",
+        "trace",
+        "root-cause",
+        "root-cause-tracing"
       ],
       "target": "skills/emperor-heal/SKILL.md",
-      "reason": "red build / derail \u2014 Holy Chain / session-discovery locate / diagnosing intake+cite"
+      "reason": "red build / derail \u2014 Holy Chain / session-discovery locate / diagnosing intake+cite / root-cause tracing"
     },
     {
       "id": "verify",
