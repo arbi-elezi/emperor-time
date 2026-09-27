@@ -5,10 +5,11 @@ description: >-
   as a skill. Use when the user throws a repo and a loose task, a lost or
   ancient codebase (Pascal, assembly, COBOL, ROM, unmarked binaries), says
   emperor time, find work, next, ship, or open a PR. Language-agnostic.
-  Host-agnostic (AGENTS.md). Not trivia.
+  Host-agnostic (AGENTS.md). Not trivia. SessionStart MUST-routes without
+  waiting to be told.
 license: MIT
 metadata:
-  version: 0.4.4
+  version: 0.4.5
   homepage: https://github.com/arbi-elezi/emperor-time
   standard: Agent Skills (SKILL.md)
 ---
@@ -53,11 +54,14 @@ Read `references/iron-laws.md` before writing production code.
 4. Record the governing file in the ledger.
 5. If the host cannot read on demand, use `adapters/generic/EMPEROR_TIME.core.md` or `AGENTS.md`.
 
+SessionStart already ran `scripts/emperor activate` (MUST-route). Do not wait
+for the client to say "emperor time". Open `ACTIVATION next=` first.
+
 ## Phase skills (wrap chains; do not replace them)
 
 | When | Open |
 |---|---|
-| Session start / continue / compacted | `skills/emperor-resume/SKILL.md` |
+| Session start / continue / compacted | `skills/emperor-resume/SKILL.md` (+ `must-route.md`) |
 | No task / find work / next / issues / Linear | `skills/emperor-queue/SKILL.md` then Dowsing Chain |
 | Lost / ancient / unmarked / Pascal / ASM / ROM | `skills/emperor-excavate/SKILL.md` then Dowsing `excavate.md` |
 | Vague ask / intake | `skills/emperor-scope/SKILL.md` then Dowsing Chain |
@@ -92,6 +96,7 @@ Jail extra: no captured skill runs on real work until trial + sha256 pin + quote
 - Unchanged retry is Vow of Worthy Spend. Change the hypothesis or stop.
 - Run `scripts/emperor gate <g0-g5> <task-dir>` before claiming the gate open. Script fail = gate closed.
 - `scripts/emperor done <task-dir>` must exit 0 before the word done.
+- `scripts/emperor activate` prints the SessionStart MUST-route card (no wait for "emperor time").
 - `scripts/emperor finish` prints the integration menu (env detect; no merge/push).
 - `scripts/emperor forge <task-dir>` refuses without consent.
 - Resume from disk (`skills/emperor-resume/SKILL.md`) instead of restating the session.
