@@ -38,5 +38,5 @@ scripts/emperor wait --check-condition "waitFor ready state"
 ## Out of scope
 
 - Whole `systematic-debugging` skill folder
-- `find-polluter.sh`, pressure / academic packs
+- Pressure / academic packs (find-polluter is a separate leaf: `emperor polluter`)
 - Replacing root-cause tracing or defense-in-depth with blind sleeps

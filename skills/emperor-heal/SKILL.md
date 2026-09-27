@@ -8,7 +8,8 @@ description: >-
   or diagnose why a session went wrong (intake + path:line citations),
   or trace a deep-stack bug backward to its original trigger before fixing,
   or add multi-layer validation after a source fix so invalid data cannot recur,
-  or replace arbitrary sleep/setTimeout waits with condition-based waiting for flaky tests.
+  or replace arbitrary sleep/setTimeout waits with condition-based waiting for flaky tests,
+  or find which test creates leftover files / shared-state pollution without guessing.
 license: MIT
 metadata:
   version: 0.4.7
@@ -89,6 +90,19 @@ condition / not a guess about timing only**) and/or run `scripts/emperor wait`
 No arbitrary sleep as the wait. Name the condition; always timeout. Do not load
 whole `systematic-debugging`; ET + Holy Chain orchestrate.
 
+
+
+## MUST — find the polluter instead of guessing
+
+When leftover files or shared state break later tests, open
+`skills/emperor-heal/find-polluter.md`
+(Chain Jail leaf from Superpowers `systematic-debugging` → **Find which test
+creates unwanted files/state / do not guess the polluter only**) and/or run
+`scripts/emperor polluter` (prints the mechanical POLLUTER / STEP / MUST card).
+
+No guessing which test polluted. Name the marker; run candidates one-by-one.
+Do not load whole `systematic-debugging`; ET + Holy Chain orchestrate.
+
 ## Steps
 
 1. Run `scripts/emperor heal` → quote `DEBUG four_phases=yes`. Advance phases
@@ -113,11 +127,15 @@ whole `systematic-debugging`; ET + Holy Chain orchestrate.
    `scripts/emperor wait` → quote `WAIT checklist=yes`. Arbitrary sleep →
    `scripts/emperor wait --reject-sleep`. Wait without a named condition →
    `--reject-unguessed` (HARD-GATE exit 1).
-7. Read `chains/holy-chain/SKILL.md` → one aspect
+7. When leftover files or shared state break later tests: run
+   `scripts/emperor polluter` → quote `POLLUTER checklist=yes`. Guessing the
+   polluter → `scripts/emperor polluter --reject-guess`. Ship without finding
+   it → `--reject-unbisected` (HARD-GATE exit 1).
+8. Read `chains/holy-chain/SKILL.md` → one aspect
    (`triage.md` | `reproduce-and-bisect.md` | `heal-and-verify.md` |
    `process-healing.md`) matching the current phase (see leaf table).
-8. Snapshot. Reproduce. One hypothesis per step. Prediction before probe.
-9. Minimal heal. Verify the cause, not the symptom (verification triad).
-10. Postmortem line on the ledger: BROKE / CAUSE / HEAL / CAUGHT-BY /
+9. Snapshot. Reproduce. One hypothesis per step. Prediction before probe.
+10. Minimal heal. Verify the cause, not the symptom (verification triad).
+11. Postmortem line on the ledger: BROKE / CAUSE / HEAL / CAUGHT-BY /
    WOULD-HAVE-CAUGHT-SOONER.
-11. If the *process* broke, re-enter at the earliest unsatisfied gate.
+12. If the *process* broke, re-enter at the earliest unsatisfied gate.

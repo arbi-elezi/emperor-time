@@ -12,7 +12,7 @@ if [[ ! -f .emperor/host.env ]]; then
 fi
 TOOL="${1:-}"
 if [[ -z "$TOOL" ]]; then
-  print -u2 "usage: $0 <done|gate|eval|review-pack|dowse|install|worktree|queue|forge|finish|activate|boot|identify|route|heal|grill|tdd|iso|review|author|evidence|receive|execute|subagent|parallel|excavate|session-discovery|diagnose|trace|defense|wait> [args]"
+  print -u2 "usage: $0 <done|gate|eval|review-pack|dowse|install|worktree|queue|forge|finish|activate|boot|identify|route|heal|grill|tdd|iso|review|author|evidence|receive|execute|subagent|parallel|excavate|session-discovery|diagnose|trace|defense|wait|polluter> [args]"
   exit 2
 fi
 shift || true
@@ -40,6 +40,10 @@ fi
 # wait: first-class alias → condition-wait HARD-GATE card
 if [[ "$TOOL" == wait ]]; then
   exec bash "$ROOT/condition-wait.sh" "$@"
+fi
+# polluter: first-class alias → find-polluter HARD-GATE card
+if [[ "$TOOL" == polluter ]]; then
+  exec bash "$ROOT/find-polluter.sh" "$@"
 fi
 
 ps1="$ROOT/${TOOL}.ps1"

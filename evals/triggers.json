@@ -207,6 +207,26 @@
     {
       "phrase": "flaky timeout",
       "skill": "emperor-heal"
+    },
+    {
+      "phrase": "find polluter",
+      "skill": "emperor-heal"
+    },
+    {
+      "phrase": "find the polluter",
+      "skill": "emperor-heal"
+    },
+    {
+      "phrase": "test pollution",
+      "skill": "emperor-heal"
+    },
+    {
+      "phrase": "which test created",
+      "skill": "emperor-heal"
+    },
+    {
+      "phrase": "leftover files from tests",
+      "skill": "emperor-heal"
     }
   ],
   "must_not_fire_master_wholesale": [
@@ -336,7 +356,13 @@
         "condition-based waiting",
         "wait for condition",
         "arbitrary sleep",
-        "flaky timeout"
+        "flaky timeout",
+        "find polluter",
+        "find the polluter",
+        "test pollution",
+        "which test created",
+        "leftover files from tests",
+        "shared state pollution"
       ],
       "tags": [
         "heal",
@@ -354,10 +380,13 @@
         "layers",
         "wait",
         "condition-based-waiting",
-        "flaky"
+        "flaky",
+        "polluter",
+        "find-polluter",
+        "pollution"
       ],
       "target": "skills/emperor-heal/SKILL.md",
-      "reason": "red build / derail \u2014 Holy Chain / session-discovery locate / diagnosing intake+cite / root-cause tracing / defense-in-depth multi-layer validation / condition-based-waiting HARD-GATE"
+      "reason": "red build / derail \u2014 Holy Chain / session-discovery locate / diagnosing intake+cite / root-cause tracing / defense-in-depth multi-layer validation / condition-based-waiting HARD-GATE / find-polluter HARD-GATE"
     },
     {
       "id": "verify",

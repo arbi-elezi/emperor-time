@@ -5,8 +5,8 @@ Leaf adapted from obra/superpowers skills/systematic-debugging
 defense-in-depth.md (MIT) — Validate at every layer / Four layers only.
 Emperor Time + Holy Chain stay the orchestrator; do not announce the
 foreign skill name. Does not vendor whole systematic-debugging (no
-find-polluter.sh or pressure tests). condition-based-waiting is a
-separate Chain Jail leaf (`emperor wait`).
+pressure/academic packs). condition-based-waiting and find-polluter
+are separate Chain Jail leaves (`emperor wait`, `emperor polluter`).
 
 Prints DEFENSE / LAYER / MUST lines.
 --reject-single-layer and --reject-unlayered always fail (HARD-GATE helpers).
