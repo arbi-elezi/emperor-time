@@ -77,15 +77,21 @@ emperor_win_cmd() {
 }
 emperor_host_report() {
   # Canonical report line lives in host.py (closes bash↔ps1 drift).
+  # Resolve path without zsh-only expansions (file is shellcheck shell=bash).
   _et_host_py=""
-  if [ -n "${BASH_SOURCE[0]:-}" ]; then
+  if [ -n "${BASH_SOURCE[0]:-}" ] && [ -f "${BASH_SOURCE[0]}" ]; then
     _et_host_py="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)/host.py"
-  elif [ -n "${ZSH_VERSION:-}" ]; then
-    _et_host_py="$(cd "$(dirname "${(%):-%x}")" && pwd)/host.py" 2>/dev/null || true
   fi
   if [ -z "$_et_host_py" ] || [ ! -f "$_et_host_py" ]; then
-    for _cand in "./scripts/lib/host.py" "$(dirname "$0")/lib/host.py" "$(dirname "$0")/host.py"; do
-      if [ -f "$_cand" ]; then _et_host_py="$(cd "$(dirname "$_cand")" && pwd)/host.py"; break; fi
+    for _cand in \
+      "./scripts/lib/host.py" \
+      "$(dirname "$0")/lib/host.py" \
+      "$(dirname "$0")/host.py"
+    do
+      if [ -f "$_cand" ]; then
+        _et_host_py="$(cd "$(dirname "$_cand")" && pwd)/host.py"
+        break
+      fi
     done
   fi
   if [ -n "$_et_host_py" ] && [ -f "$_et_host_py" ] && command -v python3 >/dev/null 2>&1; then
