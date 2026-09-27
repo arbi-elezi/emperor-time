@@ -17,3 +17,6 @@ Thumbs.db
 .vscode/
 __pycache__/
 *.py[cod]
+
+# Git worktree isolation (emperor-worktree)
+.worktrees/

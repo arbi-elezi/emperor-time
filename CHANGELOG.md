@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.4.10
+- Worktree isolation leaf: Superpowers `using-git-worktrees` → detect / native-or-git / check-ignore / baseline HARD-GATE only, adapted into `skills/emperor-worktree/isolation-checklist.md` (Chain Jail extract-aspect)
+- Python core `scripts/lib/worktree_iso.py` prints WORKTREE/STEP/MUST card, rejects step skips (`--advance`), hard-gates blind create (`--reject-blind-create`); thin `iso.sh` / `iso.ps1`; `emperor iso` on bash/ps1/zsh/cmd peers
+- emperor-worktree + emperor-build MUST the checklist before standard/heavy mutate; `.worktrees/` gitignored; eval locks card + skip rejection + reject-blind-create
+
 ## 0.4.9
 - TDD iron-law / RGR leaf: Superpowers `test-driven-development` → **The Iron Law** + **Red-Green-Refactor** HARD-GATE only, adapted into `skills/emperor-tdd/red-green-refactor.md` (Chain Jail extract-aspect)
 - Python core `scripts/lib/tdd.py` prints TDD/STEP/MUST card, rejects step skips (`--advance`), hard-gates prod-before-fail (`--reject-prod`); thin `tdd.sh` / `tdd.ps1`; `emperor tdd` on bash/ps1/zsh/cmd peers

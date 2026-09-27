@@ -41,7 +41,7 @@ for c in "Dowsing Chain" "Chain Jail" "Judgment Chain" "Steal Chain" "Holy Chain
 done
 
 echo "== twins =="
-for pair in "done" gate eval review-pack dowse install worktree queue forge finish activate identify boot route excavate heal grill tdd; do
+for pair in "done" gate eval review-pack dowse install worktree queue forge finish activate identify boot route excavate heal grill tdd iso; do
   need "scripts/${pair}.sh"
   need "scripts/${pair}.ps1"
 done
@@ -361,6 +361,46 @@ else
 fi
 TDD_SH=$(bash "$ROOT/scripts/tdd.sh" 2>&1) || true
 echo "$TDD_SH" | grep -q '^TDD checklist=yes' || { echo "EVAL FAIL: tdd.sh missing checklist card"; fail=1; }
+
+
+echo "== worktree isolation HARD-GATE leaf =="
+need "skills/emperor-worktree/isolation-checklist.md"
+need "scripts/lib/worktree_iso.py"
+need "scripts/iso.sh"
+need "scripts/iso.ps1"
+bash -n "$ROOT/scripts/iso.sh" || { echo "EVAL FAIL: iso.sh syntax"; fail=1; }
+python3 -m py_compile "$ROOT/scripts/lib/worktree_iso.py" || { echo "EVAL FAIL: worktree_iso.py compile"; fail=1; }
+grep -q 'worktree_iso.py' "$ROOT/scripts/iso.sh" || { echo "EVAL FAIL: iso.sh does not call worktree_iso.py"; fail=1; }
+grep -q 'worktree_iso.py' "$ROOT/scripts/iso.ps1" || { echo "EVAL FAIL: iso.ps1 does not call worktree_iso.py"; fail=1; }
+grep -q 'iso|' "$ROOT/scripts/emperor" || { echo "EVAL FAIL: emperor bash missing iso"; fail=1; }
+grep -q "'iso'" "$ROOT/scripts/emperor.ps1" || { echo "EVAL FAIL: emperor.ps1 missing iso"; fail=1; }
+grep -q 'isolation-checklist.md' "$ROOT/skills/emperor-worktree/SKILL.md" || { echo "EVAL FAIL: emperor-worktree missing isolation leaf"; fail=1; }
+grep -q 'HARD-GATE' "$ROOT/skills/emperor-worktree/isolation-checklist.md" || { echo "EVAL FAIL: iso leaf missing HARD-GATE heading"; fail=1; }
+grep -q 'using-git-worktrees' "$ROOT/skills/emperor-worktree/isolation-checklist.md" || { echo "EVAL FAIL: iso leaf missing source skill"; fail=1; }
+ISO_OUT=$(python3 "$ROOT/scripts/lib/worktree_iso.py" 2>&1) || true
+echo "$ISO_OUT" | grep -q '^WORKTREE checklist=yes' || { echo "EVAL FAIL: iso missing checklist=yes"; fail=1; }
+echo "$ISO_OUT" | grep -q '^STEP 1 ' || { echo "EVAL FAIL: iso missing STEP 1"; fail=1; }
+echo "$ISO_OUT" | grep -q '^STEP 5 ' || { echo "EVAL FAIL: iso missing STEP 5"; fail=1; }
+echo "$ISO_OUT" | grep -q '^MUST:' || { echo "EVAL FAIL: iso missing MUST line"; fail=1; }
+echo "$ISO_OUT" | grep -q 'NO_MUTATE_WITHOUT_ISOLATION_DETECT' || { echo "EVAL FAIL: iso missing iron law token"; fail=1; }
+if python3 "$ROOT/scripts/lib/worktree_iso.py" --advance 1 3 >/dev/null 2>&1; then
+  echo "EVAL FAIL: iso should reject step skip 1→3"
+  fail=1
+else
+  echo "EVAL PASS: iso rejects skip 1→3"
+fi
+ADV_OK=$(python3 "$ROOT/scripts/lib/worktree_iso.py" --advance 2 3 2>&1) || true
+echo "$ADV_OK" | grep -q '^ADVANCE OK' || { echo "EVAL FAIL: iso 2→3 should OK"; fail=1; }
+if python3 "$ROOT/scripts/lib/worktree_iso.py" --reject-blind-create >/dev/null 2>&1; then
+  echo "EVAL FAIL: iso --reject-blind-create should exit non-zero"
+  fail=1
+else
+  REJECT=$(python3 "$ROOT/scripts/lib/worktree_iso.py" --reject-blind-create 2>&1) || true
+  echo "$REJECT" | grep -q '^REJECT BLIND-CREATE:' || { echo "EVAL FAIL: reject-blind-create missing REJECT line"; fail=1; }
+  echo "EVAL PASS: iso --reject-blind-create hard-gates blind create"
+fi
+ISO_SH=$(bash "$ROOT/scripts/iso.sh" 2>&1) || true
+echo "$ISO_SH" | grep -q '^WORKTREE checklist=yes' || { echo "EVAL FAIL: iso.sh missing checklist card"; fail=1; }
 
 if [[ "$fail" -ne 0 ]]; then
   echo "EVALS FAILED"
