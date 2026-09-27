@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.4.49
+- Archaeology Common Lisp leaf: `evals/fixtures/lost-lisp/HELLO.LISP` + identify smoke; GNU CLISP 2.49.95+ boot probe VERIFIED (`clisp -q -norc`); dialect labels honest (CONJECTURE / UNVERIFIABLE where due)
+- Jail pin `references/archaeology-lisp-manual.md` — CLISP Non-Interactive (Batch) Mode (`_lisp-file_` / `-x`)
+- Catalog + SKILL.md + archaeology.md + language-agnostic.md link the eighth pin alongside Pascal, ASM, COBOL, Fortran, VHDL, Ada, and Forth; route triggers gain `clisp` / `sbcl` / `.lisp` / `.lsp` / `.cl` (space-padded `lisp` to avoid `ellipsis` substring); eval locks `*.lisp` identify on lost-lisp
+- Plugin, marketplace, and SKILL.md at 0.4.49
+
 ## 0.4.48
 - Archaeology Forth leaf: `evals/fixtures/lost-fs/HELLO.FS` + identify smoke; pForth V2.0.0 boot probe VERIFIED (`pforth -q`); dialect labels honest (CONJECTURE / UNVERIFIABLE where due)
 - Jail pin `references/archaeology-forth-manual.md` — pForth README How to Run (INCLUDE / `pforth myprogram.fth`)
