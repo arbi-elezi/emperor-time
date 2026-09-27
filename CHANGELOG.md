@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.4.34
+- Excavate thin-alias polish: `scripts/excavate.sh` / `excavate.ps1` call `scripts/lib/identify.py` directly (no hop through identify twins)
+- Closes deferred bash↔ps1 alias drift surface after identify.py / worktree.py cores — excavate stays a first-class tool name with one Python survey core
+- Eval locks thin excavate twins → identify.py + line caps + survey smoke parity with identify; bakeoff + honesty name the leaf
+- Plugin, marketplace, and SKILL.md at 0.4.34
+
+
 ## 0.4.33
 - Worktree create Python core: `scripts/lib/worktree.py` owns id/base resolve, `.worktrees/<id>` layout, `emperor/<id>` branch, EXISTS short-circuit, and `git worktree add`
 - Thin `worktree.sh` / `worktree.ps1` twins — closes bash↔ps1 twin drift on the mutate path after isolation HARD-GATE (`emperor iso` / worktree_iso.py stays the checklist card)

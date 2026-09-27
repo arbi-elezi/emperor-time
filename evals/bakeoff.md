@@ -79,6 +79,7 @@ mean **disk + eval**, not live multi-vendor win rates.
 | install deploy (Python core) | `scripts/lib/install.py` + thin `install.sh`/`install.ps1` (harness map, dry-run, chain expose) | TESTED |
 | silent-boot (Python core) | `scripts/lib/host.py` + `scripts/lib/boot.py` + thin `boot.sh`/`boot.ps1` (host.env report + survey + optional eval.log) | TESTED |
 | worktree create (Python core) | `scripts/lib/worktree.py` + thin `worktree.sh`/`worktree.ps1` (`.worktrees/<id>`, `emperor/<id>`) | TESTED |
+| excavate thin alias | thin `excavate.sh`/`excavate.ps1` → `identify.py` (no hop through identify twins) | TESTED |
 
 Honesty helper: `scripts/lib/bakeoff_honesty.py` fails if this inventory
 drifts from disk or if live-defect-rate is mislabeled.
@@ -96,7 +97,7 @@ drifts from disk or if live-defect-rate is mislabeled.
 ## Verdict
 
 ET wins this slice on *mechanical lock-in* (eval owns the rows; leaf gates
-above are on disk and eval-locked through v0.4.33).
+above are on disk and eval-locked through v0.4.34).
 Activation *mechanism* is closed on disk (v0.4.5–0.4.6); wild-agent
 activation without a tell stays **UNVERIFIABLE** until a marketplace re-run.
 Live defect-rate vs Superpowers stays **UNVERIFIABLE** — do not invent %.

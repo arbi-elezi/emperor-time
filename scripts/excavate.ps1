@@ -1,13 +1,27 @@
-# Thin alias: same survey as identify. First-class excavate tool name.
+<#
+.SYNOPSIS
+  Thin alias of excavate.sh — same survey as identify via Python core.
+  Calls identify.py directly (no twin hop).
+.EXAMPLE
+  .\excavate.ps1 .
+  .\excavate.ps1 path/to/lost-tree
+#>
+[CmdletBinding()]
 param(
+    [Parameter(Position = 0)]
+    [string]$Root = '',
     [Parameter(ValueFromRemainingArguments = $true)]
     [string[]]$Rest
 )
 $ErrorActionPreference = 'Continue'
-$identify = Join-Path $PSScriptRoot 'identify.ps1'
-if (-not $Rest -or $Rest.Count -eq 0) {
-    & $identify
+$repo = (Resolve-Path (Join-Path $PSScriptRoot '..')).Path
+$py = Join-Path $repo 'scripts/lib/identify.py'
+$argsList = @()
+if ($Root) { $argsList += $Root }
+if ($Rest) { $argsList += $Rest }
+if ($argsList.Count -eq 0) {
+    & python3 $py
 } else {
-    & $identify @Rest
+    & python3 $py @argsList
 }
 exit 0
