@@ -23,7 +23,7 @@ You MUST complete each phase before proceeding to the next.
 2. Reproduce consistently. If not reproducible → gather more data, do not guess.
 3. Check recent changes (diff, commits, deps, config, environment).
 4. In multi-component systems: add diagnostic instrumentation at each boundary **before** proposing fixes; run once; identify *where* it breaks.
-5. Trace data flow backward to the source of the bad value; fix at source, not symptom.
+5. Trace data flow backward to the source of the bad value; fix at source, not symptom (mechanical card: `scripts/emperor trace` / `skills/emperor-heal/root-cause-tracing.md`).
 
 Holy Chain: start at `chains/holy-chain/triage.md`, then `reproduce-and-bisect.md`.
 

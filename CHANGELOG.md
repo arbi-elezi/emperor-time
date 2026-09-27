@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.4.39
+- Root-cause tracing HARD-GATE leaf: `scripts/lib/root_cause.py` prints TRACE / STEP / MUST card (trace backward / fix at source / no symptom-only patch)
+- Thin `trace.sh` / `trace.ps1`; emperor peers gain `trace`; `--reject-symptom-fix` / `--reject-untraced` HARD-GATEs; `--check-chain` validator (≥2 backward links)
+- Skill leaf `skills/emperor-heal/root-cause-tracing.md` + `references/root-cause-tracing.md` cite obra/superpowers MIT (systematic-debugging root-cause-tracing aspect); does **not** vendor whole systematic-debugging
+- Route/triggers for trace phrases → emperor-heal; Phase-1 companion to `emperor heal`; eval/bakeoff/honesty lockstep
+- Plugin, marketplace, and SKILL.md at 0.4.39
+
 ## 0.4.38
 - Archaeology Ada leaf: `evals/fixtures/lost-ada/HELLO.ADB` + identify smoke; GNATMAKE 13.3.0 boot probe VERIFIED (`gnatmake` / run); dialect labels honest (CONJECTURE / UNVERIFIABLE where due)
 - Jail pin `references/archaeology-ada-manual.md` — GNAT User's Guide Building with gnatmake (procedure body as main unit)

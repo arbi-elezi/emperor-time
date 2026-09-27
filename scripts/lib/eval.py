@@ -2006,10 +2006,13 @@ def run_evals(root: Path) -> int:
     h.require_contains("0.4.37", "CHANGELOG.md", "CHANGELOG missing 0.4.37")
     h.require_contains("lost-ada", "evals/bakeoff.md", "bakeoff.md missing lost-ada inventory")
     h.require_contains("archaeology-ada-manual.md", "SKILL.md", "SKILL.md missing ada Jail pin")
-    h.require_contains("0.4.38", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing 0.4.38 tip")
-    h.require_contains("lost-ada", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing lost-ada")
-    h.require_contains("0.4.38", ".claude-plugin/plugin.json", "plugin.json not at 0.4.38")
     h.require_contains("0.4.38", "CHANGELOG.md", "CHANGELOG missing 0.4.38")
+    h.require_contains("root_cause.py", "evals/bakeoff.md", "bakeoff.md missing root_cause.py inventory")
+    h.require_contains("root_cause.py", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing root_cause.py")
+    h.require_contains("0.4.39", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing 0.4.39 tip")
+    h.require_contains("lost-ada", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing lost-ada")
+    h.require_contains("0.4.39", ".claude-plugin/plugin.json", "plugin.json not at 0.4.39")
+    h.require_contains("0.4.39", "CHANGELOG.md", "CHANGELOG missing 0.4.39")
 
     # session-discovery
     h.section("session-discovery locate HARD-GATE leaf")
@@ -2270,6 +2273,150 @@ def run_evals(root: Path) -> int:
         h.fail_msg("route.py diagnose the session → heal")
     else:
         h.pass_msg("route.py diagnose the session → emperor-heal")
+
+    # root-cause tracing HARD-GATE
+    h.section("root-cause tracing HARD-GATE leaf")
+    h.need("skills/emperor-heal/root-cause-tracing.md")
+    h.need("references/root-cause-tracing.md")
+    h.need("scripts/lib/root_cause.py")
+    h.need("scripts/trace.sh")
+    h.need("scripts/trace.ps1")
+    h.bash_n("scripts/trace.sh", "trace.sh syntax")
+    h.py_compile("scripts/lib/root_cause.py", "root_cause.py compile")
+    h.require_contains(
+        "root_cause.py",
+        "scripts/trace.sh",
+        "trace.sh does not call root_cause.py",
+    )
+    h.require_contains(
+        "root_cause.py",
+        "scripts/trace.ps1",
+        "trace.ps1 does not call root_cause.py",
+    )
+    h.require_contains(
+        "trace",
+        "scripts/emperor",
+        "emperor bash missing trace",
+    )
+    h.require_contains(
+        "'trace'",
+        "scripts/emperor.ps1",
+        "emperor.ps1 missing trace",
+    )
+    h.require_contains(
+        "trace",
+        "scripts/emperor.cmd",
+        "emperor.cmd missing trace",
+    )
+    h.require_contains(
+        "trace",
+        "scripts/emperor.zsh",
+        "emperor.zsh missing trace",
+    )
+    h.require_contains(
+        "root-cause-tracing.md",
+        "skills/emperor-heal/SKILL.md",
+        "emperor-heal missing root-cause-tracing leaf",
+    )
+    h.require_contains(
+        "HARD-GATE",
+        "skills/emperor-heal/root-cause-tracing.md",
+        "root-cause-tracing leaf missing HARD-GATE heading",
+    )
+    h.require_contains(
+        "systematic-debugging",
+        "skills/emperor-heal/root-cause-tracing.md",
+        "root-cause-tracing leaf missing source skill",
+    )
+    h.require_contains(
+        "root-cause-tracing.md",
+        "skills/emperor-heal/root-cause-tracing.md",
+        "root-cause-tracing leaf missing source file cite",
+    )
+    h.require_contains(
+        "obra/superpowers",
+        "references/root-cause-tracing.md",
+        "root-cause-tracing reference missing obra/superpowers cite",
+    )
+    h.require_contains(
+        "2026-09-27",
+        "references/root-cause-tracing.md",
+        "root-cause-tracing reference missing access date",
+    )
+    h.require_contains(
+        "NO SYMPTOM FIX WITHOUT SOURCE TRACE",
+        "skills/emperor-heal/root-cause-tracing.md",
+        "root-cause-tracing leaf missing iron law text",
+    )
+    h.require_contains(
+        "trace root cause",
+        "evals/triggers.json",
+        "triggers missing trace root cause phrase",
+    )
+    h.require_contains(
+        "root cause tracing",
+        "evals/triggers.json",
+        "triggers missing root cause tracing phrase",
+    )
+    h.require_contains(
+        "root-cause-tracing.md",
+        "chains/chain-jail/extract-aspect.md",
+        "extract-aspect missing root-cause-tracing leaf",
+    )
+    _, trace_out = h.run_py("scripts/lib/root_cause.py")
+    if not re.search(r"^TRACE checklist=yes", trace_out, re.M):
+        h.fail_msg("root_cause missing checklist=yes")
+    if not re.search(r"^STEP \d+ id=", trace_out, re.M):
+        h.fail_msg("root_cause missing STEP line")
+    if not re.search(r"^MUST:", trace_out, re.M):
+        h.fail_msg("root_cause missing MUST line")
+    if "NO_SYMPTOM_FIX_WITHOUT_SOURCE_TRACE" not in trace_out:
+        h.fail_msg("root_cause missing iron law token")
+    rc, _ = h.run_py("scripts/lib/root_cause.py", "--reject-symptom-fix")
+    if rc == 0:
+        h.fail_msg("root_cause --reject-symptom-fix should exit non-zero")
+    else:
+        _, reject = h.run_py("scripts/lib/root_cause.py", "--reject-symptom-fix")
+        if not re.search(r"^REJECT SYMPTOM FIX:", reject, re.M):
+            h.fail_msg("reject-symptom-fix missing REJECT line")
+        else:
+            h.pass_msg("root_cause --reject-symptom-fix hard-gates")
+    rc, _ = h.run_py("scripts/lib/root_cause.py", "--reject-untraced")
+    if rc == 0:
+        h.fail_msg("root_cause --reject-untraced should exit non-zero")
+    else:
+        _, reject = h.run_py("scripts/lib/root_cause.py", "--reject-untraced")
+        if not re.search(r"^REJECT UNTRACED:", reject, re.M):
+            h.fail_msg("reject-untraced missing REJECT line")
+        else:
+            h.pass_msg("root_cause --reject-untraced hard-gates")
+    rc, chain_ok = h.run_py(
+        "scripts/lib/root_cause.py",
+        "--check-chain",
+        "symptom → called by mid → called by source",
+    )
+    if rc != 0 or "CHAIN OK:" not in chain_ok:
+        h.fail_msg("root_cause --check-chain should accept multi-hop chain")
+    else:
+        h.pass_msg("root_cause --check-chain accepts multi-hop")
+    rc, chain_bad = h.run_py(
+        "scripts/lib/root_cause.py",
+        "--check-chain",
+        "only a single arrow → here",
+    )
+    if rc == 0 or "CHAIN FAIL:" not in chain_bad:
+        h.fail_msg("root_cause --check-chain should reject thin chain")
+    else:
+        h.pass_msg("root_cause --check-chain rejects thin chain")
+    _, trace_sh = h.run_sh("scripts/trace.sh")
+    if not re.search(r"^TRACE checklist=yes", trace_sh, re.M):
+        h.fail_msg("trace.sh missing checklist card")
+    _, rout_trace = h.run_py("scripts/lib/route.py", "trace root cause")
+    if "emperor-heal" not in rout_trace:
+        h.fail_msg("route.py trace root cause → heal")
+    else:
+        h.pass_msg("route.py trace root cause → emperor-heal")
+
 
 
     if h.fail != 0:

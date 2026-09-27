@@ -31,6 +31,7 @@ could hand a worker. Examples of legal slices:
 - Superpowers `writing-plans` → only the "Plan Document Header" + one task
   template (not brainstorming, not subagent-driven-development).
 - Superpowers `systematic-debugging` → only the "4-phase" list.
+- Superpowers `systematic-debugging` → root-cause-tracing Trace-backward / Fix-at-source only (`skills/emperor-heal/root-cause-tracing.md`).
 - Superpowers `diagnosing-superpowers` → session-discovery locate aspect only (`skills/emperor-heal/session-discovery.md`).
 - Superpowers `diagnosing-superpowers` → Core principle citation iron law + Intake before analysis only (`skills/emperor-heal/diagnosing.md`).
 - Superpowers `brainstorming` → only the HARD-GATE (questions before code).

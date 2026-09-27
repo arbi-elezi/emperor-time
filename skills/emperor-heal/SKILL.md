@@ -5,7 +5,8 @@ description: >-
   checklist, reproduce, bisect, minimal heal, verify root cause. Use when
   tests go red, a regression appears, state is corrupted, a gate was skipped,
   or you need to locate a harness session transcript before diagnosing,
-  or diagnose why a session went wrong (intake + path:line citations).
+  or diagnose why a session went wrong (intake + path:line citations),
+  or trace a deep-stack bug backward to its original trigger before fixing.
 license: MIT
 metadata:
   version: 0.4.7
@@ -47,6 +48,19 @@ law + intake-before-analysis only**) and/or run `scripts/emperor diagnose`
 No findings without `path:line`. No analysis before partner intake. Do not load
 whole `diagnosing-superpowers`; ET + Holy Chain orchestrate.
 
+
+
+## MUST — root-cause tracing before symptom fixes
+
+When a bug appears deep in the call stack (wrong cwd, empty path, bad value far
+from entry), open `skills/emperor-heal/root-cause-tracing.md`
+(Chain Jail leaf from Superpowers `systematic-debugging` → **Trace backward /
+Fix at source only**) and/or run `scripts/emperor trace` (prints the mechanical
+TRACE / STEP / MUST card).
+
+No symptom-site patches without a backward chain to the original trigger. Do not
+load whole `systematic-debugging`; ET + Holy Chain orchestrate.
+
 ## Steps
 
 1. Run `scripts/emperor heal` → quote `DEBUG four_phases=yes`. Advance phases
@@ -59,11 +73,15 @@ whole `diagnosing-superpowers`; ET + Holy Chain orchestrate.
    `DIAGNOSE checklist=yes`. Finish intake before analysis. Uncited finding →
    `scripts/emperor diagnose --reject-uncited`. Skip-intake →
    `--reject-skip-intake` (HARD-GATE exit 1).
-4. Read `chains/holy-chain/SKILL.md` → one aspect
+4. When the failure is deep in a call stack: run `scripts/emperor trace` → quote
+   `TRACE checklist=yes`. Symptom-only patch →
+   `scripts/emperor trace --reject-symptom-fix`. Untraced implement →
+   `--reject-untraced` (HARD-GATE exit 1).
+5. Read `chains/holy-chain/SKILL.md` → one aspect
    (`triage.md` | `reproduce-and-bisect.md` | `heal-and-verify.md` |
    `process-healing.md`) matching the current phase (see leaf table).
-5. Snapshot. Reproduce. One hypothesis per step. Prediction before probe.
-6. Minimal heal. Verify the cause, not the symptom (verification triad).
-7. Postmortem line on the ledger: BROKE / CAUSE / HEAL / CAUGHT-BY /
+6. Snapshot. Reproduce. One hypothesis per step. Prediction before probe.
+7. Minimal heal. Verify the cause, not the symptom (verification triad).
+8. Postmortem line on the ledger: BROKE / CAUSE / HEAL / CAUGHT-BY /
    WOULD-HAVE-CAUGHT-SOONER.
-8. If the *process* broke, re-enter at the earliest unsatisfied gate.
+9. If the *process* broke, re-enter at the earliest unsatisfied gate.
