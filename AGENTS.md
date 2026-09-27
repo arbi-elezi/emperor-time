@@ -46,7 +46,7 @@ When the utterance is ambiguous (or at session start), run
 It prints one skill/chain path and a short reason from `evals/triggers.json`
 (no embeddings). Example: `scripts/emperor route "lost pascal tree"` prints
 `skills/emperor-excavate/SKILL.md`. Exit 1 means no match; fall back to the
-phase table in `SKILL.md`. Language-agnostic: pas/asm/cobol/rom/lost/vintage
+phase table in `SKILL.md`. Language-agnostic: pas/asm/cobol/fortran/f90/rom/lost/vintage
 map to excavate.
 
 ## Consent

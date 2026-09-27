@@ -52,6 +52,7 @@ LEAVES: list[tuple[str, str, tuple[str, ...]]] = [
     ("gate-py", "scripts/lib/gate.py", ("gate.py", "mechanical")),
     ("identify-py", "scripts/lib/identify.py", ("identify.py", "survey")),
     ("eval-py", "scripts/lib/eval.py", ("eval.py", "structural eval")),
+    ("route-py", "scripts/lib/route.py", ("route", "fortran", ".f90")),
 ]
 
 BAKEOFF = Path("evals/bakeoff.md")

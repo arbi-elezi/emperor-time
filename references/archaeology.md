@@ -25,6 +25,7 @@ survey artifacts
 - For *this* repo, read `.emperor/survey.md` (silent boot already wrote it).
   For a *foreign* tree: `scripts/emperor identify <path>` or `scripts/emperor excavate <path>` (alias; Python core `scripts/lib/identify.py`, thin `scripts/identify.sh` / `identify.ps1`).
   Quote the tail. Do not guess "this is probably Node" because you like Node.
+- Utterance router: `scripts/emperor route "hello.f90"` / `"gfortran …"` (Python `scripts/lib/route.py`, triggers excavate patterns) maps Fortran fossils to excavate — same as `.pas` / `.asm` / `.cbl`.
 - Skipped probes are listed. Absence of a modern test runner is not a defect.
 
 ## Hunt (Jail, aimed at manuals not skills)
