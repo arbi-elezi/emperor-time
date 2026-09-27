@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.4.23
+- Queue picker Python core: `scripts/lib/queue.py` owns list/next/add/done (WIP=1, placeholder skip, gh → Linear → local)
+- Thin `queue.sh` / `queue.ps1` twins — closes bash↔ps1 twin drift (ps1 list lacked Linear notice + git worktree guard)
+- Factory dogfood: software-factory + emperor-queue skill point at the Python lock; eval locks compile + thin twins + empty UX + WIP refuse + done
+
 ## 0.4.22
 - Silent-boot zsh parity: `scripts/emperor.zsh` auto-boots when `.emperor/host.env` missing; `host`/`boot`/`identify`/`excavate` special-cases match bash `scripts/emperor` (closes twin gap after PS silent-boot parity)
 - Eval locks + Cursor adapter document the `emperor.zsh` silent-boot path

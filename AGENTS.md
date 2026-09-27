@@ -39,6 +39,8 @@ scripts/emperor queue next
 scripts/emperor forge <task-dir>
 ```
 
+Queue picker Python core: `scripts/lib/queue.py` (thin `queue.sh` / `queue.ps1`).
+
 ## Route (trigger to skill)
 
 When the utterance is ambiguous (or at session start), run

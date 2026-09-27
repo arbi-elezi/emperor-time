@@ -17,7 +17,7 @@ between tasks (queue → next), not by skipping a gate inside one.
 | Classical Waterfall | Big-bang phases across a whole product | Same *shape* (require → design → build → verify → deliver), but scoped to **one task**. No multi-month "design freeze." |
 | Micro-waterfall (ET) | Honest gates per unit of work | Canonical. G0–G5 + ledger. Right-size text; never delete a gate (`references/micro-waterfall.md`). |
 | Agile / Scrum | Timeboxed iteration, ceremony, team sync | Macro loop is agile (ship → next). **No** sprint planning, standups, story points, or retrospectives as rites. Client consent replaces ceremony. |
-| Kanban | Flow, WIP limits, visible board | Intent is WIP=1 (one active task). Local queue is markdown; richer board statuses / WIP refuse are open work — do not assume they are on `main` until merged. |
+| Kanban | Flow, WIP limits, visible board | Intent is WIP=1 (one active task). Local queue is markdown via `scripts/lib/queue.py` (statuses + WIP refuse on `main`). |
 | Spiral | Risk-driven cycles, prototypes | Dowsing + Chain Jail play the risk/prototype role: hunt evidence, trial a captured skill, then bind. Not a formal risk matrix. |
 | DevOps / CI/CD | Continuous integration + delivery | Factory ends at forge/PR with consent. Local structural eval (`scripts/lib/eval.py` via thin `eval.sh`/`eval.ps1`) and remote `.github/workflows/eval.yml` are on `main`. |
 | Trunk-based | Short-lived branches, frequent integrate | Compatible: small diffs, revert-sensitive probes, no drive-by. ET does not mandate trunk vs short PR branches — house git rules win. |
