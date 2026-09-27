@@ -1,6 +1,7 @@
 # Changelog
 
 ## 0.4.3
+- Silent-boot PS parity: `boot.ps1` sources `lib/host.ps1` + `Write-EmperorHostReport` (same host.env keys as bash); `emperor.ps1` auto-boots when `.emperor/host.env` missing; Cursor adapter documents `emperor boot` / Windows silent-boot contract
 - Archaeology: Jail-pin NASM 2.16.03 §7.3 SECTION for FOO.ASM (`references/archaeology-asm-manual.md`)
 - Route trigger harden: blocked/WIP → queue; red build/derail → heal; missing capability/jail → capture; nasm/assembler → excavate
 - Catalog links: archaeology Jail pins (pascal + asm) from `archaeology.md`, skill-catalog, and SKILL.md

@@ -46,6 +46,12 @@ for pair in "done" gate eval review-pack dowse install worktree queue forge iden
   need "scripts/${pair}.ps1"
 done
 
+echo "== silent-boot PS twin uses host.ps1 =="
+grep -q 'lib/host.ps1' "$ROOT/scripts/boot.ps1" || { echo "EVAL FAIL: boot.ps1 does not source lib/host.ps1"; fail=1; }
+grep -q 'Write-EmperorHostReport' "$ROOT/scripts/lib/host.ps1" || { echo "EVAL FAIL: host.ps1 missing Write-EmperorHostReport"; fail=1; }
+grep -q 'host.env' "$ROOT/scripts/emperor.ps1" || { echo "EVAL FAIL: emperor.ps1 missing silent-boot host.env check"; fail=1; }
+grep -q 'scripts/emperor boot' "$ROOT/adapters/cursor/README.md" || { echo "EVAL FAIL: cursor adapter missing emperor boot path"; fail=1; }
+
 echo "== steal router lists ci + swarm =="
 grep -q "ci-mode.md" "$ROOT/chains/steal-chain/SKILL.md" || { echo "EVAL FAIL: steal router missing ci-mode.md"; fail=1; }
 grep -q "swarm-emulate.md" "$ROOT/chains/steal-chain/SKILL.md" || { echo "EVAL FAIL: steal router missing swarm-emulate.md"; fail=1; }
