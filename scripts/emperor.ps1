@@ -7,6 +7,7 @@
   .\emperor.ps1 queue next
   .\emperor.ps1 forge .emperor/tasks/demo
   .\emperor.ps1 finish
+  .\emperor.ps1 activate
   .\emperor.ps1 identify .
   .\emperor.ps1 route "lost pascal tree"
   .\emperor.ps1 excavate .
@@ -14,7 +15,7 @@
 [CmdletBinding()]
 param(
     [Parameter(Mandatory = $true, Position = 0)]
-    [ValidateSet('done','gate','eval','review-pack','dowse','install','worktree','queue','forge','finish','boot','identify','route','excavate')]
+    [ValidateSet('done','gate','eval','review-pack','dowse','install','worktree','queue','forge','finish','activate','boot','identify','route','excavate')]
     [string]$Tool,
     [Parameter(ValueFromRemainingArguments = $true)]
     [string[]]$ToolArgs
