@@ -41,6 +41,10 @@ stay stale. Regression next week.
 ## Verdict
 
 ET wins this slice on *mechanical lock-in* (eval now owns the rows).
-Superpowers still wins *activation* (we had to be told “do it”).
+Superpowers still wins *activation* (we had to be told “do it”) — **closing:**
+v0.4.5 SessionStart runs `scripts/emperor activate` (MUST-route leaf from
+using-superpowers 1% rule; see `skills/emperor-resume/must-route.md`). Re-run
+bakeoff after marketplace install to verify agents open `ACTIVATION next=`
+without being told.
 Naked loses on (3).
 This is not a substitute for three isolated vendor sessions on a third repo.
