@@ -9,7 +9,7 @@ description: >-
   waiting to be told.
 license: MIT
 metadata:
-  version: 0.4.7
+  version: 0.4.8
   homepage: https://github.com/arbi-elezi/emperor-time
   standard: Agent Skills (SKILL.md)
 ---
@@ -69,7 +69,7 @@ client to say "emperor time".
 | No task / find work / next / issues / Linear | `skills/emperor-queue/SKILL.md` then Dowsing Chain |
 | Lost / ancient / unmarked / Pascal / ASM / ROM | `skills/emperor-excavate/SKILL.md` then Dowsing `excavate.md` |
 | Vague ask / intake | `skills/emperor-scope/SKILL.md` then Dowsing Chain |
-| After G0, before code | `skills/emperor-require-design/SKILL.md` — write work-order |
+| After G0, before code | `skills/emperor-require-design/SKILL.md` — grill HARD-GATE then work-order |
 | Implementing | `skills/emperor-build/SKILL.md` + `skills/emperor-tdd/SKILL.md` |
 | Isolated git workspace | `skills/emperor-worktree/SKILL.md` |
 | About to say done / tests pass / review | `skills/emperor-verify/SKILL.md` + Judgment Chain |

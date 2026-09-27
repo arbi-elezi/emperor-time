@@ -41,7 +41,7 @@ for c in "Dowsing Chain" "Chain Jail" "Judgment Chain" "Steal Chain" "Holy Chain
 done
 
 echo "== twins =="
-for pair in "done" gate eval review-pack dowse install worktree queue forge finish activate identify boot route excavate heal; do
+for pair in "done" gate eval review-pack dowse install worktree queue forge finish activate identify boot route excavate heal grill; do
   need "scripts/${pair}.sh"
   need "scripts/${pair}.ps1"
 done
@@ -284,6 +284,44 @@ ADV_OK=$(python3 "$ROOT/scripts/lib/debug_phases.py" --advance 2 3 2>&1) || true
 echo "$ADV_OK" | grep -q '^ADVANCE OK' || { echo "EVAL FAIL: debug_phases 2→3 should OK"; fail=1; }
 HEAL_SH=$(bash "$ROOT/scripts/heal.sh" 2>&1) || true
 echo "$HEAL_SH" | grep -q '^DEBUG four_phases=yes' || { echo "EVAL FAIL: heal.sh missing four_phases card"; fail=1; }
+
+echo "== grill brainstorm HARD-GATE leaf =="
+need "skills/emperor-require-design/grill-checklist.md"
+need "scripts/lib/grill.py"
+need "scripts/grill.sh"
+need "scripts/grill.ps1"
+bash -n "$ROOT/scripts/grill.sh" || { echo "EVAL FAIL: grill.sh syntax"; fail=1; }
+python3 -m py_compile "$ROOT/scripts/lib/grill.py" || { echo "EVAL FAIL: grill.py compile"; fail=1; }
+grep -q 'grill.py' "$ROOT/scripts/grill.sh" || { echo "EVAL FAIL: grill.sh does not call grill.py"; fail=1; }
+grep -q 'grill.py' "$ROOT/scripts/grill.ps1" || { echo "EVAL FAIL: grill.ps1 does not call grill.py"; fail=1; }
+grep -q 'grill|' "$ROOT/scripts/emperor" || { echo "EVAL FAIL: emperor bash missing grill"; fail=1; }
+grep -q "'grill'" "$ROOT/scripts/emperor.ps1" || { echo "EVAL FAIL: emperor.ps1 missing grill"; fail=1; }
+grep -q 'grill-checklist.md' "$ROOT/skills/emperor-require-design/SKILL.md" || { echo "EVAL FAIL: require-design missing grill leaf"; fail=1; }
+grep -q 'HARD-GATE' "$ROOT/skills/emperor-require-design/grill-checklist.md" || { echo "EVAL FAIL: grill leaf missing HARD-GATE heading"; fail=1; }
+grep -q 'brainstorming' "$ROOT/skills/emperor-require-design/grill-checklist.md" || { echo "EVAL FAIL: grill leaf missing source skill"; fail=1; }
+GRILL_OUT=$(python3 "$ROOT/scripts/lib/grill.py" 2>&1) || true
+echo "$GRILL_OUT" | grep -q '^GRILL checklist=yes' || { echo "EVAL FAIL: grill missing checklist=yes"; fail=1; }
+echo "$GRILL_OUT" | grep -q '^STEP 1 ' || { echo "EVAL FAIL: grill missing STEP 1"; fail=1; }
+echo "$GRILL_OUT" | grep -q '^STEP 5 ' || { echo "EVAL FAIL: grill missing STEP 5"; fail=1; }
+echo "$GRILL_OUT" | grep -q '^MUST:' || { echo "EVAL FAIL: grill missing MUST line"; fail=1; }
+if python3 "$ROOT/scripts/lib/grill.py" --advance 1 3 >/dev/null 2>&1; then
+  echo "EVAL FAIL: grill should reject step skip 1→3"
+  fail=1
+else
+  echo "EVAL PASS: grill rejects skip 1→3"
+fi
+ADV_OK=$(python3 "$ROOT/scripts/lib/grill.py" --advance 2 3 2>&1) || true
+echo "$ADV_OK" | grep -q '^ADVANCE OK' || { echo "EVAL FAIL: grill 2→3 should OK"; fail=1; }
+if python3 "$ROOT/scripts/lib/grill.py" --reject-impl >/dev/null 2>&1; then
+  echo "EVAL FAIL: grill --reject-impl should exit non-zero"
+  fail=1
+else
+  REJECT=$(python3 "$ROOT/scripts/lib/grill.py" --reject-impl 2>&1) || true
+  echo "$REJECT" | grep -q '^REJECT IMPL:' || { echo "EVAL FAIL: reject-impl missing REJECT IMPL line"; fail=1; }
+  echo "EVAL PASS: grill --reject-impl hard-gates impl"
+fi
+GRILL_SH=$(bash "$ROOT/scripts/grill.sh" 2>&1) || true
+echo "$GRILL_SH" | grep -q '^GRILL checklist=yes' || { echo "EVAL FAIL: grill.sh missing checklist card"; fail=1; }
 
 if [[ "$fail" -ne 0 ]]; then
   echo "EVALS FAILED"
