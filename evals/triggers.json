@@ -103,6 +103,18 @@
     {
       "phrase": "receive code review",
       "skill": "emperor-verify"
+    },
+    {
+      "phrase": "execute the plan inline",
+      "skill": "emperor-build"
+    },
+    {
+      "phrase": "run the plan yourself",
+      "skill": "emperor-build"
+    },
+    {
+      "phrase": "inline plan execution",
+      "skill": "emperor-build"
     }
   ],
   "must_not_fire_master_wholesale": [
@@ -408,6 +420,24 @@
       ],
       "target": "skills/emperor-tdd/SKILL.md",
       "reason": "implementing \u2014 TDD iron-law / RGR HARD-GATE"
+    },
+    {
+      "id": "execute",
+      "patterns": [
+        "execute the plan",
+        "execute plan inline",
+        "inline execution",
+        "run the plan yourself",
+        "no check-in between tasks",
+        "four stops only"
+      ],
+      "tags": [
+        "execute",
+        "executing-plans",
+        "build"
+      ],
+      "target": "skills/emperor-build/SKILL.md",
+      "reason": "inline plan execution \u2014 executing-plans HARD-GATE"
     },
     {
       "id": "build",

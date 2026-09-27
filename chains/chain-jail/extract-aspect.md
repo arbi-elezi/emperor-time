@@ -37,6 +37,7 @@ could hand a worker. Examples of legal slices:
 - Superpowers `requesting-code-review` → When / How / Act-on-feedback only (`skills/emperor-verify/request-review-checklist.md`).
 - Superpowers `verification-before-completion` → The Iron Law / The Gate Function only (`skills/emperor-verify/verification-checklist.md`).
 - Superpowers `receiving-code-review` → The Response Pattern / Forbidden Responses / When To Push Back only (`skills/emperor-verify/receive-review-checklist.md`).
+- Superpowers `executing-plans` → Continuous execution / Four stops / Rulings not stalls / Task Loop / Completion contract only (`skills/emperor-build/executing-plans-checklist.md`).
 - A domain SKILL.md → only the command recipe that matches `failing-signal`.
 
 Illegal slices:

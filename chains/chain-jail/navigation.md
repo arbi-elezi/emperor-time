@@ -32,7 +32,7 @@ This table is a map, not memory.
 | If the gap is… | Ask catalogs for… | First repos / trees (2026 public) |
 |---|---|---|
 | Socratic design / visual mock before code | `brainstorming`, `grill`, `discuss` | `obra/superpowers` `skills/brainstorming`; Pocock grill skills |
-| Fat executable plan | `writing-plans`, `executing-plans` | `obra/superpowers` `skills/writing-plans`; GSD plan-phase |
+| Fat executable plan | `writing-plans`, `executing-plans` | Local first: `scripts/lib/work_order.py` + `skills/emperor-build/executing-plans-checklist.md` + `emperor execute`. Superpowers those folders only if still insufficient |
 | TDD / failing-probe / RGR order | `tdd`, `red-green`, `failing probe` | Local first: `skills/emperor-tdd/red-green-refactor.md` + `emperor tdd`. Superpowers TDD only if runner-specific aspect still missing |
 | Systematic debug for a stack | `systematic-debugging`, framework debug | Superpowers debugging; Holy Chain first |
 | Isolated reviewer / request-review before merge | `requesting-code-review`, review personas | Local first: `skills/emperor-verify/request-review-checklist.md` + `emperor review`. Osmani personas / Superpowers only if still insufficient |
