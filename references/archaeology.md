@@ -37,7 +37,7 @@ dialect. Hunt:
 
 Extract **one heading** that unblocks *this* probe. Pin the URL + date +
 quoted paragraph in the ledger. Memory of "how Pascal works" is CONJECTURE.
-Worked example (asm): [archaeology-asm-manual.md](archaeology-asm-manual.md) — NASM 2.16.03 §7.3 SECTION pin for FOO.ASM.
+Worked examples (Jail pins): [archaeology-pascal-manual.md](archaeology-pascal-manual.md) — ISO 7185 §6.10 program heading for HELLO.PAS; [archaeology-asm-manual.md](archaeology-asm-manual.md) — NASM 2.16.03 §7.3 SECTION pin for FOO.ASM.
 
 ## Recover
 

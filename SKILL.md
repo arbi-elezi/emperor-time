@@ -22,7 +22,7 @@ and not language-specific. Pascal and raw assembly are in-scope.
 Read `AGENTS.md` if the host wants a single standing-order file.
 Read `references/software-factory.md` once per repo, not per turn.
 Read `references/language-agnostic.md` before assuming a stack.
-Read `references/archaeology.md` when the tree is lost, ancient, or foreign.
+Read `references/archaeology.md` when the tree is lost, ancient, or foreign (Jail pins: `references/archaeology-pascal-manual.md`, `references/archaeology-asm-manual.md`).
 
 ## Six Vows (load-bearing)
 

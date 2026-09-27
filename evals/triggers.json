@@ -9,7 +9,11 @@
     {"phrase": "are the tests passing", "skill": "emperor-verify"},
     {"phrase": "use claude as a worker", "skill": "emperor-dispatch"},
     {"phrase": "the build is red", "skill": "emperor-heal"},
-    {"phrase": "we are missing a skill", "skill": "emperor-capture"}
+    {"phrase": "we are missing a skill", "skill": "emperor-capture"},
+    {"phrase": "blocked task", "skill": "emperor-queue"},
+    {"phrase": "wip limit", "skill": "emperor-queue"},
+    {"phrase": "red build", "skill": "emperor-heal"},
+    {"phrase": "missing capability", "skill": "emperor-capture"}
   ],
   "must_not_fire_master_wholesale": [
     {"phrase": "fix the typo in the footer year", "note": "right-size; do not load Steal Chain or Chain Jail"},
@@ -21,17 +25,21 @@
       "patterns": [
         "lost", "ancient", "unmarked", "vintage", "archaeology", "excavate",
         "pascal", "pas ", ".pas", "turbo pascal", "delphi",
-        "assembly", " asm", "asm ", ".asm", ".s ",
+        "assembly", "assembler", "nasm", " asm", "asm ", ".asm", ".s ",
         "cobol", ".cbl", ".cob",
         "rom", ".rom", "floppy", "bitsavers", "foreign tree", "dead compiler"
       ],
-      "tags": ["archaeology", "excavate", "lost", "pascal", "asm", "cobol", "rom", "vintage"],
+      "tags": ["archaeology", "excavate", "lost", "pascal", "asm", "nasm", "cobol", "rom", "vintage"],
       "target": "skills/emperor-excavate/SKILL.md",
       "reason": "lost/ancient/foreign tree — excavate before modernizing"
     },
     {
       "id": "heal",
-      "patterns": ["build is red", "the build is red", "derail", "heal", "on fire", "ci red"],
+      "patterns": [
+        "build is red", "the build is red", "red build", "build red",
+        "derail", "heal", "on fire", "ci red", "failing build",
+        "tests are red", "ci failing"
+      ],
       "tags": ["heal", "red-build"],
       "target": "skills/emperor-heal/SKILL.md",
       "reason": "red build / derail — Holy Chain"
@@ -57,15 +65,20 @@
       "id": "queue",
       "patterns": [
         "queue next", "find work", "find your own work", "what should i do",
-        "backlog", "next issue", "pick next", "no task", "linear"
+        "backlog", "next issue", "pick next", "no task", "linear",
+        "blocked task", "blocked", "wip", "wip limit", "work in progress"
       ],
-      "tags": ["queue", "next", "find-work"],
+      "tags": ["queue", "next", "find-work", "blocked", "wip"],
       "target": "skills/emperor-queue/SKILL.md",
       "reason": "no task / pick next work"
     },
     {
       "id": "capture",
-      "patterns": ["missing a skill", "we are missing a skill", "capture a skill", "steal a skill"],
+      "patterns": [
+        "missing a skill", "we are missing a skill", "capture a skill", "steal a skill",
+        "missing capability", "capability missing", "missing a capability",
+        "we are missing a capability", "no skill for", "chain jail"
+      ],
       "tags": ["capture", "jail"],
       "target": "skills/emperor-capture/SKILL.md",
       "reason": "capability missing — Chain Jail"

@@ -102,6 +102,10 @@ if [[ -x "$ROOT/scripts/route.sh" || -f "$ROOT/scripts/route.sh" ]]; then
   echo "$out" | grep -q "emperor-excavate" || { echo "EVAL FAIL: route lost pascal → excavate"; fail=1; }
   out=$(bash "$ROOT/scripts/route.sh" "queue next" 2>/dev/null || true)
   echo "$out" | grep -q "emperor-queue" || { echo "EVAL FAIL: route queue next → queue"; fail=1; }
+  out=$(bash "$ROOT/scripts/route.sh" "blocked task" 2>/dev/null || true)
+  echo "$out" | grep -q "emperor-queue" || { echo "EVAL FAIL: route blocked task → queue"; fail=1; }
+  out=$(bash "$ROOT/scripts/route.sh" "red build" 2>/dev/null || true)
+  echo "$out" | grep -q "emperor-heal" || { echo "EVAL FAIL: route red build → heal"; fail=1; }
   if bash "$ROOT/scripts/route.sh" "what is 2+2" >/dev/null 2>&1; then
     echo "EVAL FAIL: route should miss trivia"
     fail=1
