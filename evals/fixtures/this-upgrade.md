@@ -1,45 +1,46 @@
-# Task Ledger — emperor-time self-application (forge Python core)
+# Task Ledger — emperor-time self-application (review-pack Python core)
 
-- **Task:** Port forge consent / DONE / title / G1 PR body to `scripts/lib/forge.py` so bash↔ps1 cannot drift on the factory ship lock (ps1 hardcoded title + full-ledger PR dump); thin twins; factory dogfood locks.
-- **Client quote:** Soft-ET consented Worthy Spend after v0.4.23 queue.py. Survey: heal/excavate already thin; embeddings beyond JSON not justified; no new archaeology toolchain VERIFIED; host.sh/ps1 platform-sourced helpers not a clean Python win; cmd host special intentional thin forward; **forge twin drift** — forge.sh extracts title + G1..G2 while forge.ps1 hardcoded `emperor-time change` and dumped the entire ledger into PR.md (G0 leak). review-pack / dowse remain candidates; forge is the load-bearing consent ship lock.
+- **Task:** Port isolated review-pack emitter to `scripts/lib/review_pack.py` so bash↔ps1 cannot drift on G4 hetero criteria (ps1 copied entire work-order; bash awk kept only `## Acceptance criteria`); thin twins; factory dogfood locks.
+- **Client quote:** Soft-ET consented Worthy Spend after v0.4.24 forge.py. NEXT: survey review-pack / dowse twin drift. If real drift, ship Python core + thin twins + eval + version lockstep. Else pick next best twin-drift or capability gap (not embeddings unless justified; not archaeology without VERIFIED toolchain).
 - **Origin:** assigned
 - **Size:** standard
-- **Governing files:** SKILL.md → software-factory.md → emperor-forge → forge.py
-- **Tip at spend:** v0.4.24 (branch `et-manager/forge-python-core`)
+- **Governing files:** SKILL.md → mechanical-gates.md → emperor-verify → review_pack.py
+- **Tip at spend:** v0.4.25 (branch `et-manager/review-pack-python-core`)
 
 ## G0
-Quoted ask above. Ambiguity resolved: ship forge Python core. Skip cmd redo / embeddings / archaeology / host unify / capture.py / review-pack / dowse this turn.
+Quoted ask above. Ambiguity resolved: ship review-pack Python core. Skip cmd redo / embeddings / archaeology / host unify / capture.py / dowse this turn. Do not re-announce or re-ship forge.
 
 ## G1 Acceptance criteria
-1. SKILL.md version ≥ 0.4.24 and names five chains + six vows.
-2. `scripts/lib/forge.py` owns consent + DONE + title/G1 PR body + gh/DRY; thin `forge.sh` / `forge.ps1`.
-3. Without consent → exit 3 `FORGE REFUSED`; with consent + DRY → title from ledger; PR.md has G1..G2 + DONE and no G0 leak.
-4. Plugin/marketplace/SKILL lockstep 0.4.24; software-factory + mechanical-gates + emperor-forge point at forge.py.
-5. Eval locks compile + thin twins + refuse + DRY + G1/DONE body; suite green.
+1. SKILL.md version ≥ 0.4.25 and names five chains + six vows.
+2. `scripts/lib/review_pack.py` owns meta SHAs + acceptance-criteria extract + diff/diffstat + claims; thin `review-pack.sh` / `review-pack.ps1`.
+3. criteria.md contains `## Acceptance criteria` body and does **not** leak Plan header / Out of scope / Approach (ps1 twin used to dump the full work-order).
+4. Plugin/marketplace/SKILL lockstep 0.4.25; mechanical-gates + emperor-verify + request-review checklist point at review_pack.py.
+5. Eval locks compile + thin twins + criteria extract + meta SHAs; suite green.
 6. Live defect-rate vs Superpowers stays **UNVERIFIABLE**.
 
 ## Out of scope
 - emperor.cmd host special / emperor.py dispatcher / route embeddings
 - heal/excavate/boot/host unify redo
-- review-pack.py / dowse.py / capture.py HARD-GATE
+- dowse.py / capture.py HARD-GATE
 - New archaeology toolchain leaf
 - Live multi-vendor bake-off numbers
+- Redo of forge / queue / done / #33–#41 leaves
 
 ## G2
-Rejected alternative: review-pack Python core (criteria awk vs full copy) or dowse AsJson unify.
-Why: forge is the consent-gated ship lock on the standing factory loop; title/G1 drift is already live on Windows peers.
+Rejected alternative: dowse AsJson unify (ps1 has `-AsJson` + richer roster metadata; bash table-only).
+Why: review-pack is the load-bearing G4 hetero / request-review Step 3 PACK lock; criteria dump is a live correctness bug on Windows peers. Dowse feature asymmetry remains a secondary candidate.
 
 ## G3
-forge.py + thin twins on `et-manager/forge-python-core`. See git log.
+review_pack.py + thin twins on `et-manager/review-pack-python-core`. See git log.
 
 ## G4
 Claims:
 
 | Claim | Status | Evidence |
 |---|---|---|
-| SKILL.md is 0.4.24 orchestrator | TESTED | frontmatter `version: 0.4.24` on branch HEAD |
-| forge.py refuses without consent | TESTED | exit 3 + `FORGE REFUSED` |
-| forge DRY extracts title + G1/DONE body | TESTED | `EMPEROR_CONSENT_PR=1 EMPEROR_FORGE_DRY=1` → title + PR.md without G0 |
+| SKILL.md is 0.4.25 orchestrator | TESTED | frontmatter `version: 0.4.25` on branch HEAD |
+| review_pack extracts Acceptance criteria only | TESTED | criteria.md has section; no Plan header / Out of scope leak |
+| meta.md carries base/head SHAs in a git repo | TESTED | `git rev-parse` lines in meta.md |
 | Eval suite still green | TESTED | `bash scripts/eval.sh` → EVALS PASSED |
 | Live defect-rate vs Superpowers | UNVERIFIABLE | no shared-task three-vendor bake-off run in this session |
 
@@ -55,4 +56,5 @@ PASS-WITH-CONDITIONS: local mechanism TESTED; live bake-off numbers UNVERIFIABLE
 - bash/ps1 done twins duplicated probe runner. Remediation: done.py (v0.4.21).
 - emperor.zsh missing silent-boot / identify / excavate specials vs bash. Remediation: v0.4.22.
 - bash/ps1 queue twins reimplemented picker (list Linear/git guard drift). Remediation: queue.py (v0.4.23).
-- bash/ps1 forge twins drifted (title hardcoded; full ledger dump). Remediation: this leaf (v0.4.24).
+- bash/ps1 forge twins drifted (title hardcoded; full ledger dump). Remediation: forge.py (v0.4.24).
+- bash/ps1 review-pack twins drifted (criteria full work-order dump). Remediation: this leaf (v0.4.25).

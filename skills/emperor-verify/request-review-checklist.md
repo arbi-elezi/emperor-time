@@ -10,7 +10,7 @@
 **Contract:** before merge to main, after each major feature, and after each subagent-driven task, complete the request-review checklist. Confirm WHEN. Resolve SHAs. Emit an isolated pack (no author CoT). Dispatch a fresh reviewer. Act on Critical/Important before proceed. Emperor Time stays the orchestrator via emperor-verify + Judgment; do **not** announce or load whole `requesting-code-review`.
 
 Mechanical card: `scripts/emperor review` (Python: `scripts/lib/review_req.py`).
-Pack helper (Step 3): `scripts/emperor review-pack <task-dir> <base> <head>`.
+Pack helper (Step 3): `scripts/emperor review-pack <task-dir> <base> <head>` — Python core `scripts/lib/review_pack.py` (thin `review-pack.sh` / `review-pack.ps1`).
 
 ## HARD-GATE — Requested review before proceed
 
@@ -127,7 +127,7 @@ Every critic finding starts CONJECTURE — reproduce before acting
 
 - `skills/emperor-verify/SKILL.md` — VERIFY entry; MUST open this leaf
 - `scripts/lib/review_req.py` — mechanical checklist card
-- `scripts/review-pack.sh` — Step 3 pack emitter
+- `scripts/lib/review_pack.py` — Step 3 pack emitter (thin `review-pack.sh` / `review-pack.ps1`)
 - `chains/judgment-chain/hetero-critique.md` — dispatch + verify findings
 - `chains/judgment-chain/gatekeeping.md` — G4 sequence
 - `chains/chain-jail/extract-aspect.md` — "requesting-code-review → When/How/Act"

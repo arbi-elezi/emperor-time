@@ -56,7 +56,7 @@ whole `verification-before-completion`; ET + emperor-verify orchestrate.
    start CONJECTURE.
 5. Self-critique uses `templates/critique.md`. "No findings" without named
    commands/paths is a fail.
-6. Hetero-critique: run `scripts/review-pack.sh <task-dir> <base> <head>` and
+6. Hetero-critique: run `scripts/emperor review-pack <task-dir> <base> <head>` (Python core `scripts/lib/review_pack.py`; thin `review-pack.sh` / `review-pack.ps1`) and
    dispatch the pack to a **different** context (Steal Chain worker or a fresh
    subagent). The builder does not write the hetero verdict.
 7. Act on Critical immediately; Important before proceed; Minor noted; pushback

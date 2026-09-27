@@ -1219,6 +1219,97 @@ def run_evals(root: Path) -> int:
         shutil.rmtree(tmpf, ignore_errors=True)
     h.pass_msg("forge.py thin twins + consent + PR body")
 
+    # ---- review_pack.py isolated pack ----
+    h.section("review_pack.py Python core")
+    h.need("scripts/lib/review_pack.py")
+    h.need("scripts/review-pack.sh")
+    h.need("scripts/review-pack.ps1")
+    h.bash_n("scripts/review-pack.sh", "review-pack.sh syntax")
+    h.py_compile("scripts/lib/review_pack.py", "review_pack.py compile")
+    h.require_contains(
+        "lib/review_pack.py",
+        "scripts/review-pack.sh",
+        "review-pack.sh thin twin missing review_pack.py",
+    )
+    h.require_contains(
+        "lib/review_pack.py",
+        "scripts/review-pack.ps1",
+        "review-pack.ps1 thin twin missing review_pack.py",
+    )
+    rp_sh_lines = len((root / "scripts/review-pack.sh").read_text(encoding="utf-8").splitlines())
+    rp_ps_lines = len((root / "scripts/review-pack.ps1").read_text(encoding="utf-8").splitlines())
+    if rp_sh_lines > 20:
+        h.fail_msg("review-pack.sh should be thin twin (<=20 lines)")
+    if rp_ps_lines > 30:
+        h.fail_msg("review-pack.ps1 should be thin twin (<=30 lines)")
+    h.require_contains(
+        "scripts/lib/review_pack.py",
+        "references/mechanical-gates.md",
+        "mechanical-gates.md missing review_pack.py",
+    )
+    h.require_contains(
+        "review_pack.py",
+        "skills/emperor-verify/SKILL.md",
+        "emperor-verify skill missing review_pack.py",
+    )
+    h.require_contains(
+        "review_pack.py",
+        "skills/emperor-verify/request-review-checklist.md",
+        "request-review-checklist missing review_pack.py",
+    )
+    tmpr = Path(tempfile.mkdtemp())
+    try:
+        (tmpr / "work-order.md").write_text(
+            (
+                "# Work Order — eval-pack\n"
+                "## Plan header (agentic handoff)\n"
+                "**Goal:** should not leak into criteria\n"
+                "## Acceptance criteria (checkable)\n"
+                "1. Widget ships\n"
+                "2. Diff is isolated\n"
+                "## Out of scope\n"
+                "- Plan header leak\n"
+                "## Approach\n"
+                "Should not appear in criteria.md\n"
+            ),
+            encoding="utf-8",
+        )
+        (tmpr / "claims.md").write_text(
+            "| Claim | Status | Evidence |\n|---|---|---|\n| x | VERIFIED | y |\n",
+            encoding="utf-8",
+        )
+        rc, out = h.run_sh("scripts/review-pack.sh", str(tmpr), "HEAD~1", "HEAD")
+        if rc != 0 or "REVIEW PACK:" not in out:
+            h.fail_msg("review-pack should emit REVIEW PACK")
+        else:
+            h.pass_msg("review-pack emits pack")
+        criteria = (tmpr / "review-pack" / "criteria.md").read_text(encoding="utf-8")
+        if "## Acceptance criteria" not in criteria or "Widget ships" not in criteria:
+            h.fail_msg("review-pack criteria.md missing Acceptance section")
+        elif (
+            "## Plan header" in criteria
+            or "should not leak" in criteria
+            or "## Out of scope" in criteria
+            or "## Approach" in criteria
+            or "Should not appear" in criteria
+        ):
+            # ps1 twin used to copy the full work-order; Plan/Out-of-scope must stay out.
+            h.fail_msg("review-pack criteria.md dumped full work-order — twin drift")
+        else:
+            h.pass_msg("review-pack criteria extract only")
+        meta = (tmpr / "review-pack" / "meta.md").read_text(encoding="utf-8")
+        if "- base:" not in meta or "- head:" not in meta:
+            h.fail_msg("review-pack meta.md missing base/head")
+        else:
+            h.pass_msg("review-pack meta SHAs")
+        if not (tmpr / "review-pack" / "claims.md").is_file():
+            h.fail_msg("review-pack missing claims.md copy")
+        else:
+            h.pass_msg("review-pack claims copy")
+    finally:
+        shutil.rmtree(tmpr, ignore_errors=True)
+    h.pass_msg("review_pack.py thin twins + criteria extract")
+
     # bakeoff honesty
     h.section("bakeoff honesty (mechanism inventory + UNVERIFIABLE live rate)")
     h.need("evals/bakeoff.md")
@@ -1242,13 +1333,14 @@ def run_evals(root: Path) -> int:
         "evals/fixtures/this-upgrade.md",
         "this-upgrade.md missing UNVERIFIABLE",
     )
-    h.require_contains("0.4.24", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing 0.4.24 tip")
-    h.require_contains("forge.py", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing forge.py")
+    h.require_contains("0.4.25", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing 0.4.25 tip")
+    h.require_contains("review_pack.py", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing review_pack.py")
     h.require_contains("gate.py", "evals/bakeoff.md", "bakeoff.md missing gate.py inventory")
     h.require_contains("eval.py", "evals/bakeoff.md", "bakeoff.md missing eval.py inventory")
     h.require_contains("done.py", "evals/bakeoff.md", "bakeoff.md missing done.py inventory")
     h.require_contains("queue.py", "evals/bakeoff.md", "bakeoff.md missing queue.py inventory")
     h.require_contains("forge.py", "evals/bakeoff.md", "bakeoff.md missing forge.py inventory")
+    h.require_contains("review_pack.py", "evals/bakeoff.md", "bakeoff.md missing review_pack.py inventory")
 
     if h.fail != 0:
         print("EVALS FAILED")
