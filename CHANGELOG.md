@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.4.20
+- Route enrichment (JSON MVP): excavate patterns gain Fortran family (`fortran`, `gfortran`, `.f90`, `.f95`, `.for`, `f90`) so extension utterances like `hello.f90` and `gfortran build` map to excavate — closes gap after the v0.4.15 Fortran archaeology leaf
+- Thin `route.sh` / `route.ps1` twins (normalize + argv/stdin live in `scripts/lib/route.py`) — closes route twin bloat vs other Python cores
+- Eval locks: `.f90` / fortran / gfortran → excavate, thin-twin line caps, triggers presence
+- Plugin, marketplace, and SKILL.md at 0.4.20
+
 ## 0.4.19
 - Structural eval Python core: `scripts/lib/eval.py` owns the full assertion suite (presence, twins, gates, identify, fixtures, route, leaf HARD-GATEs, bakeoff honesty)
 - Thin `eval.sh` / `eval.ps1` twins — closes bash↔ps1 twin drift (ps1 was a ~35-line presence stub while bash held ~600 lines of locks)

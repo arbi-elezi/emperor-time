@@ -323,6 +323,8 @@ def run_evals(root: Path) -> int:
         h.bash_n("scripts/route.sh", "route.sh syntax")
         for utter, needle, fail in (
             ("lost pascal tree", "emperor-excavate", "route lost pascal → excavate"),
+            ("hello.f90", "emperor-excavate", "route hello.f90 → excavate"),
+            ("gfortran build", "emperor-excavate", "route gfortran → excavate (not build)"),
             ("queue next", "emperor-queue", "route queue next → queue"),
             ("blocked task", "emperor-queue", "route blocked task → queue"),
             ("red build", "emperor-heal", "route red build → heal"),
@@ -547,14 +549,27 @@ def run_evals(root: Path) -> int:
     h.py_compile("scripts/lib/route.py", "route.py compile")
     h.require_contains("lib/route.py", "scripts/route.sh", "route.sh does not call route.py")
     h.require_contains("lib/route.py", "scripts/route.ps1", "route.ps1 does not call route.py")
+    # thin twins must stay thin (utterance normalize lives in route.py)
+    route_sh = (root / "scripts/route.sh").read_text(encoding="utf-8")
+    route_ps1 = (root / "scripts/route.ps1").read_text(encoding="utf-8")
+    if len(route_sh.splitlines()) > 20:
+        h.fail_msg("route.sh should be thin twin (<=20 lines)")
+    if len(route_ps1.splitlines()) > 30:
+        h.fail_msg("route.ps1 should be thin twin (<=30 lines)")
+    h.require_contains(".f90", "evals/triggers.json", "triggers missing .f90 excavate pattern")
+    h.require_contains("fortran", "evals/triggers.json", "triggers missing fortran excavate pattern")
+    h.require_contains("gfortran", "evals/triggers.json", "triggers missing gfortran excavate pattern")
     _, rout_py = h.run_py("scripts/lib/route.py", "finish the branch")
     if "emperor-forge" not in rout_py:
         h.fail_msg("route.py finish the branch → forge")
+    _, rout_f90 = h.run_py("scripts/lib/route.py", "hello.f90")
+    if "emperor-excavate" not in rout_f90:
+        h.fail_msg("route.py hello.f90 → excavate")
     rc, _ = h.run_py("scripts/lib/route.py", "what is 2+2")
     if rc == 0:
         h.fail_msg("route.py should miss trivia")
     else:
-        h.pass_msg("route.py misses trivia")
+        h.pass_msg("route.py misses trivia + fortran excavate + thin twins")
 
     # ---- MUST-route doctrine ----
     h.section("MUST-route doctrine + adapters")

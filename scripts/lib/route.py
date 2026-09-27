@@ -6,6 +6,8 @@ Prints: <target> — <reason>
 Exit: 0 match / 1 no match / 2 usage or error.
 
 Extracted from the inlined Python formerly in route.sh / route.ps1.
+Thin twins: scripts/route.sh / scripts/route.ps1. Excavate patterns include
+Fortran (.f90 / gfortran) alongside Pascal / ASM / COBOL.
 """
 from __future__ import annotations
 
