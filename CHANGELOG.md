@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.4.37
+- Diagnosing HARD-GATE leaf: `scripts/lib/diagnose.py` prints DIAGNOSE / INTAKE / CITE / MUST card (citation iron law + intake-before-analysis)
+- Thin `diagnose.sh` / `diagnose.ps1`; emperor peers gain `diagnose`; `--reject-uncited` / `--reject-skip-intake` HARD-GATEs; `--check-citation` validator
+- Skill leaf `skills/emperor-heal/diagnosing.md` + `references/diagnosing.md` cite obra/superpowers MIT (Core principle + Intake before analysis); does **not** vendor diagnosing-superpowers
+- Route/triggers for diagnose phrases → emperor-heal; eval/bakeoff/honesty lockstep
+
 ## 0.4.36
 - Session-discovery Python core: `scripts/lib/session_discovery.py` prints SESSION / PATH / STATUS / MUST locate card; probes Claude Code + Cursor/agent transcript roots read-only; VERIFIED only when path exists
 - Thin `session-discovery.sh` / `session-discovery.ps1`; emperor peers gain `session-discovery`; `--reject-guess` HARD-GATE (always-fail) for claim-without-path

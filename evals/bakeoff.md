@@ -82,6 +82,7 @@ mean **disk + eval**, not live multi-vendor win rates.
 | worktree create (Python core) | `scripts/lib/worktree.py` + thin `worktree.sh`/`worktree.ps1` (`.worktrees/<id>`, `emperor/<id>`) | TESTED |
 | excavate thin alias | thin `excavate.sh`/`excavate.ps1` → `identify.py` (no hop through identify twins) | TESTED |
 | session-discovery (Python core) | `scripts/lib/session_discovery.py` + thin twins + `skills/emperor-heal/session-discovery.md` + `emperor session-discovery` | TESTED |
+| diagnose (intake+cite HARD-GATE) | `scripts/lib/diagnose.py` + thin twins + `skills/emperor-heal/diagnosing.md` + `emperor diagnose` | TESTED |
 
 Honesty helper: `scripts/lib/bakeoff_honesty.py` fails if this inventory
 drifts from disk or if live-defect-rate is mislabeled.
@@ -99,7 +100,7 @@ drifts from disk or if live-defect-rate is mislabeled.
 ## Verdict
 
 ET wins this slice on *mechanical lock-in* (eval owns the rows; leaf gates
-above are on disk and eval-locked through v0.4.36).
+above are on disk and eval-locked through v0.4.37).
 Activation *mechanism* is closed on disk (v0.4.5–0.4.6); wild-agent
 activation without a tell stays **UNVERIFIABLE** until a marketplace re-run.
 Live defect-rate vs Superpowers stays **UNVERIFIABLE** — do not invent %.

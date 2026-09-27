@@ -4,7 +4,8 @@ description: >-
   Emperor Time — HEAL / Holy Chain. Stop digging, run the four-phase debug
   checklist, reproduce, bisect, minimal heal, verify root cause. Use when
   tests go red, a regression appears, state is corrupted, a gate was skipped,
-  or you need to locate a harness session transcript before diagnosing.
+  or you need to locate a harness session transcript before diagnosing,
+  or diagnose why a session went wrong (intake + path:line citations).
 license: MIT
 metadata:
   version: 0.4.7
@@ -34,6 +35,18 @@ mechanical SESSION / PATH / STATUS / MUST card).
 No session claims without a VERIFIED path. Do not load whole
 `diagnosing-superpowers`; ET + Holy Chain orchestrate.
 
+
+## MUST — diagnosing intake + citation before analysis
+
+When a partner wants to know why a session went wrong (or wants evidence for a
+bug report), open `skills/emperor-heal/diagnosing.md`
+(Chain Jail leaf from Superpowers `diagnosing-superpowers` → **citation iron
+law + intake-before-analysis only**) and/or run `scripts/emperor diagnose`
+(prints the mechanical DIAGNOSE / INTAKE / CITE / MUST card).
+
+No findings without `path:line`. No analysis before partner intake. Do not load
+whole `diagnosing-superpowers`; ET + Holy Chain orchestrate.
+
 ## Steps
 
 1. Run `scripts/emperor heal` → quote `DEBUG four_phases=yes`. Advance phases
@@ -42,11 +55,15 @@ No session claims without a VERIFIED path. Do not load whole
    quote `SESSION checklist=yes` and a `PATH ... status=VERIFIED` line.
    Guessing a session → `scripts/emperor session-discovery --reject-guess`
    (HARD-GATE exit 1).
-3. Read `chains/holy-chain/SKILL.md` → one aspect
+3. When diagnosing a session: run `scripts/emperor diagnose` → quote
+   `DIAGNOSE checklist=yes`. Finish intake before analysis. Uncited finding →
+   `scripts/emperor diagnose --reject-uncited`. Skip-intake →
+   `--reject-skip-intake` (HARD-GATE exit 1).
+4. Read `chains/holy-chain/SKILL.md` → one aspect
    (`triage.md` | `reproduce-and-bisect.md` | `heal-and-verify.md` |
    `process-healing.md`) matching the current phase (see leaf table).
-4. Snapshot. Reproduce. One hypothesis per step. Prediction before probe.
-5. Minimal heal. Verify the cause, not the symptom (verification triad).
-6. Postmortem line on the ledger: BROKE / CAUSE / HEAL / CAUGHT-BY /
+5. Snapshot. Reproduce. One hypothesis per step. Prediction before probe.
+6. Minimal heal. Verify the cause, not the symptom (verification triad).
+7. Postmortem line on the ledger: BROKE / CAUSE / HEAL / CAUGHT-BY /
    WOULD-HAVE-CAUGHT-SOONER.
-7. If the *process* broke, re-enter at the earliest unsatisfied gate.
+8. If the *process* broke, re-enter at the earliest unsatisfied gate.
