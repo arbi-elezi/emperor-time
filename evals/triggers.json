@@ -71,6 +71,14 @@
     {
       "phrase": "before merge review",
       "skill": "emperor-verify"
+    },
+    {
+      "phrase": "author a skill",
+      "skill": "emperor-capture"
+    },
+    {
+      "phrase": "write a skill from scratch",
+      "skill": "emperor-capture"
     }
   ],
   "must_not_fire_master_wholesale": [
@@ -233,14 +241,23 @@
         "missing a capability",
         "we are missing a capability",
         "no skill for",
-        "chain jail"
+        "chain jail",
+        "author a skill",
+        "write a skill",
+        "writing skills",
+        "skill without a failing baseline",
+        "authoring checklist",
+        "no skill without a failing"
       ],
       "tags": [
         "capture",
-        "jail"
+        "jail",
+        "author",
+        "authoring",
+        "writing-skills"
       ],
       "target": "skills/emperor-capture/SKILL.md",
-      "reason": "capability missing \u2014 Chain Jail"
+      "reason": "capability missing / author skill \u2014 Chain Jail + authoring iron-law"
     },
     {
       "id": "dispatch",

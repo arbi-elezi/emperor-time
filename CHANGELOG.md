@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.4.13
+- Authoring iron-law / skill-RGR leaf: Superpowers `writing-skills` → **The Iron Law (Same as TDD)** + skill RED-GREEN-REFACTOR only, adapted into `chains/chain-jail/authoring-checklist.md` (Chain Jail extract-aspect)
+- Python core `scripts/lib/author.py` prints AUTHOR/STEP/MUST card, rejects step skips (`--advance`), hard-gates untested skill writes (`--reject-untested`); thin `author.sh` / `author.ps1`; `emperor author` on bash/ps1/zsh/cmd peers
+- Chain Jail authoring.md + emperor-capture MUST the checklist before skill body; catalog + navigation point local-first; eval locks card + skip rejection + reject-untested
+- Plugin, marketplace, and SKILL.md at 0.4.13
+
 ## 0.4.12
 - Archaeology COBOL leaf: `evals/fixtures/lost-cbl/HELLO.CBL` + identify smoke; GnuCOBOL 3.2 boot probe VERIFIED (`cobc -x`); dialect labels honest (CONJECTURE / UNVERIFIABLE where due)
 - Jail pin `references/archaeology-cobol-manual.md` — GnuCOBOL Programmer’s Guide §4 IDENTIFICATION DIVISION / PROGRAM-ID

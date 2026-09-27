@@ -41,7 +41,7 @@ for c in "Dowsing Chain" "Chain Jail" "Judgment Chain" "Steal Chain" "Holy Chain
 done
 
 echo "== twins =="
-for pair in "done" gate eval review-pack dowse install worktree queue forge finish activate identify boot route excavate heal grill tdd iso review; do
+for pair in "done" gate eval review-pack dowse install worktree queue forge finish activate identify boot route excavate heal grill tdd iso review author; do
   need "scripts/${pair}.sh"
   need "scripts/${pair}.ps1"
 done
@@ -448,6 +448,47 @@ else
 fi
 REV_SH=$(bash "$ROOT/scripts/review.sh" 2>&1) || true
 echo "$REV_SH" | grep -q '^REVIEW checklist=yes' || { echo "EVAL FAIL: review.sh missing checklist card"; fail=1; }
+
+echo "== authoring iron-law / skill RGR HARD-GATE leaf =="
+need "chains/chain-jail/authoring-checklist.md"
+need "scripts/lib/author.py"
+need "scripts/author.sh"
+need "scripts/author.ps1"
+bash -n "$ROOT/scripts/author.sh" || { echo "EVAL FAIL: author.sh syntax"; fail=1; }
+python3 -m py_compile "$ROOT/scripts/lib/author.py" || { echo "EVAL FAIL: author.py compile"; fail=1; }
+grep -q 'author.py' "$ROOT/scripts/author.sh" || { echo "EVAL FAIL: author.sh does not call author.py"; fail=1; }
+grep -q 'author.py' "$ROOT/scripts/author.ps1" || { echo "EVAL FAIL: author.ps1 does not call author.py"; fail=1; }
+grep -q 'author|' "$ROOT/scripts/emperor" || { echo "EVAL FAIL: emperor bash missing author"; fail=1; }
+grep -q "'author'" "$ROOT/scripts/emperor.ps1" || { echo "EVAL FAIL: emperor.ps1 missing author"; fail=1; }
+grep -q 'authoring-checklist.md' "$ROOT/chains/chain-jail/SKILL.md" || { echo "EVAL FAIL: chain-jail missing authoring leaf"; fail=1; }
+grep -q 'authoring-checklist.md' "$ROOT/chains/chain-jail/authoring.md" || { echo "EVAL FAIL: authoring.md missing checklist pointer"; fail=1; }
+grep -q 'HARD-GATE' "$ROOT/chains/chain-jail/authoring-checklist.md" || { echo "EVAL FAIL: author leaf missing HARD-GATE heading"; fail=1; }
+grep -q 'writing-skills' "$ROOT/chains/chain-jail/authoring-checklist.md" || { echo "EVAL FAIL: author leaf missing source skill"; fail=1; }
+grep -q 'authoring-checklist.md' "$ROOT/skills/emperor-capture/SKILL.md" || { echo "EVAL FAIL: emperor-capture missing authoring leaf"; fail=1; }
+AUTH_OUT=$(python3 "$ROOT/scripts/lib/author.py" 2>&1) || true
+echo "$AUTH_OUT" | grep -q '^AUTHOR checklist=yes' || { echo "EVAL FAIL: author missing checklist=yes"; fail=1; }
+echo "$AUTH_OUT" | grep -q '^STEP 1 ' || { echo "EVAL FAIL: author missing STEP 1"; fail=1; }
+echo "$AUTH_OUT" | grep -q '^STEP 5 ' || { echo "EVAL FAIL: author missing STEP 5"; fail=1; }
+echo "$AUTH_OUT" | grep -q '^MUST:' || { echo "EVAL FAIL: author missing MUST line"; fail=1; }
+echo "$AUTH_OUT" | grep -q 'NO_SKILL_WITHOUT_FAILING_BASELINE_FIRST' || { echo "EVAL FAIL: author missing iron law token"; fail=1; }
+if python3 "$ROOT/scripts/lib/author.py" --advance 1 3 >/dev/null 2>&1; then
+  echo "EVAL FAIL: author should reject step skip 1→3"
+  fail=1
+else
+  echo "EVAL PASS: author rejects skip 1→3"
+fi
+ADV_OK=$(python3 "$ROOT/scripts/lib/author.py" --advance 2 3 2>&1) || true
+echo "$ADV_OK" | grep -q '^ADVANCE OK' || { echo "EVAL FAIL: author 2→3 should OK"; fail=1; }
+if python3 "$ROOT/scripts/lib/author.py" --reject-untested >/dev/null 2>&1; then
+  echo "EVAL FAIL: author --reject-untested should exit non-zero"
+  fail=1
+else
+  REJECT=$(python3 "$ROOT/scripts/lib/author.py" --reject-untested 2>&1) || true
+  echo "$REJECT" | grep -q '^REJECT UNTESTED:' || { echo "EVAL FAIL: reject-untested missing REJECT line"; fail=1; }
+  echo "EVAL PASS: author --reject-untested hard-gates untested skill write"
+fi
+AUTH_SH=$(bash "$ROOT/scripts/author.sh" 2>&1) || true
+echo "$AUTH_SH" | grep -q '^AUTHOR checklist=yes' || { echo "EVAL FAIL: author.sh missing checklist card"; fail=1; }
 
 if [[ "$fail" -ne 0 ]]; then
   echo "EVALS FAILED"

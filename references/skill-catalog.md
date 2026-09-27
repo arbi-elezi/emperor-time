@@ -5,7 +5,7 @@ written. Before a hunt, confirm the repo still exists and list `skills/`.
 
 | Catalog | Why it exists | Default steal |
 |---|---|---|
-| `https://github.com/obra/superpowers` | Composable engineering methodology | leaf skills only: brainstorming, writing-plans, tdd, systematic-debugging, worktrees, review, writing-skills |
+| `https://github.com/obra/superpowers` | Composable engineering methodology | leaf skills only (local HARD-GATEs landed): brainstorming→grill, writing-plans→work_order, tdd→tdd, systematic-debugging→heal, worktrees→iso, review→review, writing-skills→author |
 | `https://github.com/addyosmani/agent-skills` | Full SDLC + anti-rationalization + evals | review personas, phase checklists |
 | Matt Pocock skills (search current publish path this session) | Grill / alignment / seam TDD | grill-like interrogation if `grill.md` absent locally |
 | `https://github.com/gsd-build/get-shit-done` | Spec + phase execute + STATE | plan/verify command patterns, not their runtime |
