@@ -161,6 +161,35 @@ ID_OUT="$(bash "$ROOT/scripts/identify.sh" "$ROOT/evals/fixtures/lost-asm" 2>&1)
 echo "$ID_OUT" | grep -E -q '[0-9]+ \*\.asm' || { echo "EVAL FAIL: identify missed *.asm on lost-asm"; fail=1; }
 
 
+
+
+echo "== plan header (Superpowers leaf) =="
+need "scripts/lib/work_order.py"
+need "templates/work-order.md"
+need "evals/fixtures/plans-header/work-order-missing-header.md"
+need "evals/fixtures/plans-header/work-order-complete.md"
+grep -q "Review Focus" "$ROOT/templates/work-order.md" || { echo "EVAL FAIL: template missing Review Focus"; fail=1; }
+grep -q "Global Constraints" "$ROOT/templates/work-order.md" || { echo "EVAL FAIL: template missing Global Constraints"; fail=1; }
+grep -q "work_order.py" "$ROOT/scripts/gate.sh" || { echo "EVAL FAIL: gate.sh does not call work_order.py"; fail=1; }
+grep -q "work_order.py" "$ROOT/scripts/gate.ps1" || { echo "EVAL FAIL: gate.ps1 does not call work_order.py"; fail=1; }
+if python3 "$ROOT/scripts/lib/work_order.py" "$ROOT/evals/fixtures/plans-header/work-order-missing-header.md" >/tmp/et-wo-miss.out 2>&1; then
+  echo "EVAL FAIL: incomplete work-order should fail plan-header check"
+  fail=1
+else
+  grep -qi "Review Focus\|Goal\|Architecture\|plan header\|work_order FAIL" /tmp/et-wo-miss.out \
+    || { echo "EVAL FAIL: missing-header failure message unclear"; fail=1; }
+  echo "EVAL PASS: incomplete plan header rejected"
+fi
+if ! python3 "$ROOT/scripts/lib/work_order.py" "$ROOT/evals/fixtures/plans-header/work-order-complete.md" >/tmp/et-wo-ok.out 2>&1; then
+  echo "EVAL FAIL: complete work-order should pass plan-header check"
+  cat /tmp/et-wo-ok.out
+  fail=1
+else
+  echo "EVAL PASS: complete plan header accepted"
+fi
+rm -f /tmp/et-wo-miss.out /tmp/et-wo-ok.out
+
+
 if [[ "$fail" -ne 0 ]]; then
   echo "EVALS FAILED"
   exit 1
