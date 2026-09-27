@@ -1,17 +1,14 @@
-# Silent session defaults. User never types this.
-# Twin of boot.sh — writes .emperor/host.env, survey.md, optional eval.log.
-param()
+# Thin twin of boot.sh — silent session boot via Python core.
+param(
+    [Parameter(ValueFromRemainingArguments = $true)]
+    [string[]]$Rest
+)
 $ErrorActionPreference = 'SilentlyContinue'
-$here = $PSScriptRoot
-# Dot-source host twin (parity with boot.sh → lib/host.sh).
-. (Join-Path $here 'lib/host.ps1')
-if (-not (Test-Path '.emperor')) { New-Item -ItemType Directory -Path '.emperor' | Out-Null }
-Write-EmperorHostReport | Set-Content -Path '.emperor/host.env' -Encoding utf8
-if (Test-Path (Join-Path $here 'identify.ps1')) {
-  & (Join-Path $here 'identify.ps1') . | Out-File -FilePath '.emperor/survey.md' -Encoding utf8
+$root = (Resolve-Path (Join-Path $PSScriptRoot '..')).Path
+if (-not $env:EMPEROR_SHELL) {
+    if ($PSVersionTable.PSEdition -eq 'Core') { $env:EMPEROR_SHELL = 'pwsh' }
+    else { $env:EMPEROR_SHELL = 'powershell' }
 }
-if ((Test-Path (Join-Path $here 'eval.ps1')) -and (Test-Path 'SKILL.md')) {
-  & (Join-Path $here 'eval.ps1') 2>&1 | Out-File -FilePath '.emperor/eval.log' -Encoding utf8
-}
-if ($env:EMPEROR_BOOT_VERBOSE -eq '1') { Get-Content '.emperor/host.env' }
+$py = Join-Path $root 'scripts/lib/boot.py'
+& python3 $py @Rest
 exit 0

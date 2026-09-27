@@ -1,47 +1,48 @@
-# Task Ledger — emperor-time self-application (install Python core)
+# Task Ledger — emperor-time self-application (boot/host Python core)
 
-- **Task:** Close bash↔ps1 install twin drift by extracting harness deploy into `scripts/lib/install.py` + thin twins; unify dry-run / chain preview / first-run tip; eval + version lockstep.
-- **Client quote:** Soft-ET consented Worthy Spend after v0.4.30 parallel-dispatch. Superpowers method leaves closed on disk. NEXT: crank ET strength — install.py twin unify (deferred on prior spends alongside boot.py / diagnosing-superpowers).
+- **Task:** Close bash↔ps1 silent-boot twin drift by extracting host detect + boot sequence into `scripts/lib/host.py` + `scripts/lib/boot.py` + thin boot twins; host report helpers delegate to Python; eval + version lockstep.
+- **Client quote:** Soft-ET consented Worthy Spend after v0.4.31 install-python-core. Superpowers method leaves closed on disk. NEXT: crank ET strength — boot.py/host.py silent-boot unify (deferred on install spend; diagnosing-superpowers still waits on session-discovery).
 - **Origin:** assigned
 - **Size:** standard
-- **Governing files:** SKILL.md → scripts/lib/install.py → thin install.sh/install.ps1 → portability.md
-- **Tip at spend:** v0.4.31 (branch `et-manager/install-python-core`)
+- **Governing files:** SKILL.md → scripts/lib/host.py → scripts/lib/boot.py → thin boot.sh/boot.ps1 → portability.md
+- **Tip at spend:** v0.4.32 (branch `et-manager/boot-host-python-core`)
 
 ## G0
-Quoted ask above. Ambiguity resolved: ship install.py Python core. Skip diagnosing-superpowers / boot.py / host unify / embeddings / archaeology this turn. Do not re-announce or re-ship #33–#47 leaves.
+Quoted ask above. Ambiguity resolved: ship host.py + boot.py Python core. Skip diagnosing-superpowers / embeddings / archaeology / emperor.py dispatcher this turn. Do not re-announce or re-ship #33–#48 leaves.
 
 ## G1 Acceptance criteria
-1. SKILL.md version ≥ 0.4.31 and names five chains + six vows.
-2. `scripts/lib/install.py` owns harness map (claude-code/kimi/codex/opencode/generic-agents), dest resolve, copy set, chain expose, activation tips, dry-run.
-3. Thin `install.sh` / `install.ps1` call install.py; dry-run lists planned chains when `--with-chain-skills`; unknown harness exits non-zero.
-4. First-run tip is host-agnostic (`scripts/emperor dowse`), not `dowse.sh` vs `dowse.ps1`.
-5. Plugin/marketplace/SKILL lockstep 0.4.31; bakeoff + honesty name the leaf; CHANGELOG has 0.4.31.
-6. Eval locks compile + thin twins + dry-run + suite green.
+1. SKILL.md version ≥ 0.4.32 and names five chains + six vows.
+2. `scripts/lib/host.py` owns host detect + host.env report line (`os`/`shell`/`wsl`/`win_interop`/`encoding`/`mnt`/`win_root`) and `--as-json`.
+3. `scripts/lib/boot.py` writes `.emperor/host.env` + survey.md (+ optional eval.log); supports `--skip-eval` / `--skip-identify`.
+4. Thin `boot.sh` / `boot.ps1` call boot.py; `emperor_host_report` / `Write-EmperorHostReport` delegate to host.py.
+5. Plugin/marketplace/SKILL lockstep 0.4.32; bakeoff + honesty name the leaf; CHANGELOG has 0.4.32.
+6. Eval locks compile + thin twins + report keys + boot smoke + suite green.
 7. Live defect-rate vs Superpowers stays **UNVERIFIABLE**.
 
 ## Out of scope
 - emperor.py dispatcher / route embeddings
-- heal/excavate/boot/host unify redo
-- diagnosing-superpowers session diagnosis leaf
+- diagnosing-superpowers session diagnosis leaf (needs transcript-discovery infra)
 - Whole Superpowers diagnosing skill vendored into always-on prompt
+- Rewriting shell EMPEROR_* sourceable helpers / WSL path converters (stay in host.sh/ps1)
 - Live multi-vendor bake-off numbers
-- Redo of #33–#47 (gate/identify/finish/eval/done/queue/forge/review-pack/dowse/receive/execute/subagent/parallel/…)
+- Redo of #33–#48 (gate/identify/finish/eval/done/queue/forge/review-pack/dowse/receive/execute/subagent/parallel/install/…)
 
 ## G2
-Rejected alternative: diagnosing-superpowers HARD-GATE leaf or boot.py Python core.
-Why: Superpowers method leaves are closed; diagnosing needs transcript-discovery infra ET lacks this turn. Install twins already drifted (chain preview order + first-run tip); Python preference + twin-drift remediation pattern.
+Rejected alternative: slim diagnosing-emperor HARD-GATE (citation iron law + intake-before-analysis).
+Why: Superpowers diagnosing still needs session-discovery paths ET lacks this turn; boot/host twins already drifted (encoding + WSL interop probes); Python preference + twin-drift remediation pattern after install.py.
 
 ## G3
-install.py + thin twins on `et-manager/install-python-core`. See git log.
+host.py + boot.py + thin boot twins on `et-manager/boot-host-python-core`. See git log.
 
 ## G4
 Claims:
 
 | Claim | Status | Evidence |
 |---|---|---|
-| SKILL.md is 0.4.31 orchestrator | TESTED | frontmatter `version: 0.4.31` on branch HEAD |
-| install --dry-run prints plan without copy | TESTED | exit 0 + `(dry run - nothing copied)` |
-| bash and ps1 thin twins call install.py | TESTED | both contain `lib/install.py` |
+| SKILL.md is 0.4.32 orchestrator | TESTED | frontmatter `version: 0.4.32` on branch HEAD |
+| host.py --report prints canonical keys | TESTED | exit 0 + os=/shell=/wsl=/win_interop=/encoding= |
+| boot.py --skip-eval writes host.env + survey.md | TESTED | tempfile smoke in eval |
+| bash and ps1 thin boot twins call boot.py | TESTED | both contain `lib/boot.py` |
 | Eval suite still green | TESTED | `bash scripts/eval.sh` → EVALS PASSED |
 | Live defect-rate vs Superpowers | UNVERIFIABLE | no shared-task three-vendor bake-off run in this session |
 
@@ -65,4 +66,5 @@ PASS-WITH-CONDITIONS: local mechanism TESTED; live bake-off numbers UNVERIFIABLE
 - executing-plans continuous-execution card never extracted after writing-plans/finish. Remediation: execute.py (v0.4.28).
 - subagent-driven-development fresh-subagent / per-task-review card never extracted after executing-plans. Remediation: subagent.py (v0.4.29).
 - dispatching-parallel-agents independent-domains card never extracted after subagent-driven. Remediation: parallel.py (v0.4.30).
-- bash/ps1 install twins drifted (chain preview order; dowse.sh vs dowse.ps1 tip). Remediation: this leaf (v0.4.31).
+- bash/ps1 install twins drifted (chain preview order; dowse.sh vs dowse.ps1 tip). Remediation: install.py (v0.4.31).
+- bash/ps1 silent-boot host report drifted (encoding + WSL interop probes). Remediation: this leaf (v0.4.32).

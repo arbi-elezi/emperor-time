@@ -84,7 +84,10 @@ LEAVES: list[tuple[str, str, tuple[str, ...]]] = [
     ("review-pack-py", "scripts/lib/review_pack.py", ("review_pack.py", "review-pack")),
     ("dowse-py", "scripts/lib/dowse.py", ("dowse.py", "dowse")),
     ("install-py", "scripts/lib/install.py", ("install.py", "install")),
+    ("host-py", "scripts/lib/host.py", ("host.py", "host.env")),
+    ("boot-py", "scripts/lib/boot.py", ("boot.py", "silent-boot")),
 ]
+
 
 BAKEOFF = Path("evals/bakeoff.md")
 UPGRADE = Path("evals/fixtures/this-upgrade.md")
