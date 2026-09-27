@@ -7,7 +7,7 @@ Exit: 0 match / 1 no match / 2 usage or error.
 
 Extracted from the inlined Python formerly in route.sh / route.ps1.
 Thin twins: scripts/route.sh / scripts/route.ps1. Excavate patterns include
-Fortran (.f90 / gfortran), VHDL (.vhd / ghdl), and Ada (.adb / gnat) alongside Pascal / ASM / COBOL.
+Fortran (.f90 / gfortran), VHDL (.vhd / ghdl), Ada (.adb / gnat), and Forth (.fs / pforth) alongside Pascal / ASM / COBOL.
 """
 from __future__ import annotations
 
