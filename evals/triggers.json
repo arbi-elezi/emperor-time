@@ -418,7 +418,14 @@
         ".mod",
         ".def",
         " modula",
-        "modula "
+        "modula ",
+        "a68g",
+        "algol68g",
+        "algol68",
+        ".a68",
+        ".alg",
+        " algol",
+        "algol "
       ],
       "tags": [
         "archaeology",
@@ -468,7 +475,13 @@
         "modula-2",
         "modula2",
         "modula",
-        "def"
+        "def",
+        "a68g",
+        "algol68g",
+        "algol68",
+        "algol",
+        "a68",
+        "alg"
       ],
       "target": "skills/emperor-excavate/SKILL.md",
       "reason": "lost/ancient/foreign tree \u2014 excavate before modernizing"
