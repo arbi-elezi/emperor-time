@@ -41,7 +41,7 @@ for c in "Dowsing Chain" "Chain Jail" "Judgment Chain" "Steal Chain" "Holy Chain
 done
 
 echo "== twins =="
-for pair in "done" gate eval review-pack dowse install worktree queue forge finish identify boot route excavate; do
+for pair in "done" gate eval review-pack dowse install worktree queue forge finish activate identify boot route excavate; do
   need "scripts/${pair}.sh"
   need "scripts/${pair}.ps1"
 done
@@ -204,6 +204,26 @@ echo "$FIN_OUT" | grep -q '^MENU ' || { echo "EVAL FAIL: finish.sh missing MENU"
 out=$(bash "$ROOT/scripts/route.sh" "finish the branch" 2>/dev/null || true)
 echo "$out" | grep -q "emperor-forge" || { echo "EVAL FAIL: route finish the branch → forge"; fail=1; }
 
+echo "== activate MUST-route (SessionStart leaf) =="
+need "skills/emperor-resume/must-route.md"
+need "scripts/lib/activate.py"
+need "scripts/activate.sh"
+need "scripts/activate.ps1"
+bash -n "$ROOT/scripts/activate.sh" || { echo "EVAL FAIL: activate.sh syntax"; fail=1; }
+python3 -m py_compile "$ROOT/scripts/lib/activate.py" || { echo "EVAL FAIL: activate.py compile"; fail=1; }
+grep -q 'activate.py' "$ROOT/scripts/activate.sh" || { echo "EVAL FAIL: activate.sh does not call activate.py"; fail=1; }
+grep -q 'activate.py' "$ROOT/scripts/activate.ps1" || { echo "EVAL FAIL: activate.ps1 does not call activate.py"; fail=1; }
+grep -q 'activate|' "$ROOT/scripts/emperor" || { echo "EVAL FAIL: emperor bash missing activate"; fail=1; }
+grep -q 'scripts/activate' "$ROOT/hooks/hooks.json" || { echo "EVAL FAIL: SessionStart missing activate"; fail=1; }
+grep -q 'MUST-route' "$ROOT/hooks/hooks.json" || { echo "EVAL FAIL: SessionStart prompt missing MUST-route"; fail=1; }
+grep -q 'must-route.md' "$ROOT/skills/emperor-resume/SKILL.md" || { echo "EVAL FAIL: resume skill missing must-route"; fail=1; }
+grep -q 'using-superpowers' "$ROOT/skills/emperor-resume/must-route.md" || { echo "EVAL FAIL: must-route missing provenance"; fail=1; }
+ACT_OUT=$(python3 "$ROOT/scripts/lib/activate.py" --cwd "$ROOT" 2>&1) || true
+echo "$ACT_OUT" | grep -q '^ACTIVATION must_route=yes' || { echo "EVAL FAIL: activate missing must_route=yes"; fail=1; }
+echo "$ACT_OUT" | grep -q '^ACTIVATION next=' || { echo "EVAL FAIL: activate missing next="; fail=1; }
+echo "$ACT_OUT" | grep -q '^MUST:' || { echo "EVAL FAIL: activate missing MUST line"; fail=1; }
+ACT_U=$(python3 "$ROOT/scripts/lib/activate.py" --cwd "$ROOT" -u 'red build' 2>&1) || true
+echo "$ACT_U" | grep -q 'emperor-heal' || { echo "EVAL FAIL: activate utterance red build → heal"; fail=1; }
 
 if [[ "$fail" -ne 0 ]]; then
   echo "EVALS FAILED"

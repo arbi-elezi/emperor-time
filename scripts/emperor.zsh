@@ -8,7 +8,7 @@ source "$ROOT/lib/host.sh"
 TOOL="${1:-}"
 shift || true
 if [[ -z "$TOOL" ]]; then
-  print -u2 "usage: $0 <done|gate|eval|review-pack|dowse|install|worktree|queue|forge|finish|boot|identify|route|excavate> [args]"
+  print -u2 "usage: $0 <done|gate|eval|review-pack|dowse|install|worktree|queue|forge|finish|activate|boot|identify|route|excavate> [args]"
   exit 2
 fi
 if [[ "$TOOL" == host ]]; then emperor_host_report; exit 0; fi
