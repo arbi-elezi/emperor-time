@@ -60,6 +60,7 @@ LEAVES: list[tuple[str, str, tuple[str, ...]]] = [
         ("emperor.zsh", "silent-boot"),
     ),
     ("queue-py", "scripts/lib/queue.py", ("queue.py", "queue")),
+    ("forge-py", "scripts/lib/forge.py", ("forge.py", "forge")),
 ]
 
 BAKEOFF = Path("evals/bakeoff.md")

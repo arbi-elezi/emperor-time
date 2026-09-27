@@ -136,6 +136,7 @@ def run_evals(root: Path) -> int:
         "scripts/lib/eval.py",
         "scripts/lib/done.py",
         "scripts/lib/queue.py",
+        "scripts/lib/forge.py",
         "scripts/done.sh",
         "scripts/done.ps1",
         "scripts/queue.sh",
@@ -1143,6 +1144,81 @@ def run_evals(root: Path) -> int:
     h.require_contains("done|", "scripts/emperor", "emperor bash missing done")
     h.pass_msg("done.py thin twins + probe fixtures")
 
+    # ---- forge.py consent + PR body ----
+    h.section("forge.py Python core")
+    h.need("scripts/lib/forge.py")
+    h.need("scripts/forge.sh")
+    h.need("scripts/forge.ps1")
+    h.bash_n("scripts/forge.sh", "forge.sh syntax")
+    h.py_compile("scripts/lib/forge.py", "forge.py compile")
+    h.require_contains("lib/forge.py", "scripts/forge.sh", "forge.sh thin twin missing forge.py")
+    h.require_contains("lib/forge.py", "scripts/forge.ps1", "forge.ps1 thin twin missing forge.py")
+    forge_sh_lines = len((root / "scripts/forge.sh").read_text(encoding="utf-8").splitlines())
+    forge_ps_lines = len((root / "scripts/forge.ps1").read_text(encoding="utf-8").splitlines())
+    if forge_sh_lines > 20:
+        h.fail_msg("forge.sh should be thin twin (<=20 lines)")
+    if forge_ps_lines > 30:
+        h.fail_msg("forge.ps1 should be thin twin (<=30 lines)")
+    h.require_contains(
+        "scripts/lib/forge.py",
+        "references/software-factory.md",
+        "software-factory.md missing forge.py",
+    )
+    h.require_contains(
+        "forge.py",
+        "skills/emperor-forge/SKILL.md",
+        "emperor-forge skill missing forge.py",
+    )
+    h.require_contains(
+        "scripts/lib/forge.py",
+        "references/mechanical-gates.md",
+        "mechanical-gates.md missing forge.py",
+    )
+    tmpf = Path(tempfile.mkdtemp())
+    try:
+        (tmpf / "ledger.md").write_text(
+            "# Task: ship the widget\n"
+            "## G0\nOrigin: eval\n"
+            "## G1 Acceptance criteria\n"
+            "1. Widget ships\n"
+            "## G2\nDesign\n",
+            encoding="utf-8",
+        )
+        (tmpf / "DONE.md").write_text(
+            "probe: echo HELLO_EMPEROR_DONE\nexpect: HELLO_EMPEROR_DONE\n",
+            encoding="utf-8",
+        )
+        rc, out = h.run_sh("scripts/forge.sh", str(tmpf))
+        if rc != 3 or "FORGE REFUSED" not in out:
+            h.fail_msg("forge without consent should refuse exit 3")
+        else:
+            h.pass_msg("forge refuses without consent")
+        rc, out = h.run_sh(
+            "scripts/forge.sh",
+            str(tmpf),
+            env={"EMPEROR_CONSENT_PR": "1", "EMPEROR_FORGE_DRY": "1"},
+        )
+        if rc != 0 or "FORGE DRY" not in out:
+            h.fail_msg("forge with consent should DRY exit 0")
+        elif "ship the widget" not in out:
+            h.fail_msg("forge DRY missing extracted title")
+        else:
+            h.pass_msg("forge DRY with title")
+        pr = (tmpf / "PR.md").read_text(encoding="utf-8")
+        g1_part = pr.split("## DONE probes")[0]
+        if "## G1 Acceptance criteria" not in pr or "Widget ships" not in pr:
+            h.fail_msg("forge PR.md missing G1 section")
+        elif "## DONE probes" not in pr or "HELLO_EMPEROR_DONE" not in pr:
+            h.fail_msg("forge PR.md missing DONE probes")
+        elif "## G0" in g1_part or "Origin: eval" in g1_part:
+            # ps1 twin used to dump the full ledger; G0 must stay out of PR body.
+            h.fail_msg("forge PR.md dumped full ledger (G0 leak) — twin drift")
+        else:
+            h.pass_msg("forge PR.md G1+DONE only")
+    finally:
+        shutil.rmtree(tmpf, ignore_errors=True)
+    h.pass_msg("forge.py thin twins + consent + PR body")
+
     # bakeoff honesty
     h.section("bakeoff honesty (mechanism inventory + UNVERIFIABLE live rate)")
     h.need("evals/bakeoff.md")
@@ -1166,12 +1242,13 @@ def run_evals(root: Path) -> int:
         "evals/fixtures/this-upgrade.md",
         "this-upgrade.md missing UNVERIFIABLE",
     )
-    h.require_contains("0.4.23", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing 0.4.23 tip")
-    h.require_contains("queue.py", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing queue.py")
+    h.require_contains("0.4.24", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing 0.4.24 tip")
+    h.require_contains("forge.py", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing forge.py")
     h.require_contains("gate.py", "evals/bakeoff.md", "bakeoff.md missing gate.py inventory")
     h.require_contains("eval.py", "evals/bakeoff.md", "bakeoff.md missing eval.py inventory")
     h.require_contains("done.py", "evals/bakeoff.md", "bakeoff.md missing done.py inventory")
     h.require_contains("queue.py", "evals/bakeoff.md", "bakeoff.md missing queue.py inventory")
+    h.require_contains("forge.py", "evals/bakeoff.md", "bakeoff.md missing forge.py inventory")
 
     if h.fail != 0:
         print("EVALS FAILED")

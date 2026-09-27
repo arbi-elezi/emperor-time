@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.4.24
+- Forge PR Python core: `scripts/lib/forge.py` owns consent (env or ledger), DONE probes, title + G1..G2 PR body, gh create / DRY
+- Thin `forge.sh` / `forge.ps1` twins — closes bash↔ps1 twin drift (ps1 hardcoded title and dumped full ledger into PR.md)
+- Factory dogfood: software-factory + mechanical-gates + emperor-forge skill point at the Python lock; eval locks compile + thin twins + refuse + DRY title + G1/DONE body (no G0 leak)
+- Plugin, marketplace, and SKILL.md at 0.4.24
+
 ## 0.4.23
 - Queue picker Python core: `scripts/lib/queue.py` owns list/next/add/done (WIP=1, placeholder skip, gh → Linear → local)
 - Thin `queue.sh` / `queue.ps1` twins — closes bash↔ps1 twin drift (ps1 list lacked Linear notice + git worktree guard)

@@ -40,6 +40,7 @@ scripts/emperor forge <task-dir>
 ```
 
 Queue picker Python core: `scripts/lib/queue.py` (thin `queue.sh` / `queue.ps1`).
+Forge PR Python core: `scripts/lib/forge.py` (thin `forge.sh` / `forge.ps1`).
 
 ## Route (trigger to skill)
 
