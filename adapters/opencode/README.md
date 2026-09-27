@@ -49,3 +49,24 @@ target machine installed it.
 It fronts many providers, including local models — which makes it the easiest
 **different-vendor hetero-critic** to stand up when your orchestrator is
 Claude or Kimi (uncorrelated errors; see Steal Chain routing hints).
+
+## Session boot (host-agnostic)
+
+opencode has no Claude `SessionStart` hook. Do not ask the client their OS,
+shell, or language. After clone (or when `.emperor/` is missing), run silent
+boot once, then read what it wrote:
+
+```bash
+bash scripts/boot.sh   # or: scripts/emperor boot
+# Windows: pwsh -NoProfile -File scripts/boot.ps1
+```
+
+Then open:
+
+- `.emperor/host.env` — os, shell, wsl, encoding
+- `.emperor/survey.md` — artifact classes (do not ask the client their stack)
+- `.emperor/eval.log` — when this tree *is* Emperor Time
+
+Resume from STATE.md / `scripts/emperor queue next`. Do not tell the client
+to run `identify` or `eval`. Those are internals.
+Foreign/lost tree: `scripts/emperor identify <path>`.
