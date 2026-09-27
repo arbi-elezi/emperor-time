@@ -55,7 +55,7 @@ Holy Chain: combat ledger in `reproduce-and-bisect.md` (prediction before probe)
 
 1. Create a failing test / minimal reproduction **before** the fix (`emperor-tdd` / G2).
 2. Implement a **single** fix — no riders, no bundled refactor.
-3. Verify: cure + no new wounds + mechanism (`heal-and-verify.md` triad).
+3. Verify: cure + no new wounds + mechanism (`heal-and-verify.md` triad). For invalid-data bugs, add multi-layer validation after the source fix (mechanical card: `scripts/emperor defense` / `skills/emperor-heal/defense-in-depth.md`).
 4. If the fix fails: STOP. Count attempts. If < 3 → return to Phase 1. If ≥ 3 → stop and question architecture with the client (process-healing when the *process* is the wound).
 
 Holy Chain: `heal-and-verify.md`; process wounds → `process-healing.md`.

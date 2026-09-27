@@ -1,33 +1,33 @@
-# Task Ledger — emperor-time self-application (root-cause tracing HARD-GATE)
+# Task Ledger — emperor-time self-application (defense-in-depth HARD-GATE)
 
-- **Task:** Add root-cause tracing HARD-GATE leaf for emperor-heal (Trace backward / Fix at source): Python card + thin twins + skill/reference + route/eval/honesty lockstep. Companion to four-phase heal card.
-- **Client quote:** Soft-ET consented Worthy Spend after v0.4.38 Ada archaeology. Ship root-cause-tracing leaf (v0.4.39). Chain Jail leaf only; do not vendor foreign whole skills.
+- **Task:** Add defense-in-depth HARD-GATE leaf for emperor-heal (Validate at every layer / Four layers): Python card + thin twins + skill/reference + route/eval/honesty lockstep. Companion after root-cause source fix.
+- **Client quote:** Soft-ET consented Worthy Spend after v0.4.39 root-cause-tracing. Ship defense-in-depth leaf (v0.4.40). Chain Jail leaf only; do not vendor foreign whole skills.
 - **Origin:** assigned
 - **Size:** standard
-- **Governing files:** SKILL.md → emperor-heal → root-cause-tracing.md → root_cause.py → route/triggers → eval
-- **Tip at spend:** v0.4.39 (branch `et-manager/root-cause-tracing`)
+- **Governing files:** SKILL.md → emperor-heal → defense-in-depth.md → defense.py → route/triggers → eval
+- **Tip at spend:** v0.4.40 (branch `et-manager/defense-in-depth`)
 
 ## G0
-Quoted ask above. Ambiguity resolved: ship root-cause tracing HARD-GATE only. Skip embeddings, emperor.py dispatcher, full systematic-debugging vendoring, other archaeology pins this turn. Do not re-announce or re-ship #33–#55 leaves.
+Quoted ask above. Ambiguity resolved: ship defense-in-depth HARD-GATE only. Skip embeddings, emperor.py dispatcher, full systematic-debugging vendoring, other archaeology pins this turn. Do not re-announce or re-ship #33–#56 leaves.
 
 ## G1 Acceptance criteria
-1. SKILL.md version ≥ 0.4.39; `scripts/lib/root_cause.py` prints TRACE / STEP / MUST card.
-2. Thin `trace.sh` / `trace.ps1` call `root_cause.py`; emperor peers (bash/ps1/cmd/zsh) gain `trace`.
-3. `--reject-symptom-fix` and `--reject-untraced` always exit non-zero; `--check-chain` accepts ≥2 backward links and rejects thin chains.
-4. Skill leaf `skills/emperor-heal/root-cause-tracing.md` + `references/root-cause-tracing.md` cite obra/superpowers systematic-debugging root-cause-tracing.md (URL + access date 2026-09-27 + sha256).
-5. Route triggers include trace phrases → emperor-heal; extract-aspect names the leaf.
-6. Catalog + heal SKILL + debug-four-phases link the card; bakeoff + honesty name root_cause.py / trace.
-7. Plugin/marketplace/SKILL lockstep 0.4.39; CHANGELOG has 0.4.39.
+1. SKILL.md version ≥ 0.4.40; `scripts/lib/defense.py` prints DEFENSE / LAYER / MUST card.
+2. Thin `defense.sh` / `defense.ps1` call `defense.py`; emperor peers (bash/ps1/cmd/zsh) gain `defense`.
+3. `--reject-single-layer` and `--reject-unlayered` always exit non-zero; `--check-layers` accepts ≥2 distinct layer ids and rejects thin plans.
+4. Skill leaf `skills/emperor-heal/defense-in-depth.md` + `references/defense-in-depth.md` cite obra/superpowers systematic-debugging defense-in-depth.md (URL + access date 2026-09-27 + sha256).
+5. Route triggers include defense phrases → emperor-heal; extract-aspect names the leaf.
+6. Catalog + heal SKILL + debug-four-phases link the card; bakeoff + honesty name defense.py / defense.
+7. Plugin/marketplace/SKILL lockstep 0.4.40; CHANGELOG has 0.4.40.
 8. Eval locks new files/version/triggers; suite green.
 9. Live defect-rate vs Superpowers stays **UNVERIFIABLE**.
 
 ## Out of scope
 - embeddings / emperor.py unified dispatcher
-- Full systematic-debugging skill vendoring (find-polluter, defense-in-depth essay, condition-based-waiting, pressure tests)
+- Full systematic-debugging skill vendoring (find-polluter, condition-based-waiting, pressure tests)
 - Other people's PRs
 - Another archaeology language pin this turn
 - Live multi-vendor bake-off numbers
-- Redo of #33–#55
+- Redo of #33–#56
 
 ## G2
 Rejected alternative: vendor whole systematic-debugging under skills/.
@@ -36,23 +36,23 @@ Why: standing rule — Chain Jail leaf only (HARD-GATE card + one aspect heading
 Rejected alternative: emperor.py unified dispatcher.
 Why: larger surface than one heal leaf; out of scope.
 
-Rejected alternative: seventh archaeology language pin.
-Why: Ada just shipped; heal Phase-1 gap (root-cause-tracing) was the named deferred Superpowers delta.
+Rejected alternative: condition-based-waiting leaf this turn.
+Why: defense-in-depth is the named deferred companion after root-cause-tracing (additive layers after source fix).
 
 ## G3
-root_cause.py + trace twins + root-cause-tracing.md + references + route/eval/honesty/bakeoff lockstep on `et-manager/root-cause-tracing`. See git log.
+defense.py + defense twins + defense-in-depth.md + references + route/eval/honesty/bakeoff lockstep on `et-manager/defense-in-depth`. See git log.
 
 ## G4
 Claims:
 
 | Claim | Status | Evidence |
 |---|---|---|
-| SKILL.md is 0.4.39 orchestrator | TESTED | frontmatter `version: 0.4.39` on branch HEAD |
-| root_cause.py prints TRACE checklist | TESTED | `TRACE checklist=yes` + STEP / MUST lines |
-| --reject-symptom-fix / --reject-untraced hard-gate | TESTED | exit non-zero + REJECT lines |
-| --check-chain needs ≥2 links | TESTED | CHAIN OK / CHAIN FAIL paths |
-| Jail leaf cites Superpowers root-cause-tracing | TESTED | root-cause-tracing.md URL + 2026-09-27 + sha256 |
-| Route trace phrases → heal | TESTED | route.py + triggers.json |
+| SKILL.md is 0.4.40 orchestrator | TESTED | frontmatter `version: 0.4.40` on branch HEAD |
+| defense.py prints DEFENSE checklist | TESTED | `DEFENSE checklist=yes` + LAYER / MUST lines |
+| --reject-single-layer / --reject-unlayered hard-gate | TESTED | exit non-zero + REJECT lines |
+| --check-layers needs ≥2 layer ids | TESTED | LAYERS OK / LAYERS FAIL paths |
+| Jail leaf cites Superpowers defense-in-depth | TESTED | defense-in-depth.md URL + 2026-09-27 + sha256 |
+| Route defense phrases → heal | TESTED | route.py + triggers.json |
 | Eval suite still green | TESTED | `bash scripts/eval.sh` → EVALS PASSED |
 | Live defect-rate vs Superpowers | UNVERIFIABLE | no shared-task three-vendor bake-off run in this session |
 
@@ -84,4 +84,5 @@ PASS-WITH-CONDITIONS: local mechanism TESTED; live bake-off numbers UNVERIFIABLE
 - diagnosing-superpowers blocked: ET lacked a mechanical session-discovery locate card with verified-path honesty. Remediation: session_discovery.py (v0.4.36).
 - diagnosing-superpowers blocked: ET lacked mechanical intake-before-analysis + path:line citation HARD-GATEs after locate. Remediation: diagnose.py (v0.4.37).
 - archaeology.md / identify lacked Ada (lost-ada fixture) (`.adb`/`.ads`) fixture, Jail pin, route triggers, or eval lock after five prior language pins. Remediation: v0.4.38.
-- heal Phase 1 named "trace data flow" without a mechanical backward-chain HARD-GATE (symptom fixes still easy to ship). Remediation: this leaf (v0.4.39).
+- heal Phase 1 named "trace data flow" without a mechanical backward-chain HARD-GATE (symptom fixes still easy to ship). Remediation: root_cause.py (v0.4.39).
+- after source fix, single-layer guards still shipped as the whole invalid-data cure. Remediation: this leaf (v0.4.40).
