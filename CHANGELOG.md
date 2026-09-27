@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.4.31
+- Install Python core: `scripts/lib/install.py` owns harness map, dest resolve, copy set, chain expose, activation tips, and dry-run
+- Thin `install.sh` / `install.ps1` twins — closes bash↔ps1 twin drift (ps1 previewed chain destinations before copy; first-run tip said `dowse.ps1` vs `dowse.sh`)
+- Unified first-run tip to host-agnostic `scripts/emperor dowse`; dry-run lists planned chains when `--with-chain-skills`; eval locks compile + thin twins + dry-run + unknown harness reject
+- Plugin, marketplace, and SKILL.md at 0.4.31
+
+
 ## 0.4.30
 - Parallel-dispatch HARD-GATE leaf: Superpowers `dispatching-parallel-agents` → Identify Independent Domains / Focused Agent Tasks / Parallel Dispatch / Review and Integrate only, adapted into `skills/emperor-dispatch/parallel-dispatch-checklist.md` (Chain Jail extract-aspect)
 - Python core `scripts/lib/parallel.py` prints PARALLEL/STEP/MUST card, rejects step skips (`--advance`), hard-gates shared writable scope (`--reject-shared-scope`); thin `parallel.sh` / `parallel.ps1`; `emperor parallel` on bash/ps1/zsh/cmd peers

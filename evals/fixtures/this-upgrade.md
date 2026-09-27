@@ -1,48 +1,47 @@
-# Task Ledger — emperor-time self-application (parallel-dispatch HARD-GATE)
+# Task Ledger — emperor-time self-application (install Python core)
 
-- **Task:** Extract Superpowers `dispatching-parallel-agents` Identify Independent Domains / Focused Agent Tasks / Parallel Dispatch / Review and Integrate as a Chain Jail HARD-GATE leaf under emperor-dispatch: checklist + `scripts/lib/parallel.py` + thin twins + emperor peer + eval/bakeoff locks.
-- **Client quote:** Soft-ET consented Worthy Spend after v0.4.29 subagent-driven. NEXT: close Superpowers dispatching-parallel-agents gap (deferred on the subagent spend). Ship Python core + thin twins + eval + version lockstep.
+- **Task:** Close bash↔ps1 install twin drift by extracting harness deploy into `scripts/lib/install.py` + thin twins; unify dry-run / chain preview / first-run tip; eval + version lockstep.
+- **Client quote:** Soft-ET consented Worthy Spend after v0.4.30 parallel-dispatch. Superpowers method leaves closed on disk. NEXT: crank ET strength — install.py twin unify (deferred on prior spends alongside boot.py / diagnosing-superpowers).
 - **Origin:** assigned
 - **Size:** standard
-- **Governing files:** SKILL.md → emperor-dispatch → parallel-dispatch-checklist.md → parallel.py
-- **Tip at spend:** v0.4.30 (branch `et-manager/parallel-dispatch-hard-gate`)
+- **Governing files:** SKILL.md → scripts/lib/install.py → thin install.sh/install.ps1 → portability.md
+- **Tip at spend:** v0.4.31 (branch `et-manager/install-python-core`)
 
 ## G0
-Quoted ask above. Ambiguity resolved: ship parallel-dispatch HARD-GATE leaf. Skip diagnosing-superpowers / install.py / boot.py / host unify / embeddings / archaeology this turn. Do not re-announce or re-ship #33–#46 leaves.
+Quoted ask above. Ambiguity resolved: ship install.py Python core. Skip diagnosing-superpowers / boot.py / host unify / embeddings / archaeology this turn. Do not re-announce or re-ship #33–#47 leaves.
 
 ## G1 Acceptance criteria
-1. SKILL.md version ≥ 0.4.30 and names five chains + six vows.
-2. `skills/emperor-dispatch/parallel-dispatch-checklist.md` exists with HARD-GATE + When-to-use + Parallel steps; provenance names dispatching-parallel-agents.
-3. `scripts/lib/parallel.py` owns PARALLEL / STEP / MUST card; `--advance` rejects skips; `--reject-shared-scope` exits 1; thin `parallel.sh` / `parallel.ps1`.
-4. `emperor` / `emperor.zsh` / `emperor.ps1` / `emperor.cmd` peer `parallel`.
-5. Plugin/marketplace/SKILL lockstep 0.4.30; extract-aspect + skill-catalog + bakeoff + honesty name the leaf; CHANGELOG has 0.4.30.
-6. Eval locks compile + thin twins + iron token + suite green.
+1. SKILL.md version ≥ 0.4.31 and names five chains + six vows.
+2. `scripts/lib/install.py` owns harness map (claude-code/kimi/codex/opencode/generic-agents), dest resolve, copy set, chain expose, activation tips, dry-run.
+3. Thin `install.sh` / `install.ps1` call install.py; dry-run lists planned chains when `--with-chain-skills`; unknown harness exits non-zero.
+4. First-run tip is host-agnostic (`scripts/emperor dowse`), not `dowse.sh` vs `dowse.ps1`.
+5. Plugin/marketplace/SKILL lockstep 0.4.31; bakeoff + honesty name the leaf; CHANGELOG has 0.4.31.
+6. Eval locks compile + thin twins + dry-run + suite green.
 7. Live defect-rate vs Superpowers stays **UNVERIFIABLE**.
 
 ## Out of scope
 - emperor.py dispatcher / route embeddings
-- heal/excavate/boot/host unify redo / install.py
-- Whole dispatching-parallel-agents or long session examples vendored into always-on prompt
-- Replacing Steal Chain consent / quarantine / capture mechanics
-- Replacing emperor subagent sequential plan path
+- heal/excavate/boot/host unify redo
+- diagnosing-superpowers session diagnosis leaf
+- Whole Superpowers diagnosing skill vendored into always-on prompt
 - Live multi-vendor bake-off numbers
-- Redo of #33–#46 (gate/identify/finish/eval/done/queue/forge/review-pack/dowse/receive/execute/subagent/…)
+- Redo of #33–#47 (gate/identify/finish/eval/done/queue/forge/review-pack/dowse/receive/execute/subagent/parallel/…)
 
 ## G2
-Rejected alternative: boot.py Python core or install.py twin unify.
-Why: prior this-upgrade (v0.4.29) named dispatching-parallel-agents as the deferred companion after subagent-driven; navigation lacked a local-first parallel-domains row.
+Rejected alternative: diagnosing-superpowers HARD-GATE leaf or boot.py Python core.
+Why: Superpowers method leaves are closed; diagnosing needs transcript-discovery infra ET lacks this turn. Install twins already drifted (chain preview order + first-run tip); Python preference + twin-drift remediation pattern.
 
 ## G3
-parallel.py + checklist + thin twins on `et-manager/parallel-dispatch-hard-gate`. See git log.
+install.py + thin twins on `et-manager/install-python-core`. See git log.
 
 ## G4
 Claims:
 
 | Claim | Status | Evidence |
 |---|---|---|
-| SKILL.md is 0.4.30 orchestrator | TESTED | frontmatter `version: 0.4.30` on branch HEAD |
-| parallel --reject-shared-scope hard-gates | TESTED | exit 1 + REJECT SHARED-SCOPE |
-| bash and ps1 thin twins call parallel.py | TESTED | both contain `lib/parallel.py` |
+| SKILL.md is 0.4.31 orchestrator | TESTED | frontmatter `version: 0.4.31` on branch HEAD |
+| install --dry-run prints plan without copy | TESTED | exit 0 + `(dry run - nothing copied)` |
+| bash and ps1 thin twins call install.py | TESTED | both contain `lib/install.py` |
 | Eval suite still green | TESTED | `bash scripts/eval.sh` → EVALS PASSED |
 | Live defect-rate vs Superpowers | UNVERIFIABLE | no shared-task three-vendor bake-off run in this session |
 
@@ -65,4 +64,5 @@ PASS-WITH-CONDITIONS: local mechanism TESTED; live bake-off numbers UNVERIFIABLE
 - CHANGELOG missed 0.4.27 entry on #44; emperor.cmd missed receive peer. Remediation: v0.4.28 hygiene.
 - executing-plans continuous-execution card never extracted after writing-plans/finish. Remediation: execute.py (v0.4.28).
 - subagent-driven-development fresh-subagent / per-task-review card never extracted after executing-plans. Remediation: subagent.py (v0.4.29).
-- dispatching-parallel-agents independent-domains card never extracted after subagent-driven. Remediation: this leaf (v0.4.30).
+- dispatching-parallel-agents independent-domains card never extracted after subagent-driven. Remediation: parallel.py (v0.4.30).
+- bash/ps1 install twins drifted (chain preview order; dowse.sh vs dowse.ps1 tip). Remediation: this leaf (v0.4.31).
