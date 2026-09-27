@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.4.7
+- Heal four-phase leaf: Superpowers `systematic-debugging` → **The Four Phases** only, adapted into `skills/emperor-heal/debug-four-phases.md` (Chain Jail extract-aspect)
+- Python core `scripts/lib/debug_phases.py` prints DEBUG/PHASE/MUST card and rejects phase skips (`--advance`); thin `heal.sh` / `heal.ps1`; `emperor heal` on bash/ps1/zsh/cmd peers
+- Holy Chain router + emperor-heal skill MUST the checklist before proposing fixes; eval locks card + skip rejection
+
 ## 0.4.6
 - MUST-route doctrine bite: Load law + AGENTS.md standing order require one governing skill/file (or `emperor route` / `emperor activate`) before creative work, clarifying questions, or exploring
 - Python-first router: `scripts/lib/route.py` owns matching; `route.sh` / `route.ps1` are thin twins (same exits 0/1/2)

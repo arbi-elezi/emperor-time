@@ -11,11 +11,12 @@
   .\emperor.ps1 identify .
   .\emperor.ps1 route "lost pascal tree"
   .\emperor.ps1 excavate .
+  .\emperor.ps1 heal
 #>
 [CmdletBinding()]
 param(
     [Parameter(Mandatory = $true, Position = 0)]
-    [ValidateSet('done','gate','eval','review-pack','dowse','install','worktree','queue','forge','finish','activate','boot','identify','route','excavate')]
+    [ValidateSet('done','gate','eval','review-pack','dowse','install','worktree','queue','forge','finish','activate','boot','identify','route','heal','excavate')]
     [string]$Tool,
     [Parameter(ValueFromRemainingArguments = $true)]
     [string[]]$ToolArgs

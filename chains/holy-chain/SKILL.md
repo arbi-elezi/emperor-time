@@ -35,7 +35,9 @@ actions past the first wound.
 | The *process* broke: skipped gate, bad agent-merge, delivered falsehood, derailed loop | `process-healing.md` |
 
 Code wounds run the sequence: `triage.md` → `reproduce-and-bisect.md` →
-`heal-and-verify.md`. Process wounds go straight to `process-healing.md`
+`heal-and-verify.md`. Before proposing fixes, the heal entry MUST run the four-phase checklist
+(`skills/emperor-heal/debug-four-phases.md` / `scripts/emperor heal`) —
+Chain Jail leaf; Superpowers systematic-debugging whole skill stays out. Process wounds go straight to `process-healing.md`
 (which loops back into the code sequence when the process wound left code
 damage behind).
 
