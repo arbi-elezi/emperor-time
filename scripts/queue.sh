@@ -6,29 +6,64 @@ ROOT="$(cd "$(dirname "$0")/.." && pwd)"
 CMD="${1:-next}"
 QUEUE="${EMPEROR_QUEUE_FILE:-$ROOT/.emperor/queue.md}"
 mkdir -p "$(dirname "$QUEUE")"
-[[ -f "$QUEUE" ]] || printf '# Emperor queue\n# WIP=1 — one [~] active at a time. Statuses: [ ] ready · [~] active · [x] done · [!] blocked\n\n- [ ] (empty — add a line or connect gh/Linear)\n' > "$QUEUE"
+[[ -f "$QUEUE" ]] || printf '%s\n' \
+  '# Emperor queue' \
+  '# WIP=1 — one [~] active at a time. Statuses: [ ] ready · [~] active · [x] done · [!] blocked' \
+  '#' \
+  '# Empty — add: - [ ] <task>  (or connect gh/Linear). Placeholder/parentheses-empty lines are ignored.' \
+  '' \
+  'Local backlog when GitHub issues / Linear are not connected.' \
+  > "$QUEUE"
 
-# Incomplete local rows: ready, active, blocked (not done).
+# True when a checkbox line is an empty-queue placeholder, not real work.
+# Matches: "(empty…)", bare "- [ ]", or parentheses-only titles like "- [ ] (…)" .
+is_placeholder() {
+  local line="$1"
+  [[ "$line" == *'(empty'* ]] && return 0
+  [[ "$line" =~ ^-\ \[[\ ~!]\]\ *$ ]] && return 0
+  [[ "$line" =~ ^-\ \[[\ ~!]\]\ +\(.*\)\ *$ ]] && return 0
+  return 1
+}
+
+# Incomplete local rows: ready, active, blocked (not done). Skips placeholders.
 list_open() {
-  grep -E '^- \[([ ~!])\]' "$QUEUE" 2>/dev/null || true
+  local line
+  while IFS= read -r line || [[ -n "$line" ]]; do
+    is_placeholder "$line" && continue
+    printf '%s\n' "$line"
+  done < <(grep -E '^- \[([ ~!])\]' "$QUEUE" 2>/dev/null || true)
 }
 
 list_ready() {
-  grep -E '^- \[ \]' "$QUEUE" 2>/dev/null || true
+  local line
+  while IFS= read -r line || [[ -n "$line" ]]; do
+    is_placeholder "$line" && continue
+    printf '%s\n' "$line"
+  done < <(grep -E '^- \[ \]' "$QUEUE" 2>/dev/null || true)
 }
 
 list_active() {
-  grep -E '^- \[~\]' "$QUEUE" 2>/dev/null || true
+  local line
+  while IFS= read -r line || [[ -n "$line" ]]; do
+    is_placeholder "$line" && continue
+    printf '%s\n' "$line"
+  done < <(grep -E '^- \[~\]' "$QUEUE" 2>/dev/null || true)
 }
 
 promote_first_ready() {
-  # Promote first non-empty [ ] → [~]. Prints the new active line on stdout.
+  # Promote first non-placeholder [ ] → [~]. Prints the new active line on stdout.
   local tmp out
   tmp=$(mktemp)
   out=$(mktemp)
   awk '
+    function is_ph(s) {
+      if (s ~ /\(empty/) return 1
+      if (s ~ /^- \[[ ~!]\] *$/) return 1
+      if (s ~ /^- \[[ ~!]\] +\(.*\) *$/) return 1
+      return 0
+    }
     BEGIN { promoted = 0 }
-    /^- \[ \]/ && !/\(empty/ && !promoted {
+    /^- \[ \]/ && !is_ph($0) && !promoted {
       sub(/^- \[ \]/, "- [~]")
       promoted = 1
       print > outf
@@ -78,7 +113,7 @@ case "$CMD" in
       exit 0
     fi
     item=$(list_ready | head -n1 || true)
-    if [[ -n "${item:-}" && "$item" != *'(empty'* ]]; then
+    if [[ -n "${item:-}" ]]; then
       promoted=$(promote_first_ready) || true
       if [[ -n "${promoted:-}" ]]; then
         echo "NEXT local: $promoted"
