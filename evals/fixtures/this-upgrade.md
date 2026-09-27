@@ -1,22 +1,22 @@
-# Task Ledger — emperor-time self-application (Erlang archaeology Jail pin)
+# Task Ledger — emperor-time self-application (REXX archaeology Jail pin)
 
-- **Task:** Add Erlang archaeology Jail pin leaf (eleventh language after pas/asm/cbl/f90/vhd/ada/fs/lisp/prolog/tcl): lost-erl fixture + escript probe + manual pin + identify/route/eval/honesty lockstep. Fossils `*.erl` / `*.hrl`.
-- **Client quote:** Soft-ET consented Worthy Spend after v0.4.51 Tcl archaeology. Writing-skills Superpowers leaves exhausted; systematic-debugging leaves stay closed. Ship Erlang archaeology leaf (v0.4.52) — ET strength crank (language-agnostic peers + next classic lost-tree language). Chain Jail leaf only; do not vendor foreign whole skills.
+- **Task:** Add REXX archaeology Jail pin leaf (twelfth language after pas/asm/cbl/f90/vhd/ada/fs/lisp/prolog/tcl/erlang): lost-rex fixture + Regina probe + manual pin + identify/route/eval/honesty lockstep. Fossils `*.rex` / `*.rexx`.
+- **Client quote:** Soft-ET consented Worthy Spend after v0.4.52 Erlang archaeology. Writing-skills Superpowers leaves exhausted; systematic-debugging leaves stay closed. Ship REXX archaeology leaf (v0.4.53) — ET strength crank (language-agnostic peers + next classic lost-tree language named after Erlang). Chain Jail leaf only; do not vendor foreign whole skills.
 - **Origin:** assigned
 - **Size:** standard
-- **Governing files:** SKILL.md → archaeology.md → archaeology-erlang-manual.md → identify.py → route/triggers → eval
-- **Tip at spend:** v0.4.52 (branch `et-manager/archaeology-erlang`)
+- **Governing files:** SKILL.md → archaeology.md → archaeology-rexx-manual.md → identify.py → route/triggers → eval
+- **Tip at spend:** v0.4.53 (branch `et-manager/archaeology-rexx`)
 
 ## G0
-Quoted ask above. Ambiguity resolved: ship Erlang archaeology Jail pin only. Skip embeddings, emperor.py dispatcher, writing-skills dumps, systematic-debugging leaves, other Superpowers leaves this turn. Do not re-announce or re-ship #33–#68 leaves.
+Quoted ask above. Ambiguity resolved: ship REXX archaeology Jail pin only. Skip embeddings, emperor.py dispatcher, writing-skills dumps, systematic-debugging leaves, other Superpowers leaves this turn. Do not re-announce or re-ship #33–#69 leaves.
 
 ## G1 Acceptance criteria
-1. SKILL.md version ≥ 0.4.52; `evals/fixtures/lost-erl/HELLO.ERL` exists with PROBE.md / README.md / identify-smoke.txt.
-2. Jail pin `references/archaeology-erlang-manual.md` cites escript main/1 (URL + access date 2026-09-28 Europe/Tirane + quote).
-3. `identify.py` fossils include `*.erl` / `*.hrl`; identify on lost-erl finds `*.erl`.
-4. Route triggers include escript/erlc/.erl/.hrl + space-padded erlang → excavate; `route.py` matches.
-5. Catalog + SKILL.md + archaeology.md + language-agnostic.md link the eleventh pin; bakeoff + honesty name lost-erl.
-6. Plugin/marketplace/SKILL lockstep 0.4.52; CHANGELOG has 0.4.52.
+1. SKILL.md version ≥ 0.4.53; `evals/fixtures/lost-rex/HELLO.REX` exists with PROBE.md / README.md / identify-smoke.txt.
+2. Jail pin `references/archaeology-rexx-manual.md` cites Classic Rexx SAY (URL + access date 2026-09-28 Europe/Tirane + quote).
+3. `identify.py` fossils include `*.rex` / `*.rexx`; identify on lost-rex finds `*.rex`.
+4. Route triggers include regina/.rex/.rexx + space-padded rexx → excavate; `route.py` matches.
+5. Catalog + SKILL.md + archaeology.md + language-agnostic.md link the twelfth pin; bakeoff + honesty name lost-rex.
+6. Plugin/marketplace/SKILL lockstep 0.4.53; CHANGELOG has 0.4.53.
 7. Eval locks new files/version/triggers; suite green.
 8. Live defect-rate vs Superpowers stays **UNVERIFIABLE**.
 
@@ -28,11 +28,11 @@ Quoted ask above. Ambiguity resolved: ship Erlang archaeology Jail pin only. Ski
 - Other people's PRs
 - Another Superpowers HARD-GATE this turn
 - Live multi-vendor bake-off numbers
-- OTP gen_server / release / Elixir claims beyond escript string-print probe
-- Redo of #33–#68
+- ooRexx / NetRexx / ADDRESS host claims beyond SAY string-print probe
+- Redo of #33–#69
 
 ## G2
-Rejected alternative: vendor whole Erlang / OTP skill under skills/.
+Rejected alternative: vendor whole REXX skill under skills/.
 Why: standing rule — Chain Jail leaf only (fixture + one manual heading + route/identify locks).
 
 Rejected alternative: emperor.py unified dispatcher.
@@ -44,25 +44,25 @@ Why: writing-skills Superpowers leaves already marked complete (authoring + test
 Rejected alternative: another systematic-debugging leaf.
 Why: standing memory — systematic-debugging leaves stay closed.
 
-Rejected alternative: bare substring `erl` as the only route pattern without word-boundary / longer peers.
-Why: short-token word-boundary already protects Perl; prefer `escript` / `erlc` / `.erl` / `erlang` as primary excavate triggers. Fossils `*.erl` / `*.hrl` suffice.
+Rejected alternative: bare English keyword `say` as a route pattern.
+Why: English-word collision (same class as bare `wish` refused for Tcl); prefer `regina` / `.rex` / `.rexx` / space-intent `rexx`. Fossils `*.rex` / `*.rexx` suffice.
 
-Rejected alternative: REXX archaeology this turn.
-Why: Erlang OTP lost-telecom trees are the next classic peer after Tcl; REXX remains a future pin candidate.
+Rejected alternative: Modula-2 / ALGOL archaeology this turn.
+Why: REXX was the named next classic peer after Erlang in the prior ledger; other vintage pins remain future candidates.
 
 ## G3
-lost-erl fixture + archaeology-erlang-manual.md + identify/route/eval/honesty/bakeoff lockstep on `et-manager/archaeology-erlang`. See git log. Prior leaves retained: dowse.py (v0.4.26), install.py (v0.4.31), boot.py (v0.4.32), worktree.py (v0.4.33), excavate (v0.4.34), session_discovery.py (v0.4.36), diagnose.py (v0.4.37), lost-ada (v0.4.38), root_cause.py (v0.4.39), defense.py (v0.4.40), condition_wait.py (v0.4.41), polluter.py (v0.4.42), pressure.py (v0.4.43), good_tests.py (v0.4.44), skill_test.py (v0.4.45), persuasion.py (v0.4.46), sdo.py (v0.4.47), lost-fs (v0.4.48), lost-lisp (v0.4.49), lost-prolog (v0.4.50), lost-tcl (v0.4.51).
+lost-rex fixture + archaeology-rexx-manual.md + identify/route/eval/honesty/bakeoff lockstep on `et-manager/archaeology-rexx`. See git log. Prior leaves retained: dowse.py (v0.4.26), install.py (v0.4.31), boot.py (v0.4.32), worktree.py (v0.4.33), excavate (v0.4.34), session_discovery.py (v0.4.36), diagnose.py (v0.4.37), lost-ada (v0.4.38), root_cause.py (v0.4.39), defense.py (v0.4.40), condition_wait.py (v0.4.41), polluter.py (v0.4.42), pressure.py (v0.4.43), good_tests.py (v0.4.44), skill_test.py (v0.4.45), persuasion.py (v0.4.46), sdo.py (v0.4.47), lost-fs (v0.4.48), lost-lisp (v0.4.49), lost-prolog (v0.4.50), lost-tcl (v0.4.51), lost-erl (v0.4.52).
 
 ## G4
 Claims:
 
 | Claim | Status | Evidence |
 |---|---|---|
-| SKILL.md is 0.4.52 orchestrator | TESTED | frontmatter `version: 0.4.52` on branch HEAD |
-| HELLO.ERL runs under OTP 27 | TESTED | PROBE.md quotes `EMPEROR-TIME-ERL-PROBE-OK` |
-| identify finds `*.erl` on lost-erl | TESTED | identify-smoke.txt + eval lock |
-| Route escript/.erl → excavate | TESTED | route.py + triggers.json |
-| Jail pin cites escript main/1 | TESTED | archaeology-erlang-manual.md URL + 2026-09-28 |
+| SKILL.md is 0.4.53 orchestrator | TESTED | frontmatter `version: 0.4.53` on branch HEAD |
+| HELLO.REX runs under Regina 3.9.5 | TESTED | PROBE.md quotes `EMPEROR-TIME-REX-PROBE-OK` |
+| identify finds `*.rex` on lost-rex | TESTED | identify-smoke.txt + eval lock |
+| Route regina/.rex → excavate | TESTED | route.py + triggers.json |
+| Jail pin cites Classic Rexx SAY | TESTED | archaeology-rexx-manual.md URL + 2026-09-28 |
 | Eval suite still green | TESTED | `bash scripts/eval.sh` → EVALS PASSED |
 | Live defect-rate vs Superpowers | UNVERIFIABLE | no shared-task three-vendor bake-off run in this session |
 
@@ -91,4 +91,5 @@ PASS-WITH-CONDITIONS: local mechanism TESTED; live bake-off defect-rate stays UN
 - classic lost-tree peer Common Lisp still lacked `.lisp`/`.lsp`/`.cl` fixture, Jail pin, route triggers, or eval lock after seven prior language pins. Remediation: v0.4.49.
 - classic lost-tree peer Prolog still lacked `.pro`/`.prolog` fixture, Jail pin, route triggers, or eval lock after eight prior language pins (and `*.pl` was correctly refused for Perl collision). Remediation: v0.4.50.
 - classic lost-tree peer Tcl still lacked `.tcl`/`.tk` fixture, Jail pin, route triggers, or eval lock after nine prior language pins (and bare `wish` was correctly refused for English-word collision). Remediation: v0.4.51.
-- classic lost-tree peer Erlang still lacked `.erl`/`.hrl` fixture, Jail pin, route triggers, or eval lock after ten prior language pins (prefer `escript`/`erlc`/`erlang` over bare `erl`-only; Perl word-bounded). Remediation: this leaf (v0.4.52).
+- classic lost-tree peer Erlang still lacked `.erl`/`.hrl` fixture, Jail pin, route triggers, or eval lock after ten prior language pins (prefer `escript`/`erlc`/`erlang` over bare `erl`-only; Perl word-bounded). Remediation: v0.4.52.
+- classic lost-tree peer REXX still lacked `.rex`/`.rexx` fixture, Jail pin, route triggers, or eval lock after eleven prior language pins (prefer `regina`/`.rex`/`.rexx`/space-intent `rexx`; bare English `say` refused). Remediation: this leaf (v0.4.53).

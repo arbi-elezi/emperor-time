@@ -1,0 +1,10 @@
+== identify evals/fixtures/lost-rex ==
+-- extensions --
+      2 md
+      1 txt
+      1 rex
+-- named fossils --
+1 *.rex
+-- shebangs --
+evals/fixtures/lost-rex/HELLO.REX: #!/usr/bin/env rexx
+identify: done (read-only)
