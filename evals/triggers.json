@@ -255,16 +255,23 @@
         "write a plan",
         "work order",
         "require design",
-        "design before code"
+        "design before code",
+        "brainstorm",
+        "grill the design",
+        "questions before code",
+        "socratic design"
       ],
       "tags": [
         "design",
         "g1",
         "g2",
-        "work-order"
+        "work-order",
+        "brainstorm",
+        "grill",
+        "socratic"
       ],
       "target": "skills/emperor-require-design/SKILL.md",
-      "reason": "after G0, before code \u2014 write work-order"
+      "reason": "after G0, before code \u2014 grill HARD-GATE then work-order"
     },
     {
       "id": "worktree",

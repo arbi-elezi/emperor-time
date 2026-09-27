@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.4.8
+- Grill/brainstorm leaf: Superpowers `brainstorming` → **HARD-GATE** only, adapted into `skills/emperor-require-design/grill-checklist.md` (Chain Jail extract-aspect)
+- Python core `scripts/lib/grill.py` prints GRILL/STEP/MUST card, rejects step skips (`--advance`), hard-gates impl jumps (`--reject-impl`); thin `grill.sh` / `grill.ps1`; `emperor grill` on bash/ps1/zsh/cmd peers
+- require-design MUST the checklist before BUILD; eval locks card + skip rejection + reject-impl
+
 ## 0.4.7
 - Heal four-phase leaf: Superpowers `systematic-debugging` → **The Four Phases** only, adapted into `skills/emperor-heal/debug-four-phases.md` (Chain Jail extract-aspect)
 - Python core `scripts/lib/debug_phases.py` prints DEBUG/PHASE/MUST card and rejects phase skips (`--advance`); thin `heal.sh` / `heal.ps1`; `emperor heal` on bash/ps1/zsh/cmd peers
