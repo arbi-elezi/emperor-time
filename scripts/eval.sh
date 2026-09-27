@@ -41,7 +41,7 @@ for c in "Dowsing Chain" "Chain Jail" "Judgment Chain" "Steal Chain" "Holy Chain
 done
 
 echo "== twins =="
-for pair in "done" gate eval review-pack dowse install worktree queue forge finish activate identify boot route excavate; do
+for pair in "done" gate eval review-pack dowse install worktree queue forge finish activate identify boot route excavate heal; do
   need "scripts/${pair}.sh"
   need "scripts/${pair}.ps1"
 done
@@ -252,6 +252,38 @@ grep -q 'scripts/lib/route.py' "$ROOT/references/sdlc-comparison.md" \
   || { echo "EVAL FAIL: sdlc-comparison missing route.py"; fail=1; }
 grep -q 'eval.yml' "$ROOT/references/sdlc-comparison.md" \
   || { echo "EVAL FAIL: sdlc-comparison missing eval.yml honesty"; fail=1; }
+
+
+echo "== heal four-phase debug leaf =="
+need "skills/emperor-heal/debug-four-phases.md"
+need "scripts/lib/debug_phases.py"
+need "scripts/heal.sh"
+need "scripts/heal.ps1"
+bash -n "$ROOT/scripts/heal.sh" || { echo "EVAL FAIL: heal.sh syntax"; fail=1; }
+python3 -m py_compile "$ROOT/scripts/lib/debug_phases.py" || { echo "EVAL FAIL: debug_phases.py compile"; fail=1; }
+grep -q 'debug_phases.py' "$ROOT/scripts/heal.sh" || { echo "EVAL FAIL: heal.sh does not call debug_phases.py"; fail=1; }
+grep -q 'debug_phases.py' "$ROOT/scripts/heal.ps1" || { echo "EVAL FAIL: heal.ps1 does not call debug_phases.py"; fail=1; }
+grep -q 'heal|' "$ROOT/scripts/emperor" || { echo "EVAL FAIL: emperor bash missing heal"; fail=1; }
+grep -q "'heal'" "$ROOT/scripts/emperor.ps1" || { echo "EVAL FAIL: emperor.ps1 missing heal"; fail=1; }
+grep -q 'debug-four-phases.md' "$ROOT/skills/emperor-heal/SKILL.md" || { echo "EVAL FAIL: heal skill missing four-phase leaf"; fail=1; }
+grep -q 'The Four Phases' "$ROOT/skills/emperor-heal/debug-four-phases.md" || { echo "EVAL FAIL: four-phase leaf missing provenance heading"; fail=1; }
+grep -q 'systematic-debugging' "$ROOT/skills/emperor-heal/debug-four-phases.md" || { echo "EVAL FAIL: four-phase leaf missing source skill"; fail=1; }
+grep -q 'debug-four-phases.md' "$ROOT/chains/holy-chain/SKILL.md" || { echo "EVAL FAIL: holy-chain missing four-phase MUST"; fail=1; }
+HEAL_OUT=$(python3 "$ROOT/scripts/lib/debug_phases.py" 2>&1) || true
+echo "$HEAL_OUT" | grep -q '^DEBUG four_phases=yes' || { echo "EVAL FAIL: debug_phases missing four_phases=yes"; fail=1; }
+echo "$HEAL_OUT" | grep -q '^PHASE 1 ' || { echo "EVAL FAIL: debug_phases missing PHASE 1"; fail=1; }
+echo "$HEAL_OUT" | grep -q '^PHASE 4 ' || { echo "EVAL FAIL: debug_phases missing PHASE 4"; fail=1; }
+echo "$HEAL_OUT" | grep -q '^MUST:' || { echo "EVAL FAIL: debug_phases missing MUST line"; fail=1; }
+if python3 "$ROOT/scripts/lib/debug_phases.py" --advance 1 3 >/dev/null 2>&1; then
+  echo "EVAL FAIL: debug_phases should reject phase skip 1→3"
+  fail=1
+else
+  echo "EVAL PASS: debug_phases rejects skip 1→3"
+fi
+ADV_OK=$(python3 "$ROOT/scripts/lib/debug_phases.py" --advance 2 3 2>&1) || true
+echo "$ADV_OK" | grep -q '^ADVANCE OK' || { echo "EVAL FAIL: debug_phases 2→3 should OK"; fail=1; }
+HEAL_SH=$(bash "$ROOT/scripts/heal.sh" 2>&1) || true
+echo "$HEAL_SH" | grep -q '^DEBUG four_phases=yes' || { echo "EVAL FAIL: heal.sh missing four_phases card"; fail=1; }
 
 if [[ "$fail" -ne 0 ]]; then
   echo "EVALS FAILED"
