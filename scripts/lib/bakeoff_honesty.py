@@ -47,6 +47,7 @@ LEAVES: list[tuple[str, str, tuple[str, ...]]] = [
     ("arch-pas", "evals/fixtures/lost-pas/HELLO.PAS", ("lost-pas",)),
     ("arch-asm", "evals/fixtures/lost-asm/FOO.ASM", ("lost-asm",)),
     ("arch-cbl", "evals/fixtures/lost-cbl/HELLO.CBL", ("lost-cbl",)),
+    ("arch-f90", "evals/fixtures/lost-f90/HELLO.F90", ("lost-f90",)),
 ]
 
 BAKEOFF = Path("evals/bakeoff.md")
