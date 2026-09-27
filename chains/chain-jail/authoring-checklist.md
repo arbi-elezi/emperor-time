@@ -5,12 +5,13 @@
 - source-hash: sha256:bbdfe742f853562e643a3d40d64476359d47881e39cef80a189283fa26d11ab9
 - heading: "The Iron Law (Same as TDD)" (+ RED-GREEN-REFACTOR for Skills cycle only)
 - license: MIT
-- issue-context: authoring.md had doctrine (description-first, body procedure, trial) but no enforceable baseline-before-write script path; Chain Jail extract-aspect names Iron Law / skill RGR only (not whole writing-skills, not SDO essay, not persuasion-principles, not graphviz companion, not anthropic-best-practices dump; testing-skills-with-subagents is a sibling leaf (`testing-skills.md`))
+- issue-context: authoring.md had doctrine (description-first, body procedure, trial) but no enforceable baseline-before-write script path; Chain Jail extract-aspect names Iron Law / skill RGR only (not whole writing-skills, not SDO essay, not whole writing-skills graphviz companion, not anthropic-best-practices dump; testing-skills-with-subagents is a sibling leaf (`testing-skills.md`); persuasion-principles is a sibling leaf (`persuasion-principles.md`))
 
 **Contract:** before writing or editing a skill under Chain Jail authoring (or capture→author path), complete the skill RGR cycle. No skill body without a failing baseline first. Emperor Time stays the orchestrator via Chain Jail `authoring.md` + emperor-capture; do **not** announce or load whole `writing-skills`.
 
 Mechanical card: `scripts/emperor author` (Python: `scripts/lib/author.py`).
 Companion for pressure-testing skills: `chains/chain-jail/testing-skills.md` + `scripts/emperor skill-test`.
+Companion for critical-practice wording: `chains/chain-jail/persuasion-principles.md` + `scripts/emperor persuasion`.
 
 ## HARD-GATE — The Iron Law
 

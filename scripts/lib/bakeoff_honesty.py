@@ -143,6 +143,11 @@ LEAVES: list[tuple[str, str, tuple[str, ...]]] = [
         "scripts/lib/skill_test.py",
         ("skill_test.py", "skill-test"),
     ),
+    (
+        "persuasion-principles",
+        "scripts/lib/persuasion.py",
+        ("persuasion.py", "persuasion"),
+    ),
 ]
 
 

@@ -22,8 +22,12 @@ metadata:
    open `chains/chain-jail/testing-skills.md` and/or run
    `scripts/emperor skill-test` (HARD-GATE: combined pressure + watch baseline
    FAIL). Academic-only → `scripts/emperor skill-test --reject-academic-only`.
-5. **Pin + consent + trial are mandatory** before the captured skill may fire:
+5. **Persuasion-principles companion:** when wording critical / discipline
+   practices, open `chains/chain-jail/persuasion-principles.md` and/or run
+   `scripts/emperor persuasion` (HARD-GATE: Authority + Commitment + boost).
+   Hedge language → `scripts/emperor persuasion --reject-hedge`.
+6. **Pin + consent + trial are mandatory** before the captured skill may fire:
    read `chains/chain-jail/pin-and-consent.md` then `trial-and-register.md`.
-6. Captured skills live in `.emperor/captured-skills/` with provenance headers.
-7. A captured skill that fails trial stays quarantined. Using it is a Vow of
+7. Captured skills live in `.emperor/captured-skills/` with provenance headers.
+8. A captured skill that fails trial stays quarantined. Using it is a Vow of
    Evidence + Vow of Consent breach.

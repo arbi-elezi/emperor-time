@@ -2030,9 +2030,11 @@ def run_evals(root: Path) -> int:
     h.require_contains("good_tests.py", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing good_tests.py")
     h.require_contains("skill_test.py", "evals/bakeoff.md", "bakeoff.md missing skill_test.py inventory")
     h.require_contains("skill_test.py", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing skill_test.py")
-    h.require_contains("0.4.45", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing 0.4.45 tip")
-    h.require_contains("0.4.45", ".claude-plugin/plugin.json", "plugin.json not at 0.4.45")
-    h.require_contains("0.4.45", "CHANGELOG.md", "CHANGELOG missing 0.4.45")
+    h.require_contains("persuasion.py", "evals/bakeoff.md", "bakeoff.md missing persuasion.py inventory")
+    h.require_contains("persuasion.py", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing persuasion.py")
+    h.require_contains("0.4.46", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing 0.4.46 tip")
+    h.require_contains("0.4.46", ".claude-plugin/plugin.json", "plugin.json not at 0.4.46")
+    h.require_contains("0.4.46", "CHANGELOG.md", "CHANGELOG missing 0.4.46")
 
     # session-discovery
     h.section("session-discovery locate HARD-GATE leaf")
@@ -3342,6 +3344,163 @@ def run_evals(root: Path) -> int:
         h.fail_msg("route.py testing skills with subagents → capture")
     else:
         h.pass_msg("route.py testing skills with subagents → emperor-capture")
+
+
+    # persuasion-principles HARD-GATE
+    h.section("persuasion-principles HARD-GATE leaf")
+    h.need("chains/chain-jail/persuasion-principles.md")
+    h.need("references/persuasion-principles.md")
+    h.need("scripts/lib/persuasion.py")
+    h.need("scripts/persuasion.sh")
+    h.need("scripts/persuasion.ps1")
+    h.bash_n("scripts/persuasion.sh", "persuasion.sh syntax")
+    h.py_compile("scripts/lib/persuasion.py", "persuasion.py compile")
+    h.require_contains(
+        "persuasion.py",
+        "scripts/persuasion.sh",
+        "persuasion.sh does not call persuasion.py",
+    )
+    h.require_contains(
+        "persuasion.py",
+        "scripts/persuasion.ps1",
+        "persuasion.ps1 does not call persuasion.py",
+    )
+    h.require_contains(
+        "persuasion",
+        "scripts/emperor",
+        "emperor bash missing persuasion",
+    )
+    h.require_contains(
+        "'persuasion'",
+        "scripts/emperor.ps1",
+        "emperor.ps1 missing persuasion",
+    )
+    h.require_contains(
+        "persuasion",
+        "scripts/emperor.cmd",
+        "emperor.cmd missing persuasion",
+    )
+    h.require_contains(
+        "persuasion",
+        "scripts/emperor.zsh",
+        "emperor.zsh missing persuasion",
+    )
+    h.require_contains(
+        "persuasion-principles.md",
+        "skills/emperor-capture/SKILL.md",
+        "emperor-capture missing persuasion-principles leaf",
+    )
+    h.require_contains(
+        "persuasion-principles.md",
+        "chains/chain-jail/authoring-checklist.md",
+        "authoring-checklist missing persuasion companion",
+    )
+    h.require_contains(
+        "HARD-GATE",
+        "chains/chain-jail/persuasion-principles.md",
+        "persuasion leaf missing HARD-GATE heading",
+    )
+    h.require_contains(
+        "writing-skills",
+        "chains/chain-jail/persuasion-principles.md",
+        "persuasion leaf missing source skill",
+    )
+    h.require_contains(
+        "persuasion-principles.md",
+        "chains/chain-jail/persuasion-principles.md",
+        "persuasion leaf missing source file cite",
+    )
+    h.require_contains(
+        "obra/superpowers",
+        "references/persuasion-principles.md",
+        "persuasion reference missing obra/superpowers cite",
+    )
+    h.require_contains(
+        "2026-09-27",
+        "references/persuasion-principles.md",
+        "persuasion reference missing access date",
+    )
+    h.require_contains(
+        "a51bc9bf75189ea73a27b3fb504a2fdfdb966fb1f7f1cdf03203230a216ccc03",
+        "references/persuasion-principles.md",
+        "persuasion reference missing sha256",
+    )
+    h.require_contains(
+        "CRITICAL PRACTICE USES PERSUASION",
+        "chains/chain-jail/persuasion-principles.md",
+        "persuasion leaf missing iron law text",
+    )
+    h.require_contains(
+        "persuasion principles",
+        "evals/triggers.json",
+        "triggers missing persuasion principles phrase",
+    )
+    h.require_contains(
+        "hedged skill language",
+        "evals/triggers.json",
+        "triggers missing hedged skill language phrase",
+    )
+    h.require_contains(
+        "persuasion-principles.md",
+        "chains/chain-jail/extract-aspect.md",
+        "extract-aspect missing persuasion-principles leaf",
+    )
+    _, pe_out = h.run_py("scripts/lib/persuasion.py")
+    if not re.search(r"^PERSUADE checklist=yes", pe_out, re.M):
+        h.fail_msg("persuasion missing checklist=yes")
+    if not re.search(r"^PRIN \d+ id=", pe_out, re.M):
+        h.fail_msg("persuasion missing PRIN line")
+    if not re.search(r"^MUST:", pe_out, re.M):
+        h.fail_msg("persuasion missing MUST line")
+    if not re.search(r"^GATE rule=", pe_out, re.M):
+        h.fail_msg("persuasion missing GATE line")
+    if "CRITICAL_PRACTICE_USES_PERSUASION" not in pe_out:
+        h.fail_msg("persuasion missing iron law token")
+    rc, _ = h.run_py("scripts/lib/persuasion.py", "--reject-hedge")
+    if rc == 0:
+        h.fail_msg("persuasion --reject-hedge should exit non-zero")
+    else:
+        _, reject = h.run_py("scripts/lib/persuasion.py", "--reject-hedge")
+        if not re.search(r"^REJECT HEDGE:", reject, re.M):
+            h.fail_msg("reject-hedge missing REJECT line")
+        else:
+            h.pass_msg("persuasion --reject-hedge hard-gates")
+    rc, _ = h.run_py("scripts/lib/persuasion.py", "--reject-optional")
+    if rc == 0:
+        h.fail_msg("persuasion --reject-optional should exit non-zero")
+    else:
+        _, reject = h.run_py("scripts/lib/persuasion.py", "--reject-optional")
+        if not re.search(r"^REJECT OPTIONAL:", reject, re.M):
+            h.fail_msg("reject-optional missing REJECT line")
+        else:
+            h.pass_msg("persuasion --reject-optional hard-gates")
+    rc, pe_ok = h.run_py(
+        "scripts/lib/persuasion.py",
+        "--check-persuasion",
+        "YOU MUST announce skill usage. Choose A, B, or C. Before proceeding "
+        "every time.",
+    )
+    if rc != 0 or "PERSUADE OK:" not in pe_ok:
+        h.fail_msg("persuasion --check-persuasion should accept persuasion answers")
+    else:
+        h.pass_msg("persuasion --check-persuasion accepts persuasion answers")
+    rc, pe_bad = h.run_py(
+        "scripts/lib/persuasion.py",
+        "--check-persuasion",
+        "consider writing tests when feasible",
+    )
+    if rc == 0 or "PERSUADE FAIL:" not in pe_bad:
+        h.fail_msg("persuasion --check-persuasion should reject hedge claim")
+    else:
+        h.pass_msg("persuasion --check-persuasion rejects hedge claim")
+    _, pe_sh = h.run_sh("scripts/persuasion.sh")
+    if not re.search(r"^PERSUADE checklist=yes", pe_sh, re.M):
+        h.fail_msg("persuasion.sh missing checklist card")
+    _, rout_pe = h.run_py("scripts/lib/route.py", "persuasion principles")
+    if "emperor-capture" not in rout_pe:
+        h.fail_msg("route.py persuasion principles → capture")
+    else:
+        h.pass_msg("route.py persuasion principles → emperor-capture")
 
 
 

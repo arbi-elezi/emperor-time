@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.4.46
+- Persuasion-principles HARD-GATE leaf: `scripts/lib/persuasion.py` prints PERSUADE / PRIN / GATE / MUST card (Authority / Commitment / Scarcity / Social Proof / Unity / Reciprocity / Liking)
+- Thin `persuasion.sh` / `persuasion.ps1`; emperor peers gain `persuasion`; `--reject-hedge` / `--reject-optional` HARD-GATEs; `--check-persuasion` validator (authority + commitment plus scarcity / social-proof / unity signals)
+- Skill leaf `chains/chain-jail/persuasion-principles.md` + `references/persuasion-principles.md` cite obra/superpowers writing-skills persuasion-principles.md (URL + 2026-09-27 + sha256); Chain Jail extract-aspect + authoring companion + capture SKILL + catalog lockstep
+- Route/triggers → emperor-capture; bakeoff + honesty inventory; plugin/marketplace/SKILL at 0.4.46
+
 ## 0.4.45
 - Testing-skills HARD-GATE leaf: `scripts/lib/skill_test.py` prints SKILLTEST / PRIN / GATE / MUST card (combined pressure / watch baseline fail / verbatim rationalizations / explicit negation / stay green)
 - Thin `skill-test.sh` / `skill-test.ps1`; emperor peers gain `skill-test`; `--reject-academic-only` / `--reject-skip-red` HARD-GATEs; `--check-pressure-baseline` validator (combined-pressure + watch-baseline / verbatim / explicit-negation / stay-green signals)

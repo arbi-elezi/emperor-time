@@ -41,5 +41,5 @@ verbatim / explicit-negation / stay-green.
 
 - Whole `writing-skills` skill vendoring
 - Authoring iron-law / skill RGR (sibling leaf `authoring-checklist.md`)
-- Persuasion-principles / graphviz / anthropic-best-practices dumps
+- Persuasion-principles (sibling leaf `persuasion-principles.md`) / graphviz / anthropic-best-practices dumps
 - embeddings / emperor.py dispatcher
