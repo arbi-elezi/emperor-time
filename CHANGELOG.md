@@ -4,6 +4,7 @@
 - Verification-before-completion / evidence HARD-GATE leaf: Superpowers `verification-before-completion` → **The Iron Law** + **The Gate Function** only, adapted into `skills/emperor-verify/verification-checklist.md` (Chain Jail extract-aspect)
 - Python core `scripts/lib/evidence.py` prints EVIDENCE/STEP/MUST card, rejects step skips (`--advance`), hard-gates unverified completion claims (`--reject-unverified`); thin `evidence.sh` / `evidence.ps1`; `emperor evidence` on bash/ps1/zsh/cmd peers
 - emperor-verify MUST the checklist before any completion / pass / fixed / done claim; catalog + navigation point local-first; eval locks card + skip rejection + reject-unverified
+- Honest bake-off refresh: `evals/bakeoff.md` + `evals/fixtures/this-upgrade.md` inventory mechanism/activation/leaf gates (plans, finish, activate/must-route, grill, debug phases, TDD, worktree iso, review, author, evidence, archaeology pas/asm/cbl); local mechanism TESTED/VERIFIED; live defect-rate vs Superpowers UNVERIFIABLE; `scripts/lib/bakeoff_honesty.py` + eval lock — no version bump
 - Plugin, marketplace, and SKILL.md at 0.4.14
 
 ## 0.4.13
