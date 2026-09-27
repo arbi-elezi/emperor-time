@@ -321,6 +321,7 @@ def run_evals(root: Path) -> int:
     h.require_contains("*.adb", "scripts/lib/identify.py", "identify.py missing *.adb fossil")
     h.require_contains("*.fs", "scripts/lib/identify.py", "identify.py missing *.fs fossil")
     h.require_contains("*.lisp", "scripts/lib/identify.py", "identify.py missing *.lisp fossil")
+    h.require_contains("*.pro", "scripts/lib/identify.py", "identify.py missing *.pro fossil")
     h.require_contains(
         "scripts/lib/identify.py",
         "references/archaeology.md",
@@ -380,6 +381,8 @@ def run_evals(root: Path) -> int:
             ("pforth HELLO.FS", "emperor-excavate", "route pforth → excavate"),
             ("hello.lisp", "emperor-excavate", "route hello.lisp → excavate"),
             ("clisp HELLO.LISP", "emperor-excavate", "route clisp → excavate"),
+            ("hello.pro", "emperor-excavate", "route hello.pro → excavate"),
+            ("swipl HELLO.PRO", "emperor-excavate", "route swipl → excavate"),
             ("queue next", "emperor-queue", "route queue next → queue"),
             ("blocked task", "emperor-queue", "route blocked task → queue"),
             ("red build", "emperor-heal", "route red build → heal"),
@@ -540,6 +543,13 @@ def run_evals(root: Path) -> int:
             "HELLO.LISP",
             r"[0-9]+ \*\.lisp",
             ["references/archaeology-lisp-manual.md"],
+        ),
+        (
+            "lost-prolog identify finds *.pro",
+            "lost-prolog",
+            "HELLO.PRO",
+            r"[0-9]+ \*\.pro",
+            ["references/archaeology-prolog-manual.md"],
         ),
     ]
     # The loop above was messy — clear fail state not affected; rewrite cleanly below by
@@ -709,6 +719,9 @@ def run_evals(root: Path) -> int:
     h.require_contains(".lisp", "evals/triggers.json", "triggers missing .lisp excavate pattern")
     h.require_contains("clisp", "evals/triggers.json", "triggers missing clisp excavate pattern")
     h.require_contains("sbcl", "evals/triggers.json", "triggers missing sbcl excavate pattern")
+    h.require_contains(".pro", "evals/triggers.json", "triggers missing .pro excavate pattern")
+    h.require_contains("swipl", "evals/triggers.json", "triggers missing swipl excavate pattern")
+    h.require_contains("gprolog", "evals/triggers.json", "triggers missing gprolog excavate pattern")
     _, rout_py = h.run_py("scripts/lib/route.py", "finish the branch")
     if "emperor-forge" not in rout_py:
         h.fail_msg("route.py finish the branch → forge")
@@ -736,11 +749,17 @@ def run_evals(root: Path) -> int:
     _, rout_clisp = h.run_py("scripts/lib/route.py", "clisp HELLO.LISP")
     if "emperor-excavate" not in rout_clisp:
         h.fail_msg("route.py clisp → excavate")
+    _, rout_pro = h.run_py("scripts/lib/route.py", "hello.pro")
+    if "emperor-excavate" not in rout_pro:
+        h.fail_msg("route.py hello.pro → excavate")
+    _, rout_swipl = h.run_py("scripts/lib/route.py", "swipl HELLO.PRO")
+    if "emperor-excavate" not in rout_swipl:
+        h.fail_msg("route.py swipl → excavate")
     rc, _ = h.run_py("scripts/lib/route.py", "what is 2+2")
     if rc == 0:
         h.fail_msg("route.py should miss trivia")
     else:
-        h.pass_msg("route.py misses trivia + fortran/vhdl/ada/forth/lisp excavate + thin twins")
+        h.pass_msg("route.py misses trivia + fortran/vhdl/ada/forth/lisp/prolog excavate + thin twins")
 
     # ---- MUST-route doctrine ----
     h.section("MUST-route doctrine + adapters")
@@ -2049,6 +2068,8 @@ def run_evals(root: Path) -> int:
     h.require_contains("archaeology-forth-manual.md", "SKILL.md", "SKILL.md missing forth Jail pin")
     h.require_contains("lost-lisp", "evals/bakeoff.md", "bakeoff.md missing lost-lisp inventory")
     h.require_contains("archaeology-lisp-manual.md", "SKILL.md", "SKILL.md missing lisp Jail pin")
+    h.require_contains("lost-prolog", "evals/bakeoff.md", "bakeoff.md missing lost-prolog inventory")
+    h.require_contains("archaeology-prolog-manual.md", "SKILL.md", "SKILL.md missing prolog Jail pin")
     h.require_contains("0.4.38", "CHANGELOG.md", "CHANGELOG missing 0.4.38")
     h.require_contains("root_cause.py", "evals/bakeoff.md", "bakeoff.md missing root_cause.py inventory")
     h.require_contains("root_cause.py", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing root_cause.py")
@@ -2056,6 +2077,7 @@ def run_evals(root: Path) -> int:
     h.require_contains("lost-ada", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing lost-ada")
     h.require_contains("lost-fs", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing lost-fs")
     h.require_contains("lost-lisp", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing lost-lisp")
+    h.require_contains("lost-prolog", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing lost-prolog")
     h.require_contains("0.4.39", "CHANGELOG.md", "CHANGELOG missing 0.4.39")
     h.require_contains("defense.py", "evals/bakeoff.md", "bakeoff.md missing defense.py inventory")
     h.require_contains("defense.py", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing defense.py")
@@ -2082,8 +2104,10 @@ def run_evals(root: Path) -> int:
     h.require_contains("0.4.48", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing 0.4.48 tip")
     h.require_contains("0.4.48", "CHANGELOG.md", "CHANGELOG missing 0.4.48")
     h.require_contains("0.4.49", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing 0.4.49 tip")
-    h.require_contains("0.4.49", ".claude-plugin/plugin.json", "plugin.json not at 0.4.49")
     h.require_contains("0.4.49", "CHANGELOG.md", "CHANGELOG missing 0.4.49")
+    h.require_contains("0.4.50", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing 0.4.50 tip")
+    h.require_contains("0.4.50", ".claude-plugin/plugin.json", "plugin.json not at 0.4.50")
+    h.require_contains("0.4.50", "CHANGELOG.md", "CHANGELOG missing 0.4.50")
 
     # session-discovery
     h.section("session-discovery locate HARD-GATE leaf")

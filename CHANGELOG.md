@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.4.50
+- Archaeology Prolog leaf: `evals/fixtures/lost-prolog/HELLO.PRO` + identify smoke; SWI-Prolog 9.2.9 boot probe VERIFIED (`swipl -q -t halt`); dialect labels honest (CONJECTURE / UNVERIFIABLE where due); identify fossils `*.pro` / `*.prolog` only (no `*.pl` — Perl collision)
+- Jail pin `references/archaeology-prolog-manual.md` — SWI-Prolog `initialization/2` main role (batch / application file run)
+- Catalog + SKILL.md + archaeology.md + language-agnostic.md link the ninth pin alongside Pascal, ASM, COBOL, Fortran, VHDL, Ada, Forth, and Common Lisp; route triggers gain `swipl` / `gprolog` / `.pro` / `.prolog` (space-padded `prolog` to avoid bare substring); eval locks `*.pro` identify on lost-prolog
+- Plugin, marketplace, and SKILL.md at 0.4.50
+
 ## 0.4.49
 - Archaeology Common Lisp leaf: `evals/fixtures/lost-lisp/HELLO.LISP` + identify smoke; GNU CLISP 2.49.95+ boot probe VERIFIED (`clisp -q -norc`); dialect labels honest (CONJECTURE / UNVERIFIABLE where due)
 - Jail pin `references/archaeology-lisp-manual.md` — CLISP Non-Interactive (Batch) Mode (`_lisp-file_` / `-x`)
