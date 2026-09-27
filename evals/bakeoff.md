@@ -65,6 +65,7 @@ mean **disk + eval**, not live multi-vendor win rates.
 | mechanical gates (Python core) | `scripts/lib/gate.py` + thin `gate.sh`/`gate.ps1` | TESTED |
 | identify survey (Python core) | `scripts/lib/identify.py` + thin `identify.sh`/`identify.ps1` | TESTED |
 | structural eval (Python core) | `scripts/lib/eval.py` + thin `eval.sh`/`eval.ps1` | TESTED |
+| DONE probes (Python core) | `scripts/lib/done.py` + thin `done.sh`/`done.ps1` + `evals/fixtures/done-probes/` | TESTED |
 | route MVP (Fortran excavate) | `scripts/lib/route.py` + thin `route.sh`/`route.ps1` + triggers `.f90`/`fortran`/`gfortran` | TESTED |
 
 Honesty helper: `scripts/lib/bakeoff_honesty.py` fails if this inventory

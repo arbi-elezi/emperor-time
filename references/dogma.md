@@ -8,7 +8,7 @@ the Inquisition. If a rule exists only as a file nobody runs, it is not dogma.
 The agent names DONE. The script tests DONE. The client does not babysit.
 
 `.emperor/tasks/<id>/DONE.md` is written by the agent from G1 + observed stack.
-`scripts/done.sh` executes the probes listed there. Exit 0 is DONE. A paragraph
+`scripts/lib/done.py` (thin `done.sh` / `done.ps1`) executes the probes listed there. Exit 0 is DONE. A paragraph
 that says "done" is heresy.
 
 ## No easy path

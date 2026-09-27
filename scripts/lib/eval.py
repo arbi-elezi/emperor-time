@@ -134,6 +134,7 @@ def run_evals(root: Path) -> int:
         "scripts/lib/identify.py",
         "scripts/lib/finish.py",
         "scripts/lib/eval.py",
+        "scripts/lib/done.py",
         "scripts/done.sh",
         "scripts/done.ps1",
         "scripts/eval.sh",
@@ -1016,6 +1017,51 @@ def run_evals(root: Path) -> int:
     if not re.search(r"^EVIDENCE checklist=yes", evid_sh, re.M):
         h.fail_msg("evidence.sh missing checklist card")
 
+
+    # ---- done probes (Python core) ----
+    h.section("done probes (Python core)")
+    h.need("scripts/lib/done.py")
+    h.need("scripts/done.sh")
+    h.need("scripts/done.ps1")
+    h.need("evals/fixtures/done-probes/ok/DONE.md")
+    h.need("evals/fixtures/done-probes/fail/DONE.md")
+    h.need("evals/fixtures/done-probes/no-probes/DONE.md")
+    h.bash_n("scripts/done.sh", "done.sh syntax")
+    h.py_compile("scripts/lib/done.py", "done.py compile")
+    h.require_contains("lib/done.py", "scripts/done.sh", "done.sh thin twin missing done.py")
+    h.require_contains("lib/done.py", "scripts/done.ps1", "done.ps1 thin twin missing done.py")
+    # thin twins must stay thin (probe runner lives in done.py)
+    done_sh_lines = len((root / "scripts/done.sh").read_text(encoding="utf-8").splitlines())
+    done_ps_lines = len((root / "scripts/done.ps1").read_text(encoding="utf-8").splitlines())
+    if done_sh_lines > 20:
+        h.fail_msg("done.sh should be thin twin (<=20 lines)")
+    if done_ps_lines > 30:
+        h.fail_msg("done.ps1 should be thin twin (<=30 lines)")
+    h.require_contains(
+        "scripts/lib/done.py",
+        "references/dogma.md",
+        "dogma.md missing done.py",
+    )
+    rc, ok_out = h.run_sh("scripts/done.sh", "evals/fixtures/done-probes/ok")
+    if rc != 0 or "DONE OK" not in ok_out:
+        h.fail_msg("done ok fixture should PASS + DONE OK")
+    else:
+        h.pass_msg("done ok fixture")
+    rc, fail_out = h.run_sh("scripts/done.sh", "evals/fixtures/done-probes/fail")
+    if rc == 0:
+        h.fail_msg("done fail fixture should exit non-zero")
+    elif "DONE FAIL:" not in fail_out:
+        h.fail_msg("done fail fixture missing DONE FAIL")
+    else:
+        h.pass_msg("done fail fixture")
+    rc, nop_out = h.run_py("scripts/lib/done.py", "evals/fixtures/done-probes/no-probes")
+    if rc == 0:
+        h.fail_msg("done no-probes should exit non-zero")
+    else:
+        h.pass_msg("done no-probes rejected")
+    h.require_contains("done|", "scripts/emperor", "emperor bash missing done")
+    h.pass_msg("done.py thin twins + probe fixtures")
+
     # bakeoff honesty
     h.section("bakeoff honesty (mechanism inventory + UNVERIFIABLE live rate)")
     h.need("evals/bakeoff.md")
@@ -1039,10 +1085,11 @@ def run_evals(root: Path) -> int:
         "evals/fixtures/this-upgrade.md",
         "this-upgrade.md missing UNVERIFIABLE",
     )
-    h.require_contains("0.4.19", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing 0.4.19 tip")
-    h.require_contains("eval.py", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing eval.py")
+    h.require_contains("0.4.21", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing 0.4.21 tip")
+    h.require_contains("done.py", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing done.py")
     h.require_contains("gate.py", "evals/bakeoff.md", "bakeoff.md missing gate.py inventory")
     h.require_contains("eval.py", "evals/bakeoff.md", "bakeoff.md missing eval.py inventory")
+    h.require_contains("done.py", "evals/bakeoff.md", "bakeoff.md missing done.py inventory")
 
     if h.fail != 0:
         print("EVALS FAILED")

@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.4.21
+- DONE probes Python core: `scripts/lib/done.py` owns probe:/expect: execution (bash -lc, substring match, empty-expect parity)
+- Thin `done.sh` / `done.ps1` twins — closes bash↔ps1 twin drift risk on the load-bearing Stop-hook / forge gate
+- Fixtures `evals/fixtures/done-probes/{ok,fail,no-probes}` + eval locks (compile, thin caps, smoke, dogma pointer)
+- Plugin, marketplace, and SKILL.md at 0.4.21
+
 ## 0.4.20
 - Route enrichment (JSON MVP): excavate patterns gain Fortran family (`fortran`, `gfortran`, `.f90`, `.f95`, `.for`, `f90`) so extension utterances like `hello.f90` and `gfortran build` map to excavate — closes gap after the v0.4.15 Fortran archaeology leaf
 - Thin `route.sh` / `route.ps1` twins (normalize + argv/stdin live in `scripts/lib/route.py`) — closes route twin bloat vs other Python cores
