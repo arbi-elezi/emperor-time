@@ -1,11 +1,11 @@
-# Task Ledger — emperor-time self-application (Fortran archaeology leaf)
+# Task Ledger — emperor-time self-application (gate.py Python core)
 
-- **Task:** Crank ET-unique archaeology: lost-f90 Fortran fixture + Jail pin + eval lock; keep bake-off honesty; Superpowers leaves stay closed.
+- **Task:** Port mechanical gates G0–G5 to Python core (`scripts/lib/gate.py`); thin `gate.sh`/`gate.ps1` twins; close bash↔ps1 twin drift (CONJECTURE warn); eval-lock; keep bake-off honesty; Superpowers leaves stay closed.
 - **Client quote:** "use emperor-time yourself to do this task"
 - **Origin:** assigned
 - **Size:** heavy
 - **Governing files:** SKILL.md → emperor-scope → emperor-require-design → emperor-tdd → emperor-verify
-- **Tip at Fortran spend:** v0.4.15 (branch `et-manager/archaeology-fortran-leaf`)
+- **Tip at gate.py spend:** v0.4.16 (branch `et-manager/gate-python-core`)
 
 ## G0
 Quoted ask above. Ambiguity resolved: method axes only, not stars. Live
@@ -13,14 +13,14 @@ multi-vendor defect-rate numbers are out of scope for any single session
 that did not run them.
 
 ## G1 Acceptance criteria
-1. SKILL.md version ≥ 0.4.15 and names five chains + six vows.
+1. SKILL.md version ≥ 0.4.16 and names five chains + six vows.
 2. Phase skills exist for scope/design/build/tdd/worktree/verify/dispatch/heal/capture (+ resume/queue/excavate/forge).
-3. `scripts/gate.sh g4` rejects unquoted VERIFIED.
+3. `scripts/gate.sh g4` / `scripts/lib/gate.py` rejects unquoted VERIFIED.
 4. Jail pin-and-consent file exists.
 5. Plugin lists TDD and worktree skills; marketplace version matches plugin.
 6. Mechanism / activation / leaf gates present and eval-locked: plans, finish,
    activate/must-route, grill, debug phases, TDD, worktree iso, review, author,
-   evidence, archaeology pas/asm/cbl/f90.
+   evidence, archaeology pas/asm/cbl/f90, **gate.py mechanical core**.
 7. `evals/bakeoff.md` + this fixture label local mechanism TESTED/VERIFIED and
    live defect-rate vs Superpowers **UNVERIFIABLE** (no fake numbers).
 
@@ -30,25 +30,27 @@ that did not run them.
 - Live multi-model bake-off numbers (UNVERIFIABLE unless a third-repo
   three-vendor session is actually run and quoted)
 - Live Superpowers leaf steals (catalog remains largely closed + documented)
+- Archaeology language five / embeddings / emperor dispatcher unification
 
 ## G2
-Rejected alternative: claim “ET beats Superpowers on defect rate” from local
-eval alone. Why: Vow of Evidence — structural TESTED ≠ live defect-rate.
-Work-order: `evals/bakeoff.md` inventory + this fixture + optional
-`scripts/lib/bakeoff_honesty.py` lock.
+Rejected alternative: leave gate.sh/gate.ps1 as dual full reimplementations.
+Why: twin drift was real (ps1 lacked G4 CONJECTURE warn); Python-first doctrine
+already landed for grill/tdd/iso/review/author/evidence — gate is the lock.
+Work-order: `scripts/lib/gate.py` + thin twins + eval lock + honesty inventory.
 
 ## G3
-Fortran archaeology on `et-manager/archaeology-fortran-leaf`. See git log.
+gate.py Python core on `et-manager/gate-python-core`. See git log.
 
 ## G4
 Claims:
 
 | Claim | Status | Evidence |
 |---|---|---|
-| SKILL.md is 0.4.15 orchestrator | TESTED | frontmatter `version: 0.4.15` on branch HEAD |
+| SKILL.md is 0.4.16 orchestrator | TESTED | frontmatter `version: 0.4.16` on branch HEAD |
 | Five chains still present | TESTED | `chains/*/SKILL.md` paths exist |
-| Leaf gates (plans/finish/activate/grill/debug/TDD/iso/review/author/evidence) on disk + eval-locked | TESTED | `bash scripts/eval.sh` → EVALS PASSED; paths in bakeoff inventory |
+| Leaf gates incl. gate.py on disk + eval-locked | TESTED | `bash scripts/eval.sh` → EVALS PASSED; bakeoff inventory names gate.py |
 | Archaeology fixtures pas/asm/cbl/f90 identify | TESTED | eval identify smokes on `lost-pas` / `lost-asm` / `lost-cbl` / `lost-f90` |
+| gate.py rejects unquoted VERIFIED + unordered prior | TESTED | eval unquoted fixture + prior-refuse smoke |
 | Bakeoff + this fixture refuse fake live defect-rate numbers | TESTED | both files contain `UNVERIFIABLE` for live defect-rate vs Superpowers |
 | Live defect-rate vs Superpowers | UNVERIFIABLE | no shared-task three-vendor bake-off run in this session |
 
@@ -60,3 +62,4 @@ tell remain UNVERIFIABLE.
 ## Breach Register
 - Earlier turns asserted "most complete skill ever" without bake-off — Vow of Evidence. Remediation: this ledger + `evals/bakeoff.md` label that CONJECTURE / keep live rate UNVERIFIABLE.
 - Incremental bakeoff notes (activation close, evidence lock) risked implying a finished live bake-off. Remediation: full inventory table + explicit UNVERIFIABLE rows (2026-09-27 honesty spend).
+- bash/ps1 gate twins drifted (CONJECTURE warn only in sh). Remediation: single Python core + thin twins (v0.4.16).

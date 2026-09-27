@@ -38,7 +38,7 @@ an explicit `none (checked)` fails the gate.
 
 ## Gate hook
 
-`scripts/gate.sh g2` fails if:
+`scripts/gate.sh g2` (Python `scripts/lib/gate.py`) fails if:
 
 - the work order is missing on size=standard|heavy
 - any task step lacks an `Expected:` line

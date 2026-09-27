@@ -8,7 +8,7 @@ Load before writing production code. These are restrictions, not slogans.
 4. **Tautology test is REFUTED.** If the test would still pass after reverting the change, it does not verify the change.
 5. **Foreign minds are CONJECTURE.** Other models, prior sessions, captured skills, and your own memory enter as rumor.
 6. **Unchanged retry is a breach.** Change the hypothesis or stop.
-7. **Script is the gate.** `scripts/gate.sh` exit 0, quoted. Markdown PASS is decoration.
+7. **Script is the gate.** `scripts/gate.sh` / `scripts/lib/gate.py` exit 0, quoted. Markdown PASS is decoration.
 8. **Work-order or it is not a plan.** Zero-context Task N. No TBD.
 9. **Reviewer isolation.** Hetero-critique receives the review pack only.
 10. **Resume from disk.** `.emperor/state.md` beats chat memory.
