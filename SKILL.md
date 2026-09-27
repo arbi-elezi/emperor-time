@@ -8,7 +8,7 @@ description: >-
   Host-agnostic (AGENTS.md). Not trivia.
 license: MIT
 metadata:
-  version: 0.4.1
+  version: 0.4.2
   homepage: https://github.com/arbi-elezi/emperor-time
   standard: Agent Skills (SKILL.md)
 ---
