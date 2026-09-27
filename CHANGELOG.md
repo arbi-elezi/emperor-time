@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.4.2
+- Wave merge: CI eval workflow; adapter silent-boot parity; SDLC comparison; Pascal Jail pin (ISO 7185 §6.10)
+- Queue Kanban maturity (WIP=1 statuses); trigger→skill `route` MVP (sh/ps1 twins)
+- First-class `excavate` alias + usage hygiene across emperor peers
+- Archaeology probes: `lost-pas` HELLO.PAS + `lost-asm` FOO.ASM fixtures with dialect-honest identify smokes
+- Plugin, marketplace, and SKILL.md at 0.4.2
+
 ## 0.4.1
 - Silent boot: `scripts/boot.sh` / `boot.ps1` write `.emperor/host.env`, `survey.md`, and optional `eval.log` with no user ritual
 - Identify is internal: fossils and `scripts/emperor identify <path>` for foreign trees; agents read survey, do not ask the client to run identify
