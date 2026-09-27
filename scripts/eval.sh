@@ -24,6 +24,7 @@ for f in \
   chains/holy-chain/SKILL.md \
   templates/work-order.md \
   scripts/gate.sh scripts/gate.ps1 \
+  scripts/lib/gate.py \
   scripts/done.sh scripts/done.ps1 \
   scripts/eval.sh scripts/eval.ps1 \
   scripts/emperor scripts/emperor.ps1 scripts/emperor.cmd scripts/emperor.zsh \
@@ -66,6 +67,26 @@ fi
 echo "== gate script syntax =="
 bash -n "$ROOT/scripts/gate.sh" || { echo "EVAL FAIL: gate.sh syntax"; fail=1; }
 bash -n "$ROOT/scripts/emperor" || { echo "EVAL FAIL: emperor syntax"; fail=1; }
+
+echo "== gate.py Python core =="
+need "scripts/lib/gate.py"
+python3 -m py_compile "$ROOT/scripts/lib/gate.py" || { echo "EVAL FAIL: gate.py compile"; fail=1; }
+grep -q 'lib/gate.py' "$ROOT/scripts/gate.sh" || { echo "EVAL FAIL: gate.sh thin twin missing gate.py"; fail=1; }
+grep -q 'lib/gate.py' "$ROOT/scripts/gate.ps1" || { echo "EVAL FAIL: gate.ps1 thin twin missing gate.py"; fail=1; }
+grep -q 'CONJECTURE' "$ROOT/scripts/lib/gate.py" || { echo "EVAL FAIL: gate.py missing CONJECTURE warn"; fail=1; }
+grep -q 'work_order.py' "$ROOT/scripts/lib/gate.py" || { echo "EVAL FAIL: gate.py missing work_order.py"; fail=1; }
+grep -q 'scripts/lib/gate.py' "$ROOT/references/mechanical-gates.md" || { echo "EVAL FAIL: mechanical-gates.md missing gate.py"; fail=1; }
+# prior-gate refuse
+TMPG="$(mktemp -d)"
+mkdir -p "$TMPG/.gates"
+printf '%s\n' '## G0' 'Origin: test' 'Task: prior' > "$TMPG/ledger.md"
+if bash "$ROOT/scripts/gate.sh" g1 "$TMPG" >/dev/null 2>&1; then
+  echo "EVAL FAIL: gate g1 should refuse without prior g0 stamp"
+  fail=1
+else
+  echo "EVAL PASS: gate.py refuses unordered g1"
+fi
+rm -rf "$TMPG"
 
 echo "== fixture: unquoted VERIFIED must fail g4 =="
 TMP="$(mktemp -d)"
@@ -187,8 +208,11 @@ need "evals/fixtures/plans-header/work-order-missing-header.md"
 need "evals/fixtures/plans-header/work-order-complete.md"
 grep -q "Review Focus" "$ROOT/templates/work-order.md" || { echo "EVAL FAIL: template missing Review Focus"; fail=1; }
 grep -q "Global Constraints" "$ROOT/templates/work-order.md" || { echo "EVAL FAIL: template missing Global Constraints"; fail=1; }
-grep -q "work_order.py" "$ROOT/scripts/gate.sh" || { echo "EVAL FAIL: gate.sh does not call work_order.py"; fail=1; }
-grep -q "work_order.py" "$ROOT/scripts/gate.ps1" || { echo "EVAL FAIL: gate.ps1 does not call work_order.py"; fail=1; }
+need "scripts/lib/gate.py"
+python3 -m py_compile "$ROOT/scripts/lib/gate.py" || { echo "EVAL FAIL: gate.py compile"; fail=1; }
+grep -q 'lib/gate.py' "$ROOT/scripts/gate.sh" || { echo "EVAL FAIL: gate.sh does not call gate.py"; fail=1; }
+grep -q 'lib/gate.py' "$ROOT/scripts/gate.ps1" || { echo "EVAL FAIL: gate.ps1 does not call gate.py"; fail=1; }
+grep -q 'work_order.py' "$ROOT/scripts/lib/gate.py" || { echo "EVAL FAIL: gate.py does not call work_order.py"; fail=1; }
 if python3 "$ROOT/scripts/lib/work_order.py" "$ROOT/evals/fixtures/plans-header/work-order-missing-header.md" >/tmp/et-wo-miss.out 2>&1; then
   echo "EVAL FAIL: incomplete work-order should fail plan-header check"
   fail=1
@@ -555,7 +579,8 @@ grep -q 'TESTED' "$ROOT/evals/bakeoff.md" || { echo "EVAL FAIL: bakeoff.md missi
 grep -q 'lost-cbl' "$ROOT/evals/bakeoff.md" || { echo "EVAL FAIL: bakeoff.md missing lost-cbl inventory"; fail=1; }
 grep -q 'lost-f90' "$ROOT/evals/bakeoff.md" || { echo "EVAL FAIL: bakeoff.md missing lost-f90 inventory"; fail=1; }
 grep -q 'UNVERIFIABLE' "$ROOT/evals/fixtures/this-upgrade.md" || { echo "EVAL FAIL: this-upgrade.md missing UNVERIFIABLE"; fail=1; }
-grep -q '0.4.15' "$ROOT/evals/fixtures/this-upgrade.md" || { echo "EVAL FAIL: this-upgrade.md missing 0.4.15 tip"; fail=1; }
+grep -q '0.4.16' "$ROOT/evals/fixtures/this-upgrade.md" || { echo "EVAL FAIL: this-upgrade.md missing 0.4.16 tip"; fail=1; }
+grep -q 'gate.py' "$ROOT/evals/bakeoff.md" || { echo "EVAL FAIL: bakeoff.md missing gate.py inventory"; fail=1; }
 
 if [[ "$fail" -ne 0 ]]; then
   echo "EVALS FAILED"

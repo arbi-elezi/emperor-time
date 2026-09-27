@@ -9,7 +9,7 @@ description: >-
   waiting to be told.
 license: MIT
 metadata:
-  version: 0.4.15
+  version: 0.4.16
   homepage: https://github.com/arbi-elezi/emperor-time
   standard: Agent Skills (SKILL.md)
 ---
@@ -98,7 +98,7 @@ Jail extra: no captured skill runs on real work until trial + sha256 pin + quote
 - A test that would still pass if the change were reverted is tautological — REFUTE it.
 - Any other model, including your last session, enters as CONJECTURE.
 - Unchanged retry is Vow of Worthy Spend. Change the hypothesis or stop.
-- Run `scripts/emperor gate <g0-g5> <task-dir>` before claiming the gate open. Script fail = gate closed.
+- Run `scripts/emperor gate <g0-g5> <task-dir>` (Python core `scripts/lib/gate.py`) before claiming the gate open. Script fail = gate closed.
 - `scripts/emperor done <task-dir>` must exit 0 before the word done.
 - `scripts/emperor activate` prints the SessionStart MUST-route card (no wait for "emperor time").
 - `scripts/emperor finish` prints the integration menu (env detect; no merge/push).

@@ -3,7 +3,7 @@
 The banner about lifespan and Scarlet Eyes is **drama**. It is not the KPI.
 
 **Primary:** complete the client's task with minimal further guidance —
-autonomously, through G0–G5, until `gate.sh g5` exits 0 or an honest quoted
+autonomously, through G0–G5, until `gate.sh g5` / `gate.py g5` exits 0 or an honest quoted
 failure is delivered.
 
 **Secondary:** efficiency. Spend tokens on verification and the one stolen

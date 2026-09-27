@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.4.16
+- Mechanical gates Python core: `scripts/lib/gate.py` owns G0–G5 (prior stamps, plan-header via `work_order.py`, G4 quoted-VERIFIED hard fail + CONJECTURE warn)
+- Thin `gate.sh` / `gate.ps1` twins — closes bash↔ps1 twin drift (ps1 had dropped CONJECTURE warn)
+- `references/mechanical-gates.md` + iron-laws / work-order / purpose point at the Python lock; eval locks compile + thin twins + unordered prior refuse + bakeoff inventory
+- Plugin, marketplace, and SKILL.md at 0.4.16
+
 ## 0.4.15
 - Archaeology Fortran leaf: `evals/fixtures/lost-f90/HELLO.F90` + identify smoke; GNU Fortran 14.2 boot probe VERIFIED (`gfortran -o`); dialect labels honest (CONJECTURE / UNVERIFIABLE where due)
 - Jail pin `references/archaeology-fortran-manual.md` — GNU Fortran Compiler §2.2 free-form dialect / file-extension source form

@@ -7,7 +7,7 @@ A model writing "G4 PASS" in markdown is not a gate. An exit code is.
 
 | Script | Gate | Fails when |
 |---|---|---|
-| `scripts/gate.sh g0` | G0 | no task dir, no client quote in ledger |
+| `scripts/gate.sh g0` (Python core) | G0 | no task dir, no client quote in ledger |
 | `scripts/gate.sh g1` | G1 | no acceptance criteria |
 | `scripts/gate.sh g2` | G2 | non-trivial task missing work-order or Expected: lines |
 | `scripts/gate.sh g3` | G3 | impact-map paths missing from `git diff --stat` (when in a git repo) |
@@ -16,7 +16,9 @@ A model writing "G4 PASS" in markdown is not a gate. An exit code is.
 | `scripts/review-pack.sh` | G4 hetero | cannot emit isolated pack |
 | `scripts/eval.sh` | harness health | an eval fixture fails |
 
-PowerShell twins: `scripts/gate.ps1`, `scripts/review-pack.ps1`.
+Python core: `scripts/lib/gate.py` owns G0–G5. Thin twins: `scripts/gate.sh`,
+`scripts/gate.ps1` (same exits). G2 still calls `work_order.py` for the plan
+header. Review-pack remains shell/ps1 until its own Python leaf.
 
 ## Vow mapping
 

@@ -16,7 +16,7 @@
     {
       "id": "unquoted-verified-rejected",
       "type": "behavioral-fixture",
-      "expect": "gate.sh g4 fails when a VERIFIED claim has no quoted evidence"
+      "expect": "gate.sh / gate.py g4 fails when a VERIFIED claim has no quoted evidence"
     },
     {
       "id": "work-order-required-nontrivial",
