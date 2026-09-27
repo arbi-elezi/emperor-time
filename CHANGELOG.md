@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.4.9
+- TDD iron-law / RGR leaf: Superpowers `test-driven-development` → **The Iron Law** + **Red-Green-Refactor** HARD-GATE only, adapted into `skills/emperor-tdd/red-green-refactor.md` (Chain Jail extract-aspect)
+- Python core `scripts/lib/tdd.py` prints TDD/STEP/MUST card, rejects step skips (`--advance`), hard-gates prod-before-fail (`--reject-prod`); thin `tdd.sh` / `tdd.ps1`; `emperor tdd` on bash/ps1/zsh/cmd peers
+- emperor-tdd + emperor-build MUST the checklist before production code; eval locks card + skip rejection + reject-prod
+
 ## 0.4.8
 - Grill/brainstorm leaf: Superpowers `brainstorming` → **HARD-GATE** only, adapted into `skills/emperor-require-design/grill-checklist.md` (Chain Jail extract-aspect)
 - Python core `scripts/lib/grill.py` prints GRILL/STEP/MUST card, rejects step skips (`--advance`), hard-gates impl jumps (`--reject-impl`); thin `grill.sh` / `grill.ps1`; `emperor grill` on bash/ps1/zsh/cmd peers
