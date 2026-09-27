@@ -31,6 +31,15 @@ scripts/emperor queue next
 scripts/emperor forge <task-dir>
 ```
 
+## Route (trigger → skill)
+
+When the utterance is ambiguous, run `scripts/emperor route "<utterance>"` (or
+`scripts/route.sh`). It prints one skill/chain path and a short reason from
+`evals/triggers.json` (no embeddings). Example: `scripts/emperor route "lost
+pascal tree"` → `skills/emperor-excavate/SKILL.md`. Exit 1 means no match —
+fall back to the phase table in `SKILL.md`. Language-agnostic: pas/asm/cobol/
+rom/lost/vintage map to excavate.
+
 ## Consent
 
 No other CLI, no login, no public PR without explicit client yes.
