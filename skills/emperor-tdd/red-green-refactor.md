@@ -5,11 +5,12 @@
 - source-hash: sha256:64b03fce4aee5a97a93160cea8111f3ba13a17b7c001db4bd5836d67fd10705d
 - heading: "The Iron Law" + "Red-Green-Refactor"
 - license: MIT
-- issue-context: emperor-tdd had doctrine but no enforceable red→green→refactor script path; Chain Jail extract-aspect names Iron Law / RGR only (not whole TDD skill, not writing-good-tests companion, not rationalization essays)
+- issue-context: emperor-tdd had doctrine but no enforceable red→green→refactor script path; Chain Jail extract-aspect names Iron Law / RGR only (not whole TDD skill, writing-good-tests is a sibling leaf (`writing-good-tests.md`), not rationalization essays)
 
 **Contract:** before any production code for a feature, bugfix, refactor, or behavior change, complete the RGR cycle. No production code without a failing probe first. Emperor Time stays the orchestrator via emperor-tdd + BUILD; do **not** announce or load whole `test-driven-development`.
 
 Mechanical card: `scripts/emperor tdd` (Python: `scripts/lib/tdd.py`).
+Companion for test quality: `skills/emperor-tdd/writing-good-tests.md` + `scripts/emperor good-tests`.
 
 ## HARD-GATE — The Iron Law
 

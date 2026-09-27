@@ -10,3 +10,5 @@ Law: no production code without a failing probe first.
 Prediction in the ledger before the command.
 Delete implementation written before the fail was observed.
 Mechanical card: `scripts/lib/tdd.py` via `scripts/emperor tdd`.
+
+Test quality companion: `skills/emperor-tdd/writing-good-tests.md` + `scripts/emperor good-tests` (Name the Break / Exercise the Real Thing).
