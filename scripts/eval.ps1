@@ -1,35 +1,15 @@
-$Root = (Resolve-Path (Join-Path $PSScriptRoot '..')).Path
-$fail = 0
-function Need([string]$f) {
-  if (-not (Test-Path (Join-Path $Root $f))) {
-    Write-Host "EVAL FAIL: missing $f"
-    $script:fail = 1
-  }
-}
-Write-Host '== presence =='
-@(
-  'SKILL.md',
-  'chains/dowsing-chain/SKILL.md','chains/chain-jail/SKILL.md',
-  'chains/judgment-chain/SKILL.md','chains/steal-chain/SKILL.md','chains/holy-chain/SKILL.md',
-  'scripts/emperor','scripts/emperor.ps1','scripts/emperor.cmd'
-) | ForEach-Object { Need $_ }
-
-Write-Host '== twins (every mechanical script) =='
-@('done','gate','eval','review-pack','dowse','install','worktree','queue','forge','finish','activate','identify','boot','route','excavate','heal','grill','tdd','iso','review','author','evidence') | ForEach-Object {
-  Need "scripts/$_.sh"
-  Need "scripts/$_.ps1"
-}
-
-Write-Host '== vows + five chains =='
-$skill = Get-Content (Join-Path $Root 'SKILL.md') -Raw
-if ($skill -notmatch 'Vow of Evidence') { Write-Host 'EVAL FAIL: vows missing'; $fail = 1 }
-@('Dowsing Chain','Chain Jail','Judgment Chain','Steal Chain','Holy Chain') | ForEach-Object {
-  if ($skill -notmatch [regex]::Escape($_)) { Write-Host "EVAL FAIL: $_ unnamed in SKILL.md"; $fail = 1 }
-}
-
-Write-Host '== route.py =='
-Need 'scripts/lib/route.py'
-if (-not (Test-Path (Join-Path $Root 'scripts/lib/route.py'))) { $fail = 1 }
-
-if ($fail -ne 0) { Write-Host 'EVALS FAILED'; exit 1 }
-Write-Host 'EVALS PASSED'
+<#
+.SYNOPSIS
+  Thin twin of eval.sh — structural evals via Python core.
+  Does not spawn a model. Exit 0 = EVALS PASSED, 1 = EVALS FAILED.
+#>
+[CmdletBinding()]
+param(
+    [Parameter(ValueFromRemainingArguments = $true)]
+    [string[]]$Rest
+)
+$ErrorActionPreference = 'Stop'
+$root = (Resolve-Path (Join-Path $PSScriptRoot '..')).Path
+$py = Join-Path $root 'scripts/lib/eval.py'
+& python3 $py @Rest
+exit $LASTEXITCODE

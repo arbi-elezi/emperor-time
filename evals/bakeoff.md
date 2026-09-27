@@ -43,7 +43,7 @@ stay stale. Regression next week.
 
 ## Mechanism inventory on main (local — TESTED / VERIFIED)
 
-Local structural eval (`scripts/eval.sh`) owns these leaves. Status labels
+Local structural eval (`scripts/lib/eval.py` via thin twins) owns these leaves. Status labels
 mean **disk + eval**, not live multi-vendor win rates.
 
 | Leaf | Path / command | Local status |
@@ -64,6 +64,7 @@ mean **disk + eval**, not live multi-vendor win rates.
 | archaeology Fortran | `evals/fixtures/lost-f90/` + Jail pin | TESTED |
 | mechanical gates (Python core) | `scripts/lib/gate.py` + thin `gate.sh`/`gate.ps1` | TESTED |
 | identify survey (Python core) | `scripts/lib/identify.py` + thin `identify.sh`/`identify.ps1` | TESTED |
+| structural eval (Python core) | `scripts/lib/eval.py` + thin `eval.sh`/`eval.ps1` | TESTED |
 
 Honesty helper: `scripts/lib/bakeoff_honesty.py` fails if this inventory
 drifts from disk or if live-defect-rate is mislabeled.
@@ -72,7 +73,7 @@ drifts from disk or if live-defect-rate is mislabeled.
 
 | Claim | Status | Evidence |
 |---|---|---|
-| Local mechanism leaves above exist and are eval-locked | TESTED | `bash scripts/eval.sh` → EVALS PASSED; honesty helper exit 0 |
+| Local mechanism leaves above exist and are eval-locked | TESTED | `bash scripts/eval.sh` (eval.py) → EVALS PASSED; honesty helper exit 0 |
 | Activation MUST-route fires from SessionStart without waiting for “emperor time” (hook + card contract) | TESTED | hooks.json → activate; `activate.py` prints `ACTIVATION next=` |
 | Agents *in the wild* open `ACTIVATION next=` without being told | UNVERIFIABLE | no marketplace re-run bakeoff in this session |
 | Live defect-rate vs Superpowers (shared tasks, isolated vendor sessions) | UNVERIFIABLE | no three-vendor third-repo bake-off run; **no fake numbers** |
@@ -81,7 +82,7 @@ drifts from disk or if live-defect-rate is mislabeled.
 ## Verdict
 
 ET wins this slice on *mechanical lock-in* (eval owns the rows; leaf gates
-above are on disk and eval-locked through v0.4.18).
+above are on disk and eval-locked through v0.4.19).
 Activation *mechanism* is closed on disk (v0.4.5–0.4.6); wild-agent
 activation without a tell stays **UNVERIFIABLE** until a marketplace re-run.
 Live defect-rate vs Superpowers stays **UNVERIFIABLE** — do not invent %.

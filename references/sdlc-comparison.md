@@ -19,7 +19,7 @@ between tasks (queue → next), not by skipping a gate inside one.
 | Agile / Scrum | Timeboxed iteration, ceremony, team sync | Macro loop is agile (ship → next). **No** sprint planning, standups, story points, or retrospectives as rites. Client consent replaces ceremony. |
 | Kanban | Flow, WIP limits, visible board | Intent is WIP=1 (one active task). Local queue is markdown; richer board statuses / WIP refuse are open work — do not assume they are on `main` until merged. |
 | Spiral | Risk-driven cycles, prototypes | Dowsing + Chain Jail play the risk/prototype role: hunt evidence, trial a captured skill, then bind. Not a formal risk matrix. |
-| DevOps / CI/CD | Continuous integration + delivery | Factory ends at forge/PR with consent. Local structural eval (`scripts/eval.sh`) and remote `.github/workflows/eval.yml` are on `main`. |
+| DevOps / CI/CD | Continuous integration + delivery | Factory ends at forge/PR with consent. Local structural eval (`scripts/lib/eval.py` via thin `eval.sh`/`eval.ps1`) and remote `.github/workflows/eval.yml` are on `main`. |
 | Trunk-based | Short-lived branches, frequent integrate | Compatible: small diffs, revert-sensitive probes, no drive-by. ET does not mandate trunk vs short PR branches — house git rules win. |
 
 ## ET factory (G0–G5) in SDLC words
@@ -62,7 +62,7 @@ Gates are **exit codes** (`scripts/emperor gate …`), not markdown wishes
 | No sprint ceremony | By design (no backlog grooming rite) | Stay ceremony-free; queue + ledger replace standups |
 | WIP metrics thin | WIP=1 is **intent** in doctrine/queue skill; no cycle-time dashboard | Optional `started`/`finished` fields and status marks remain optional polish |
 | Board / route UX | Skill tables + Dowsing + trigger→skill Router MVP (`scripts/emperor route`, Python `scripts/lib/route.py`) on `main` | Keep loading exactly one governing file; route refines when utterance is ambiguous |
-| Remote CI | Local `scripts/eval.sh` / `eval.ps1` **and** `.github/workflows/eval.yml` on `main` | Do not invent green checks; quote the workflow run you actually saw |
+| Remote CI | Local `scripts/lib/eval.py` (thin `eval.sh`/`eval.ps1`) **and** `.github/workflows/eval.yml` on `main` | Do not invent green checks; quote the workflow run you actually saw |
 | Adapter boot / MUST-route | Silent boot + host-agnostic MUST-route notes on cursor/codex/kimi-cli/ollama/opencode/generic adapters | Claude SessionStart still runs boot + activate; other hosts follow adapter README |
 | Excavate ergonomics | Identify/survey path **and** first-class `excavate` alias on `main` | Prefer `scripts/emperor excavate` / archaeology skill for lost trees |
 

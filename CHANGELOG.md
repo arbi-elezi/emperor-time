@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.4.19
+- Structural eval Python core: `scripts/lib/eval.py` owns the full assertion suite (presence, twins, gates, identify, fixtures, route, leaf HARD-GATEs, bakeoff honesty)
+- Thin `eval.sh` / `eval.ps1` twins — closes bash↔ps1 twin drift (ps1 was a ~35-line presence stub while bash held ~600 lines of locks)
+- `references/mechanical-gates.md` + bakeoff inventory point at the Python lock; eval self-locks compile + thin twins
+- Plugin, marketplace, and SKILL.md at 0.4.19
+
 ## 0.4.18
 - Finish menu Python core: `scripts/lib/finish.py` owns ENV/MENU detection (worktree kind, origin/HEAD base_guess, cleanup_owned)
 - Thin `finish.sh` / `finish.ps1` twins — closes bash↔ps1 twin drift (ps1 had dropped origin/HEAD fallback)
