@@ -41,7 +41,7 @@ for c in "Dowsing Chain" "Chain Jail" "Judgment Chain" "Steal Chain" "Holy Chain
 done
 
 echo "== twins =="
-for pair in done gate eval review-pack dowse install worktree queue forge identify boot; do
+for pair in done gate eval review-pack dowse install worktree queue forge identify boot route; do
   need "scripts/${pair}.sh"
   need "scripts/${pair}.ps1"
 done
@@ -94,6 +94,21 @@ rm -rf "$TMP"
 
 echo "== trigger file present =="
 grep -q "emperor time" "$ROOT/evals/triggers.json" || { echo "EVAL FAIL: triggers"; fail=1; }
+
+echo "== route mvp =="
+if [[ -x "$ROOT/scripts/route.sh" || -f "$ROOT/scripts/route.sh" ]]; then
+  bash -n "$ROOT/scripts/route.sh" || { echo "EVAL FAIL: route.sh syntax"; fail=1; }
+  out=$(bash "$ROOT/scripts/route.sh" "lost pascal tree" 2>/dev/null || true)
+  echo "$out" | grep -q "emperor-excavate" || { echo "EVAL FAIL: route lost pascal → excavate"; fail=1; }
+  out=$(bash "$ROOT/scripts/route.sh" "queue next" 2>/dev/null || true)
+  echo "$out" | grep -q "emperor-queue" || { echo "EVAL FAIL: route queue next → queue"; fail=1; }
+  if bash "$ROOT/scripts/route.sh" "what is 2+2" >/dev/null 2>&1; then
+    echo "EVAL FAIL: route should miss trivia"
+    fail=1
+  else
+    echo "EVAL PASS: route misses trivia"
+  fi
+fi
 
 if [[ "$fail" -ne 0 ]]; then
   echo "EVALS FAILED"
