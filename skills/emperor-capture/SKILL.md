@@ -18,8 +18,12 @@ metadata:
    open `chains/chain-jail/authoring-checklist.md` and/or run
    `scripts/emperor author` (HARD-GATE: no skill body without a failing
    baseline). Jumping to prose → `scripts/emperor author --reject-untested`.
-4. **Pin + consent + trial are mandatory** before the captured skill may fire:
+4. **Testing-skills companion:** before trial/register of a discipline skill,
+   open `chains/chain-jail/testing-skills.md` and/or run
+   `scripts/emperor skill-test` (HARD-GATE: combined pressure + watch baseline
+   FAIL). Academic-only → `scripts/emperor skill-test --reject-academic-only`.
+5. **Pin + consent + trial are mandatory** before the captured skill may fire:
    read `chains/chain-jail/pin-and-consent.md` then `trial-and-register.md`.
-5. Captured skills live in `.emperor/captured-skills/` with provenance headers.
-6. A captured skill that fails trial stays quarantined. Using it is a Vow of
+6. Captured skills live in `.emperor/captured-skills/` with provenance headers.
+7. A captured skill that fails trial stays quarantined. Using it is a Vow of
    Evidence + Vow of Consent breach.
