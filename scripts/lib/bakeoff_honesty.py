@@ -61,6 +61,8 @@ LEAVES: list[tuple[str, str, tuple[str, ...]]] = [
     ),
     ("queue-py", "scripts/lib/queue.py", ("queue.py", "queue")),
     ("forge-py", "scripts/lib/forge.py", ("forge.py", "forge")),
+    ("review-pack-py", "scripts/lib/review_pack.py", ("review_pack.py", "review-pack")),
+    ("dowse-py", "scripts/lib/dowse.py", ("dowse.py", "dowse")),
 ]
 
 BAKEOFF = Path("evals/bakeoff.md")

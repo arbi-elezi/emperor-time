@@ -71,6 +71,7 @@ mean **disk + eval**, not live multi-vendor win rates.
 | queue picker (Python core) | `scripts/lib/queue.py` + thin `queue.sh`/`queue.ps1` (WIP=1, placeholder skip, gh/Linear/local) | TESTED |
 | forge PR (Python core) | `scripts/lib/forge.py` + thin `forge.sh`/`forge.ps1` (consent, DONE, title/G1 body, DRY) | TESTED |
 | review-pack (Python core) | `scripts/lib/review_pack.py` + thin `review-pack.sh`/`review-pack.ps1` (meta SHAs, acceptance criteria extract, diff) | TESTED |
+| dowse scan (Python core) | `scripts/lib/dowse.py` + thin `dowse.sh`/`dowse.ps1` (AsJson + Binary/Headless/SignIn roster) | TESTED |
 
 Honesty helper: `scripts/lib/bakeoff_honesty.py` fails if this inventory
 drifts from disk or if live-defect-rate is mislabeled.

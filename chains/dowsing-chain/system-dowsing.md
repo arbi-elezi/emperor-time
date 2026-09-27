@@ -6,12 +6,17 @@ reads. The roster is the single artifact.
 
 ## Step 1 — Detect
 
-Preferred: the bundled scripts (they encode these rules):
+Preferred: the bundled scripts (they encode these rules). Python core
+`scripts/lib/dowse.py` owns the roster (thin `dowse.sh` / `dowse.ps1`):
 
 ```
 Windows :  scripts\dowse.ps1        [-CheckAuth] [-AsJson] [-SkipVersions]
-POSIX   :  scripts/dowse.sh         [--check-auth] [--skip-versions]
+POSIX   :  scripts/dowse.sh         [--check-auth] [--as-json] [--skip-versions]
+Both    :  python3 scripts/lib/dowse.py  [--check-auth] [--as-json] [--skip-versions]
 ```
+
+`--as-json` / `-AsJson` emits the richer roster (Binary, Headless, SignIn) so
+bash and PowerShell peers no longer drift on orchestrator-facing metadata.
 
 Manual fallback (per binary in `references/agent-registry.md`):
 

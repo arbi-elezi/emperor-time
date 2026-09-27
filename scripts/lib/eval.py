@@ -1310,6 +1310,92 @@ def run_evals(root: Path) -> int:
         shutil.rmtree(tmpr, ignore_errors=True)
     h.pass_msg("review_pack.py thin twins + criteria extract")
 
+    # ---- dowse.py machine scan ----
+    h.section("dowse.py Python core")
+    h.need("scripts/lib/dowse.py")
+    h.need("scripts/dowse.sh")
+    h.need("scripts/dowse.ps1")
+    h.bash_n("scripts/dowse.sh", "dowse.sh syntax")
+    h.py_compile("scripts/lib/dowse.py", "dowse.py compile")
+    h.require_contains(
+        "lib/dowse.py",
+        "scripts/dowse.sh",
+        "dowse.sh thin twin missing dowse.py",
+    )
+    h.require_contains(
+        "lib/dowse.py",
+        "scripts/dowse.ps1",
+        "dowse.ps1 thin twin missing dowse.py",
+    )
+    dw_sh_lines = len((root / "scripts/dowse.sh").read_text(encoding="utf-8").splitlines())
+    dw_ps_lines = len((root / "scripts/dowse.ps1").read_text(encoding="utf-8").splitlines())
+    if dw_sh_lines > 20:
+        h.fail_msg("dowse.sh should be thin twin (<=20 lines)")
+    if dw_ps_lines > 40:
+        h.fail_msg("dowse.ps1 should be thin twin (<=40 lines)")
+    h.require_contains(
+        "scripts/lib/dowse.py",
+        "chains/dowsing-chain/system-dowsing.md",
+        "system-dowsing.md missing dowse.py",
+    )
+    h.require_contains(
+        "dowse.py",
+        "references/agent-registry.md",
+        "agent-registry.md missing dowse.py",
+    )
+    h.require_contains(
+        "dowse.py",
+        "references/mechanical-gates.md",
+        "mechanical-gates.md missing dowse.py",
+    )
+    h.require_contains(
+        "--as-json",
+        "scripts/lib/dowse.py",
+        "dowse.py missing --as-json",
+    )
+    h.require_contains(
+        "--as-json",
+        "scripts/dowse.sh",
+        "dowse.sh usage missing --as-json",
+    )
+    h.require_contains(
+        "AsJson",
+        "scripts/dowse.ps1",
+        "dowse.ps1 missing -AsJson switch",
+    )
+    rc, out = h.run_py("scripts/lib/dowse.py", "--skip-versions", "--as-json")
+    if rc != 0:
+        h.fail_msg("dowse.py --as-json should exit 0")
+    else:
+        try:
+            import json as _json
+
+            roster = _json.loads(out)
+            if not isinstance(roster, list) or len(roster) < 5:
+                h.fail_msg("dowse --as-json roster too short")
+            else:
+                keys = set(roster[0].keys())
+                need = {"Agent", "Binary", "Status", "Version", "Auth", "Headless", "SignIn"}
+                if not need.issubset(keys):
+                    h.fail_msg(f"dowse richer roster missing keys: {need - keys}")
+                else:
+                    h.pass_msg("dowse --as-json richer roster")
+                bins = {e.get("Binary") for e in roster}
+                for b in ("claude", "codex", "gh", "ollama"):
+                    if b not in bins:
+                        h.fail_msg(f"dowse roster missing binary {b}")
+                        break
+                else:
+                    h.pass_msg("dowse roster core binaries")
+        except Exception as exc:  # noqa: BLE001 — eval harness
+            h.fail_msg(f"dowse --as-json not parseable: {exc}")
+    rc2, out2 = h.run_sh("scripts/dowse.sh", "--skip-versions", "--as-json")
+    if rc2 != 0 or '"Headless"' not in out2 or '"SignIn"' not in out2:
+        h.fail_msg("dowse.sh --as-json should emit richer roster")
+    else:
+        h.pass_msg("dowse.sh AsJson parity")
+    h.pass_msg("dowse.py thin twins + AsJson richer roster")
+
     # bakeoff honesty
     h.section("bakeoff honesty (mechanism inventory + UNVERIFIABLE live rate)")
     h.need("evals/bakeoff.md")
@@ -1333,14 +1419,15 @@ def run_evals(root: Path) -> int:
         "evals/fixtures/this-upgrade.md",
         "this-upgrade.md missing UNVERIFIABLE",
     )
-    h.require_contains("0.4.25", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing 0.4.25 tip")
-    h.require_contains("review_pack.py", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing review_pack.py")
+    h.require_contains("0.4.26", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing 0.4.26 tip")
+    h.require_contains("dowse.py", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing dowse.py")
     h.require_contains("gate.py", "evals/bakeoff.md", "bakeoff.md missing gate.py inventory")
     h.require_contains("eval.py", "evals/bakeoff.md", "bakeoff.md missing eval.py inventory")
     h.require_contains("done.py", "evals/bakeoff.md", "bakeoff.md missing done.py inventory")
     h.require_contains("queue.py", "evals/bakeoff.md", "bakeoff.md missing queue.py inventory")
     h.require_contains("forge.py", "evals/bakeoff.md", "bakeoff.md missing forge.py inventory")
     h.require_contains("review_pack.py", "evals/bakeoff.md", "bakeoff.md missing review_pack.py inventory")
+    h.require_contains("dowse.py", "evals/bakeoff.md", "bakeoff.md missing dowse.py inventory")
 
     if h.fail != 0:
         print("EVALS FAILED")
