@@ -127,6 +127,18 @@
     {
       "phrase": "task review after each",
       "skill": "emperor-build"
+    },
+    {
+      "phrase": "find session transcript",
+      "skill": "emperor-heal"
+    },
+    {
+      "phrase": "where is the session log",
+      "skill": "emperor-heal"
+    },
+    {
+      "phrase": "session discovery",
+      "skill": "emperor-heal"
     }
   ],
   "must_not_fire_master_wholesale": [
@@ -218,14 +230,21 @@
         "ci red",
         "failing build",
         "tests are red",
-        "ci failing"
+        "ci failing",
+        "find session transcript",
+        "where is the session log",
+        "session discovery",
+        "session transcript",
+        "locate session"
       ],
       "tags": [
         "heal",
-        "red-build"
+        "red-build",
+        "session-discovery",
+        "transcript"
       ],
       "target": "skills/emperor-heal/SKILL.md",
-      "reason": "red build / derail \u2014 Holy Chain"
+      "reason": "red build / derail \u2014 Holy Chain / session-discovery locate"
     },
     {
       "id": "verify",

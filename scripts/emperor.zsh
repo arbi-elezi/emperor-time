@@ -12,7 +12,7 @@ if [[ ! -f .emperor/host.env ]]; then
 fi
 TOOL="${1:-}"
 if [[ -z "$TOOL" ]]; then
-  print -u2 "usage: $0 <done|gate|eval|review-pack|dowse|install|worktree|queue|forge|finish|activate|boot|identify|route|heal|grill|tdd|iso|review|author|evidence|receive|execute|subagent|parallel|excavate> [args]"
+  print -u2 "usage: $0 <done|gate|eval|review-pack|dowse|install|worktree|queue|forge|finish|activate|boot|identify|route|heal|grill|tdd|iso|review|author|evidence|receive|execute|subagent|parallel|excavate|session-discovery> [args]"
   exit 2
 fi
 shift || true

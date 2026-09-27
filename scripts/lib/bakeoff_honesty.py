@@ -97,6 +97,11 @@ LEAVES: list[tuple[str, str, tuple[str, ...]]] = [
         "scripts/excavate.sh",
         ("excavate thin", "identify.py"),
     ),
+    (
+        "session-discovery",
+        "scripts/lib/session_discovery.py",
+        ("session_discovery.py", "session-discovery"),
+    ),
 ]
 
 

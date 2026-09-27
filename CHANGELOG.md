@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.4.36
+- Session-discovery Python core: `scripts/lib/session_discovery.py` prints SESSION / PATH / STATUS / MUST locate card; probes Claude Code + Cursor/agent transcript roots read-only; VERIFIED only when path exists
+- Thin `session-discovery.sh` / `session-discovery.ps1`; emperor peers gain `session-discovery`; `--reject-guess` HARD-GATE (always-fail) for claim-without-path
+- Skill leaf `skills/emperor-heal/session-discovery.md` + `references/session-discovery.md` (obra/superpowers diagnosing locate aspect, MIT); route triggers for session transcript locate → emperor-heal
+- Unblocks a future diagnosing HARD-GATE without vendoring whole diagnosing-superpowers; eval/bakeoff/honesty/plugin lockstep
+- Plugin, marketplace, and SKILL.md at 0.4.36
+
+
 ## 0.4.35
 - Archaeology VHDL leaf: `evals/fixtures/lost-vhd/HELLO.VHD` + identify smoke; GHDL 5.0.1 boot probe VERIFIED (`ghdl -a` / `-e` / `-r`); dialect labels honest (CONJECTURE / UNVERIFIABLE where due)
 - Jail pin `references/archaeology-vhdl-manual.md` — GHDL Invoking GHDL Analysis / Elaboration / Run (entity as top unit)
