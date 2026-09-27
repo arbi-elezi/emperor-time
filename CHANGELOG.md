@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.4.55
+- Archaeology Algol 68 leaf: `evals/fixtures/lost-a68/HELLO.A68` + identify smoke; Algol 68 Genie 3.1.2 boot probe VERIFIED (`a68g HELLO.A68`); dialect labels honest (CONJECTURE / UNVERIFIABLE where due); identify fossils `*.a68` / `*.alg`
+- Jail pin `references/archaeology-algol68-manual.md` — Algol 68 Genie Synopsis / Transput `print` (`a68g [option | file] ...`)
+- Catalog + SKILL.md + archaeology.md + language-agnostic.md link the fourteenth pin alongside Pascal, ASM, COBOL, Fortran, VHDL, Ada, Forth, Common Lisp, Prolog, Tcl, Erlang, REXX, and Modula-2; route triggers gain `a68g` / `algol68g` / `algol68` / `.a68` / `.alg` (space-padded `algol`; bare English `print` refused); eval locks `*.a68` identify on lost-a68
+- Plugin, marketplace, and SKILL.md at 0.4.55
+
 ## 0.4.54
 - Archaeology Modula-2 leaf: `evals/fixtures/lost-mod/HELLO.MOD` + identify smoke; GNU Modula-2 14.2.0 boot probe VERIFIED (`gm2 -g -x modula-2 HELLO.MOD`); dialect labels honest (CONJECTURE / UNVERIFIABLE where due); identify fossils `*.mod` / `*.def`
 - Jail pin `references/archaeology-modula2-manual.md` — GNU Modula-2 Example compile and link (`WriteString` / `gm2 -g hello.mod`)

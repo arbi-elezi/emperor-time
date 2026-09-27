@@ -1,0 +1,9 @@
+== identify evals/fixtures/lost-a68 ==
+-- extensions --
+      2 md
+      1 txt
+      1 a68
+-- named fossils --
+1 *.a68
+-- shebangs --
+identify: done (read-only)
