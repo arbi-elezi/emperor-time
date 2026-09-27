@@ -1,3 +1,4 @@
+# shellcheck shell=bash
 # Emperor Time host detect. Source from bash OR zsh (not zsh-only).
 # Sets: EMPEROR_OS EMPEROR_SHELL EMPEROR_WSL EMPEROR_WIN_INTEROP
 #       EMPEROR_ENCODING EMPEROR_WIN_ROOT EMPEROR_MNT
@@ -51,9 +52,9 @@ if [ "$EMPEROR_WSL" -eq 1 ]; then
   fi
 fi
 
-if [ -n "${ZSH_VERSION:-}" ]; then EMPEROR_SHELL=zsh
-elif [ -n "${BASH_VERSION:-}" ]; then EMPEROR_SHELL=bash
-else EMPEROR_SHELL=sh
+if [ -n "${ZSH_VERSION:-}" ]; then EMPEROR_SHELL="zsh"
+elif [ -n "${BASH_VERSION:-}" ]; then EMPEROR_SHELL="bash"
+else EMPEROR_SHELL="sh"
 fi
 export EMPEROR_OS EMPEROR_SHELL EMPEROR_WSL EMPEROR_WIN_INTEROP EMPEROR_MNT EMPEROR_WIN_ROOT
 
