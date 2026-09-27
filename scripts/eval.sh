@@ -225,6 +225,34 @@ echo "$ACT_OUT" | grep -q '^MUST:' || { echo "EVAL FAIL: activate missing MUST l
 ACT_U=$(python3 "$ROOT/scripts/lib/activate.py" --cwd "$ROOT" -u 'red build' 2>&1) || true
 echo "$ACT_U" | grep -q 'emperor-heal' || { echo "EVAL FAIL: activate utterance red build → heal"; fail=1; }
 
+
+echo "== route.py Python core =="
+need "scripts/lib/route.py"
+python3 -m py_compile "$ROOT/scripts/lib/route.py" || { echo "EVAL FAIL: route.py compile"; fail=1; }
+grep -q 'lib/route.py' "$ROOT/scripts/route.sh" || { echo "EVAL FAIL: route.sh does not call route.py"; fail=1; }
+grep -q 'lib/route.py' "$ROOT/scripts/route.ps1" || { echo "EVAL FAIL: route.ps1 does not call route.py"; fail=1; }
+ROUT_PY=$(python3 "$ROOT/scripts/lib/route.py" "finish the branch" 2>/dev/null || true)
+echo "$ROUT_PY" | grep -q "emperor-forge" || { echo "EVAL FAIL: route.py finish the branch → forge"; fail=1; }
+if python3 "$ROOT/scripts/lib/route.py" "what is 2+2" >/dev/null 2>&1; then
+  echo "EVAL FAIL: route.py should miss trivia"
+  fail=1
+else
+  echo "EVAL PASS: route.py misses trivia"
+fi
+
+echo "== MUST-route doctrine + adapters =="
+grep -q 'MUST: pick one governing' "$ROOT/SKILL.md" || { echo "EVAL FAIL: SKILL Load law missing MUST governing"; fail=1; }
+grep -q 'MUST-route (standing order)' "$ROOT/AGENTS.md" || { echo "EVAL FAIL: AGENTS missing MUST-route standing order"; fail=1; }
+grep -q 'MUST-route' "$ROOT/hooks/hooks.json" || { echo "EVAL FAIL: SessionStart prompt missing MUST-route"; fail=1; }
+for ad in cursor codex kimi-cli ollama opencode generic; do
+  grep -q 'MUST-route (before creative work)' "$ROOT/adapters/$ad/README.md" \
+    || { echo "EVAL FAIL: adapters/$ad missing MUST-route note"; fail=1; }
+done
+grep -q 'scripts/lib/route.py' "$ROOT/references/sdlc-comparison.md" \
+  || { echo "EVAL FAIL: sdlc-comparison missing route.py"; fail=1; }
+grep -q 'eval.yml' "$ROOT/references/sdlc-comparison.md" \
+  || { echo "EVAL FAIL: sdlc-comparison missing eval.yml honesty"; fail=1; }
+
 if [[ "$fail" -ne 0 ]]; then
   echo "EVALS FAILED"
   exit 1

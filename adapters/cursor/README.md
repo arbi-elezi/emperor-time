@@ -27,3 +27,11 @@ Foreign/lost tree: `scripts/emperor identify <path>`.
 
 On Windows, `scripts/emperor.ps1 <tool>` silent-boots when `.emperor/host.env`
 is missing — same contract as `scripts/emperor` on bash/zsh.
+
+## MUST-route (before creative work)
+
+Silent boot is not enough. Before clarifying questions, exploring, or writing
+code, open one governing file from the `SKILL.md` tables, or run
+`scripts/emperor route "<utterance>"` / `scripts/emperor activate` and open
+`ACTIVATION next=`. Same bite as Claude SessionStart MUST-route; Emperor Time
+stays the orchestrator (no foreign master router).

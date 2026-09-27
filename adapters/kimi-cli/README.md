@@ -83,3 +83,12 @@ Then open:
 Resume from STATE.md / `scripts/emperor queue next`. Do not tell the client
 to run `identify` or `eval`. Those are internals.
 Foreign/lost tree: `scripts/emperor identify <path>`.
+
+## MUST-route (before creative work)
+
+Silent boot is not enough. Before clarifying questions, exploring, or writing
+code, open one governing file from the `SKILL.md` tables, or run
+`scripts/emperor route "<utterance>"` / `scripts/emperor activate` and open
+`ACTIVATION next=`. Same bite as Claude SessionStart MUST-route; Emperor Time
+stays the orchestrator (no foreign master router).
+
