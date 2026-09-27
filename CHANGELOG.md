@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.4.35
+- Archaeology VHDL leaf: `evals/fixtures/lost-vhd/HELLO.VHD` + identify smoke; GHDL 5.0.1 boot probe VERIFIED (`ghdl -a` / `-e` / `-r`); dialect labels honest (CONJECTURE / UNVERIFIABLE where due)
+- Jail pin `references/archaeology-vhdl-manual.md` — GHDL Invoking GHDL Analysis / Elaboration / Run (entity as top unit)
+- Catalog + SKILL.md + archaeology.md link the fifth pin alongside Pascal, ASM, COBOL, and Fortran; route triggers gain `vhdl` / `ghdl` / `.vhd` / `.vhdl`; eval locks `*.vhd` identify on lost-vhd
+- Plugin, marketplace, and SKILL.md at 0.4.35
+
+
 ## 0.4.34
 - Excavate thin-alias polish: `scripts/excavate.sh` / `excavate.ps1` call `scripts/lib/identify.py` directly (no hop through identify twins)
 - Closes deferred bash↔ps1 alias drift surface after identify.py / worktree.py cores — excavate stays a first-class tool name with one Python survey core

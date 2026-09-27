@@ -317,6 +317,7 @@ def run_evals(root: Path) -> int:
     h.require_contains("lib/identify.py", "scripts/identify.ps1", "identify.ps1 thin twin missing identify.py")
     h.require_contains("shebang", "scripts/lib/identify.py", "identify.py missing shebang survey")
     h.require_contains("*.f90", "scripts/lib/identify.py", "identify.py missing *.f90 fossil")
+    h.require_contains("*.vhd", "scripts/lib/identify.py", "identify.py missing *.vhd fossil")
     h.require_contains(
         "scripts/lib/identify.py",
         "references/archaeology.md",
@@ -368,6 +369,8 @@ def run_evals(root: Path) -> int:
             ("lost pascal tree", "emperor-excavate", "route lost pascal → excavate"),
             ("hello.f90", "emperor-excavate", "route hello.f90 → excavate"),
             ("gfortran build", "emperor-excavate", "route gfortran → excavate (not build)"),
+            ("hello.vhd", "emperor-excavate", "route hello.vhd → excavate"),
+            ("ghdl -a HELLO.VHD", "emperor-excavate", "route ghdl → excavate"),
             ("queue next", "emperor-queue", "route queue next → queue"),
             ("blocked task", "emperor-queue", "route blocked task → queue"),
             ("red build", "emperor-heal", "route red build → heal"),
@@ -500,6 +503,13 @@ def run_evals(root: Path) -> int:
             "HELLO.F90",
             r"[0-9]+ \*\.f90",
             ["references/archaeology-fortran-manual.md"],
+        ),
+        (
+            "lost-vhd identify finds *.vhd",
+            "lost-vhd",
+            "HELLO.VHD",
+            r"[0-9]+ \*\.vhd",
+            ["references/archaeology-vhdl-manual.md"],
         ),
     ]
     # The loop above was messy — clear fail state not affected; rewrite cleanly below by
@@ -655,17 +665,23 @@ def run_evals(root: Path) -> int:
     h.require_contains(".f90", "evals/triggers.json", "triggers missing .f90 excavate pattern")
     h.require_contains("fortran", "evals/triggers.json", "triggers missing fortran excavate pattern")
     h.require_contains("gfortran", "evals/triggers.json", "triggers missing gfortran excavate pattern")
+    h.require_contains(".vhd", "evals/triggers.json", "triggers missing .vhd excavate pattern")
+    h.require_contains("vhdl", "evals/triggers.json", "triggers missing vhdl excavate pattern")
+    h.require_contains("ghdl", "evals/triggers.json", "triggers missing ghdl excavate pattern")
     _, rout_py = h.run_py("scripts/lib/route.py", "finish the branch")
     if "emperor-forge" not in rout_py:
         h.fail_msg("route.py finish the branch → forge")
     _, rout_f90 = h.run_py("scripts/lib/route.py", "hello.f90")
     if "emperor-excavate" not in rout_f90:
         h.fail_msg("route.py hello.f90 → excavate")
+    _, rout_vhd = h.run_py("scripts/lib/route.py", "hello.vhd")
+    if "emperor-excavate" not in rout_vhd:
+        h.fail_msg("route.py hello.vhd → excavate")
     rc, _ = h.run_py("scripts/lib/route.py", "what is 2+2")
     if rc == 0:
         h.fail_msg("route.py should miss trivia")
     else:
-        h.pass_msg("route.py misses trivia + fortran excavate + thin twins")
+        h.pass_msg("route.py misses trivia + fortran/vhdl excavate + thin twins")
 
     # ---- MUST-route doctrine ----
     h.section("MUST-route doctrine + adapters")
@@ -1929,6 +1945,7 @@ def run_evals(root: Path) -> int:
     h.require_contains("TESTED", "evals/bakeoff.md", "bakeoff.md missing TESTED")
     h.require_contains("lost-cbl", "evals/bakeoff.md", "bakeoff.md missing lost-cbl inventory")
     h.require_contains("lost-f90", "evals/bakeoff.md", "bakeoff.md missing lost-f90 inventory")
+    h.require_contains("lost-vhd", "evals/bakeoff.md", "bakeoff.md missing lost-vhd inventory")
     h.require_contains(
         "UNVERIFIABLE",
         "evals/fixtures/this-upgrade.md",
@@ -1956,6 +1973,11 @@ def run_evals(root: Path) -> int:
     h.require_contains("excavate thin", "evals/bakeoff.md", "bakeoff.md missing excavate thin alias inventory")
     h.require_contains("excavate", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing excavate")
     h.require_contains("0.4.34", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing 0.4.34 tip")
+    h.require_contains("lost-vhd", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing lost-vhd")
+    h.require_contains("0.4.35", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing 0.4.35 tip")
+    h.require_contains("archaeology-vhdl-manual.md", "SKILL.md", "SKILL.md missing vhdl Jail pin")
+    h.require_contains("0.4.35", ".claude-plugin/plugin.json", "plugin.json not at 0.4.35")
+    h.require_contains("0.4.35", "CHANGELOG.md", "CHANGELOG missing 0.4.35")
 
     if h.fail != 0:
         print("EVALS FAILED")

@@ -1,51 +1,58 @@
-# Task Ledger — emperor-time self-application (excavate thin-alias polish)
+# Task Ledger — emperor-time self-application (archaeology VHDL leaf)
 
-- **Task:** Polish excavate thin aliases so `scripts/excavate.sh` / `excavate.ps1` call `scripts/lib/identify.py` directly (no hop through identify twins); eval + version lockstep. Survey semantics unchanged.
-- **Client quote:** Soft-ET consented Worthy Spend after v0.4.33 worktree.py create core. Superpowers method leaves closed on disk. NEXT: excavate thin-alias polish (diagnosing-superpowers still waits on session-discovery).
+- **Task:** Add lost-VHDL archaeology fixture + Jail pin + route/eval lockstep so `.vhd`/`.vhdl` fossils already surveyed by identify.py gain a runnable probe and fifth archaeology pin (after pas/asm/cbl/f90).
+- **Client quote:** Soft-ET consented Worthy Spend after v0.4.34 excavate thin-alias. Superpowers method leaves closed on disk. diagnosing-superpowers still waits on session-discovery — prefer other Worthy Spend. NEXT: archaeology VHDL leaf (identify already lists `*.vhd`/`*.vhdl`; archaeology.md names `.vhd` without fixture/Jail).
 - **Origin:** assigned
 - **Size:** standard
-- **Governing files:** SKILL.md → excavate.sh/excavate.ps1 → identify.py → emperor-excavate
-- **Tip at spend:** v0.4.34 (branch `et-manager/excavate-thin-alias`)
+- **Governing files:** SKILL.md → emperor-excavate → archaeology.md → identify.py → lost-vhd → archaeology-vhdl-manual.md
+- **Tip at spend:** v0.4.35 (branch `et-manager/archaeology-vhdl-leaf`)
 
 ## G0
-Quoted ask above. Ambiguity resolved: ship excavate thin-alias polish. Skip diagnosing-superpowers / embeddings / emperor.py dispatcher this turn. Do not re-announce or re-ship #33–#50 leaves (gate/identify/finish/eval/done/queue/forge/review-pack/dowse/receive/execute/subagent/parallel/install/boot.py/host.py/worktree.py/…).
+Quoted ask above. Ambiguity resolved: ship archaeology VHDL leaf. Skip diagnosing-superpowers / embeddings / emperor.py dispatcher this turn. Do not re-announce or re-ship #33–#51 leaves (gate/identify/finish/eval/done/queue/forge/review-pack/dowse/receive/execute/subagent/parallel/install/boot.py/host.py/worktree.py/excavate thin-alias/…).
 
 ## G1 Acceptance criteria
-1. SKILL.md version ≥ 0.4.34 and names five chains + six vows.
-2. `scripts/excavate.sh` / `excavate.ps1` call `lib/identify.py` directly (contain `lib/identify.py`; do not exec identify.sh / identify.ps1).
-3. Excavate survey smoke matches identify (`== identify` header) on a fixture path.
-4. Plugin/marketplace/SKILL lockstep 0.4.34; bakeoff + honesty name the excavate thin alias leaf; CHANGELOG has 0.4.34.
-5. Eval locks thin excavate twins + line caps + suite green.
-6. Live defect-rate vs Superpowers stays **UNVERIFIABLE**.
+1. SKILL.md version ≥ 0.4.35 and names five chains + six vows; Jail pins include archaeology-vhdl-manual.md.
+2. `evals/fixtures/lost-vhd/HELLO.VHD` exists; identify survey prints `1 *.vhd`.
+3. Jail pin `references/archaeology-vhdl-manual.md` cites GHDL Invoking GHDL Analysis/Elaboration/Run with URL + access date + quote.
+4. PROBE.md ledgers GHDL 5.x `ghdl -a/-e/-r` VERIFIED; dialect year / vendor sim stay CONJECTURE or UNVERIFIABLE where due.
+5. Route triggers include `vhdl` / `ghdl` / `.vhd` / `.vhdl` → excavate; `route.py hello.vhd` → emperor-excavate.
+6. Plugin/marketplace/SKILL lockstep 0.4.35; bakeoff + honesty name the lost-vhd leaf; CHANGELOG has 0.4.35.
+7. Eval locks fixture + pin + triggers + route + suite green.
+8. Live defect-rate vs Superpowers stays **UNVERIFIABLE**.
 
 ## Out of scope
 - emperor.py dispatcher / route embeddings
 - diagnosing-superpowers session diagnosis leaf (needs transcript-discovery infra)
 - Whole Superpowers diagnosing skill vendored into always-on prompt
-- Rewriting identify.py survey semantics / fossil table
-- Rewriting worktree.py create or worktree_iso isolation HARD-GATE
+- Rewriting identify.py survey semantics / fossil table (*.vhd already present)
+- IEEE Std 1076 purchased PDF clause hunt
+- ModelSim / Vivado / NVC / synthesis / std_logic rewrite
 - Live multi-vendor bake-off numbers
-- Redo of #33–#50 (including worktree.py / boot.py / install.py / dowse.py / …)
+- Redo of #33–#51 (including excavate thin-alias / worktree.py / boot.py / …)
 
 ## G2
 Rejected alternative: slim diagnosing-emperor HARD-GATE (citation iron law + intake-before-analysis).
-Why: Superpowers diagnosing still needs session-discovery paths ET lacks this turn; excavate thin-alias was the deferred Worthy Spend after worktree.py.
+Why: Superpowers diagnosing still needs session-discovery paths ET lacks this turn; archaeology VHDL closes a documented ET strength gap (`.vhd` named, no fixture/Jail).
 
 Rejected alternative: emperor.py unified dispatcher.
-Why: larger surface than one alias polish; portability twins still required; out of scope for this leaf.
+Why: larger surface than one archaeology leaf; portability twins still required; out of scope for this leaf.
+
+Rejected alternative: session-discovery Python core alone.
+Why: foundational for diagnosing but harness path contracts still sparse this turn; VHDL leaf is the deferred Worthy Spend after excavate thin-alias with identify fossils already waiting.
 
 ## G3
-excavate.sh / excavate.ps1 → identify.py on `et-manager/excavate-thin-alias`. See git log.
+lost-vhd fixture + archaeology-vhdl-manual.md + triggers/eval/honesty/bakeoff lockstep on `et-manager/archaeology-vhdl-leaf`. See git log.
 
 ## G4
 Claims:
 
 | Claim | Status | Evidence |
 |---|---|---|
-| SKILL.md is 0.4.34 orchestrator | TESTED | frontmatter `version: 0.4.34` on branch HEAD |
-| excavate.sh calls identify.py directly | TESTED | contains `lib/identify.py`; no `identify.sh` hop |
-| excavate.ps1 calls identify.py directly | TESTED | contains `lib/identify.py`; no `identify.ps1` hop |
-| excavate survey smoke matches identify | TESTED | tempfile fixture → `== identify` |
+| SKILL.md is 0.4.35 orchestrator | TESTED | frontmatter `version: 0.4.35` on branch HEAD |
+| lost-vhd identify finds *.vhd | TESTED | identify.py on fixture → `1 *.vhd` |
+| GHDL probe prints known string | TESTED | `ghdl -r hello` → `EMPEROR-TIME-VHD-PROBE-OK` (PROBE.md) |
+| Jail pin cites GHDL Invoking | TESTED | archaeology-vhdl-manual.md URL + Analysis/Elaboration/Run quote |
+| route hello.vhd → excavate | TESTED | route.py + triggers.json |
 | Eval suite still green | TESTED | `bash scripts/eval.sh` → EVALS PASSED |
 | Live defect-rate vs Superpowers | UNVERIFIABLE | no shared-task three-vendor bake-off run in this session |
 
@@ -72,4 +79,5 @@ PASS-WITH-CONDITIONS: local mechanism TESTED; live bake-off numbers UNVERIFIABLE
 - bash/ps1 install twins drifted (chain preview order; dowse.sh vs dowse.ps1 tip). Remediation: install.py (v0.4.31).
 - bash/ps1 silent-boot host report drifted (encoding + WSL interop probes). Remediation: host.py + boot.py (v0.4.32).
 - bash/ps1 worktree create twins reimplemented mutate path. Remediation: worktree.py (v0.4.33).
-- excavate thin aliases hopped identify.sh/ps1 instead of identify.py. Remediation: this leaf (v0.4.34).
+- excavate thin aliases hopped identify.sh/ps1 instead of identify.py. Remediation: v0.4.34.
+- archaeology.md named `.vhd` and identify listed `*.vhd`/`*.vhdl` without fixture, Jail pin, route triggers, or eval lock. Remediation: this leaf (v0.4.35).

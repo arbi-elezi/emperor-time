@@ -25,7 +25,7 @@ survey artifacts
 - For *this* repo, read `.emperor/survey.md` (silent boot already wrote it).
   For a *foreign* tree: `scripts/emperor identify <path>` or `scripts/emperor excavate <path>` (alias; Python core `scripts/lib/identify.py`; thin identify + excavate twins call the core directly).
   Quote the tail. Do not guess "this is probably Node" because you like Node.
-- Utterance router: `scripts/emperor route "hello.f90"` / `"gfortran …"` (Python `scripts/lib/route.py`, triggers excavate patterns) maps Fortran fossils to excavate — same as `.pas` / `.asm` / `.cbl`.
+- Utterance router: `scripts/emperor route "hello.f90"` / `"gfortran …"` / `"hello.vhd"` / `"ghdl …"` (Python `scripts/lib/route.py`, triggers excavate patterns) maps Fortran and VHDL fossils to excavate — same as `.pas` / `.asm` / `.cbl`.
 - Skipped probes are listed. Absence of a modern test runner is not a defect.
 
 ## Hunt (Jail, aimed at manuals not skills)
@@ -38,7 +38,7 @@ dialect. Hunt:
 
 Extract **one heading** that unblocks *this* probe. Pin the URL + date +
 quoted paragraph in the ledger. Memory of "how Pascal works" is CONJECTURE.
-Worked examples (Jail pins): [archaeology-pascal-manual.md](archaeology-pascal-manual.md) — ISO 7185 §6.10 program heading for HELLO.PAS; [archaeology-asm-manual.md](archaeology-asm-manual.md) — NASM 2.16.03 §7.3 SECTION pin for FOO.ASM; [archaeology-cobol-manual.md](archaeology-cobol-manual.md) — GnuCOBOL Programmer’s Guide §4 IDENTIFICATION DIVISION / PROGRAM-ID for HELLO.CBL; [archaeology-fortran-manual.md](archaeology-fortran-manual.md) — GNU Fortran Compiler §2.2 free-form dialect / `.f90` for HELLO.F90.
+Worked examples (Jail pins): [archaeology-pascal-manual.md](archaeology-pascal-manual.md) — ISO 7185 §6.10 program heading for HELLO.PAS; [archaeology-asm-manual.md](archaeology-asm-manual.md) — NASM 2.16.03 §7.3 SECTION pin for FOO.ASM; [archaeology-cobol-manual.md](archaeology-cobol-manual.md) — GnuCOBOL Programmer’s Guide §4 IDENTIFICATION DIVISION / PROGRAM-ID for HELLO.CBL; [archaeology-fortran-manual.md](archaeology-fortran-manual.md) — GNU Fortran Compiler §2.2 free-form dialect / `.f90` for HELLO.F90. [archaeology-vhdl-manual.md](archaeology-vhdl-manual.md) — GHDL Invoking GHDL Analysis/Elaboration/Run for HELLO.VHD.
 
 ## Recover
 
