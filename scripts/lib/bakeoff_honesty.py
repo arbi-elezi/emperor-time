@@ -86,6 +86,11 @@ LEAVES: list[tuple[str, str, tuple[str, ...]]] = [
     ("install-py", "scripts/lib/install.py", ("install.py", "install")),
     ("host-py", "scripts/lib/host.py", ("host.py", "host.env")),
     ("boot-py", "scripts/lib/boot.py", ("boot.py", "silent-boot")),
+    (
+        "worktree-py",
+        "scripts/lib/worktree.py",
+        ("worktree.py", "worktree"),
+    ),
 ]
 
 

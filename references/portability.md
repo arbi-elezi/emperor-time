@@ -19,7 +19,7 @@ prompt form.
 | **Ollama / local** | Bake `adapters/generic/EMPEROR_TIME.core.md` into a Modelfile `SYSTEM` | Always-on persona — see `adapters/ollama/` |
 | **Any open-weight runner** (llama.cpp, LM Studio, vLLM, …) | Paste `adapters/generic/EMPEROR_TIME.core.md` as the system prompt | Always-on |
 
-`scripts/lib/install.py` (thin `install.sh` / `install.ps1`) automate the top rows. Silent boot is `scripts/lib/boot.py` + `scripts/lib/host.py` (thin `boot.sh` / `boot.ps1`).
+`scripts/lib/install.py` (thin `install.sh` / `install.ps1`) automate the top rows. Silent boot is `scripts/lib/boot.py` + `scripts/lib/host.py` (thin `boot.sh` / `boot.ps1`). Worktree create is `scripts/lib/worktree.py` (thin `worktree.sh` / `worktree.ps1`).
 
 ## The distillation ladder
 
