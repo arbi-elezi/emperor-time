@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.4.15
+- Archaeology Fortran leaf: `evals/fixtures/lost-f90/HELLO.F90` + identify smoke; GNU Fortran 14.2 boot probe VERIFIED (`gfortran -o`); dialect labels honest (CONJECTURE / UNVERIFIABLE where due)
+- Jail pin `references/archaeology-fortran-manual.md` — GNU Fortran Compiler §2.2 free-form dialect / file-extension source form
+- Catalog + SKILL.md + archaeology.md link the fourth pin alongside Pascal, ASM, and COBOL; eval locks `*.f90` identify on lost-f90
+- Plugin, marketplace, and SKILL.md at 0.4.15
+
 ## 0.4.14
 - Verification-before-completion / evidence HARD-GATE leaf: Superpowers `verification-before-completion` → **The Iron Law** + **The Gate Function** only, adapted into `skills/emperor-verify/verification-checklist.md` (Chain Jail extract-aspect)
 - Python core `scripts/lib/evidence.py` prints EVIDENCE/STEP/MUST card, rejects step skips (`--advance`), hard-gates unverified completion claims (`--reject-unverified`); thin `evidence.sh` / `evidence.ps1`; `emperor evidence` on bash/ps1/zsh/cmd peers

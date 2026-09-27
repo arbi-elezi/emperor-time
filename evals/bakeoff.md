@@ -61,6 +61,7 @@ mean **disk + eval**, not live multi-vendor win rates.
 | archaeology Pascal | `evals/fixtures/lost-pas/` + Jail pin | TESTED |
 | archaeology ASM | `evals/fixtures/lost-asm/` + Jail pin | TESTED |
 | archaeology COBOL | `evals/fixtures/lost-cbl/` + Jail pin | TESTED |
+| archaeology Fortran | `evals/fixtures/lost-f90/` + Jail pin | TESTED |
 
 Honesty helper: `scripts/lib/bakeoff_honesty.py` fails if this inventory
 drifts from disk or if live-defect-rate is mislabeled.

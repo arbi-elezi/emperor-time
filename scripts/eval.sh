@@ -169,6 +169,15 @@ ID_OUT="$(bash "$ROOT/scripts/identify.sh" "$ROOT/evals/fixtures/lost-cbl" 2>&1)
 echo "$ID_OUT" | grep -E -q '[0-9]+ \*\.cbl' || { echo "EVAL FAIL: identify missed *.cbl on lost-cbl"; fail=1; }
 
 
+echo "== fixture: lost-f90 identify finds *.f90 =="
+need "evals/fixtures/lost-f90/HELLO.F90"
+need "evals/fixtures/lost-f90/README.md"
+need "evals/fixtures/lost-f90/PROBE.md"
+need "references/archaeology-fortran-manual.md"
+ID_OUT="$(bash "$ROOT/scripts/identify.sh" "$ROOT/evals/fixtures/lost-f90" 2>&1)" || true
+echo "$ID_OUT" | grep -E -q '[0-9]+ \*\.f90' || { echo "EVAL FAIL: identify missed *.f90 on lost-f90"; fail=1; }
+
+
 
 
 echo "== plan header (Superpowers leaf) =="
@@ -544,8 +553,9 @@ echo "$HON_OUT" | grep -q '^LIVE_DEFECT_RATE=UNVERIFIABLE' || { echo "EVAL FAIL:
 grep -q 'UNVERIFIABLE' "$ROOT/evals/bakeoff.md" || { echo "EVAL FAIL: bakeoff.md missing UNVERIFIABLE"; fail=1; }
 grep -q 'TESTED' "$ROOT/evals/bakeoff.md" || { echo "EVAL FAIL: bakeoff.md missing TESTED"; fail=1; }
 grep -q 'lost-cbl' "$ROOT/evals/bakeoff.md" || { echo "EVAL FAIL: bakeoff.md missing lost-cbl inventory"; fail=1; }
+grep -q 'lost-f90' "$ROOT/evals/bakeoff.md" || { echo "EVAL FAIL: bakeoff.md missing lost-f90 inventory"; fail=1; }
 grep -q 'UNVERIFIABLE' "$ROOT/evals/fixtures/this-upgrade.md" || { echo "EVAL FAIL: this-upgrade.md missing UNVERIFIABLE"; fail=1; }
-grep -q '0.4.14' "$ROOT/evals/fixtures/this-upgrade.md" || { echo "EVAL FAIL: this-upgrade.md missing 0.4.14 tip"; fail=1; }
+grep -q '0.4.15' "$ROOT/evals/fixtures/this-upgrade.md" || { echo "EVAL FAIL: this-upgrade.md missing 0.4.15 tip"; fail=1; }
 
 if [[ "$fail" -ne 0 ]]; then
   echo "EVALS FAILED"
