@@ -1,17 +1,8 @@
 #!/usr/bin/env bash
-# Silent session defaults. User never types this.
-# Writes .emperor/host.env and .emperor/survey.md. Optionally .emperor/eval.log.
+# Thin twin: silent session boot via Python core (host.env + survey + eval.log).
+# User never types this. Always exits 0.
 set -uo pipefail
-HERE="$(cd "$(dirname "$0")" && pwd)"
-# shellcheck disable=SC1091
-. "$HERE/lib/host.sh"
-mkdir -p .emperor
-emperor_host_report > .emperor/host.env
-bash "$HERE/identify.sh" . > .emperor/survey.md 2>/dev/null || true
-if [[ -f "$HERE/eval.sh" && -f SKILL.md ]]; then
-  bash "$HERE/eval.sh" > .emperor/eval.log 2>&1 || true
-fi
-if [[ "${EMPEROR_BOOT_VERBOSE:-0}" == 1 ]]; then
-  cat .emperor/host.env
-fi
-exit 0
+ROOT="$(cd "$(dirname "$0")/.." && pwd)"
+# Hint shell for host.py when /proc parent is ambiguous.
+export EMPEROR_SHELL="${EMPEROR_SHELL:-bash}"
+exec python3 "$ROOT/scripts/lib/boot.py" "$@"

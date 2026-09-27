@@ -201,12 +201,21 @@ def run_evals(root: Path) -> int:
         h.need(f"scripts/{pair}.ps1")
 
     # ---- silent-boot PS ----
-    h.section("silent-boot PS twin uses host.ps1")
-    h.require_contains("lib/host.ps1", "scripts/boot.ps1", "boot.ps1 does not source lib/host.ps1")
+    h.section("silent-boot PS twin + host report helpers")
+    h.require_contains(
+        "lib/boot.py",
+        "scripts/boot.ps1",
+        "boot.ps1 thin twin missing boot.py",
+    )
     h.require_contains(
         "Write-EmperorHostReport",
         "scripts/lib/host.ps1",
         "host.ps1 missing Write-EmperorHostReport",
+    )
+    h.require_contains(
+        "host.py",
+        "scripts/lib/host.ps1",
+        "host.ps1 Write-EmperorHostReport missing host.py delegate",
     )
     h.require_contains("host.env", "scripts/emperor.ps1", "emperor.ps1 missing silent-boot host.env check")
     h.require_contains(
@@ -1711,6 +1720,83 @@ def run_evals(root: Path) -> int:
     )
     h.pass_msg("install.py thin twins + dry-run + harness map")
 
+    # ---- boot.py / host.py silent-boot ----
+    h.section("boot.py + host.py Python core")
+    h.need("scripts/lib/host.py")
+    h.need("scripts/lib/boot.py")
+    h.need("scripts/boot.sh")
+    h.need("scripts/boot.ps1")
+    h.bash_n("scripts/boot.sh", "boot.sh syntax")
+    h.py_compile("scripts/lib/host.py", "host.py compile")
+    h.py_compile("scripts/lib/boot.py", "boot.py compile")
+    h.require_contains(
+        "lib/boot.py",
+        "scripts/boot.sh",
+        "boot.sh thin twin missing boot.py",
+    )
+    h.require_contains(
+        "lib/boot.py",
+        "scripts/boot.ps1",
+        "boot.ps1 thin twin missing boot.py",
+    )
+    boot_sh_lines = len(h.read("scripts/boot.sh").splitlines())
+    boot_ps1_lines = len(h.read("scripts/boot.ps1").splitlines())
+    if boot_sh_lines > 20:
+        h.fail_msg("boot.sh should be thin twin (<=20 lines)")
+    if boot_ps1_lines > 30:
+        h.fail_msg("boot.ps1 should be thin twin (<=30 lines)")
+    h.require_contains(
+        "host.py",
+        "scripts/lib/host.sh",
+        "host.sh emperor_host_report missing host.py delegate",
+    )
+    rc, report = h.run_py("scripts/lib/host.py", "--report")
+    if rc != 0:
+        h.fail_msg("host.py --report should exit 0")
+    for key in ("os=", "shell=", "wsl=", "win_interop=", "encoding="):
+        if key not in report:
+            h.fail_msg(f"host.py report missing {key}")
+            break
+    else:
+        h.pass_msg("host.py report keys")
+    rcj, jout = h.run_py("scripts/lib/host.py", "--as-json")
+    if rcj != 0 or '"os"' not in jout or '"shell"' not in jout:
+        h.fail_msg("host.py --as-json should emit os/shell")
+    else:
+        h.pass_msg("host.py --as-json")
+    with tempfile.TemporaryDirectory(prefix="et-boot-") as tmp:
+        rc_b, _ = h.run_py(
+            "scripts/lib/boot.py",
+            "--root",
+            tmp,
+            "--skip-eval",
+        )
+        host_env = Path(tmp) / ".emperor" / "host.env"
+        survey = Path(tmp) / ".emperor" / "survey.md"
+        if rc_b != 0:
+            h.fail_msg("boot.py --skip-eval should exit 0")
+        elif not host_env.is_file():
+            h.fail_msg("boot.py should write .emperor/host.env")
+        elif "os=" not in host_env.read_text(encoding="utf-8"):
+            h.fail_msg("boot.py host.env missing os=")
+        elif not survey.is_file():
+            h.fail_msg("boot.py should write .emperor/survey.md")
+        else:
+            h.pass_msg("boot.py writes host.env + survey.md")
+    rc_sh, _ = h.run_sh(
+        "scripts/boot.sh",
+        "--skip-eval",
+        "--root",
+        str(root),
+        env={"EMPEROR_BOOT_SKIP_EVAL": "1"},
+    )
+    # boot.sh always exits 0; just ensure it runs
+    if rc_sh != 0:
+        h.fail_msg("boot.sh --skip-eval should exit 0")
+    else:
+        h.pass_msg("boot.sh thin twin runs")
+    h.pass_msg("boot.py + host.py thin twins + report + smoke")
+
     # bakeoff honesty
     h.section("bakeoff honesty (mechanism inventory + UNVERIFIABLE live rate)")
     h.need("evals/bakeoff.md")
@@ -1746,6 +1832,10 @@ def run_evals(root: Path) -> int:
     h.require_contains("install.py", "evals/bakeoff.md", "bakeoff.md missing install.py inventory")
     h.require_contains("install.py", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing install.py")
     h.require_contains("0.4.31", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing 0.4.31 tip")
+    h.require_contains("boot.py", "evals/bakeoff.md", "bakeoff.md missing boot.py inventory")
+    h.require_contains("host.py", "evals/bakeoff.md", "bakeoff.md missing host.py inventory")
+    h.require_contains("boot.py", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing boot.py")
+    h.require_contains("0.4.32", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing 0.4.32 tip")
 
     if h.fail != 0:
         print("EVALS FAILED")

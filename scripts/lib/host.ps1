@@ -55,7 +55,15 @@ function Invoke-EmperorWsl([string[]]$Cmd) {
     return $LASTEXITCODE
 }
 function Write-EmperorHostReport {
-    # Same keys as emperor_host_report in host.sh (silent-boot host.env line).
+    # Canonical report line lives in host.py (closes bash↔ps1 drift).
+    $hostPy = Join-Path $PSScriptRoot 'host.py'
+    if (-not (Test-Path $hostPy)) {
+        $hostPy = Join-Path (Join-Path $PSScriptRoot 'lib') 'host.py'
+    }
+    if ((Test-Path $hostPy) -and (Get-Command python3 -ErrorAction SilentlyContinue)) {
+        & python3 $hostPy --report
+        return
+    }
     $enc = if ($env:EMPEROR_ENCODING) { $env:EMPEROR_ENCODING } else { 'UTF-8' }
     'os={0} shell={1} wsl={2} win_interop={3} encoding={4} mnt={5} win_root={6}' -f `
         $script:EmperorOs, $script:EmperorShell, $script:EmperorWsl, `

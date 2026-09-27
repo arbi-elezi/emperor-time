@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.4.32
+- Silent-boot Python core: `scripts/lib/host.py` owns host detect + host.env report line; `scripts/lib/boot.py` owns `.emperor/host.env` + survey.md + optional eval.log
+- Thin `boot.sh` / `boot.ps1` twins — closes bash↔ps1 twin drift (host.sh C.UTF-8 + cmd/powershell/pwsh WSL interop vs host.ps1 UTF-8 + cmd-only)
+- `emperor_host_report` / `Write-EmperorHostReport` delegate to `host.py`; shell twins keep sourceable EMPEROR_* + path helpers for the dispatcher
+- Eval locks compile + thin twins + report keys + `--as-json` + boot smoke (`--skip-eval`); bakeoff + honesty name the leaf
+- Plugin, marketplace, and SKILL.md at 0.4.32
+
+
 ## 0.4.31
 - Install Python core: `scripts/lib/install.py` owns harness map, dest resolve, copy set, chain expose, activation tips, and dry-run
 - Thin `install.sh` / `install.ps1` twins — closes bash↔ps1 twin drift (ps1 previewed chain destinations before copy; first-run tip said `dowse.ps1` vs `dowse.sh`)
