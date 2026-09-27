@@ -39,7 +39,7 @@ fi
 ps1="$ROOT/${TOOL}.ps1"
 sh="$ROOT/${TOOL}.sh"
 
-if [[ "$EMPEROR_WSL" -eq 1 && "${EMPEROR_FORCE_WIN:-0}" == 1 && -f "$ps1" ]]; then
+if [[ "$EMPEROR_WSL" -eq 1 && "${EMPEROR_FORCE_WIN:-0}" -eq 1 && -f "$ps1" ]]; then
   _ps=$(emperor_win_ps) || { echo "emperor: WSL but no Windows PowerShell interop" >&2; exit 127; }
   _winroot=$(emperor_to_win "$ROOT")
   exec "$_ps" -NoProfile -File "${_winroot}\\${TOOL}.ps1" "$@"
