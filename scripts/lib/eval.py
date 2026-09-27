@@ -318,6 +318,7 @@ def run_evals(root: Path) -> int:
     h.require_contains("shebang", "scripts/lib/identify.py", "identify.py missing shebang survey")
     h.require_contains("*.f90", "scripts/lib/identify.py", "identify.py missing *.f90 fossil")
     h.require_contains("*.vhd", "scripts/lib/identify.py", "identify.py missing *.vhd fossil")
+    h.require_contains("*.adb", "scripts/lib/identify.py", "identify.py missing *.adb fossil")
     h.require_contains(
         "scripts/lib/identify.py",
         "references/archaeology.md",
@@ -371,6 +372,8 @@ def run_evals(root: Path) -> int:
             ("gfortran build", "emperor-excavate", "route gfortran → excavate (not build)"),
             ("hello.vhd", "emperor-excavate", "route hello.vhd → excavate"),
             ("ghdl -a HELLO.VHD", "emperor-excavate", "route ghdl → excavate"),
+            ("hello.adb", "emperor-excavate", "route hello.adb → excavate"),
+            ("gnatmake HELLO.ADB", "emperor-excavate", "route gnatmake → excavate"),
             ("queue next", "emperor-queue", "route queue next → queue"),
             ("blocked task", "emperor-queue", "route blocked task → queue"),
             ("red build", "emperor-heal", "route red build → heal"),
@@ -510,6 +513,13 @@ def run_evals(root: Path) -> int:
             "HELLO.VHD",
             r"[0-9]+ \*\.vhd",
             ["references/archaeology-vhdl-manual.md"],
+        ),
+        (
+            "lost-ada identify finds *.adb",
+            "lost-ada",
+            "HELLO.ADB",
+            r"[0-9]+ \*\.adb",
+            ["references/archaeology-ada-manual.md"],
         ),
     ]
     # The loop above was messy — clear fail state not affected; rewrite cleanly below by
@@ -668,6 +678,10 @@ def run_evals(root: Path) -> int:
     h.require_contains(".vhd", "evals/triggers.json", "triggers missing .vhd excavate pattern")
     h.require_contains("vhdl", "evals/triggers.json", "triggers missing vhdl excavate pattern")
     h.require_contains("ghdl", "evals/triggers.json", "triggers missing ghdl excavate pattern")
+    h.require_contains(".adb", "evals/triggers.json", "triggers missing .adb excavate pattern")
+    h.require_contains("ada", "evals/triggers.json", "triggers missing ada excavate pattern")
+    h.require_contains("gnat", "evals/triggers.json", "triggers missing gnat excavate pattern")
+    h.require_contains("gnatmake", "evals/triggers.json", "triggers missing gnatmake excavate pattern")
     _, rout_py = h.run_py("scripts/lib/route.py", "finish the branch")
     if "emperor-forge" not in rout_py:
         h.fail_msg("route.py finish the branch → forge")
@@ -677,11 +691,17 @@ def run_evals(root: Path) -> int:
     _, rout_vhd = h.run_py("scripts/lib/route.py", "hello.vhd")
     if "emperor-excavate" not in rout_vhd:
         h.fail_msg("route.py hello.vhd → excavate")
+    _, rout_ada = h.run_py("scripts/lib/route.py", "hello.adb")
+    if "emperor-excavate" not in rout_ada:
+        h.fail_msg("route.py hello.adb → excavate")
+    _, rout_gnat = h.run_py("scripts/lib/route.py", "gnatmake HELLO.ADB")
+    if "emperor-excavate" not in rout_gnat:
+        h.fail_msg("route.py gnatmake → excavate")
     rc, _ = h.run_py("scripts/lib/route.py", "what is 2+2")
     if rc == 0:
         h.fail_msg("route.py should miss trivia")
     else:
-        h.pass_msg("route.py misses trivia + fortran/vhdl excavate + thin twins")
+        h.pass_msg("route.py misses trivia + fortran/vhdl/ada excavate + thin twins")
 
     # ---- MUST-route doctrine ----
     h.section("MUST-route doctrine + adapters")
@@ -1983,8 +2003,13 @@ def run_evals(root: Path) -> int:
     h.require_contains("diagnose.py", "evals/bakeoff.md", "bakeoff.md missing diagnose.py inventory")
     h.require_contains("diagnose.py", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing diagnose.py")
     h.require_contains("0.4.37", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing 0.4.37 tip")
-    h.require_contains("0.4.37", ".claude-plugin/plugin.json", "plugin.json not at 0.4.37")
     h.require_contains("0.4.37", "CHANGELOG.md", "CHANGELOG missing 0.4.37")
+    h.require_contains("lost-ada", "evals/bakeoff.md", "bakeoff.md missing lost-ada inventory")
+    h.require_contains("archaeology-ada-manual.md", "SKILL.md", "SKILL.md missing ada Jail pin")
+    h.require_contains("0.4.38", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing 0.4.38 tip")
+    h.require_contains("lost-ada", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing lost-ada")
+    h.require_contains("0.4.38", ".claude-plugin/plugin.json", "plugin.json not at 0.4.38")
+    h.require_contains("0.4.38", "CHANGELOG.md", "CHANGELOG missing 0.4.38")
 
     # session-discovery
     h.section("session-discovery locate HARD-GATE leaf")

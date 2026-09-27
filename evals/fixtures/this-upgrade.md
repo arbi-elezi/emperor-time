@@ -1,57 +1,56 @@
-# Task Ledger — emperor-time self-application (diagnosing HARD-GATE)
+# Task Ledger — emperor-time self-application (Ada archaeology Jail pin)
 
-- **Task:** Add diagnosing HARD-GATE Python core + thin twins + heal leaf + reference + route/eval lockstep for citation iron law + intake-before-analysis, without vendoring whole diagnosing-superpowers.
-- **Client quote:** Soft-ET consented Worthy Spend after v0.4.36 session-discovery. Remaining Superpowers gap: diagnosing-superpowers HARD-GATEs (citation + intake). Ship diagnose leaf (v0.4.37). Do not vendor full skill.
+- **Task:** Add Ada archaeology Jail pin leaf (sixth language after pas/asm/cbl/f90/vhd): lost-ada fixture + GNAT gnatmake probe + manual pin + identify/route/eval/honesty lockstep.
+- **Client quote:** Soft-ET consented Worthy Spend after v0.4.37 diagnosing. Ship Ada archaeology leaf (v0.4.38). Chain Jail leaf only; do not vendor foreign whole skills.
 - **Origin:** assigned
 - **Size:** standard
-- **Governing files:** SKILL.md → emperor-heal → diagnosing.md → diagnose.py → references/diagnosing.md
-- **Tip at spend:** v0.4.37 (branch `et-manager/diagnosing-hard-gate`)
+- **Governing files:** SKILL.md → archaeology.md → archaeology-ada-manual.md → identify.py → route/triggers → eval
+- **Tip at spend:** v0.4.38 (branch `et-manager/archaeology-ada`)
 
 ## G0
-Quoted ask above. Ambiguity resolved: ship diagnosing HARD-GATE (intake + citation) only. Skip full diagnosing-emperor skill, analyst prompts, templates, bundles, embeddings, emperor.py dispatcher this turn. Do not re-announce or re-ship #33–#53 leaves.
+Quoted ask above. Ambiguity resolved: ship Ada archaeology Jail pin only. Skip embeddings, emperor.py dispatcher, other heal leaves, full Superpowers skill vendoring this turn. Do not re-announce or re-ship #33–#54 leaves.
 
 ## G1 Acceptance criteria
-1. SKILL.md version ≥ 0.4.37; `scripts/lib/diagnose.py` prints DIAGNOSE / INTAKE / CITE / MUST card.
-2. Thin `scripts/diagnose.sh` / `diagnose.ps1` exec the Python core; emperor peers dispatch `diagnose`.
-3. Honesty: `--reject-uncited` and `--reject-skip-intake` HARD-GATE exit non-zero; `--check-citation` accepts path:line only.
-4. Skill leaf `skills/emperor-heal/diagnosing.md` + `references/diagnosing.md` cite obra/superpowers MIT Core principle + Intake before analysis (URL + access date 2026-09-27).
-5. Route triggers include diagnose phrases → emperor-heal; `route.py` matches.
-6. Plugin/marketplace/SKILL lockstep 0.4.37; bakeoff + honesty name diagnose.py; CHANGELOG has 0.4.37.
+1. SKILL.md version ≥ 0.4.38; `evals/fixtures/lost-ada/HELLO.ADB` exists with PROBE.md / README.md / identify-smoke.txt.
+2. Jail pin `references/archaeology-ada-manual.md` cites GNAT UGN Building with gnatmake (URL + access date 2026-09-27 + quote).
+3. `identify.py` fossils include `*.adb` / `*.ads` / `*.ada`; identify on lost-ada finds `*.adb`.
+4. Route triggers include ada/gnat/gnatmake/.adb/.ads → excavate; `route.py` matches.
+5. Catalog + SKILL.md + archaeology.md link the sixth pin; bakeoff + honesty name lost-ada.
+6. Plugin/marketplace/SKILL lockstep 0.4.38; CHANGELOG has 0.4.38.
 7. Eval locks new files/version/triggers; suite green.
 8. Live defect-rate vs Superpowers stays **UNVERIFIABLE**.
 
 ## Out of scope
-- Full diagnosing-emperor / diagnosing-superpowers skill (analyst prompts, case/report templates, bundles, GitHub issues, scrub)
-- emperor.py dispatcher / route embeddings
-- Mutating or scrubbing session transcript files
-- Rewriting session-discovery / debug-four-phases
+- embeddings / emperor.py unified dispatcher
+- Full Superpowers skill vendoring
+- Other people's PRs
+- root-cause-tracing / other heal leaves this turn
 - Live multi-vendor bake-off numbers
-- Redo of #33–#53
+- Redo of #33–#54
 
 ## G2
-Rejected alternative: vendor whole diagnosing-superpowers under skills/.
-Why: standing rule — extract citation + intake HARD-GATEs only; full skill is prompts+templates ET does not need yet.
+Rejected alternative: vendor whole Ada skill / AdaCore training pack under skills/.
+Why: standing rule — Chain Jail leaf only (fixture + one manual heading + route/identify locks).
 
 Rejected alternative: emperor.py unified dispatcher.
-Why: larger surface than one HARD-GATE leaf; out of scope.
+Why: larger surface than one archaeology leaf; out of scope.
 
-Rejected alternative: another archaeology Jail pin.
-Why: diagnosing is the named remaining Superpowers gap; session-discovery already unblocked it.
+Rejected alternative: another Superpowers heal HARD-GATE.
+Why: Ada is the named archaeology sixth pin this turn.
 
 ## G3
-diagnose.py + thin twins + heal leaf + reference + triggers/eval/honesty/bakeoff lockstep on `et-manager/diagnosing-hard-gate`. See git log.
+lost-ada fixture + archaeology-ada-manual.md + identify/route/eval/honesty/bakeoff lockstep on `et-manager/archaeology-ada`. See git log.
 
 ## G4
 Claims:
 
 | Claim | Status | Evidence |
 |---|---|---|
-| SKILL.md is 0.4.37 orchestrator | TESTED | frontmatter `version: 0.4.37` on branch HEAD |
-| diagnose.py prints checklist card | TESTED | `DIAGNOSE checklist=yes` + INTAKE/CITE/MUST |
-| --reject-uncited / --reject-skip-intake hard-gate | TESTED | exit non-zero + REJECT lines |
-| --check-citation path:line | TESTED | OK with path:line; FAIL without |
-| Thin twins call Python core | TESTED | diagnose.sh/ps1 contain diagnose.py |
-| Route diagnose → heal | TESTED | route.py + triggers.json |
+| SKILL.md is 0.4.38 orchestrator | TESTED | frontmatter `version: 0.4.38` on branch HEAD |
+| HELLO.ADB compiles and runs under GNATMAKE 13.3.0 | TESTED | PROBE.md quotes `EMPEROR-TIME-ADA-PROBE-OK` |
+| identify finds `*.adb` on lost-ada | TESTED | identify-smoke.txt + eval lock |
+| Route ada/gnat/.adb → excavate | TESTED | route.py + triggers.json |
+| Jail pin cites GNAT UGN gnatmake | TESTED | archaeology-ada-manual.md URL + 2026-09-27 |
 | Eval suite still green | TESTED | `bash scripts/eval.sh` → EVALS PASSED |
 | Live defect-rate vs Superpowers | UNVERIFIABLE | no shared-task three-vendor bake-off run in this session |
 
@@ -81,4 +80,5 @@ PASS-WITH-CONDITIONS: local mechanism TESTED; live bake-off numbers UNVERIFIABLE
 - excavate thin aliases hopped identify.sh/ps1 instead of identify.py. Remediation: v0.4.34.
 - archaeology.md named `.vhd` and identify listed `*.vhd`/`*.vhdl` without fixture, Jail pin, route triggers, or eval lock. Remediation: v0.4.35.
 - diagnosing-superpowers blocked: ET lacked a mechanical session-discovery locate card with verified-path honesty. Remediation: session_discovery.py (v0.4.36).
-- diagnosing-superpowers blocked: ET lacked mechanical intake-before-analysis + path:line citation HARD-GATEs after locate. Remediation: this leaf (v0.4.37).
+- diagnosing-superpowers blocked: ET lacked mechanical intake-before-analysis + path:line citation HARD-GATEs after locate. Remediation: diagnose.py (v0.4.37).
+- archaeology.md / identify lacked Ada (`.adb`/`.ads`) fixture, Jail pin, route triggers, or eval lock after five prior language pins. Remediation: this leaf (v0.4.38).

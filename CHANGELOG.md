@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.4.38
+- Archaeology Ada leaf: `evals/fixtures/lost-ada/HELLO.ADB` + identify smoke; GNATMAKE 13.3.0 boot probe VERIFIED (`gnatmake` / run); dialect labels honest (CONJECTURE / UNVERIFIABLE where due)
+- Jail pin `references/archaeology-ada-manual.md` — GNAT User's Guide Building with gnatmake (procedure body as main unit)
+- Catalog + SKILL.md + archaeology.md link the sixth pin alongside Pascal, ASM, COBOL, Fortran, and VHDL; route triggers gain `ada` / `gnat` / `gnatmake` / `.adb` / `.ads`; eval locks `*.adb` identify on lost-ada
+- Plugin, marketplace, and SKILL.md at 0.4.38
+
+
 ## 0.4.37
 - Diagnosing HARD-GATE leaf: `scripts/lib/diagnose.py` prints DIAGNOSE / INTAKE / CITE / MUST card (citation iron law + intake-before-analysis)
 - Thin `diagnose.sh` / `diagnose.ps1`; emperor peers gain `diagnose`; `--reject-uncited` / `--reject-skip-intake` HARD-GATEs; `--check-citation` validator
