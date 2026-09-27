@@ -110,6 +110,13 @@ if [[ -x "$ROOT/scripts/route.sh" || -f "$ROOT/scripts/route.sh" ]]; then
   fi
 fi
 
+echo "== fixture: lost-pas identify finds *.pas =="
+need "evals/fixtures/lost-pas/HELLO.PAS"
+need "evals/fixtures/lost-pas/README.md"
+need "evals/fixtures/lost-pas/PROBE.md"
+ID_OUT="$(bash "$ROOT/scripts/identify.sh" "$ROOT/evals/fixtures/lost-pas" 2>&1)" || true
+echo "$ID_OUT" | grep -E -q '[0-9]+ \*\.pas' || { echo "EVAL FAIL: identify missed *.pas on lost-pas"; fail=1; }
+
 if [[ "$fail" -ne 0 ]]; then
   echo "EVALS FAILED"
   exit 1
