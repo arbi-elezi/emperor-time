@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.4.18
+- Finish menu Python core: `scripts/lib/finish.py` owns ENV/MENU detection (worktree kind, origin/HEAD base_guess, cleanup_owned)
+- Thin `finish.sh` / `finish.ps1` twins — closes bash↔ps1 twin drift (ps1 had dropped origin/HEAD fallback)
+- `skills/emperor-forge/finish-menu.md` + bakeoff inventory point at the Python lock; eval locks compile + thin twins + ENV/MENU smoke
+- Plugin, marketplace, and SKILL.md at 0.4.18
+
 ## 0.4.17
 - Artifact survey Python core: `scripts/lib/identify.py` owns extensions + named fossils + shebangs (always exit 0)
 - Thin `identify.sh` / `identify.ps1` twins — closes bash↔ps1 twin drift (ps1 had dropped shebangs section; fossil/Makefile counting diverged)

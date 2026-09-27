@@ -26,6 +26,7 @@ for f in \
   scripts/gate.sh scripts/gate.ps1 \
   scripts/lib/gate.py \
   scripts/lib/identify.py \
+  scripts/lib/finish.py \
   scripts/done.sh scripts/done.ps1 \
   scripts/eval.sh scripts/eval.ps1 \
   scripts/emperor scripts/emperor.ps1 scripts/emperor.cmd scripts/emperor.zsh \
@@ -249,7 +250,13 @@ echo "== finish menu (forge aspect) =="
 need "skills/emperor-forge/finish-menu.md"
 need "scripts/finish.sh"
 need "scripts/finish.ps1"
+need "scripts/lib/finish.py"
 bash -n "$ROOT/scripts/finish.sh" || { echo "EVAL FAIL: finish.sh syntax"; fail=1; }
+python3 -m py_compile "$ROOT/scripts/lib/finish.py" || { echo "EVAL FAIL: finish.py compile"; fail=1; }
+grep -q 'lib/finish.py' "$ROOT/scripts/finish.sh" || { echo "EVAL FAIL: finish.sh thin twin missing finish.py"; fail=1; }
+grep -q 'lib/finish.py' "$ROOT/scripts/finish.ps1" || { echo "EVAL FAIL: finish.ps1 thin twin missing finish.py"; fail=1; }
+grep -q 'origin/HEAD' "$ROOT/scripts/lib/finish.py" || { echo "EVAL FAIL: finish.py missing origin/HEAD base_guess"; fail=1; }
+grep -q 'scripts/lib/finish.py' "$ROOT/skills/emperor-forge/finish-menu.md" || { echo "EVAL FAIL: finish-menu.md missing finish.py"; fail=1; }
 grep -q "Merge back to" "$ROOT/skills/emperor-forge/finish-menu.md" || { echo "EVAL FAIL: finish-menu missing merge option"; fail=1; }
 grep -q "typed word" "$ROOT/skills/emperor-forge/finish-menu.md" || { echo "EVAL FAIL: finish-menu missing discard confirm"; fail=1; }
 grep -q "finish-menu.md" "$ROOT/skills/emperor-forge/SKILL.md" || { echo "EVAL FAIL: forge skill missing finish-menu"; fail=1; }
@@ -257,6 +264,8 @@ grep -q 'finish|' "$ROOT/scripts/emperor" || { echo "EVAL FAIL: emperor bash mis
 FIN_OUT=$(bash "$ROOT/scripts/finish.sh" 2>&1) || true
 echo "$FIN_OUT" | grep -q '^ENV kind=' || { echo "EVAL FAIL: finish.sh missing ENV kind"; fail=1; }
 echo "$FIN_OUT" | grep -q '^MENU ' || { echo "EVAL FAIL: finish.sh missing MENU"; fail=1; }
+echo "$FIN_OUT" | grep -q 'base_guess=' || { echo "EVAL FAIL: finish missing base_guess"; fail=1; }
+echo "EVAL PASS: finish.py thin twins + ENV/MENU"
 out=$(bash "$ROOT/scripts/route.sh" "finish the branch" 2>/dev/null || true)
 echo "$out" | grep -q "emperor-forge" || { echo "EVAL FAIL: route finish the branch → forge"; fail=1; }
 
@@ -594,7 +603,8 @@ grep -q 'TESTED' "$ROOT/evals/bakeoff.md" || { echo "EVAL FAIL: bakeoff.md missi
 grep -q 'lost-cbl' "$ROOT/evals/bakeoff.md" || { echo "EVAL FAIL: bakeoff.md missing lost-cbl inventory"; fail=1; }
 grep -q 'lost-f90' "$ROOT/evals/bakeoff.md" || { echo "EVAL FAIL: bakeoff.md missing lost-f90 inventory"; fail=1; }
 grep -q 'UNVERIFIABLE' "$ROOT/evals/fixtures/this-upgrade.md" || { echo "EVAL FAIL: this-upgrade.md missing UNVERIFIABLE"; fail=1; }
-grep -q '0.4.16' "$ROOT/evals/fixtures/this-upgrade.md" || { echo "EVAL FAIL: this-upgrade.md missing 0.4.16 tip"; fail=1; }
+grep -q '0.4.18' "$ROOT/evals/fixtures/this-upgrade.md" || { echo "EVAL FAIL: this-upgrade.md missing 0.4.18 tip"; fail=1; }
+grep -q 'finish.py' "$ROOT/evals/fixtures/this-upgrade.md" || { echo "EVAL FAIL: this-upgrade.md missing finish.py"; fail=1; }
 grep -q 'gate.py' "$ROOT/evals/bakeoff.md" || { echo "EVAL FAIL: bakeoff.md missing gate.py inventory"; fail=1; }
 
 if [[ "$fail" -ne 0 ]]; then
