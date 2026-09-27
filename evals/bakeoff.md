@@ -67,11 +67,12 @@ mean **disk + eval**, not live multi-vendor win rates.
 | archaeology COBOL | `evals/fixtures/lost-cbl/` + Jail pin | TESTED |
 | archaeology Fortran | `evals/fixtures/lost-f90/` + Jail pin | TESTED |
 | archaeology VHDL | `evals/fixtures/lost-vhd/` + Jail pin | TESTED |
+| archaeology Ada | `evals/fixtures/lost-ada/` + Jail pin | TESTED |
 | mechanical gates (Python core) | `scripts/lib/gate.py` + thin `gate.sh`/`gate.ps1` | TESTED |
 | identify survey (Python core) | `scripts/lib/identify.py` + thin `identify.sh`/`identify.ps1` | TESTED |
 | structural eval (Python core) | `scripts/lib/eval.py` + thin `eval.sh`/`eval.ps1` | TESTED |
 | DONE probes (Python core) | `scripts/lib/done.py` + thin `done.sh`/`done.ps1` + `evals/fixtures/done-probes/` | TESTED |
-| route MVP (Fortran/VHDL excavate) | `scripts/lib/route.py` + thin `route.sh`/`route.ps1` + triggers `.f90`/`fortran`/`gfortran`/`.vhd`/`vhdl`/`ghdl` | TESTED |
+| route MVP (Fortran/VHDL/Ada excavate) | `scripts/lib/route.py` + thin `route.sh`/`route.ps1` + triggers `.f90`/`fortran`/`gfortran`/`.vhd`/`vhdl`/`ghdl`/`.adb`/`ada`/`gnat`/`gnatmake` | TESTED |
 | silent-boot zsh parity | `scripts/emperor.zsh` host.env auto-boot + host/boot/identify/excavate specials (bash twin) | TESTED |
 | queue picker (Python core) | `scripts/lib/queue.py` + thin `queue.sh`/`queue.ps1` (WIP=1, placeholder skip, gh/Linear/local) | TESTED |
 | forge PR (Python core) | `scripts/lib/forge.py` + thin `forge.sh`/`forge.ps1` (consent, DONE, title/G1 body, DRY) | TESTED |

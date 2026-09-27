@@ -1,0 +1,9 @@
+== identify evals/fixtures/lost-ada ==
+-- extensions --
+      2 md
+      1 txt
+      1 adb
+-- named fossils --
+1 *.adb
+-- shebangs --
+identify: done (read-only)

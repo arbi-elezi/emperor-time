@@ -211,7 +211,15 @@
         ".vhd",
         ".vhdl",
         " vhd",
-        "vhd "
+        "vhd ",
+        "ada",
+        "gnat",
+        "gnatmake",
+        ".adb",
+        ".ads",
+        ".ada",
+        " adb",
+        "adb "
       ],
       "tags": [
         "archaeology",
@@ -228,7 +236,12 @@
         "gfortran",
         "vhdl",
         "vhd",
-        "ghdl"
+        "ghdl",
+        "ada",
+        "adb",
+        "ads",
+        "gnat",
+        "gnatmake"
       ],
       "target": "skills/emperor-excavate/SKILL.md",
       "reason": "lost/ancient/foreign tree \u2014 excavate before modernizing"
