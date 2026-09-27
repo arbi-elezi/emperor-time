@@ -115,6 +115,18 @@
     {
       "phrase": "inline plan execution",
       "skill": "emperor-build"
+    },
+    {
+      "phrase": "fresh subagent per task",
+      "skill": "emperor-build"
+    },
+    {
+      "phrase": "execute with subagents",
+      "skill": "emperor-build"
+    },
+    {
+      "phrase": "task review after each",
+      "skill": "emperor-build"
     }
   ],
   "must_not_fire_master_wholesale": [
@@ -438,6 +450,24 @@
       ],
       "target": "skills/emperor-build/SKILL.md",
       "reason": "inline plan execution \u2014 executing-plans HARD-GATE"
+    },
+    {
+      "id": "subagent",
+      "patterns": [
+        "subagent driven",
+        "subagent-driven",
+        "fresh subagent per task",
+        "dispatch implementer per task",
+        "task review after each",
+        "execute with subagents"
+      ],
+      "tags": [
+        "subagent",
+        "subagent-driven-development",
+        "build"
+      ],
+      "target": "skills/emperor-build/SKILL.md",
+      "reason": "subagent plan execution \u2014 subagent-driven-development HARD-GATE"
     },
     {
       "id": "build",

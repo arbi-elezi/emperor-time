@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.4.29
+- Subagent-driven HARD-GATE leaf: Superpowers `subagent-driven-development` → Fresh subagent per task / Task review after each / Fix loop R of 5 / Final whole-branch review only, adapted into `skills/emperor-build/subagent-driven-checklist.md` (Chain Jail extract-aspect)
+- Python core `scripts/lib/subagent.py` prints SUBAGENT/STEP/MUST card, rejects step skips (`--advance`), hard-gates skipped task review (`--reject-skip-review`); thin `subagent.sh` / `subagent.ps1`; `emperor subagent` on bash/ps1/zsh/cmd peers
+- emperor-build MUST the checklist for subagent plan runs (companion to `emperor execute` inline path); catalog + navigation + bakeoff point local-first; eval locks card + skip rejection + reject-skip-review
+- Plugin, marketplace, and SKILL.md at 0.4.29
+
 ## 0.4.28
 - Executing-plans HARD-GATE leaf: Superpowers `executing-plans` → Continuous execution / Four stops / Rulings not stalls / Task Loop / Completion contract only, adapted into `skills/emperor-build/executing-plans-checklist.md` (Chain Jail extract-aspect)
 - Python core `scripts/lib/execute.py` prints EXECUTE/STEP/MUST card, rejects step skips (`--advance`), hard-gates check-in theater (`--reject-checkin`); thin `execute.sh` / `execute.ps1`; `emperor execute` on bash/ps1/zsh/cmd peers
