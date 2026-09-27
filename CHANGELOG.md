@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.4.22
+- Silent-boot zsh parity: `scripts/emperor.zsh` auto-boots when `.emperor/host.env` missing; `host`/`boot`/`identify`/`excavate` special-cases match bash `scripts/emperor` (closes twin gap after PS silent-boot parity)
+- Eval locks + Cursor adapter document the `emperor.zsh` silent-boot path
+- Plugin, marketplace, and SKILL.md at 0.4.22
+
 ## 0.4.21
 - DONE probes Python core: `scripts/lib/done.py` owns probe:/expect: execution (bash -lc, substring match, empty-expect parity)
 - Thin `done.sh` / `done.ps1` twins — closes bash↔ps1 twin drift risk on the load-bearing Stop-hook / forge gate

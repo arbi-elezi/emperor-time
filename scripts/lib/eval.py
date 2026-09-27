@@ -207,6 +207,31 @@ def run_evals(root: Path) -> int:
         "cursor adapter missing emperor boot path",
     )
 
+    # ---- silent-boot zsh ----
+    h.section("silent-boot zsh twin matches bash")
+    h.require_contains("host.env", "scripts/emperor.zsh", "emperor.zsh missing silent-boot host.env check")
+    h.require_contains("boot.sh", "scripts/emperor.zsh", "emperor.zsh missing boot.sh silent-boot path")
+    h.require_contains(
+        'TOOL" == host || "$TOOL" == boot',
+        "scripts/emperor.zsh",
+        "emperor.zsh missing host|boot special-case (bash parity)",
+    )
+    h.require_contains(
+        'TOOL" == identify',
+        "scripts/emperor.zsh",
+        "emperor.zsh missing identify silent/path special-case",
+    )
+    h.require_contains(
+        'TOOL" == excavate',
+        "scripts/emperor.zsh",
+        "emperor.zsh missing excavate first-class alias",
+    )
+    h.require_contains(
+        "emperor.zsh",
+        "adapters/cursor/README.md",
+        "cursor adapter missing emperor.zsh silent-boot mention",
+    )
+
     # ---- steal ----
     h.section("steal router lists ci + swarm")
     h.require_contains("ci-mode.md", "chains/steal-chain/SKILL.md", "steal router missing ci-mode.md")
