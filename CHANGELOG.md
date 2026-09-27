@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.4.52
+- Archaeology Erlang leaf: `evals/fixtures/lost-erl/HELLO.ERL` + identify smoke; OTP 27 boot probe VERIFIED (`escript HELLO.ERL`); dialect labels honest (CONJECTURE / UNVERIFIABLE where due); identify fossils `*.erl` / `*.hrl`
+- Jail pin `references/archaeology-erlang-manual.md` — escript `main/1` (batch / application file run)
+- Catalog + SKILL.md + archaeology.md + language-agnostic.md link the eleventh pin alongside Pascal, ASM, COBOL, Fortran, VHDL, Ada, Forth, Common Lisp, Prolog, and Tcl; route triggers gain `escript` / `erlc` / `.erl` / `.hrl` (space-padded `erlang`; bare `erl` tag word-bounded so Perl does not collide); eval locks `*.erl` identify on lost-erl
+- Plugin, marketplace, and SKILL.md at 0.4.52
+
 ## 0.4.51
 - Archaeology Tcl leaf: `evals/fixtures/lost-tcl/HELLO.TCL` + identify smoke; Tcl 8.6.16 boot probe VERIFIED (`tclsh HELLO.TCL`); dialect labels honest (CONJECTURE / UNVERIFIABLE where due); identify fossils `*.tcl` / `*.tk`
 - Jail pin `references/archaeology-tcl-manual.md` — tclsh SCRIPT FILES (batch / application file run)

@@ -1,7 +1,7 @@
 # Language-agnostic law
 
 Emperor Time has no home language. Python, JS, Pascal, COBOL, Forth,
-Common Lisp, Prolog, Tcl, 6502, x86, VHDL, and a folder of unmarked binaries are peers.
+Common Lisp, Prolog, Tcl, Erlang, 6502, x86, VHDL, and a folder of unmarked binaries are peers.
 
 ## Restrictions
 
