@@ -2,6 +2,9 @@
 
 The detect / sign-in / invoke matrix for enlistable coding agents.
 
+Machine scan (read-only): `scripts/lib/dowse.py` (thin `dowse.sh` / `dowse.ps1`)
+emits the roster; `--as-json` includes Binary / Headless / SignIn for orchestrators.
+
 **This registry is a cache of observations, not truth.** Entries marked
 `[verified 2026-07-22]` were checked against vendor docs on that date; entries
 marked `[verify-at-dowse]` are best-effort and MUST be confirmed against

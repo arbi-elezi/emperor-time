@@ -25,6 +25,8 @@ Review-pack Python core: `scripts/lib/review_pack.py` owns meta SHAs +
 acceptance-criteria extract + diff (thin `review-pack.sh` / `review-pack.ps1`).
 Closes bash↔ps1 drift on criteria (ps1 used to dump the full work-order).
 
+Dowse Python core: `scripts/lib/dowse.py` owns PATH detect + bounded version/auth probes + table/`--as-json` richer roster (thin `dowse.sh` / `dowse.ps1`). Closes bash↔ps1 drift on AsJson + Headless/SignIn metadata.
+
 Forge Python core: `scripts/lib/forge.py` owns consent + DONE gate + title/G1 PR body (thin `forge.sh` / `forge.ps1`). Closes bash↔ps1 drift on title extraction and ledger dump.
 
 Harness health Python core: `scripts/lib/eval.py` owns the structural assertion

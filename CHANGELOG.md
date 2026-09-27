@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.4.26
+- Dowse Python core: `scripts/lib/dowse.py` owns read-only agent roster scan (PATH detect, bounded --version / auth probes, table + `--as-json`)
+- Thin `dowse.sh` / `dowse.ps1` twins — closes bash↔ps1 twin drift (ps1 had `-AsJson` + Binary/Headless/SignIn metadata; bash was table-only)
+- Factory dogfood: system-dowsing + agent-registry + bakeoff point at the Python lock; eval locks compile + thin twins + AsJson richer roster + `--as-json` on both peers
+- Plugin, marketplace, and SKILL.md at 0.4.26
+
 ## 0.4.25
 - Review-pack Python core: `scripts/lib/review_pack.py` owns meta SHAs, acceptance-criteria extract, diff/diffstat, claims copy
 - Thin `review-pack.sh` / `review-pack.ps1` twins — closes bash↔ps1 twin drift (ps1 copied entire work-order into criteria.md; bash awk kept only `## Acceptance criteria`)
