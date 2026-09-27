@@ -6,7 +6,7 @@
 - heading: Trace backward / Fix at source / Never fix just the symptom
 - license: MIT
 - access-date: 2026-09-27
-- issue-context: heal four-phase card names "trace data flow" in Phase 1 but lacked a mechanical backward-chain HARD-GATE; Chain Jail extract-aspect names Trace-backward / Fix-at-source only (not whole systematic-debugging, not find-polluter.sh, not defense-in-depth essay, not condition-based-waiting, not pressure tests).
+- issue-context: heal four-phase card names "trace data flow" in Phase 1 but lacked a mechanical backward-chain HARD-GATE; Chain Jail extract-aspect names Trace-backward / Fix-at-source only (not whole systematic-debugging, not find-polluter.sh, not pressure tests). Sibling Chain Jail leaves: defense-in-depth (`emperor defense`), condition-based-waiting (`emperor wait`).
 
 **Contract:** when a bug appears deep in the call stack (wrong cwd, empty path, bad value far from entry), finish a **backward trace to the original trigger** before proposing a fix. Fix at the source, not where the error prints. Emperor Time stays the orchestrator via Holy Chain / emperor-heal; do **not** announce or load whole `systematic-debugging`.
 
@@ -49,3 +49,4 @@ Dead end (cannot trace further): record the dead end, fix at the last reachable 
 | Phase order (1→4) | emperor-heal + `emperor heal` |
 | Session locate / intake | session-discovery / diagnose |
 | Multi-layer validation after source fix | emperor-heal + `emperor defense` |
+| Condition-based waiting (flaky/timing) | emperor-heal + `emperor wait` |

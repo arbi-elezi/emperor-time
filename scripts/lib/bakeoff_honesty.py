@@ -118,6 +118,11 @@ LEAVES: list[tuple[str, str, tuple[str, ...]]] = [
         "scripts/lib/defense.py",
         ("defense.py", "defense"),
     ),
+    (
+        "condition-based-waiting",
+        "scripts/lib/condition_wait.py",
+        ("condition_wait.py", "wait"),
+    ),
 ]
 
 
