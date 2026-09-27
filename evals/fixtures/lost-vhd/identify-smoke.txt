@@ -1,0 +1,9 @@
+== identify evals/fixtures/lost-vhd ==
+-- extensions --
+      2 md
+      1 vhd
+      1 txt
+-- named fossils --
+1 *.vhd
+-- shebangs --
+identify: done (read-only)
