@@ -23,7 +23,7 @@ survey artifacts
 - Extensions, magic bytes, encodings, Makefiles, `.dpr` `.pas` `.asm` `.s`
   `.inc` `.cbl` `.for` `.vhd` `.rel` object files, disk images.
 - For *this* repo, read `.emperor/survey.md` (silent boot already wrote it).
-  For a *foreign* tree: `scripts/emperor identify <path>` (or `scripts/identify.sh`).
+  For a *foreign* tree: `scripts/emperor identify <path>` or `scripts/emperor excavate <path>` (alias; or `scripts/identify.sh`).
   Quote the tail. Do not guess "this is probably Node" because you like Node.
 - Skipped probes are listed. Absence of a modern test runner is not a defect.
 

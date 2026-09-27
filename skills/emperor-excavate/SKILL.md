@@ -17,3 +17,5 @@ Dowsing surveys. Jail hunts one manual heading. Judgment refuses "I modernized
 it" as DONE.
 
 Probe = whatever command the recovered unit answers to. Not pytest-by-default.
+
+`scripts/emperor excavate` works as an alias for the identify survey.
