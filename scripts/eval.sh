@@ -117,6 +117,14 @@ need "evals/fixtures/lost-pas/PROBE.md"
 ID_OUT="$(bash "$ROOT/scripts/identify.sh" "$ROOT/evals/fixtures/lost-pas" 2>&1)" || true
 echo "$ID_OUT" | grep -E -q '[0-9]+ \*\.pas' || { echo "EVAL FAIL: identify missed *.pas on lost-pas"; fail=1; }
 
+echo "== fixture: lost-asm identify finds *.asm =="
+need "evals/fixtures/lost-asm/FOO.ASM"
+need "evals/fixtures/lost-asm/README.md"
+need "evals/fixtures/lost-asm/PROBE.md"
+ID_OUT="$(bash "$ROOT/scripts/identify.sh" "$ROOT/evals/fixtures/lost-asm" 2>&1)" || true
+echo "$ID_OUT" | grep -E -q '[0-9]+ \*\.asm' || { echo "EVAL FAIL: identify missed *.asm on lost-asm"; fail=1; }
+
+
 if [[ "$fail" -ne 0 ]]; then
   echo "EVALS FAILED"
   exit 1
