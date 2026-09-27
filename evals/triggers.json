@@ -316,20 +316,38 @@
       "reason": "vague ask / intake \u2014 Dowsing"
     },
     {
+      "id": "tdd",
+      "patterns": [
+        "tdd",
+        "red green refactor",
+        "red-green-refactor",
+        "failing probe first",
+        "failing probe",
+        "iron law",
+        "watch it fail",
+        "no production code without"
+      ],
+      "tags": [
+        "tdd",
+        "rgr",
+        "iron-law"
+      ],
+      "target": "skills/emperor-tdd/SKILL.md",
+      "reason": "implementing \u2014 TDD iron-law / RGR HARD-GATE"
+    },
+    {
       "id": "build",
       "patterns": [
         "implementing",
-        "tdd",
         "write the code",
         "build it"
       ],
       "tags": [
         "build",
-        "tdd",
         "g3"
       ],
       "target": "skills/emperor-build/SKILL.md",
-      "reason": "implementing \u2014 build + TDD"
+      "reason": "implementing \u2014 build + TDD RGR"
     },
     {
       "id": "master",

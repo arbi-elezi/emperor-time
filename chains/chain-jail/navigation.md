@@ -33,7 +33,7 @@ This table is a map, not memory.
 |---|---|---|
 | Socratic design / visual mock before code | `brainstorming`, `grill`, `discuss` | `obra/superpowers` `skills/brainstorming`; Pocock grill skills |
 | Fat executable plan | `writing-plans`, `executing-plans` | `obra/superpowers` `skills/writing-plans`; GSD plan-phase |
-| Language-specific TDD / fixtures | test skill for *this* stack | Superpowers TDD only if `emperor-tdd` cannot express the runner |
+| TDD / failing-probe / RGR order | `tdd`, `red-green`, `failing probe` | Local first: `skills/emperor-tdd/red-green-refactor.md` + `emperor tdd`. Superpowers TDD only if runner-specific aspect still missing |
 | Systematic debug for a stack | `systematic-debugging`, framework debug | Superpowers debugging; Holy Chain first |
 | Isolated reviewer personality | review personas, security/perf checklists | Osmani agent-skills; Superpowers `requesting-code-review` |
 | Git worktree / finish-branch polish | `using-git-worktrees`, `finishing-a-development-branch` | Local first: `skills/emperor-forge/finish-menu.md` + `emperor finish`. Superpowers those folders only if still insufficient |

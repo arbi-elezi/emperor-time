@@ -15,7 +15,7 @@ Write-Host '== presence =='
 ) | ForEach-Object { Need $_ }
 
 Write-Host '== twins (every mechanical script) =='
-@('done','gate','eval','review-pack','dowse','install','worktree','queue','forge','finish','activate','identify','boot','route','excavate','heal') | ForEach-Object {
+@('done','gate','eval','review-pack','dowse','install','worktree','queue','forge','finish','activate','identify','boot','route','excavate','heal','grill','tdd') | ForEach-Object {
   Need "scripts/$_.sh"
   Need "scripts/$_.ps1"
 }

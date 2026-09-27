@@ -32,6 +32,7 @@ could hand a worker. Examples of legal slices:
   template (not brainstorming, not subagent-driven-development).
 - Superpowers `systematic-debugging` → only the "4-phase" list.
 - Superpowers `brainstorming` → only the HARD-GATE (questions before code).
+- Superpowers `test-driven-development` → only The Iron Law / Red-Green-Refactor (HARD-GATE).
 - Addy review skill → only the five-axis table.
 - A domain SKILL.md → only the command recipe that matches `failing-signal`.
 

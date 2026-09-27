@@ -9,7 +9,7 @@ description: >-
   waiting to be told.
 license: MIT
 metadata:
-  version: 0.4.8
+  version: 0.4.9
   homepage: https://github.com/arbi-elezi/emperor-time
   standard: Agent Skills (SKILL.md)
 ---
@@ -94,7 +94,7 @@ Jail extra: no captured skill runs on real work until trial + sha256 pin + quote
 
 - Prediction written *before* the command.
 - Quote the tail. "The suite passes" without a quote is CONJECTURE and cannot open G4.
-- Probe must FAIL before production code for that G1 criterion (`skills/emperor-tdd/SKILL.md`). The probe is any command, not a JS/Python test runner.
+- Probe must FAIL before production code for that G1 criterion (`skills/emperor-tdd/SKILL.md` + `red-green-refactor.md` / `emperor tdd`). The probe is any command, not a JS/Python test runner.
 - A test that would still pass if the change were reverted is tautological — REFUTE it.
 - Any other model, including your last session, enters as CONJECTURE.
 - Unchanged retry is Vow of Worthy Spend. Change the hypothesis or stop.
