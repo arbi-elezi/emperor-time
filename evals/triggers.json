@@ -171,6 +171,22 @@
     {
       "phrase": "trace backward through the call chain",
       "skill": "emperor-heal"
+    },
+    {
+      "phrase": "defense in depth",
+      "skill": "emperor-heal"
+    },
+    {
+      "phrase": "validate at every layer",
+      "skill": "emperor-heal"
+    },
+    {
+      "phrase": "multi-layer validation",
+      "skill": "emperor-heal"
+    },
+    {
+      "phrase": "no single layer validation",
+      "skill": "emperor-heal"
     }
   ],
   "must_not_fire_master_wholesale": [
@@ -290,7 +306,12 @@
         "root cause tracing",
         "fix at the source not the symptom",
         "trace backward through the call chain",
-        "symptom fix"
+        "symptom fix",
+        "defense in depth",
+        "validate at every layer",
+        "multi-layer validation",
+        "no single layer validation",
+        "single layer validation"
       ],
       "tags": [
         "heal",
@@ -302,10 +323,13 @@
         "citation",
         "trace",
         "root-cause",
-        "root-cause-tracing"
+        "root-cause-tracing",
+        "defense",
+        "defense-in-depth",
+        "layers"
       ],
       "target": "skills/emperor-heal/SKILL.md",
-      "reason": "red build / derail \u2014 Holy Chain / session-discovery locate / diagnosing intake+cite / root-cause tracing"
+      "reason": "red build / derail \u2014 Holy Chain / session-discovery locate / diagnosing intake+cite / root-cause tracing / defense-in-depth multi-layer validation"
     },
     {
       "id": "verify",

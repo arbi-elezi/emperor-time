@@ -113,6 +113,11 @@ LEAVES: list[tuple[str, str, tuple[str, ...]]] = [
         "scripts/lib/root_cause.py",
         ("root_cause.py", "trace"),
     ),
+    (
+        "defense-in-depth",
+        "scripts/lib/defense.py",
+        ("defense.py", "defense"),
+    ),
 ]
 
 

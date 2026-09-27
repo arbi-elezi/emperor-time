@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.4.40
+- Defense-in-depth HARD-GATE leaf: `scripts/lib/defense.py` prints DEFENSE / LAYER / MUST card (validate at every layer / four layers)
+- Thin `defense.sh` / `defense.ps1`; emperor peers gain `defense`; `--reject-single-layer` / `--reject-unlayered` HARD-GATEs; `--check-layers` validator (≥2 distinct layer ids)
+- Skill leaf `skills/emperor-heal/defense-in-depth.md` + `references/defense-in-depth.md` cite obra/superpowers MIT (systematic-debugging defense-in-depth aspect); does **not** vendor whole systematic-debugging
+- Route/triggers for defense phrases → emperor-heal; Phase-4 companion after `emperor trace` source fix; eval/bakeoff/honesty lockstep
+- Plugin, marketplace, and SKILL.md at 0.4.40
+
 ## 0.4.39
 - Root-cause tracing HARD-GATE leaf: `scripts/lib/root_cause.py` prints TRACE / STEP / MUST card (trace backward / fix at source / no symptom-only patch)
 - Thin `trace.sh` / `trace.ps1`; emperor peers gain `trace`; `--reject-symptom-fix` / `--reject-untraced` HARD-GATEs; `--check-chain` validator (≥2 backward links)

@@ -2011,8 +2011,12 @@ def run_evals(root: Path) -> int:
     h.require_contains("root_cause.py", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing root_cause.py")
     h.require_contains("0.4.39", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing 0.4.39 tip")
     h.require_contains("lost-ada", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing lost-ada")
-    h.require_contains("0.4.39", ".claude-plugin/plugin.json", "plugin.json not at 0.4.39")
     h.require_contains("0.4.39", "CHANGELOG.md", "CHANGELOG missing 0.4.39")
+    h.require_contains("defense.py", "evals/bakeoff.md", "bakeoff.md missing defense.py inventory")
+    h.require_contains("defense.py", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing defense.py")
+    h.require_contains("0.4.40", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing 0.4.40 tip")
+    h.require_contains("0.4.40", ".claude-plugin/plugin.json", "plugin.json not at 0.4.40")
+    h.require_contains("0.4.40", "CHANGELOG.md", "CHANGELOG missing 0.4.40")
 
     # session-discovery
     h.section("session-discovery locate HARD-GATE leaf")
@@ -2416,6 +2420,150 @@ def run_evals(root: Path) -> int:
         h.fail_msg("route.py trace root cause → heal")
     else:
         h.pass_msg("route.py trace root cause → emperor-heal")
+
+
+    # defense-in-depth HARD-GATE
+    h.section("defense-in-depth HARD-GATE leaf")
+    h.need("skills/emperor-heal/defense-in-depth.md")
+    h.need("references/defense-in-depth.md")
+    h.need("scripts/lib/defense.py")
+    h.need("scripts/defense.sh")
+    h.need("scripts/defense.ps1")
+    h.bash_n("scripts/defense.sh", "defense.sh syntax")
+    h.py_compile("scripts/lib/defense.py", "defense.py compile")
+    h.require_contains(
+        "defense.py",
+        "scripts/defense.sh",
+        "defense.sh does not call defense.py",
+    )
+    h.require_contains(
+        "defense.py",
+        "scripts/defense.ps1",
+        "defense.ps1 does not call defense.py",
+    )
+    h.require_contains(
+        "defense",
+        "scripts/emperor",
+        "emperor bash missing defense",
+    )
+    h.require_contains(
+        "'defense'",
+        "scripts/emperor.ps1",
+        "emperor.ps1 missing defense",
+    )
+    h.require_contains(
+        "defense",
+        "scripts/emperor.cmd",
+        "emperor.cmd missing defense",
+    )
+    h.require_contains(
+        "defense",
+        "scripts/emperor.zsh",
+        "emperor.zsh missing defense",
+    )
+    h.require_contains(
+        "defense-in-depth.md",
+        "skills/emperor-heal/SKILL.md",
+        "emperor-heal missing defense-in-depth leaf",
+    )
+    h.require_contains(
+        "HARD-GATE",
+        "skills/emperor-heal/defense-in-depth.md",
+        "defense-in-depth leaf missing HARD-GATE heading",
+    )
+    h.require_contains(
+        "systematic-debugging",
+        "skills/emperor-heal/defense-in-depth.md",
+        "defense-in-depth leaf missing source skill",
+    )
+    h.require_contains(
+        "defense-in-depth.md",
+        "skills/emperor-heal/defense-in-depth.md",
+        "defense-in-depth leaf missing source file cite",
+    )
+    h.require_contains(
+        "obra/superpowers",
+        "references/defense-in-depth.md",
+        "defense-in-depth reference missing obra/superpowers cite",
+    )
+    h.require_contains(
+        "2026-09-27",
+        "references/defense-in-depth.md",
+        "defense-in-depth reference missing access date",
+    )
+    h.require_contains(
+        "NO SINGLE LAYER VALIDATION",
+        "skills/emperor-heal/defense-in-depth.md",
+        "defense-in-depth leaf missing iron law text",
+    )
+    h.require_contains(
+        "defense in depth",
+        "evals/triggers.json",
+        "triggers missing defense in depth phrase",
+    )
+    h.require_contains(
+        "validate at every layer",
+        "evals/triggers.json",
+        "triggers missing validate at every layer phrase",
+    )
+    h.require_contains(
+        "defense-in-depth.md",
+        "chains/chain-jail/extract-aspect.md",
+        "extract-aspect missing defense-in-depth leaf",
+    )
+    _, defense_out = h.run_py("scripts/lib/defense.py")
+    if not re.search(r"^DEFENSE checklist=yes", defense_out, re.M):
+        h.fail_msg("defense missing checklist=yes")
+    if not re.search(r"^LAYER \d+ id=", defense_out, re.M):
+        h.fail_msg("defense missing LAYER line")
+    if not re.search(r"^MUST:", defense_out, re.M):
+        h.fail_msg("defense missing MUST line")
+    if "NO_SINGLE_LAYER_VALIDATION" not in defense_out:
+        h.fail_msg("defense missing iron law token")
+    rc, _ = h.run_py("scripts/lib/defense.py", "--reject-single-layer")
+    if rc == 0:
+        h.fail_msg("defense --reject-single-layer should exit non-zero")
+    else:
+        _, reject = h.run_py("scripts/lib/defense.py", "--reject-single-layer")
+        if not re.search(r"^REJECT SINGLE LAYER:", reject, re.M):
+            h.fail_msg("reject-single-layer missing REJECT line")
+        else:
+            h.pass_msg("defense --reject-single-layer hard-gates")
+    rc, _ = h.run_py("scripts/lib/defense.py", "--reject-unlayered")
+    if rc == 0:
+        h.fail_msg("defense --reject-unlayered should exit non-zero")
+    else:
+        _, reject = h.run_py("scripts/lib/defense.py", "--reject-unlayered")
+        if not re.search(r"^REJECT UNLAYERED:", reject, re.M):
+            h.fail_msg("reject-unlayered missing REJECT line")
+        else:
+            h.pass_msg("defense --reject-unlayered hard-gates")
+    rc, layers_ok = h.run_py(
+        "scripts/lib/defense.py",
+        "--check-layers",
+        "entry + business + environment",
+    )
+    if rc != 0 or "LAYERS OK:" not in layers_ok:
+        h.fail_msg("defense --check-layers should accept multi-layer plan")
+    else:
+        h.pass_msg("defense --check-layers accepts multi-layer plan")
+    rc, layers_bad = h.run_py(
+        "scripts/lib/defense.py",
+        "--check-layers",
+        "only entry here",
+    )
+    if rc == 0 or "LAYERS FAIL:" not in layers_bad:
+        h.fail_msg("defense --check-layers should reject single-layer plan")
+    else:
+        h.pass_msg("defense --check-layers rejects single-layer plan")
+    _, defense_sh = h.run_sh("scripts/defense.sh")
+    if not re.search(r"^DEFENSE checklist=yes", defense_sh, re.M):
+        h.fail_msg("defense.sh missing checklist card")
+    _, rout_defense = h.run_py("scripts/lib/route.py", "defense in depth")
+    if "emperor-heal" not in rout_defense:
+        h.fail_msg("route.py defense in depth → heal")
+    else:
+        h.pass_msg("route.py defense in depth → emperor-heal")
 
 
 

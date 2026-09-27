@@ -6,7 +6,8 @@ description: >-
   tests go red, a regression appears, state is corrupted, a gate was skipped,
   or you need to locate a harness session transcript before diagnosing,
   or diagnose why a session went wrong (intake + path:line citations),
-  or trace a deep-stack bug backward to its original trigger before fixing.
+  or trace a deep-stack bug backward to its original trigger before fixing,
+  or add multi-layer validation after a source fix so invalid data cannot recur.
 license: MIT
 metadata:
   version: 0.4.7
@@ -61,6 +62,19 @@ TRACE / STEP / MUST card).
 No symptom-site patches without a backward chain to the original trigger. Do not
 load whole `systematic-debugging`; ET + Holy Chain orchestrate.
 
+
+
+## MUST — defense-in-depth after source fix
+
+When a bug was caused by invalid data and the source is fixed, open
+`skills/emperor-heal/defense-in-depth.md`
+(Chain Jail leaf from Superpowers `systematic-debugging` → **Validate at every
+layer / Four layers only**) and/or run `scripts/emperor defense` (prints the
+mechanical DEFENSE / LAYER / MUST card).
+
+No single-layer guard as the whole fix. Layers are additive after the source
+fix. Do not load whole `systematic-debugging`; ET + Holy Chain orchestrate.
+
 ## Steps
 
 1. Run `scripts/emperor heal` → quote `DEBUG four_phases=yes`. Advance phases
@@ -77,11 +91,15 @@ load whole `systematic-debugging`; ET + Holy Chain orchestrate.
    `TRACE checklist=yes`. Symptom-only patch →
    `scripts/emperor trace --reject-symptom-fix`. Untraced implement →
    `--reject-untraced` (HARD-GATE exit 1).
-5. Read `chains/holy-chain/SKILL.md` → one aspect
+5. After a source fix for invalid data: run `scripts/emperor defense` → quote
+   `DEFENSE checklist=yes`. Single-layer-only →
+   `scripts/emperor defense --reject-single-layer`. Unlayered ship →
+   `--reject-unlayered` (HARD-GATE exit 1).
+6. Read `chains/holy-chain/SKILL.md` → one aspect
    (`triage.md` | `reproduce-and-bisect.md` | `heal-and-verify.md` |
    `process-healing.md`) matching the current phase (see leaf table).
-6. Snapshot. Reproduce. One hypothesis per step. Prediction before probe.
-7. Minimal heal. Verify the cause, not the symptom (verification triad).
-8. Postmortem line on the ledger: BROKE / CAUSE / HEAL / CAUGHT-BY /
+7. Snapshot. Reproduce. One hypothesis per step. Prediction before probe.
+8. Minimal heal. Verify the cause, not the symptom (verification triad).
+9. Postmortem line on the ledger: BROKE / CAUSE / HEAL / CAUGHT-BY /
    WOULD-HAVE-CAUGHT-SOONER.
-9. If the *process* broke, re-enter at the earliest unsatisfied gate.
+10. If the *process* broke, re-enter at the earliest unsatisfied gate.

@@ -28,7 +28,7 @@ No backward chain to the original trigger? **Do not patch the symptom site.** Ke
 2. **Find Immediate Cause** — which code directly causes it?
 3. **Ask: What Called This?** — one level up, with the value passed.
 4. **Keep Tracing Up** — repeat until the bad value originates.
-5. **Find Original Trigger** — fix THERE. Optional defense-in-depth layers are additive after the source fix.
+5. **Find Original Trigger** — fix THERE. Optional defense-in-depth layers are additive after the source fix (mechanical card: `scripts/emperor defense` / `skills/emperor-heal/defense-in-depth.md`).
 
 Dead end (cannot trace further): record the dead end, fix at the last reachable layer, and say so honestly. Prefer the source when reachable.
 
@@ -48,3 +48,4 @@ Dead end (cannot trace further): record the dead end, fix at the last reachable 
 | Backward-trace HARD-GATE | emperor-heal + `emperor trace` |
 | Phase order (1→4) | emperor-heal + `emperor heal` |
 | Session locate / intake | session-discovery / diagnose |
+| Multi-layer validation after source fix | emperor-heal + `emperor defense` |
