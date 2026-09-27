@@ -411,7 +411,14 @@
         ".rex",
         ".rexx",
         " rexx",
-        "rexx "
+        "rexx ",
+        "gm2",
+        "modula-2",
+        "modula2",
+        ".mod",
+        ".def",
+        " modula",
+        "modula "
       ],
       "tags": [
         "archaeology",
@@ -456,7 +463,12 @@
         "hrl",
         "regina",
         "rexx",
-        "rex"
+        "rex",
+        "gm2",
+        "modula-2",
+        "modula2",
+        "modula",
+        "def"
       ],
       "target": "skills/emperor-excavate/SKILL.md",
       "reason": "lost/ancient/foreign tree \u2014 excavate before modernizing"

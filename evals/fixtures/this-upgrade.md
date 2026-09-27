@@ -1,22 +1,22 @@
-# Task Ledger — emperor-time self-application (REXX archaeology Jail pin)
+# Task Ledger — emperor-time self-application (Modula-2 archaeology Jail pin)
 
-- **Task:** Add REXX archaeology Jail pin leaf (twelfth language after pas/asm/cbl/f90/vhd/ada/fs/lisp/prolog/tcl/erlang): lost-rex fixture + Regina probe + manual pin + identify/route/eval/honesty lockstep. Fossils `*.rex` / `*.rexx`.
-- **Client quote:** Soft-ET consented Worthy Spend after v0.4.52 Erlang archaeology. Writing-skills Superpowers leaves exhausted; systematic-debugging leaves stay closed. Ship REXX archaeology leaf (v0.4.53) — ET strength crank (language-agnostic peers + next classic lost-tree language named after Erlang). Chain Jail leaf only; do not vendor foreign whole skills.
+- **Task:** Add Modula-2 archaeology Jail pin leaf (thirteenth language after pas/asm/cbl/f90/vhd/ada/fs/lisp/prolog/tcl/erlang/rexx): lost-mod fixture + gm2 probe + manual pin + identify/route/eval/honesty lockstep. Fossils `*.mod` / `*.def`.
+- **Client quote:** Soft-ET consented Worthy Spend after v0.4.53 REXX archaeology. Writing-skills Superpowers leaves exhausted; systematic-debugging leaves stay closed. Ship Modula-2 archaeology leaf (v0.4.54) — ET strength crank (language-agnostic peers + next classic lost-tree language named after REXX). Chain Jail leaf only; do not vendor foreign whole skills.
 - **Origin:** assigned
 - **Size:** standard
-- **Governing files:** SKILL.md → archaeology.md → archaeology-rexx-manual.md → identify.py → route/triggers → eval
-- **Tip at spend:** v0.4.53 (branch `et-manager/archaeology-rexx`)
+- **Governing files:** SKILL.md → archaeology.md → archaeology-modula2-manual.md → identify.py → route/triggers → eval
+- **Tip at spend:** v0.4.54 (branch `et-manager/archaeology-modula2`)
 
 ## G0
-Quoted ask above. Ambiguity resolved: ship REXX archaeology Jail pin only. Skip embeddings, emperor.py dispatcher, writing-skills dumps, systematic-debugging leaves, other Superpowers leaves this turn. Do not re-announce or re-ship #33–#69 leaves.
+Quoted ask above. Ambiguity resolved: ship Modula-2 archaeology Jail pin only. Skip embeddings, emperor.py dispatcher, writing-skills dumps, systematic-debugging leaves, other Superpowers leaves this turn. Do not re-announce or re-ship #33–#70 leaves.
 
 ## G1 Acceptance criteria
-1. SKILL.md version ≥ 0.4.53; `evals/fixtures/lost-rex/HELLO.REX` exists with PROBE.md / README.md / identify-smoke.txt.
-2. Jail pin `references/archaeology-rexx-manual.md` cites Classic Rexx SAY (URL + access date 2026-09-28 Europe/Tirane + quote).
-3. `identify.py` fossils include `*.rex` / `*.rexx`; identify on lost-rex finds `*.rex`.
-4. Route triggers include regina/.rex/.rexx + space-padded rexx → excavate; `route.py` matches.
-5. Catalog + SKILL.md + archaeology.md + language-agnostic.md link the twelfth pin; bakeoff + honesty name lost-rex.
-6. Plugin/marketplace/SKILL lockstep 0.4.53; CHANGELOG has 0.4.53.
+1. SKILL.md version ≥ 0.4.54; `evals/fixtures/lost-mod/HELLO.MOD` exists with PROBE.md / README.md / identify-smoke.txt.
+2. Jail pin `references/archaeology-modula2-manual.md` cites GNU Modula-2 Example compile and link (URL + access date 2026-09-28 Europe/Tirane + quote).
+3. `identify.py` fossils include `*.mod` / `*.def`; identify on lost-mod finds `*.mod`.
+4. Route triggers include gm2/modula-2/modula2/.mod/.def + space-padded modula → excavate; `route.py` matches.
+5. Catalog + SKILL.md + archaeology.md + language-agnostic.md link the thirteenth pin; bakeoff + honesty name lost-mod.
+6. Plugin/marketplace/SKILL lockstep 0.4.54; CHANGELOG has 0.4.54.
 7. Eval locks new files/version/triggers; suite green.
 8. Live defect-rate vs Superpowers stays **UNVERIFIABLE**.
 
@@ -28,11 +28,11 @@ Quoted ask above. Ambiguity resolved: ship REXX archaeology Jail pin only. Skip 
 - Other people's PRs
 - Another Superpowers HARD-GATE this turn
 - Live multi-vendor bake-off numbers
-- ooRexx / NetRexx / ADDRESS host claims beyond SAY string-print probe
-- Redo of #33–#69
+- Wirth book / ISO 10514-1 DEFINITION MODULE claims beyond PIM StrIO WriteString probe
+- Redo of #33–#70
 
 ## G2
-Rejected alternative: vendor whole REXX skill under skills/.
+Rejected alternative: vendor whole Modula-2 skill under skills/.
 Why: standing rule — Chain Jail leaf only (fixture + one manual heading + route/identify locks).
 
 Rejected alternative: emperor.py unified dispatcher.
@@ -44,25 +44,25 @@ Why: writing-skills Superpowers leaves already marked complete (authoring + test
 Rejected alternative: another systematic-debugging leaf.
 Why: standing memory — systematic-debugging leaves stay closed.
 
-Rejected alternative: bare English keyword `say` as a route pattern.
-Why: English-word collision (same class as bare `wish` refused for Tcl); prefer `regina` / `.rex` / `.rexx` / space-intent `rexx`. Fossils `*.rex` / `*.rexx` suffice.
+Rejected alternative: bare token `mod` as a route pattern.
+Why: short-token / English collision class (module, mod operator); prefer `gm2` / `modula-2` / `modula2` / `.mod` / `.def` / space-intent `modula`. Fossils `*.mod` / `*.def` suffice (Fortran compiler `.mod` artifacts remain survey-honest).
 
-Rejected alternative: Modula-2 / ALGOL archaeology this turn.
-Why: REXX was the named next classic peer after Erlang in the prior ledger; other vintage pins remain future candidates.
+Rejected alternative: ALGOL archaeology this turn.
+Why: Modula-2 was the named next classic peer after REXX in the prior ledger; ALGOL remains a future candidate.
 
 ## G3
-lost-rex fixture + archaeology-rexx-manual.md + identify/route/eval/honesty/bakeoff lockstep on `et-manager/archaeology-rexx`. See git log. Prior leaves retained: dowse.py (v0.4.26), install.py (v0.4.31), boot.py (v0.4.32), worktree.py (v0.4.33), excavate (v0.4.34), session_discovery.py (v0.4.36), diagnose.py (v0.4.37), lost-ada (v0.4.38), root_cause.py (v0.4.39), defense.py (v0.4.40), condition_wait.py (v0.4.41), polluter.py (v0.4.42), pressure.py (v0.4.43), good_tests.py (v0.4.44), skill_test.py (v0.4.45), persuasion.py (v0.4.46), sdo.py (v0.4.47), lost-fs (v0.4.48), lost-lisp (v0.4.49), lost-prolog (v0.4.50), lost-tcl (v0.4.51), lost-erl (v0.4.52).
+lost-mod fixture + archaeology-modula2-manual.md + identify/route/eval/honesty/bakeoff lockstep on `et-manager/archaeology-modula2`. See git log. Prior leaves retained: dowse.py (v0.4.26), install.py (v0.4.31), boot.py (v0.4.32), worktree.py (v0.4.33), excavate (v0.4.34), session_discovery.py (v0.4.36), diagnose.py (v0.4.37), lost-ada (v0.4.38), root_cause.py (v0.4.39), defense.py (v0.4.40), condition_wait.py (v0.4.41), polluter.py (v0.4.42), pressure.py (v0.4.43), good_tests.py (v0.4.44), skill_test.py (v0.4.45), persuasion.py (v0.4.46), sdo.py (v0.4.47), lost-fs (v0.4.48), lost-lisp (v0.4.49), lost-prolog (v0.4.50), lost-tcl (v0.4.51), lost-erl (v0.4.52), lost-rex (v0.4.53).
 
 ## G4
 Claims:
 
 | Claim | Status | Evidence |
 |---|---|---|
-| SKILL.md is 0.4.53 orchestrator | TESTED | frontmatter `version: 0.4.53` on branch HEAD |
-| HELLO.REX runs under Regina 3.9.5 | TESTED | PROBE.md quotes `EMPEROR-TIME-REX-PROBE-OK` |
-| identify finds `*.rex` on lost-rex | TESTED | identify-smoke.txt + eval lock |
-| Route regina/.rex → excavate | TESTED | route.py + triggers.json |
-| Jail pin cites Classic Rexx SAY | TESTED | archaeology-rexx-manual.md URL + 2026-09-28 |
+| SKILL.md is 0.4.54 orchestrator | TESTED | frontmatter `version: 0.4.54` on branch HEAD |
+| HELLO.MOD runs under gm2 14.2.0 | TESTED | PROBE.md quotes `EMPEROR-TIME-MOD-PROBE-OK` |
+| identify finds `*.mod` on lost-mod | TESTED | identify-smoke.txt + eval lock |
+| Route gm2/.mod → excavate | TESTED | route.py + triggers.json |
+| Jail pin cites GNU Modula-2 Example compile and link | TESTED | archaeology-modula2-manual.md URL + 2026-09-28 |
 | Eval suite still green | TESTED | `bash scripts/eval.sh` → EVALS PASSED |
 | Live defect-rate vs Superpowers | UNVERIFIABLE | no shared-task three-vendor bake-off run in this session |
 
@@ -92,4 +92,5 @@ PASS-WITH-CONDITIONS: local mechanism TESTED; live bake-off defect-rate stays UN
 - classic lost-tree peer Prolog still lacked `.pro`/`.prolog` fixture, Jail pin, route triggers, or eval lock after eight prior language pins (and `*.pl` was correctly refused for Perl collision). Remediation: v0.4.50.
 - classic lost-tree peer Tcl still lacked `.tcl`/`.tk` fixture, Jail pin, route triggers, or eval lock after nine prior language pins (and bare `wish` was correctly refused for English-word collision). Remediation: v0.4.51.
 - classic lost-tree peer Erlang still lacked `.erl`/`.hrl` fixture, Jail pin, route triggers, or eval lock after ten prior language pins (prefer `escript`/`erlc`/`erlang` over bare `erl`-only; Perl word-bounded). Remediation: v0.4.52.
-- classic lost-tree peer REXX still lacked `.rex`/`.rexx` fixture, Jail pin, route triggers, or eval lock after eleven prior language pins (prefer `regina`/`.rex`/`.rexx`/space-intent `rexx`; bare English `say` refused). Remediation: this leaf (v0.4.53).
+- classic lost-tree peer REXX still lacked `.rex`/`.rexx` fixture, Jail pin, route triggers, or eval lock after eleven prior language pins (prefer `regina`/`.rex`/`.rexx`/space-intent `rexx`; bare English `say` refused). Remediation: v0.4.53.
+- classic lost-tree peer Modula-2 still lacked `.mod`/`.def` fixture, Jail pin, route triggers, or eval lock after twelve prior language pins (prefer `gm2`/`modula-2`/`modula2`/`.mod`/`.def`/space-intent `modula`; bare token `mod` refused). Remediation: this leaf (v0.4.54).
