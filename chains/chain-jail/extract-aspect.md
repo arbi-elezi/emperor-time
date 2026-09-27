@@ -36,6 +36,7 @@ could hand a worker. Examples of legal slices:
 - Addy review skill → only the five-axis table.
 - Superpowers `requesting-code-review` → When / How / Act-on-feedback only (`skills/emperor-verify/request-review-checklist.md`).
 - Superpowers `verification-before-completion` → The Iron Law / The Gate Function only (`skills/emperor-verify/verification-checklist.md`).
+- Superpowers `receiving-code-review` → The Response Pattern / Forbidden Responses / When To Push Back only (`skills/emperor-verify/receive-review-checklist.md`).
 - A domain SKILL.md → only the command recipe that matches `failing-signal`.
 
 Illegal slices:

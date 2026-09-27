@@ -91,6 +91,18 @@
     {
       "phrase": "claim without evidence",
       "skill": "emperor-verify"
+    },
+    {
+      "phrase": "acting on review feedback",
+      "skill": "emperor-verify"
+    },
+    {
+      "phrase": "implement review comments",
+      "skill": "emperor-verify"
+    },
+    {
+      "phrase": "receive code review",
+      "skill": "emperor-verify"
     }
   ],
   "must_not_fire_master_wholesale": [
@@ -158,7 +170,7 @@
         "gfortran"
       ],
       "target": "skills/emperor-excavate/SKILL.md",
-      "reason": "lost/ancient/foreign tree — excavate before modernizing"
+      "reason": "lost/ancient/foreign tree \u2014 excavate before modernizing"
     },
     {
       "id": "heal",
@@ -180,7 +192,7 @@
         "red-build"
       ],
       "target": "skills/emperor-heal/SKILL.md",
-      "reason": "red build / derail — Holy Chain"
+      "reason": "red build / derail \u2014 Holy Chain"
     },
     {
       "id": "verify",
@@ -197,17 +209,23 @@
         "verification before completion",
         "fresh verification",
         "evidence checklist",
-        "claim tests pass"
+        "claim tests pass",
+        "acting on review feedback",
+        "implement review comments",
+        "receiving code review",
+        "receive review checklist"
       ],
       "tags": [
         "verify",
         "review",
         "g4",
         "evidence",
-        "verification-before-completion"
+        "verification-before-completion",
+        "receive",
+        "receiving-code-review"
       ],
       "target": "skills/emperor-verify/SKILL.md",
-      "reason": "done/tests/review — Judgment Chain"
+      "reason": "done/tests/review \u2014 Judgment Chain"
     },
     {
       "id": "forge",
@@ -230,7 +248,7 @@
         "finish"
       ],
       "target": "skills/emperor-forge/SKILL.md",
-      "reason": "ship / finish menu / PR — consent for public PR"
+      "reason": "ship / finish menu / PR \u2014 consent for public PR"
     },
     {
       "id": "queue",
@@ -288,7 +306,7 @@
         "writing-skills"
       ],
       "target": "skills/emperor-capture/SKILL.md",
-      "reason": "capability missing / author skill — Chain Jail + authoring iron-law"
+      "reason": "capability missing / author skill \u2014 Chain Jail + authoring iron-law"
     },
     {
       "id": "dispatch",
@@ -303,7 +321,7 @@
         "worker"
       ],
       "target": "skills/emperor-dispatch/SKILL.md",
-      "reason": "other local CLI as worker — Steal Chain"
+      "reason": "other local CLI as worker \u2014 Steal Chain"
     },
     {
       "id": "require-design",
@@ -327,7 +345,7 @@
         "socratic"
       ],
       "target": "skills/emperor-require-design/SKILL.md",
-      "reason": "after G0, before code — grill HARD-GATE then work-order"
+      "reason": "after G0, before code \u2014 grill HARD-GATE then work-order"
     },
     {
       "id": "worktree",
@@ -354,7 +372,7 @@
         "resume"
       ],
       "target": "skills/emperor-resume/SKILL.md",
-      "reason": "session continue / compacted — resume from disk"
+      "reason": "session continue / compacted \u2014 resume from disk"
     },
     {
       "id": "scope",
@@ -369,7 +387,7 @@
         "intake"
       ],
       "target": "skills/emperor-scope/SKILL.md",
-      "reason": "vague ask / intake — Dowsing"
+      "reason": "vague ask / intake \u2014 Dowsing"
     },
     {
       "id": "tdd",
@@ -389,7 +407,7 @@
         "iron-law"
       ],
       "target": "skills/emperor-tdd/SKILL.md",
-      "reason": "implementing — TDD iron-law / RGR HARD-GATE"
+      "reason": "implementing \u2014 TDD iron-law / RGR HARD-GATE"
     },
     {
       "id": "build",
@@ -403,7 +421,7 @@
         "g3"
       ],
       "target": "skills/emperor-build/SKILL.md",
-      "reason": "implementing — build + TDD RGR"
+      "reason": "implementing \u2014 build + TDD RGR"
     },
     {
       "id": "master",
@@ -416,7 +434,7 @@
         "master"
       ],
       "target": "SKILL.md",
-      "reason": "master skill — name situation then open one phase file"
+      "reason": "master skill \u2014 name situation then open one phase file"
     }
   ]
 }

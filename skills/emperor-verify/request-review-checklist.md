@@ -11,6 +11,7 @@
 
 Mechanical card: `scripts/emperor review` (Python: `scripts/lib/review_req.py`).
 Pack helper (Step 3): `scripts/emperor review-pack <task-dir> <base> <head>` — Python core `scripts/lib/review_pack.py` (thin `review-pack.sh` / `review-pack.ps1`).
+Companion leaf (receive side): `skills/emperor-verify/receive-review-checklist.md` / `emperor receive`.
 
 ## HARD-GATE — Requested review before proceed
 
