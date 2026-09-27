@@ -54,6 +54,11 @@ LEAVES: list[tuple[str, str, tuple[str, ...]]] = [
     ("eval-py", "scripts/lib/eval.py", ("eval.py", "structural eval")),
     ("route-py", "scripts/lib/route.py", ("route", "fortran", ".f90")),
     ("done-py", "scripts/lib/done.py", ("done.py", "DONE probes")),
+    (
+        "silent-boot-zsh",
+        "scripts/emperor.zsh",
+        ("emperor.zsh", "silent-boot"),
+    ),
 ]
 
 BAKEOFF = Path("evals/bakeoff.md")

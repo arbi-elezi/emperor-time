@@ -11,6 +11,7 @@ boot once, then read what it wrote:
 
 ```bash
 bash scripts/boot.sh   # or: scripts/emperor boot
+# zsh:  zsh scripts/emperor.zsh boot   (same silent-boot contract)
 # Windows: pwsh -NoProfile -File scripts/boot.ps1
 #          (or: pwsh -NoProfile -File scripts/emperor.ps1 boot)
 ```
@@ -26,7 +27,7 @@ to run `identify` or `eval`. Those are internals.
 Foreign/lost tree: `scripts/emperor identify <path>`.
 
 On Windows, `scripts/emperor.ps1 <tool>` silent-boots when `.emperor/host.env`
-is missing — same contract as `scripts/emperor` on bash/zsh.
+is missing — same contract as `scripts/emperor` (bash) and `scripts/emperor.zsh`.
 
 ## MUST-route (before creative work)
 
