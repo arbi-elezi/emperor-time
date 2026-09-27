@@ -7,3 +7,7 @@ expect: <exact substring>
 
 probe: <second command>
 expect: <substring>
+
+# Cycle time (optional, cheap)
+# started: <ISO8601>
+# finished: <ISO8601>

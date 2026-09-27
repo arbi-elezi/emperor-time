@@ -3,13 +3,41 @@ param(
     [Parameter(Position = 0)][ValidateSet('list','next','add','done')]$Cmd = 'next',
     [Parameter(ValueFromRemainingArguments = $true)][string[]]$Rest
 )
+# Kanban statuses (WIP=1): [ ] ready · [~] active · [x] done · [!] blocked
 $ErrorActionPreference = 'Stop'
 $Root = (Resolve-Path (Join-Path $PSScriptRoot '..')).Path
 $Queue = if ($env:EMPEROR_QUEUE_FILE) { $env:EMPEROR_QUEUE_FILE } else { Join-Path $Root '.emperor/queue.md' }
 $dir = Split-Path $Queue
 if (-not (Test-Path $dir)) { New-Item -ItemType Directory -Force -Path $dir | Out-Null }
-if (-not (Test-Path $Queue)) { "# Emperor queue`n`n- [ ] (empty — add a line or connect gh/Linear)`n" | Set-Content $Queue }
-function LocalOpen { Select-String -Path $Queue -Pattern '^- \[ \]' | ForEach-Object { $_.Line } }
+if (-not (Test-Path $Queue)) {
+    @"
+# Emperor queue
+# WIP=1 — one [~] active at a time. Statuses: [ ] ready · [~] active · [x] done · [!] blocked
+
+- [ ] (empty — add a line or connect gh/Linear)
+"@ | Set-Content $Queue
+}
+function LocalOpen {
+    Select-String -Path $Queue -Pattern '^- \[([ ~!])\]' | ForEach-Object { $_.Line }
+}
+function LocalReady {
+    Select-String -Path $Queue -Pattern '^- \[ \]' | ForEach-Object { $_.Line }
+}
+function LocalActive {
+    Select-String -Path $Queue -Pattern '^- \[~\]' | ForEach-Object { $_.Line }
+}
+function PromoteFirstReady {
+    $c = Get-Content $Queue
+    $promoted = $null
+    $c = $c | ForEach-Object {
+        if ($null -eq $promoted -and $_ -match '^- \[ \]' -and $_ -notmatch '\(empty') {
+            $promoted = ($_ -replace '^- \[ \]', '- [~]')
+            $promoted
+        } else { $_ }
+    }
+    $c | Set-Content $Queue
+    return $promoted
+}
 switch ($Cmd) {
     'list' {
         Write-Host "== local $Queue =="
@@ -20,13 +48,26 @@ switch ($Cmd) {
         }
     }
     'next' {
-        if (Get-Command gh -ErrorAction SilentlyContinue) {
-            $item = gh issue list --state open --limit 1 --json number,title 2>$null
-            if ($item -and $item -ne '[]') { Write-Host "NEXT gh: $item"; exit 0 }
+        $src = if ($env:EMPEROR_QUEUE_SOURCE) { $env:EMPEROR_QUEUE_SOURCE } else { 'auto' }
+        if (($src -eq 'gh' -or $src -eq 'auto') -and (Get-Command gh -ErrorAction SilentlyContinue)) {
+            $item = gh issue list --state open --limit 1 --json number,title --jq '.[] | "#\(.number) \(.title)"' 2>$null
+            if ($item) { Write-Host "NEXT gh: $item"; exit 0 }
         }
-        if ($env:LINEAR_API_KEY) { Write-Host 'NEXT linear: key present — query with consent'; exit 0 }
-        $line = @(LocalOpen | Select-Object -First 1)
-        if ($line -and $line -notmatch '\(empty') { Write-Host "NEXT local: $line"; exit 0 }
+        if ($src -eq 'linear' -or ($src -eq 'auto' -and $env:LINEAR_API_KEY)) {
+            Write-Host 'NEXT linear: key present — agent must query Linear with client consent; script will not ship tokens.'
+            exit 0
+        }
+        $active = @(LocalActive | Select-Object -First 1)
+        if ($active) {
+            Write-Host "NEXT local (active): $active"
+            Write-Host 'WIP=1: refuse second active — finish current or: queue done <substring>'
+            exit 0
+        }
+        $line = @(LocalReady | Select-Object -First 1)
+        if ($line -and $line -notmatch '\(empty') {
+            $promoted = PromoteFirstReady
+            if ($promoted) { Write-Host "NEXT local: $promoted"; exit 0 }
+        }
         Write-Host "NEXT none: queue empty. Add a line to $Queue or pass a task."
         exit 2
     }
@@ -41,9 +82,9 @@ switch ($Cmd) {
         $c = Get-Content $Queue
         $hit = $false
         $c = $c | ForEach-Object {
-            if (-not $hit -and $_ -match '^- \[ \]' -and $_.Contains($pat)) {
+            if (-not $hit -and $_ -match '^- \[[ ~!]\]' -and $_.Contains($pat)) {
                 $hit = $true
-                $_ -replace '^- \[ \]', '- [x]'
+                $_ -replace '^- \[[ ~!]\]', '- [x]'
             } else { $_ }
         }
         $c | Set-Content $Queue
