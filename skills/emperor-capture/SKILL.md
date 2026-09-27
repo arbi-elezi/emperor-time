@@ -6,7 +6,7 @@ description: >-
   absent from this harness. Never bind an unpinned web skill.
 license: MIT
 metadata:
-  version: 0.3.0
+  version: 0.4.13
   chain: chain-jail
 ---
 
@@ -14,8 +14,12 @@ metadata:
 
 1. Read `chains/chain-jail/SKILL.md` → `absence-check.md` first.
 2. Hunt / adapt / author per router.
-3. **Pin + consent + trial are mandatory** before the captured skill may fire:
+3. **Authoring iron law:** before writing or substantively editing a skill,
+   open `chains/chain-jail/authoring-checklist.md` and/or run
+   `scripts/emperor author` (HARD-GATE: no skill body without a failing
+   baseline). Jumping to prose → `scripts/emperor author --reject-untested`.
+4. **Pin + consent + trial are mandatory** before the captured skill may fire:
    read `chains/chain-jail/pin-and-consent.md` then `trial-and-register.md`.
-4. Captured skills live in `.emperor/captured-skills/` with provenance headers.
-5. A captured skill that fails trial stays quarantined. Using it is a Vow of
+5. Captured skills live in `.emperor/captured-skills/` with provenance headers.
+6. A captured skill that fails trial stays quarantined. Using it is a Vow of
    Evidence + Vow of Consent breach.

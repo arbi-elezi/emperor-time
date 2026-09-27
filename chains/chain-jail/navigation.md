@@ -41,7 +41,7 @@ This table is a map, not memory.
 | PDF/docx/xlsx/pptx | document skills | `anthropics/skills` |
 | UI that does not look generic | `frontend-design` | official plugin marketplace / Anthropic frontend-design |
 | Domain X (k8s, SQL, SEO…) | `<domain> SKILL.md` | vendor orgs, `awesome-agent-skills`, GitHub topic `agent-skills` |
-| Skill-authoring craft | `writing-skills` | Superpowers writing-skills — after `authoring.md` law |
+| Skill-authoring craft | `writing-skills` | Local first: `authoring-checklist.md` + `emperor author` (Iron Law). Superpowers writing-skills only if still insufficient |
 
 Emperor Time already *is* the orchestrator. Do not steal `using-superpowers`
 or another master router to replace `SKILL.md`. Steal **leaf** skills.

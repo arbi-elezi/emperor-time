@@ -5,6 +5,26 @@ bar is higher than adapting: you are creating the thing future absence-checks
 will find, so its routing surface and its honesty determine whether it ever
 helps anyone. Output: a skill folder staged for trial.
 
+## MUST — authoring iron-law checklist first
+
+Before writing or substantively editing a skill, open
+`chains/chain-jail/authoring-checklist.md`
+(Chain Jail leaf from Superpowers `writing-skills` → **The Iron Law (Same as
+TDD)** / skill RGR only)
+and/or run `scripts/emperor author` (prints the mechanical AUTHOR / STEP / MUST
+card).
+
+No skill body without Step 2 baseline FAIL observed and quoted. Do not load
+whole `writing-skills`; ET + Chain Jail authoring orchestrate.
+
+Hard rules (mechanical):
+
+1. Run `scripts/emperor author` → quote `AUTHOR checklist=yes`.
+2. Advance with `scripts/emperor author --advance N N+1` (skips fail).
+3. Jumping to skill prose → `scripts/emperor author --reject-untested`
+   (HARD-GATE exit 1).
+4. Then continue with the anatomy steps below; hand to trial still mandatory.
+
 ## The anatomy (what every authored skill contains)
 
 ```
