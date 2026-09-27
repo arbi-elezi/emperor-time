@@ -6,8 +6,9 @@ description: >-
   asks to use another agent, parallelize, or review via a different model.
 license: MIT
 metadata:
-  version: 0.3.0
+  version: 0.4.30
   chain: steal-chain
+  part-of: emperor-time
 ---
 
 # Emperor Dispatch (Steal Chain wrapper)
@@ -20,3 +21,20 @@ metadata:
 5. Capture to `.emperor/runs/<task>/<agent>/` (`prompt.md`, `out.txt`, `meta.md`).
 6. Output is CONJECTURE until Judgment + `scripts/gate.sh g4`.
 7. Sign-in is the client's terminal. You never run interactive logins.
+
+## MUST — parallel-dispatch checklist for independent domains
+
+When facing 2+ *independent* tasks / failures / subsystems (disjoint writable
+scopes, no shared root cause) — before launching concurrent agents — open
+`skills/emperor-dispatch/parallel-dispatch-checklist.md`
+(Chain Jail leaf from Superpowers `dispatching-parallel-agents` → Identify
+Independent Domains / Focused Agent Tasks / Parallel Dispatch / Review and
+Integrate only)
+and/or run `scripts/emperor parallel` (prints the mechanical PARALLEL / STEP /
+MUST card).
+
+One agent per independent domain. Focused self-contained briefs. All dispatches
+in the same response for true parallelism. Review and integrate before done.
+Do not load whole `dispatching-parallel-agents`; ET + emperor-dispatch
+orchestrate. Sequential plan tasks stay `emperor subagent` (no parallel
+implementers on the same plan). Inline stays `emperor execute`.

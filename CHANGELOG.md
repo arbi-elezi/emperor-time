@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.4.30
+- Parallel-dispatch HARD-GATE leaf: Superpowers `dispatching-parallel-agents` → Identify Independent Domains / Focused Agent Tasks / Parallel Dispatch / Review and Integrate only, adapted into `skills/emperor-dispatch/parallel-dispatch-checklist.md` (Chain Jail extract-aspect)
+- Python core `scripts/lib/parallel.py` prints PARALLEL/STEP/MUST card, rejects step skips (`--advance`), hard-gates shared writable scope (`--reject-shared-scope`); thin `parallel.sh` / `parallel.ps1`; `emperor parallel` on bash/ps1/zsh/cmd peers
+- emperor-dispatch MUST the checklist for 2+ independent domains; companion to sequential `emperor subagent` / inline `emperor execute`; catalog + navigation + bakeoff point local-first; eval locks card + skip rejection + reject-shared-scope
+- Plugin, marketplace, and SKILL.md at 0.4.30
+
 ## 0.4.29
 - Subagent-driven HARD-GATE leaf: Superpowers `subagent-driven-development` → Fresh subagent per task / Task review after each / Fix loop R of 5 / Final whole-branch review only, adapted into `skills/emperor-build/subagent-driven-checklist.md` (Chain Jail extract-aspect)
 - Python core `scripts/lib/subagent.py` prints SUBAGENT/STEP/MUST card, rejects step skips (`--advance`), hard-gates skipped task review (`--reject-skip-review`); thin `subagent.sh` / `subagent.ps1`; `emperor subagent` on bash/ps1/zsh/cmd peers

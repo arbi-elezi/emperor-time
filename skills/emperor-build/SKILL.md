@@ -6,7 +6,7 @@ description: >-
   Failing probe first. Tripwires observed before flags/APIs/paths are asserted.
 license: MIT
 metadata:
-  version: 0.4.29
+  version: 0.4.30
   part-of: emperor-time
 ---
 
