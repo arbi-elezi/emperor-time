@@ -22,11 +22,12 @@
   .\emperor.ps1 execute
   .\emperor.ps1 subagent
   .\emperor.ps1 parallel
+  .\emperor.ps1 session-discovery
 #>
 [CmdletBinding()]
 param(
     [Parameter(Mandatory = $true, Position = 0)]
-    [ValidateSet('done','gate','eval','review-pack','dowse','install','worktree','queue','forge','finish','activate','boot','identify','route','heal','grill','tdd','iso','review','author','evidence','receive','execute','subagent','parallel','excavate')]
+    [ValidateSet('done','gate','eval','review-pack','dowse','install','worktree','queue','forge','finish','activate','boot','identify','route','heal','grill','tdd','iso','review','author','evidence','receive','execute','subagent','parallel','excavate','session-discovery')]
     [string]$Tool,
     [Parameter(ValueFromRemainingArguments = $true)]
     [string[]]$ToolArgs

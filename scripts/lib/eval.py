@@ -1973,11 +1973,138 @@ def run_evals(root: Path) -> int:
     h.require_contains("excavate thin", "evals/bakeoff.md", "bakeoff.md missing excavate thin alias inventory")
     h.require_contains("excavate", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing excavate")
     h.require_contains("0.4.34", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing 0.4.34 tip")
-    h.require_contains("lost-vhd", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing lost-vhd")
-    h.require_contains("0.4.35", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing 0.4.35 tip")
+    h.require_contains("lost-vhd", "evals/bakeoff.md", "bakeoff.md missing lost-vhd inventory")
     h.require_contains("archaeology-vhdl-manual.md", "SKILL.md", "SKILL.md missing vhdl Jail pin")
-    h.require_contains("0.4.35", ".claude-plugin/plugin.json", "plugin.json not at 0.4.35")
     h.require_contains("0.4.35", "CHANGELOG.md", "CHANGELOG missing 0.4.35")
+    h.require_contains("session_discovery.py", "evals/bakeoff.md", "bakeoff.md missing session_discovery.py inventory")
+    h.require_contains("session_discovery.py", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing session_discovery.py")
+    h.require_contains("0.4.36", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing 0.4.36 tip")
+    h.require_contains("0.4.36", ".claude-plugin/plugin.json", "plugin.json not at 0.4.36")
+    h.require_contains("0.4.36", "CHANGELOG.md", "CHANGELOG missing 0.4.36")
+
+    # session-discovery
+    h.section("session-discovery locate HARD-GATE leaf")
+    h.need("skills/emperor-heal/session-discovery.md")
+    h.need("references/session-discovery.md")
+    h.need("scripts/lib/session_discovery.py")
+    h.need("scripts/session-discovery.sh")
+    h.need("scripts/session-discovery.ps1")
+    h.bash_n("scripts/session-discovery.sh", "session-discovery.sh syntax")
+    h.py_compile("scripts/lib/session_discovery.py", "session_discovery.py compile")
+    h.require_contains(
+        "session_discovery.py",
+        "scripts/session-discovery.sh",
+        "session-discovery.sh does not call session_discovery.py",
+    )
+    h.require_contains(
+        "session_discovery.py",
+        "scripts/session-discovery.ps1",
+        "session-discovery.ps1 does not call session_discovery.py",
+    )
+    h.require_contains(
+        "session-discovery",
+        "scripts/emperor",
+        "emperor bash missing session-discovery",
+    )
+    h.require_contains(
+        "'session-discovery'",
+        "scripts/emperor.ps1",
+        "emperor.ps1 missing session-discovery",
+    )
+    h.require_contains(
+        "session-discovery",
+        "scripts/emperor.cmd",
+        "emperor.cmd missing session-discovery",
+    )
+    h.require_contains(
+        "session-discovery",
+        "scripts/emperor.zsh",
+        "emperor.zsh missing session-discovery",
+    )
+    h.require_contains(
+        "session-discovery.md",
+        "skills/emperor-heal/SKILL.md",
+        "emperor-heal missing session-discovery leaf",
+    )
+    h.require_contains(
+        "HARD-GATE",
+        "skills/emperor-heal/session-discovery.md",
+        "session-discovery leaf missing HARD-GATE heading",
+    )
+    h.require_contains(
+        "diagnosing-superpowers",
+        "skills/emperor-heal/session-discovery.md",
+        "session-discovery leaf missing source skill",
+    )
+    h.require_contains(
+        "obra/superpowers",
+        "references/session-discovery.md",
+        "session-discovery reference missing obra/superpowers cite",
+    )
+    h.require_contains(
+        "2026-09-27",
+        "references/session-discovery.md",
+        "session-discovery reference missing access date",
+    )
+    h.require_contains(
+        "session discovery",
+        "evals/triggers.json",
+        "triggers missing session discovery phrase",
+    )
+    h.require_contains(
+        "find session transcript",
+        "evals/triggers.json",
+        "triggers missing find session transcript phrase",
+    )
+    _, sess_out = h.run_py("scripts/lib/session_discovery.py")
+    if not re.search(r"^SESSION checklist=yes", sess_out, re.M):
+        h.fail_msg("session_discovery missing checklist=yes")
+    if not re.search(r"^PATH kind=", sess_out, re.M):
+        h.fail_msg("session_discovery missing PATH line")
+    if not re.search(r"^STATUS summary=", sess_out, re.M):
+        h.fail_msg("session_discovery missing STATUS line")
+    if not re.search(r"^MUST:", sess_out, re.M):
+        h.fail_msg("session_discovery missing MUST line")
+    if "NO_SESSION_CLAIM_WITHOUT_VERIFIED_PATH" not in sess_out:
+        h.fail_msg("session_discovery missing iron law token")
+    # explicit missing path must be ABSENT (honesty)
+    _, miss = h.run_py(
+        "scripts/lib/session_discovery.py",
+        "--path",
+        "/tmp/et-session-discovery-absent-path-does-not-exist",
+    )
+    if "status=ABSENT" not in miss:
+        h.fail_msg("session_discovery --path missing should mark ABSENT")
+    else:
+        h.pass_msg("session_discovery marks missing --path ABSENT")
+    # explicit existing path VERIFIED
+    _, hit = h.run_py(
+        "scripts/lib/session_discovery.py",
+        "--path",
+        str(root / "scripts/lib/session_discovery.py"),
+    )
+    if "status=VERIFIED" not in hit:
+        h.fail_msg("session_discovery --path existing should VERIFIED")
+    else:
+        h.pass_msg("session_discovery marks existing --path VERIFIED")
+    rc, _ = h.run_py("scripts/lib/session_discovery.py", "--reject-guess")
+    if rc == 0:
+        h.fail_msg("session_discovery --reject-guess should exit non-zero")
+    else:
+        _, reject = h.run_py("scripts/lib/session_discovery.py", "--reject-guess")
+        if not re.search(r"^REJECT GUESS:", reject, re.M):
+            h.fail_msg("reject-guess missing REJECT line")
+        else:
+            h.pass_msg("session_discovery --reject-guess hard-gates guess")
+    _, sess_sh = h.run_sh("scripts/session-discovery.sh")
+    if not re.search(r"^SESSION checklist=yes", sess_sh, re.M):
+        h.fail_msg("session-discovery.sh missing checklist card")
+    _, rout_sess = h.run_py("scripts/lib/route.py", "session discovery")
+    if "emperor-heal" not in rout_sess:
+        h.fail_msg("route.py session discovery → heal")
+    else:
+        h.pass_msg("route.py session discovery → emperor-heal")
+
 
     if h.fail != 0:
         print("EVALS FAILED")
