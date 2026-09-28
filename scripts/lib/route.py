@@ -7,7 +7,7 @@ Exit: 0 match / 1 no match / 2 usage or error.
 
 Extracted from the inlined Python formerly in route.sh / route.ps1.
 Thin twins: scripts/route.sh / scripts/route.ps1. Excavate patterns include
-Fortran (.f90 / gfortran), VHDL (.vhd / ghdl), Ada (.adb / gnat), Forth (.fs / pforth), Common Lisp (.lisp / clisp), Prolog (.pro / swipl), Tcl (.tcl / tclsh), Erlang (.erl / escript), REXX (.rex / regina), Modula-2 (.mod / gm2), Algol 68 (.a68 / a68g), ALGOL 60 (.a60 / marst), Algol W (.alw / awe), Icon (.icn / icont), Oberon (.obn / voc), SNOBOL4 (.sno / snobol4), Simula (.sim / cim), and APL (.apl / apl) alongside Pascal / ASM / COBOL.
+Fortran (.f90 / gfortran), VHDL (.vhd / ghdl), Ada (.adb / gnat), Forth (.fs / pforth), Common Lisp (.lisp / clisp), Prolog (.pro / swipl), Tcl (.tcl / tclsh), Erlang (.erl / escript), REXX (.rex / regina), Modula-2 (.mod / gm2), Algol 68 (.a68 / a68g), ALGOL 60 (.a60 / marst), Algol W (.alw / awe), Icon (.icn / icont), Oberon (.obn / voc), SNOBOL4 (.sno / snobol4), Simula (.sim / cim), APL (.apl / apl), and BCPL (.b / bcpl / cintsys) alongside Pascal / ASM / COBOL.
 """
 from __future__ import annotations
 
