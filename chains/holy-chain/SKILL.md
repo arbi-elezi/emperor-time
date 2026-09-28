@@ -31,7 +31,7 @@ actions past the first wound.
 |---|---|
 | Breakage just detected — secure the scene before anything else | `triage.md` |
 | Scene secured — make it fail on demand and isolate the cause | `reproduce-and-bisect.md` |
-| Cause isolated — fix minimally and prove the cure | `heal-and-verify.md` |
+| Cause isolated — fix minimally and prove the cure | `heal-and-verify.md` (mechanical: `scripts/emperor heal-verify`) |
 | The *process* broke: skipped gate, bad agent-merge, delivered falsehood, derailed loop | `process-healing.md` |
 
 Code wounds run the sequence: `triage.md` → `reproduce-and-bisect.md` →

@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.4.131
+
+- Vertical depth: heal-and-verify triad + postmortem HARD-GATE — `scripts/lib/heal_verify.py` mechanically refuses heal-done without Cure + No-new-wounds + Mechanism and the BROKE/CAUSE/HEAL/CAUGHT-BY/WOULD-HAVE-CAUGHT-SOONER line (not doctrine-only markdown)
+- Always-fail `--reject-no-triad` / `--reject-no-postmortem`; `--check-heal PATH` validates triad + postmortem when heal activity is present (vacuous PASS otherwise)
+- Thin twins `heal-verify.sh` / `heal-verify.ps1` + `heal-and-verify` alias + `emperor heal-verify` peers; fixtures `evals/fixtures/heal-and-verify/`; heal-and-verify.md + mechanical-gates + emperor-heal skill HARD-GATE lockstep
+- Entry still `scripts/emperor heal` (four-phase); this module locks the close. Not archaeology; not embeddings; closes next soft-gate after Steal consent-protocol (v0.4.130)
+- Plugin, marketplace, and SKILL.md at 0.4.131
+
+
 ## 0.4.130
 
 - Vertical depth: Steal consent-protocol HARD-GATE — `scripts/lib/consent.py` mechanically refuses dispatch / enlistment without a CONSENT: record (not doctrine-only markdown; CONSENT-header theater without `agent → role` fails)

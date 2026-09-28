@@ -61,6 +61,7 @@ if ($Tool -eq 'brief') { $Tool = 'task-brief' }
 if ($Tool -eq 'judgment-audit') { $Tool = 'claim-audit' }
 if ($Tool -eq 'steal-quarantine') { $Tool = 'quarantine' }
 if ($Tool -eq 'steal-consent') { $Tool = 'consent' }
+if ($Tool -eq 'heal-and-verify') { $Tool = 'heal-verify' }
 if ($Tool -eq 'self-critique') { $Tool = 'critique' }
 if ($Tool -eq 'breach') { $Tool = 'verdict' }
 $ps1 = Join-Path $here "$Tool.ps1"

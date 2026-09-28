@@ -5812,13 +5812,20 @@ def run_evals(root: Path) -> int:
     h.require_contains("REJECT MULTI WIP", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing REJECT MULTI WIP")
     h.require_contains("queue-reject-multi-wip", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing queue-reject-multi-wip")
     h.require_contains("0.4.130", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing 0.4.130 tip")
-    h.require_contains("0.4.130", ".claude-plugin/plugin.json", "plugin.json not at 0.4.130")
     h.require_contains("0.4.130", "CHANGELOG.md", "CHANGELOG missing 0.4.130")
     h.require_contains("reject-no-consent", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing reject-no-consent")
     h.require_contains("check-consent", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing check-consent")
     h.require_contains("REJECT NO CONSENT", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing REJECT NO CONSENT")
     h.require_contains("steal-consent", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing steal-consent")
     h.require_contains("consent.py", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing consent.py")
+    h.require_contains("0.4.131", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing 0.4.131 tip")
+    h.require_contains("0.4.131", ".claude-plugin/plugin.json", "plugin.json not at 0.4.131")
+    h.require_contains("0.4.131", "CHANGELOG.md", "CHANGELOG missing 0.4.131")
+    h.require_contains("reject-no-triad", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing reject-no-triad")
+    h.require_contains("reject-no-postmortem", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing reject-no-postmortem")
+    h.require_contains("check-heal", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing check-heal")
+    h.require_contains("heal_verify.py", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing heal_verify.py")
+    h.require_contains("heal-and-verify", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing heal-and-verify")
     h.require_contains("finish.py", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing finish.py")
     h.require_contains("reject-red-suite", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing reject-red-suite")
     h.require_contains("require-green", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing require-green")
@@ -6589,6 +6596,168 @@ def run_evals(root: Path) -> int:
     else:
         h.pass_msg("emperor consent peer forwards --reject-no-consent")
     h.pass_msg("consent.py thin twins + consent-protocol HARD-GATE")
+
+    # ---- heal-and-verify HARD-GATE (Holy Chain vertical depth) ----
+    h.section("heal-and-verify HARD-GATE")
+    h.need("scripts/lib/heal_verify.py")
+    h.need("scripts/heal-verify.sh")
+    h.need("scripts/heal-verify.ps1")
+    h.need("scripts/heal-and-verify.sh")
+    h.need("scripts/heal-and-verify.ps1")
+    h.need("evals/fixtures/heal-and-verify/heal-ok.md")
+    h.need("evals/fixtures/heal-and-verify/heal-no-triad.md")
+    h.need("evals/fixtures/heal-and-verify/heal-no-postmortem.md")
+    h.need("evals/fixtures/heal-and-verify/heal-vacuous.md")
+    h.need("evals/fixtures/heal-and-verify/task-ok/ledger.md")
+    h.need("evals/fixtures/heal-and-verify/task-no-triad/ledger.md")
+    h.need("evals/fixtures/heal-and-verify/task-no-postmortem/ledger.md")
+    h.bash_n("scripts/heal-verify.sh", "heal-verify.sh syntax")
+    h.bash_n("scripts/heal-and-verify.sh", "heal-and-verify.sh syntax")
+    h.py_compile("scripts/lib/heal_verify.py", "heal_verify.py compile")
+    h.require_contains(
+        "lib/heal_verify.py",
+        "scripts/heal-verify.sh",
+        "heal-verify.sh thin twin missing heal_verify.py",
+    )
+    h.require_contains(
+        "lib/heal_verify.py",
+        "scripts/heal-verify.ps1",
+        "heal-verify.ps1 thin twin missing heal_verify.py",
+    )
+    h.require_contains(
+        "heal-verify",
+        "scripts/emperor",
+        "emperor bash peer missing heal-verify",
+    )
+    h.require_contains(
+        "heal-and-verify",
+        "scripts/emperor",
+        "emperor bash peer missing heal-and-verify",
+    )
+    h.require_contains(
+        "'heal-verify'",
+        "scripts/emperor.ps1",
+        "emperor.ps1 missing heal-verify",
+    )
+    h.require_contains(
+        "heal-verify",
+        "scripts/emperor.cmd",
+        "emperor.cmd missing heal-verify",
+    )
+    h.require_contains(
+        "heal-verify",
+        "scripts/emperor.zsh",
+        "emperor.zsh missing heal-verify",
+    )
+    h.require_contains(
+        "--reject-no-triad",
+        "scripts/lib/heal_verify.py",
+        "heal_verify.py missing --reject-no-triad",
+    )
+    h.require_contains(
+        "--reject-no-postmortem",
+        "scripts/lib/heal_verify.py",
+        "heal_verify.py missing --reject-no-postmortem",
+    )
+    h.require_contains(
+        "--check-heal",
+        "scripts/lib/heal_verify.py",
+        "heal_verify.py missing --check-heal",
+    )
+    h.require_contains(
+        "HARD-GATE",
+        "chains/holy-chain/heal-and-verify.md",
+        "heal-and-verify.md missing HARD-GATE mechanical pointer",
+    )
+    h.require_contains(
+        "--reject-no-triad",
+        "skills/emperor-heal/SKILL.md",
+        "emperor-heal skill missing --reject-no-triad",
+    )
+    h.require_contains(
+        "heal-and-verify-hard-gate",
+        "evals/evals.json",
+        "evals.json missing heal-and-verify-hard-gate case",
+    )
+    h.require_contains(
+        "heal-and-verify",
+        "references/mechanical-gates.md",
+        "mechanical-gates missing heal-and-verify row",
+    )
+    h.require_contains(
+        "--reject-no-triad",
+        "references/software-factory.md",
+        "software-factory missing --reject-no-triad",
+    )
+    h.require_contains(
+        "reject-no-triad",
+        "evals/bakeoff.md",
+        "bakeoff.md missing heal-verify reject-no-triad inventory",
+    )
+    _, card = h.run_py("scripts/lib/heal_verify.py")
+    if "checklist=yes" not in card:
+        h.fail_msg("heal-verify card missing checklist=yes")
+    elif "TRIAD_THEN_POSTMORTEM" not in card:
+        h.fail_msg("heal-verify card missing iron law token")
+    else:
+        h.pass_msg("heal-verify prints HEAL-VERIFY card")
+    rc, reject = h.run_py("scripts/lib/heal_verify.py", "--reject-no-triad")
+    if rc == 0:
+        h.fail_msg("heal-verify --reject-no-triad should exit non-zero")
+    elif "REJECT NO TRIAD" not in reject and "HARD-GATE" not in reject:
+        h.fail_msg("heal-verify --reject-no-triad missing REJECT text")
+    else:
+        h.pass_msg("heal-verify --reject-no-triad hard-gates")
+    rc, reject = h.run_py("scripts/lib/heal_verify.py", "--reject-no-postmortem")
+    if rc == 0:
+        h.fail_msg("heal-verify --reject-no-postmortem should exit non-zero")
+    elif "REJECT NO POSTMORTEM" not in reject and "HARD-GATE" not in reject:
+        h.fail_msg("heal-verify --reject-no-postmortem missing REJECT text")
+    else:
+        h.pass_msg("heal-verify --reject-no-postmortem hard-gates")
+    for name, needle in (
+        ("heal-no-triad.md", r"triad|Cure|Mechanism"),
+        ("heal-no-postmortem.md", r"postmortem|BROKE"),
+        ("task-no-triad", r"triad|Cure|Mechanism"),
+        ("task-no-postmortem", r"postmortem|BROKE"),
+    ):
+        target = root / "evals/fixtures/heal-and-verify" / name
+        rc, err = h.run_py(
+            "scripts/lib/heal_verify.py",
+            "--check-heal",
+            str(target),
+        )
+        if rc == 0:
+            h.fail_msg(f"heal-and-verify {name} should fail check-heal")
+        elif not h.grep_out(err, needle):
+            h.fail_msg(f"heal-and-verify {name} should mention {needle}: {err}")
+        else:
+            h.pass_msg(f"heal-and-verify {name} rejected")
+    for name in ("heal-ok.md", "heal-vacuous.md", "task-ok"):
+        rc, _ = h.run_py(
+            "scripts/lib/heal_verify.py",
+            "--check-heal",
+            str(root / "evals/fixtures/heal-and-verify" / name),
+        )
+        if rc != 0:
+            h.fail_msg(f"heal-and-verify {name} should pass check-heal")
+        else:
+            h.pass_msg(f"heal-and-verify {name} accepted")
+    _, sh_card = h.run_sh("scripts/heal-verify.sh")
+    if "checklist=yes" not in sh_card:
+        h.fail_msg("heal-verify.sh should print HEAL-VERIFY card")
+    else:
+        h.pass_msg("heal-verify.sh thin twin prints card")
+    _, emp_out = h.run_sh(
+        "scripts/emperor",
+        "heal-verify",
+        "--reject-no-triad",
+    )
+    if "REJECT NO TRIAD" not in emp_out:
+        h.fail_msg("emperor heal-verify --reject-no-triad should forward REJECT")
+    else:
+        h.pass_msg("emperor heal-verify peer forwards --reject-no-triad")
+    h.pass_msg("heal_verify.py thin twins + heal-and-verify HARD-GATE")
 
     # root-cause tracing HARD-GATE
     h.section("root-cause tracing HARD-GATE leaf")

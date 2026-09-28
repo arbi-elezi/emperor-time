@@ -75,3 +75,26 @@ The last field is the only forward-looking one and the whole point:
 
 Recurring `CAUGHT-BY: client` or `CAUGHT-BY: luck` across ledgers is itself
 a finding about the verification culture — surface it.
+
+## HARD-GATE (mechanical)
+
+Doctrine above is the law. The lock is an exit code:
+
+```bash
+scripts/emperor heal-verify <task-dir>           # or --check-heal PATH
+scripts/emperor heal-verify --reject-no-triad    # always fails
+scripts/emperor heal-verify --reject-no-postmortem
+scripts/emperor heal-and-verify <task-dir>       # alias
+```
+
+Python core: `scripts/lib/heal_verify.py`. Thin twins: `heal-verify.sh` /
+`heal-verify.ps1` (+ `heal-and-verify` alias). Fails when:
+
+1. Heal activity present but missing Cure / No-new-wounds / Mechanism triad legs
+2. Heal activity present but missing postmortem
+   `BROKE: | CAUSE: | HEAL: | CAUGHT-BY: | WOULD-HAVE-CAUGHT-SOONER:`
+
+Accepts: full triad + postmortem; vacuous PASS when no heal activity is claimed.
+Entry rite still runs `scripts/emperor heal` (four-phase) before proposing fixes —
+this module locks the close, not the entry card.
+

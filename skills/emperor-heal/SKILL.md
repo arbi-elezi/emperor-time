@@ -157,6 +157,18 @@ process. Do not load whole `systematic-debugging`; ET + Holy Chain orchestrate.
    (`triage.md` | `reproduce-and-bisect.md` | `heal-and-verify.md` |
    `process-healing.md`) matching the current phase (see leaf table).
 10. Snapshot. Reproduce. One hypothesis per step. Prediction before probe.
+
+## MUST — heal-and-verify HARD-GATE before claiming heal done
+
+After the four-phase entry (`scripts/emperor heal`) and before DONE:
+
+1. Quote the verification triad (Cure + No new wounds + Mechanism).
+2. Append the postmortem line (`BROKE: | CAUSE: | HEAL: | CAUGHT-BY: | WOULD-HAVE-CAUGHT-SOONER:`).
+3. Run `scripts/emperor heal-verify <task-dir>` (or `heal-and-verify`) — exit 0.
+   Always-fail helpers: `--reject-no-triad` / `--reject-no-postmortem`.
+
+See `chains/holy-chain/heal-and-verify.md`.
+
 11. Minimal heal. Verify the cause, not the symptom (verification triad).
 12. Postmortem line on the ledger: BROKE / CAUSE / HEAL / CAUGHT-BY /
    WOULD-HAVE-CAUGHT-SOONER.
