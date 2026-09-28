@@ -112,6 +112,11 @@
       "id": "blind-secrets-broker",
       "type": "behavioral-fixture",
       "expect": "secrets_broker.py list|declare|inject never echoes plaintext; env-file inject + vault hook; --reject-secret-leak / --check-env-redacted; workspace_env show redacted + sync merges plugin overlays into managed.env"
+    },
+    {
+      "id": "forge-pr-consent-hard-gate",
+      "type": "behavioral-fixture",
+      "expect": "forge.py --reject-no-pr-consent / --check-pr-consent refuses forge/PR activity lacking EMPEROR_CONSENT_PR or ledger PR-consent quote; accepts consented and vacuous non-forge; G5 calls check-pr-consent (Steal --reject-no-consent remains separate)"
     }
   ]
 }

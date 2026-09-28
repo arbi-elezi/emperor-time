@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.4.137
+
+- Vertical depth: forge PR-consent residual HARD-GATE — `scripts/lib/forge.py` already refused without consent; now adds card-style always-fail `--reject-no-pr-consent` / `--check-pr-consent` peers (forge-specific names; Steal keeps `--reject-no-consent` / `--check-consent`)
+- G5 calls `--check-pr-consent` when forge / public-PR activity is present (vacuous PASS for merge-locally / no forge markers); fixtures `evals/fixtures/forge-pr-consent/`
+- Thin twins already forward args; emperor-forge skill + mechanical-gates + software-factory + bakeoff honesty lockstep
+- Not archaeology; not embeddings; closes soft→hard leftover #1 after vision spine (v0.4.136); next soft gate: Holy reproduce-and-bisect
+- Plugin, marketplace, and SKILL.md at 0.4.137
+
 ## 0.4.136
 
 - Vertical depth: blind secrets broker + unified workspace env — real `secrets list|declare|inject` (names+status only; NEVER plaintext); env-file broker writes artifact `.env.secrets` outside git; vault/1password hook placeholders; HARD-GATE `--reject-secret-leak` / `--check-env-redacted`

@@ -22,6 +22,8 @@ G0 also delegates thoughttrail + super-context to context.py
 (vacuous PASS when no context / thoughttrail markers).
 G5 delegates verdict + Breach Register honesty to verdict.py
 (PASS substring + header-only theater is not enough).
+G5 also delegates forge PR-consent to forge.py
+(vacuous PASS when no forge / public-PR markers).
 """
 from __future__ import annotations
 
@@ -159,6 +161,17 @@ def _run_context(gate: str, task: Path) -> None:
         )
         if proc.returncode != 0:
             _fail(gate, f"thoughttrail/super-context ({flag})")
+
+
+
+def _run_forge_consent(gate: str, task: Path) -> None:
+    py = _root() / "scripts" / "lib" / "forge.py"
+    proc = subprocess.run(
+        [sys.executable, str(py), "--check-pr-consent", str(task)],
+        check=False,
+    )
+    if proc.returncode != 0:
+        _fail(gate, "forge PR consent (forge.py)")
 
 
 def _run_verdict(gate: str, task: Path) -> None:
@@ -303,6 +316,9 @@ def run_gate(gate: str, task: Path) -> None:
         # Mechanical verdict + Breach Register: deliverable ruling + citations;
         # empty/theater Stake rows fail (verdict.py). Header-only PASS theater ≠ G5.
         _run_verdict(gate, task)
+        # Forge PR consent: EMPEROR_CONSENT_PR or ledger quote when forge/PR claimed.
+        # Vacuous PASS when no forge / public-PR markers (merge-locally OK).
+        _run_forge_consent(gate, task)
         _mark(stamp, gate)
         _ok(gate, "deliverable artifacts present")
         return
