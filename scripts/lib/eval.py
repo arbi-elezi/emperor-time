@@ -660,6 +660,10 @@ def run_evals(root: Path) -> int:
             ("pytsv HELLO.tsv", "emperor-excavate", "route pytsv → excavate"),
             ("tab-separated HELLO.tsv", "emperor-excavate", "route tab-separated → excavate"),
             ("hello.tsv", "emperor-excavate", "route hello.tsv → excavate"),
+            ("jsonl HELLO.jsonl", "emperor-excavate", "route jsonl → excavate"),
+            ("pyjsonl HELLO.jsonl", "emperor-excavate", "route pyjsonl → excavate"),
+            ("ndjson HELLO.jsonl", "emperor-excavate", "route ndjson → excavate"),
+            ("hello.jsonl", "emperor-excavate", "route hello.jsonl → excavate"),
             ("queue next", "emperor-queue", "route queue next → queue"),
             ("blocked task", "emperor-queue", "route blocked task → queue"),
             ("red build", "emperor-heal", "route red build → heal"),
@@ -1268,6 +1272,13 @@ def run_evals(root: Path) -> int:
             "HELLO.tsv",
             r"[0-9]+ \*\.tsv",
             ["references/archaeology-tsv-manual.md"],
+        ),
+        (
+            "lost-jsonl identify finds *.jsonl",
+            "lost-jsonl",
+            "HELLO.jsonl",
+            r"[0-9]+ \*\.jsonl",
+            ["references/archaeology-jsonl-manual.md"],
         ),
     ]
     # The loop above was messy — clear fail state not affected; rewrite cleanly below by
@@ -2300,9 +2311,8 @@ def run_evals(root: Path) -> int:
     rc_bare_json, rout_bare_json = h.run_py("scripts/lib/route.py", "json")
     if "emperor-excavate" in rout_bare_json:
         h.fail_msg("route.py bare json must not → excavate (jsonl/json5/jsonc collision)")
-    rc_jsonl, rout_jsonl = h.run_py("scripts/lib/route.py", "hello.jsonl")
-    if "emperor-excavate" in rout_jsonl:
-        h.fail_msg("route.py hello.jsonl must not → excavate (JSON leaf owns *.json only)")
+    # hello.jsonl now owned by JSONL leaf (v0.4.114); .json extension-boundary above
+    # still refuses prefix-steal. Positive hello.jsonl → excavate asserted in JSONL block.
     _, rout_ini = h.run_py("scripts/lib/route.py", "ini HELLO.ini")
     if "emperor-excavate" not in rout_ini:
         h.fail_msg("route.py ini → excavate")
@@ -2548,6 +2558,24 @@ def run_evals(root: Path) -> int:
         h.fail_msg("route matches(.tsv, hello.tsv) must be True")
     if _m(".tsv", "hello.tsvfoo"):
         h.fail_msg("route matches(.tsv, hello.tsvfoo) must be False after extension-boundary")
+    _, rout_jsonl = h.run_py("scripts/lib/route.py", "jsonl HELLO.jsonl")
+    if "emperor-excavate" not in rout_jsonl:
+        h.fail_msg("route.py jsonl → excavate")
+    _, rout_pyjsonl = h.run_py("scripts/lib/route.py", "pyjsonl HELLO.jsonl")
+    if "emperor-excavate" not in rout_pyjsonl:
+        h.fail_msg("route.py pyjsonl → excavate")
+    _, rout_ndjson = h.run_py("scripts/lib/route.py", "ndjson HELLO.jsonl")
+    if "emperor-excavate" not in rout_ndjson:
+        h.fail_msg("route.py ndjson → excavate")
+    _, rout_hello_jsonl = h.run_py("scripts/lib/route.py", "hello.jsonl")
+    if "emperor-excavate" not in rout_hello_jsonl:
+        h.fail_msg("route.py hello.jsonl → excavate")
+    if not _m(".jsonl", "hello.jsonl"):
+        h.fail_msg("route matches(.jsonl, hello.jsonl) must be True")
+    if _m(".jsonl", "hello.jsonlfoo"):
+        h.fail_msg("route matches(.jsonl, hello.jsonlfoo) must be False after extension-boundary")
+    if _m(".json", "hello.jsonl"):
+        h.fail_msg("route matches(.json, hello.jsonl) must be False (json leaf must not steal .jsonl)")
     # bare .l must not be enough alone when colliding; .lisp already routes via .lisp
     _, rout_regina = h.run_py("scripts/lib/route.py", "regina HELLO.REX")
     if "emperor-excavate" not in rout_regina:
@@ -4126,8 +4154,10 @@ def run_evals(root: Path) -> int:
     h.require_contains("0.4.112", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing 0.4.112 tip")
     h.require_contains("0.4.112", "CHANGELOG.md", "CHANGELOG missing 0.4.112")
     h.require_contains("0.4.113", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing 0.4.113 tip")
-    h.require_contains("0.4.113", ".claude-plugin/plugin.json", "plugin.json not at 0.4.113")
     h.require_contains("0.4.113", "CHANGELOG.md", "CHANGELOG missing 0.4.113")
+    h.require_contains("0.4.114", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing 0.4.114 tip")
+    h.require_contains("0.4.114", ".claude-plugin/plugin.json", "plugin.json not at 0.4.114")
+    h.require_contains("0.4.114", "CHANGELOG.md", "CHANGELOG missing 0.4.114")
 
     # session-discovery
     h.section("session-discovery locate HARD-GATE leaf")

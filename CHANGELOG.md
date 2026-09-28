@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.4.114
+
+- Archaeology JSONL / stdlib json.loads-per-line-on-`.jsonl` Jail pin: `evals/fixtures/lost-jsonl/` + `references/archaeology-jsonl-manual.md` (CPython stdlib `json` on HELLO.jsonl → EMPEROR-TIME-JSONL-PROBE-OK; zero new apt; Debian jsonlint REJECTED as leaf owner)
+- identify/route/eval/honesty/bakeoff/catalog lockstep; fossils `*.jsonl`; route tags `jsonl` / `pyjsonl` / `ndjson` / `.jsonl`; does not steal plain `*.json`
+- Plugin, marketplace, and SKILL.md at 0.4.114
+
+
 ## 0.4.113
 
 - Archaeology TSV / stdlib csv.DictReader-on-`.tsv` (tab delimiter) Jail pin: `evals/fixtures/lost-tsv/` + `references/archaeology-tsv-manual.md` (CPython stdlib `csv` on HELLO.tsv → EMPEROR-TIME-TSV-PROBE-OK; zero new apt; Debian csvkit/miller/tsv-utils REJECTED as leaf owner)
