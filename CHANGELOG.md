@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.4.62
+- Archaeology APL leaf: `evals/fixtures/lost-apl/HELLO.APL` + identify smoke; GNU APL 2.0 (source build, `--with-optional_libs=no`) boot probe VERIFIED (`apl -s --OFF -f HELLO.APL` → `EMPEROR-TIME-APL-PROBE-OK`); prebuilt `apl_2.0-1_amd64.deb` needs `libgsl.so.27` (trixie has `libgsl28`) so UNVERIFIABLE here; dialect labels honest (CONJECTURE / UNVERIFIABLE where due); identify fossils `*.apl` only
+- Jail pin `references/archaeology-apl-manual.md` — GNU APL `apl(1)` SYNOPSIS (`apl [options]`) / OPTIONS `-f file`
+- Catalog + SKILL.md + archaeology.md + language-agnostic.md link the twenty-first pin alongside Pascal, ASM, COBOL, Fortran, VHDL, Ada, Forth, Common Lisp, Prolog, Tcl, Erlang, REXX, Modula-2, Algol 68, ALGOL 60, Algol W, Icon, Oberon, SNOBOL4, and Simula; route triggers gain `apl` / `gnu-apl` / `.apl` (bare English keyword tags refused); eval locks `*.apl` identify on lost-apl
+- Plugin, marketplace, and SKILL.md at 0.4.62
+
 ## 0.4.61
 - Archaeology Simula leaf: `evals/fixtures/lost-cim/HELLO.SIM` + identify smoke; Portable Simula 2.0 (Setup R21) / Temurin JDK 21 boot probe VERIFIED (`java -jar simula.jar … HELLO.SIM` → `EMPEROR-TIME-CIM-PROBE-OK`); GNU Cim 3.37 built but segfaults here (UNVERIFIABLE); dialect labels honest (CONJECTURE / UNVERIFIABLE where due); identify fossils `*.sim` only
 - Jail pin `references/archaeology-simula-manual.md` — Portable Simula Usage synopsis (`java -jar simula.jar [options] sourceFile`)
