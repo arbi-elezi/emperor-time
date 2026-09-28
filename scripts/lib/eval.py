@@ -5819,7 +5819,7 @@ def run_evals(root: Path) -> int:
     h.require_contains("steal-consent", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing steal-consent")
     h.require_contains("consent.py", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing consent.py")
     h.require_contains("0.4.132", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing 0.4.132 tip")
-    h.require_contains("0.4.132", ".claude-plugin/plugin.json", "plugin.json not at 0.4.132")
+    h.require_contains("0.4.133", ".claude-plugin/plugin.json", "plugin.json not at 0.4.133")
     h.require_contains("0.4.132", "CHANGELOG.md", "CHANGELOG missing 0.4.132")
     h.require_contains("reject-no-triad", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing reject-no-triad")
     h.require_contains("reject-no-postmortem", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing reject-no-postmortem")
@@ -5827,6 +5827,13 @@ def run_evals(root: Path) -> int:
     h.require_contains("review_pack.py", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing review_pack.py")
     h.require_contains("hetero-critique-isolation", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing hetero-critique-isolation")
     h.require_contains("reject-unisolated", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing reject-unisolated")
+    h.require_contains("0.4.133", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing 0.4.133 tip")
+    h.require_contains("0.4.133", "CHANGELOG.md", "CHANGELOG missing 0.4.133")
+    h.require_contains("reject-no-graph", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing reject-no-graph")
+    h.require_contains("reject-no-trail", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing reject-no-trail")
+    h.require_contains("thoughttrail-super-context", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing thoughttrail-super-context")
+    h.require_contains("context.py", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing context.py")
+    h.require_contains("md_graph.py", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing md_graph.py")
     h.require_contains("finish.py", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing finish.py")
     h.require_contains("reject-red-suite", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing reject-red-suite")
     h.require_contains("require-green", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing require-green")
@@ -6832,9 +6839,9 @@ def run_evals(root: Path) -> int:
         "bakeoff.md missing reject-unisolated inventory",
     )
     h.require_contains(
-        "0.4.132",
+        "0.4.133",
         "SKILL.md",
-        "SKILL.md not bumped to 0.4.132",
+        "SKILL.md not bumped to 0.4.133",
     )
     _, card = h.run_py("scripts/lib/review_pack.py")
     if "checklist=yes" not in card:
@@ -8295,6 +8302,245 @@ def run_evals(root: Path) -> int:
         h.fail_msg("route.py skill discovery optimization → capture")
     else:
         h.pass_msg("route.py skill discovery optimization → emperor-capture")
+
+
+
+    # ---- thoughttrail + super-context HARD-GATE ----
+    h.section("thoughttrail-super-context HARD-GATE")
+    h.need("scripts/lib/context.py")
+    h.need("scripts/lib/md_graph.py")
+    h.need("scripts/lib/context_store.py")
+    h.need("scripts/lib/thoughttrail.py")
+    h.need("scripts/lib/super_context.py")
+    h.need("scripts/context.sh")
+    h.need("scripts/context.ps1")
+    h.need("scripts/thoughttrail.sh")
+    h.need("scripts/sandbox.sh")
+    h.need("scripts/sot.sh")
+    h.need("scripts/runtime.sh")
+    h.need("scripts/env.sh")
+    h.need("scripts/secrets.sh")
+    h.need("references/super-context.md")
+    h.need("evals/fixtures/thoughttrail-super-context/README.md")
+    h.need("evals/fixtures/thoughttrail-super-context/repo-ok/CLAIM.md")
+    h.need("evals/fixtures/thoughttrail-super-context/repo-no-graph/CLAIM.md")
+    h.need("evals/fixtures/thoughttrail-super-context/repo-no-trail/CLAIM.md")
+    h.need("evals/fixtures/thoughttrail-super-context/task-ok/ledger.md")
+    h.need("evals/fixtures/thoughttrail-super-context/task-no-graph/ledger.md")
+    h.need("evals/fixtures/thoughttrail-super-context/task-vacuous/ledger.md")
+    h.bash_n("scripts/context.sh", "context.sh syntax")
+    h.bash_n("scripts/thoughttrail.sh", "thoughttrail.sh syntax")
+    h.py_compile("scripts/lib/context.py", "context.py compile")
+    h.py_compile("scripts/lib/md_graph.py", "md_graph.py compile")
+    h.py_compile("scripts/lib/context_store.py", "context_store.py compile")
+    h.py_compile("scripts/lib/thoughttrail.py", "thoughttrail.py compile")
+    h.py_compile("scripts/lib/super_context.py", "super_context.py compile")
+    h.require_contains(
+        "lib/context.py",
+        "scripts/context.sh",
+        "context.sh thin twin missing context.py",
+    )
+    h.require_contains(
+        "lib/context.py",
+        "scripts/context.ps1",
+        "context.ps1 thin twin missing context.py",
+    )
+    h.require_contains(
+        "context",
+        "scripts/emperor",
+        "emperor bash peer missing context",
+    )
+    h.require_contains(
+        "'context'",
+        "scripts/emperor.ps1",
+        "emperor.ps1 missing context",
+    )
+    h.require_contains(
+        "context",
+        "scripts/emperor.cmd",
+        "emperor.cmd missing context",
+    )
+    h.require_contains(
+        "context",
+        "scripts/emperor.zsh",
+        "emperor.zsh missing context",
+    )
+    h.require_contains(
+        "--reject-no-graph",
+        "scripts/lib/context.py",
+        "context.py missing --reject-no-graph",
+    )
+    h.require_contains(
+        "--reject-no-trail",
+        "scripts/lib/context.py",
+        "context.py missing --reject-no-trail",
+    )
+    h.require_contains(
+        "--check-context",
+        "scripts/lib/context.py",
+        "context.py missing --check-context",
+    )
+    h.require_contains(
+        "--check-trail",
+        "scripts/lib/context.py",
+        "context.py missing --check-trail",
+    )
+    h.require_contains(
+        "EXTRACTED",
+        "scripts/lib/md_graph.py",
+        "md_graph.py missing EXTRACTED",
+    )
+    h.require_contains(
+        "INFERRED",
+        "scripts/lib/md_graph.py",
+        "md_graph.py missing INFERRED",
+    )
+    h.require_contains(
+        "thoughttrail-super-context-hard-gate",
+        "evals/evals.json",
+        "evals.json missing thoughttrail-super-context-hard-gate case",
+    )
+    h.require_contains(
+        "reject-no-graph",
+        "references/mechanical-gates.md",
+        "mechanical-gates missing reject-no-graph",
+    )
+    h.require_contains(
+        "super-context",
+        "references/software-factory.md",
+        "software-factory missing super-context",
+    )
+    h.require_contains(
+        "L0",
+        "skills/emperor-resume/SKILL.md",
+        "emperor-resume missing L0",
+    )
+    h.require_contains(
+        "reject-no-graph",
+        "evals/bakeoff.md",
+        "bakeoff.md missing reject-no-graph inventory",
+    )
+    h.require_contains(
+        "blind",
+        "references/super-context.md",
+        "super-context.md missing blind creds doctrine",
+    )
+    h.require_contains(
+        "podman",
+        "references/super-context.md",
+        "super-context.md missing podman runtime",
+    )
+    _, card = h.run_py("scripts/lib/context.py")
+    if "checklist=yes" not in card:
+        h.fail_msg("context card missing checklist=yes")
+    elif "GRAPH_THEN_TRAIL" not in card:
+        h.fail_msg("context card missing iron law token")
+    else:
+        h.pass_msg("context prints CONTEXT card")
+    rc, reject = h.run_py("scripts/lib/context.py", "--reject-no-graph")
+    if rc == 0:
+        h.fail_msg("context --reject-no-graph should exit non-zero")
+    elif "REJECT NO GRAPH" not in reject and "HARD-GATE" not in reject:
+        h.fail_msg("context --reject-no-graph missing REJECT text")
+    else:
+        h.pass_msg("context --reject-no-graph hard-gates")
+    rc, reject = h.run_py("scripts/lib/context.py", "--reject-no-trail")
+    if rc == 0:
+        h.fail_msg("context --reject-no-trail should exit non-zero")
+    elif "REJECT NO TRAIL" not in reject and "HARD-GATE" not in reject:
+        h.fail_msg("context --reject-no-trail missing REJECT text")
+    else:
+        h.pass_msg("context --reject-no-trail hard-gates")
+    for name, needle in (
+        ("repo-no-graph", r"graph\.sqlite|l0\.md|missing"),
+        ("repo-no-trail", r"trail\.jsonl|empty|missing"),
+        ("task-no-graph", r"graph\.sqlite|l0\.md|missing"),
+    ):
+        target = root / "evals/fixtures/thoughttrail-super-context" / name
+        flag = "--check-trail" if "trail" in name and "no-trail" in name else "--check-context"
+        # repo-no-trail: graph exists but trail empty — check-trail
+        if name == "repo-no-trail":
+            flag = "--check-trail"
+        rc, err = h.run_py("scripts/lib/context.py", flag, str(target))
+        if rc == 0:
+            h.fail_msg(f"context {name} should fail {flag}")
+        elif not h.grep_out(err, needle):
+            h.fail_msg(f"context {name} should mention {needle}: {err}")
+        else:
+            h.pass_msg(f"context {name} rejected")
+    for name in ("repo-ok", "task-ok", "task-vacuous"):
+        rc, _ = h.run_py(
+            "scripts/lib/context.py",
+            "--check-context",
+            str(root / "evals/fixtures/thoughttrail-super-context" / name),
+        )
+        if rc != 0:
+            h.fail_msg(f"context {name} should pass check-context")
+        else:
+            h.pass_msg(f"context {name} accepted")
+    # build + query + trail on a temp copy of docs
+    import tempfile as _tf
+    import shutil as _sh
+    tmp = Path(_tf.mkdtemp())
+    try:
+        docs_src = root / "evals/fixtures/thoughttrail-super-context/repo-no-graph/docs"
+        _sh.copytree(docs_src, tmp / "docs")
+        rc, out = h.run_py("scripts/lib/context.py", "build", str(tmp), "--force")
+        if rc != 0 or "PASS" not in out and "build" not in out.lower():
+            # accept either PASS wording
+            if rc != 0:
+                h.fail_msg(f"context build should pass: {out}")
+            else:
+                h.pass_msg("context build ok")
+        else:
+            h.pass_msg("context build ok")
+        rc, out = h.run_py("scripts/lib/context.py", "query", "ADR", str(tmp))
+        if rc != 0 or "ADR" not in out:
+            h.fail_msg(f"context query ADR should hit: {out}")
+        else:
+            h.pass_msg("context query finds ADR")
+        rc, out = h.run_py(
+            "scripts/lib/context.py", "trail", "append", "eval trail", str(tmp)
+        )
+        if rc != 0:
+            h.fail_msg(f"trail append should pass: {out}")
+        else:
+            h.pass_msg("context trail append ok")
+        rc, out = h.run_py("scripts/lib/context.py", "sot", "status", "--root", str(tmp))
+        if rc != 0:
+            h.fail_msg(f"sot status stub should pass: {out}")
+        else:
+            h.pass_msg("sot status stub ok")
+        rc, out = h.run_py(
+            "scripts/lib/context.py", "runtime", "use", "k8s", "--root", str(tmp)
+        )
+        if rc != 0 or "k8s" not in out:
+            h.fail_msg(f"runtime use k8s should pass: {out}")
+        else:
+            h.pass_msg("runtime use k8s stub ok")
+        rc, out = h.run_py(
+            "scripts/lib/context.py", "secrets", "list", "--root", str(tmp)
+        )
+        if rc != 0:
+            h.fail_msg(f"secrets list should pass: {out}")
+        elif "plaintext" in out.lower() and "password=" in out.lower():
+            h.fail_msg("secrets list leaked plaintext")
+        else:
+            h.pass_msg("secrets list blind ok")
+    finally:
+        _sh.rmtree(tmp, ignore_errors=True)
+    _, sh_card = h.run_sh("scripts/context.sh")
+    if "checklist=yes" not in sh_card:
+        h.fail_msg("context.sh should print CONTEXT card")
+    else:
+        h.pass_msg("context.sh thin twin prints card")
+    _, emp_out = h.run_sh("scripts/emperor", "context", "--reject-no-graph")
+    if "REJECT NO GRAPH" not in emp_out:
+        h.fail_msg("emperor context --reject-no-graph should forward REJECT")
+    else:
+        h.pass_msg("emperor context peer forwards --reject-no-graph")
+    h.pass_msg("context.py thoughttrail-super-context HARD-GATE")
+
 
 
     if h.fail != 0:

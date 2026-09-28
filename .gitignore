@@ -2,6 +2,14 @@
 .emperor/
 # (includes .emperor/sdd/ plan-scoped SDD workspaces; also self-ignored via .emperor/sdd/.gitignore)
 
+
+# Allow committed fixture graphs / trails for thoughttrail-super-context evals
+!evals/
+!evals/fixtures/
+!evals/fixtures/**
+!evals/fixtures/**/.emperor/
+!evals/fixtures/**/.emperor/**
+
 # Local Claude Code state from plugin test-installs (never publish)
 .claude/settings.local.json
 
