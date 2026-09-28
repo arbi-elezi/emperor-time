@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.4.77
+
+- Archaeology roff leaf: `evals/fixtures/lost-roff/HELLO.ROFF` + identify smoke; GNU groff 1.23.0 boot probe VERIFIED (`groff -Tascii HELLO.ROFF` → `EMPEROR-TIME-ROFF-PROBE-OK`); dialect labels honest (CONJECTURE / UNVERIFIABLE where due); identify fossils `*.roff` only; bare `roff` / `nroff` / `groff` allowed as route tags (tool binary names)
+- Jail pin `references/archaeology-roff-manual.md` — GNU groff groff(1) SYNOPSIS file operands + Options `-T` / output-device
+- Catalog + SKILL.md + archaeology.md + language-agnostic.md link the thirty-sixth pin alongside Pascal, ASM, COBOL, Fortran, VHDL, Ada, Forth, Common Lisp, Prolog, Tcl, Erlang, REXX, Modula-2, Algol 68, ALGOL 60, Algol W, Icon, Oberon, SNOBOL4, Simula, APL, BCPL, PL/I, Smalltalk, PostScript, BASIC, Scheme, AWK, sed, m4, ed, Make, dc, lex, and yacc; route triggers gain `roff` / `nroff` / `groff` / `gnu-groff` / `.roff`; eval locks `*.roff` identify on lost-roff
+- Plugin, marketplace, and SKILL.md at 0.4.77
+
 ## 0.4.76
 
 - Jail pin `references/archaeology-yacc-manual.md` — GNU Bison bison(1) SYNOPSIS FILE arguments + Output Files `-o` / `--output`

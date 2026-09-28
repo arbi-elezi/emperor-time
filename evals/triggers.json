@@ -506,7 +506,12 @@
         ".y",
         "yacc",
         "bison",
-        "gnu-bison"
+        "gnu-bison",
+        ".roff",
+        "roff",
+        "nroff",
+        "groff",
+        "gnu-groff"
       ],
       "tags": [
         "archaeology",
@@ -629,7 +634,11 @@
         "gnu-flex",
         "yacc",
         "bison",
-        "gnu-bison"
+        "gnu-bison",
+        "roff",
+        "nroff",
+        "groff",
+        "gnu-groff"
       ],
       "target": "skills/emperor-excavate/SKILL.md",
       "reason": "lost/ancient/foreign tree \u2014 excavate before modernizing"
