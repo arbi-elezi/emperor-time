@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.4.59
+- Archaeology Oberon leaf: `evals/fixtures/lost-obn/HELLO.OBN` + identify smoke; Vishap Oberon voc 2.1.0 boot probe VERIFIED (`voc -M HELLO.OBN` → `EMPEROR-TIME-OBN-PROBE-OK`); dialect labels honest (CONJECTURE / UNVERIFIABLE where due); identify fossils `*.obn` only (not `*.mod` / `*.Mod` — Modula-2 leaf)
+- Jail pin `references/archaeology-oberon-manual.md` — Vishap Compiling Main module (`voc` `-m` / `-M`)
+- Catalog + SKILL.md + archaeology.md + language-agnostic.md link the eighteenth pin alongside Pascal, ASM, COBOL, Fortran, VHDL, Ada, Forth, Common Lisp, Prolog, Tcl, Erlang, REXX, Modula-2, Algol 68, ALGOL 60, Algol W, and Icon; route triggers gain `voc` / `oberon` / `oberon-2` / `oberon2` / `.obn` (bare English `module` refused); eval locks `*.obn` identify on lost-obn
+- Plugin, marketplace, and SKILL.md at 0.4.59
+
+
 ## 0.4.58
 - Archaeology Icon leaf: `evals/fixtures/lost-icn/HELLO.ICN` + identify smoke; Icon 9.5.24b boot probe VERIFIED (`ln -sf HELLO.ICN hello.icn` then `icont -s hello.icn` → `EMPEROR-TIME-ICN-PROBE-OK`); dialect labels honest (CONJECTURE / UNVERIFIABLE where due); identify fossils `*.icn` only
 - Jail pin `references/archaeology-icon-manual.md` — Icon 9 UNIX Manual Page (IPD244d) SYNOPSIS / File Names (`icont` + `.icn`)
