@@ -371,6 +371,7 @@ def run_evals(root: Path) -> int:
     h.require_contains("*.jq", "scripts/lib/identify.py", "identify.py missing *.jq fossil")
     h.require_contains("*.xsl", "scripts/lib/identify.py", "identify.py missing *.xsl fossil")
     h.require_contains("*.xslt", "scripts/lib/identify.py", "identify.py missing *.xslt fossil")
+    h.require_contains("*.xml", "scripts/lib/identify.py", "identify.py missing *.xml fossil")
     h.require_contains(
         "scripts/lib/identify.py",
         "references/archaeology.md",
@@ -564,6 +565,10 @@ def run_evals(root: Path) -> int:
             ("xslt HELLO.xsl", "emperor-excavate", "route xslt → excavate"),
             ("hello.xsl", "emperor-excavate", "route hello.xsl → excavate"),
             ("hello.xslt", "emperor-excavate", "route hello.xslt → excavate"),
+            ("xmllint HELLO.xml", "emperor-excavate", "route xmllint → excavate"),
+            ("libxml2 HELLO.xml", "emperor-excavate", "route libxml2 → excavate"),
+            ("xml HELLO.xml", "emperor-excavate", "route xml → excavate"),
+            ("hello.xml", "emperor-excavate", "route hello.xml → excavate"),
             ("queue next", "emperor-queue", "route queue next → queue"),
             ("blocked task", "emperor-queue", "route blocked task → queue"),
             ("red build", "emperor-heal", "route red build → heal"),
@@ -1033,6 +1038,13 @@ def run_evals(root: Path) -> int:
             r"[0-9]+ \*\.xsl",
             ["references/archaeology-xslt-manual.md"],
         ),
+        (
+            "lost-xml identify finds *.xml",
+            "lost-xml",
+            "HELLO.xml",
+            r"[0-9]+ \*\.xml",
+            ["references/archaeology-xml-manual.md"],
+        ),
     ]
     # The loop above was messy — clear fail state not affected; rewrite cleanly below by
     # only running the clean fixtures list (sections already printed wrongly once).
@@ -1355,6 +1367,10 @@ def run_evals(root: Path) -> int:
     h.require_contains("xslt", "evals/triggers.json", "triggers missing xslt excavate pattern")
     h.require_contains(".xsl", "evals/triggers.json", "triggers missing .xsl excavate pattern")
     h.require_contains(".xslt", "evals/triggers.json", "triggers missing .xslt excavate pattern")
+    h.require_contains("xmllint", "evals/triggers.json", "triggers missing xmllint excavate pattern")
+    h.require_contains("libxml2", "evals/triggers.json", "triggers missing libxml2 excavate pattern")
+    h.require_contains("xml", "evals/triggers.json", "triggers missing xml excavate pattern")
+    h.require_contains(".xml", "evals/triggers.json", "triggers missing .xml excavate pattern")
     h.require_contains(".js", "evals/triggers.json", "triggers missing .js excavate pattern")
     _, rout_py = h.run_py("scripts/lib/route.py", "finish the branch")
     if "emperor-forge" not in rout_py:
@@ -1883,6 +1899,22 @@ def run_evals(root: Path) -> int:
         h.fail_msg("route matches(.xsl, hello.xsl) must be True")
     if not _m(".xslt", "hello.xslt"):
         h.fail_msg("route matches(.xslt, hello.xslt) must be True")
+    _, rout_xmllint = h.run_py("scripts/lib/route.py", "xmllint HELLO.xml")
+    if "emperor-excavate" not in rout_xmllint:
+        h.fail_msg("route.py xmllint → excavate")
+    _, rout_libxml2 = h.run_py("scripts/lib/route.py", "libxml2 HELLO.xml")
+    if "emperor-excavate" not in rout_libxml2:
+        h.fail_msg("route.py libxml2 → excavate")
+    _, rout_xml = h.run_py("scripts/lib/route.py", "xml HELLO.xml")
+    if "emperor-excavate" not in rout_xml:
+        h.fail_msg("route.py xml → excavate")
+    _, rout_hello_xml = h.run_py("scripts/lib/route.py", "hello.xml")
+    if "emperor-excavate" not in rout_hello_xml:
+        h.fail_msg("route.py hello.xml → excavate")
+    if not _m(".xml", "hello.xml"):
+        h.fail_msg("route matches(.xml, hello.xml) must be True")
+    if _m(".xml", "hello.xmlrpc"):
+        h.fail_msg("route matches(.xml, hello.xmlrpc) must be False after extension-boundary")
     # bare .l must not be enough alone when colliding; .lisp already routes via .lisp
     _, rout_regina = h.run_py("scripts/lib/route.py", "regina HELLO.REX")
     if "emperor-excavate" not in rout_regina:
@@ -1891,7 +1923,7 @@ def run_evals(root: Path) -> int:
     if rc == 0:
         h.fail_msg("route.py should miss trivia")
     else:
-        h.pass_msg("route.py misses trivia + fortran/vhdl/ada/forth/lisp/prolog/tcl/erlang/rexx/modula/algol/algol60/algolw/icon/oberon/snobol/simula/apl/bcpl/pli/st/ps/bas/scm/awk/sed/m4/ed/make/dc/lex/yacc/roff/perl/bc/expect/lua/ruby/go/rust/c/js/py/ts/bash/php/sql/jq/xslt excavate + thin twins")
+        h.pass_msg("route.py misses trivia + fortran/vhdl/ada/forth/lisp/prolog/tcl/erlang/rexx/modula/algol/algol60/algolw/icon/oberon/snobol/simula/apl/bcpl/pli/st/ps/bas/scm/awk/sed/m4/ed/make/dc/lex/yacc/roff/perl/bc/expect/lua/ruby/go/rust/c/js/py/ts/bash/php/sql/jq/xslt/xml excavate + thin twins")
 
     # ---- MUST-route doctrine ----
     h.section("MUST-route doctrine + adapters")
@@ -3427,8 +3459,10 @@ def run_evals(root: Path) -> int:
     h.require_contains("0.4.92", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing 0.4.92 tip")
     h.require_contains("0.4.92", "CHANGELOG.md", "CHANGELOG missing 0.4.92")
     h.require_contains("0.4.93", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing 0.4.93 tip")
-    h.require_contains("0.4.93", ".claude-plugin/plugin.json", "plugin.json not at 0.4.93")
     h.require_contains("0.4.93", "CHANGELOG.md", "CHANGELOG missing 0.4.93")
+    h.require_contains("0.4.94", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing 0.4.94 tip")
+    h.require_contains("0.4.94", ".claude-plugin/plugin.json", "plugin.json not at 0.4.94")
+    h.require_contains("0.4.94", "CHANGELOG.md", "CHANGELOG missing 0.4.94")
 
     # session-discovery
     h.section("session-discovery locate HARD-GATE leaf")
