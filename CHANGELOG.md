@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.4.127
+
+- Vertical depth: grill path-taxonomy HARD-GATE — `scripts/lib/grill.py` mechanically refuses missing path type (spike|bounded|architectural), skipped stage, or impl before stage approval (not questions-before-impl theater alone; Superpowers brainstorming path taxonomy + stage-approval)
+- Always-fail `--reject-no-path` / `--reject-stage-skip` / `--reject-impl-before-approval`; `--check-path` validates ledger `Path:` + `Stage approval:`
+- Thin twins + emperor grill peers; grill-checklist + mechanical-gates lockstep; eval fixtures `grill-path-taxonomy/`
+- Plugin, marketplace, and SKILL.md at 0.4.127
+
 ## 0.4.126
 
 - Vertical depth: finish suite-green HARD-GATE — `scripts/lib/finish.py` mechanically refuses menu advance / done without a green suite (not menu-only theater; Superpowers finishing Step 1)

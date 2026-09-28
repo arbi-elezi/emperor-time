@@ -62,6 +62,11 @@
       "id": "finish-suite-green-hard-gate",
       "type": "behavioral-fixture",
       "expect": "finish.py --reject-red-suite / --require-green refuses menu on red/missing DONE probes; accepts green task-ok and prints MENU; integrates done.py"
+    },
+    {
+      "id": "grill-path-taxonomy-hard-gate",
+      "type": "behavioral-fixture",
+      "expect": "grill.py --reject-no-path / --reject-stage-skip / --reject-impl-before-approval / --check-path refuses missing path type, skipped stage, idea-only approval, impl before stage approval; accepts Path+Stage for spike|bounded|architectural"
     }
   ]
 }

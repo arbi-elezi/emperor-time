@@ -22,7 +22,8 @@ LEAVES: list[tuple[str, str, tuple[str, ...]]] = [
     ("finish-py", "scripts/lib/finish.py", ("finish.py", "finish menu", "reject-red-suite", "require-green")),
     ("activate", "scripts/lib/activate.py", ("activate", "must-route")),
     ("must-route", "skills/emperor-resume/must-route.md", ("must-route",)),
-    ("grill", "skills/emperor-require-design/grill-checklist.md", ("grill",)),
+    ("grill", "skills/emperor-require-design/grill-checklist.md", ("grill", "reject-no-path", "check-path", "path taxonomy")),
+    ("grill-py", "scripts/lib/grill.py", ("grill.py", "reject-no-path", "reject-stage-skip", "check-path")),
     (
         "debug-phases",
         "skills/emperor-heal/debug-four-phases.md",

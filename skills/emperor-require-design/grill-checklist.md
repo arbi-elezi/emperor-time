@@ -11,6 +11,13 @@
 
 Mechanical card: `scripts/emperor grill` (Python: `scripts/lib/grill.py`).
 
+**HARD-GATE (mechanical):** `scripts/lib/grill.py` refuses missing path type,
+skipped stage, or impl before stage approval (`--reject-no-path` /
+`--reject-stage-skip` / `--reject-impl-before-approval` always fail;
+`--check-path <task-dir>` validates `Path:` + `Stage approval:` against
+spike | bounded | architectural). Questions-before-impl alone is soft theater
+without path taxonomy + stage-approval lock.
+
 ## HARD-GATE
 
 Before taking any implementation action, complete the selected path's
@@ -35,7 +42,8 @@ Announce out loud: spike | bounded | architectural (partner may override).
 When in doubt, take the heavier path. Hidden complexity mid-task upgrades —
 stop, say so, step up. Nothing downgrades mid-task.
 
-ET: record the classification in the task ledger / work-order Size notes.
+ET: record `Path: spike|bounded|architectural` and later
+`Stage approval: …` in the task ledger (mechanical `--check-path` reads these).
 
 ### Step 2: Grill intent (Socratic)
 
@@ -96,7 +104,9 @@ approval may BUILD / `emperor-tdd` / forge proceed.
 ## Related
 
 - `skills/emperor-require-design/SKILL.md` — design entry; MUST open this leaf
-- `scripts/lib/grill.py` — mechanical checklist card
+- `scripts/lib/grill.py` — mechanical checklist card + path-taxonomy HARD-GATE
+  (`--check-path` / `--reject-no-path` / `--reject-stage-skip` /
+  `--reject-impl-before-approval`)
 - `scripts/lib/work_order.py` — Plan header lock (G2) after grill for architectural
 - `chains/chain-jail/extract-aspect.md` — "brainstorming → only HARD-GATE"
 - `chains/chain-jail/navigation.md` — Socratic design gap → this leaf
