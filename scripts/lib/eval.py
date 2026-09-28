@@ -4998,6 +4998,159 @@ def run_evals(root: Path) -> int:
         shutil.rmtree(tmpf, ignore_errors=True)
     h.pass_msg("forge.py thin twins + consent + PR body")
 
+    # ---- forge PR-consent HARD-GATE (G5 / forge surface residual) ----
+    h.section("forge-pr-consent HARD-GATE")
+    h.need("evals/fixtures/forge-pr-consent/forge-ok.md")
+    h.need("evals/fixtures/forge-pr-consent/forge-no-consent.md")
+    h.need("evals/fixtures/forge-pr-consent/forge-vacuous.md")
+    h.need("evals/fixtures/forge-pr-consent/task-ok/ledger.md")
+    h.need("evals/fixtures/forge-pr-consent/task-no-consent/ledger.md")
+    h.need("evals/fixtures/forge-pr-consent/task-vacuous/ledger.md")
+    h.require_contains(
+        "--reject-no-pr-consent",
+        "scripts/lib/forge.py",
+        "forge.py missing --reject-no-pr-consent",
+    )
+    h.require_contains(
+        "--check-pr-consent",
+        "scripts/lib/forge.py",
+        "forge.py missing --check-pr-consent",
+    )
+    h.require_contains(
+        "forge.py",
+        "scripts/lib/gate.py",
+        "gate.py does not call forge.py",
+    )
+    h.require_contains(
+        "--check-pr-consent",
+        "scripts/lib/gate.py",
+        "gate.py missing --check-pr-consent wiring",
+    )
+    h.require_contains(
+        "HARD-GATE",
+        "skills/emperor-forge/SKILL.md",
+        "emperor-forge skill missing HARD-GATE",
+    )
+    h.require_contains(
+        "--reject-no-pr-consent",
+        "skills/emperor-forge/SKILL.md",
+        "emperor-forge skill missing --reject-no-pr-consent",
+    )
+    h.require_contains(
+        "forge-pr-consent-hard-gate",
+        "evals/evals.json",
+        "evals.json missing forge-pr-consent-hard-gate case",
+    )
+    h.require_contains(
+        "reject-no-pr-consent",
+        "references/mechanical-gates.md",
+        "mechanical-gates missing reject-no-pr-consent",
+    )
+    h.require_contains(
+        "check-pr-consent",
+        "references/software-factory.md",
+        "software-factory missing check-pr-consent",
+    )
+    h.require_contains(
+        "reject-no-pr-consent",
+        "evals/bakeoff.md",
+        "bakeoff.md missing reject-no-pr-consent inventory",
+    )
+    _, card = h.run_py("scripts/lib/forge.py")
+    if "checklist=yes" not in card:
+        h.fail_msg("forge card missing checklist=yes")
+    elif "PR_CONSENT_BEFORE_PUBLIC" not in card:
+        h.fail_msg("forge card missing iron law token")
+    else:
+        h.pass_msg("forge prints FORGE card")
+    rc, reject = h.run_py("scripts/lib/forge.py", "--reject-no-pr-consent")
+    if rc == 0:
+        h.fail_msg("forge --reject-no-pr-consent should exit non-zero")
+    elif "REJECT NO PR CONSENT" not in reject and "HARD-GATE" not in reject:
+        h.fail_msg("forge --reject-no-pr-consent missing REJECT text")
+    else:
+        h.pass_msg("forge --reject-no-pr-consent hard-gates")
+    for name, needle in (
+        ("forge-no-consent.md", r"consent|PR consent"),
+        ("task-no-consent", r"consent|PR consent"),
+    ):
+        target = root / "evals/fixtures/forge-pr-consent" / name
+        rc, err = h.run_py(
+            "scripts/lib/forge.py",
+            "--check-pr-consent",
+            str(target),
+        )
+        if rc == 0:
+            h.fail_msg(f"forge-pr-consent {name} should fail check-pr-consent")
+        elif not h.grep_out(err, needle):
+            h.fail_msg(f"forge-pr-consent {name} should mention {needle}: {err}")
+        else:
+            h.pass_msg(f"forge-pr-consent {name} rejected")
+    for name in ("forge-ok.md", "forge-vacuous.md", "task-ok", "task-vacuous"):
+        rc, _ = h.run_py(
+            "scripts/lib/forge.py",
+            "--check-pr-consent",
+            str(root / "evals/fixtures/forge-pr-consent" / name),
+        )
+        if rc != 0:
+            h.fail_msg(f"forge-pr-consent {name} should pass check-pr-consent")
+        else:
+            h.pass_msg(f"forge-pr-consent {name} accepted")
+    # EMPEROR_CONSENT_PR env covers no-consent fixture
+    rc, _ = h.run(
+        [
+            "python3",
+            str(root / "scripts/lib/forge.py"),
+            "--check-pr-consent",
+            str(root / "evals/fixtures/forge-pr-consent/task-no-consent"),
+        ],
+        env={"EMPEROR_CONSENT_PR": "1"},
+    )
+    if rc != 0:
+        h.fail_msg("EMPEROR_CONSENT_PR=1 should cover task-no-consent")
+    else:
+        h.pass_msg("EMPEROR_CONSENT_PR covers forge no-consent fixture")
+    # G5 wiring
+    tmp = Path(tempfile.mkdtemp())
+    try:
+        import shutil as _shutil
+        for name, expect_fail in (("task-no-consent", True), ("task-ok", False), ("task-vacuous", False)):
+            src = root / "evals/fixtures/forge-pr-consent" / name
+            dst = tmp / name
+            _shutil.copytree(src, dst)
+            (dst / ".gates").mkdir(exist_ok=True)
+            stamp = _utc_stamp()
+            for g in ("g0", "g1", "g2", "g3", "g4"):
+                (dst / ".gates" / g).write_text(stamp + "\n", encoding="utf-8")
+            rc, out = h.run_sh("scripts/gate.sh", "g5", str(dst))
+            if expect_fail:
+                if rc == 0:
+                    h.fail_msg(f"G5 allowed no-pr-consent {name}")
+                else:
+                    h.pass_msg(f"G5 rejects no-pr-consent {name}")
+            else:
+                if rc != 0:
+                    h.fail_msg(f"G5 should accept forge-consent {name}: {out}")
+                else:
+                    h.pass_msg(f"G5 accepts forge-consent {name}")
+    finally:
+        shutil.rmtree(tmp, ignore_errors=True)
+    _, sh_card = h.run_sh("scripts/forge.sh")
+    if "checklist=yes" not in sh_card:
+        h.fail_msg("forge.sh should print FORGE card")
+    else:
+        h.pass_msg("forge.sh thin twin prints card")
+    _, emp_out = h.run_sh(
+        "scripts/emperor",
+        "forge",
+        "--reject-no-pr-consent",
+    )
+    if "REJECT NO PR CONSENT" not in emp_out:
+        h.fail_msg("emperor forge --reject-no-pr-consent should forward REJECT")
+    else:
+        h.pass_msg("emperor forge peer forwards --reject-no-pr-consent")
+    h.pass_msg("forge.py thin twins + forge PR-consent HARD-GATE")
+
     # ---- review_pack.py isolated pack ----
     h.section("review_pack.py Python core")
     h.need("scripts/lib/review_pack.py")
@@ -5819,7 +5972,8 @@ def run_evals(root: Path) -> int:
     h.require_contains("steal-consent", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing steal-consent")
     h.require_contains("consent.py", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing consent.py")
     h.require_contains("0.4.132", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing 0.4.132 tip")
-    h.require_contains("0.4.136", ".claude-plugin/plugin.json", "plugin.json not at 0.4.136")
+    h.require_contains("0.4.137", ".claude-plugin/plugin.json", "plugin.json not at 0.4.137")
+    h.require_contains("0.4.136", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing retained 0.4.136")
     h.require_contains("0.4.132", "CHANGELOG.md", "CHANGELOG missing 0.4.132")
     h.require_contains("reject-no-triad", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing reject-no-triad")
     h.require_contains("reject-no-postmortem", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing reject-no-postmortem")
@@ -5843,14 +5997,19 @@ def run_evals(root: Path) -> int:
     h.require_contains("0.4.135", "CHANGELOG.md", "CHANGELOG missing 0.4.135")
     h.require_contains("sandbox_engine.py", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing sandbox_engine.py")
     h.require_contains("sandbox-engine", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing sandbox-engine")
-    h.require_contains("0.4.136", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing 0.4.136 tip")
+    h.require_contains("0.4.137", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing 0.4.137 tip")
+    h.require_contains("0.4.137", "CHANGELOG.md", "CHANGELOG missing 0.4.137")
     h.require_contains("0.4.136", "CHANGELOG.md", "CHANGELOG missing 0.4.136")
+    h.require_contains("reject-no-pr-consent", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing reject-no-pr-consent")
+    h.require_contains("check-pr-consent", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing check-pr-consent")
+    h.require_contains("forge-pr-consent", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing forge-pr-consent")
+    h.require_contains("PR_CONSENT_BEFORE_PUBLIC", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing PR_CONSENT_BEFORE_PUBLIC")
     h.require_contains("secrets_broker.py", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing secrets_broker.py")
     h.require_contains("workspace_env.py", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing workspace_env.py")
     h.require_contains("blind-secrets-broker", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing blind-secrets-broker")
     h.require_contains("reject-secret-leak", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing reject-secret-leak")
     h.require_contains("check-env-redacted", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing check-env-redacted")
-    h.require_contains("0.4.136", ".claude-plugin/marketplace.json", "marketplace.json not at 0.4.136")
+    h.require_contains("0.4.137", ".claude-plugin/marketplace.json", "marketplace.json not at 0.4.137")
     h.require_contains("finish.py", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing finish.py")
     h.require_contains("reject-red-suite", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing reject-red-suite")
     h.require_contains("require-green", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing require-green")
@@ -6856,9 +7015,9 @@ def run_evals(root: Path) -> int:
         "bakeoff.md missing reject-unisolated inventory",
     )
     h.require_contains(
-        "0.4.136",
+        "0.4.137",
         "SKILL.md",
-        "SKILL.md not bumped to 0.4.136",
+        "SKILL.md not bumped to 0.4.137",
     )
     _, card = h.run_py("scripts/lib/review_pack.py")
     if "checklist=yes" not in card:

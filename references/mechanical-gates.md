@@ -12,7 +12,7 @@ A model writing "G4 PASS" in markdown is not a gate. An exit code is.
 | `scripts/gate.sh g2` | G2 | non-trivial task missing work-order or Expected: lines |
 | `scripts/gate.sh g3` | G3 | impact-map paths missing from `git diff --stat` (when in a git repo) |
 | `scripts/gate.sh g4` | G4 | incomplete eight-count critique (via `critique.py`); missing CLAIM AUDIT / unfinished HYPOTHESIS\|TESTED (via `claim_audit.py`); steal no-consent (via `consent.py`); steal unquarantined (via `quarantine.py`); unisolated / author-diary review-pack (via `review_pack.py`); VERIFIED without quote |
-| `scripts/gate.sh g5` | G5 | verdict soft/missing citations / FAIL delivered; empty or theater Breach Register rows (via `verdict.py`) |
+| `scripts/gate.sh g5` | G5 | verdict soft/missing citations / FAIL delivered; empty or theater Breach Register rows (via `verdict.py`); forge no-PR-consent when forge/PR claimed (via `forge.py`) |
 | `scripts/review-pack.sh` (Python core) | G4 hetero isolation | cannot emit isolated pack; pack missing when hetero claimed; author diary / forbidden files / CoT in pack (`review_pack.py --reject-unisolated` / `--reject-author-diary` / `--check-isolation`) |
 | `scripts/finish.sh` (Python core) | finish menu / suite-green | red suite / missing DONE probes (`finish.py --reject-red-suite` / `--require-green`; no menu until green) |
 | `scripts/grill.sh` (Python core) | grill path taxonomy | path type missing / stage skipped / impl before stage approval (`grill.py --reject-no-path` / `--reject-stage-skip` / `--reject-impl-before-approval` / `--check-path`) |
@@ -21,7 +21,7 @@ A model writing "G4 PASS" in markdown is not a gate. An exit code is.
 | `scripts/consent.sh` (Python core) | Steal consent-protocol | missing CONSENT / header theater / uncovered enlisted agent (`consent.py --reject-no-consent` / `--check-consent`) |
 | `scripts/heal-verify.sh` (Python core) | heal-and-verify triad + postmortem | missing Cure/No-new-wounds/Mechanism or postmortem (`heal_verify.py --reject-no-triad` / `--reject-no-postmortem` / `--check-heal`) |
 | `scripts/context.sh` (Python core) | super-context + thoughttrail | missing graph/L0 or trail when claimed (`context.py --reject-no-graph` / `--reject-no-trail` / `--check-context` / `--check-trail`) |
-| `scripts/forge.sh` (Python core) | G5 deliver / consent PR | no consent; DONE fail; gh missing → DRY |
+| `scripts/forge.sh` (Python core) | G5 deliver / consent PR HARD-GATE | no PR consent (`forge.py --reject-no-pr-consent` / `--check-pr-consent`); DONE fail; gh missing → DRY |
 | `scripts/eval.sh` (Python core) | harness health | an eval fixture fails |
 
 Python core: `scripts/lib/gate.py` owns G0–G5. Thin twins: `scripts/gate.sh`,
@@ -48,6 +48,10 @@ G5 calls `verdict.py` for Judgment verdict + Breach Register honesty
 (`--reject-hidden-breach` / `--check-verdict`; thin `verdict.sh` /
 `verdict.ps1` + `breach` alias / `emperor verdict`) — PASS-substring +
 Breach Register header alone with blank/TBD rows is hidden-breach theater.
+G5 also calls `forge.py` for forge PR-consent (`--reject-no-pr-consent` /
+`--check-pr-consent`; thin `forge.sh` / `forge.ps1` / `emperor forge`) —
+vacuous PASS when no forge / public-PR markers (merge-locally OK). Steal
+`--reject-no-consent` remains a different gate.
 
 Review-pack Python core: `scripts/lib/review_pack.py` owns meta SHAs +
 acceptance-criteria extract + diff **and** hetero-critique isolation HARD-GATE
@@ -74,7 +78,7 @@ Super-context Python core: `scripts/lib/context.py` (+ `md_graph.py` / `context_
 
 Heal-verify Python core: `scripts/lib/heal_verify.py` owns heal-and-verify HARD-GATE (`--reject-no-triad` / `--reject-no-postmortem` / `--check-heal`; thin `heal-verify.sh` / `heal-verify.ps1` + `heal-and-verify` alias / `emperor heal-verify`) — triad theater or missing postmortem is soft; entry still `emperor heal` four-phase.
 
-Forge Python core: `scripts/lib/forge.py` owns consent + DONE gate + title/G1 PR body (thin `forge.sh` / `forge.ps1`). Closes bash↔ps1 drift on title extraction and ledger dump.
+Forge Python core: `scripts/lib/forge.py` owns consent + DONE gate + title/G1 PR body **and** forge PR-consent HARD-GATE (`--reject-no-pr-consent` / `--check-pr-consent`; thin `forge.sh` / `forge.ps1`) — refuse-without-consent alone was soft theater vs card-style peers; Steal `--reject-no-consent` is separate. Closes bash↔ps1 drift on title extraction and ledger dump.
 
 Harness health Python core: `scripts/lib/eval.py` owns the structural assertion
 suite. Thin twins: `scripts/eval.sh`, `scripts/eval.ps1` (same exits 0/1).
@@ -86,7 +90,7 @@ suite. Thin twins: `scripts/eval.sh`, `scripts/eval.ps1` (same exits 0/1).
 - Vow of Phases → gate order; `gate.sh g4` refuses if g2 never passed
 - Vow of the Ledger → missing ledger is a hard fail
 - Vow of Critique → G4 critique eight-count HARD-GATE (all eight axes + Checked evidence; file presence alone fails) + hetero-critique isolation HARD-GATE (review pack only; no author diary)
-- Vow of Consent → Steal consent-protocol HARD-GATE (CONSENT + agent → role / EMPEROR_CONSENT_AGENTS / solo; G4 calls consent.py) + Jail pin+consent; forge PR still separate
+- Vow of Consent → Steal consent-protocol HARD-GATE (CONSENT + agent → role / EMPEROR_CONSENT_AGENTS / solo; G4 calls consent.py) + Jail pin+consent; forge PR-consent HARD-GATE (`--reject-no-pr-consent` / `--check-pr-consent`; G5 calls forge.py)
 - Vow of Worthy Spend → lifespan section with empty "bought" is a warning, not a pass decoration
 - Verdict / Stake of Retribution → G5 verdict + Breach Register HARD-GATE (deliverable Verdict with citations; no empty/theater Stake rows)
 

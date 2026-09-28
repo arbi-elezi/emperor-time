@@ -22,7 +22,7 @@ Super-context / thoughttrail: `scripts/emperor context` — Python cores `md_gra
 
 Hetero-critique isolation: `scripts/emperor review-pack --check-isolation <task-dir>` — Python core `scripts/lib/review_pack.py` (`--reject-unisolated` / `--reject-author-diary` / `--check-isolation`) refuses unisolated / author-diary packs. G4 calls it when review-pack activity is present.
 
-Forge (consent PR): `scripts/emperor forge <task-dir>` — Python core `scripts/lib/forge.py` (thin `forge.sh` / `forge.ps1`) owns consent, DONE probes, title/G1 PR body. Never invent a public PR without consent.
+Forge (consent PR) HARD-GATE: `scripts/emperor forge <task-dir>` — Python core `scripts/lib/forge.py` (`--reject-no-pr-consent` / `--check-pr-consent`; thin `forge.sh` / `forge.ps1`) owns consent, DONE probes, title/G1 PR body. G5 calls `--check-pr-consent`. Never invent a public PR without consent. Steal `--reject-no-consent` is separate.
 
 A comment on the PR is a process failure. Prevent it: small diff, tests that
 would fail if reverted, no drive-by refactors, no agent trailers, no leftover

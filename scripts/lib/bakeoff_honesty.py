@@ -17,6 +17,7 @@ LEAVES: list[tuple[str, str, tuple[str, ...]]] = [
     ("claim-audit", "scripts/lib/claim_audit.py", ("claim-audit", "claim_audit", "reject-unaudited", "CLAIM AUDIT")),
     ("quarantine", "scripts/lib/quarantine.py", ("quarantine", "reject-unquarantined", "CONJECTURE", "ADMITTED")),
     ("consent", "scripts/lib/consent.py", ("consent", "reject-no-consent", "CONSENT", "consent-protocol")),
+    ("forge-pr-consent", "scripts/lib/forge.py", ("forge", "reject-no-pr-consent", "check-pr-consent", "EMPEROR_CONSENT_PR")),
     ("heal-verify", "scripts/lib/heal_verify.py", ("heal-verify", "reject-no-triad", "reject-no-postmortem", "heal-and-verify")),
     ("review-isolation", "scripts/lib/review_pack.py", ("review-pack", "reject-unisolated", "reject-author-diary", "check-isolation", "hetero-critique isolation")),
     ("super-context", "scripts/lib/context.py", ("super-context", "thoughttrail", "reject-no-graph", "reject-no-trail", "check-context", "GRAPH_THEN_TRAIL")),

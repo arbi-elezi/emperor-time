@@ -1,6 +1,7 @@
 <#
 .SYNOPSIS
   Thin twin of forge.sh — consent-gated PR forge via Python core.
+  HARD-GATE: --reject-no-pr-consent / --check-pr-consent
 .EXAMPLE
   .\forge.ps1 .emperor/tasks/demo
 #>
