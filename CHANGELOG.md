@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.4.113
+
+- Archaeology TSV / stdlib csv.DictReader-on-`.tsv` (tab delimiter) Jail pin: `evals/fixtures/lost-tsv/` + `references/archaeology-tsv-manual.md` (CPython stdlib `csv` on HELLO.tsv → EMPEROR-TIME-TSV-PROBE-OK; zero new apt; Debian csvkit/miller/tsv-utils REJECTED as leaf owner)
+- identify/route/eval/honesty/bakeoff/catalog lockstep; fossils `*.tsv`; route tags `tsv` / `pytsv` / `tab-separated` / `.tsv`; does not steal plain `*.csv`
+- Plugin, marketplace, and SKILL.md at 0.4.113
+
 ## 0.4.112
 
 - Archaeology XLSX / stdlib zipfile-on-`.xlsx` Jail pin: `evals/fixtures/lost-xlsx/` + `references/archaeology-xlsx-manual.md` (CPython stdlib `zipfile` on HELLO.xlsx → EMPEROR-TIME-XLSX-PROBE-OK; zero new apt; Debian unzip/zip/LibreOffice/openpyxl/xlsxwriter REJECTED as leaf owner)

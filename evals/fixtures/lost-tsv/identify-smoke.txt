@@ -1,0 +1,9 @@
+== identify evals/fixtures/lost-tsv ==
+-- extensions --
+      2 md
+      1 txt
+      1 tsv
+-- named fossils --
+1 *.tsv
+-- shebangs --
+identify: done (read-only)
