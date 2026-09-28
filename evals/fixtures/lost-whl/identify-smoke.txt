@@ -1,0 +1,9 @@
+== identify evals/fixtures/lost-whl ==
+-- extensions --
+      2 md
+      1 whl
+      1 txt
+-- named fossils --
+1 *.whl
+-- shebangs --
+identify: done (read-only)

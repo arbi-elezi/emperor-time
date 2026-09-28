@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.4.107
+
+- Archaeology wheel / stdlib zipfile-on-`.whl` Jail pin: `evals/fixtures/lost-whl/` + `references/archaeology-whl-manual.md` (CPython stdlib `zipfile` on HELLO.whl → EMPEROR-TIME-WHL-PROBE-OK; zero new apt; Debian unzip/zip REJECTED as leaf owner)
+- identify/route/eval/honesty/bakeoff/catalog lockstep; fossils `*.whl`; route tags `whl` / `pywhl` / `wheel` / `.whl`; does not steal plain `*.zip`
+- Plugin, marketplace, and SKILL.md at 0.4.107
+
 ## 0.4.106
 
 - Archaeology compressed-TAR / stdlib tarfile Jail pin: `evals/fixtures/lost-targz/` + `references/archaeology-targz-manual.md` (CPython stdlib `tarfile` `r:gz`/`r:bz2`/`r:xz` → EMPEROR-TIME-TARGZ-PROBE-OK; zero new apt; Debian tar/gzip/bzip2/xz-utils REJECTED as leaf owner)
