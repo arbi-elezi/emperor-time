@@ -1,0 +1,9 @@
+== identify evals/fixtures/lost-apk ==
+-- extensions --
+      2 md
+      1 txt
+      1 apk
+-- named fossils --
+1 *.apk
+-- shebangs --
+identify: done (read-only)
