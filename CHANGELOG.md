@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.4.75
+- Archaeology lex leaf: `evals/fixtures/lost-lex/HELLO.L` + identify smoke; GNU flex 2.6.4 boot probe VERIFIED (`flex HELLO.L` → `lex.yy.c` → `gcc -o hello lex.yy.c -lfl` / `flex -o hello.c HELLO.L` → `EMPEROR-TIME-LEX-PROBE-OK`); dialect labels honest (CONJECTURE / UNVERIFIABLE where due); identify fossils `*.l` / `*.lex`; bare `lex` / `flex` allowed as route tags (tool binary names); bare `.l` refused (short-extension collision with `.lisp`)
+- Jail pin `references/archaeology-lex-manual.md` — GNU flex flex(1) SYNOPSIS FILE arguments + FILES `-o` / `--outfile`
+- Catalog + SKILL.md + archaeology.md + language-agnostic.md link the thirty-fourth pin alongside Pascal, ASM, COBOL, Fortran, VHDL, Ada, Forth, Common Lisp, Prolog, Tcl, Erlang, REXX, Modula-2, Algol 68, ALGOL 60, Algol W, Icon, Oberon, SNOBOL4, Simula, APL, BCPL, PL/I, Smalltalk, PostScript, BASIC, Scheme, AWK, sed, m4, ed, Make, and dc; route triggers gain `lex` / `flex` / `gnu-flex` / `.lex`; eval locks `*.l` identify on lost-lex
+- Plugin, marketplace, and SKILL.md at 0.4.75
+
 ## 0.4.74
 - Archaeology dc leaf: `evals/fixtures/lost-dc/HELLO.DC` + identify smoke; GNU dc 1.4.1 (GNU bc 1.07.1) boot probe VERIFIED (`dc -f HELLO.DC` / `dc HELLO.DC` → `EMPEROR-TIME-DC-PROBE-OK`); dialect labels honest (CONJECTURE / UNVERIFIABLE where due); identify fossils `*.dc` only; bare `dc` allowed as route tag (tool binary name)
 - Jail pin `references/archaeology-dc-manual.md` — GNU dc dc(1) DESCRIPTION file arguments + OPTIONS `-f` / `--file`

@@ -79,6 +79,8 @@ FOSSIL_PATTERNS: tuple[str, ...] = (
     "*.m4",
     "*.ed",
     "*.dc",
+    "*.l",
+    "*.lex",
     "*.rel",
     "*.hex",
     "*.bin",

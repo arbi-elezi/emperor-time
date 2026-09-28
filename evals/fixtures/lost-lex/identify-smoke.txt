@@ -1,0 +1,9 @@
+== identify evals/fixtures/lost-lex ==
+-- extensions --
+      2 md
+      1 txt
+      1 l
+-- named fossils --
+1 *.l
+-- shebangs --
+identify: done (read-only)

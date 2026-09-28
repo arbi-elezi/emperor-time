@@ -498,7 +498,11 @@
         "GNUmakefile",
         ".dc",
         "dc",
-        "gnu-dc"
+        "gnu-dc",
+        ".lex",
+        "lex",
+        "flex",
+        "gnu-flex"
       ],
       "tags": [
         "archaeology",
@@ -615,7 +619,10 @@
         "mk",
         "mak",
         "dc",
-        "gnu-dc"
+        "gnu-dc",
+        "lex",
+        "flex",
+        "gnu-flex"
       ],
       "target": "skills/emperor-excavate/SKILL.md",
       "reason": "lost/ancient/foreign tree \u2014 excavate before modernizing"
