@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.4.78
+
+- Archaeology Perl leaf: `evals/fixtures/lost-pl/HELLO.PL` + identify smoke; Perl 5.40.1 boot probe VERIFIED (`perl HELLO.PL` → `EMPEROR-TIME-PERL-PROBE-OK`); dialect labels honest (CONJECTURE / UNVERIFIABLE where due); identify fossils `*.pl` / `*.pm`; bare `perl` allowed as route tag (tool binary name); bare `.pl` refused as route tag (substring collision with PL/I `.pli` / `.pl1`); Prolog already left `*.pl` alone for this reclaim
+- Jail pin `references/archaeology-perl-manual.md` — Perl perlrun(1) SYNOPSIS programfile + DESCRIPTION file-on-command-line
+- Catalog + SKILL.md + archaeology.md + language-agnostic.md link the thirty-seventh pin alongside Pascal, ASM, COBOL, Fortran, VHDL, Ada, Forth, Common Lisp, Prolog, Tcl, Erlang, REXX, Modula-2, Algol 68, ALGOL 60, Algol W, Icon, Oberon, SNOBOL4, Simula, APL, BCPL, PL/I, Smalltalk, PostScript, BASIC, Scheme, AWK, sed, m4, ed, Make, dc, lex, yacc, and roff; route triggers gain `perl` / `perl5` / `.pm`; eval locks `*.pl` identify on lost-pl
+- Plugin, marketplace, and SKILL.md at 0.4.78
+
 ## 0.4.77
 
 - Archaeology roff leaf: `evals/fixtures/lost-roff/HELLO.ROFF` + identify smoke; GNU groff 1.23.0 boot probe VERIFIED (`groff -Tascii HELLO.ROFF` → `EMPEROR-TIME-ROFF-PROBE-OK`); dialect labels honest (CONJECTURE / UNVERIFIABLE where due); identify fossils `*.roff` only; bare `roff` / `nroff` / `groff` allowed as route tags (tool binary names)
