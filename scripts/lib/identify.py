@@ -75,6 +75,7 @@ FOSSIL_PATTERNS: tuple[str, ...] = (
     "*.bas",
     "*.scm",
     "*.awk",
+    "*.sed",
     "*.rel",
     "*.hex",
     "*.bin",

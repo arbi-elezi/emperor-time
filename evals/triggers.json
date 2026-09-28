@@ -480,7 +480,10 @@
         ".awk",
         "gawk",
         "awk",
-        "nawk"
+        "nawk",
+        ".sed",
+        "sed",
+        "gsed"
       ],
       "tags": [
         "archaeology",
@@ -584,10 +587,12 @@
         "chicken-scheme",
         "awk",
         "gawk",
-        "nawk"
+        "nawk",
+        "sed",
+        "gsed"
       ],
       "target": "skills/emperor-excavate/SKILL.md",
-      "reason": "lost/ancient/foreign tree — excavate before modernizing"
+      "reason": "lost/ancient/foreign tree \u2014 excavate before modernizing"
     },
     {
       "id": "heal",
@@ -669,7 +674,7 @@
         "academic"
       ],
       "target": "skills/emperor-heal/SKILL.md",
-      "reason": "red build / derail — Holy Chain / session-discovery locate / diagnosing intake+cite / root-cause tracing / defense-in-depth multi-layer validation / condition-based-waiting HARD-GATE / find-polluter HARD-GATE / pressure-academic HARD-GATE"
+      "reason": "red build / derail \u2014 Holy Chain / session-discovery locate / diagnosing intake+cite / root-cause tracing / defense-in-depth multi-layer validation / condition-based-waiting HARD-GATE / find-polluter HARD-GATE / pressure-academic HARD-GATE"
     },
     {
       "id": "verify",
@@ -702,7 +707,7 @@
         "receiving-code-review"
       ],
       "target": "skills/emperor-verify/SKILL.md",
-      "reason": "done/tests/review — Judgment Chain"
+      "reason": "done/tests/review \u2014 Judgment Chain"
     },
     {
       "id": "forge",
@@ -725,7 +730,7 @@
         "finish"
       ],
       "target": "skills/emperor-forge/SKILL.md",
-      "reason": "ship / finish menu / PR — consent for public PR"
+      "reason": "ship / finish menu / PR \u2014 consent for public PR"
     },
     {
       "id": "queue",
@@ -805,7 +810,7 @@
         "skill-discovery"
       ],
       "target": "skills/emperor-capture/SKILL.md",
-      "reason": "capability missing / author skill — Chain Jail + authoring iron-law / testing-skills HARD-GATE / persuasion-principles HARD-GATE / skill-discovery SDO HARD-GATE"
+      "reason": "capability missing / author skill \u2014 Chain Jail + authoring iron-law / testing-skills HARD-GATE / persuasion-principles HARD-GATE / skill-discovery SDO HARD-GATE"
     },
     {
       "id": "dispatch",
@@ -822,7 +827,7 @@
         "worker"
       ],
       "target": "skills/emperor-dispatch/SKILL.md",
-      "reason": "other local CLI as worker — Steal Chain"
+      "reason": "other local CLI as worker \u2014 Steal Chain"
     },
     {
       "id": "require-design",
@@ -846,7 +851,7 @@
         "socratic"
       ],
       "target": "skills/emperor-require-design/SKILL.md",
-      "reason": "after G0, before code — grill HARD-GATE then work-order"
+      "reason": "after G0, before code \u2014 grill HARD-GATE then work-order"
     },
     {
       "id": "worktree",
@@ -873,7 +878,7 @@
         "resume"
       ],
       "target": "skills/emperor-resume/SKILL.md",
-      "reason": "session continue / compacted — resume from disk"
+      "reason": "session continue / compacted \u2014 resume from disk"
     },
     {
       "id": "scope",
@@ -888,7 +893,7 @@
         "intake"
       ],
       "target": "skills/emperor-scope/SKILL.md",
-      "reason": "vague ask / intake — Dowsing"
+      "reason": "vague ask / intake \u2014 Dowsing"
     },
     {
       "id": "tdd",
@@ -918,7 +923,7 @@
         "name-the-break"
       ],
       "target": "skills/emperor-tdd/SKILL.md",
-      "reason": "implementing — TDD iron-law / RGR HARD-GATE / writing-good-tests HARD-GATE"
+      "reason": "implementing \u2014 TDD iron-law / RGR HARD-GATE / writing-good-tests HARD-GATE"
     },
     {
       "id": "execute",
@@ -936,7 +941,7 @@
         "build"
       ],
       "target": "skills/emperor-build/SKILL.md",
-      "reason": "inline plan execution — executing-plans HARD-GATE"
+      "reason": "inline plan execution \u2014 executing-plans HARD-GATE"
     },
     {
       "id": "subagent",
@@ -954,7 +959,7 @@
         "build"
       ],
       "target": "skills/emperor-build/SKILL.md",
-      "reason": "subagent plan execution — subagent-driven-development HARD-GATE"
+      "reason": "subagent plan execution \u2014 subagent-driven-development HARD-GATE"
     },
     {
       "id": "parallel",
@@ -973,7 +978,7 @@
         "dispatch"
       ],
       "target": "skills/emperor-dispatch/SKILL.md",
-      "reason": "parallel independent domains — dispatching-parallel-agents HARD-GATE"
+      "reason": "parallel independent domains \u2014 dispatching-parallel-agents HARD-GATE"
     },
     {
       "id": "build",
@@ -987,7 +992,7 @@
         "g3"
       ],
       "target": "skills/emperor-build/SKILL.md",
-      "reason": "implementing — build + TDD RGR"
+      "reason": "implementing \u2014 build + TDD RGR"
     },
     {
       "id": "master",
@@ -1000,7 +1005,7 @@
         "master"
       ],
       "target": "SKILL.md",
-      "reason": "master skill — name situation then open one phase file"
+      "reason": "master skill \u2014 name situation then open one phase file"
     }
   ]
 }
