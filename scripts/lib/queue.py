@@ -4,8 +4,15 @@
 Read-only unless mutating local .emperor/queue.md (add/done/next promote).
 Kanban statuses (WIP=1): [ ] ready · [~] active · [x] done · [!] blocked
 
+Always-fail HARD-GATE helpers:
+  --reject-multi-wip   refuse >1 in-progress / active [~] (always exit 1)
+
+Check mode:
+  --check-wip [PATH]   exit 1 when ledger shows >1 non-placeholder [~]
+
 Thin twins: scripts/queue.sh / scripts/queue.ps1
 CLI: queue.py list|next|add|done [args]
+     queue.py --reject-multi-wip | --check-wip [PATH]
 
 Env:
   EMPEROR_QUEUE_FILE   — override queue path (default: <repo>/.emperor/queue.md)
@@ -181,6 +188,34 @@ def _gh_next_item() -> str | None:
     return item or None
 
 
+
+def reject_multi_wip() -> str:
+    """Always-fail iron: agents who skip queue next still hit this gate."""
+    return (
+        "REJECT MULTI WIP: HARD-GATE — queue refuses >1 in-progress / active "
+        "[~] (WIP=1). Do not start a second item while another [~] exists; "
+        "finish or `queue done` first. Agents who skip `queue next` must still "
+        "run scripts/emperor queue --check-wip before claiming multi-ready "
+        "parallel work.\n"
+    )
+
+
+def check_wip(path: Path) -> list[str]:
+    """Return errors when ledger has more than one active [~] (WIP=1)."""
+    if not path.is_file():
+        return [f"queue file missing: {path}"]
+    active = list_active(path)
+    n = len(active)
+    if n > 1:
+        preview = "; ".join(active[:5])
+        more = f" (+{n - 5} more)" if n > 5 else ""
+        return [
+            f"multi-WIP: {n} active [~] (WIP=1 allows at most one): "
+            f"{preview}{more}"
+        ]
+    return []
+
+
 def cmd_list(path: Path) -> int:
     root = _repo_root()
     print(f"== local {path} ==")
@@ -261,6 +296,34 @@ def cmd_done(path: Path, pat: str) -> int:
 
 def main(argv: list[str] | None = None) -> int:
     args = list(sys.argv[1:] if argv is None else argv)
+
+    if "--reject-multi-wip" in args:
+        sys.stdout.write(reject_multi_wip())
+        return 1
+
+    if "--check-wip" in args:
+        idx = args.index("--check-wip")
+        check_arg: Path | None = None
+        for a in args[idx + 1 :]:
+            if a.startswith("-"):
+                continue
+            check_arg = Path(a)
+            break
+        if check_arg is not None:
+            path = check_arg
+        else:
+            path = _queue_path()
+            _ensure_queue(path)
+        errs = check_wip(path)
+        if errs:
+            for e in errs:
+                sys.stdout.write(f"WIP FAIL: {e}\n")
+            sys.stdout.write(reject_multi_wip())
+            return 1
+        active_n = len(list_active(path)) if path.is_file() else 0
+        sys.stdout.write(f"WIP PASS: WIP=1 ok ({active_n} active)\n")
+        return 0
+
     cmd = args[0] if args else "next"
     rest = args[1:] if args else []
 
@@ -275,7 +338,10 @@ def main(argv: list[str] | None = None) -> int:
         return cmd_add(path, " ".join(rest))
     if cmd == "done":
         return cmd_done(path, rest[0] if rest else "")
-    print("usage: queue.py list|next|add|done", file=sys.stderr)
+    print(
+        "usage: queue.py list|next|add|done | --reject-multi-wip | --check-wip [PATH]",
+        file=sys.stderr,
+    )
     return 2
 
 

@@ -72,6 +72,11 @@
       "id": "diagnose-report-skeleton-hard-gate",
       "type": "behavioral-fixture",
       "expect": "diagnose.py --reject-no-report / --check-report refuses missing report / theater problem / missing sessions / uncited findings; accepts cited findings and honest none-found report skeleton"
+    },
+    {
+      "id": "queue-reject-multi-wip-hard-gate",
+      "type": "behavioral-fixture",
+      "expect": "queue.py --reject-multi-wip / --check-wip refuses >1 active [~] multi-WIP; accepts zero or one active (placeholders ignored)"
     }
   ]
 }

@@ -15,6 +15,20 @@ metadata:
 **WIP=1** — one active task at a time. Do not start a second item while `[~]`
 exists; finish or `queue done` first.
 
+## HARD-GATE — reject multi-WIP
+
+`queue next` already refuses promoting a second `[~]`, but agents who skip the
+script have no always-fail check. Before claiming parallel / multi-ready work:
+
+```bash
+scripts/emperor queue --reject-multi-wip   # always exit 1 (iron)
+scripts/emperor queue --check-wip          # exit 1 when ledger has >1 [~]
+scripts/emperor queue --check-wip <queue.md>
+```
+
+`--check-wip` counts non-placeholder active `[~]` lines only. Zero or one
+active → PASS. Two or more → FAIL with `REJECT MULTI WIP`.
+
 ## Local Kanban statuses
 
 | Mark | Meaning |
@@ -24,7 +38,7 @@ exists; finish or `queue done` first.
 | `[x]` | done |
 | `[!]` | blocked (optional; listed, never auto-picked) |
 
-Python core: `scripts/lib/queue.py` (thin `scripts/queue.sh` / `queue.ps1`). `queue list` shows ready / active / blocked (skips empty placeholders). `queue next` returns the existing
+Python core: `scripts/lib/queue.py` (thin `scripts/queue.sh` / `queue.ps1`). Always-fail `--reject-multi-wip` / `--check-wip` enforce WIP=1 on the ledger even when agents skip `next`. `queue list` shows ready / active / blocked (skips empty placeholders). `queue next` returns the existing
 `[~]` if present (WIP refuse); otherwise promotes the first real ready `[ ]` → `[~]`.
 Empty queue = comment-only / no checkbox lines — `(empty…)` and parentheses-only titles are never promoted.
 `queue done <substring>` checks off `[ ]` / `[~]` / `[!]`.
