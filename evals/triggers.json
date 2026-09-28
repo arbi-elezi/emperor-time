@@ -663,7 +663,11 @@
         "tsv",
         "pytsv",
         "tab-separated",
-        ".tsv"
+        ".tsv",
+        "jsonl",
+        "pyjsonl",
+        "ndjson",
+        ".jsonl"
       ],
       "tags": [
         "archaeology",
@@ -928,7 +932,11 @@
         "tsv",
         "pytsv",
         "tab-separated",
-        ".tsv"
+        ".tsv",
+        "jsonl",
+        "pyjsonl",
+        "ndjson",
+        ".jsonl"
       ],
       "target": "skills/emperor-excavate/SKILL.md",
       "reason": "lost/ancient/foreign tree — excavate before modernizing"
