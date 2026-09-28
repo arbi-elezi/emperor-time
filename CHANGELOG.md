@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.4.87
+
+- Archaeology Python leaf: `evals/fixtures/lost-py/HELLO.py` + identify smoke; Python 3.13.5 boot probe VERIFIED (`python3 HELLO.py` → `EMPEROR-TIME-PY-PROBE-OK`); dialect labels honest (CONJECTURE / UNVERIFIABLE where due); identify fossils `*.py` only; bare `python` refused as route tag (ET meta / house-tooling discourse collision); bare `py` allowed as route tag (two-letter abbreviation; word-boundary); bare `.py` allowed as route tag with extension-boundary matching (does not prefix-hit `.pyc` / `.pyo` / `.pyw` / `.pyx` / `.pyi`); prefer `python3` / `python3.13` / `cpython` / `.py`; Debian package `python3` 3.13.5-1 already on box; classic scripting / runtime after JavaScript; treats Python as peer fossil not house language; TeX/LaTeX still deferred; C++ still deferred; TypeScript still deferred
+- Jail pin `references/archaeology-python-manual.md` — Python 3.13 Command line Synopsis (`python … script`) + print
+- Catalog + SKILL.md + archaeology.md + language-agnostic.md link the forty-sixth pin alongside Pascal, ASM, COBOL, Fortran, VHDL, Ada, Forth, Common Lisp, Prolog, Tcl, Erlang, REXX, Modula-2, Algol 68, ALGOL 60, Algol W, Icon, Oberon, SNOBOL4, Simula, APL, BCPL, PL/I, Smalltalk, PostScript, BASIC, Scheme, AWK, sed, m4, ed, Make, dc, lex, yacc, roff, Perl, bc, Expect, Lua, Ruby, Go, Rust, C, and JavaScript; route triggers gain `python3` / `python3.13` / `cpython` / `py` / `.py`; bare `python` refused; eval locks `*.py` identify on lost-py
+- Plugin, marketplace, and SKILL.md at 0.4.87
+
 ## 0.4.86
 
 - Archaeology JavaScript leaf: `evals/fixtures/lost-js/HELLO.js` + identify smoke; Node.js 20.19.2 boot probe VERIFIED (`node HELLO.js` → `EMPEROR-TIME-JS-PROBE-OK`); dialect labels honest (CONJECTURE / UNVERIFIABLE where due); identify fossils `*.js` only; bare `node` refused as route tag (common-English / tech collision); bare `js` allowed as route tag (two-letter abbreviation; word-boundary); bare `.js` allowed as route tag with extension-boundary matching (does not prefix-hit `.json` / `.jsx`); prefer `nodejs` / `node20` / `javascript` / `.js`; Debian package `nodejs` 20.19.2+dfsg-1+deb13u3 already on box; classic scripting / runtime after C; TeX/LaTeX still deferred; C++ still deferred

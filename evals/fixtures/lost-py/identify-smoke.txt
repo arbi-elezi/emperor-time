@@ -1,0 +1,9 @@
+== identify evals/fixtures/lost-py ==
+-- extensions --
+      2 md
+      1 txt
+      1 py
+-- named fossils --
+1 *.py
+-- shebangs --
+identify: done (read-only)
