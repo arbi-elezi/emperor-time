@@ -61,3 +61,27 @@ Class: local|shared|shipped         Agents halted: <list|none>
 Hand to `reproduce-and-bisect.md`. Do not skip ahead to fixing — a fix
 without a reproduction can only be believed, never verified, and belief is
 not in the vocabulary here.
+
+## HARD-GATE (mechanical)
+
+Doctrine above is the law. The lock is an exit code:
+
+```bash
+scripts/emperor triage <task-dir>              # or --check-triage PATH
+scripts/emperor triage --reject-no-triage      # always fails
+scripts/emperor triage --reject-no-snapshot
+scripts/emperor holy-triage <task-dir>         # alias
+```
+
+Python core: `scripts/lib/triage.py`. Thin twins: `triage.sh` /
+`triage.ps1` (+ `holy-triage` alias). Fails when:
+
+1. Triage activity present but missing triage block fields
+   (`Broke:` / `Noticed by:` / `Last-good:` / `First-bad:` / `Class: local|shared|shipped`)
+2. Triage activity present but missing `Snapshot:` (stash / rescue branch /
+   copy path / HEAD)
+
+Accepts: full triage block + snapshot; vacuous PASS when no triage activity
+is claimed. Hands off to `reproduce-and-bisect.md` (mechanical:
+`scripts/emperor reproduce`) once the scene is secured.
+

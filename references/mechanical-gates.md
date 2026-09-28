@@ -21,6 +21,7 @@ A model writing "G4 PASS" in markdown is not a gate. An exit code is.
 | `scripts/consent.sh` (Python core) | Steal consent-protocol | missing CONSENT / header theater / uncovered enlisted agent (`consent.py --reject-no-consent` / `--check-consent`) |
 | `scripts/heal-verify.sh` (Python core) | heal-and-verify triad + postmortem | missing Cure/No-new-wounds/Mechanism or postmortem (`heal_verify.py --reject-no-triad` / `--reject-no-postmortem` / `--check-heal`) |
 | `scripts/reproduce.sh` (Python core) | reproduce-and-bisect fingerprint + combat ledger | missing fingerprint or combat ledger (`reproduce.py --reject-no-repro` / `--reject-no-combat-ledger` / `--check-reproduce`) |
+| `scripts/triage.sh` (Python core) | holy triage block + snapshot | missing triage block or snapshot (`triage.py --reject-no-triage` / `--reject-no-snapshot` / `--check-triage`) |
 | `scripts/context.sh` (Python core) | super-context + thoughttrail | missing graph/L0 or trail when claimed (`context.py --reject-no-graph` / `--reject-no-trail` / `--check-context` / `--check-trail`) |
 | `scripts/forge.sh` (Python core) | G5 deliver / consent PR HARD-GATE | no PR consent (`forge.py --reject-no-pr-consent` / `--check-pr-consent`); DONE fail; gh missing → DRY |
 | `scripts/eval.sh` (Python core) | harness health | an eval fixture fails |
@@ -80,6 +81,8 @@ Super-context Python core: `scripts/lib/context.py` (+ `md_graph.py` / `context_
 Heal-verify Python core: `scripts/lib/heal_verify.py` owns heal-and-verify HARD-GATE (`--reject-no-triad` / `--reject-no-postmortem` / `--check-heal`; thin `heal-verify.sh` / `heal-verify.ps1` + `heal-and-verify` alias / `emperor heal-verify`) — triad theater or missing postmortem is soft; entry still `emperor heal` four-phase.
 
 Reproduce Python core: `scripts/lib/reproduce.py` owns reproduce-and-bisect HARD-GATE (`--reject-no-repro` / `--reject-no-combat-ledger` / `--check-reproduce`; thin `reproduce.sh` / `reproduce.ps1` + `reproduce-and-bisect` alias / `emperor reproduce`) — cause-isolated theater without fingerprint or combat ledger is soft; hands off to heal-verify for the close.
+
+Triage Python core: `scripts/lib/triage.py` owns holy triage HARD-GATE (`--reject-no-triage` / `--reject-no-snapshot` / `--check-triage`; thin `triage.sh` / `triage.ps1` + `holy-triage` alias / `emperor triage`) — investigation theater without triage block or snapshot is soft; hands off to reproduce for cause isolation.
 
 Forge Python core: `scripts/lib/forge.py` owns consent + DONE gate + title/G1 PR body **and** forge PR-consent HARD-GATE (`--reject-no-pr-consent` / `--check-pr-consent`; thin `forge.sh` / `forge.ps1`) — refuse-without-consent alone was soft theater vs card-style peers; Steal `--reject-no-consent` is separate. Closes bash↔ps1 drift on title extraction and ledger dump.
 

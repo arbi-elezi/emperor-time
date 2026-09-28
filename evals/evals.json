@@ -122,6 +122,11 @@
       "id": "reproduce-and-bisect-hard-gate",
       "type": "behavioral-fixture",
       "expect": "reproduce.py --reject-no-repro / --reject-no-combat-ledger / --check-reproduce refuses missing fingerprint or combat ledger when reproduce activity present; accepts fingerprint+combat and vacuous non-reproduce"
+    },
+    {
+      "id": "holy-triage-hard-gate",
+      "type": "behavioral-fixture",
+      "expect": "triage.py --reject-no-triage / --reject-no-snapshot / --check-triage refuses missing triage block or snapshot when triage activity present; accepts block+snapshot and vacuous non-triage"
     }
   ]
 }

@@ -5972,7 +5972,7 @@ def run_evals(root: Path) -> int:
     h.require_contains("steal-consent", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing steal-consent")
     h.require_contains("consent.py", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing consent.py")
     h.require_contains("0.4.132", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing 0.4.132 tip")
-    h.require_contains("0.4.138", ".claude-plugin/plugin.json", "plugin.json not at 0.4.138")
+    h.require_contains("0.4.139", ".claude-plugin/plugin.json", "plugin.json not at 0.4.139")
     h.require_contains("0.4.137", "CHANGELOG.md", "CHANGELOG missing retained 0.4.137")
     h.require_contains("0.4.136", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing retained 0.4.136")
     h.require_contains("0.4.132", "CHANGELOG.md", "CHANGELOG missing 0.4.132")
@@ -5998,7 +5998,9 @@ def run_evals(root: Path) -> int:
     h.require_contains("0.4.135", "CHANGELOG.md", "CHANGELOG missing 0.4.135")
     h.require_contains("sandbox_engine.py", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing sandbox_engine.py")
     h.require_contains("sandbox-engine", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing sandbox-engine")
-    h.require_contains("0.4.138", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing 0.4.138 tip")
+    h.require_contains("0.4.139", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing 0.4.139 tip")
+    h.require_contains("0.4.139", "CHANGELOG.md", "CHANGELOG missing 0.4.139")
+    h.require_contains("0.4.138", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing retained 0.4.138")
     h.require_contains("0.4.138", "CHANGELOG.md", "CHANGELOG missing 0.4.138")
     h.require_contains("0.4.137", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing retained 0.4.137")
     h.require_contains("0.4.137", "CHANGELOG.md", "CHANGELOG missing 0.4.137")
@@ -6012,13 +6014,19 @@ def run_evals(root: Path) -> int:
     h.require_contains("reproduce-and-bisect", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing reproduce-and-bisect")
     h.require_contains("FINGERPRINT_THEN_COMBAT", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing FINGERPRINT_THEN_COMBAT")
     h.require_contains("reproduce.py", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing reproduce.py")
+    h.require_contains("reject-no-triage", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing reject-no-triage")
+    h.require_contains("reject-no-snapshot", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing reject-no-snapshot")
+    h.require_contains("check-triage", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing check-triage")
+    h.require_contains("holy-triage", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing holy-triage")
+    h.require_contains("STOP_SNAPSHOT_BRACKET", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing STOP_SNAPSHOT_BRACKET")
+    h.require_contains("triage.py", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing triage.py")
     h.require_contains("PR_CONSENT_BEFORE_PUBLIC", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing PR_CONSENT_BEFORE_PUBLIC")
     h.require_contains("secrets_broker.py", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing secrets_broker.py")
     h.require_contains("workspace_env.py", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing workspace_env.py")
     h.require_contains("blind-secrets-broker", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing blind-secrets-broker")
     h.require_contains("reject-secret-leak", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing reject-secret-leak")
     h.require_contains("check-env-redacted", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing check-env-redacted")
-    h.require_contains("0.4.138", ".claude-plugin/marketplace.json", "marketplace.json not at 0.4.138")
+    h.require_contains("0.4.139", ".claude-plugin/marketplace.json", "marketplace.json not at 0.4.139")
     h.require_contains("finish.py", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing finish.py")
     h.require_contains("reject-red-suite", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing reject-red-suite")
     h.require_contains("require-green", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing require-green")
@@ -7114,6 +7122,168 @@ def run_evals(root: Path) -> int:
         h.pass_msg("emperor reproduce peer forwards --reject-no-repro")
     h.pass_msg("reproduce.py thin twins + reproduce-and-bisect HARD-GATE")
 
+    # ---- holy triage HARD-GATE (Holy Chain vertical depth) ----
+    h.section("holy-triage HARD-GATE")
+    h.need("scripts/lib/triage.py")
+    h.need("scripts/triage.sh")
+    h.need("scripts/triage.ps1")
+    h.need("scripts/holy-triage.sh")
+    h.need("scripts/holy-triage.ps1")
+    h.need("evals/fixtures/holy-triage/triage-ok.md")
+    h.need("evals/fixtures/holy-triage/triage-no-block.md")
+    h.need("evals/fixtures/holy-triage/triage-no-snapshot.md")
+    h.need("evals/fixtures/holy-triage/triage-vacuous.md")
+    h.need("evals/fixtures/holy-triage/task-ok/ledger.md")
+    h.need("evals/fixtures/holy-triage/task-no-triage/ledger.md")
+    h.need("evals/fixtures/holy-triage/task-no-snapshot/ledger.md")
+    h.bash_n("scripts/triage.sh", "triage.sh syntax")
+    h.bash_n("scripts/holy-triage.sh", "holy-triage.sh syntax")
+    h.py_compile("scripts/lib/triage.py", "triage.py compile")
+    h.require_contains(
+        "lib/triage.py",
+        "scripts/triage.sh",
+        "triage.sh thin twin missing triage.py",
+    )
+    h.require_contains(
+        "lib/triage.py",
+        "scripts/triage.ps1",
+        "triage.ps1 thin twin missing triage.py",
+    )
+    h.require_contains(
+        "triage",
+        "scripts/emperor",
+        "emperor bash peer missing triage",
+    )
+    h.require_contains(
+        "holy-triage",
+        "scripts/emperor",
+        "emperor bash peer missing holy-triage",
+    )
+    h.require_contains(
+        "'triage'",
+        "scripts/emperor.ps1",
+        "emperor.ps1 missing triage alias map",
+    )
+    h.require_contains(
+        "triage",
+        "scripts/emperor.cmd",
+        "emperor.cmd missing triage",
+    )
+    h.require_contains(
+        "triage",
+        "scripts/emperor.zsh",
+        "emperor.zsh missing triage",
+    )
+    h.require_contains(
+        "--reject-no-triage",
+        "scripts/lib/triage.py",
+        "triage.py missing --reject-no-triage",
+    )
+    h.require_contains(
+        "--reject-no-snapshot",
+        "scripts/lib/triage.py",
+        "triage.py missing --reject-no-snapshot",
+    )
+    h.require_contains(
+        "--check-triage",
+        "scripts/lib/triage.py",
+        "triage.py missing --check-triage",
+    )
+    h.require_contains(
+        "HARD-GATE",
+        "chains/holy-chain/triage.md",
+        "triage.md missing HARD-GATE mechanical pointer",
+    )
+    h.require_contains(
+        "--reject-no-triage",
+        "skills/emperor-heal/SKILL.md",
+        "emperor-heal skill missing --reject-no-triage",
+    )
+    h.require_contains(
+        "holy-triage-hard-gate",
+        "evals/evals.json",
+        "evals.json missing holy-triage-hard-gate case",
+    )
+    h.require_contains(
+        "reject-no-triage",
+        "references/mechanical-gates.md",
+        "mechanical-gates missing holy triage row",
+    )
+    h.require_contains(
+        "check-triage",
+        "references/software-factory.md",
+        "software-factory missing check-triage",
+    )
+    h.require_contains(
+        "reject-no-triage",
+        "evals/bakeoff.md",
+        "bakeoff.md missing triage reject-no-triage inventory",
+    )
+    _, card = h.run_py("scripts/lib/triage.py")
+    if "checklist=yes" not in card:
+        h.fail_msg("triage card missing checklist=yes")
+    elif "STOP_SNAPSHOT_BRACKET" not in card:
+        h.fail_msg("triage card missing iron law token")
+    else:
+        h.pass_msg("triage prints TRIAGE card")
+    rc, reject = h.run_py("scripts/lib/triage.py", "--reject-no-triage")
+    if rc == 0:
+        h.fail_msg("triage --reject-no-triage should exit non-zero")
+    elif "REJECT NO TRIAGE" not in reject and "HARD-GATE" not in reject:
+        h.fail_msg("triage --reject-no-triage missing REJECT text")
+    else:
+        h.pass_msg("triage --reject-no-triage hard-gates")
+    rc, reject = h.run_py("scripts/lib/triage.py", "--reject-no-snapshot")
+    if rc == 0:
+        h.fail_msg("triage --reject-no-snapshot should exit non-zero")
+    elif "REJECT NO SNAPSHOT" not in reject and "HARD-GATE" not in reject:
+        h.fail_msg("triage --reject-no-snapshot missing REJECT text")
+    else:
+        h.pass_msg("triage --reject-no-snapshot hard-gates")
+    for name, needle in (
+        ("triage-no-block.md", r"Broke|Noticed|Last-good|First-bad|Class"),
+        ("triage-no-snapshot.md", r"Snapshot"),
+        ("task-no-triage", r"Broke|Noticed|Last-good|First-bad|Class"),
+        ("task-no-snapshot", r"Snapshot"),
+    ):
+        target = root / "evals/fixtures/holy-triage" / name
+        rc, err = h.run_py(
+            "scripts/lib/triage.py",
+            "--check-triage",
+            str(target),
+        )
+        if rc == 0:
+            h.fail_msg(f"holy-triage {name} should fail check-triage")
+        elif not h.grep_out(err, needle):
+            h.fail_msg(f"holy-triage {name} should mention {needle}: {err}")
+        else:
+            h.pass_msg(f"holy-triage {name} rejected")
+    for name in ("triage-ok.md", "triage-vacuous.md", "task-ok"):
+        rc, _ = h.run_py(
+            "scripts/lib/triage.py",
+            "--check-triage",
+            str(root / "evals/fixtures/holy-triage" / name),
+        )
+        if rc != 0:
+            h.fail_msg(f"holy-triage {name} should pass check-triage")
+        else:
+            h.pass_msg(f"holy-triage {name} accepted")
+    _, sh_card = h.run_sh("scripts/triage.sh")
+    if "checklist=yes" not in sh_card:
+        h.fail_msg("triage.sh should print TRIAGE card")
+    else:
+        h.pass_msg("triage.sh thin twin prints card")
+    _, emp_out = h.run_sh(
+        "scripts/emperor",
+        "triage",
+        "--reject-no-triage",
+    )
+    if "REJECT NO TRIAGE" not in emp_out:
+        h.fail_msg("emperor triage --reject-no-triage should forward REJECT")
+    else:
+        h.pass_msg("emperor triage peer forwards --reject-no-triage")
+    h.pass_msg("triage.py thin twins + holy-triage HARD-GATE")
+
     # ---- hetero-critique isolation HARD-GATE (Judgment G4 vertical depth) ----
     h.section("hetero-critique-isolation HARD-GATE")
     h.need("scripts/lib/review_pack.py")
@@ -7186,9 +7356,9 @@ def run_evals(root: Path) -> int:
         "bakeoff.md missing reject-unisolated inventory",
     )
     h.require_contains(
-        "0.4.138",
+        "0.4.139",
         "SKILL.md",
-        "SKILL.md not bumped to 0.4.138",
+        "SKILL.md not bumped to 0.4.139",
     )
     _, card = h.run_py("scripts/lib/review_pack.py")
     if "checklist=yes" not in card:

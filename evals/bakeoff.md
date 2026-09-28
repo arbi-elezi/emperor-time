@@ -54,6 +54,7 @@ mean **disk + eval**, not live multi-vendor win rates.
 | consent-protocol (Steal enlistment) HARD-GATE | `scripts/lib/consent.py` (`--reject-no-consent` / `--check-consent`) + `evals/fixtures/steal-consent/` + `emperor consent` | TESTED |
 | heal-and-verify (triad + postmortem) HARD-GATE | `scripts/lib/heal_verify.py` (`--reject-no-triad` / `--reject-no-postmortem` / `--check-heal`) + `evals/fixtures/heal-and-verify/` + `emperor heal-verify` | TESTED |
 | reproduce-and-bisect (fingerprint + combat ledger) HARD-GATE | `scripts/lib/reproduce.py` (`--reject-no-repro` / `--reject-no-combat-ledger` / `--check-reproduce`) + `evals/fixtures/reproduce-and-bisect/` + `emperor reproduce` | TESTED |
+| holy triage (block + snapshot) HARD-GATE | `scripts/lib/triage.py` (`--reject-no-triage` / `--reject-no-snapshot` / `--check-triage`) + `evals/fixtures/holy-triage/` + `emperor triage` | TESTED |
 | hetero-critique isolation HARD-GATE | `scripts/lib/review_pack.py` (`--reject-unisolated` / `--reject-author-diary` / `--check-isolation`) + `evals/fixtures/hetero-critique-isolation/` + `emperor review-pack` | TESTED |
 | Blind secrets broker + HARD-GATE | `secrets_broker.py` `secrets list|declare|inject` (names+status only; env-file/vault/1password; `--reject-secret-leak` / `--check-env-redacted`) + `evals/fixtures/blind-secrets-broker/` | TESTED |
 | Unified workspace env | `workspace_env.py` `env show` / `env sync` (overlay merge across SOT plugins; redacted show; `managed.env` no secret echo) + `evals/fixtures/blind-secrets-broker/` | TESTED |
