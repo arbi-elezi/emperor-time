@@ -93,6 +93,8 @@ FOSSIL_PATTERNS: tuple[str, ...] = (
     "*.php",
     "*.sql",
     "*.jq",
+    "*.xsl",
+    "*.xslt",
     "*.l",
     "*.lex",
     "*.y",
