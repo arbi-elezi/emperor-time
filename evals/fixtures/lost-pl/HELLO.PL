@@ -1,0 +1,1 @@
+print "EMPEROR-TIME-PERL-PROBE-OK\n";

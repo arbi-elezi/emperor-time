@@ -83,6 +83,8 @@ FOSSIL_PATTERNS: tuple[str, ...] = (
     "*.lex",
     "*.y",
     "*.roff",
+    "*.pl",
+    "*.pm",
     "*.rel",
     "*.hex",
     "*.bin",
