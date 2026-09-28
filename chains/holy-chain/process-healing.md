@@ -89,3 +89,26 @@ binding a lesson captured from your own history.
 - Not rare, ideally — a register with occasional small entries and fast
   remediations is the healthy signature; an always-empty register on complex
   work is more likely unexamined than immaculate.
+
+## HARD-GATE (mechanical)
+
+Doctrine above is the law. The lock is an exit code:
+
+```bash
+scripts/emperor process-heal <task-dir>              # or --check-process-heal PATH
+scripts/emperor process-heal --reject-no-register    # always fails
+scripts/emperor process-heal --reject-no-reentry
+scripts/emperor process-healing <task-dir>           # alias
+```
+
+Python core: `scripts/lib/process_heal.py`. Thin twins: `process-heal.sh` /
+`process-heal.ps1` (+ `process-healing` alias). Fails when:
+
+1. Process-healing activity present but missing register entry
+   (`Breach Register:` / `Register:` / `| Vow |` row with remediation)
+2. Process-healing activity present but missing `RE-ENTERED G[0-5]` ledger
+   seam (or `re-enter at G[0-5]` / earliest sound gate)
+
+Accepts: register entry + RE-ENTERED seam; vacuous PASS when no
+process-healing activity is claimed. Code damage left behind still routes
+into `triage.md` → `reproduce-and-bisect.md` → `heal-and-verify.md`.

@@ -127,6 +127,11 @@
       "id": "holy-triage-hard-gate",
       "type": "behavioral-fixture",
       "expect": "triage.py --reject-no-triage / --reject-no-snapshot / --check-triage refuses missing triage block or snapshot when triage activity present; accepts block+snapshot and vacuous non-triage"
+    },
+    {
+      "id": "holy-process-healing-hard-gate",
+      "type": "behavioral-fixture",
+      "expect": "process_heal.py --reject-no-register / --reject-no-reentry / --check-process-heal refuses missing register or RE-ENTERED seam when process-healing activity present; accepts register+reentry and vacuous non-process-heal"
     }
   ]
 }

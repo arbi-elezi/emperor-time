@@ -12,7 +12,7 @@ if [[ ! -f .emperor/host.env ]]; then
 fi
 TOOL="${1:-}"
 if [[ -z "$TOOL" ]]; then
-  print -u2 "usage: $0 <done|gate|eval|review-pack|dowse|install|worktree|queue|forge|finish|activate|boot|identify|route|heal|grill|tdd|iso|review|author|evidence|receive|execute|subagent|parallel|excavate|session-discovery|diagnose|trace|defense|wait|polluter|pressure|good-tests|skill-test|persuasion|sdo|brief|task-brief|task-start|task-done|sdd-workspace|sdd-review-pack|work-order|claim-audit|judgment-audit|quarantine|steal-quarantine|consent|steal-consent|heal-verify|heal-and-verify|reproduce|reproduce-and-bisect|triage|holy-triage|critique|self-critique|verdict|breach|context|thoughttrail|super-context|sandbox|sot|runtime|env|secrets> [args]"
+  print -u2 "usage: $0 <done|gate|eval|review-pack|dowse|install|worktree|queue|forge|finish|activate|boot|identify|route|heal|grill|tdd|iso|review|author|evidence|receive|execute|subagent|parallel|excavate|session-discovery|diagnose|trace|defense|wait|polluter|pressure|good-tests|skill-test|persuasion|sdo|brief|task-brief|task-start|task-done|sdd-workspace|sdd-review-pack|work-order|claim-audit|judgment-audit|quarantine|steal-quarantine|consent|steal-consent|heal-verify|heal-and-verify|reproduce|reproduce-and-bisect|triage|holy-triage|process-heal|process-healing|critique|self-critique|verdict|breach|context|thoughttrail|super-context|sandbox|sot|runtime|env|secrets> [args]"
   exit 2
 fi
 shift || true
@@ -72,6 +72,10 @@ fi
 # holy-triage: first-class alias → triage HARD-GATE
 if [[ "$TOOL" == holy-triage ]]; then
   exec bash "$ROOT/triage.sh" "$@"
+fi
+# process-healing: first-class alias → process-heal HARD-GATE
+if [[ "$TOOL" == process-healing ]]; then
+  exec bash "$ROOT/process-heal.sh" "$@"
 fi
 # self-critique: first-class alias → critique eight-count HARD-GATE
 if [[ "$TOOL" == self-critique ]]; then
