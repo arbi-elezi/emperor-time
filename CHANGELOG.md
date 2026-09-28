@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.4.58
+- Archaeology Icon leaf: `evals/fixtures/lost-icn/HELLO.ICN` + identify smoke; Icon 9.5.24b boot probe VERIFIED (`ln -sf HELLO.ICN hello.icn` then `icont -s hello.icn` → `EMPEROR-TIME-ICN-PROBE-OK`); dialect labels honest (CONJECTURE / UNVERIFIABLE where due); identify fossils `*.icn` only
+- Jail pin `references/archaeology-icon-manual.md` — Icon 9 UNIX Manual Page (IPD244d) SYNOPSIS / File Names (`icont` + `.icn`)
+- Catalog + SKILL.md + archaeology.md + language-agnostic.md link the seventeenth pin alongside Pascal, ASM, COBOL, Fortran, VHDL, Ada, Forth, Common Lisp, Prolog, Tcl, Erlang, REXX, Modula-2, Algol 68, ALGOL 60, and Algol W; route triggers gain `icont` / `iconx` / `.icn` (bare English `icon` / `write` refused); eval locks `*.icn` identify on lost-icn
+- Plugin, marketplace, and SKILL.md at 0.4.58
+
+
 ## 0.4.57
 - Archaeology Algol W leaf: `evals/fixtures/lost-alw/HELLO.ALW` + identify smoke; Awe 2026-05 boot probe VERIFIED (`awe HELLO.ALW -o HELLO`); dialect labels honest (CONJECTURE / UNVERIFIABLE where due); identify fossils `*.alw` only (not `*.a60` / `*.a68` / `*.alg`)
 - Jail pin `references/archaeology-algolw-manual.md` — Awe SYNOPSIS / EXAMPLES `WRITE` (`awe source.alw... [-o executable]`)

@@ -1,0 +1,6 @@
+procedure main()
+   # HELLO.ICN — archaeology probe fixture (DOS-era 8.3 name)
+   # Dialect CONJECTURE: see README.md in this directory
+   # Intent: smallest Icon program that prints a known string via write
+   write("EMPEROR-TIME-ICN-PROBE-OK")
+end
