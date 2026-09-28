@@ -6,7 +6,7 @@ description: >-
   asks to use another agent, parallelize, or review via a different model.
 license: MIT
 metadata:
-  version: 0.4.30
+  version: 0.4.141
   chain: steal-chain
   part-of: emperor-time
 ---
@@ -32,6 +32,16 @@ metadata:
    CONJECTURE start / ADMITTED|REJECTED → exit 1. G4 calls
    `scripts/lib/quarantine.py` when steal activity is present.
 8. Sign-in is the client's terminal. You never run interactive logins.
+   **MUST — sign-in / dispatch / swarm HARD-GATE:** when claiming steal
+   sign-in, dispatch, or swarm-emulate, run
+   `scripts/emperor steal-flow <task-dir>` (aliases: `sign-in-handoff`,
+   `steal-dispatch`, `swarm-emulate`). Doctrine leaves:
+   `sign-in-handoff.md` / `dispatch.md` / `swarm-emulate.md`. Use
+   `--reject-no-signin` / `--reject-no-dispatch-layout` /
+   `--reject-unbounded-swarm` / `--check-signin` / `--check-dispatch` /
+   `--check-swarm`. Missing SIGN-IN HANDOFF (or credential material),
+   incomplete runs layout / OBJECTIVE+SCOPE, or unbounded swarm → exit 1.
+   G4 calls `scripts/lib/steal_flow.py` when matching activity is present.
 
 ## MUST — parallel-dispatch checklist for independent domains
 

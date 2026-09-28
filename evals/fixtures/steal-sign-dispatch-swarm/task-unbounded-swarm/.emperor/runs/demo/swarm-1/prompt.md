@@ -1,0 +1,2 @@
+OBJECTIVE: s1
+SCOPE: a.py

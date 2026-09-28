@@ -90,3 +90,21 @@ Mechanics:
   agent's miss in the roster's notes column (routing input for next time).
 - Hand `out.txt` to `quarantine.md`. Even beautiful-looking output.
   *Especially* beautiful-looking output.
+
+
+## HARD-GATE (mechanical)
+
+Doctrine above is the law. The lock is an exit code:
+
+```bash
+scripts/emperor steal-flow --check-dispatch <task-dir>
+scripts/emperor steal-flow --reject-no-dispatch-layout  # always fails
+scripts/emperor steal-dispatch <task-dir>               # alias → steal-flow
+scripts/gate.sh g4 <task-dir>                           # calls steal_flow.py when dispatch activity present
+```
+
+Python core: `scripts/lib/steal_flow.py`. Thin twins: `steal-flow.sh` /
+`steal-flow.ps1` (+ `steal-dispatch` alias). Fails when dispatch activity is
+present but missing `.emperor/runs/<task>/<agent>/{prompt.md,out.txt,meta.md}`
+or prompt lacks `OBJECTIVE:` / `SCOPE:` (meta needs exit/timeout). Vacuous PASS
+when no dispatch markers.

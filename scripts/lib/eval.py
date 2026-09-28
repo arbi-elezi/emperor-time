@@ -5972,7 +5972,7 @@ def run_evals(root: Path) -> int:
     h.require_contains("steal-consent", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing steal-consent")
     h.require_contains("consent.py", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing consent.py")
     h.require_contains("0.4.132", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing 0.4.132 tip")
-    h.require_contains("0.4.140", ".claude-plugin/plugin.json", "plugin.json not at 0.4.140")
+    h.require_contains("0.4.141", ".claude-plugin/plugin.json", "plugin.json not at 0.4.141")
     h.require_contains("0.4.137", "CHANGELOG.md", "CHANGELOG missing retained 0.4.137")
     h.require_contains("0.4.136", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing retained 0.4.136")
     h.require_contains("0.4.132", "CHANGELOG.md", "CHANGELOG missing 0.4.132")
@@ -5998,7 +5998,9 @@ def run_evals(root: Path) -> int:
     h.require_contains("0.4.135", "CHANGELOG.md", "CHANGELOG missing 0.4.135")
     h.require_contains("sandbox_engine.py", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing sandbox_engine.py")
     h.require_contains("sandbox-engine", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing sandbox-engine")
+    h.require_contains("0.4.141", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing 0.4.141 tip")
     h.require_contains("0.4.140", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing 0.4.140 tip")
+    h.require_contains("0.4.141", "CHANGELOG.md", "CHANGELOG missing 0.4.141")
     h.require_contains("0.4.140", "CHANGELOG.md", "CHANGELOG missing 0.4.140")
     h.require_contains("0.4.139", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing retained 0.4.139 tip")
     h.require_contains("0.4.139", "CHANGELOG.md", "CHANGELOG missing 0.4.139")
@@ -6034,7 +6036,7 @@ def run_evals(root: Path) -> int:
     h.require_contains("blind-secrets-broker", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing blind-secrets-broker")
     h.require_contains("reject-secret-leak", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing reject-secret-leak")
     h.require_contains("check-env-redacted", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing check-env-redacted")
-    h.require_contains("0.4.140", ".claude-plugin/marketplace.json", "marketplace.json not at 0.4.140")
+    h.require_contains("0.4.141", ".claude-plugin/marketplace.json", "marketplace.json not at 0.4.141")
     h.require_contains("finish.py", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing finish.py")
     h.require_contains("reject-red-suite", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing reject-red-suite")
     h.require_contains("require-green", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing require-green")
@@ -7454,6 +7456,255 @@ def run_evals(root: Path) -> int:
         h.pass_msg("emperor process-heal peer forwards --reject-no-register")
     h.pass_msg("process_heal.py thin twins + holy-process-healing HARD-GATE")
 
+    # ---- steal sign-in/dispatch/swarm HARD-GATE (Steal Chain vertical depth) ----
+    h.section("steal-sign-dispatch-swarm HARD-GATE")
+    h.need("scripts/lib/steal_flow.py")
+    h.need("scripts/steal-flow.sh")
+    h.need("scripts/steal-flow.ps1")
+    h.need("scripts/sign-in-handoff.sh")
+    h.need("scripts/sign-in-handoff.ps1")
+    h.need("scripts/steal-dispatch.sh")
+    h.need("scripts/steal-dispatch.ps1")
+    h.need("scripts/swarm-emulate.sh")
+    h.need("scripts/swarm-emulate.ps1")
+    h.need("evals/fixtures/steal-sign-dispatch-swarm/signin-ok.md")
+    h.need("evals/fixtures/steal-sign-dispatch-swarm/signin-missing.md")
+    h.need("evals/fixtures/steal-sign-dispatch-swarm/signin-credentials.md")
+    h.need("evals/fixtures/steal-sign-dispatch-swarm/dispatch-ok.md")
+    h.need("evals/fixtures/steal-sign-dispatch-swarm/dispatch-bad.md")
+    h.need("evals/fixtures/steal-sign-dispatch-swarm/swarm-ok.md")
+    h.need("evals/fixtures/steal-sign-dispatch-swarm/swarm-unbounded.md")
+    h.need("evals/fixtures/steal-sign-dispatch-swarm/vacuous.md")
+    h.need("evals/fixtures/steal-sign-dispatch-swarm/task-ok/ledger.md")
+    h.need("evals/fixtures/steal-sign-dispatch-swarm/task-missing-signin/ledger.md")
+    h.need("evals/fixtures/steal-sign-dispatch-swarm/task-bad-dispatch/ledger.md")
+    h.need("evals/fixtures/steal-sign-dispatch-swarm/task-unbounded-swarm/ledger.md")
+    h.need("evals/fixtures/steal-sign-dispatch-swarm/task-vacuous/ledger.md")
+    h.bash_n("scripts/steal-flow.sh", "steal-flow.sh syntax")
+    h.bash_n("scripts/sign-in-handoff.sh", "sign-in-handoff.sh syntax")
+    h.bash_n("scripts/steal-dispatch.sh", "steal-dispatch.sh syntax")
+    h.bash_n("scripts/swarm-emulate.sh", "swarm-emulate.sh syntax")
+    h.py_compile("scripts/lib/steal_flow.py", "steal_flow.py compile")
+    h.require_contains(
+        "lib/steal_flow.py",
+        "scripts/steal-flow.sh",
+        "steal-flow.sh thin twin missing steal_flow.py",
+    )
+    h.require_contains(
+        "lib/steal_flow.py",
+        "scripts/steal-flow.ps1",
+        "steal-flow.ps1 thin twin missing steal_flow.py",
+    )
+    h.require_contains(
+        "steal-flow",
+        "scripts/emperor",
+        "emperor bash peer missing steal-flow",
+    )
+    h.require_contains(
+        "sign-in-handoff",
+        "scripts/emperor",
+        "emperor bash peer missing sign-in-handoff",
+    )
+    h.require_contains(
+        "'steal-flow'",
+        "scripts/emperor.ps1",
+        "emperor.ps1 missing steal-flow",
+    )
+    h.require_contains(
+        "steal-flow",
+        "scripts/emperor.cmd",
+        "emperor.cmd missing steal-flow",
+    )
+    h.require_contains(
+        "steal-flow",
+        "scripts/emperor.zsh",
+        "emperor.zsh missing steal-flow",
+    )
+    h.require_contains(
+        "steal_flow.py",
+        "scripts/lib/gate.py",
+        "gate.py does not call steal_flow.py",
+    )
+    h.require_contains(
+        "--check-signin",
+        "scripts/lib/gate.py",
+        "gate.py missing --check-signin wiring",
+    )
+    h.require_contains(
+        "--reject-no-signin",
+        "scripts/lib/steal_flow.py",
+        "steal_flow.py missing --reject-no-signin",
+    )
+    h.require_contains(
+        "--reject-no-dispatch-layout",
+        "scripts/lib/steal_flow.py",
+        "steal_flow.py missing --reject-no-dispatch-layout",
+    )
+    h.require_contains(
+        "--reject-unbounded-swarm",
+        "scripts/lib/steal_flow.py",
+        "steal_flow.py missing --reject-unbounded-swarm",
+    )
+    h.require_contains(
+        "--check-signin",
+        "scripts/lib/steal_flow.py",
+        "steal_flow.py missing --check-signin",
+    )
+    h.require_contains(
+        "--check-dispatch",
+        "scripts/lib/steal_flow.py",
+        "steal_flow.py missing --check-dispatch",
+    )
+    h.require_contains(
+        "--check-swarm",
+        "scripts/lib/steal_flow.py",
+        "steal_flow.py missing --check-swarm",
+    )
+    h.require_contains(
+        "HARD-GATE",
+        "chains/steal-chain/sign-in-handoff.md",
+        "sign-in-handoff.md missing HARD-GATE mechanical pointer",
+    )
+    h.require_contains(
+        "HARD-GATE",
+        "chains/steal-chain/dispatch.md",
+        "dispatch.md missing HARD-GATE mechanical pointer",
+    )
+    h.require_contains(
+        "HARD-GATE",
+        "chains/steal-chain/swarm-emulate.md",
+        "swarm-emulate.md missing HARD-GATE mechanical pointer",
+    )
+    h.require_contains(
+        "--reject-no-signin",
+        "skills/emperor-dispatch/SKILL.md",
+        "emperor-dispatch skill missing --reject-no-signin",
+    )
+    h.require_contains(
+        "steal-sign-dispatch-swarm-hard-gate",
+        "evals/evals.json",
+        "evals.json missing steal-sign-dispatch-swarm-hard-gate case",
+    )
+    h.require_contains(
+        "steal-flow",
+        "references/mechanical-gates.md",
+        "mechanical-gates missing steal-flow row",
+    )
+    h.require_contains(
+        "check-signin",
+        "references/software-factory.md",
+        "software-factory missing check-signin",
+    )
+    h.require_contains(
+        "reject-no-signin",
+        "evals/bakeoff.md",
+        "bakeoff.md missing steal-flow reject-no-signin inventory",
+    )
+    _, card = h.run_py("scripts/lib/steal_flow.py")
+    if "checklist=yes" not in card:
+        h.fail_msg("steal-flow card missing checklist=yes")
+    elif "SIGNIN_THEN_DISPATCH_THEN_BOUNDED_SWARM" not in card:
+        h.fail_msg("steal-flow card missing iron law token")
+    else:
+        h.pass_msg("steal-flow prints STEAL-FLOW card")
+    for flag, needle in (
+        ("--reject-no-signin", "REJECT NO SIGNIN"),
+        ("--reject-no-dispatch-layout", "REJECT NO DISPATCH"),
+        ("--reject-unbounded-swarm", "REJECT UNBOUNDED SWARM"),
+    ):
+        rc, reject = h.run_py("scripts/lib/steal_flow.py", flag)
+        if rc == 0:
+            h.fail_msg(f"steal-flow {flag} should exit non-zero")
+        elif needle not in reject and "HARD-GATE" not in reject:
+            h.fail_msg(f"steal-flow {flag} missing REJECT text")
+        else:
+            h.pass_msg(f"steal-flow {flag} hard-gates")
+    for name, flag, needle in (
+        ("signin-missing.md", "--check-signin", r"HANDOFF|SIGN-IN|signin"),
+        ("signin-credentials.md", "--check-signin", r"credential|token|secret|api"),
+        ("dispatch-bad.md", "--check-dispatch", r"layout|OBJECTIVE|SCOPE|runs"),
+        ("swarm-unbounded.md", "--check-swarm", r"unbounded|cap|N="),
+        ("task-missing-signin", "--check-signin", r"HANDOFF|SIGN-IN|signin"),
+        ("task-bad-dispatch", "--check-dispatch", r"layout|prompt|meta|OBJECTIVE|SCOPE"),
+        ("task-unbounded-swarm", "--check-swarm", r"unbounded|cap|exceed"),
+    ):
+        target = root / "evals/fixtures/steal-sign-dispatch-swarm" / name
+        rc, err = h.run_py("scripts/lib/steal_flow.py", flag, str(target))
+        if rc == 0:
+            h.fail_msg(f"steal-flow {name} should fail {flag}")
+        elif not h.grep_out(err, needle):
+            h.fail_msg(f"steal-flow {name} should mention {needle}: {err}")
+        else:
+            h.pass_msg(f"steal-flow {name} rejected via {flag}")
+    for name, flag in (
+        ("signin-ok.md", "--check-signin"),
+        ("dispatch-ok.md", "--check-dispatch"),
+        ("swarm-ok.md", "--check-swarm"),
+        ("vacuous.md", "--check-signin"),
+        ("vacuous.md", "--check-dispatch"),
+        ("vacuous.md", "--check-swarm"),
+        ("task-ok", "--check-signin"),
+        ("task-ok", "--check-dispatch"),
+        ("task-ok", "--check-swarm"),
+        ("task-vacuous", "--check-signin"),
+        ("task-vacuous", "--check-dispatch"),
+        ("task-vacuous", "--check-swarm"),
+    ):
+        rc, _ = h.run_py(
+            "scripts/lib/steal_flow.py",
+            flag,
+            str(root / "evals/fixtures/steal-sign-dispatch-swarm" / name),
+        )
+        if rc != 0:
+            h.fail_msg(f"steal-flow {name} should pass {flag}")
+        else:
+            h.pass_msg(f"steal-flow {name} accepted via {flag}")
+    # G4 wiring
+    tmp = Path(tempfile.mkdtemp())
+    try:
+        import shutil as _shutil
+        for name, expect_fail in (
+            ("task-missing-signin", True),
+            ("task-bad-dispatch", True),
+            ("task-unbounded-swarm", True),
+            ("task-ok", False),
+        ):
+            src = root / "evals/fixtures/steal-sign-dispatch-swarm" / name
+            dst = tmp / name
+            _shutil.copytree(src, dst)
+            (dst / ".gates").mkdir(exist_ok=True)
+            stamp = _utc_stamp()
+            for g in ("g0", "g1", "g2", "g3"):
+                (dst / ".gates" / g).write_text(stamp + "\n", encoding="utf-8")
+            rc, out = h.run_sh("scripts/gate.sh", "g4", str(dst))
+            if expect_fail:
+                if rc == 0:
+                    h.fail_msg(f"G4 allowed bad steal-flow {name}")
+                else:
+                    h.pass_msg(f"G4 rejects bad steal-flow {name}")
+            else:
+                if rc != 0:
+                    h.fail_msg(f"G4 should accept steal-flow {name}: {out}")
+                else:
+                    h.pass_msg(f"G4 accepts steal-flow {name}")
+    finally:
+        shutil.rmtree(tmp, ignore_errors=True)
+    _, sh_card = h.run_sh("scripts/steal-flow.sh")
+    if "checklist=yes" not in sh_card:
+        h.fail_msg("steal-flow.sh should print STEAL-FLOW card")
+    else:
+        h.pass_msg("steal-flow.sh thin twin prints card")
+    _, emp_out = h.run_sh(
+        "scripts/emperor",
+        "steal-flow",
+        "--reject-no-signin",
+    )
+    if "REJECT NO SIGNIN" not in emp_out:
+        h.fail_msg("emperor steal-flow --reject-no-signin should forward REJECT")
+    else:
+        h.pass_msg("emperor steal-flow peer forwards --reject-no-signin")
+    h.pass_msg("steal_flow.py thin twins + steal-sign-dispatch-swarm HARD-GATE")
+
     # ---- hetero-critique isolation HARD-GATE (Judgment G4 vertical depth) ----
     h.section("hetero-critique-isolation HARD-GATE")
     h.need("scripts/lib/review_pack.py")
@@ -7526,9 +7777,9 @@ def run_evals(root: Path) -> int:
         "bakeoff.md missing reject-unisolated inventory",
     )
     h.require_contains(
-        "0.4.140",
+        "0.4.141",
         "SKILL.md",
-        "SKILL.md not bumped to 0.4.140",
+        "SKILL.md not bumped to 0.4.141",
     )
     _, card = h.run_py("scripts/lib/review_pack.py")
     if "checklist=yes" not in card:

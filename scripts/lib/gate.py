@@ -16,6 +16,8 @@ G4 also delegates Steal quarantine admission to quarantine.py
 (vacuous PASS when no worker runs / no steal markers).
 G4 also delegates Steal consent-protocol to consent.py
 (vacuous PASS when no worker runs / no steal markers).
+G4 also delegates Steal sign-in / dispatch / swarm to steal_flow.py
+(vacuous PASS when no matching steal-flow activity).
 G4 also delegates hetero-critique isolation to review_pack.py
 (vacuous PASS when no review-pack / no hetero markers).
 G0 also delegates thoughttrail + super-context to context.py
@@ -141,6 +143,17 @@ def _run_consent(gate: str, task: Path) -> None:
         _fail(gate, "steal consent (consent.py)")
 
 
+def _run_steal_flow(gate: str, task: Path) -> None:
+    py = _root() / "scripts" / "lib" / "steal_flow.py"
+    for flag in ("--check-signin", "--check-dispatch", "--check-swarm"):
+        proc = subprocess.run(
+            [sys.executable, str(py), flag, str(task)],
+            check=False,
+        )
+        if proc.returncode != 0:
+            _fail(gate, f"steal flow ({flag})")
+
+
 def _run_review_isolation(gate: str, task: Path) -> None:
     py = _root() / "scripts" / "lib" / "review_pack.py"
     proc = subprocess.run(
@@ -149,7 +162,6 @@ def _run_review_isolation(gate: str, task: Path) -> None:
     )
     if proc.returncode != 0:
         _fail(gate, "hetero-critique isolation (review_pack.py)")
-
 
 
 def _run_context(gate: str, task: Path) -> None:
@@ -161,7 +173,6 @@ def _run_context(gate: str, task: Path) -> None:
         )
         if proc.returncode != 0:
             _fail(gate, f"thoughttrail/super-context ({flag})")
-
 
 
 def _run_forge_consent(gate: str, task: Path) -> None:
@@ -284,6 +295,9 @@ def run_gate(gate: str, task: Path) -> None:
         # Steal quarantine: runs layout + CONJECTURE start + ADMITTED|REJECTED.
         # Vacuous PASS when no worker runs / steal markers.
         _run_quarantine(gate, task)
+        # Steal sign-in / dispatch / swarm HARD-GATE (steal_flow.py).
+        # Vacuous PASS when no matching activity.
+        _run_steal_flow(gate, task)
         # Hetero-critique isolation: review-pack has no author diary / CoT.
         # Vacuous PASS when no review-pack / no hetero markers.
         _run_review_isolation(gate, task)
