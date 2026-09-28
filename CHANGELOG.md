@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.4.76
+
+- Jail pin `references/archaeology-yacc-manual.md` — GNU Bison bison(1) SYNOPSIS FILE arguments + Output Files `-o` / `--output`
+- Catalog + SKILL.md + archaeology.md + language-agnostic.md link the thirty-fifth pin alongside Pascal, ASM, COBOL, Fortran, VHDL, Ada, Forth, Common Lisp, Prolog, Tcl, Erlang, REXX, Modula-2, Algol 68, ALGOL 60, Algol W, Icon, Oberon, SNOBOL4, Simula, APL, BCPL, PL/I, Smalltalk, PostScript, BASIC, Scheme, AWK, sed, m4, ed, Make, dc, and lex; route triggers gain `yacc` / `bison` / `gnu-bison` / `.y`; eval locks `*.y` identify on lost-yacc
+- Plugin, marketplace, and SKILL.md at 0.4.76
+
 ## 0.4.75
 - Archaeology lex leaf: `evals/fixtures/lost-lex/HELLO.L` + identify smoke; GNU flex 2.6.4 boot probe VERIFIED (`flex HELLO.L` → `lex.yy.c` → `gcc -o hello lex.yy.c -lfl` / `flex -o hello.c HELLO.L` → `EMPEROR-TIME-LEX-PROBE-OK`); dialect labels honest (CONJECTURE / UNVERIFIABLE where due); identify fossils `*.l` / `*.lex`; bare `lex` / `flex` allowed as route tags (tool binary names); bare `.l` refused (short-extension collision with `.lisp`)
 - Jail pin `references/archaeology-lex-manual.md` — GNU flex flex(1) SYNOPSIS FILE arguments + FILES `-o` / `--outfile`
