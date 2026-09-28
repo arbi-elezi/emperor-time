@@ -1,7 +1,7 @@
 # Language-agnostic law
 
 Emperor Time has no home language. Python, JS, Pascal, COBOL, Forth,
-Common Lisp, Prolog, Tcl, Erlang, REXX, Modula-2, Algol 68, ALGOL 60, Algol W, Icon, Oberon, SNOBOL4, Simula, APL, BCPL, PL/I, Smalltalk, PostScript, BASIC, Scheme, AWK, sed, m4, ed, Make, dc, lex, yacc, roff, Perl, 6502, x86, VHDL, and a folder of unmarked binaries are peers.
+Common Lisp, Prolog, Tcl, Erlang, REXX, Modula-2, Algol 68, ALGOL 60, Algol W, Icon, Oberon, SNOBOL4, Simula, APL, BCPL, PL/I, Smalltalk, PostScript, BASIC, Scheme, AWK, sed, m4, ed, Make, dc, lex, yacc, roff, Perl, bc, 6502, x86, VHDL, and a folder of unmarked binaries are peers.
 
 ## Restrictions
 

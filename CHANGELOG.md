@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.4.79
+
+- Archaeology bc leaf: `evals/fixtures/lost-bc/HELLO.BC` + identify smoke; GNU bc 1.07.1 boot probe VERIFIED (`bc HELLO.BC` / `bc -q HELLO.BC` → `EMPEROR-TIME-BC-PROBE-OK`); dialect labels honest (CONJECTURE / UNVERIFIABLE where due); identify fossils `*.bc` only; bare `bc` allowed as route tag (tool binary name; word-boundary); bare `.bc` refused as route tag (substring collision with BCPL `.bcpl`); companion to dc leaf (GNU bc/dc family); deferred earlier on apt 500, now installed
+- Jail pin `references/archaeology-bc-manual.md` — GNU bc DESCRIPTION file arguments + STATEMENTS `print` + PSEUDO STATEMENTS `quit`
+- Catalog + SKILL.md + archaeology.md + language-agnostic.md link the thirty-eighth pin alongside Pascal, ASM, COBOL, Fortran, VHDL, Ada, Forth, Common Lisp, Prolog, Tcl, Erlang, REXX, Modula-2, Algol 68, ALGOL 60, Algol W, Icon, Oberon, SNOBOL4, Simula, APL, BCPL, PL/I, Smalltalk, PostScript, BASIC, Scheme, AWK, sed, m4, ed, Make, dc, lex, yacc, roff, and Perl; route triggers gain `bc` / `gnu-bc`; eval locks `*.bc` identify on lost-bc
+- Plugin, marketplace, and SKILL.md at 0.4.79
+
 ## 0.4.78
 
 - Archaeology Perl leaf: `evals/fixtures/lost-pl/HELLO.PL` + identify smoke; Perl 5.40.1 boot probe VERIFIED (`perl HELLO.PL` → `EMPEROR-TIME-PERL-PROBE-OK`); dialect labels honest (CONJECTURE / UNVERIFIABLE where due); identify fossils `*.pl` / `*.pm`; bare `perl` allowed as route tag (tool binary name); bare `.pl` refused as route tag (substring collision with PL/I `.pli` / `.pl1`); Prolog already left `*.pl` alone for this reclaim
