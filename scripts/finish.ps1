@@ -1,7 +1,8 @@
 <#
 .SYNOPSIS
-  Thin twin of finish.sh — git finish environment + integration menu via Python core.
+  Thin twin of finish.sh — git finish ENV/MENU + suite-green HARD-GATE via Python core.
   Does not merge, push, or delete.
+  --reject-red-suite / --require-green refuse menu without green suite.
 #>
 [CmdletBinding()]
 param(

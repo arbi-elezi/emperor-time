@@ -19,7 +19,7 @@ LEAVES: list[tuple[str, str, tuple[str, ...]]] = [
     ("critique", "scripts/lib/critique.py", ("critique", "reject-incomplete-critique", "eight-count", "Checked")),
     ("verdict", "scripts/lib/verdict.py", ("verdict", "reject-hidden-breach", "Breach Register", "claim audit")),
     ("finish", "skills/emperor-forge/finish-menu.md", ("finish",)),
-    ("finish-py", "scripts/lib/finish.py", ("finish.py", "finish menu")),
+    ("finish-py", "scripts/lib/finish.py", ("finish.py", "finish menu", "reject-red-suite", "require-green")),
     ("activate", "scripts/lib/activate.py", ("activate", "must-route")),
     ("must-route", "skills/emperor-resume/must-route.md", ("must-route",)),
     ("grill", "skills/emperor-require-design/grill-checklist.md", ("grill",)),

@@ -14,6 +14,7 @@ A model writing "G4 PASS" in markdown is not a gate. An exit code is.
 | `scripts/gate.sh g4` | G4 | incomplete eight-count critique (via `critique.py`); missing CLAIM AUDIT / unfinished HYPOTHESIS\|TESTED (via `claim_audit.py`); steal unquarantined (via `quarantine.py`); VERIFIED without quote |
 | `scripts/gate.sh g5` | G5 | verdict soft/missing citations / FAIL delivered; empty or theater Breach Register rows (via `verdict.py`) |
 | `scripts/review-pack.sh` (Python core) | G4 hetero | cannot emit isolated pack |
+| `scripts/finish.sh` (Python core) | finish menu / suite-green | red suite / missing DONE probes (`finish.py --reject-red-suite` / `--require-green`; no menu until green) |
 | `scripts/forge.sh` (Python core) | G5 deliver / consent PR | no consent; DONE fail; gh missing → DRY |
 | `scripts/eval.sh` (Python core) | harness health | an eval fixture fails |
 
@@ -41,6 +42,8 @@ acceptance-criteria extract + diff (thin `review-pack.sh` / `review-pack.ps1`).
 Closes bash↔ps1 drift on criteria (ps1 used to dump the full work-order).
 
 Dowse Python core: `scripts/lib/dowse.py` owns PATH detect + bounded version/auth probes + table/`--as-json` richer roster (thin `dowse.sh` / `dowse.ps1`). Closes bash↔ps1 drift on AsJson + Headless/SignIn metadata.
+
+Finish Python core: `scripts/lib/finish.py` owns ENV/MENU detect **and** suite-green HARD-GATE (`--reject-red-suite` / `--require-green` / `--check-suite`; thin `finish.sh` / `finish.ps1`) — integrates `done.py` probes and/or `eval.py`; menu-only finish without green is soft theater (Superpowers finishing Step 1).
 
 Forge Python core: `scripts/lib/forge.py` owns consent + DONE gate + title/G1 PR body (thin `forge.sh` / `forge.ps1`). Closes bash↔ps1 drift on title extraction and ledger dump.
 

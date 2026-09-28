@@ -13,9 +13,15 @@ stays the orchestrator; do not announce a foreign skill name.
 
 ## Step 1 — Fresh suite on this tree
 
+**HARD-GATE:** `scripts/lib/finish.py` refuses menu advance / done without a
+green suite (`--reject-red-suite` always fails; `--require-green <task-dir>`
+runs `done.py` probes — and/or `eval.py` when present/`--with-eval` — and
+prints ENV/MENU only when green). Menu-only finish is soft theater.
+
 Run the project's full test command on the tree you are about to integrate.
-Quote the tail. A green run earlier in the session does not count (Vow of
-Evidence). If red: report failures and stop. No menu until green.
+Prefer `scripts/emperor finish --require-green <task-dir>` (DONE probes via
+`done.py`). Quote the tail. A green run earlier in the session does not count
+(Vow of Evidence). If red: report failures and stop. No menu until green.
 
 ## Step 2 — Detect environment
 

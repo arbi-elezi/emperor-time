@@ -57,6 +57,11 @@
       "id": "verdict-breach-hard-gate",
       "type": "behavioral-fixture",
       "expect": "verdict.py / gate g5 rejects empty/theater Breach Register rows / missing Verdict citations / FAIL delivered; accepts cited PASS + honest empty or filled Stake"
+    },
+    {
+      "id": "finish-suite-green-hard-gate",
+      "type": "behavioral-fixture",
+      "expect": "finish.py --reject-red-suite / --require-green refuses menu on red/missing DONE probes; accepts green task-ok and prints MENU; integrates done.py"
     }
   ]
 }

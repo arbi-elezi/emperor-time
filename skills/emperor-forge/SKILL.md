@@ -19,9 +19,11 @@ PR the client can merge without babysitting comments.
 ## Before forge: finish menu
 
 When implementation is complete (G4 PASS, suite green on this tree), do **not**
-jump straight to a PR. Open `finish-menu.md` and/or run `scripts/emperor finish`:
+jump straight to a PR. Open `finish-menu.md` and/or run
+`scripts/emperor finish --require-green <task-dir>` (HARD-GATE: refuses menu
+without green DONE probes / eval):
 
-1. Fresh suite on this tree (quote the tail).
+1. Fresh suite on this tree (quote the tail; `--require-green` or stop).
 2. Detect normal repo vs linked worktree vs detached HEAD.
 3. Present the exact menu (3 options, or 2 if detached). Wait.
 4. Execute the choice:
