@@ -70,3 +70,24 @@ only through your own re-run/probe.
 Sequence position: the audit runs **before** self-critique (the prosecutor
 argues from an audited ledger — count 8, "honesty of the report", depends on
 these statuses being real). Hand to `self-critique.md`.
+
+## HARD-GATE (mechanical)
+
+Doctrine above is the law. The lock is an exit code:
+
+```bash
+scripts/emperor claim-audit <task-dir>           # or --check-audit PATH
+scripts/emperor claim-audit --reject-unaudited   # always fails (card + exit 1)
+scripts/gate.sh g4 <task-dir>                    # calls claim_audit.py
+```
+
+Python core: `scripts/lib/claim_audit.py`. Thin twins: `claim-audit.sh` /
+`claim-audit.ps1` (+ `judgment-audit` alias). Fails when:
+
+1. Missing `CLAIM AUDIT:` line (or Claim Audit section)
+2. Unfinished `HYPOTHESIS` / `TESTED` rows
+3. Soft structure (audit cites rows but no Status table; unlabeled CONJECTURE;
+   VERIFIED without quoted evidence)
+
+A critique file alone does **not** open G4.
+

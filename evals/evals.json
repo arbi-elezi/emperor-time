@@ -37,6 +37,11 @@
       "id": "bakeoff-honesty-labels",
       "type": "structural",
       "expect": "bakeoff.md + this-upgrade.md inventory leaves; label local mechanism TESTED/VERIFIED; live defect-rate vs Superpowers UNVERIFIABLE; bakeoff_honesty.py exit 0"
+    },
+    {
+      "id": "claim-audit-hard-gate",
+      "type": "behavioral-fixture",
+      "expect": "claim_audit.py / gate g4 rejects missing CLAIM AUDIT line and unfinished HYPOTHESIS/TESTED rows; accepts audited terminal ledger"
     }
   ]
 }

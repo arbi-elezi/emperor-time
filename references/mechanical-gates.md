@@ -11,7 +11,7 @@ A model writing "G4 PASS" in markdown is not a gate. An exit code is.
 | `scripts/gate.sh g1` | G1 | no acceptance criteria |
 | `scripts/gate.sh g2` | G2 | non-trivial task missing work-order or Expected: lines |
 | `scripts/gate.sh g3` | G3 | impact-map paths missing from `git diff --stat` (when in a git repo) |
-| `scripts/gate.sh g4` | G4 | claim rows still CONJECTURE; no critique file; listed probes not run |
+| `scripts/gate.sh g4` | G4 | no critique; missing CLAIM AUDIT / unfinished HYPOTHESIS\|TESTED (via `claim_audit.py`); VERIFIED without quote |
 | `scripts/gate.sh g5` | G5 | verdict not PASS/PASS-WITH-CONDITIONS; breach hidden empty-header |
 | `scripts/review-pack.sh` (Python core) | G4 hetero | cannot emit isolated pack |
 | `scripts/forge.sh` (Python core) | G5 deliver / consent PR | no consent; DONE fail; gh missing → DRY |
@@ -20,7 +20,10 @@ A model writing "G4 PASS" in markdown is not a gate. An exit code is.
 Python core: `scripts/lib/gate.py` owns G0–G5. Thin twins: `scripts/gate.sh`,
 `scripts/gate.ps1` (same exits). G2 still calls `work_order.py` for the plan
 header **and** Task-N structure (`--reject-tbd` / `--reject-no-tasks` /
-`--check-tasks`; thin `work-order.sh` / `work-order.ps1`).
+`--check-tasks`; thin `work-order.sh` / `work-order.ps1`). G4 calls
+`claim_audit.py` for the Judgment claim-audit sweep (`--reject-unaudited` /
+`--check-audit`; thin `claim-audit.sh` / `claim-audit.ps1` + `judgment-audit`
+alias / `emperor claim-audit`).
 
 Review-pack Python core: `scripts/lib/review_pack.py` owns meta SHAs +
 acceptance-criteria extract + diff (thin `review-pack.sh` / `review-pack.ps1`).
@@ -35,7 +38,7 @@ suite. Thin twins: `scripts/eval.sh`, `scripts/eval.ps1` (same exits 0/1).
 
 ## Vow mapping
 
-- Vow of Evidence → G4 claim lint (VERIFIED rows need a quoted evidence cell)
+- Vow of Evidence → G4 claim lint (VERIFIED rows need a quoted evidence cell) + claim-audit HARD-GATE (CLAIM AUDIT line; no HYPOTHESIS/TESTED)
 - Vow of Phases → gate order; `gate.sh g4` refuses if g2 never passed
 - Vow of the Ledger → missing ledger is a hard fail
 - Vow of Critique → missing critique file is a hard fail at G4
