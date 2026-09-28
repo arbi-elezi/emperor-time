@@ -24,3 +24,6 @@ CLAIM AUDIT: 1 rows — 1 VERIFIED / 0 REFUTED / 0 CONJECTURE-labeled / 0 UNVERI
 
 ## Breach Register
 - empty
+
+CONSENT: task task-unquarantined
+  codex → fixture work   (per-task approval, "yes")

@@ -5806,12 +5806,19 @@ def run_evals(root: Path) -> int:
     h.require_contains("CITE_OR_FAIL_REPORT", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing CITE_OR_FAIL_REPORT")
     h.require_contains("diagnose-report-skeleton", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing diagnose-report-skeleton")
     h.require_contains("0.4.129", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing 0.4.129 tip")
-    h.require_contains("0.4.129", ".claude-plugin/plugin.json", "plugin.json not at 0.4.129")
     h.require_contains("0.4.129", "CHANGELOG.md", "CHANGELOG missing 0.4.129")
     h.require_contains("reject-multi-wip", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing reject-multi-wip")
     h.require_contains("check-wip", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing check-wip")
     h.require_contains("REJECT MULTI WIP", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing REJECT MULTI WIP")
     h.require_contains("queue-reject-multi-wip", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing queue-reject-multi-wip")
+    h.require_contains("0.4.130", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing 0.4.130 tip")
+    h.require_contains("0.4.130", ".claude-plugin/plugin.json", "plugin.json not at 0.4.130")
+    h.require_contains("0.4.130", "CHANGELOG.md", "CHANGELOG missing 0.4.130")
+    h.require_contains("reject-no-consent", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing reject-no-consent")
+    h.require_contains("check-consent", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing check-consent")
+    h.require_contains("REJECT NO CONSENT", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing REJECT NO CONSENT")
+    h.require_contains("steal-consent", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing steal-consent")
+    h.require_contains("consent.py", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing consent.py")
     h.require_contains("finish.py", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing finish.py")
     h.require_contains("reject-red-suite", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing reject-red-suite")
     h.require_contains("require-green", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing require-green")
@@ -6370,6 +6377,218 @@ def run_evals(root: Path) -> int:
     else:
         h.pass_msg("emperor queue peer forwards --reject-multi-wip")
     h.pass_msg("queue.py thin twins + multi-WIP HARD-GATE")
+
+    # ---- steal consent-protocol HARD-GATE (Steal Chain vertical depth) ----
+    h.section("steal-consent HARD-GATE")
+    h.need("scripts/lib/consent.py")
+    h.need("scripts/consent.sh")
+    h.need("scripts/consent.ps1")
+    h.need("scripts/steal-consent.sh")
+    h.need("scripts/steal-consent.ps1")
+    h.need("evals/fixtures/steal-consent/task-no-consent/ledger.md")
+    h.need("evals/fixtures/steal-consent/task-header-only/ledger.md")
+    h.need("evals/fixtures/steal-consent/task-ok/ledger.md")
+    h.need("evals/fixtures/steal-consent/consent-missing.md")
+    h.need("evals/fixtures/steal-consent/consent-header-only.md")
+    h.need("evals/fixtures/steal-consent/consent-ok.md")
+    h.need("evals/fixtures/steal-consent/consent-solo.md")
+    h.bash_n("scripts/consent.sh", "consent.sh syntax")
+    h.bash_n("scripts/steal-consent.sh", "steal-consent.sh syntax")
+    h.py_compile("scripts/lib/consent.py", "consent.py compile")
+    h.require_contains(
+        "lib/consent.py",
+        "scripts/consent.sh",
+        "consent.sh thin twin missing consent.py",
+    )
+    h.require_contains(
+        "lib/consent.py",
+        "scripts/consent.ps1",
+        "consent.ps1 thin twin missing consent.py",
+    )
+    h.require_contains(
+        "consent",
+        "scripts/emperor",
+        "emperor bash peer missing consent",
+    )
+    h.require_contains(
+        "steal-consent",
+        "scripts/emperor",
+        "emperor bash peer missing steal-consent",
+    )
+    h.require_contains(
+        "'consent'",
+        "scripts/emperor.ps1",
+        "emperor.ps1 missing consent",
+    )
+    h.require_contains(
+        "consent",
+        "scripts/emperor.cmd",
+        "emperor.cmd missing consent",
+    )
+    h.require_contains(
+        "consent",
+        "scripts/emperor.zsh",
+        "emperor.zsh missing consent",
+    )
+    h.require_contains(
+        "consent.py",
+        "scripts/lib/gate.py",
+        "gate.py does not call consent.py",
+    )
+    h.require_contains(
+        "--reject-no-consent",
+        "scripts/lib/consent.py",
+        "consent.py missing --reject-no-consent",
+    )
+    h.require_contains(
+        "--check-consent",
+        "scripts/lib/consent.py",
+        "consent.py missing --check-consent",
+    )
+    h.require_contains(
+        "HARD-GATE",
+        "chains/steal-chain/consent-protocol.md",
+        "consent-protocol.md missing HARD-GATE mechanical pointer",
+    )
+    h.require_contains(
+        "CONSENT:",
+        "chains/steal-chain/consent-protocol.md",
+        "consent-protocol.md missing CONSENT: doctrine",
+    )
+    h.require_contains(
+        "--reject-no-consent",
+        "skills/emperor-dispatch/SKILL.md",
+        "emperor-dispatch skill missing --reject-no-consent",
+    )
+    h.require_contains(
+        "steal-consent",
+        "evals/evals.json",
+        "evals.json missing steal-consent case",
+    )
+    h.require_contains(
+        "consent-protocol",
+        "references/mechanical-gates.md",
+        "mechanical-gates missing consent-protocol row",
+    )
+    h.require_contains(
+        "--reject-no-consent",
+        "references/software-factory.md",
+        "software-factory missing --reject-no-consent",
+    )
+    h.require_contains(
+        "reject-no-consent",
+        "evals/bakeoff.md",
+        "bakeoff.md missing consent reject-no-consent inventory",
+    )
+    _, card = h.run_py("scripts/lib/consent.py")
+    if "checklist=yes" not in card:
+        h.fail_msg("consent card missing checklist=yes")
+    elif "NO_DISPATCH_WITHOUT_CONSENT_RECORD" not in card:
+        h.fail_msg("consent card missing iron law token")
+    else:
+        h.pass_msg("consent prints CONSENT card")
+    rc, reject = h.run_py("scripts/lib/consent.py", "--reject-no-consent")
+    if rc == 0:
+        h.fail_msg("consent --reject-no-consent should exit non-zero")
+    elif "REJECT NO CONSENT" not in reject and "HARD-GATE" not in reject:
+        h.fail_msg("consent --reject-no-consent missing REJECT text")
+    else:
+        h.pass_msg("consent --reject-no-consent hard-gates")
+    for name, needle in (
+        ("consent-missing.md", r"CONSENT|consent"),
+        ("consent-header-only.md", r"assignment|CONSENT"),
+        ("task-no-consent", r"CONSENT|consent"),
+        ("task-header-only", r"assignment|CONSENT"),
+    ):
+        target = root / "evals/fixtures/steal-consent" / name
+        rc, err = h.run_py(
+            "scripts/lib/consent.py",
+            "--check-consent",
+            str(target),
+        )
+        if rc == 0:
+            h.fail_msg(f"steal-consent {name} should fail check-consent")
+        elif not h.grep_out(err, needle):
+            h.fail_msg(f"steal-consent {name} should mention {needle}: {err}")
+        else:
+            h.pass_msg(f"steal-consent {name} rejected")
+    for name in ("consent-ok.md", "consent-solo.md", "task-ok"):
+        rc, _ = h.run_py(
+            "scripts/lib/consent.py",
+            "--check-consent",
+            str(root / "evals/fixtures/steal-consent" / name),
+        )
+        if rc != 0:
+            h.fail_msg(f"steal-consent {name} should pass check-consent")
+        else:
+            h.pass_msg(f"steal-consent {name} accepted")
+    # CI env standing
+    rc, _ = h.run(
+        [
+            "python3",
+            str(root / "scripts/lib/consent.py"),
+            "--check-consent",
+            str(root / "evals/fixtures/steal-consent/task-no-consent"),
+        ],
+        env={"EMPEROR_CONSENT_AGENTS": "codex"},
+    )
+    if rc != 0:
+        h.fail_msg("EMPEROR_CONSENT_AGENTS=codex should cover task-no-consent")
+    else:
+        h.pass_msg("EMPEROR_CONSENT_AGENTS covers enlisted agent")
+    rc, err = h.run(
+        [
+            "python3",
+            str(root / "scripts/lib/consent.py"),
+            "--check-consent",
+            str(root / "evals/fixtures/steal-consent/task-no-consent"),
+        ],
+        env={"EMPEROR_CONSENT_AGENTS": "none"},
+    )
+    if rc == 0:
+        h.fail_msg("EMPEROR_CONSENT_AGENTS=none with steal should fail")
+    else:
+        h.pass_msg("EMPEROR_CONSENT_AGENTS=none rejects steal")
+    # G4 wiring
+    tmp = Path(tempfile.mkdtemp())
+    try:
+        import shutil as _shutil
+        for name, expect_fail in (("task-no-consent", True), ("task-ok", False)):
+            src = root / "evals/fixtures/steal-consent" / name
+            dst = tmp / name
+            _shutil.copytree(src, dst)
+            (dst / ".gates").mkdir(exist_ok=True)
+            stamp = _utc_stamp()
+            for g in ("g0", "g1", "g2", "g3"):
+                (dst / ".gates" / g).write_text(stamp + "\n", encoding="utf-8")
+            rc, out = h.run_sh("scripts/gate.sh", "g4", str(dst))
+            if expect_fail:
+                if rc == 0:
+                    h.fail_msg(f"G4 allowed no-consent {name}")
+                else:
+                    h.pass_msg(f"G4 rejects no-consent {name}")
+            else:
+                if rc != 0:
+                    h.fail_msg(f"G4 should accept consented {name}: {out}")
+                else:
+                    h.pass_msg(f"G4 accepts consented {name}")
+    finally:
+        shutil.rmtree(tmp, ignore_errors=True)
+    _, sh_card = h.run_sh("scripts/consent.sh")
+    if "checklist=yes" not in sh_card:
+        h.fail_msg("consent.sh should print CONSENT card")
+    else:
+        h.pass_msg("consent.sh thin twin prints card")
+    _, emp_out = h.run_sh(
+        "scripts/emperor",
+        "consent",
+        "--reject-no-consent",
+    )
+    if "REJECT NO CONSENT" not in emp_out:
+        h.fail_msg("emperor consent --reject-no-consent should forward REJECT")
+    else:
+        h.pass_msg("emperor consent peer forwards --reject-no-consent")
+    h.pass_msg("consent.py thin twins + consent-protocol HARD-GATE")
 
     # root-cause tracing HARD-GATE
     h.section("root-cause tracing HARD-GATE leaf")

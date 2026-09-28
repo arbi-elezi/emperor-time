@@ -11,13 +11,14 @@ A model writing "G4 PASS" in markdown is not a gate. An exit code is.
 | `scripts/gate.sh g1` | G1 | no acceptance criteria |
 | `scripts/gate.sh g2` | G2 | non-trivial task missing work-order or Expected: lines |
 | `scripts/gate.sh g3` | G3 | impact-map paths missing from `git diff --stat` (when in a git repo) |
-| `scripts/gate.sh g4` | G4 | incomplete eight-count critique (via `critique.py`); missing CLAIM AUDIT / unfinished HYPOTHESIS\|TESTED (via `claim_audit.py`); steal unquarantined (via `quarantine.py`); VERIFIED without quote |
+| `scripts/gate.sh g4` | G4 | incomplete eight-count critique (via `critique.py`); missing CLAIM AUDIT / unfinished HYPOTHESIS\|TESTED (via `claim_audit.py`); steal no-consent (via `consent.py`); steal unquarantined (via `quarantine.py`); VERIFIED without quote |
 | `scripts/gate.sh g5` | G5 | verdict soft/missing citations / FAIL delivered; empty or theater Breach Register rows (via `verdict.py`) |
 | `scripts/review-pack.sh` (Python core) | G4 hetero | cannot emit isolated pack |
 | `scripts/finish.sh` (Python core) | finish menu / suite-green | red suite / missing DONE probes (`finish.py --reject-red-suite` / `--require-green`; no menu until green) |
 | `scripts/grill.sh` (Python core) | grill path taxonomy | path type missing / stage skipped / impl before stage approval (`grill.py --reject-no-path` / `--reject-stage-skip` / `--reject-impl-before-approval` / `--check-path`) |
 | `scripts/diagnose.sh` (Python core) | diagnose report skeleton | missing report / theater problem / missing sessions / uncited findings (`diagnose.py --reject-no-report` / `--check-report`) |
 | `scripts/queue.sh` (Python core) | queue multi-WIP | >1 in-progress / active `[~]` (`queue.py --reject-multi-wip` / `--check-wip`) |
+| `scripts/consent.sh` (Python core) | Steal consent-protocol | missing CONSENT / header theater / uncovered enlisted agent (`consent.py --reject-no-consent` / `--check-consent`) |
 | `scripts/forge.sh` (Python core) | G5 deliver / consent PR | no consent; DONE fail; gh missing → DRY |
 | `scripts/eval.sh` (Python core) | harness health | an eval fixture fails |
 
@@ -31,10 +32,13 @@ header **and** Task-N structure (`--reject-tbd` / `--reject-no-tasks` /
 presence ≠ eight-count completeness. G4 calls `claim_audit.py` for the
 Judgment claim-audit sweep (`--reject-unaudited` / `--check-audit`; thin
 `claim-audit.sh` / `claim-audit.ps1` + `judgment-audit` alias / `emperor
-claim-audit`). G4 also calls `quarantine.py` for Steal quarantine admission
-(`--reject-unquarantined` / `--check-quarantine`; thin `quarantine.sh` /
-`quarantine.ps1` + `steal-quarantine` alias / `emperor quarantine`) —
-vacuous PASS when no worker runs.
+claim-audit`). G4 also calls `consent.py` for Steal consent-protocol
+(`--reject-no-consent` / `--check-consent`; thin `consent.sh` /
+`consent.ps1` + `steal-consent` alias / `emperor consent`) — vacuous PASS
+when no worker runs. G4 also calls `quarantine.py` for Steal quarantine
+admission (`--reject-unquarantined` / `--check-quarantine`; thin
+`quarantine.sh` / `quarantine.ps1` + `steal-quarantine` alias /
+`emperor quarantine`) — vacuous PASS when no worker runs.
 G5 calls `verdict.py` for Judgment verdict + Breach Register honesty
 (`--reject-hidden-breach` / `--check-verdict`; thin `verdict.sh` /
 `verdict.ps1` + `breach` alias / `emperor verdict`) — PASS-substring +
@@ -54,6 +58,8 @@ Diagnose Python core: `scripts/lib/diagnose.py` owns the diagnosing checklist ca
 
 Queue Python core: `scripts/lib/queue.py` owns the work picker **and** multi-WIP HARD-GATE (`--reject-multi-wip` / `--check-wip`; thin `queue.sh` / `queue.ps1`) — WIP=1 on `[~]` active lines; `queue next` refuse alone is soft theater when agents skip the script.
 
+Consent Python core: `scripts/lib/consent.py` owns Steal consent-protocol HARD-GATE (`--reject-no-consent` / `--check-consent`; thin `consent.sh` / `consent.ps1` + `steal-consent` alias / `emperor consent`) — CONSENT-header theater without `agent → role` is soft; forge `EMPEROR_CONSENT_PR` is not Steal enlistment consent.
+
 Forge Python core: `scripts/lib/forge.py` owns consent + DONE gate + title/G1 PR body (thin `forge.sh` / `forge.ps1`). Closes bash↔ps1 drift on title extraction and ledger dump.
 
 Harness health Python core: `scripts/lib/eval.py` owns the structural assertion
@@ -66,7 +72,7 @@ suite. Thin twins: `scripts/eval.sh`, `scripts/eval.ps1` (same exits 0/1).
 - Vow of Phases → gate order; `gate.sh g4` refuses if g2 never passed
 - Vow of the Ledger → missing ledger is a hard fail
 - Vow of Critique → G4 critique eight-count HARD-GATE (all eight axes + Checked evidence; file presence alone fails)
-- Vow of Consent → Steal/Jail scripts refuse without a CONSENT line in the ledger
+- Vow of Consent → Steal consent-protocol HARD-GATE (CONSENT + agent → role / EMPEROR_CONSENT_AGENTS / solo; G4 calls consent.py) + Jail pin+consent; forge PR still separate
 - Vow of Worthy Spend → lifespan section with empty "bought" is a warning, not a pass decoration
 - Verdict / Stake of Retribution → G5 verdict + Breach Register HARD-GATE (deliverable Verdict with citations; no empty/theater Stake rows)
 
