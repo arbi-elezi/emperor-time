@@ -467,7 +467,9 @@
         "ironspring",
         "gst",
         "smalltalk",
-        "gnu-smalltalk"
+        "gnu-smalltalk",
+        "postscript",
+        "ghostscript"
       ],
       "tags": [
         "archaeology",
@@ -559,7 +561,9 @@
         "ironspring",
         "gst",
         "smalltalk",
-        "gnu-smalltalk"
+        "gnu-smalltalk",
+        "postscript",
+        "ghostscript"
       ],
       "target": "skills/emperor-excavate/SKILL.md",
       "reason": "lost/ancient/foreign tree — excavate before modernizing"

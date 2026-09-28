@@ -1,0 +1,9 @@
+== identify evals/fixtures/lost-ps ==
+-- extensions --
+      2 md
+      1 txt
+      1 ps
+-- named fossils --
+1 *.ps
+-- shebangs --
+identify: done (read-only)
