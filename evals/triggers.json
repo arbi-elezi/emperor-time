@@ -683,7 +683,11 @@
         ".wav",
         "ffprobe",
         "ffmpeg",
-        "wav"
+        "wav",
+        ".jpeg",
+        ".jpg",
+        "jpeg",
+        "jpg"
       ],
       "tags": [
         "archaeology",
@@ -968,7 +972,11 @@
         ".wav",
         "ffprobe",
         "ffmpeg",
-        "wav"
+        "wav",
+        ".jpeg",
+        ".jpg",
+        "jpeg",
+        "jpg"
       ],
       "target": "skills/emperor-excavate/SKILL.md",
       "reason": "lost/ancient/foreign tree — excavate before modernizing"
