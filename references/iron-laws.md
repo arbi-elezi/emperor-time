@@ -10,7 +10,7 @@ Load before writing production code. These are restrictions, not slogans.
 6. **Unchanged retry is a breach.** Change the hypothesis or stop.
 7. **Script is the gate.** `scripts/gate.sh` / `scripts/lib/gate.py` exit 0, quoted. Markdown PASS is decoration.
 8. **Work-order or it is not a plan.** Zero-context Task N. No TBD.
-9. **Reviewer isolation.** Hetero-critique receives the review pack only.
+9. **Reviewer isolation.** Hetero-critique receives the review pack only. Mechanical: `scripts/emperor review-pack --check-isolation` / `--reject-unisolated` / `--reject-author-diary`.
 10. **Resume from disk.** `.emperor/state.md` beats chat memory.
 11. **Pin + CONSENT + trial** before a captured skill may fire.
 12. **No credentials in this process.** Sign-in is the client's terminal.

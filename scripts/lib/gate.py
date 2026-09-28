@@ -16,6 +16,8 @@ G4 also delegates Steal quarantine admission to quarantine.py
 (vacuous PASS when no worker runs / no steal markers).
 G4 also delegates Steal consent-protocol to consent.py
 (vacuous PASS when no worker runs / no steal markers).
+G4 also delegates hetero-critique isolation to review_pack.py
+(vacuous PASS when no review-pack / no hetero markers).
 G5 delegates verdict + Breach Register honesty to verdict.py
 (PASS substring + header-only theater is not enough).
 """
@@ -135,6 +137,16 @@ def _run_consent(gate: str, task: Path) -> None:
         _fail(gate, "steal consent (consent.py)")
 
 
+def _run_review_isolation(gate: str, task: Path) -> None:
+    py = _root() / "scripts" / "lib" / "review_pack.py"
+    proc = subprocess.run(
+        [sys.executable, str(py), "--check-isolation", str(task)],
+        check=False,
+    )
+    if proc.returncode != 0:
+        _fail(gate, "hetero-critique isolation (review_pack.py)")
+
+
 def _run_verdict(gate: str, task: Path) -> None:
     py = _root() / "scripts" / "lib" / "verdict.py"
     proc = subprocess.run(
@@ -242,6 +254,9 @@ def run_gate(gate: str, task: Path) -> None:
         # Steal quarantine: runs layout + CONJECTURE start + ADMITTED|REJECTED.
         # Vacuous PASS when no worker runs / steal markers.
         _run_quarantine(gate, task)
+        # Hetero-critique isolation: review-pack has no author diary / CoT.
+        # Vacuous PASS when no review-pack / no hetero markers.
+        _run_review_isolation(gate, task)
         if claims.is_file():
             text = claims.read_text(encoding="utf-8", errors="replace")
             for line in text.splitlines():

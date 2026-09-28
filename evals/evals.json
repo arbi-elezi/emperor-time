@@ -87,6 +87,11 @@
       "id": "heal-and-verify-hard-gate",
       "type": "behavioral-fixture",
       "expect": "heal_verify.py --reject-no-triad / --reject-no-postmortem / --check-heal refuses missing triad or postmortem when heal activity present; accepts triad+postmortem and vacuous non-heal"
+    },
+    {
+      "id": "hetero-critique-isolation-hard-gate",
+      "type": "behavioral-fixture",
+      "expect": "review_pack.py --reject-unisolated / --reject-author-diary / --check-isolation refuses missing pack when hetero claimed, forbidden diary/out.txt/notes files, and author-diary content; accepts clean pack and vacuous non-hetero; G4 calls check-isolation"
     }
   ]
 }

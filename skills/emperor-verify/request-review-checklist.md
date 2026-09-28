@@ -10,7 +10,7 @@
 **Contract:** before merge to main, after each major feature, and after each subagent-driven task, complete the request-review checklist. Confirm WHEN. Resolve SHAs. Emit an isolated pack (no author CoT). Dispatch a fresh reviewer. Act on Critical/Important before proceed. Emperor Time stays the orchestrator via emperor-verify + Judgment; do **not** announce or load whole `requesting-code-review`.
 
 Mechanical card: `scripts/emperor review` (Python: `scripts/lib/review_req.py`).
-Pack helper (Step 3): `scripts/emperor review-pack <task-dir> <base> <head>` — Python core `scripts/lib/review_pack.py` (thin `review-pack.sh` / `review-pack.ps1`).
+Pack helper (Step 3): `scripts/emperor review-pack <task-dir> <base> <head>` — Python core `scripts/lib/review_pack.py` (thin `review-pack.sh` / `review-pack.ps1`). Isolation HARD-GATE: `--check-isolation` / `--reject-unisolated` / `--reject-author-diary` (G4 calls check when pack present).
 Companion leaf (receive side): `skills/emperor-verify/receive-review-checklist.md` / `emperor receive`.
 
 ## HARD-GATE — Requested review before proceed
@@ -62,7 +62,7 @@ Ledger both SHAs. The product under review is the range, not the session.
 scripts/emperor review-pack <task-dir> "$BASE_SHA" "$HEAD_SHA"
 ```
 
-Expect `review-pack/meta.md`, diff, criteria. No author chain-of-thought.
+Expect `review-pack/meta.md`, diff, criteria. No author chain-of-thought. Then `scripts/emperor review-pack --check-isolation <task-dir>` must exit 0.
 The pack is the only context the reviewer should need beyond DESCRIPTION + PLAN.
 
 ### Step 4: DISPATCH — Fresh reviewer context
@@ -103,7 +103,7 @@ Every critic finding starts CONJECTURE — reproduce before acting
 |------|-----|---------|---------|
 | 1. WHEN | Name the trigger | Trigger ledgered | G4 / finish / major feature |
 | 2. SHAS | Bound the product | BASE + HEAD ledgered | git merge-base |
-| 3. PACK | Isolated; no CoT | review-pack/ present | `emperor review-pack` |
+| 3. PACK | Isolated; no CoT | review-pack/ present + `--check-isolation` exit 0 | `emperor review-pack` |
 | 4. DISPATCH | Fresh context | Reviewer returns Strengths/Issues/Assessment | hetero-critique |
 | 5. ACT | Severity gates | Critical+Important cleared or evidenced pushback | claim ledger / G4 |
 
@@ -128,7 +128,7 @@ Every critic finding starts CONJECTURE — reproduce before acting
 
 - `skills/emperor-verify/SKILL.md` — VERIFY entry; MUST open this leaf
 - `scripts/lib/review_req.py` — mechanical checklist card
-- `scripts/lib/review_pack.py` — Step 3 pack emitter (thin `review-pack.sh` / `review-pack.ps1`)
+- `scripts/lib/review_pack.py` — Step 3 pack emitter + isolation HARD-GATE (thin `review-pack.sh` / `review-pack.ps1`)
 - `chains/judgment-chain/hetero-critique.md` — dispatch + verify findings
 - `chains/judgment-chain/gatekeeping.md` — G4 sequence
 - `chains/chain-jail/extract-aspect.md` — "requesting-code-review → When/How/Act"

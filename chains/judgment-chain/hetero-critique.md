@@ -86,3 +86,27 @@ exists to stop. Every acted-on finding carries your verification evidence.
 - **Only same-family agents available** → still worth running (fresh context
   breaks *some* correlation); mark the record `same-family critic —
   decorrelation partial`.
+
+## HARD-GATE (mechanical)
+
+Doctrine above is the law. The lock is an exit code:
+
+```bash
+scripts/emperor review-pack --check-isolation <task-dir>   # or pack dir
+scripts/emperor review-pack --reject-unisolated            # always fails
+scripts/emperor review-pack --reject-author-diary          # always fails
+scripts/emperor review-pack <task-dir> [base] [head]       # emit clean pack
+```
+
+Python core: `scripts/lib/review_pack.py`. Thin twins: `review-pack.sh` /
+`review-pack.ps1`. G4 calls `--check-isolation` when review-pack / hetero
+activity is present. Fails when:
+
+1. Hetero / isolation claimed but `review-pack/` missing
+2. Pack contains forbidden files (self-critique.md, critique.md, diary, CoT,
+   worker `out.txt`, design/notes rationalizations, or any non-allowlist name)
+3. Allowed files carry author-diary / self-critique content markers
+
+Accepts: clean pack (meta + criteria + diff + claims only); vacuous PASS when
+no pack and no hetero signal. Iron law 9 — examiner receives the review pack only.
+
