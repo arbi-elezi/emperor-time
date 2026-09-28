@@ -655,7 +655,11 @@
         "docx",
         "pydocx",
         "ooxml-word",
-        ".docx"
+        ".docx",
+        "xlsx",
+        "pyxlsx",
+        "ooxml-excel",
+        ".xlsx"
       ],
       "tags": [
         "archaeology",
@@ -912,7 +916,11 @@
         "docx",
         "pydocx",
         "ooxml-word",
-        ".docx"
+        ".docx",
+        "xlsx",
+        "pyxlsx",
+        "ooxml-excel",
+        ".xlsx"
       ],
       "target": "skills/emperor-excavate/SKILL.md",
       "reason": "lost/ancient/foreign tree — excavate before modernizing"

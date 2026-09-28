@@ -1,0 +1,9 @@
+== identify evals/fixtures/lost-xlsx ==
+-- extensions --
+      2 md
+      1 xlsx
+      1 txt
+-- named fossils --
+1 *.xlsx
+-- shebangs --
+identify: done (read-only)
