@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.4.66
+- Archaeology PostScript leaf: `evals/fixtures/lost-ps/HELLO.PS` + identify smoke; GPL Ghostscript 10.05.1 boot probe VERIFIED (`gs -q -dNOPAUSE -dBATCH -sDEVICE=nullpage HELLO.PS` → `EMPEROR-TIME-PS-PROBE-OK`); dialect labels honest (CONJECTURE / UNVERIFIABLE where due); identify fossils `*.ps` + `*.eps`; bare `.ps` refused as route tag (short-extension collision with `.ps1`); bare `gs` refused as route tag (two-letter collision)
+- Jail pin `references/archaeology-postscript-manual.md` — Ghostscript User Guide Invoking Ghostscript / `gs [options] {filename …}`
+- Catalog + SKILL.md + archaeology.md + language-agnostic.md link the twenty-fifth pin alongside Pascal, ASM, COBOL, Fortran, VHDL, Ada, Forth, Common Lisp, Prolog, Tcl, Erlang, REXX, Modula-2, Algol 68, ALGOL 60, Algol W, Icon, Oberon, SNOBOL4, Simula, APL, BCPL, PL/I, and Smalltalk; route triggers gain `ghostscript` / `postscript` (bare `.ps` and bare `gs` refused); eval locks `*.ps` identify on lost-ps
+- Plugin, marketplace, and SKILL.md at 0.4.66
+
 ## 0.4.65
 - Archaeology Smalltalk leaf: `evals/fixtures/lost-st/HELLO.ST` + identify smoke; GNU Smalltalk 3.2.5 boot probe VERIFIED (`./gst -q HELLO.ST` → `EMPEROR-TIME-ST-PROBE-OK`); dialect labels honest (CONJECTURE / UNVERIFIABLE where due); identify fossils `*.st` only; bare `.st` refused as route tag (short-extension collision)
 - Jail pin `references/archaeology-smalltalk-manual.md` — GNU Smalltalk User's Guide Invocation / `gst [ flags … ] [ file … ]`
