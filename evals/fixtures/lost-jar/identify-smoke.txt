@@ -1,0 +1,9 @@
+== identify evals/fixtures/lost-jar ==
+-- extensions --
+      2 md
+      1 txt
+      1 jar
+-- named fossils --
+1 *.jar
+-- shebangs --
+identify: done (read-only)

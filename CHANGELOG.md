@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.4.108
+
+- Archaeology JAR / stdlib zipfile-on-`.jar` Jail pin: `evals/fixtures/lost-jar/` + `references/archaeology-jar-manual.md` (CPython stdlib `zipfile` on HELLO.jar → EMPEROR-TIME-JAR-PROBE-OK; zero new apt; Debian unzip/zip/openjdk REJECTED as leaf owner)
+- identify/route/eval/honesty/bakeoff/catalog lockstep; fossils `*.jar`; route tags `jar` / `pyjar` / `java-archive` / `.jar`; does not steal plain `*.zip` or `*.whl`
+- Plugin, marketplace, and SKILL.md at 0.4.108
+
 ## 0.4.107
 
 - Archaeology wheel / stdlib zipfile-on-`.whl` Jail pin: `evals/fixtures/lost-whl/` + `references/archaeology-whl-manual.md` (CPython stdlib `zipfile` on HELLO.whl → EMPEROR-TIME-WHL-PROBE-OK; zero new apt; Debian unzip/zip REJECTED as leaf owner)
