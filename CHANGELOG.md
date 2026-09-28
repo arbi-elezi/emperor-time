@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.4.96
+
+- Archaeology TOML leaf: `evals/fixtures/lost-toml/HELLO.toml` + identify smoke; kislyuk/tomlq 3.4.3 boot probe VERIFIED (`tomlq -r .probe HELLO.toml` → `EMPEROR-TIME-TOMLQ-PROBE-OK`); dialect labels honest (CONJECTURE / UNVERIFIABLE where due); identify fossils `*.toml`; bare `toml` / `tomlq` / `kislyuk-tomlq` / `tomlq3.4` allowed as route tags; bare `.toml` allowed with extension-boundary matching; prefer `tomlq` / `kislyuk-tomlq` / `tomlq3.4` / `toml` / `.toml`; Debian `yq` 3.4.3-2 already on box from YAML leaf ships `/usr/bin/tomlq` — **zero new Apt Worthy Spend** this leaf; TOML document leaf after YAML; treats TOML as peer fossil not house twin language; TeX/LaTeX still deferred; C++ still deferred; tidy/HTML still deferred; CLIPS / embeddings still deferred
+- Jail pin `references/archaeology-toml-manual.md` — yq documentation TOML support (tomlq …)
+- Catalog + SKILL.md + archaeology.md + language-agnostic.md link the fifty-fifth pin alongside Pascal, ASM, COBOL, Fortran, VHDL, Ada, Forth, Common Lisp, Prolog, Tcl, Erlang, REXX, Modula-2, Algol 68, ALGOL 60, Algol W, Icon, Oberon, SNOBOL4, Simula, APL, BCPL, PL/I, Smalltalk, PostScript, BASIC, Scheme, AWK, sed, m4, ed, Make, dc, lex, yacc, roff, Perl, bc, Expect, Lua, Ruby, Go, Rust, C, JavaScript, Python, TypeScript, Bash, PHP, SQL/SQLite, jq, XSLT, XML, and YAML; route triggers gain `tomlq` / `kislyuk-tomlq` / `tomlq3.4` / `toml` / `.toml`; eval locks `*.toml` identify on lost-toml
+- Plugin, marketplace, and SKILL.md at 0.4.96
+
 ## 0.4.95
 
 - Archaeology YAML leaf: `evals/fixtures/lost-yaml/HELLO.yaml` + identify smoke; kislyuk/yq 3.4.3 boot probe VERIFIED (`yq -r .probe HELLO.yaml` → `EMPEROR-TIME-YQ-PROBE-OK`); dialect labels honest (CONJECTURE / UNVERIFIABLE where due); identify fossils `*.yaml` / `*.yml`; bare `yaml` / `yq` / `kislyuk-yq` / `yq3.4` allowed as route tags; bare `.yaml` / `.yml` allowed with extension-boundary matching; prefer `yq` / `kislyuk-yq` / `yq3.4` / `yaml` / `.yaml` / `.yml`; Debian package `yq` 3.4.3-2 apt-installed this leaf (~267 kB archive with python3-yaml siblings; Installed-Size sum ~1063 kB; jq already on box); YAML document leaf after jq/XML; treats YAML as peer fossil not house twin language; TeX/LaTeX still deferred; C++ still deferred; CLIPS / embeddings still deferred

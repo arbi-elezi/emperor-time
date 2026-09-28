@@ -374,6 +374,7 @@ def run_evals(root: Path) -> int:
     h.require_contains("*.xml", "scripts/lib/identify.py", "identify.py missing *.xml fossil")
     h.require_contains("*.yaml", "scripts/lib/identify.py", "identify.py missing *.yaml fossil")
     h.require_contains("*.yml", "scripts/lib/identify.py", "identify.py missing *.yml fossil")
+    h.require_contains("*.toml", "scripts/lib/identify.py", "identify.py missing *.toml fossil")
     h.require_contains(
         "scripts/lib/identify.py",
         "references/archaeology.md",
@@ -577,6 +578,11 @@ def run_evals(root: Path) -> int:
             ("yaml HELLO.yaml", "emperor-excavate", "route yaml → excavate"),
             ("hello.yaml", "emperor-excavate", "route hello.yaml → excavate"),
             ("hello.yml", "emperor-excavate", "route hello.yml → excavate"),
+            ("tomlq HELLO.toml", "emperor-excavate", "route tomlq → excavate"),
+            ("kislyuk-tomlq HELLO.toml", "emperor-excavate", "route kislyuk-tomlq → excavate"),
+            ("tomlq3.4 HELLO.toml", "emperor-excavate", "route tomlq3.4 → excavate"),
+            ("toml HELLO.toml", "emperor-excavate", "route toml → excavate"),
+            ("hello.toml", "emperor-excavate", "route hello.toml → excavate"),
             ("queue next", "emperor-queue", "route queue next → queue"),
             ("blocked task", "emperor-queue", "route blocked task → queue"),
             ("red build", "emperor-heal", "route red build → heal"),
@@ -1060,6 +1066,13 @@ def run_evals(root: Path) -> int:
             r"[0-9]+ \*\.yaml",
             ["references/archaeology-yaml-manual.md"],
         ),
+        (
+            "lost-toml identify finds *.toml",
+            "lost-toml",
+            "HELLO.toml",
+            r"[0-9]+ \*\.toml",
+            ["references/archaeology-toml-manual.md"],
+        ),
     ]
     # The loop above was messy — clear fail state not affected; rewrite cleanly below by
     # only running the clean fixtures list (sections already printed wrongly once).
@@ -1392,6 +1405,11 @@ def run_evals(root: Path) -> int:
     h.require_contains("yaml", "evals/triggers.json", "triggers missing yaml excavate pattern")
     h.require_contains(".yaml", "evals/triggers.json", "triggers missing .yaml excavate pattern")
     h.require_contains(".yml", "evals/triggers.json", "triggers missing .yml excavate pattern")
+    h.require_contains("tomlq", "evals/triggers.json", "triggers missing tomlq excavate pattern")
+    h.require_contains("kislyuk-tomlq", "evals/triggers.json", "triggers missing kislyuk-tomlq excavate pattern")
+    h.require_contains("tomlq3.4", "evals/triggers.json", "triggers missing tomlq3.4 excavate pattern")
+    h.require_contains("toml", "evals/triggers.json", "triggers missing toml excavate pattern")
+    h.require_contains(".toml", "evals/triggers.json", "triggers missing .toml excavate pattern")
     h.require_contains(".js", "evals/triggers.json", "triggers missing .js excavate pattern")
     _, rout_py = h.run_py("scripts/lib/route.py", "finish the branch")
     if "emperor-forge" not in rout_py:
@@ -1962,6 +1980,25 @@ def run_evals(root: Path) -> int:
         h.fail_msg("route matches(.yml, hello.yml) must be True")
     if _m(".yml", "hello.ymlfoo"):
         h.fail_msg("route matches(.yml, hello.ymlfoo) must be False after extension-boundary")
+    _, rout_tomlq = h.run_py("scripts/lib/route.py", "tomlq HELLO.toml")
+    if "emperor-excavate" not in rout_tomlq:
+        h.fail_msg("route.py tomlq → excavate")
+    _, rout_kislyuk_tomlq = h.run_py("scripts/lib/route.py", "kislyuk-tomlq HELLO.toml")
+    if "emperor-excavate" not in rout_kislyuk_tomlq:
+        h.fail_msg("route.py kislyuk-tomlq → excavate")
+    _, rout_tomlq34 = h.run_py("scripts/lib/route.py", "tomlq3.4 HELLO.toml")
+    if "emperor-excavate" not in rout_tomlq34:
+        h.fail_msg("route.py tomlq3.4 → excavate")
+    _, rout_toml = h.run_py("scripts/lib/route.py", "toml HELLO.toml")
+    if "emperor-excavate" not in rout_toml:
+        h.fail_msg("route.py toml → excavate")
+    _, rout_hello_toml = h.run_py("scripts/lib/route.py", "hello.toml")
+    if "emperor-excavate" not in rout_hello_toml:
+        h.fail_msg("route.py hello.toml → excavate")
+    if not _m(".toml", "hello.toml"):
+        h.fail_msg("route matches(.toml, hello.toml) must be True")
+    if _m(".toml", "hello.tomlfoo"):
+        h.fail_msg("route matches(.toml, hello.tomlfoo) must be False after extension-boundary")
     # bare .l must not be enough alone when colliding; .lisp already routes via .lisp
     _, rout_regina = h.run_py("scripts/lib/route.py", "regina HELLO.REX")
     if "emperor-excavate" not in rout_regina:
@@ -3508,8 +3545,10 @@ def run_evals(root: Path) -> int:
     h.require_contains("0.4.93", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing 0.4.93 tip")
     h.require_contains("0.4.93", "CHANGELOG.md", "CHANGELOG missing 0.4.93")
     h.require_contains("0.4.95", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing 0.4.95 tip")
-    h.require_contains("0.4.95", ".claude-plugin/plugin.json", "plugin.json not at 0.4.95")
     h.require_contains("0.4.95", "CHANGELOG.md", "CHANGELOG missing 0.4.95")
+    h.require_contains("0.4.96", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing 0.4.96 tip")
+    h.require_contains("0.4.96", ".claude-plugin/plugin.json", "plugin.json not at 0.4.96")
+    h.require_contains("0.4.96", "CHANGELOG.md", "CHANGELOG missing 0.4.96")
 
     # session-discovery
     h.section("session-discovery locate HARD-GATE leaf")
