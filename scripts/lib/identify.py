@@ -99,6 +99,8 @@ FOSSIL_PATTERNS: tuple[str, ...] = (
     "*.yaml",
     "*.yml",
     "*.toml",
+    "*.html",
+    "*.htm",
     "*.l",
     "*.lex",
     "*.y",

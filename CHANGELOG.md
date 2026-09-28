@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.4.97
+
+- Archaeology HTML leaf: `evals/fixtures/lost-html/HELLO.html` + identify smoke; HTML Tidy 5.8.0 boot probe VERIFIED (`tidy -q -utf8 --show-body-only yes -asxml HELLO.html` → body containing `EMPEROR-TIME-TIDY-PROBE-OK`); dialect labels honest (CONJECTURE / UNVERIFIABLE where due); identify fossils `*.html` / `*.htm`; bare `html` / `tidy` / `html-tidy` / `tidy5.8` allowed as route tags; bare `.html` / `.htm` allowed with extension-boundary matching (`.htm` does not prefix-hit `.html`); prefer `tidy` / `html-tidy` / `tidy5.8` / `html` / `.html` / `.htm`; Debian packages `tidy` 2:5.8.0-2 + `libtidy58` 2:5.8.0-2 apt-installed this leaf (~252 kB archives; Installed-Size sum ~1170 kB / ~1198 kB disk); HTML document leaf after XML/TOML; treats HTML as peer fossil not house twin language; TeX/LaTeX still deferred; C++ still deferred; csvkit/CSV still deferred; CLIPS / embeddings still deferred
+- Jail pin `references/archaeology-html-manual.md` — HTML Tidy documentation Running Tidy in a Terminal (CLI …)
+- Catalog + SKILL.md + archaeology.md + language-agnostic.md link the fifty-sixth pin alongside Pascal, ASM, COBOL, Fortran, VHDL, Ada, Forth, Common Lisp, Prolog, Tcl, Erlang, REXX, Modula-2, Algol 68, ALGOL 60, Algol W, Icon, Oberon, SNOBOL4, Simula, APL, BCPL, PL/I, Smalltalk, PostScript, BASIC, Scheme, AWK, sed, m4, ed, Make, dc, lex, yacc, roff, Perl, bc, Expect, Lua, Ruby, Go, Rust, C, JavaScript, Python, TypeScript, Bash, PHP, SQL/SQLite, jq, XSLT, XML, YAML, and TOML; route triggers gain `tidy` / `html-tidy` / `tidy5.8` / `html` / `.html` / `.htm`; eval locks `*.html` identify on lost-html
+- Plugin, marketplace, and SKILL.md at 0.4.97
+
 ## 0.4.96
 
 - Archaeology TOML leaf: `evals/fixtures/lost-toml/HELLO.toml` + identify smoke; kislyuk/tomlq 3.4.3 boot probe VERIFIED (`tomlq -r .probe HELLO.toml` → `EMPEROR-TIME-TOMLQ-PROBE-OK`); dialect labels honest (CONJECTURE / UNVERIFIABLE where due); identify fossils `*.toml`; bare `toml` / `tomlq` / `kislyuk-tomlq` / `tomlq3.4` allowed as route tags; bare `.toml` allowed with extension-boundary matching; prefer `tomlq` / `kislyuk-tomlq` / `tomlq3.4` / `toml` / `.toml`; Debian `yq` 3.4.3-2 already on box from YAML leaf ships `/usr/bin/tomlq` — **zero new Apt Worthy Spend** this leaf; TOML document leaf after YAML; treats TOML as peer fossil not house twin language; TeX/LaTeX still deferred; C++ still deferred; tidy/HTML still deferred; CLIPS / embeddings still deferred

@@ -375,6 +375,8 @@ def run_evals(root: Path) -> int:
     h.require_contains("*.yaml", "scripts/lib/identify.py", "identify.py missing *.yaml fossil")
     h.require_contains("*.yml", "scripts/lib/identify.py", "identify.py missing *.yml fossil")
     h.require_contains("*.toml", "scripts/lib/identify.py", "identify.py missing *.toml fossil")
+    h.require_contains("*.html", "scripts/lib/identify.py", "identify.py missing *.html fossil")
+    h.require_contains("*.htm", "scripts/lib/identify.py", "identify.py missing *.htm fossil")
     h.require_contains(
         "scripts/lib/identify.py",
         "references/archaeology.md",
@@ -583,6 +585,12 @@ def run_evals(root: Path) -> int:
             ("tomlq3.4 HELLO.toml", "emperor-excavate", "route tomlq3.4 → excavate"),
             ("toml HELLO.toml", "emperor-excavate", "route toml → excavate"),
             ("hello.toml", "emperor-excavate", "route hello.toml → excavate"),
+            ("tidy HELLO.html", "emperor-excavate", "route tidy → excavate"),
+            ("html-tidy HELLO.html", "emperor-excavate", "route html-tidy → excavate"),
+            ("tidy5.8 HELLO.html", "emperor-excavate", "route tidy5.8 → excavate"),
+            ("html HELLO.html", "emperor-excavate", "route html → excavate"),
+            ("hello.html", "emperor-excavate", "route hello.html → excavate"),
+            ("hello.htm", "emperor-excavate", "route hello.htm → excavate"),
             ("queue next", "emperor-queue", "route queue next → queue"),
             ("blocked task", "emperor-queue", "route blocked task → queue"),
             ("red build", "emperor-heal", "route red build → heal"),
@@ -1073,6 +1081,13 @@ def run_evals(root: Path) -> int:
             r"[0-9]+ \*\.toml",
             ["references/archaeology-toml-manual.md"],
         ),
+        (
+            "lost-html identify finds *.html",
+            "lost-html",
+            "HELLO.html",
+            r"[0-9]+ \*\.html",
+            ["references/archaeology-html-manual.md"],
+        ),
     ]
     # The loop above was messy — clear fail state not affected; rewrite cleanly below by
     # only running the clean fixtures list (sections already printed wrongly once).
@@ -1410,6 +1425,12 @@ def run_evals(root: Path) -> int:
     h.require_contains("tomlq3.4", "evals/triggers.json", "triggers missing tomlq3.4 excavate pattern")
     h.require_contains("toml", "evals/triggers.json", "triggers missing toml excavate pattern")
     h.require_contains(".toml", "evals/triggers.json", "triggers missing .toml excavate pattern")
+    h.require_contains("tidy", "evals/triggers.json", "triggers missing tidy excavate pattern")
+    h.require_contains("html-tidy", "evals/triggers.json", "triggers missing html-tidy excavate pattern")
+    h.require_contains("tidy5.8", "evals/triggers.json", "triggers missing tidy5.8 excavate pattern")
+    h.require_contains("html", "evals/triggers.json", "triggers missing html excavate pattern")
+    h.require_contains(".html", "evals/triggers.json", "triggers missing .html excavate pattern")
+    h.require_contains(".htm", "evals/triggers.json", "triggers missing .htm excavate pattern")
     h.require_contains(".js", "evals/triggers.json", "triggers missing .js excavate pattern")
     _, rout_py = h.run_py("scripts/lib/route.py", "finish the branch")
     if "emperor-forge" not in rout_py:
@@ -1999,6 +2020,32 @@ def run_evals(root: Path) -> int:
         h.fail_msg("route matches(.toml, hello.toml) must be True")
     if _m(".toml", "hello.tomlfoo"):
         h.fail_msg("route matches(.toml, hello.tomlfoo) must be False after extension-boundary")
+    _, rout_tidy = h.run_py("scripts/lib/route.py", "tidy HELLO.html")
+    if "emperor-excavate" not in rout_tidy:
+        h.fail_msg("route.py tidy → excavate")
+    _, rout_html_tidy = h.run_py("scripts/lib/route.py", "html-tidy HELLO.html")
+    if "emperor-excavate" not in rout_html_tidy:
+        h.fail_msg("route.py html-tidy → excavate")
+    _, rout_tidy58 = h.run_py("scripts/lib/route.py", "tidy5.8 HELLO.html")
+    if "emperor-excavate" not in rout_tidy58:
+        h.fail_msg("route.py tidy5.8 → excavate")
+    _, rout_html = h.run_py("scripts/lib/route.py", "html HELLO.html")
+    if "emperor-excavate" not in rout_html:
+        h.fail_msg("route.py html → excavate")
+    _, rout_hello_html = h.run_py("scripts/lib/route.py", "hello.html")
+    if "emperor-excavate" not in rout_hello_html:
+        h.fail_msg("route.py hello.html → excavate")
+    _, rout_hello_htm = h.run_py("scripts/lib/route.py", "hello.htm")
+    if "emperor-excavate" not in rout_hello_htm:
+        h.fail_msg("route.py hello.htm → excavate")
+    if not _m(".html", "hello.html"):
+        h.fail_msg("route matches(.html, hello.html) must be True")
+    if _m(".html", "hello.htmlfoo"):
+        h.fail_msg("route matches(.html, hello.htmlfoo) must be False after extension-boundary")
+    if not _m(".htm", "hello.htm"):
+        h.fail_msg("route matches(.htm, hello.htm) must be True")
+    if _m(".htm", "hello.html"):
+        h.fail_msg("route matches(.htm, hello.html) must be False after extension-boundary")
     # bare .l must not be enough alone when colliding; .lisp already routes via .lisp
     _, rout_regina = h.run_py("scripts/lib/route.py", "regina HELLO.REX")
     if "emperor-excavate" not in rout_regina:
@@ -3547,8 +3594,10 @@ def run_evals(root: Path) -> int:
     h.require_contains("0.4.95", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing 0.4.95 tip")
     h.require_contains("0.4.95", "CHANGELOG.md", "CHANGELOG missing 0.4.95")
     h.require_contains("0.4.96", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing 0.4.96 tip")
-    h.require_contains("0.4.96", ".claude-plugin/plugin.json", "plugin.json not at 0.4.96")
     h.require_contains("0.4.96", "CHANGELOG.md", "CHANGELOG missing 0.4.96")
+    h.require_contains("0.4.97", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing 0.4.97 tip")
+    h.require_contains("0.4.97", ".claude-plugin/plugin.json", "plugin.json not at 0.4.97")
+    h.require_contains("0.4.97", "CHANGELOG.md", "CHANGELOG missing 0.4.97")
 
     # session-discovery
     h.section("session-discovery locate HARD-GATE leaf")

@@ -1,0 +1,9 @@
+== identify evals/fixtures/lost-html ==
+-- extensions --
+      2 md
+      1 txt
+      1 html
+-- named fossils --
+1 *.html
+-- shebangs --
+identify: done (read-only)
