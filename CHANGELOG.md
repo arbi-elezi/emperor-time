@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.4.111
+
+- Archaeology DOCX / stdlib zipfile-on-`.docx` Jail pin: `evals/fixtures/lost-docx/` + `references/archaeology-docx-manual.md` (CPython stdlib `zipfile` on HELLO.docx → EMPEROR-TIME-DOCX-PROBE-OK; zero new apt; Debian unzip/zip/LibreOffice/pandoc REJECTED as leaf owner)
+- identify/route/eval/honesty/bakeoff/catalog lockstep; fossils `*.docx`; route tags `docx` / `pydocx` / `ooxml-word` / `.docx`; does not steal plain `*.zip` or `*.whl` or `*.jar` or `*.war` or `*.apk`
+- Plugin, marketplace, and SKILL.md at 0.4.111
+
+
 ## 0.4.110
 
 - Archaeology APK / stdlib zipfile-on-`.apk` Jail pin: `evals/fixtures/lost-apk/` + `references/archaeology-apk-manual.md` (CPython stdlib `zipfile` on HELLO.apk → EMPEROR-TIME-APK-PROBE-OK; zero new apt; Debian unzip/zip/android-sdk/aapt REJECTED as leaf owner)

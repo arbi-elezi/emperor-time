@@ -651,7 +651,11 @@
         "apk",
         "pyapk",
         "android-package",
-        ".apk"
+        ".apk",
+        "docx",
+        "pydocx",
+        "ooxml-word",
+        ".docx"
       ],
       "tags": [
         "archaeology",
@@ -904,7 +908,11 @@
         "apk",
         "pyapk",
         "android-package",
-        ".apk"
+        ".apk",
+        "docx",
+        "pydocx",
+        "ooxml-word",
+        ".docx"
       ],
       "target": "skills/emperor-excavate/SKILL.md",
       "reason": "lost/ancient/foreign tree — excavate before modernizing"
