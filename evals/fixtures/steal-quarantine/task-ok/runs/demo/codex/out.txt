@@ -1,0 +1,4 @@
+All done. Tests pass.
+EPISTEMICS:
+VERIFIED: ran npm test parser — exit 0
+ASSUMED: no other suites

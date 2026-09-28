@@ -78,7 +78,7 @@ Read each summary. Check for conflicting edits (same files touched despite SCOPE
 Run the full project suite on this tree. Spot-check for systematic agent errors.
 Output is CONJECTURE until Judgment + `scripts/gate.sh g4` / quarantine.
 
-ET: `quarantine.md` then Judgment; `emperor review` / evidence as needed.
+ET: `quarantine.md` then `emperor quarantine <task-dir>` (HARD-GATE) then Judgment; `emperor review` / evidence as needed.
 
 ### Step 6: COMPLETE — Ledger, next, or finish
 

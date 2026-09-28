@@ -79,3 +79,28 @@ a rename-only diff from the weakest local model gets the same *pipeline* as a
 core-logic diff from the strongest cloud model — but the rename's "real
 verification" is `grep` + build, minutes, while core logic gets the full test
 plan. The pipeline is constant; the depth is right-sized.
+
+## HARD-GATE (mechanical)
+
+Doctrine above is the law. The lock is an exit code:
+
+```bash
+scripts/emperor quarantine <task-dir>              # or --check-quarantine PATH
+scripts/emperor quarantine --reject-unquarantined  # always fails (card + exit 1)
+scripts/emperor steal-quarantine <task-dir>        # alias
+scripts/gate.sh g4 <task-dir>                      # calls quarantine.py when steal activity present
+```
+
+Python core: `scripts/lib/quarantine.py`. Thin twins: `quarantine.sh` /
+`quarantine.ps1` (+ `steal-quarantine` alias). Fails when:
+
+1. Missing quarantine dir (`.emperor/runs/<task>/<agent>/` with `prompt.md` /
+   `out.txt` / `meta.md`) while steal activity is claimed
+2. Missing CONJECTURE start (worker-sourced Claim Ledger rows must enter as
+   CONJECTURE)
+3. Missing admission markers (`ADMITTED` or `REJECTED` with `verified:` /
+   `reason:` / probe quote)
+
+Vacuous PASS when the task has no worker runs and no steal markers — G4 stays
+quiet for solo work. An admission file alone is theater without the ruling
+tokens.

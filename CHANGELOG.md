@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.4.123
+
+- Vertical depth: Steal quarantine admission HARD-GATE — `scripts/lib/quarantine.py` mechanically rejects worker "done" lacking quarantine dir (`.emperor/runs/<task>/<agent>/`) / CONJECTURE start / ADMITTED|REJECTED admission markers (not doctrine-only markdown)
+- Always-fail helper `--reject-unquarantined`; `--check-quarantine PATH`; no-args prints QUARANTINE card; G4 calls the same module when steal activity is present (vacuous PASS for solo tasks)
+- Thin twins `quarantine.sh` / `quarantine.ps1` + `steal-quarantine` alias + `emperor quarantine` / `emperor steal-quarantine` peers; fixtures `evals/fixtures/steal-quarantine/` prove reject + accept; references/mechanical-gates + quarantine.md HARD-GATE lockstep
+- Not archaeology; not whole Superpowers vendor; closes next soft-gate after claim-audit (v0.4.122)
+- Plugin, marketplace, and SKILL.md at 0.4.123
+
 ## 0.4.122
 
 - Vertical depth: Judgment claim-audit HARD-GATE — `scripts/lib/claim_audit.py` mechanically rejects missing CLAIM AUDIT line / unfinished HYPOTHESIS|TESTED rows / soft claim-audit structure (not doctrine-only markdown)
