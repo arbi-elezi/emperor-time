@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.4.112
+
+- Archaeology XLSX / stdlib zipfile-on-`.xlsx` Jail pin: `evals/fixtures/lost-xlsx/` + `references/archaeology-xlsx-manual.md` (CPython stdlib `zipfile` on HELLO.xlsx → EMPEROR-TIME-XLSX-PROBE-OK; zero new apt; Debian unzip/zip/LibreOffice/openpyxl/xlsxwriter REJECTED as leaf owner)
+- identify/route/eval/honesty/bakeoff/catalog lockstep; fossils `*.xlsx`; route tags `xlsx` / `pyxlsx` / `ooxml-excel` / `.xlsx`; does not steal plain `*.zip` or `*.whl` or `*.jar` or `*.war` or `*.apk` or `*.docx`
+- Plugin, marketplace, and SKILL.md at 0.4.112
+
+
 ## 0.4.111
 
 - Archaeology DOCX / stdlib zipfile-on-`.docx` Jail pin: `evals/fixtures/lost-docx/` + `references/archaeology-docx-manual.md` (CPython stdlib `zipfile` on HELLO.docx → EMPEROR-TIME-DOCX-PROBE-OK; zero new apt; Debian unzip/zip/LibreOffice/pandoc REJECTED as leaf owner)
