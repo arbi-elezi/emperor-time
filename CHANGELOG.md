@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.4.117
+
+- Archaeology PNG / Pillow Image.open+tEXt-on-`.png` Jail pin: `evals/fixtures/lost-png/` + `references/archaeology-png-manual.md` (Pillow 11.1.0 on HELLO.png → EMPEROR-TIME-PNG-PROBE-OK; zero new apt; ImageMagick/ffmpeg REJECTED as leaf owner)
+- identify/route/eval/honesty/bakeoff/catalog lockstep; fossils `*.png`; route tags `png` / `pillow` / `pil` / `.png`; does not steal plain `*.pdf` or `*.ps` or `*.pptx`
+- Plugin, marketplace, and SKILL.md at 0.4.117
+
 ## 0.4.116
 
 - Archaeology PDF / Poppler pdftotext-on-`.pdf` Jail pin: `evals/fixtures/lost-pdf/` + `references/archaeology-pdf-manual.md` (Poppler `pdftotext` 25.03.0 on HELLO.pdf → EMPEROR-TIME-PDF-PROBE-OK; zero new apt; LibreOffice/ghostscript/qpdf REJECTED as leaf owner)

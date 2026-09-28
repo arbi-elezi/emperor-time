@@ -1,0 +1,9 @@
+== identify evals/fixtures/lost-png ==
+-- extensions --
+      2 md
+      1 txt
+      1 png
+-- named fossils --
+1 *.png
+-- shebangs --
+identify: done (read-only)
