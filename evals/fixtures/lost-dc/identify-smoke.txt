@@ -1,0 +1,9 @@
+== identify evals/fixtures/lost-dc ==
+-- extensions --
+      2 md
+      1 txt
+      1 dc
+-- named fossils --
+1 *.dc
+-- shebangs --
+identify: done (read-only)
