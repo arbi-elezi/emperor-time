@@ -676,6 +676,10 @@ def run_evals(root: Path) -> int:
             ("pillow HELLO.png", "emperor-excavate", "route pillow → excavate"),
             ("pil HELLO.png", "emperor-excavate", "route pil → excavate"),
             ("hello.png", "emperor-excavate", "route hello.png → excavate"),
+            ("wav HELLO.wav", "emperor-excavate", "route wav → excavate"),
+            ("ffmpeg HELLO.wav", "emperor-excavate", "route ffmpeg → excavate"),
+            ("ffprobe HELLO.wav", "emperor-excavate", "route ffprobe → excavate"),
+            ("hello.wav", "emperor-excavate", "route hello.wav → excavate"),
             ("queue next", "emperor-queue", "route queue next → queue"),
             ("blocked task", "emperor-queue", "route blocked task → queue"),
             ("red build", "emperor-heal", "route red build → heal"),
@@ -1312,6 +1316,13 @@ def run_evals(root: Path) -> int:
             "HELLO.png",
             r"[0-9]+ \*\.png",
             ["references/archaeology-png-manual.md"],
+        ),
+        (
+            "lost-wav identify finds *.wav",
+            "lost-wav",
+            "HELLO.wav",
+            r"[0-9]+ \*\.wav",
+            ["references/archaeology-wav-manual.md"],
         ),
     ]
     # The loop above was messy — clear fail state not affected; rewrite cleanly below by
@@ -2675,6 +2686,30 @@ def run_evals(root: Path) -> int:
         h.fail_msg("route matches(.ps, hello.png) must be False (ps leaf must not steal .png)")
     if _m(".pptx", "hello.png"):
         h.fail_msg("route matches(.pptx, hello.png) must be False (pptx leaf must not steal .png)")
+    _, rout_wav = h.run_py("scripts/lib/route.py", "wav HELLO.wav")
+    if "emperor-excavate" not in rout_wav:
+        h.fail_msg("route.py wav → excavate")
+    _, rout_ffmpeg = h.run_py("scripts/lib/route.py", "ffmpeg HELLO.wav")
+    if "emperor-excavate" not in rout_ffmpeg:
+        h.fail_msg("route.py ffmpeg → excavate")
+    _, rout_ffprobe = h.run_py("scripts/lib/route.py", "ffprobe HELLO.wav")
+    if "emperor-excavate" not in rout_ffprobe:
+        h.fail_msg("route.py ffprobe → excavate")
+    _, rout_hello_wav = h.run_py("scripts/lib/route.py", "hello.wav")
+    if "emperor-excavate" not in rout_hello_wav:
+        h.fail_msg("route.py hello.wav → excavate")
+    if not _m(".wav", "hello.wav"):
+        h.fail_msg("route matches(.wav, hello.wav) must be True")
+    if _m(".wav", "hello.wavfoo"):
+        h.fail_msg("route matches(.wav, hello.wavfoo) must be False after extension-boundary")
+    if _m(".png", "hello.wav"):
+        h.fail_msg("route matches(.png, hello.wav) must be False (png leaf must not steal .wav)")
+    if _m(".pdf", "hello.wav"):
+        h.fail_msg("route matches(.pdf, hello.wav) must be False (pdf leaf must not steal .wav)")
+    if _m(".ps", "hello.wav"):
+        h.fail_msg("route matches(.ps, hello.wav) must be False (ps leaf must not steal .wav)")
+    if _m(".pptx", "hello.wav"):
+        h.fail_msg("route matches(.pptx, hello.wav) must be False (pptx leaf must not steal .wav)")
     # bare .l must not be enough alone when colliding; .lisp already routes via .lisp
     _, rout_regina = h.run_py("scripts/lib/route.py", "regina HELLO.REX")
     if "emperor-excavate" not in rout_regina:
@@ -4258,9 +4293,10 @@ def run_evals(root: Path) -> int:
     h.require_contains("0.4.114", "CHANGELOG.md", "CHANGELOG missing 0.4.114")
     h.require_contains("0.4.115", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing 0.4.115 tip")
     h.require_contains("0.4.115", "CHANGELOG.md", "CHANGELOG missing 0.4.115")
-    h.require_contains("0.4.117", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing 0.4.117 tip")
-    h.require_contains("0.4.117", ".claude-plugin/plugin.json", "plugin.json not at 0.4.117")
     h.require_contains("0.4.117", "CHANGELOG.md", "CHANGELOG missing 0.4.117")
+    h.require_contains("0.4.118", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing 0.4.118 tip")
+    h.require_contains("0.4.118", ".claude-plugin/plugin.json", "plugin.json not at 0.4.118")
+    h.require_contains("0.4.118", "CHANGELOG.md", "CHANGELOG missing 0.4.118")
 
     # session-discovery
     h.section("session-discovery locate HARD-GATE leaf")

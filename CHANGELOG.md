@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.4.118
+
+- Archaeology WAV / ffmpeg ffprobe-format-tags-on-`.wav` Jail pin: `evals/fixtures/lost-wav/` + `references/archaeology-wav-manual.md` (ffmpeg/ffprobe 7.1.5 on HELLO.wav → EMPEROR-TIME-WAV-PROBE-OK; zero new apt; sox/ImageMagick REJECTED as leaf owner; Python ffprobe wrapper)
+- identify/route/eval/honesty/bakeoff/catalog lockstep; fossils `*.wav`; route tags `wav` / `ffmpeg` / `ffprobe` / `.wav`; does not steal plain `*.png` or `*.pdf` or `*.ps` or `*.pptx`
+- Plugin, marketplace, and SKILL.md at 0.4.118
+
 ## 0.4.117
 
 - Archaeology PNG / Pillow Image.open+tEXt-on-`.png` Jail pin: `evals/fixtures/lost-png/` + `references/archaeology-png-manual.md` (Pillow 11.1.0 on HELLO.png → EMPEROR-TIME-PNG-PROBE-OK; zero new apt; ImageMagick/ffmpeg REJECTED as leaf owner)
