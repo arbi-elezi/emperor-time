@@ -9,7 +9,7 @@ description: >-
   waiting to be told.
 license: MIT
 metadata:
-  version: 0.4.125
+  version: 0.4.126
   homepage: https://github.com/arbi-elezi/emperor-time
   standard: Agent Skills (SKILL.md)
 ---
@@ -101,7 +101,7 @@ Jail extra: no captured skill runs on real work until trial + sha256 pin + quote
 - Run `scripts/emperor gate <g0-g5> <task-dir>` (Python core `scripts/lib/gate.py`) before claiming the gate open. Script fail = gate closed.
 - `scripts/emperor done <task-dir>` must exit 0 before the word done.
 - `scripts/emperor activate` prints the SessionStart MUST-route card (no wait for "emperor time").
-- `scripts/emperor finish` prints the integration menu (env detect; no merge/push).
+- `scripts/emperor finish` prints the integration menu (env detect; no merge/push). `--require-green <task-dir>` / `--reject-red-suite` HARD-GATE: no menu without green suite (done.py probes / eval).
 - `scripts/emperor execute` prints the inline plan-execution card (no check-in theater; four stops only).
 - `scripts/emperor forge <task-dir>` refuses without consent.
 - Resume from disk (`skills/emperor-resume/SKILL.md`) instead of restating the session.

@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.4.126
+
+- Vertical depth: finish suite-green HARD-GATE — `scripts/lib/finish.py` mechanically refuses menu advance / done without a green suite (not menu-only theater; Superpowers finishing Step 1)
+- Always-fail helper `--reject-red-suite`; `--require-green <task-dir>` / `--check-suite PATH` integrate `done.py` probes (and/or `eval.py` when present/`--with-eval`); green → ENV/MENU; red → no MENU
+- Thin twins `finish.sh` / `finish.ps1` + `emperor finish` peers; fixtures `evals/fixtures/finish-suite-green/`; finish-menu.md + mechanical-gates + forge skill HARD-GATE lockstep
+- Not archaeology; not embeddings; closes next soft-gate after verdict/breach (v0.4.125)
+- Plugin, marketplace, and SKILL.md at 0.4.126
+
 ## 0.4.125
 
 - Vertical depth: Judgment verdict + Breach Register HARD-GATE — `scripts/lib/verdict.py` mechanically rejects empty/theater Stake rows / missing Verdict citations / FAIL delivered as G5 (not PASS-substring + header-only theater)

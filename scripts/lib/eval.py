@@ -2214,12 +2214,15 @@ def run_evals(root: Path) -> int:
         h.pass_msg("verdict.sh thin twin emits card")
 
 
-    # ---- finish menu ----
-    h.section("finish menu (forge aspect)")
+    # ---- finish suite-green HARD-GATE (forge aspect vertical depth) ----
+    h.section("finish-suite-green HARD-GATE")
     h.need("skills/emperor-forge/finish-menu.md")
     h.need("scripts/finish.sh")
     h.need("scripts/finish.ps1")
     h.need("scripts/lib/finish.py")
+    h.need("evals/fixtures/finish-suite-green/task-ok/DONE.md")
+    h.need("evals/fixtures/finish-suite-green/task-red/DONE.md")
+    h.need("evals/fixtures/finish-suite-green/task-no-done/ledger.md")
     h.bash_n("scripts/finish.sh", "finish.sh syntax")
     h.py_compile("scripts/lib/finish.py", "finish.py compile")
     h.require_contains("lib/finish.py", "scripts/finish.sh", "finish.sh thin twin missing finish.py")
@@ -2229,6 +2232,16 @@ def run_evals(root: Path) -> int:
         "scripts/lib/finish.py",
         "skills/emperor-forge/finish-menu.md",
         "finish-menu.md missing finish.py",
+    )
+    h.require_contains(
+        "--require-green",
+        "skills/emperor-forge/finish-menu.md",
+        "finish-menu.md missing --require-green HARD-GATE",
+    )
+    h.require_contains(
+        "HARD-GATE",
+        "skills/emperor-forge/finish-menu.md",
+        "finish-menu.md missing HARD-GATE pointer",
     )
     h.require_contains(
         "Merge back to",
@@ -2245,7 +2258,130 @@ def run_evals(root: Path) -> int:
         "skills/emperor-forge/SKILL.md",
         "forge skill missing finish-menu",
     )
+    h.require_contains(
+        "--require-green",
+        "skills/emperor-forge/SKILL.md",
+        "forge skill missing --require-green",
+    )
     h.require_contains("finish|", "scripts/emperor", "emperor bash missing finish")
+    h.require_contains(
+        "'finish'",
+        "scripts/emperor.ps1",
+        "emperor.ps1 missing finish",
+    )
+    h.require_contains(
+        "finish",
+        "scripts/emperor.cmd",
+        "emperor.cmd missing finish",
+    )
+    h.require_contains(
+        "finish",
+        "scripts/emperor.zsh",
+        "emperor.zsh missing finish",
+    )
+    h.require_contains(
+        "--reject-red-suite",
+        "scripts/lib/finish.py",
+        "finish.py missing --reject-red-suite",
+    )
+    h.require_contains(
+        "--require-green",
+        "scripts/lib/finish.py",
+        "finish.py missing --require-green",
+    )
+    h.require_contains(
+        "done.py",
+        "scripts/lib/finish.py",
+        "finish.py missing done.py integration",
+    )
+    h.require_contains(
+        "NO_MENU_WITHOUT_GREEN_SUITE",
+        "scripts/lib/finish.py",
+        "finish.py missing iron law token",
+    )
+    h.require_contains(
+        "reject-red-suite",
+        "evals/bakeoff.md",
+        "bakeoff.md missing finish reject-red-suite inventory",
+    )
+    h.require_contains(
+        "finish-suite-green",
+        "evals/evals.json",
+        "evals.json missing finish-suite-green case",
+    )
+    _, card = h.run_py("scripts/lib/finish.py", "--card")
+    if "checklist=yes" not in card:
+        h.fail_msg("finish card missing checklist=yes")
+    elif "NO_MENU_WITHOUT_GREEN_SUITE" not in card:
+        h.fail_msg("finish card missing iron law token")
+    else:
+        h.pass_msg("finish prints FINISH card")
+    rc, _ = h.run_py("scripts/lib/finish.py", "--reject-red-suite")
+    if rc == 0:
+        h.fail_msg("finish --reject-red-suite should exit non-zero")
+    else:
+        _, reject = h.run_py("scripts/lib/finish.py", "--reject-red-suite")
+        if "REJECT RED SUITE" not in reject and "HARD-GATE" not in reject:
+            h.fail_msg("finish --reject-red-suite missing REJECT text")
+        else:
+            h.pass_msg("finish --reject-red-suite hard-gates")
+    rc, err = h.run_py(
+        "scripts/lib/finish.py",
+        "--check-suite",
+        str(root / "evals/fixtures/finish-suite-green/task-red"),
+    )
+    if rc == 0:
+        h.fail_msg("finish task-red fixture should fail suite check")
+    elif not h.grep_out(err, r"DONE probes red|no menu until green|FAIL"):
+        h.fail_msg("finish task-red should mention red probes / no menu")
+    else:
+        h.pass_msg("finish task-red rejected")
+    rc, err = h.run_py(
+        "scripts/lib/finish.py",
+        "--check-suite",
+        str(root / "evals/fixtures/finish-suite-green/task-no-done"),
+    )
+    if rc == 0:
+        h.fail_msg("finish task-no-done fixture should fail suite check")
+    elif not h.grep_out(err, r"no DONE\.md|cannot prove suite green|DONE.md"):
+        h.fail_msg("finish task-no-done should mention missing DONE.md")
+    else:
+        h.pass_msg("finish task-no-done rejected")
+    rc, ok_out = h.run_py(
+        "scripts/lib/finish.py",
+        "--check-suite",
+        str(root / "evals/fixtures/finish-suite-green/task-ok"),
+    )
+    if rc != 0 or "suite green" not in ok_out:
+        h.fail_msg("finish task-ok should pass suite check")
+    else:
+        h.pass_msg("finish task-ok accepted")
+    rc, req_out = h.run_py(
+        "scripts/lib/finish.py",
+        "--require-green",
+        str(root / "evals/fixtures/finish-suite-green/task-ok"),
+    )
+    if rc != 0:
+        h.fail_msg(f"finish --require-green task-ok should exit 0: {req_out}")
+    elif not re.search(r"^SUITE green=yes", req_out, re.M):
+        h.fail_msg("finish --require-green task-ok missing SUITE green=yes")
+    elif not re.search(r"^MENU ", req_out, re.M):
+        h.fail_msg("finish --require-green task-ok missing MENU")
+    else:
+        h.pass_msg("finish --require-green task-ok prints MENU")
+    rc, req_red = h.run_py(
+        "scripts/lib/finish.py",
+        "--require-green",
+        str(root / "evals/fixtures/finish-suite-green/task-red"),
+    )
+    if rc == 0:
+        h.fail_msg("finish --require-green task-red should exit non-zero")
+    elif re.search(r"^MENU ", req_red, re.M):
+        h.fail_msg("finish --require-green task-red must not print MENU")
+    elif "REJECT RED SUITE" not in req_red and "HARD-GATE" not in req_red:
+        h.fail_msg("finish --require-green task-red missing REJECT RED SUITE")
+    else:
+        h.pass_msg("finish --require-green task-red refuses MENU")
     _, fin_out = h.run_sh("scripts/finish.sh")
     if not re.search(r"^ENV kind=", fin_out, re.M):
         h.fail_msg("finish.sh missing ENV kind")
@@ -2253,7 +2389,7 @@ def run_evals(root: Path) -> int:
         h.fail_msg("finish.sh missing MENU")
     if "base_guess=" not in fin_out:
         h.fail_msg("finish missing base_guess")
-    h.pass_msg("finish.py thin twins + ENV/MENU")
+    h.pass_msg("finish.py thin twins + ENV/MENU + suite-green HARD-GATE")
     _, out = h.run_sh("scripts/route.sh", "finish the branch")
     if "emperor-forge" not in out:
         h.fail_msg("route finish the branch → forge")
@@ -5477,12 +5613,18 @@ def run_evals(root: Path) -> int:
     h.require_contains("eight-count", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing eight-count")
     h.require_contains("Checked", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing Checked")
     h.require_contains("0.4.125", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing 0.4.125 tip")
-    h.require_contains("0.4.125", ".claude-plugin/plugin.json", "plugin.json not at 0.4.125")
     h.require_contains("0.4.125", "CHANGELOG.md", "CHANGELOG missing 0.4.125")
     h.require_contains("verdict.py", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing verdict.py")
     h.require_contains("reject-hidden-breach", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing reject-hidden-breach")
     h.require_contains("Breach Register", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing Breach Register")
     h.require_contains("check-verdict", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing check-verdict")
+    h.require_contains("0.4.126", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing 0.4.126 tip")
+    h.require_contains("0.4.126", ".claude-plugin/plugin.json", "plugin.json not at 0.4.126")
+    h.require_contains("0.4.126", "CHANGELOG.md", "CHANGELOG missing 0.4.126")
+    h.require_contains("finish.py", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing finish.py")
+    h.require_contains("reject-red-suite", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing reject-red-suite")
+    h.require_contains("require-green", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing require-green")
+    h.require_contains("check-suite", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing check-suite")
 
     # session-discovery
     h.section("session-discovery locate HARD-GATE leaf")
