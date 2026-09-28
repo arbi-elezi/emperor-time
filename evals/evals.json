@@ -97,6 +97,11 @@
       "id": "thoughttrail-super-context-hard-gate",
       "type": "behavioral-fixture",
       "expect": "context.py --reject-no-graph / --reject-no-trail / --check-context / --check-trail refuses missing graph.sqlite+l0.md or empty trail when activity claimed; accepts repo-ok + vacuous; build+query+trail append work on fixtures; no embeddings"
+    },
+    {
+      "id": "sot-artifact-sync",
+      "type": "behavioral-fixture",
+      "expect": "sot add-plugin clones fetch-only mirror; sot sync fetches tip; artifacts sync materializes multi-repo copies under artifacts/<id>/repos/ without mutating SOT"
     }
   ]
 }

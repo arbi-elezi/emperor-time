@@ -5819,7 +5819,7 @@ def run_evals(root: Path) -> int:
     h.require_contains("steal-consent", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing steal-consent")
     h.require_contains("consent.py", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing consent.py")
     h.require_contains("0.4.132", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing 0.4.132 tip")
-    h.require_contains("0.4.133", ".claude-plugin/plugin.json", "plugin.json not at 0.4.133")
+    h.require_contains("0.4.134", ".claude-plugin/plugin.json", "plugin.json not at 0.4.134")
     h.require_contains("0.4.132", "CHANGELOG.md", "CHANGELOG missing 0.4.132")
     h.require_contains("reject-no-triad", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing reject-no-triad")
     h.require_contains("reject-no-postmortem", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing reject-no-postmortem")
@@ -5834,6 +5834,11 @@ def run_evals(root: Path) -> int:
     h.require_contains("thoughttrail-super-context", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing thoughttrail-super-context")
     h.require_contains("context.py", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing context.py")
     h.require_contains("md_graph.py", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing md_graph.py")
+    h.require_contains("0.4.134", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing 0.4.134 tip")
+    h.require_contains("0.4.134", "CHANGELOG.md", "CHANGELOG missing 0.4.134")
+    h.require_contains("sot-artifact-sync", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing sot-artifact-sync")
+    h.require_contains("clone --mirror", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing clone --mirror")
+    h.require_contains("artifacts sync", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing artifacts sync")
     h.require_contains("finish.py", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing finish.py")
     h.require_contains("reject-red-suite", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing reject-red-suite")
     h.require_contains("require-green", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing require-green")
@@ -6839,9 +6844,9 @@ def run_evals(root: Path) -> int:
         "bakeoff.md missing reject-unisolated inventory",
     )
     h.require_contains(
-        "0.4.133",
+        "0.4.134",
         "SKILL.md",
-        "SKILL.md not bumped to 0.4.133",
+        "SKILL.md not bumped to 0.4.134",
     )
     _, card = h.run_py("scripts/lib/review_pack.py")
     if "checklist=yes" not in card:
@@ -8540,6 +8545,109 @@ def run_evals(root: Path) -> int:
     else:
         h.pass_msg("emperor context peer forwards --reject-no-graph")
     h.pass_msg("context.py thoughttrail-super-context HARD-GATE")
+
+
+
+
+    # ---- SOT + artifact multi-repo sync (P1) ----
+    h.section("sot-artifact-sync")
+    h.need("scripts/lib/super_context.py")
+    h.need("evals/fixtures/sot-artifact-sync/README.md")
+    h.require_contains(
+        "clone --mirror",
+        "scripts/lib/super_context.py",
+        "super_context missing clone --mirror",
+    )
+    h.require_contains(
+        "artifacts sync",
+        "evals/bakeoff.md",
+        "bakeoff missing artifacts sync",
+    )
+    h.require_contains(
+        "sot-artifact-sync",
+        "evals/evals.json",
+        "evals.json missing sot-artifact-sync case",
+    )
+    h.require_contains(
+        "clone --mirror",
+        "references/super-context.md",
+        "super-context.md missing clone --mirror doctrine",
+    )
+    import tempfile as _tf
+    import shutil as _sh
+    tmp = Path(_tf.mkdtemp())
+    src_a = Path(_tf.mkdtemp())
+    src_b = Path(_tf.mkdtemp())
+    try:
+        def _init_repo(path: Path, text: str) -> None:
+            path.mkdir(parents=True, exist_ok=True)
+            (path / "README.md").write_text(text + "\n", encoding="utf-8")
+            import subprocess as _sp
+            _sp.run(["git", "init", "-b", "main", str(path)], check=True, capture_output=True)
+            _sp.run(["git", "-C", str(path), "add", "."], check=True, capture_output=True)
+            _sp.run(
+                ["git", "-C", str(path), "-c", "user.email=t@t", "-c", "user.name=t",
+                 "commit", "-m", "init"],
+                check=True,
+                capture_output=True,
+            )
+        _init_repo(src_a, "alpha")
+        _init_repo(src_b, "beta")
+        rc, out = h.run_py(
+            "scripts/lib/super_context.py",
+            "sot", "add-plugin", "plug-a", str(src_a), "--root", str(tmp),
+        )
+        if rc != 0 or "add-plugin ok" not in out:
+            h.fail_msg(f"sot add-plugin a failed: {out}")
+        else:
+            h.pass_msg("sot add-plugin a ok")
+        rc, out = h.run_py(
+            "scripts/lib/super_context.py",
+            "sot", "add-plugin", "plug-b", str(src_b), "--root", str(tmp),
+        )
+        if rc != 0 or "add-plugin ok" not in out:
+            h.fail_msg(f"sot add-plugin b failed: {out}")
+        else:
+            h.pass_msg("sot add-plugin b ok")
+        mirror = tmp / ".emperor" / "sot" / "plugins" / "plug-a" / "mirror"
+        if not mirror.is_dir():
+            h.fail_msg("missing fetch-only mirror dir")
+        else:
+            h.pass_msg("fetch-only mirror present")
+        rc, out = h.run_py(
+            "scripts/lib/super_context.py", "sot", "sync", "--root", str(tmp)
+        )
+        if rc != 0 or "SOT sync DONE" not in out:
+            h.fail_msg(f"sot sync failed: {out}")
+        else:
+            h.pass_msg("sot sync ok")
+        rc, out = h.run_py(
+            "scripts/lib/super_context.py",
+            "artifacts", "sync", "--artifact", "demo", "--root", str(tmp),
+        )
+        if rc != 0 or "ARTIFACTS sync DONE" not in out:
+            h.fail_msg(f"artifacts sync failed: {out}")
+        else:
+            h.pass_msg("artifacts sync ok")
+        ra = tmp / ".emperor" / "artifacts" / "demo" / "repos" / "plug-a" / "README.md"
+        rb = tmp / ".emperor" / "artifacts" / "demo" / "repos" / "plug-b" / "README.md"
+        if not ra.is_file() or not rb.is_file():
+            h.fail_msg("artifact repos missing README")
+        else:
+            h.pass_msg("artifact multi-repo repos present")
+        # SOT mirror must remain bare-ish (no working tree mutation of source)
+        if (mirror / "README.md").is_file() and not (mirror / "refs").is_dir():
+            # some clones keep files; bare mirror should have refs/
+            pass
+        if not (mirror / "refs").is_dir() and not (mirror / "HEAD").is_file():
+            h.fail_msg("mirror does not look like git mirror")
+        else:
+            h.pass_msg("SOT mirror looks fetch-only")
+    finally:
+        _sh.rmtree(tmp, ignore_errors=True)
+        _sh.rmtree(src_a, ignore_errors=True)
+        _sh.rmtree(src_b, ignore_errors=True)
+    h.pass_msg("sot-artifact-sync P1")
 
 
 

@@ -20,6 +20,7 @@ LEAVES: list[tuple[str, str, tuple[str, ...]]] = [
     ("heal-verify", "scripts/lib/heal_verify.py", ("heal-verify", "reject-no-triad", "reject-no-postmortem", "heal-and-verify")),
     ("review-isolation", "scripts/lib/review_pack.py", ("review-pack", "reject-unisolated", "reject-author-diary", "check-isolation", "hetero-critique isolation")),
     ("super-context", "scripts/lib/context.py", ("super-context", "thoughttrail", "reject-no-graph", "reject-no-trail", "check-context", "GRAPH_THEN_TRAIL")),
+    ("sot-artifact-sync", "scripts/lib/super_context.py", ("sot add-plugin", "artifacts sync", "clone --mirror", "sot-artifact-sync")),
     ("critique", "scripts/lib/critique.py", ("critique", "reject-incomplete-critique", "eight-count", "Checked")),
     ("verdict", "scripts/lib/verdict.py", ("verdict", "reject-hidden-breach", "Breach Register", "claim audit")),
     ("finish", "skills/emperor-forge/finish-menu.md", ("finish",)),

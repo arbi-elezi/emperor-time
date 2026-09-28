@@ -23,6 +23,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import subprocess
 import sys
 from pathlib import Path
 
@@ -211,8 +212,41 @@ def cmd_layout(args: argparse.Namespace) -> int:
     return 0
 
 
+
+def _run_git(args: list[str], *, cwd: Path | None = None) -> tuple[int, str]:
+    try:
+        r = subprocess.run(
+            ["git", *args],
+            cwd=str(cwd) if cwd else None,
+            capture_output=True,
+            text=True,
+            check=False,
+        )
+    except FileNotFoundError:
+        return 127, "git not found"
+    out = (r.stdout or "") + (r.stderr or "")
+    return r.returncode, out.strip()
+
+
+def _plugin_mirror(plugin_dir: Path) -> Path:
+    return plugin_dir / "mirror"
+
+
+def _load_plugin_meta(plugin_dir: Path) -> dict:
+    meta_path = plugin_dir / "plugin.json"
+    if meta_path.is_file():
+        return json.loads(meta_path.read_text(encoding="utf-8"))
+    return {}
+
+
+def _save_plugin_meta(plugin_dir: Path, meta: dict) -> None:
+    (plugin_dir / "plugin.json").write_text(
+        json.dumps(meta, indent=2) + "\n", encoding="utf-8"
+    )
+
+
 def cmd_sot(args: argparse.Namespace) -> int:
-    """v1 stubs: sync | add-plugin | status — doctrine real, clone engine thin."""
+    """SOT sync|add-plugin|status — real git fetch-only mirrors under sot/plugins."""
     root = Path(args.root).resolve() if args.root else _repo_root()
     paths = trail.ensure_layout(root)
     action = args.sot_action
@@ -221,12 +255,18 @@ def cmd_sot(args: argparse.Namespace) -> int:
         plugins = [
             p.name
             for p in sorted(plugins_dir.iterdir())
-            if p.is_dir() and p.name != "__pycache__"
+            if p.is_dir() and p.name not in {"__pycache__"} and (p / "plugin.json").is_file()
         ]
         print(f"SOT status fetch_only=true plugins={len(plugins)}")
         print(f"  pointer={paths['sot'] / 'POINTER.md'}")
         for name in plugins:
-            print(f"  plugin={name}")
+            meta = _load_plugin_meta(plugins_dir / name)
+            mirror = _plugin_mirror(plugins_dir / name)
+            ready = "ready" if mirror.is_dir() else "meta-only"
+            print(
+                f"  plugin={name} state={ready} "
+                f"ref={meta.get('ref', 'main')} url={meta.get('url', '')}"
+            )
         if not plugins:
             print("  (no plugins — emperor sot add-plugin <name> <url>)")
         return 0
@@ -234,41 +274,106 @@ def cmd_sot(args: argparse.Namespace) -> int:
         if not args.name:
             print("SOT FAIL: add-plugin needs <name>", file=sys.stderr)
             return 1
+        if not args.url:
+            print("SOT FAIL: add-plugin needs <url> (git URL or local path)", file=sys.stderr)
+            return 1
         dest = plugins_dir / args.name
         dest.mkdir(parents=True, exist_ok=True)
+        ref = args.ref or "main"
+        mirror = _plugin_mirror(dest)
         meta = {
             "name": args.name,
-            "url": args.url or "",
+            "url": args.url,
             "fetch_only": True,
-            "ref": args.ref or "main",
-            "stub": True,
+            "ref": ref,
+            "mirror": "mirror",
+            "stub": False,
         }
-        (dest / "plugin.json").write_text(
-            json.dumps(meta, indent=2) + "\n", encoding="utf-8"
-        )
-        # thin compose service hint
-        (dest / "compose.fragment.yml").write_text(
-            "\n".join(
-                [
-                    f"# fragment for plugin {args.name} — sandbox plan merges these",
-                    f"  {args.name}:",
-                    f"    image: ${{{args.name.upper()}_IMAGE:-alpine:3.20}}",
-                    "    profiles: [\"et-plugin\"]",
-                    "",
-                ]
-            ),
-            encoding="utf-8",
-        )
-        print(f"SOT add-plugin stub name={args.name} path={dest}")
-        print("NOTE: fetch/clone not executed in v1 stub — doctrine only")
+        # Real clone --mirror (fetch-only SOT). Never checkout a working tree here.
+        if mirror.exists():
+            print(f"SOT add-plugin exists name={args.name} — use sot sync to refresh")
+        else:
+            rc, out = _run_git(
+                ["clone", "--mirror", args.url, str(mirror)]
+            )
+            if rc != 0:
+                print(f"SOT FAIL: git clone --mirror rc={rc}", file=sys.stderr)
+                print(out, file=sys.stderr)
+                return 1
+            # pin ref availability (fetch-only; no checkout)
+            rc2, out2 = _run_git(["-C", str(mirror), "rev-parse", f"refs/heads/{ref}"])
+            if rc2 != 0:
+                # try tags or remote HEAD
+                rc2, out2 = _run_git(["-C", str(mirror), "rev-parse", "HEAD"])
+            meta["tip"] = out2.strip() if rc2 == 0 else ""
+            print(f"SOT add-plugin cloned name={args.name} mirror={mirror}")
+            if meta.get("tip"):
+                print(f"SOT tip={meta['tip']}")
+        _save_plugin_meta(dest, meta)
+        frag = dest / "compose.fragment.yml"
+        if not frag.exists():
+            frag.write_text(
+                "\n".join(
+                    [
+                        f"# fragment for plugin {args.name} — sandbox plan merges these",
+                        f"  {args.name}:",
+                        f"    image: ${{{args.name.upper()}_IMAGE:-alpine:3.20}}",
+                        '    profiles: ["et-plugin"]',
+                        "",
+                    ]
+                ),
+                encoding="utf-8",
+            )
+        print(f"SOT add-plugin ok name={args.name} path={dest} fetch_only=true")
         return 0
     if action == "sync":
-        # stub: touch POINTER + report
         pointer = paths["sot"] / "POINTER.md"
-        print(f"SOT sync stub pointer={pointer}")
-        print("NOTE: git fetch of mirrors not executed in v1 stub")
-        plugins = [p.name for p in plugins_dir.iterdir() if p.is_dir()]
-        print(f"SOT sync would refresh plugins={plugins or '[]'}")
+        print(f"SOT sync pointer={pointer}")
+        plugins = [
+            p
+            for p in sorted(plugins_dir.iterdir())
+            if p.is_dir() and (p / "plugin.json").is_file()
+        ]
+        if not plugins:
+            print("SOT sync none (no plugins)")
+            return 0
+        failed = 0
+        for pdir in plugins:
+            meta = _load_plugin_meta(pdir)
+            mirror = _plugin_mirror(pdir)
+            if not mirror.is_dir():
+                url = meta.get("url") or ""
+                if not url:
+                    print(f"SOT sync SKIP {pdir.name}: no mirror and no url")
+                    failed += 1
+                    continue
+                rc, out = _run_git(["clone", "--mirror", url, str(mirror)])
+                if rc != 0:
+                    print(f"SOT sync FAIL {pdir.name}: clone {out}", file=sys.stderr)
+                    failed += 1
+                    continue
+            rc, out = _run_git(["-C", str(mirror), "fetch", "--all", "--prune"])
+            if rc != 0:
+                print(f"SOT sync FAIL {pdir.name}: fetch {out}", file=sys.stderr)
+                failed += 1
+                continue
+            ref = meta.get("ref") or "main"
+            rc2, tip = _run_git(["-C", str(mirror), "rev-parse", f"refs/heads/{ref}"])
+            if rc2 != 0:
+                rc2, tip = _run_git(["-C", str(mirror), "rev-parse", "HEAD"])
+            if rc2 == 0:
+                meta["tip"] = tip.strip()
+                meta["last_sync"] = __import__("datetime").datetime.now(
+                    __import__("datetime").timezone.utc
+                ).strftime("%Y-%m-%dT%H:%M:%SZ")
+                _save_plugin_meta(pdir, meta)
+                print(f"SOT sync ok plugin={pdir.name} tip={meta['tip']}")
+            else:
+                print(f"SOT sync ok plugin={pdir.name} (tip unresolved)")
+        if failed:
+            print(f"SOT sync DONE with failures={failed}", file=sys.stderr)
+            return 1
+        print(f"SOT sync DONE plugins={len(plugins)}")
         return 0
     print(f"SOT FAIL: unknown action {action}", file=sys.stderr)
     return 1
@@ -369,6 +474,7 @@ def cmd_sandbox(args: argparse.Namespace) -> int:
 
 
 def cmd_artifacts(args: argparse.Namespace) -> int:
+    """Artifacts list|stub-create|sync — multi-repo copies from SOT plugins."""
     root = Path(args.root).resolve() if args.root else _repo_root()
     paths = trail.ensure_layout(root)
     action = args.artifacts_action
@@ -380,21 +486,110 @@ def cmd_artifacts(args: argparse.Namespace) -> int:
         ]
         print(f"ARTIFACTS n={len(arts)}")
         for a in arts:
-            print(f"  {a}")
+            repos = paths["artifacts"] / a / "repos"
+            n = len(list(repos.iterdir())) if repos.is_dir() else 0
+            print(f"  {a} repos={n}")
         return 0
     if action == "stub-create":
         aid = args.artifact or "task-stub"
         dest = paths["artifacts"] / aid
         dest.mkdir(parents=True, exist_ok=True)
+        (dest / "repos").mkdir(exist_ok=True)
         (dest / "README.md").write_text(
-            f"# Artifact `{aid}`\n\nMulti-repo worktrees + compose live here.\n",
+            f"# Artifact `{aid}`\n\n"
+            "Multi-repo worktrees live under `repos/<plugin>/`.\n"
+            "Synced from fetch-only SOT mirrors — never mutate SOT.\n"
+            "Run: `emperor context artifacts sync --artifact "
+            f"{aid}`\n",
             encoding="utf-8",
+        )
+        meta = {"id": aid, "plugins": [], "synced": False}
+        (dest / "artifact.json").write_text(
+            json.dumps(meta, indent=2) + "\n", encoding="utf-8"
         )
         print(f"ARTIFACTS stub-create id={aid} path={dest}")
         return 0
+    if action == "sync":
+        aid = args.artifact or "default"
+        dest = paths["artifacts"] / aid
+        dest.mkdir(parents=True, exist_ok=True)
+        repos_dir = dest / "repos"
+        repos_dir.mkdir(exist_ok=True)
+        plugins_dir = paths["sot_plugins"]
+        plugins = [
+            p
+            for p in sorted(plugins_dir.iterdir())
+            if p.is_dir() and (p / "plugin.json").is_file()
+        ]
+        if not plugins:
+            print("ARTIFACTS sync FAIL: no SOT plugins — sot add-plugin first", file=sys.stderr)
+            return 1
+        synced = []
+        failed = 0
+        for pdir in plugins:
+            meta = _load_plugin_meta(pdir)
+            mirror = _plugin_mirror(pdir)
+            if not mirror.is_dir():
+                print(f"ARTIFACTS sync SKIP {pdir.name}: no mirror (sot sync first)")
+                failed += 1
+                continue
+            target = repos_dir / pdir.name
+            ref = meta.get("ref") or "main"
+            tip = meta.get("tip") or ""
+            if not tip:
+                rc, tip = _run_git(["-C", str(mirror), "rev-parse", f"refs/heads/{ref}"])
+                if rc != 0:
+                    rc, tip = _run_git(["-C", str(mirror), "rev-parse", "HEAD"])
+                tip = tip.strip() if rc == 0 else ""
+            if not tip:
+                print(f"ARTIFACTS sync FAIL {pdir.name}: no tip", file=sys.stderr)
+                failed += 1
+                continue
+            if target.exists():
+                # refresh existing clone from mirror
+                rc, out = _run_git(["-C", str(target), "fetch", str(mirror), ref])
+                if rc != 0:
+                    rc, out = _run_git(["-C", str(target), "fetch", str(mirror)])
+                if rc == 0:
+                    _run_git(["-C", str(target), "checkout", "-B", ref, "FETCH_HEAD"])
+                else:
+                    print(f"ARTIFACTS sync FAIL {pdir.name}: {out}", file=sys.stderr)
+                    failed += 1
+                    continue
+            else:
+                rc, out = _run_git(
+                    ["clone", "--no-hardlinks", f"--branch={ref}", str(mirror), str(target)]
+                )
+                if rc != 0:
+                    # mirror may be bare without branch name — clone then checkout tip
+                    rc, out = _run_git(["clone", str(mirror), str(target)])
+                    if rc != 0:
+                        print(f"ARTIFACTS sync FAIL {pdir.name}: clone {out}", file=sys.stderr)
+                        failed += 1
+                        continue
+                    if tip:
+                        _run_git(["-C", str(target), "checkout", "-B", ref, tip])
+            synced.append(pdir.name)
+            print(f"ARTIFACTS sync ok plugin={pdir.name} path={target} tip={tip[:12]}")
+        art_meta = {
+            "id": aid,
+            "plugins": synced,
+            "synced": failed == 0 and bool(synced),
+        }
+        (dest / "artifact.json").write_text(
+            json.dumps(art_meta, indent=2) + "\n", encoding="utf-8"
+        )
+        # generate compose into artifact
+        alloc = _allocate_ports(paths["sandbox"], aid)
+        compose = _compose_from_plugins(root, aid, alloc)
+        (dest / "compose.yml").write_text(compose, encoding="utf-8")
+        if failed:
+            print(f"ARTIFACTS sync DONE with failures={failed}", file=sys.stderr)
+            return 1
+        print(f"ARTIFACTS sync DONE id={aid} plugins={len(synced)}")
+        return 0
     print(f"ARTIFACTS FAIL: unknown action {action}", file=sys.stderr)
     return 1
-
 
 
 def cmd_runtime(args: argparse.Namespace) -> int:
@@ -601,7 +796,7 @@ def build_parser() -> argparse.ArgumentParser:
     ar = sub.add_parser("artifacts", help="artifacts list|stub-create", parents=[parent])
     ar.add_argument(
         "artifacts_action",
-        choices=["list", "stub-create"],
+        choices=["list", "stub-create", "sync"],
     )
     ar.add_argument("--artifact", default="")
 
