@@ -1,0 +1,9 @@
+== identify evals/fixtures/lost-tar ==
+-- extensions --
+      2 md
+      1 txt
+      1 tar
+-- named fossils --
+1 *.tar
+-- shebangs --
+identify: done (read-only)

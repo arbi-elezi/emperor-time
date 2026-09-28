@@ -617,6 +617,10 @@ def run_evals(root: Path) -> int:
             ("pyzip HELLO.zip", "emperor-excavate", "route pyzip → excavate"),
             ("zipfile HELLO.zip", "emperor-excavate", "route zipfile → excavate"),
             ("hello.zip", "emperor-excavate", "route hello.zip → excavate"),
+            ("tar HELLO.tar", "emperor-excavate", "route tar → excavate"),
+            ("pytar HELLO.tar", "emperor-excavate", "route pytar → excavate"),
+            ("tarfile HELLO.tar", "emperor-excavate", "route tarfile → excavate"),
+            ("hello.tar", "emperor-excavate", "route hello.tar → excavate"),
             ("queue next", "emperor-queue", "route queue next → queue"),
             ("blocked task", "emperor-queue", "route blocked task → queue"),
             ("red build", "emperor-heal", "route red build → heal"),
@@ -1156,6 +1160,13 @@ def run_evals(root: Path) -> int:
             r"[0-9]+ \*\.zip",
             ["references/archaeology-zip-manual.md"],
         ),
+        (
+            "lost-tar identify finds *.tar",
+            "lost-tar",
+            "HELLO.tar",
+            r"[0-9]+ \*\.tar",
+            ["references/archaeology-tar-manual.md"],
+        ),
     ]
     # The loop above was messy — clear fail state not affected; rewrite cleanly below by
     # only running the clean fixtures list (sections already printed wrongly once).
@@ -1522,6 +1533,10 @@ def run_evals(root: Path) -> int:
     h.require_contains("pyzip", "evals/triggers.json", "triggers missing pyzip excavate pattern")
     h.require_contains("zipfile", "evals/triggers.json", "triggers missing zipfile excavate pattern")
     h.require_contains(".zip", "evals/triggers.json", "triggers missing .zip excavate pattern")
+    h.require_contains("tar", "evals/triggers.json", "triggers missing tar excavate pattern")
+    h.require_contains("pytar", "evals/triggers.json", "triggers missing pytar excavate pattern")
+    h.require_contains("tarfile", "evals/triggers.json", "triggers missing tarfile excavate pattern")
+    h.require_contains(".tar", "evals/triggers.json", "triggers missing .tar excavate pattern")
     h.require_contains(".js", "evals/triggers.json", "triggers missing .js excavate pattern")
     _, rout_py = h.run_py("scripts/lib/route.py", "finish the branch")
     if "emperor-forge" not in rout_py:
@@ -2247,6 +2262,22 @@ def run_evals(root: Path) -> int:
         h.fail_msg("route matches(.zip, hello.zip) must be True")
     if _m(".zip", "hello.zipfoo"):
         h.fail_msg("route matches(.zip, hello.zipfoo) must be False after extension-boundary")
+    _, rout_tar = h.run_py("scripts/lib/route.py", "tar HELLO.tar")
+    if "emperor-excavate" not in rout_tar:
+        h.fail_msg("route.py tar → excavate")
+    _, rout_pytar = h.run_py("scripts/lib/route.py", "pytar HELLO.tar")
+    if "emperor-excavate" not in rout_pytar:
+        h.fail_msg("route.py pytar → excavate")
+    _, rout_tarfile = h.run_py("scripts/lib/route.py", "tarfile HELLO.tar")
+    if "emperor-excavate" not in rout_tarfile:
+        h.fail_msg("route.py tarfile → excavate")
+    _, rout_hello_tar = h.run_py("scripts/lib/route.py", "hello.tar")
+    if "emperor-excavate" not in rout_hello_tar:
+        h.fail_msg("route.py hello.tar → excavate")
+    if not _m(".tar", "hello.tar"):
+        h.fail_msg("route matches(.tar, hello.tar) must be True")
+    if _m(".tar", "hello.tarfoo"):
+        h.fail_msg("route matches(.tar, hello.tarfoo) must be False after extension-boundary")
     # bare .l must not be enough alone when colliding; .lisp already routes via .lisp
     _, rout_regina = h.run_py("scripts/lib/route.py", "regina HELLO.REX")
     if "emperor-excavate" not in rout_regina:
@@ -3808,9 +3839,9 @@ def run_evals(root: Path) -> int:
     h.require_contains("0.4.101", "CHANGELOG.md", "CHANGELOG missing 0.4.101")
     h.require_contains("0.4.102", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing 0.4.102 tip")
     h.require_contains("0.4.102", "CHANGELOG.md", "CHANGELOG missing 0.4.102")
-    h.require_contains("0.4.103", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing 0.4.103 tip")
-    h.require_contains("0.4.103", ".claude-plugin/plugin.json", "plugin.json not at 0.4.103")
-    h.require_contains("0.4.103", "CHANGELOG.md", "CHANGELOG missing 0.4.103")
+    h.require_contains("0.4.104", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing 0.4.104 tip")
+    h.require_contains("0.4.104", ".claude-plugin/plugin.json", "plugin.json not at 0.4.104")
+    h.require_contains("0.4.104", "CHANGELOG.md", "CHANGELOG missing 0.4.104")
 
     # session-discovery
     h.section("session-discovery locate HARD-GATE leaf")

@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.4.104
+
+- Archaeology tar/tarfile Jail pin: `evals/fixtures/lost-tar/` + `references/archaeology-tar-manual.md` (CPython stdlib `tarfile.open`/`getmembers`/`extractfile` → EMPEROR-TIME-TAR-PROBE-OK; zero new apt; Debian tar REJECTED as leaf owner)
+- identify/route/eval/honesty/bakeoff/catalog lockstep; fossils `*.tar`; route tags `tar` / `pytar` / `tarfile` / `.tar`
+- Plugin, marketplace, and SKILL.md at 0.4.104
+
+
 ## 0.4.103
 
 - Archaeology zip/zipfile Jail pin: `evals/fixtures/lost-zip/` + `references/archaeology-zip-manual.md` (CPython stdlib `ZipFile.namelist`/`read` → EMPEROR-TIME-ZIP-PROBE-OK; zero new apt; unzip/zip REJECTED)
