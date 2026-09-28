@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.4.72
+- Archaeology ed leaf: `evals/fixtures/lost-ed/HELLO.ED` + identify smoke; GNU ed 1.21.1 boot probe VERIFIED (`ed -s < HELLO.ED` → `EMPEROR-TIME-ED-PROBE-OK`); dialect labels honest (CONJECTURE / UNVERIFIABLE where due); identify fossils `*.ed` only; bare `ed` allowed as route tag (tool binary name — not English collision)
+- Jail pin `references/archaeology-ed-manual.md` — GNU ed Invoking ed / `-s` / `--script`
+- Catalog + SKILL.md + archaeology.md + language-agnostic.md link the thirty-first pin alongside Pascal, ASM, COBOL, Fortran, VHDL, Ada, Forth, Common Lisp, Prolog, Tcl, Erlang, REXX, Modula-2, Algol 68, ALGOL 60, Algol W, Icon, Oberon, SNOBOL4, Simula, APL, BCPL, PL/I, Smalltalk, PostScript, BASIC, Scheme, AWK, sed, and m4; route triggers gain `ed` / `gnu-ed` / `.ed`; eval locks `*.ed` identify on lost-ed
+- Plugin, marketplace, and SKILL.md at 0.4.72
+
 ## 0.4.71
 - Archaeology m4 leaf: `evals/fixtures/lost-m4/HELLO.M4` + identify smoke; GNU M4 1.4.19 boot probe VERIFIED (`m4 HELLO.M4` → `EMPEROR-TIME-M4-PROBE-OK`); dialect labels honest (CONJECTURE / UNVERIFIABLE where due); identify fossils `*.m4` only; bare `m4` allowed as route tag (tool binary name — not English collision)
 - Jail pin `references/archaeology-m4-manual.md` — GNU M4 Invoking m4 / Command line files (FILE args)

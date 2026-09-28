@@ -486,7 +486,10 @@
         "gsed",
         ".m4",
         "m4",
-        "gm4"
+        "gm4",
+        ".ed",
+        "ed",
+        "gnu-ed"
       ],
       "tags": [
         "archaeology",
@@ -594,7 +597,9 @@
         "sed",
         "gsed",
         "m4",
-        "gm4"
+        "gm4",
+        "ed",
+        "gnu-ed"
       ],
       "target": "skills/emperor-excavate/SKILL.md",
       "reason": "lost/ancient/foreign tree \u2014 excavate before modernizing"
