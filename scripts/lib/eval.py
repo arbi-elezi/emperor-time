@@ -664,6 +664,10 @@ def run_evals(root: Path) -> int:
             ("pyjsonl HELLO.jsonl", "emperor-excavate", "route pyjsonl → excavate"),
             ("ndjson HELLO.jsonl", "emperor-excavate", "route ndjson → excavate"),
             ("hello.jsonl", "emperor-excavate", "route hello.jsonl → excavate"),
+            ("pptx HELLO.pptx", "emperor-excavate", "route pptx → excavate"),
+            ("pypptx HELLO.pptx", "emperor-excavate", "route pypptx → excavate"),
+            ("ooxml-pptx HELLO.pptx", "emperor-excavate", "route ooxml-pptx → excavate"),
+            ("hello.pptx", "emperor-excavate", "route hello.pptx → excavate"),
             ("queue next", "emperor-queue", "route queue next → queue"),
             ("blocked task", "emperor-queue", "route blocked task → queue"),
             ("red build", "emperor-heal", "route red build → heal"),
@@ -1279,6 +1283,13 @@ def run_evals(root: Path) -> int:
             "HELLO.jsonl",
             r"[0-9]+ \*\.jsonl",
             ["references/archaeology-jsonl-manual.md"],
+        ),
+        (
+            "lost-pptx identify finds *.pptx",
+            "lost-pptx",
+            "HELLO.pptx",
+            r"[0-9]+ \*\.pptx",
+            ["references/archaeology-pptx-manual.md"],
         ),
     ]
     # The loop above was messy — clear fail state not affected; rewrite cleanly below by
@@ -2576,6 +2587,28 @@ def run_evals(root: Path) -> int:
         h.fail_msg("route matches(.jsonl, hello.jsonlfoo) must be False after extension-boundary")
     if _m(".json", "hello.jsonl"):
         h.fail_msg("route matches(.json, hello.jsonl) must be False (json leaf must not steal .jsonl)")
+    _, rout_pptx = h.run_py("scripts/lib/route.py", "pptx HELLO.pptx")
+    if "emperor-excavate" not in rout_pptx:
+        h.fail_msg("route.py pptx → excavate")
+    _, rout_pypptx = h.run_py("scripts/lib/route.py", "pypptx HELLO.pptx")
+    if "emperor-excavate" not in rout_pypptx:
+        h.fail_msg("route.py pypptx → excavate")
+    _, rout_ooxml_pptx = h.run_py("scripts/lib/route.py", "ooxml-pptx HELLO.pptx")
+    if "emperor-excavate" not in rout_ooxml_pptx:
+        h.fail_msg("route.py ooxml-pptx → excavate")
+    _, rout_hello_pptx = h.run_py("scripts/lib/route.py", "hello.pptx")
+    if "emperor-excavate" not in rout_hello_pptx:
+        h.fail_msg("route.py hello.pptx → excavate")
+    if not _m(".pptx", "hello.pptx"):
+        h.fail_msg("route matches(.pptx, hello.pptx) must be True")
+    if _m(".pptx", "hello.pptxfoo"):
+        h.fail_msg("route matches(.pptx, hello.pptxfoo) must be False after extension-boundary")
+    if _m(".zip", "hello.pptx"):
+        h.fail_msg("route matches(.zip, hello.pptx) must be False (zip leaf must not steal .pptx)")
+    if _m(".docx", "hello.pptx"):
+        h.fail_msg("route matches(.docx, hello.pptx) must be False (docx leaf must not steal .pptx)")
+    if _m(".xlsx", "hello.pptx"):
+        h.fail_msg("route matches(.xlsx, hello.pptx) must be False (xlsx leaf must not steal .pptx)")
     # bare .l must not be enough alone when colliding; .lisp already routes via .lisp
     _, rout_regina = h.run_py("scripts/lib/route.py", "regina HELLO.REX")
     if "emperor-excavate" not in rout_regina:
@@ -4156,8 +4189,10 @@ def run_evals(root: Path) -> int:
     h.require_contains("0.4.113", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing 0.4.113 tip")
     h.require_contains("0.4.113", "CHANGELOG.md", "CHANGELOG missing 0.4.113")
     h.require_contains("0.4.114", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing 0.4.114 tip")
-    h.require_contains("0.4.114", ".claude-plugin/plugin.json", "plugin.json not at 0.4.114")
     h.require_contains("0.4.114", "CHANGELOG.md", "CHANGELOG missing 0.4.114")
+    h.require_contains("0.4.115", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing 0.4.115 tip")
+    h.require_contains("0.4.115", ".claude-plugin/plugin.json", "plugin.json not at 0.4.115")
+    h.require_contains("0.4.115", "CHANGELOG.md", "CHANGELOG missing 0.4.115")
 
     # session-discovery
     h.section("session-discovery locate HARD-GATE leaf")

@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.4.115
+
+- Archaeology PPTX / stdlib zipfile-on-`.pptx` Jail pin: `evals/fixtures/lost-pptx/` + `references/archaeology-pptx-manual.md` (CPython stdlib `zipfile` on HELLO.pptx → EMPEROR-TIME-PPTX-PROBE-OK; zero new apt; Debian unzip/zip/LibreOffice REJECTED as leaf owner)
+- identify/route/eval/honesty/bakeoff/catalog lockstep; fossils `*.pptx`; route tags `pptx` / `pypptx` / `ooxml-pptx` / `.pptx`; does not steal plain `*.zip` or `*.docx` or `*.xlsx`
+- Plugin, marketplace, and SKILL.md at 0.4.115
+
 ## 0.4.114
 
 - Archaeology JSONL / stdlib json.loads-per-line-on-`.jsonl` Jail pin: `evals/fixtures/lost-jsonl/` + `references/archaeology-jsonl-manual.md` (CPython stdlib `json` on HELLO.jsonl → EMPEROR-TIME-JSONL-PROBE-OK; zero new apt; Debian jsonlint REJECTED as leaf owner)

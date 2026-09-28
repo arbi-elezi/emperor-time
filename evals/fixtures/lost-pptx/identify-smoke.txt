@@ -1,0 +1,9 @@
+== identify evals/fixtures/lost-pptx ==
+-- extensions --
+      2 md
+      1 txt
+      1 pptx
+-- named fossils --
+1 *.pptx
+-- shebangs --
+identify: done (read-only)
