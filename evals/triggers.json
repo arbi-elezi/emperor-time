@@ -532,7 +532,11 @@
         ".rs",
         "rust",
         "rustc",
-        "rust1.85"
+        "rust1.85",
+        ".c",
+        "gcc",
+        "gcc14",
+        "c11"
       ],
       "tags": [
         "archaeology",
@@ -674,7 +678,10 @@
         "rustc",
         "rust1.85",
         "golang",
-        "go1.24"
+        "go1.24",
+        "gcc",
+        "gcc14",
+        "c11"
       ],
       "target": "skills/emperor-excavate/SKILL.md",
       "reason": "lost/ancient/foreign tree — excavate before modernizing"

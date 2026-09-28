@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.4.85
+
+- Archaeology C leaf: `evals/fixtures/lost-c/HELLO.c` + identify smoke; GCC 14.2.0 boot probe VERIFIED (`gcc HELLO.c -o HELLO` → `./HELLO` → `EMPEROR-TIME-C-PROBE-OK`); dialect labels honest (CONJECTURE / UNVERIFIABLE where due); identify fossils `*.c` only; bare `c` refused as route tag (single-letter / common-English collision); bare `.c` allowed as route tag with extension-boundary matching (does not prefix-hit `.cbl` / `.cl`); prefer `gcc` / `gcc14` / `c11` / `.c`; Debian packages `gcc` 4:14.2.0-1 / `gcc-14` 14.2.0-19 already on box; systems compile-and-run after Rust; TeX/LaTeX still deferred
+- Jail pin `references/archaeology-c-manual.md` — GCC Overall Options (`file.c` / `-o file`) + puts
+- Route extension match: suffixes now require non-alnum/end after the pattern so `.c` cannot prefix-hit `.cbl` / `.cl` (honesty for short extensions)
+- Catalog + SKILL.md + archaeology.md + language-agnostic.md link the forty-fourth pin alongside Pascal, ASM, COBOL, Fortran, VHDL, Ada, Forth, Common Lisp, Prolog, Tcl, Erlang, REXX, Modula-2, Algol 68, ALGOL 60, Algol W, Icon, Oberon, SNOBOL4, Simula, APL, BCPL, PL/I, Smalltalk, PostScript, BASIC, Scheme, AWK, sed, m4, ed, Make, dc, lex, yacc, roff, Perl, bc, Expect, Lua, Ruby, Go, and Rust; route triggers gain `gcc` / `gcc14` / `c11` / `.c`; eval locks `*.c` identify on lost-c
+- Plugin, marketplace, and SKILL.md at 0.4.85
+
 ## 0.4.84
 
 - Archaeology Rust leaf: `evals/fixtures/lost-rust/HELLO.rs` + identify smoke; rustc 1.85.1 boot probe VERIFIED (`rustc HELLO.rs` → `./HELLO` → `EMPEROR-TIME-RUST-PROBE-OK`); dialect labels honest (CONJECTURE / UNVERIFIABLE where due); identify fossils `*.rs` only; bare `rust` allowed as route tag (language name; word-boundary); bare `.rs` allowed as route tag (no known peer excavate substring collision); prefer `rust` / `rustc` / `rust1.85` / `.rs`; Debian package `rustc` 1.85.1+dfsg1-1+deb13u1 already on box; systems compile-and-run after Go; TeX/LaTeX still deferred
