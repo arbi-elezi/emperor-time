@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.4.109
+
+- Archaeology WAR / stdlib zipfile-on-`.war` Jail pin: `evals/fixtures/lost-war/` + `references/archaeology-war-manual.md` (CPython stdlib `zipfile` on HELLO.war → EMPEROR-TIME-WAR-PROBE-OK; zero new apt; Debian unzip/zip/openjdk/tomcat REJECTED as leaf owner)
+- identify/route/eval/honesty/bakeoff/catalog lockstep; fossils `*.war`; route tags `war` / `pywar` / `web-archive` / `.war`; does not steal plain `*.zip` or `*.whl` or `*.jar`
+- Plugin, marketplace, and SKILL.md at 0.4.109
+
+
 ## 0.4.108
 
 - Archaeology JAR / stdlib zipfile-on-`.jar` Jail pin: `evals/fixtures/lost-jar/` + `references/archaeology-jar-manual.md` (CPython stdlib `zipfile` on HELLO.jar → EMPEROR-TIME-JAR-PROBE-OK; zero new apt; Debian unzip/zip/openjdk REJECTED as leaf owner)

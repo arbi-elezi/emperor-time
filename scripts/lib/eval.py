@@ -640,6 +640,10 @@ def run_evals(root: Path) -> int:
             ("pyjar HELLO.jar", "emperor-excavate", "route pyjar → excavate"),
             ("java-archive HELLO.jar", "emperor-excavate", "route java-archive → excavate"),
             ("hello.jar", "emperor-excavate", "route hello.jar → excavate"),
+            ("war HELLO.war", "emperor-excavate", "route war → excavate"),
+            ("pywar HELLO.war", "emperor-excavate", "route pywar → excavate"),
+            ("web-archive HELLO.war", "emperor-excavate", "route web-archive → excavate"),
+            ("hello.war", "emperor-excavate", "route hello.war → excavate"),
             ("queue next", "emperor-queue", "route queue next → queue"),
             ("blocked task", "emperor-queue", "route blocked task → queue"),
             ("red build", "emperor-heal", "route red build → heal"),
@@ -1213,6 +1217,13 @@ def run_evals(root: Path) -> int:
             "HELLO.jar",
             r"[0-9]+ \*\.jar",
             ["references/archaeology-jar-manual.md"],
+        ),
+        (
+            "lost-war identify finds *.war",
+            "lost-war",
+            "HELLO.war",
+            r"[0-9]+ \*\.war",
+            ["references/archaeology-war-manual.md"],
         ),
     ]
     # The loop above was messy — clear fail state not affected; rewrite cleanly below by
@@ -2413,6 +2424,22 @@ def run_evals(root: Path) -> int:
         h.fail_msg("route matches(.jar, hello.jar) must be True")
     if _m(".jar", "hello.jarfoo"):
         h.fail_msg("route matches(.jar, hello.jarfoo) must be False after extension-boundary")
+    _, rout_war = h.run_py("scripts/lib/route.py", "war HELLO.war")
+    if "emperor-excavate" not in rout_war:
+        h.fail_msg("route.py war → excavate")
+    _, rout_pywar = h.run_py("scripts/lib/route.py", "pywar HELLO.war")
+    if "emperor-excavate" not in rout_pywar:
+        h.fail_msg("route.py pywar → excavate")
+    _, rout_web_archive = h.run_py("scripts/lib/route.py", "web-archive HELLO.war")
+    if "emperor-excavate" not in rout_web_archive:
+        h.fail_msg("route.py web-archive → excavate")
+    _, rout_hello_war = h.run_py("scripts/lib/route.py", "hello.war")
+    if "emperor-excavate" not in rout_hello_war:
+        h.fail_msg("route.py hello.war → excavate")
+    if not _m(".war", "hello.war"):
+        h.fail_msg("route matches(.war, hello.war) must be True")
+    if _m(".war", "hello.warfoo"):
+        h.fail_msg("route matches(.war, hello.warfoo) must be False after extension-boundary")
     # bare .l must not be enough alone when colliding; .lisp already routes via .lisp
     _, rout_regina = h.run_py("scripts/lib/route.py", "regina HELLO.REX")
     if "emperor-excavate" not in rout_regina:
@@ -3981,8 +4008,10 @@ def run_evals(root: Path) -> int:
     h.require_contains("0.4.107", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing 0.4.107 tip")
     h.require_contains("0.4.107", "CHANGELOG.md", "CHANGELOG missing 0.4.107")
     h.require_contains("0.4.108", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing 0.4.108 tip")
-    h.require_contains("0.4.108", ".claude-plugin/plugin.json", "plugin.json not at 0.4.108")
     h.require_contains("0.4.108", "CHANGELOG.md", "CHANGELOG missing 0.4.108")
+    h.require_contains("0.4.109", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing 0.4.109 tip")
+    h.require_contains("0.4.109", ".claude-plugin/plugin.json", "plugin.json not at 0.4.109")
+    h.require_contains("0.4.109", "CHANGELOG.md", "CHANGELOG missing 0.4.109")
 
     # session-discovery
     h.section("session-discovery locate HARD-GATE leaf")
