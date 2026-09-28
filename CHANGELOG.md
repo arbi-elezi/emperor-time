@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.4.92
+
+- Archaeology jq leaf: `evals/fixtures/lost-jq/HELLO.jq` + identify smoke; jq 1.7 CLI boot probe VERIFIED (`jq -nr -f HELLO.jq` → `EMPEROR-TIME-JQ-PROBE-OK`); dialect labels honest (CONJECTURE / UNVERIFIABLE where due); identify fossils `*.jq` only; bare `jq` allowed as route tag (tool binary name; word-boundary); bare `.jq` allowed as route tag with extension-boundary matching (does not prefix-hit `.jquery`); prefer `jq` / `jq1.7` / `jqlang` / `.jq`; Debian package `jq` 1.7.1-6+deb13u4 already on box this leaf (Worthy Spend 0 B apt; Installed-Size 125 kB); JSON filter leaf after SQL; treats jq as peer fossil not house twin language; TeX/LaTeX still deferred; C++ still deferred; CLIPS / embeddings still deferred
+- Jail pin `references/archaeology-jq-manual.md` — jq 1.7 Manual Invoking jq (`-f` / `--from-file` …)
+- Catalog + SKILL.md + archaeology.md + language-agnostic.md link the fifty-first pin alongside Pascal, ASM, COBOL, Fortran, VHDL, Ada, Forth, Common Lisp, Prolog, Tcl, Erlang, REXX, Modula-2, Algol 68, ALGOL 60, Algol W, Icon, Oberon, SNOBOL4, Simula, APL, BCPL, PL/I, Smalltalk, PostScript, BASIC, Scheme, AWK, sed, m4, ed, Make, dc, lex, yacc, roff, Perl, bc, Expect, Lua, Ruby, Go, Rust, C, JavaScript, Python, TypeScript, Bash, PHP, and SQL/SQLite; route triggers gain `jq` / `jq1.7` / `jqlang` / `.jq`; eval locks `*.jq` identify on lost-jq
+- Plugin, marketplace, and SKILL.md at 0.4.92
+
 ## 0.4.91
 
 - Archaeology SQL/SQLite leaf: `evals/fixtures/lost-sql/HELLO.sql` + identify smoke; SQLite 3.46.1 CLI boot probe VERIFIED (`sqlite3 -batch :memory: ".read HELLO.sql"` → `EMPEROR-TIME-SQL-PROBE-OK`); dialect labels honest (CONJECTURE / UNVERIFIABLE where due); identify fossils `*.sql` only (no `*.sqlite` / `*.db` / `*.sqlite3` this leaf); bare `sql` allowed as route tag (three-letter language abbreviation; word-boundary); bare `sqlite` allowed as route tag (tool / language name; word-boundary); bare `.sql` allowed as route tag with extension-boundary matching (does not prefix-hit `.sqlite` / `.sqlite3` / `.sqlitedb`); prefer `sqlite` / `sqlite3` / `sqlite3.46` / `.sql`; Debian package `sqlite3` 3.46.1-7+deb13u2 apt-installed this leaf (~601 kB); SQL scripting leaf after PHP; treats SQLite SQL as peer fossil not house twin language; TeX/LaTeX still deferred; C++ still deferred; CLIPS / embeddings still deferred

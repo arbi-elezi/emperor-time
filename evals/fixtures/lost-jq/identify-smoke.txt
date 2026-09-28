@@ -1,0 +1,9 @@
+== identify evals/fixtures/lost-jq ==
+-- extensions --
+      2 md
+      1 txt
+      1 jq
+-- named fossils --
+1 *.jq
+-- shebangs --
+identify: done (read-only)
