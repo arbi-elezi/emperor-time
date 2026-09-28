@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.4.57
+- Archaeology Algol W leaf: `evals/fixtures/lost-alw/HELLO.ALW` + identify smoke; Awe 2026-05 boot probe VERIFIED (`awe HELLO.ALW -o HELLO`); dialect labels honest (CONJECTURE / UNVERIFIABLE where due); identify fossils `*.alw` only (not `*.a60` / `*.a68` / `*.alg`)
+- Jail pin `references/archaeology-algolw-manual.md` — Awe SYNOPSIS / EXAMPLES `WRITE` (`awe source.alw... [-o executable]`)
+- Catalog + SKILL.md + archaeology.md + language-agnostic.md link the sixteenth pin alongside Pascal, ASM, COBOL, Fortran, VHDL, Ada, Forth, Common Lisp, Prolog, Tcl, Erlang, REXX, Modula-2, Algol 68, and ALGOL 60; route triggers gain `awe` / `algolw` / `algol-w` / `.alw` / space-intent `algol w` (bare English `write` refused); eval locks `*.alw` identify on lost-alw
+- Plugin, marketplace, and SKILL.md at 0.4.57
+
 ## 0.4.56
 - Archaeology ALGOL 60 leaf: `evals/fixtures/lost-a60/HELLO.A60` + identify smoke; GNU MARST 2.8 boot probe VERIFIED (`marst HELLO.A60` → `gcc -lalgol -lm`); dialect labels honest (CONJECTURE / UNVERIFIABLE where due); identify fossils `*.a60` (not `*.alg` — Algol 68 leaf)
 - Jail pin `references/archaeology-algol60-manual.md` — GNU MARST Usage Example / `outstring` (`marst … -o …` / `gcc … -lalgol -lm`)
