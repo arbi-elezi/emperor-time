@@ -536,7 +536,12 @@
         ".c",
         "gcc",
         "gcc14",
-        "c11"
+        "c11",
+        ".js",
+        "nodejs",
+        "node20",
+        "javascript",
+        "js"
       ],
       "tags": [
         "archaeology",
@@ -681,7 +686,11 @@
         "go1.24",
         "gcc",
         "gcc14",
-        "c11"
+        "c11",
+        "nodejs",
+        "node20",
+        "javascript",
+        "js"
       ],
       "target": "skills/emperor-excavate/SKILL.md",
       "reason": "lost/ancient/foreign tree — excavate before modernizing"
