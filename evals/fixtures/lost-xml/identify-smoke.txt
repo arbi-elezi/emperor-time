@@ -1,0 +1,9 @@
+== identify evals/fixtures/lost-xml ==
+-- extensions --
+      2 md
+      1 xml
+      1 txt
+-- named fossils --
+1 *.xml
+-- shebangs --
+identify: done (read-only)

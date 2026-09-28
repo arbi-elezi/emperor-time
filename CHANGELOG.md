@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.4.94
+
+- Archaeology XML leaf: `evals/fixtures/lost-xml/HELLO.xml` + identify smoke; xmllint (libxml2 2.9.14) boot probe VERIFIED (`xmllint --xpath 'string(/probe)' HELLO.xml` → `EMPEROR-TIME-XML-PROBE-OK`); dialect labels honest (CONJECTURE / UNVERIFIABLE where due); identify fossils `*.xml` (XML peer after XSLT; XSLT still owns `*.xsl` / `*.xslt` only); bare `xml` / `xmllint` / `libxml2` allowed as route tags; bare `.xml` allowed with extension-boundary matching; prefer `xmllint` / `libxml2` / `xml` / `.xml`; Debian package `libxml2-utils` 2.12.7+dfsg+really2.9.14-2.1+deb13u3 apt-installed this leaf (101 kB archive; Installed-Size 181 kB; libxml2 already on box); XML document leaf after XSLT; treats XML as peer fossil not house twin language; TeX/LaTeX still deferred; C++ still deferred; CLIPS / embeddings still deferred
+- Jail pin `references/archaeology-xml-manual.md` — xmllint(1) SYNOPSIS (XML-FILE + `--xpath` …)
+- Catalog + SKILL.md + archaeology.md + language-agnostic.md link the fifty-third pin alongside Pascal, ASM, COBOL, Fortran, VHDL, Ada, Forth, Common Lisp, Prolog, Tcl, Erlang, REXX, Modula-2, Algol 68, ALGOL 60, Algol W, Icon, Oberon, SNOBOL4, Simula, APL, BCPL, PL/I, Smalltalk, PostScript, BASIC, Scheme, AWK, sed, m4, ed, Make, dc, lex, yacc, roff, Perl, bc, Expect, Lua, Ruby, Go, Rust, C, JavaScript, Python, TypeScript, Bash, PHP, SQL/SQLite, jq, and XSLT; route triggers gain `xmllint` / `libxml2` / `xml` / `.xml`; eval locks `*.xml` identify on lost-xml
+- Plugin, marketplace, and SKILL.md at 0.4.94
+
 ## 0.4.93
 
 - Archaeology XSLT leaf: `evals/fixtures/lost-xsl/HELLO.xsl` + identify smoke; xsltproc 1.1.35 (libxslt) boot probe VERIFIED (`xsltproc HELLO.xsl HELLO.xml` → `EMPEROR-TIME-XSLT-PROBE-OK`); dialect labels honest (CONJECTURE / UNVERIFIABLE where due); identify fossils `*.xsl` / `*.xslt` only (not bare `*.xml`); bare `xslt` / `xsltproc` / `libxslt` allowed as route tags; bare `.xsl` / `.xslt` allowed with extension-boundary matching (`.xsl` does not alone prefix-hit `.xslt` — both listed); prefer `xsltproc` / `libxslt` / `xslt` / `.xsl` / `.xslt`; Debian package `xsltproc` 1.1.35-1.2+deb13u3 apt-installed this leaf (115 kB archive; Installed-Size 151 kB; libxslt1.1 already on box); XML/XSLT leaf after jq; treats XSLT as peer fossil not house twin language; TeX/LaTeX still deferred; C++ still deferred; CLIPS / embeddings still deferred
