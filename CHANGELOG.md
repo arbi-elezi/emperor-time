@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.4.67
+- Archaeology BASIC leaf: `evals/fixtures/lost-bas/HELLO.BAS` + identify smoke; Bywater BASIC 2.20pl2 boot probe VERIFIED (`bwbasic HELLO.BAS` → `EMPEROR-TIME-BAS-PROBE-OK`); dialect labels honest (CONJECTURE / UNVERIFIABLE where due); identify fossils `*.bas` only; bare English `basic` refused as route tag (common-English collision); bare `print` refused as route tag (cross-dialect keyword)
+- Jail pin `references/archaeology-basic-manual.md` — bwbasic(1) §4.d Command-Line Execution / `bwbasic prog.bas`
+- Catalog + SKILL.md + archaeology.md + language-agnostic.md link the twenty-sixth pin alongside Pascal, ASM, COBOL, Fortran, VHDL, Ada, Forth, Common Lisp, Prolog, Tcl, Erlang, REXX, Modula-2, Algol 68, ALGOL 60, Algol W, Icon, Oberon, SNOBOL4, Simula, APL, BCPL, PL/I, Smalltalk, and PostScript; route triggers gain `bwbasic` / `bywater` / `.bas` (bare English `basic` refused); eval locks `*.bas` identify on lost-bas
+- Plugin, marketplace, and SKILL.md at 0.4.67
+
 ## 0.4.66
 - Archaeology PostScript leaf: `evals/fixtures/lost-ps/HELLO.PS` + identify smoke; GPL Ghostscript 10.05.1 boot probe VERIFIED (`gs -q -dNOPAUSE -dBATCH -sDEVICE=nullpage HELLO.PS` → `EMPEROR-TIME-PS-PROBE-OK`); dialect labels honest (CONJECTURE / UNVERIFIABLE where due); identify fossils `*.ps` + `*.eps`; bare `.ps` refused as route tag (short-extension collision with `.ps1`); bare `gs` refused as route tag (two-letter collision)
 - Jail pin `references/archaeology-postscript-manual.md` — Ghostscript User Guide Invoking Ghostscript / `gs [options] {filename …}`
