@@ -1,0 +1,9 @@
+== identify evals/fixtures/lost-pli ==
+-- extensions --
+      2 md
+      1 txt
+      1 pli
+-- named fossils --
+1 *.pli
+-- shebangs --
+identify: done (read-only)
