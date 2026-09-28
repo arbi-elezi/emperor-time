@@ -17,6 +17,12 @@ metadata:
    (`consent-protocol.md` first unless consent is already on the ledger).
 2. Dowse the machine (`scripts/dowse.sh` / `dowse.ps1`) if the roster is stale.
 3. Client consents per agent per task (or a standing policy they stated).
+   **MUST — consent HARD-GATE:** before dispatch, run
+   `scripts/emperor consent <task-dir>` (or `steal-consent`).
+   Doctrine: `chains/steal-chain/consent-protocol.md`. Use
+   `--reject-no-consent` / `--check-consent`. Missing CONSENT /
+   header theater / uncovered enlisted agent → exit 1. G4 calls
+   `scripts/lib/consent.py` when steal activity is present.
 4. Workers receive the **work order + named files**, never the author's diary.
 5. Capture to `.emperor/runs/<task>/<agent>/` (`prompt.md`, `out.txt`, `meta.md`).
 6. Output is CONJECTURE until Judgment + `scripts/gate.sh g4`.

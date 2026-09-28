@@ -51,6 +51,7 @@ mean **disk + eval**, not live multi-vendor win rates.
 | plans (Plan Document Header + Task-N) | `scripts/lib/work_order.py` (`--reject-tbd` / `--reject-no-tasks` / `--check-tasks`) + `evals/fixtures/plans-header/` + `emperor work-order` | TESTED |
 | claim-audit (Judgment G4) | `scripts/lib/claim_audit.py` (`--reject-unaudited` / `--check-audit` / CLAIM AUDIT line) + `evals/fixtures/claim-audit/` + `emperor claim-audit` | TESTED |
 | quarantine (Steal admission) | `scripts/lib/quarantine.py` (`--reject-unquarantined` / `--check-quarantine` / CONJECTURE + ADMITTED) + `evals/fixtures/steal-quarantine/` + `emperor quarantine` | TESTED |
+| consent-protocol (Steal enlistment) HARD-GATE | `scripts/lib/consent.py` (`--reject-no-consent` / `--check-consent`) + `evals/fixtures/steal-consent/` + `emperor consent` | TESTED |
 | critique eight-count (Judgment G4) | `scripts/lib/critique.py` (`--reject-incomplete-critique` / `--check-critique` / eight axes + Checked) + `evals/fixtures/critique-eight-count/` + `emperor critique` | TESTED |
 | verdict / breach (Judgment G5) | `scripts/lib/verdict.py` (`--reject-hidden-breach` / `--check-verdict` / Verdict citations + honest Breach Register) + `evals/fixtures/verdict-breach/` + `emperor verdict` | TESTED |
 | finish menu suite-green HARD-GATE | `scripts/lib/finish.py` `--reject-red-suite` / `--require-green` + thin `finish.sh`/`finish.ps1` + `finish-menu.md` (done.py / eval) | TESTED |
@@ -193,7 +194,7 @@ drifts from disk or if live-defect-rate is mislabeled.
 ## Verdict
 
 ET wins this slice on *mechanical lock-in* (eval owns the rows; leaf gates
-above are on disk and eval-locked through v0.4.129).
+above are on disk and eval-locked through v0.4.130).
 Activation *mechanism* is closed on disk (v0.4.5–0.4.6); wild-agent
 activation without a tell stays **UNVERIFIABLE** until a marketplace re-run.
 Live defect-rate vs Superpowers stays **UNVERIFIABLE** — do not invent %.

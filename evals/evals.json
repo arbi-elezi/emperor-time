@@ -77,6 +77,11 @@
       "id": "queue-reject-multi-wip-hard-gate",
       "type": "behavioral-fixture",
       "expect": "queue.py --reject-multi-wip / --check-wip refuses >1 active [~] multi-WIP; accepts zero or one active (placeholders ignored)"
+    },
+    {
+      "id": "steal-consent-hard-gate",
+      "type": "behavioral-fixture",
+      "expect": "consent.py / gate g4 rejects steal activity lacking CONSENT record / header theater / uncovered enlisted agent; accepts CONSENT + agent \u2192 role / EMPEROR_CONSENT_AGENTS / solo"
     }
   ]
 }

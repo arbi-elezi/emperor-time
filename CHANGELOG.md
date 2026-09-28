@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.4.130
+
+- Vertical depth: Steal consent-protocol HARD-GATE — `scripts/lib/consent.py` mechanically refuses dispatch / enlistment without a CONSENT: record (not doctrine-only markdown; CONSENT-header theater without `agent → role` fails)
+- Always-fail `--reject-no-consent`; `--check-consent PATH` validates CONSENT + assignments / EMPEROR_CONSENT_AGENTS / honest solo; G4 calls the module when steal activity is present (vacuous PASS for solo)
+- Thin twins `consent.sh` / `consent.ps1` + `steal-consent` alias + `emperor consent` / `emperor steal-consent` peers; fixtures `evals/fixtures/steal-consent/`; consent-protocol.md + mechanical-gates + dispatch skill HARD-GATE lockstep
+- Not archaeology; not embeddings; closes next soft-gate after queue multi-WIP (v0.4.129)
+- Plugin, marketplace, and SKILL.md at 0.4.130
+
 ## 0.4.129
 
 - Vertical depth: queue multi-WIP HARD-GATE — `scripts/lib/queue.py` mechanically refuses >1 in-progress / active `[~]` on the ledger (not `queue next` refuse theater alone; agents who skip the script still hit always-fail `--reject-multi-wip`)

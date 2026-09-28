@@ -14,6 +14,8 @@ G4 delegates self-critique eight-count to critique.py
 (critique file presence ≠ eight-count completeness).
 G4 also delegates Steal quarantine admission to quarantine.py
 (vacuous PASS when no worker runs / no steal markers).
+G4 also delegates Steal consent-protocol to consent.py
+(vacuous PASS when no worker runs / no steal markers).
 G5 delegates verdict + Breach Register honesty to verdict.py
 (PASS substring + header-only theater is not enough).
 """
@@ -123,6 +125,16 @@ def _run_quarantine(gate: str, task: Path) -> None:
         _fail(gate, "steal quarantine (quarantine.py)")
 
 
+def _run_consent(gate: str, task: Path) -> None:
+    py = _root() / "scripts" / "lib" / "consent.py"
+    proc = subprocess.run(
+        [sys.executable, str(py), "--check-consent", str(task)],
+        check=False,
+    )
+    if proc.returncode != 0:
+        _fail(gate, "steal consent (consent.py)")
+
+
 def _run_verdict(gate: str, task: Path) -> None:
     py = _root() / "scripts" / "lib" / "verdict.py"
     proc = subprocess.run(
@@ -224,6 +236,9 @@ def run_gate(gate: str, task: Path) -> None:
         # Mechanical claim-audit: CLAIM AUDIT line + terminal rows.
         # Not critique-file-present theater — exit code from claim_audit.py.
         _run_claim_audit(gate, task)
+        # Steal consent: CONSENT record before enlistment.
+        # Vacuous PASS when no worker runs / steal markers.
+        _run_consent(gate, task)
         # Steal quarantine: runs layout + CONJECTURE start + ADMITTED|REJECTED.
         # Vacuous PASS when no worker runs / steal markers.
         _run_quarantine(gate, task)

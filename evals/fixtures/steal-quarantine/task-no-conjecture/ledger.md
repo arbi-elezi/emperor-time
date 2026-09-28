@@ -26,3 +26,6 @@ CLAIM AUDIT: 0 rows — 0 VERIFIED / 0 REFUTED / 0 labeled / 0 labeled; spot-che
 
 ## Breach Register
 - empty
+
+CONSENT: task task-no-conjecture
+  codex → fixture work   (per-task approval, "yes")

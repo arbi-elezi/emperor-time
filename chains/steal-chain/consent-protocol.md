@@ -75,3 +75,29 @@ for.
   the handoff aspect (`sign-in-handoff.md`) owns that exchange.
 - **Scope expansion** — an agent approved for task A is not approved for task
   B; per-task means per-task.
+
+## HARD-GATE (mechanical)
+
+Doctrine above is the law. The lock is an exit code:
+
+```bash
+scripts/emperor consent <task-dir>              # or --check-consent PATH
+scripts/emperor consent --reject-no-consent     # always fails (card + exit 1)
+scripts/emperor steal-consent <task-dir>        # alias
+scripts/gate.sh g4 <task-dir>                   # calls consent.py when steal activity present
+```
+
+Python core: `scripts/lib/consent.py`. Thin twins: `consent.sh` /
+`consent.ps1` (+ `steal-consent` alias). Fails when:
+
+1. Steal activity present but missing `CONSENT:` record with at least one
+   `agent → role` assignment (header-only theater fails)
+2. Enlisted run agent under `.emperor/runs/` not named in the consent record
+   (and not covered by `EMPEROR_CONSENT_AGENTS`)
+3. `EMPEROR_CONSENT_AGENTS=none` (or empty) while steal activity is present
+
+Accepts: well-formed CONSENT + assignments; CI `EMPEROR_CONSENT_AGENTS` covering
+enlisted agents; honest `proceeded solo` / client-unreachable solo self-grant.
+Vacuous PASS when the task has no worker runs and no steal markers — G4 stays
+quiet for solo work. Forge `EMPEROR_CONSENT_PR` is **not** Steal enlistment
+consent.
