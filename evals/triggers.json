@@ -476,7 +476,11 @@
         ".scm",
         "csi",
         "chicken",
-        "chicken-scheme"
+        "chicken-scheme",
+        ".awk",
+        "gawk",
+        "awk",
+        "nawk"
       ],
       "tags": [
         "archaeology",
@@ -577,7 +581,10 @@
         "scm",
         "csi",
         "chicken",
-        "chicken-scheme"
+        "chicken-scheme",
+        "awk",
+        "gawk",
+        "nawk"
       ],
       "target": "skills/emperor-excavate/SKILL.md",
       "reason": "lost/ancient/foreign tree — excavate before modernizing"
