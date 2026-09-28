@@ -609,6 +609,10 @@ def run_evals(root: Path) -> int:
             ("pyplist HELLO.plist", "emperor-excavate", "route pyplist → excavate"),
             ("plistlib HELLO.plist", "emperor-excavate", "route plistlib → excavate"),
             ("hello.plist", "emperor-excavate", "route hello.plist → excavate"),
+            ("eml HELLO.eml", "emperor-excavate", "route eml → excavate"),
+            ("pyemail HELLO.eml", "emperor-excavate", "route pyemail → excavate"),
+            ("email.parser HELLO.eml", "emperor-excavate", "route email.parser → excavate"),
+            ("hello.eml", "emperor-excavate", "route hello.eml → excavate"),
             ("queue next", "emperor-queue", "route queue next → queue"),
             ("blocked task", "emperor-queue", "route blocked task → queue"),
             ("red build", "emperor-heal", "route red build → heal"),
@@ -1134,6 +1138,13 @@ def run_evals(root: Path) -> int:
             r"[0-9]+ \*\.plist",
             ["references/archaeology-plist-manual.md"],
         ),
+        (
+            "lost-eml identify finds *.eml",
+            "lost-eml",
+            "HELLO.eml",
+            r"[0-9]+ \*\.eml",
+            ["references/archaeology-eml-manual.md"],
+        ),
     ]
     # The loop above was messy — clear fail state not affected; rewrite cleanly below by
     # only running the clean fixtures list (sections already printed wrongly once).
@@ -1492,6 +1503,10 @@ def run_evals(root: Path) -> int:
     h.require_contains("pyplist", "evals/triggers.json", "triggers missing pyplist excavate pattern")
     h.require_contains("plistlib", "evals/triggers.json", "triggers missing plistlib excavate pattern")
     h.require_contains(".plist", "evals/triggers.json", "triggers missing .plist excavate pattern")
+    h.require_contains("eml", "evals/triggers.json", "triggers missing eml excavate pattern")
+    h.require_contains("pyemail", "evals/triggers.json", "triggers missing pyemail excavate pattern")
+    h.require_contains("email.parser", "evals/triggers.json", "triggers missing email.parser excavate pattern")
+    h.require_contains(".eml", "evals/triggers.json", "triggers missing .eml excavate pattern")
     h.require_contains(".js", "evals/triggers.json", "triggers missing .js excavate pattern")
     _, rout_py = h.run_py("scripts/lib/route.py", "finish the branch")
     if "emperor-forge" not in rout_py:
@@ -2181,6 +2196,26 @@ def run_evals(root: Path) -> int:
         h.fail_msg("route matches(.plist, hello.plistfoo) must be False after extension-boundary")
     if _m(".plist", "hello.plistx"):
         h.fail_msg("route matches(.plist, hello.plistx) must be False after extension-boundary")
+    _, rout_eml = h.run_py("scripts/lib/route.py", "eml HELLO.eml")
+    if "emperor-excavate" not in rout_eml:
+        h.fail_msg("route.py eml → excavate")
+    _, rout_pyemail = h.run_py("scripts/lib/route.py", "pyemail HELLO.eml")
+    if "emperor-excavate" not in rout_pyemail:
+        h.fail_msg("route.py pyemail → excavate")
+    _, rout_email_parser = h.run_py("scripts/lib/route.py", "email.parser HELLO.eml")
+    if "emperor-excavate" not in rout_email_parser:
+        h.fail_msg("route.py email.parser → excavate")
+    _, rout_hello_eml = h.run_py("scripts/lib/route.py", "hello.eml")
+    if "emperor-excavate" not in rout_hello_eml:
+        h.fail_msg("route.py hello.eml → excavate")
+    if not _m(".eml", "hello.eml"):
+        h.fail_msg("route matches(.eml, hello.eml) must be True")
+    if _m(".eml", "hello.emlfoo"):
+        h.fail_msg("route matches(.eml, hello.emlfoo) must be False after extension-boundary")
+    if _m(".eml", "hello.emlx"):
+        h.fail_msg("route matches(.eml, hello.emlx) must be False after extension-boundary")
+    # bare email must NOT route to excavate via eml leaf (discourse collision)
+    # (may still match other routes; only assert .eml extension-boundary + positive tags above)
     # bare .l must not be enough alone when colliding; .lisp already routes via .lisp
     _, rout_regina = h.run_py("scripts/lib/route.py", "regina HELLO.REX")
     if "emperor-excavate" not in rout_regina:
@@ -3739,8 +3774,10 @@ def run_evals(root: Path) -> int:
     h.require_contains("0.4.100", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing 0.4.100 tip")
     h.require_contains("0.4.100", "CHANGELOG.md", "CHANGELOG missing 0.4.100")
     h.require_contains("0.4.101", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing 0.4.101 tip")
-    h.require_contains("0.4.101", ".claude-plugin/plugin.json", "plugin.json not at 0.4.101")
     h.require_contains("0.4.101", "CHANGELOG.md", "CHANGELOG missing 0.4.101")
+    h.require_contains("0.4.102", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing 0.4.102 tip")
+    h.require_contains("0.4.102", ".claude-plugin/plugin.json", "plugin.json not at 0.4.102")
+    h.require_contains("0.4.102", "CHANGELOG.md", "CHANGELOG missing 0.4.102")
 
     # session-discovery
     h.section("session-discovery locate HARD-GATE leaf")

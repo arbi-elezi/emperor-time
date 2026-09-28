@@ -9,3 +9,4 @@ Modelfile.example text eol=lf
 *.ps1 text eol=crlf
 # Rendered art
 *.png -text
+evals/fixtures/lost-eml/HELLO.eml text eol=crlf

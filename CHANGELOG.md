@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.4.102
+
+- Archaeology eml/email.parser Jail pin: `evals/fixtures/lost-eml/` + `references/archaeology-eml-manual.md` (CPython stdlib `BytesParser.parsebytes` Subject → EMPEROR-TIME-EML-PROBE-OK; zero new apt; mailutils/mutt REJECTED)
+- identify/route/eval/honesty/bakeoff/catalog lockstep; fossils `*.eml`; route tags `eml` / `pyemail` / `email.parser` / `.eml` (bare `email` refused)
+- Plugin, marketplace, and SKILL.md at 0.4.102
+
+
 ## 0.4.101
 
 - Archaeology plist leaf: `evals/fixtures/lost-plist/HELLO.plist` + identify smoke; CPython 3.13.5 stdlib `plistlib` boot probe VERIFIED (`plistlib.load` → `EMPEROR-TIME-PLIST-PROBE-OK`); dialect labels honest (CONJECTURE / UNVERIFIABLE where due); identify fossils `*.plist`; bare `plist` / `pyplist` / `plistlib` allowed as route tags; bare `.plist` allowed with extension-boundary matching; prefer `plist` / `pyplist` / `plistlib` / `.plist`; CPython stdlib already on box — **zero new Apt Worthy Spend** this leaf; Debian `libplist-utils` 2.6.0-2+b1 apt REJECTED (~68 kB archives with libplist-2.0-4; unnecessary vs stdlib); property-list leaf after INI; treats plist as peer fossil not house twin language; distinct from XML (`*.xml` / xmllint) and JSON (`*.json` / stdlib json); TeX/LaTeX still deferred; C++ still deferred; graphviz still deferred; `*.tsv` / `*.jsonl` still deferred; CLIPS / embeddings still deferred

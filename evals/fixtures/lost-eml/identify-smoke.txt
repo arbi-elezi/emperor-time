@@ -1,0 +1,9 @@
+== identify /workspace/emperor-time/evals/fixtures/lost-eml ==
+-- extensions --
+      2 md
+      1 txt
+      1 eml
+-- named fossils --
+1 *.eml
+-- shebangs --
+identify: done (read-only)
