@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.4.65
+- Archaeology Smalltalk leaf: `evals/fixtures/lost-st/HELLO.ST` + identify smoke; GNU Smalltalk 3.2.5 boot probe VERIFIED (`./gst -q HELLO.ST` → `EMPEROR-TIME-ST-PROBE-OK`); dialect labels honest (CONJECTURE / UNVERIFIABLE where due); identify fossils `*.st` only; bare `.st` refused as route tag (short-extension collision)
+- Jail pin `references/archaeology-smalltalk-manual.md` — GNU Smalltalk User's Guide Invocation / `gst [ flags … ] [ file … ]`
+- Catalog + SKILL.md + archaeology.md + language-agnostic.md link the twenty-fourth pin alongside Pascal, ASM, COBOL, Fortran, VHDL, Ada, Forth, Common Lisp, Prolog, Tcl, Erlang, REXX, Modula-2, Algol 68, ALGOL 60, Algol W, Icon, Oberon, SNOBOL4, Simula, APL, BCPL, and PL/I; route triggers gain `gst` / `smalltalk` / `gnu-smalltalk` (bare English keyword tags and bare `.st` refused); eval locks `*.st` identify on lost-st
+- Plugin, marketplace, and SKILL.md at 0.4.65
+
 ## 0.4.64
 - Archaeology PL/I leaf: `evals/fixtures/lost-pli/HELLO.PLI` + identify smoke; Iron Spring PL/I 1.4.1 (15 Apr 2026) boot probe VERIFIED (`plic -C -lixg -ew HELLO.PLI -o hello.o` + `ld … -lprf` + `./hello` → `EMPEROR-TIME-PLI-PROBE-OK`); dialect labels honest (CONJECTURE / UNVERIFIABLE where due); identify fossils `*.pli` + `*.pl1`
 - Jail pin `references/archaeology-pli-manual.md` — Iron Spring Programming Guide Running the Compiler / `plic` `-C` + readme_linux SA_make `ld … -lprf`
