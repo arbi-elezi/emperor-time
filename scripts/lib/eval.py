@@ -648,6 +648,10 @@ def run_evals(root: Path) -> int:
             ("pyapk HELLO.apk", "emperor-excavate", "route pyapk → excavate"),
             ("android-package HELLO.apk", "emperor-excavate", "route android-package → excavate"),
             ("hello.apk", "emperor-excavate", "route hello.apk → excavate"),
+            ("docx HELLO.docx", "emperor-excavate", "route docx → excavate"),
+            ("pydocx HELLO.docx", "emperor-excavate", "route pydocx → excavate"),
+            ("ooxml-word HELLO.docx", "emperor-excavate", "route ooxml-word → excavate"),
+            ("hello.docx", "emperor-excavate", "route hello.docx → excavate"),
             ("queue next", "emperor-queue", "route queue next → queue"),
             ("blocked task", "emperor-queue", "route blocked task → queue"),
             ("red build", "emperor-heal", "route red build → heal"),
@@ -1235,6 +1239,13 @@ def run_evals(root: Path) -> int:
             "HELLO.apk",
             r"[0-9]+ \*\.apk",
             ["references/archaeology-apk-manual.md"],
+        ),
+        (
+            "lost-docx identify finds *.docx",
+            "lost-docx",
+            "HELLO.docx",
+            r"[0-9]+ \*\.docx",
+            ["references/archaeology-docx-manual.md"],
         ),
     ]
     # The loop above was messy — clear fail state not affected; rewrite cleanly below by
@@ -2467,6 +2478,22 @@ def run_evals(root: Path) -> int:
         h.fail_msg("route matches(.apk, hello.apk) must be True")
     if _m(".apk", "hello.apkfoo"):
         h.fail_msg("route matches(.apk, hello.apkfoo) must be False after extension-boundary")
+    _, rout_docx = h.run_py("scripts/lib/route.py", "docx HELLO.docx")
+    if "emperor-excavate" not in rout_docx:
+        h.fail_msg("route.py docx → excavate")
+    _, rout_pydocx = h.run_py("scripts/lib/route.py", "pydocx HELLO.docx")
+    if "emperor-excavate" not in rout_pydocx:
+        h.fail_msg("route.py pydocx → excavate")
+    _, rout_ooxml_word = h.run_py("scripts/lib/route.py", "ooxml-word HELLO.docx")
+    if "emperor-excavate" not in rout_ooxml_word:
+        h.fail_msg("route.py ooxml-word → excavate")
+    _, rout_hello_docx = h.run_py("scripts/lib/route.py", "hello.docx")
+    if "emperor-excavate" not in rout_hello_docx:
+        h.fail_msg("route.py hello.docx → excavate")
+    if not _m(".docx", "hello.docx"):
+        h.fail_msg("route matches(.docx, hello.docx) must be True")
+    if _m(".docx", "hello.docxfoo"):
+        h.fail_msg("route matches(.docx, hello.docxfoo) must be False after extension-boundary")
     # bare .l must not be enough alone when colliding; .lisp already routes via .lisp
     _, rout_regina = h.run_py("scripts/lib/route.py", "regina HELLO.REX")
     if "emperor-excavate" not in rout_regina:
@@ -4039,8 +4066,10 @@ def run_evals(root: Path) -> int:
     h.require_contains("0.4.109", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing 0.4.109 tip")
     h.require_contains("0.4.109", "CHANGELOG.md", "CHANGELOG missing 0.4.109")
     h.require_contains("0.4.110", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing 0.4.110 tip")
-    h.require_contains("0.4.110", ".claude-plugin/plugin.json", "plugin.json not at 0.4.110")
     h.require_contains("0.4.110", "CHANGELOG.md", "CHANGELOG missing 0.4.110")
+    h.require_contains("0.4.111", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing 0.4.111 tip")
+    h.require_contains("0.4.111", ".claude-plugin/plugin.json", "plugin.json not at 0.4.111")
+    h.require_contains("0.4.111", "CHANGELOG.md", "CHANGELOG missing 0.4.111")
 
     # session-discovery
     h.section("session-discovery locate HARD-GATE leaf")
