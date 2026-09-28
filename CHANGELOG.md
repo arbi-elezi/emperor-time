@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.4.128
+
+- Vertical depth: diagnose cite-or-fail report skeleton HARD-GATE — `scripts/lib/diagnose.py` mechanically refuses claiming diagnosis done without a written report path (not intake+cite theater alone; Superpowers diagnosing Report step — path + cited findings only, not 7-analyst templates)
+- Always-fail `--reject-no-report`; `--check-report PATH` validates problem statement + session(s) + findings with path:line (or honest none-found)
+- Thin twins + emperor diagnose peers; diagnosing.md + mechanical-gates lockstep; eval fixtures `diagnose-report-skeleton/`
+- Plugin, marketplace, and SKILL.md at 0.4.128
+
+
 ## 0.4.127
 
 - Vertical depth: grill path-taxonomy HARD-GATE — `scripts/lib/grill.py` mechanically refuses missing path type (spike|bounded|architectural), skipped stage, or impl before stage approval (not questions-before-impl theater alone; Superpowers brainstorming path taxonomy + stage-approval)

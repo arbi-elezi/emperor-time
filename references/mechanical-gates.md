@@ -16,6 +16,7 @@ A model writing "G4 PASS" in markdown is not a gate. An exit code is.
 | `scripts/review-pack.sh` (Python core) | G4 hetero | cannot emit isolated pack |
 | `scripts/finish.sh` (Python core) | finish menu / suite-green | red suite / missing DONE probes (`finish.py --reject-red-suite` / `--require-green`; no menu until green) |
 | `scripts/grill.sh` (Python core) | grill path taxonomy | path type missing / stage skipped / impl before stage approval (`grill.py --reject-no-path` / `--reject-stage-skip` / `--reject-impl-before-approval` / `--check-path`) |
+| `scripts/diagnose.sh` (Python core) | diagnose report skeleton | missing report / theater problem / missing sessions / uncited findings (`diagnose.py --reject-no-report` / `--check-report`) |
 | `scripts/forge.sh` (Python core) | G5 deliver / consent PR | no consent; DONE fail; gh missing → DRY |
 | `scripts/eval.sh` (Python core) | harness health | an eval fixture fails |
 
@@ -47,6 +48,8 @@ Dowse Python core: `scripts/lib/dowse.py` owns PATH detect + bounded version/aut
 Finish Python core: `scripts/lib/finish.py` owns ENV/MENU detect **and** suite-green HARD-GATE (`--reject-red-suite` / `--require-green` / `--check-suite`; thin `finish.sh` / `finish.ps1`) — integrates `done.py` probes and/or `eval.py`; menu-only finish without green is soft theater (Superpowers finishing Step 1).
 
 Grill Python core: `scripts/lib/grill.py` owns the brainstorm checklist card **and** path-taxonomy HARD-GATE (`--reject-no-path` / `--reject-stage-skip` / `--reject-impl-before-approval` / `--check-path`; thin `grill.sh` / `grill.ps1`) — spike | bounded | architectural + stage approval; questions-before-impl without path/stage lock is soft theater (Superpowers brainstorming HARD-GATE).
+
+Diagnose Python core: `scripts/lib/diagnose.py` owns the diagnosing checklist card **and** cite-or-fail report skeleton HARD-GATE (`--reject-uncited` / `--reject-skip-intake` / `--reject-no-report` / `--check-citation` / `--check-report`; thin `diagnose.sh` / `diagnose.ps1`) — problem statement + session(s) + findings with path:line (or honest none-found); intake+cite without a report path is soft theater (Superpowers diagnosing Report step — not 7-analyst templates).
 
 Forge Python core: `scripts/lib/forge.py` owns consent + DONE gate + title/G1 PR body (thin `forge.sh` / `forge.ps1`). Closes bash↔ps1 drift on title extraction and ledger dump.
 
