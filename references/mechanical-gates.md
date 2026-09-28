@@ -11,9 +11,9 @@ A model writing "G4 PASS" in markdown is not a gate. An exit code is.
 | `scripts/gate.sh g1` | G1 | no acceptance criteria |
 | `scripts/gate.sh g2` | G2 | non-trivial task missing work-order or Expected: lines |
 | `scripts/gate.sh g3` | G3 | impact-map paths missing from `git diff --stat` (when in a git repo) |
-| `scripts/gate.sh g4` | G4 | incomplete eight-count critique (via `critique.py`); missing CLAIM AUDIT / unfinished HYPOTHESIS\|TESTED (via `claim_audit.py`); steal no-consent (via `consent.py`); steal unquarantined (via `quarantine.py`); VERIFIED without quote |
+| `scripts/gate.sh g4` | G4 | incomplete eight-count critique (via `critique.py`); missing CLAIM AUDIT / unfinished HYPOTHESIS\|TESTED (via `claim_audit.py`); steal no-consent (via `consent.py`); steal unquarantined (via `quarantine.py`); unisolated / author-diary review-pack (via `review_pack.py`); VERIFIED without quote |
 | `scripts/gate.sh g5` | G5 | verdict soft/missing citations / FAIL delivered; empty or theater Breach Register rows (via `verdict.py`) |
-| `scripts/review-pack.sh` (Python core) | G4 hetero | cannot emit isolated pack |
+| `scripts/review-pack.sh` (Python core) | G4 hetero isolation | cannot emit isolated pack; pack missing when hetero claimed; author diary / forbidden files / CoT in pack (`review_pack.py --reject-unisolated` / `--reject-author-diary` / `--check-isolation`) |
 | `scripts/finish.sh` (Python core) | finish menu / suite-green | red suite / missing DONE probes (`finish.py --reject-red-suite` / `--require-green`; no menu until green) |
 | `scripts/grill.sh` (Python core) | grill path taxonomy | path type missing / stage skipped / impl before stage approval (`grill.py --reject-no-path` / `--reject-stage-skip` / `--reject-impl-before-approval` / `--check-path`) |
 | `scripts/diagnose.sh` (Python core) | diagnose report skeleton | missing report / theater problem / missing sessions / uncited findings (`diagnose.py --reject-no-report` / `--check-report`) |
@@ -39,15 +39,21 @@ claim-audit`). G4 also calls `consent.py` for Steal consent-protocol
 when no worker runs. G4 also calls `quarantine.py` for Steal quarantine
 admission (`--reject-unquarantined` / `--check-quarantine`; thin
 `quarantine.sh` / `quarantine.ps1` + `steal-quarantine` alias /
-`emperor quarantine`) — vacuous PASS when no worker runs.
+`emperor quarantine`) — vacuous PASS when no worker runs. G4 also calls
+`review_pack.py` for hetero-critique isolation (`--reject-unisolated` /
+`--reject-author-diary` / `--check-isolation`; thin `review-pack.sh` /
+`review-pack.ps1` / `emperor review-pack`) — vacuous PASS when no pack.
 G5 calls `verdict.py` for Judgment verdict + Breach Register honesty
 (`--reject-hidden-breach` / `--check-verdict`; thin `verdict.sh` /
 `verdict.ps1` + `breach` alias / `emperor verdict`) — PASS-substring +
 Breach Register header alone with blank/TBD rows is hidden-breach theater.
 
 Review-pack Python core: `scripts/lib/review_pack.py` owns meta SHAs +
-acceptance-criteria extract + diff (thin `review-pack.sh` / `review-pack.ps1`).
-Closes bash↔ps1 drift on criteria (ps1 used to dump the full work-order).
+acceptance-criteria extract + diff **and** hetero-critique isolation HARD-GATE
+(`--reject-unisolated` / `--reject-author-diary` / `--check-isolation`; thin
+`review-pack.sh` / `review-pack.ps1`). G4 calls `--check-isolation` when
+review-pack / hetero activity is present (vacuous PASS otherwise). Closes
+bash↔ps1 drift on criteria (ps1 used to dump the full work-order).
 
 Dowse Python core: `scripts/lib/dowse.py` owns PATH detect + bounded version/auth probes + table/`--as-json` richer roster (thin `dowse.sh` / `dowse.ps1`). Closes bash↔ps1 drift on AsJson + Headless/SignIn metadata.
 
@@ -74,7 +80,7 @@ suite. Thin twins: `scripts/eval.sh`, `scripts/eval.ps1` (same exits 0/1).
 - Steal Chain quarantine → G4 quarantine HARD-GATE (runs layout + CONJECTURE start + ADMITTED|REJECTED)
 - Vow of Phases → gate order; `gate.sh g4` refuses if g2 never passed
 - Vow of the Ledger → missing ledger is a hard fail
-- Vow of Critique → G4 critique eight-count HARD-GATE (all eight axes + Checked evidence; file presence alone fails)
+- Vow of Critique → G4 critique eight-count HARD-GATE (all eight axes + Checked evidence; file presence alone fails) + hetero-critique isolation HARD-GATE (review pack only; no author diary)
 - Vow of Consent → Steal consent-protocol HARD-GATE (CONSENT + agent → role / EMPEROR_CONSENT_AGENTS / solo; G4 calls consent.py) + Jail pin+consent; forge PR still separate
 - Vow of Worthy Spend → lifespan section with empty "bought" is a warning, not a pass decoration
 - Verdict / Stake of Retribution → G5 verdict + Breach Register HARD-GATE (deliverable Verdict with citations; no empty/theater Stake rows)

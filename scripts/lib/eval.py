@@ -5818,14 +5818,15 @@ def run_evals(root: Path) -> int:
     h.require_contains("REJECT NO CONSENT", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing REJECT NO CONSENT")
     h.require_contains("steal-consent", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing steal-consent")
     h.require_contains("consent.py", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing consent.py")
-    h.require_contains("0.4.131", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing 0.4.131 tip")
-    h.require_contains("0.4.131", ".claude-plugin/plugin.json", "plugin.json not at 0.4.131")
-    h.require_contains("0.4.131", "CHANGELOG.md", "CHANGELOG missing 0.4.131")
+    h.require_contains("0.4.132", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing 0.4.132 tip")
+    h.require_contains("0.4.132", ".claude-plugin/plugin.json", "plugin.json not at 0.4.132")
+    h.require_contains("0.4.132", "CHANGELOG.md", "CHANGELOG missing 0.4.132")
     h.require_contains("reject-no-triad", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing reject-no-triad")
     h.require_contains("reject-no-postmortem", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing reject-no-postmortem")
     h.require_contains("check-heal", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing check-heal")
-    h.require_contains("heal_verify.py", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing heal_verify.py")
-    h.require_contains("heal-and-verify", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing heal-and-verify")
+    h.require_contains("review_pack.py", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing review_pack.py")
+    h.require_contains("hetero-critique-isolation", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing hetero-critique-isolation")
+    h.require_contains("reject-unisolated", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing reject-unisolated")
     h.require_contains("finish.py", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing finish.py")
     h.require_contains("reject-red-suite", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing reject-red-suite")
     h.require_contains("require-green", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing require-green")
@@ -6758,6 +6759,178 @@ def run_evals(root: Path) -> int:
     else:
         h.pass_msg("emperor heal-verify peer forwards --reject-no-triad")
     h.pass_msg("heal_verify.py thin twins + heal-and-verify HARD-GATE")
+
+    # ---- hetero-critique isolation HARD-GATE (Judgment G4 vertical depth) ----
+    h.section("hetero-critique-isolation HARD-GATE")
+    h.need("scripts/lib/review_pack.py")
+    h.need("scripts/review-pack.sh")
+    h.need("scripts/review-pack.ps1")
+    h.need("evals/fixtures/hetero-critique-isolation/pack-ok/meta.md")
+    h.need("evals/fixtures/hetero-critique-isolation/pack-author-diary/self-critique.md")
+    h.need("evals/fixtures/hetero-critique-isolation/pack-unisolated/out.txt")
+    h.need("evals/fixtures/hetero-critique-isolation/pack-diary-content/criteria.md")
+    h.need("evals/fixtures/hetero-critique-isolation/task-ok/ledger.md")
+    h.need("evals/fixtures/hetero-critique-isolation/task-author-diary/ledger.md")
+    h.need("evals/fixtures/hetero-critique-isolation/task-unisolated/ledger.md")
+    h.need("evals/fixtures/hetero-critique-isolation/task-missing-pack/ledger.md")
+    h.need("evals/fixtures/hetero-critique-isolation/task-vacuous/ledger.md")
+    h.bash_n("scripts/review-pack.sh", "review-pack.sh syntax (isolation)")
+    h.py_compile("scripts/lib/review_pack.py", "review_pack.py compile (isolation)")
+    h.require_contains(
+        "--reject-unisolated",
+        "scripts/lib/review_pack.py",
+        "review_pack.py missing --reject-unisolated",
+    )
+    h.require_contains(
+        "--reject-author-diary",
+        "scripts/lib/review_pack.py",
+        "review_pack.py missing --reject-author-diary",
+    )
+    h.require_contains(
+        "--check-isolation",
+        "scripts/lib/review_pack.py",
+        "review_pack.py missing --check-isolation",
+    )
+    h.require_contains(
+        "_run_review_isolation",
+        "scripts/lib/gate.py",
+        "gate.py missing _run_review_isolation",
+    )
+    h.require_contains(
+        "--check-isolation",
+        "scripts/lib/gate.py",
+        "gate.py missing --check-isolation call",
+    )
+    h.require_contains(
+        "HARD-GATE",
+        "chains/judgment-chain/hetero-critique.md",
+        "hetero-critique.md missing HARD-GATE mechanical pointer",
+    )
+    h.require_contains(
+        "--reject-unisolated",
+        "skills/emperor-verify/SKILL.md",
+        "emperor-verify skill missing --reject-unisolated",
+    )
+    h.require_contains(
+        "hetero-critique-isolation-hard-gate",
+        "evals/evals.json",
+        "evals.json missing hetero-critique-isolation-hard-gate case",
+    )
+    h.require_contains(
+        "reject-unisolated",
+        "references/mechanical-gates.md",
+        "mechanical-gates missing reject-unisolated",
+    )
+    h.require_contains(
+        "check-isolation",
+        "references/software-factory.md",
+        "software-factory missing check-isolation",
+    )
+    h.require_contains(
+        "reject-unisolated",
+        "evals/bakeoff.md",
+        "bakeoff.md missing reject-unisolated inventory",
+    )
+    h.require_contains(
+        "0.4.132",
+        "SKILL.md",
+        "SKILL.md not bumped to 0.4.132",
+    )
+    _, card = h.run_py("scripts/lib/review_pack.py")
+    if "checklist=yes" not in card:
+        h.fail_msg("review-pack card missing checklist=yes")
+    elif "REVIEWER_ISOLATION" not in card:
+        h.fail_msg("review-pack card missing iron law token")
+    else:
+        h.pass_msg("review-pack prints ISOLATION card")
+    rc, reject = h.run_py("scripts/lib/review_pack.py", "--reject-unisolated")
+    if rc == 0:
+        h.fail_msg("review-pack --reject-unisolated should exit non-zero")
+    elif "REJECT UNISOLATED" not in reject and "HARD-GATE" not in reject:
+        h.fail_msg("review-pack --reject-unisolated missing REJECT text")
+    else:
+        h.pass_msg("review-pack --reject-unisolated hard-gates")
+    rc, reject = h.run_py("scripts/lib/review_pack.py", "--reject-author-diary")
+    if rc == 0:
+        h.fail_msg("review-pack --reject-author-diary should exit non-zero")
+    elif "REJECT AUTHOR DIARY" not in reject and "HARD-GATE" not in reject:
+        h.fail_msg("review-pack --reject-author-diary missing REJECT text")
+    else:
+        h.pass_msg("review-pack --reject-author-diary hard-gates")
+    for name, needle in (
+        ("pack-author-diary", r"author-diary|self-critique|forbidden"),
+        ("pack-unisolated", r"unisolated|forbidden|out\.txt|notes"),
+        ("pack-diary-content", r"author-diary|self-critique"),
+        ("task-author-diary", r"author-diary|self-critique|forbidden"),
+        ("task-unisolated", r"unisolated|forbidden|out\.txt|notes"),
+        ("task-missing-pack", r"missing isolated review-pack"),
+    ):
+        target = root / "evals/fixtures/hetero-critique-isolation" / name
+        rc, err = h.run_py(
+            "scripts/lib/review_pack.py",
+            "--check-isolation",
+            str(target),
+        )
+        if rc == 0:
+            h.fail_msg(f"isolation {name} should fail check-isolation")
+        elif not h.grep_out(err, needle):
+            h.fail_msg(f"isolation {name} should mention {needle}: {err}")
+        else:
+            h.pass_msg(f"isolation {name} rejected")
+    for name in ("pack-ok", "task-ok", "task-vacuous"):
+        rc, _ = h.run_py(
+            "scripts/lib/review_pack.py",
+            "--check-isolation",
+            str(root / "evals/fixtures/hetero-critique-isolation" / name),
+        )
+        if rc != 0:
+            h.fail_msg(f"isolation {name} should pass check-isolation")
+        else:
+            h.pass_msg(f"isolation {name} accepted")
+    # G4 wiring: contaminated packs fail; clean pack passes (with prior stamps)
+    tmp = Path(tempfile.mkdtemp())
+    try:
+        import shutil as _shutil
+        for name, expect_fail in (
+            ("task-author-diary", True),
+            ("task-unisolated", True),
+            ("task-ok", False),
+        ):
+            src = root / "evals/fixtures/hetero-critique-isolation" / name
+            dst = tmp / name
+            _shutil.copytree(src, dst)
+            (dst / ".gates").mkdir(exist_ok=True)
+            stamp = _utc_stamp()
+            for g in ("g0", "g1", "g2", "g3"):
+                (dst / ".gates" / g).write_text(stamp + "\n", encoding="utf-8")
+            rc, out = h.run_sh("scripts/gate.sh", "g4", str(dst))
+            if expect_fail:
+                if rc == 0:
+                    h.fail_msg(f"G4 allowed unisolated {name}")
+                else:
+                    h.pass_msg(f"G4 rejects unisolated {name}")
+            else:
+                if rc != 0:
+                    h.fail_msg(f"G4 should accept isolated {name}: {out}")
+                else:
+                    h.pass_msg(f"G4 accepts isolated {name}")
+    finally:
+        shutil.rmtree(tmp, ignore_errors=True)
+    _, sh_card = h.run_sh("scripts/review-pack.sh")
+    if "checklist=yes" not in sh_card:
+        h.fail_msg("review-pack.sh should print ISOLATION card")
+    else:
+        h.pass_msg("review-pack.sh thin twin prints card")
+    _, emp_out = h.run_sh(
+        "scripts/emperor",
+        "review-pack",
+        "--reject-unisolated",
+    )
+    if "REJECT UNISOLATED" not in emp_out:
+        h.fail_msg("emperor review-pack --reject-unisolated should forward REJECT")
+    else:
+        h.pass_msg("emperor review-pack peer forwards --reject-unisolated")
+    h.pass_msg("review_pack.py isolation HARD-GATE")
 
     # root-cause tracing HARD-GATE
     h.section("root-cause tracing HARD-GATE leaf")

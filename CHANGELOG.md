@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.4.132
+
+- Vertical depth: hetero-critique isolation HARD-GATE — `scripts/lib/review_pack.py` mechanically refuses unisolated examiner handoffs and author diary / self-critique / CoT / worker out.txt inside the review pack (not soft vow / iron-law-9 markdown alone)
+- Always-fail `--reject-unisolated` / `--reject-author-diary`; `--check-isolation PATH` validates pack allowlist + diary markers when review-pack / hetero activity is present (vacuous PASS otherwise); G4 calls the check
+- Thin twins `review-pack.sh` / `review-pack.ps1` forward flags; fixtures `evals/fixtures/hetero-critique-isolation/`; hetero-critique.md + mechanical-gates + emperor-verify / request-review lockstep
+- Emit path unchanged (`review-pack <task-dir> [base] [head]`). Not archaeology; not embeddings; closes next soft-gate after heal-and-verify (v0.4.131)
+- Plugin, marketplace, and SKILL.md at 0.4.132
+
 ## 0.4.131
 
 - Vertical depth: heal-and-verify triad + postmortem HARD-GATE — `scripts/lib/heal_verify.py` mechanically refuses heal-done without Cure + No-new-wounds + Mechanism and the BROKE/CAUSE/HEAL/CAUGHT-BY/WOULD-HAVE-CAUGHT-SOONER line (not doctrine-only markdown)

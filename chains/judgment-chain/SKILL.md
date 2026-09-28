@@ -23,7 +23,7 @@ Judgment never builds. It rules. The agent names DONE; `scripts/done.sh` tests i
 | Phase claims done — gate criteria | `gatekeeping.md` |
 | G4 claim sweep | `claim-audit.md` |
 | Critique own work | `self-critique.md` |
-| Other context available to prosecute | `hetero-critique.md` |
+| Other context available to prosecute | `hetero-critique.md` (mechanical: `scripts/emperor review-pack --check-isolation`) |
 | Ruling / breach | `verdicts-and-breaches.md` |
 | About to edit or G1 moved | `scope-guard.md` |
 | About to write a hunk | `change-rationale.md` |

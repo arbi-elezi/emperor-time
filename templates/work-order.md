@@ -133,6 +133,7 @@ Reviewer receives only:
 
 Reviewer does **not** receive: design rationalizations, Steal Chain worker
 "done" reports, or the author's self-critique conclusions.
+Mechanical: `scripts/emperor review-pack --check-isolation <task-dir>` (`--reject-unisolated` / `--reject-author-diary`).
 
 ## G4 probes (must be runnable by gate.sh)
 
