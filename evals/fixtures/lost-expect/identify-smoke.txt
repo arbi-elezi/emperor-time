@@ -1,0 +1,9 @@
+== identify evals/fixtures/lost-expect ==
+-- extensions --
+      2 md
+      1 txt
+      1 exp
+-- named fossils --
+1 *.exp
+-- shebangs --
+identify: done (read-only)

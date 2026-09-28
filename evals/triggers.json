@@ -516,7 +516,10 @@
         "perl",
         "perl5",
         "bc",
-        "gnu-bc"
+        "gnu-bc",
+        ".exp",
+        "expect",
+        "tcl-expect"
       ],
       "tags": [
         "archaeology",
@@ -647,7 +650,9 @@
         "perl",
         "perl5",
         "bc",
-        "gnu-bc"
+        "gnu-bc",
+        "expect",
+        "tcl-expect"
       ],
       "target": "skills/emperor-excavate/SKILL.md",
       "reason": "lost/ancient/foreign tree — excavate before modernizing"
