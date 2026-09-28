@@ -30,7 +30,7 @@ actions past the first wound.
 | Your situation | Aspect file |
 |---|---|
 | Breakage just detected — secure the scene before anything else | `triage.md` |
-| Scene secured — make it fail on demand and isolate the cause | `reproduce-and-bisect.md` |
+| Scene secured — make it fail on demand and isolate the cause | `reproduce-and-bisect.md` (mechanical: `scripts/emperor reproduce`) |
 | Cause isolated — fix minimally and prove the cure | `heal-and-verify.md` (mechanical: `scripts/emperor heal-verify`) |
 | The *process* broke: skipped gate, bad agent-merge, delivered falsehood, derailed loop | `process-healing.md` |
 

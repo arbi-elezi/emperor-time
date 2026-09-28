@@ -158,6 +158,18 @@ process. Do not load whole `systematic-debugging`; ET + Holy Chain orchestrate.
    `process-healing.md`) matching the current phase (see leaf table).
 10. Snapshot. Reproduce. One hypothesis per step. Prediction before probe.
 
+
+## MUST — reproduce-and-bisect HARD-GATE before claiming cause isolated
+
+After triage and before heal-and-verify:
+
+1. Quote the reproduction fingerprint (`REPRO:` / fails on demand / quoted failure text).
+2. Append at least one combat ledger line (`H#: ... | predict: ... | ran: ... | saw: ... | REFUTED|VERIFIED`).
+3. Run `scripts/emperor reproduce <task-dir>` (or `reproduce-and-bisect`) — exit 0.
+   Always-fail helpers: `--reject-no-repro` / `--reject-no-combat-ledger`.
+
+See `chains/holy-chain/reproduce-and-bisect.md`.
+
 ## MUST — heal-and-verify HARD-GATE before claiming heal done
 
 After the four-phase entry (`scripts/emperor heal`) and before DONE:

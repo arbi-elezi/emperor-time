@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.4.138
+
+- Vertical depth: Holy reproduce-and-bisect HARD-GATE — `scripts/lib/reproduce.py` card-style `--reject-no-repro` / `--reject-no-combat-ledger` / `--check-reproduce` (fingerprint + combat ledger; vacuous PASS when no reproduce activity)
+- Fixtures `evals/fixtures/reproduce-and-bisect/`; thin twins `reproduce.sh`/`.ps1` + `reproduce-and-bisect` alias; `emperor reproduce`
+- Doctrine/SKILL/mechanical-gates/software-factory/bakeoff honesty lockstep; heal-and-verify remains the close gate
+- Not archaeology; not embeddings; closes soft→hard leftover named in v0.4.137; next soft gates: Holy triage / process-healing
+- Plugin, marketplace, and SKILL.md at 0.4.138
+
 ## 0.4.137
 
 - Vertical depth: forge PR-consent residual HARD-GATE — `scripts/lib/forge.py` already refused without consent; now adds card-style always-fail `--reject-no-pr-consent` / `--check-pr-consent` peers (forge-specific names; Steal keeps `--reject-no-consent` / `--check-consent`)

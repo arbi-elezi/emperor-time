@@ -18,6 +18,7 @@ Given a repo and a loose task (or no task):
 
 Steal consent-protocol: `scripts/emperor consent <task-dir>` — Python core `scripts/lib/consent.py` (`--reject-no-consent` / `--check-consent`; thin `consent.sh` / `consent.ps1`) refuses enlistment without CONSENT record. G4 calls it when steal activity is present.
 Heal-and-verify: `scripts/emperor heal-verify <task-dir>` — Python core `scripts/lib/heal_verify.py` (`--reject-no-triad` / `--reject-no-postmortem` / `--check-heal`) refuses heal-done without triad + postmortem.
+Reproduce-and-bisect: `scripts/emperor reproduce <task-dir>` — Python core `scripts/lib/reproduce.py` (`--reject-no-repro` / `--reject-no-combat-ledger` / `--check-reproduce`) refuses cause-isolated without fingerprint + combat ledger.
 Super-context / thoughttrail: `scripts/emperor context` — Python cores `md_graph.py` / `context_store.py` / `thoughttrail.py` / `context.py` (+ `super_context.py` stubs). HARD-GATE `--reject-no-graph` / `--reject-no-trail` / `--check-context` / `--check-trail`. Aliases: thoughttrail, sandbox, sot, runtime, env, secrets.
 
 Hetero-critique isolation: `scripts/emperor review-pack --check-isolation <task-dir>` — Python core `scripts/lib/review_pack.py` (`--reject-unisolated` / `--reject-author-diary` / `--check-isolation`) refuses unisolated / author-diary packs. G4 calls it when review-pack activity is present.
