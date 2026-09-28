@@ -557,7 +557,12 @@
         "bash",
         "bash5",
         "bash5.2",
-        "gnu-bash"
+        "gnu-bash",
+        ".php",
+        "php",
+        "php8",
+        "php8.4",
+        "php-cli"
       ],
       "tags": [
         "archaeology",
@@ -720,7 +725,12 @@
         "bash",
         "bash5",
         "bash5.2",
-        "gnu-bash"
+        "gnu-bash",
+        ".php",
+        "php",
+        "php8",
+        "php8.4",
+        "php-cli"
       ],
       "target": "skills/emperor-excavate/SKILL.md",
       "reason": "lost/ancient/foreign tree \u2014 excavate before modernizing"

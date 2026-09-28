@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.4.90
+
+- Archaeology PHP leaf: `evals/fixtures/lost-php/HELLO.php` + identify smoke; PHP 8.4.26 (cli) boot probe VERIFIED (`php HELLO.php` → `EMPEROR-TIME-PHP-PROBE-OK`); dialect labels honest (CONJECTURE / UNVERIFIABLE where due); identify fossils `*.php` only (no `*.phtml` this leaf); bare `php` allowed as route tag (tool binary name; word-boundary); bare `.php` allowed as route tag with extension-boundary matching (does not prefix-hit `.php3` / `.php4` / `.php5` / `.phps`); prefer `php` / `php8` / `php8.4` / `php-cli` / `.php`; Debian packages `php-cli` 2:8.4+96 / `php8.4-cli` 8.4.26-1~deb13u1 apt-installed this leaf; scripting leaf after Bash; treats PHP as peer fossil not house twin language; TeX/LaTeX still deferred; C++ still deferred; CLIPS / embeddings still deferred
+- Jail pin `references/archaeology-php-manual.md` — PHP Manual Executing PHP files (`php` … file)
+- Catalog + SKILL.md + archaeology.md + language-agnostic.md link the forty-ninth pin alongside Pascal, ASM, COBOL, Fortran, VHDL, Ada, Forth, Common Lisp, Prolog, Tcl, Erlang, REXX, Modula-2, Algol 68, ALGOL 60, Algol W, Icon, Oberon, SNOBOL4, Simula, APL, BCPL, PL/I, Smalltalk, PostScript, BASIC, Scheme, AWK, sed, m4, ed, Make, dc, lex, yacc, roff, Perl, bc, Expect, Lua, Ruby, Go, Rust, C, JavaScript, Python, TypeScript, and Bash; route triggers gain `php` / `php8` / `php8.4` / `php-cli` / `.php`; eval locks `*.php` identify on lost-php
+- Plugin, marketplace, and SKILL.md at 0.4.90
+
 ## 0.4.89
 
 - Archaeology Bash leaf: `evals/fixtures/lost-sh/HELLO.sh` + identify smoke; GNU Bash 5.2.37 boot probe VERIFIED (`bash HELLO.sh` → `EMPEROR-TIME-BASH-PROBE-OK`); dialect labels honest (CONJECTURE / UNVERIFIABLE where due); identify fossils `*.sh` only (no `*.bash` this leaf); bare `bash` allowed as route tag (tool binary name; word-boundary); bare `sh` refused as route tag (POSIX / dash ambiguity; verified toolchain is bash); bare `.sh` allowed as route tag with extension-boundary matching (does not prefix-hit `.sha` / `.shar` / `.shtml`); prefer `bash` / `bash5` / `bash5.2` / `gnu-bash` / `.sh`; Debian package `bash` 5.2.37-2+b10 already on box; shell-script leaf after TypeScript; treats Bash as peer fossil not house twin language; TeX/LaTeX still deferred; C++ still deferred; CLIPS / embeddings still deferred

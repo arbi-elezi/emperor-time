@@ -9,7 +9,7 @@
       "name": "emperor-time",
       "source": "./",
       "description": "Full-rigor harness: mechanical gates, TDD iron law, worktrees, claim ledgers, five chains, consent orchestration, pin+consent capture.",
-      "version": "0.4.89",
+      "version": "0.4.90",
       "author": {
         "name": "Arbi Elezi",
         "url": "https://github.com/arbi-elezi"
