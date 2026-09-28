@@ -10,6 +10,8 @@ Thin twins: scripts/gate.sh / scripts/gate.ps1 — same CLI:
 Preserves gate.sh semantics (including G4 CONJECTURE warn) so bash/ps1
 cannot drift. G2 delegates plan-header check to work_order.py.
 G4 delegates claim-audit sweep to claim_audit.py.
+G4 delegates self-critique eight-count to critique.py
+(critique file presence ≠ eight-count completeness).
 G4 also delegates Steal quarantine admission to quarantine.py
 (vacuous PASS when no worker runs / no steal markers).
 """
@@ -99,6 +101,16 @@ def _run_claim_audit(gate: str, task: Path) -> None:
         _fail(gate, "claim audit (claim_audit.py)")
 
 
+def _run_critique(gate: str, task: Path) -> None:
+    py = _root() / "scripts" / "lib" / "critique.py"
+    proc = subprocess.run(
+        [sys.executable, str(py), "--check-critique", str(task)],
+        check=False,
+    )
+    if proc.returncode != 0:
+        _fail(gate, "critique eight-count (critique.py)")
+
+
 def _run_quarantine(gate: str, task: Path) -> None:
     py = _root() / "scripts" / "lib" / "quarantine.py"
     proc = subprocess.run(
@@ -116,7 +128,6 @@ def run_gate(gate: str, task: Path) -> None:
     ledger = task / "ledger.md"
     order = task / "work-order.md"
     claims = task / "claims.md"
-    critique = task / "critique.md"
     stamp = task / ".gates"
     stamp.mkdir(parents=True, exist_ok=True)
 
@@ -195,8 +206,9 @@ def run_gate(gate: str, task: Path) -> None:
     if gate == "g4":
         _require_prior(stamp, gate)
         _need_ledger(gate, ledger)
-        if not (critique.is_file() or _has(r"Self-critique", ledger)):
-            _fail(gate, "no critique artifact")
+        # Mechanical eight-count: all axes + Checked evidence.
+        # Critique file presence ≠ eight-count completeness (critique.py).
+        _run_critique(gate, task)
         # Mechanical claim-audit: CLAIM AUDIT line + terminal rows.
         # Not critique-file-present theater — exit code from claim_audit.py.
         _run_claim_audit(gate, task)

@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.4.124
+
+- Vertical depth: Judgment self-critique eight-count HARD-GATE — `scripts/lib/critique.py` mechanically rejects critique-file-present theater / missing axes / empty Checked cells (not doctrine-only markdown)
+- Always-fail helper `--reject-incomplete-critique`; `--check-critique PATH`; no-args prints CRITIQUE card; G4 calls the same module alongside claim_audit (critique presence ≠ eight-count completeness)
+- Thin twins `critique.sh` / `critique.ps1` + `self-critique` alias + `emperor critique` / `emperor self-critique` peers; fixtures `evals/fixtures/critique-eight-count/` prove reject + accept; references/mechanical-gates + self-critique.md HARD-GATE lockstep
+- Eight axes enforced: Requirements coverage; Correctness at the edges; Hidden assumptions; Evidence quality; Regression surface; Security and safety; Simpler alternative; Honesty of the report
+- Not archaeology; not embeddings; closes next soft-gate after steal quarantine (v0.4.123)
+- Plugin, marketplace, and SKILL.md at 0.4.124
+
 ## 0.4.123
 
 - Vertical depth: Steal quarantine admission HARD-GATE — `scripts/lib/quarantine.py` mechanically rejects worker "done" lacking quarantine dir (`.emperor/runs/<task>/<agent>/`) / CONJECTURE start / ADMITTED|REJECTED admission markers (not doctrine-only markdown)
