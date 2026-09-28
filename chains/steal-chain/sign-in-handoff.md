@@ -63,3 +63,21 @@ updated with the verification evidence.
 | Login "succeeded" but status still fails | Lie-detection reflex: trust the status probe over the memory of success; common causes to suggest — wrong account, expired flow, PATH pointing at an older binary (`<bin> --version` both terminals) |
 | Agent has no non-interactive auth story at all | It can still work interactively *driven by the client*; note in roster as `INTERACTIVE-ONLY`; exclude from headless dispatch |
 | Client asks you to store a key "for next time" | Config files and env are theirs to set; you may name where the tool reads from (its documented env var), but you never write it |
+
+
+## HARD-GATE (mechanical)
+
+Doctrine above is the law. The lock is an exit code:
+
+```bash
+scripts/emperor steal-flow --check-signin <task-dir>
+scripts/emperor steal-flow --reject-no-signin     # always fails (card + exit 1)
+scripts/emperor sign-in-handoff <task-dir>        # alias → steal-flow
+scripts/gate.sh g4 <task-dir>                     # calls steal_flow.py when sign-in activity present
+```
+
+Python core: `scripts/lib/steal_flow.py`. Thin twins: `steal-flow.sh` /
+`steal-flow.ps1` (+ `sign-in-handoff` alias). Fails when sign-in activity is
+present but missing `SIGN-IN HANDOFF:` (agent + client completed + verified
+status) or when credential/token-shaped material appears in the record.
+Vacuous PASS when no sign-in markers.

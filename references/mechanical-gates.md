@@ -11,7 +11,7 @@ A model writing "G4 PASS" in markdown is not a gate. An exit code is.
 | `scripts/gate.sh g1` | G1 | no acceptance criteria |
 | `scripts/gate.sh g2` | G2 | non-trivial task missing work-order or Expected: lines |
 | `scripts/gate.sh g3` | G3 | impact-map paths missing from `git diff --stat` (when in a git repo) |
-| `scripts/gate.sh g4` | G4 | incomplete eight-count critique (via `critique.py`); missing CLAIM AUDIT / unfinished HYPOTHESIS\|TESTED (via `claim_audit.py`); steal no-consent (via `consent.py`); steal unquarantined (via `quarantine.py`); unisolated / author-diary review-pack (via `review_pack.py`); VERIFIED without quote |
+| `scripts/gate.sh g4` | G4 | incomplete eight-count critique (via `critique.py`); missing CLAIM AUDIT / unfinished HYPOTHESIS\|TESTED (via `claim_audit.py`); steal no-consent (via `consent.py`); steal unquarantined (via `quarantine.py`); steal sign-in/dispatch/swarm (via `steal_flow.py`); unisolated / author-diary review-pack (via `review_pack.py`); VERIFIED without quote |
 | `scripts/gate.sh g5` | G5 | verdict soft/missing citations / FAIL delivered; empty or theater Breach Register rows (via `verdict.py`); forge no-PR-consent when forge/PR claimed (via `forge.py`) |
 | `scripts/review-pack.sh` (Python core) | G4 hetero isolation | cannot emit isolated pack; pack missing when hetero claimed; author diary / forbidden files / CoT in pack (`review_pack.py --reject-unisolated` / `--reject-author-diary` / `--check-isolation`) |
 | `scripts/finish.sh` (Python core) | finish menu / suite-green | red suite / missing DONE probes (`finish.py --reject-red-suite` / `--require-green`; no menu until green) |
@@ -19,6 +19,7 @@ A model writing "G4 PASS" in markdown is not a gate. An exit code is.
 | `scripts/diagnose.sh` (Python core) | diagnose report skeleton | missing report / theater problem / missing sessions / uncited findings (`diagnose.py --reject-no-report` / `--check-report`) |
 | `scripts/queue.sh` (Python core) | queue multi-WIP | >1 in-progress / active `[~]` (`queue.py --reject-multi-wip` / `--check-wip`) |
 | `scripts/consent.sh` (Python core) | Steal consent-protocol | missing CONSENT / header theater / uncovered enlisted agent (`consent.py --reject-no-consent` / `--check-consent`) |
+| `scripts/steal-flow.sh` (Python core) | Steal sign-in / dispatch / swarm | missing SIGN-IN HANDOFF / runs layout / unbounded swarm (`steal_flow.py --reject-no-signin` / `--reject-no-dispatch-layout` / `--reject-unbounded-swarm` / `--check-signin` / `--check-dispatch` / `--check-swarm`) |
 | `scripts/heal-verify.sh` (Python core) | heal-and-verify triad + postmortem | missing Cure/No-new-wounds/Mechanism or postmortem (`heal_verify.py --reject-no-triad` / `--reject-no-postmortem` / `--check-heal`) |
 | `scripts/reproduce.sh` (Python core) | reproduce-and-bisect fingerprint + combat ledger | missing fingerprint or combat ledger (`reproduce.py --reject-no-repro` / `--reject-no-combat-ledger` / `--check-reproduce`) |
 | `scripts/triage.sh` (Python core) | holy triage block + snapshot | missing triage block or snapshot (`triage.py --reject-no-triage` / `--reject-no-snapshot` / `--check-triage`) |
@@ -44,6 +45,10 @@ when no worker runs. G4 also calls `quarantine.py` for Steal quarantine
 admission (`--reject-unquarantined` / `--check-quarantine`; thin
 `quarantine.sh` / `quarantine.ps1` + `steal-quarantine` alias /
 `emperor quarantine`) — vacuous PASS when no worker runs. G4 also calls
+`steal_flow.py` for Steal sign-in / dispatch / swarm (`--check-signin` /
+`--check-dispatch` / `--check-swarm`; thin `steal-flow.sh` / `steal-flow.ps1`
++ aliases / `emperor steal-flow`) — vacuous PASS when no matching markers.
+G4 also calls
 `review_pack.py` for hetero-critique isolation (`--reject-unisolated` /
 `--reject-author-diary` / `--check-isolation`; thin `review-pack.sh` /
 `review-pack.ps1` / `emperor review-pack`) — vacuous PASS when no pack.
@@ -75,6 +80,8 @@ Queue Python core: `scripts/lib/queue.py` owns the work picker **and** multi-WIP
 
 Consent Python core: `scripts/lib/consent.py` owns Steal consent-protocol HARD-GATE (`--reject-no-consent` / `--check-consent`; thin `consent.sh` / `consent.ps1` + `steal-consent` alias / `emperor consent`) — CONSENT-header theater without `agent → role` is soft; forge `EMPEROR_CONSENT_PR` is not Steal enlistment consent.
 
+Steal-flow Python core: `scripts/lib/steal_flow.py` owns Steal sign-in / dispatch / swarm HARD-GATE (`--reject-no-signin` / `--reject-no-dispatch-layout` / `--reject-unbounded-swarm` / `--check-signin` / `--check-dispatch` / `--check-swarm`; thin `steal-flow.sh` / `steal-flow.ps1` + aliases / `emperor steal-flow`) — silent/missing handoff, incomplete runs layout, or unbounded swarm is soft; G4 calls it when matching activity is present.
+
 Blind secrets + workspace env Python cores: `scripts/lib/secrets_broker.py` + `workspace_env.py` (wired from `super_context.py`) own blind credentials HARD-GATE (`--reject-secret-leak` / `--check-env-redacted`; thin `secrets.sh` / `env.sh` + `emperor secrets` / `emperor env`) — agent sees names+status only; env show redacted; env sync merges SOT plugin overlays without echoing secrets.
 
 Super-context Python core: `scripts/lib/context.py` (+ `md_graph.py` / `context_store.py` / `thoughttrail.py` / `super_context.py` stubs) owns graph-over-grep + thoughttrail HARD-GATE (`--reject-no-graph` / `--reject-no-trail` / `--check-context` / `--check-trail`; thin `context.sh` / `context.ps1` + aliases). Load L0 before mass-grep. No embeddings; no Graphify copy.
@@ -99,7 +106,7 @@ suite. Thin twins: `scripts/eval.sh`, `scripts/eval.ps1` (same exits 0/1).
 - Vow of Phases → gate order; `gate.sh g4` refuses if g2 never passed
 - Vow of the Ledger → missing ledger is a hard fail
 - Vow of Critique → G4 critique eight-count HARD-GATE (all eight axes + Checked evidence; file presence alone fails) + hetero-critique isolation HARD-GATE (review pack only; no author diary)
-- Vow of Consent → Steal consent-protocol HARD-GATE (CONSENT + agent → role / EMPEROR_CONSENT_AGENTS / solo; G4 calls consent.py) + Jail pin+consent; forge PR-consent HARD-GATE (`--reject-no-pr-consent` / `--check-pr-consent`; G5 calls forge.py)
+- Vow of Consent → Steal consent-protocol HARD-GATE (CONSENT + agent → role / EMPEROR_CONSENT_AGENTS / solo; G4 calls consent.py) + Steal sign-in/dispatch/swarm HARD-GATE (SIGN-IN HANDOFF + runs layout + bound swarm; G4 calls steal_flow.py) + Jail pin+consent; forge PR-consent HARD-GATE (`--reject-no-pr-consent` / `--check-pr-consent`; G5 calls forge.py)
 - Vow of Worthy Spend → lifespan section with empty "bought" is a warning, not a pass decoration
 - Verdict / Stake of Retribution → G5 verdict + Breach Register HARD-GATE (deliverable Verdict with citations; no empty/theater Stake rows)
 

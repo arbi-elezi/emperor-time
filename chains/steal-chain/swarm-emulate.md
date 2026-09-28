@@ -22,3 +22,21 @@ when present and consented. This aspect is the rite when that button is missing.
 
 Lack of vendor swarm is not an excuse to serialize disjoint work, and not an
 excuse to yolo 30 agents into one dirty tree.
+
+
+## HARD-GATE (mechanical)
+
+Doctrine above is the law. The lock is an exit code:
+
+```bash
+scripts/emperor steal-flow --check-swarm <task-dir>
+scripts/emperor steal-flow --reject-unbounded-swarm  # always fails
+scripts/emperor swarm-emulate <task-dir>             # alias → steal-flow
+scripts/gate.sh g4 <task-dir>                        # calls steal_flow.py when swarm activity present
+```
+
+Python core: `scripts/lib/steal_flow.py`. Thin twins: `steal-flow.sh` /
+`steal-flow.ps1` (+ `swarm-emulate` alias). Fails when swarm activity is
+present but N exceeds default 4 / `EMPEROR_SWARM_N`, scopes overlap, swarm-<n>
+collect layout is missing, or synthesis note is absent. Vacuous PASS when no
+swarm markers.

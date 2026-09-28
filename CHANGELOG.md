@@ -1,11 +1,19 @@
 # Changelog
 
+## 0.4.141
+
+- Vertical depth: Steal sign-in / dispatch / swarm HARD-GATE — `scripts/lib/steal_flow.py` card-style `--reject-no-signin` / `--reject-no-dispatch-layout` / `--reject-unbounded-swarm` / `--check-signin` / `--check-dispatch` / `--check-swarm` (SIGN-IN HANDOFF + runs layout + bound swarm; vacuous PASS when no matching activity)
+- Fixtures `evals/fixtures/steal-sign-dispatch-swarm/`; thin twins `steal-flow.sh`/`.ps1` + aliases `sign-in-handoff` / `steal-dispatch` / `swarm-emulate`; `emperor steal-flow`; G4 calls when steal-flow activity present
+- Doctrine/SKILL/mechanical-gates/software-factory/bakeoff honesty lockstep; consent + quarantine remain separate
+- Not archaeology; not embeddings; closes soft→hard leftover named in v0.4.140; next soft leftover: Jail pin-and-consent
+- Plugin, marketplace, and SKILL.md at 0.4.141
+
 ## 0.4.140
 
 - Vertical depth: Holy process-healing HARD-GATE — `scripts/lib/process_heal.py` card-style `--reject-no-register` / `--reject-no-reentry` / `--check-process-heal` (register entry + RE-ENTERED seam; vacuous PASS when no process-healing activity)
 - Fixtures `evals/fixtures/process-healing/`; thin twins `process-heal.sh`/`.ps1` + `process-healing` alias; `emperor process-heal`
 - Doctrine/SKILL/mechanical-gates/software-factory/bakeoff honesty lockstep; completes Holy hard suite (triage / reproduce / heal-verify / process-healing)
-- Not archaeology; not embeddings; closes soft→hard leftover named in v0.4.139; next soft leftovers: Steal sign-in/dispatch/swarm, Jail pin-and-consent
+- Not archaeology; not embeddings; closes soft→hard leftover named in v0.4.139; next soft leftovers: Steal sign-in/dispatch/swarm, Jail pin-and-consent (sign-in/dispatch/swarm shipped v0.4.141)
 - Plugin, marketplace, and SKILL.md at 0.4.140
 
 ## 0.4.139

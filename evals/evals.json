@@ -84,6 +84,11 @@
       "expect": "consent.py / gate g4 rejects steal activity lacking CONSENT record / header theater / uncovered enlisted agent; accepts CONSENT + agent \u2192 role / EMPEROR_CONSENT_AGENTS / solo"
     },
     {
+      "id": "steal-sign-dispatch-swarm-hard-gate",
+      "type": "behavioral-fixture",
+      "expect": "steal_flow.py --reject-no-signin / --reject-no-dispatch-layout / --reject-unbounded-swarm / --check-signin / --check-dispatch / --check-swarm refuses missing SIGN-IN HANDOFF, incomplete runs layout, or unbounded swarm when matching activity present; accepts ok+vacuous; G4 calls when steal-flow activity present"
+    },
+    {
       "id": "heal-and-verify-hard-gate",
       "type": "behavioral-fixture",
       "expect": "heal_verify.py --reject-no-triad / --reject-no-postmortem / --check-heal refuses missing triad or postmortem when heal activity present; accepts triad+postmortem and vacuous non-heal"

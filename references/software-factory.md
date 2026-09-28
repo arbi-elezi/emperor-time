@@ -17,6 +17,7 @@ Given a repo and a loose task (or no task):
 7. Pick the next item. Stop when the queue is empty or the client says rest.
 
 Steal consent-protocol: `scripts/emperor consent <task-dir>` — Python core `scripts/lib/consent.py` (`--reject-no-consent` / `--check-consent`; thin `consent.sh` / `consent.ps1`) refuses enlistment without CONSENT record. G4 calls it when steal activity is present.
+Steal sign-in / dispatch / swarm: `scripts/emperor steal-flow <task-dir>` — Python core `scripts/lib/steal_flow.py` (`--reject-no-signin` / `--reject-no-dispatch-layout` / `--reject-unbounded-swarm` / `--check-signin` / `--check-dispatch` / `--check-swarm`; thin `steal-flow.sh` / aliases) refuses silent login / incomplete runs layout / unbounded swarm. G4 calls it when matching activity is present.
 Heal-and-verify: `scripts/emperor heal-verify <task-dir>` — Python core `scripts/lib/heal_verify.py` (`--reject-no-triad` / `--reject-no-postmortem` / `--check-heal`) refuses heal-done without triad + postmortem.
 Reproduce-and-bisect: `scripts/emperor reproduce <task-dir>` — Python core `scripts/lib/reproduce.py` (`--reject-no-repro` / `--reject-no-combat-ledger` / `--check-reproduce`) refuses cause-isolated without fingerprint + combat ledger.
 Holy triage: `scripts/emperor triage <task-dir>` — Python core `scripts/lib/triage.py` (`--reject-no-triage` / `--reject-no-snapshot` / `--check-triage`) refuses investigation without triage block + snapshot.
