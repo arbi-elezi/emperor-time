@@ -113,6 +113,7 @@ FOSSIL_PATTERNS: tuple[str, ...] = (
     "*.tgz",
     "*.tar.bz2",
     "*.tar.xz",
+    "*.whl",
     "*.l",
     "*.lex",
     "*.y",
