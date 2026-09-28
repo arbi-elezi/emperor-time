@@ -552,7 +552,12 @@
         "typescript5",
         "tsc",
         "ts5",
-        "ts"
+        "ts",
+        ".sh",
+        "bash",
+        "bash5",
+        "bash5.2",
+        "gnu-bash"
       ],
       "tags": [
         "archaeology",
@@ -710,7 +715,12 @@
         "typescript5",
         "tsc",
         "ts5",
-        "ts"
+        "ts",
+        ".sh",
+        "bash",
+        "bash5",
+        "bash5.2",
+        "gnu-bash"
       ],
       "target": "skills/emperor-excavate/SKILL.md",
       "reason": "lost/ancient/foreign tree \u2014 excavate before modernizing"

@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.4.89
+
+- Archaeology Bash leaf: `evals/fixtures/lost-sh/HELLO.sh` + identify smoke; GNU Bash 5.2.37 boot probe VERIFIED (`bash HELLO.sh` → `EMPEROR-TIME-BASH-PROBE-OK`); dialect labels honest (CONJECTURE / UNVERIFIABLE where due); identify fossils `*.sh` only (no `*.bash` this leaf); bare `bash` allowed as route tag (tool binary name; word-boundary); bare `sh` refused as route tag (POSIX / dash ambiguity; verified toolchain is bash); bare `.sh` allowed as route tag with extension-boundary matching (does not prefix-hit `.sha` / `.shar` / `.shtml`); prefer `bash` / `bash5` / `bash5.2` / `gnu-bash` / `.sh`; Debian package `bash` 5.2.37-2+b10 already on box; shell-script leaf after TypeScript; treats Bash as peer fossil not house twin language; TeX/LaTeX still deferred; C++ still deferred; CLIPS / embeddings still deferred
+- Jail pin `references/archaeology-bash-manual.md` — bash(1) ARGUMENTS (`bash` … file)
+- Catalog + SKILL.md + archaeology.md + language-agnostic.md link the forty-eighth pin alongside Pascal, ASM, COBOL, Fortran, VHDL, Ada, Forth, Common Lisp, Prolog, Tcl, Erlang, REXX, Modula-2, Algol 68, ALGOL 60, Algol W, Icon, Oberon, SNOBOL4, Simula, APL, BCPL, PL/I, Smalltalk, PostScript, BASIC, Scheme, AWK, sed, m4, ed, Make, dc, lex, yacc, roff, Perl, bc, Expect, Lua, Ruby, Go, Rust, C, JavaScript, Python, and TypeScript; route triggers gain `bash` / `bash5` / `bash5.2` / `gnu-bash` / `.sh`; bare `sh` refused; eval locks `*.sh` identify on lost-sh
+- Plugin, marketplace, and SKILL.md at 0.4.89
+
 ## 0.4.88
 
 - Archaeology TypeScript leaf: `evals/fixtures/lost-ts/HELLO.ts` + identify smoke; TypeScript 5.6.3 (`tsc`) + Node.js 20.19.2 boot probe VERIFIED (`tsc --target ES2020 --module commonjs HELLO.ts --outDir …` then `node …/HELLO.js` → `EMPEROR-TIME-TS-PROBE-OK`); dialect labels honest (CONJECTURE / UNVERIFIABLE where due); identify fossils `*.ts` only (no `*.tsx` this leaf); bare `ts` allowed as route tag (two-letter abbreviation; word-boundary); bare `.ts` allowed as route tag with extension-boundary matching (does not prefix-hit `.tsx` / `.tsbuildinfo` / `.mts` / `.cts`); prefer `typescript` / `typescript5` / `tsc` / `ts5` / `.ts`; npm-local `typescript` 5.6.3 provides real `tsc` (not bun; bun≠tsc); typed-compile after Python; TeX/LaTeX still deferred; C++ still deferred; CLIPS / embeddings still deferred

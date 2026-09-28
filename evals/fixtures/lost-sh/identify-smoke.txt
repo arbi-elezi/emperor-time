@@ -1,0 +1,10 @@
+== identify evals/fixtures/lost-sh ==
+-- extensions --
+      2 md
+      1 txt
+      1 sh
+-- named fossils --
+1 *.sh
+-- shebangs --
+evals/fixtures/lost-sh/HELLO.sh: #!/usr/bin/env bash
+identify: done (read-only)
