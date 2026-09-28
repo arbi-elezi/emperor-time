@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.4.116
+
+- Archaeology PDF / Poppler pdftotext-on-`.pdf` Jail pin: `evals/fixtures/lost-pdf/` + `references/archaeology-pdf-manual.md` (Poppler `pdftotext` 25.03.0 on HELLO.pdf → EMPEROR-TIME-PDF-PROBE-OK; zero new apt; LibreOffice/ghostscript/qpdf REJECTED as leaf owner)
+- identify/route/eval/honesty/bakeoff/catalog lockstep; fossils `*.pdf`; route tags `pdf` / `pdftotext` / `poppler` / `.pdf`; does not steal plain `*.ps` or `*.pptx` or `*.docx`
+- Plugin, marketplace, and SKILL.md at 0.4.116
+
 ## 0.4.115
 
 - Archaeology PPTX / stdlib zipfile-on-`.pptx` Jail pin: `evals/fixtures/lost-pptx/` + `references/archaeology-pptx-manual.md` (CPython stdlib `zipfile` on HELLO.pptx → EMPEROR-TIME-PPTX-PROBE-OK; zero new apt; Debian unzip/zip/LibreOffice REJECTED as leaf owner)
