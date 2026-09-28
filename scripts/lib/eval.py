@@ -364,6 +364,7 @@ def run_evals(root: Path) -> int:
     h.require_contains("*.c", "scripts/lib/identify.py", "identify.py missing *.c fossil")
     h.require_contains("*.js", "scripts/lib/identify.py", "identify.py missing *.js fossil")
     h.require_contains("*.py", "scripts/lib/identify.py", "identify.py missing *.py fossil")
+    h.require_contains("*.ts", "scripts/lib/identify.py", "identify.py missing *.ts fossil")
     h.require_contains(
         "scripts/lib/identify.py",
         "references/archaeology.md",
@@ -529,6 +530,11 @@ def run_evals(root: Path) -> int:
             ("python3.13 HELLO.py", "emperor-excavate", "route python3.13 → excavate"),
             ("cpython HELLO.py", "emperor-excavate", "route cpython → excavate"),
             ("hello.py", "emperor-excavate", "route hello.py → excavate"),
+            ("typescript HELLO.ts", "emperor-excavate", "route typescript → excavate"),
+            ("typescript5 HELLO.ts", "emperor-excavate", "route typescript5 → excavate"),
+            ("tsc HELLO.ts", "emperor-excavate", "route tsc → excavate"),
+            ("ts5 HELLO.ts", "emperor-excavate", "route ts5 → excavate"),
+            ("hello.ts", "emperor-excavate", "route hello.ts → excavate"),
             ("queue next", "emperor-queue", "route queue next → queue"),
             ("blocked task", "emperor-queue", "route blocked task → queue"),
             ("red build", "emperor-heal", "route red build → heal"),
@@ -956,6 +962,13 @@ def run_evals(root: Path) -> int:
             r"[0-9]+ \*\.py",
             ["references/archaeology-python-manual.md"],
         ),
+        (
+            "lost-ts identify finds *.ts",
+            "lost-ts",
+            "HELLO.ts",
+            r"[0-9]+ \*\.ts",
+            ["references/archaeology-typescript-manual.md"],
+        ),
     ]
     # The loop above was messy — clear fail state not affected; rewrite cleanly below by
     # only running the clean fixtures list (sections already printed wrongly once).
@@ -1250,6 +1263,11 @@ def run_evals(root: Path) -> int:
     h.require_contains("python3.13", "evals/triggers.json", "triggers missing python3.13 excavate pattern")
     h.require_contains("python3", "evals/triggers.json", "triggers missing python3 excavate pattern")
     h.require_contains(".py", "evals/triggers.json", "triggers missing .py excavate pattern")
+    h.require_contains("typescript", "evals/triggers.json", "triggers missing typescript excavate pattern")
+    h.require_contains("typescript5", "evals/triggers.json", "triggers missing typescript5 excavate pattern")
+    h.require_contains("tsc", "evals/triggers.json", "triggers missing tsc excavate pattern")
+    h.require_contains("ts5", "evals/triggers.json", "triggers missing ts5 excavate pattern")
+    h.require_contains(".ts", "evals/triggers.json", "triggers missing .ts excavate pattern")
     h.require_contains(".js", "evals/triggers.json", "triggers missing .js excavate pattern")
     _, rout_py = h.run_py("scripts/lib/route.py", "finish the branch")
     if "emperor-forge" not in rout_py:
@@ -1643,6 +1661,31 @@ def run_evals(root: Path) -> int:
     _, rout_bare_python = h.run_py("scripts/lib/route.py", "prefer python for new tooling")
     if "emperor-excavate" in rout_bare_python:
         h.fail_msg("route.py bare python ET-meta must not → excavate")
+    _, rout_typescript = h.run_py("scripts/lib/route.py", "typescript HELLO.ts")
+    if "emperor-excavate" not in rout_typescript:
+        h.fail_msg("route.py typescript → excavate")
+    _, rout_typescript5 = h.run_py("scripts/lib/route.py", "typescript5 HELLO.ts")
+    if "emperor-excavate" not in rout_typescript5:
+        h.fail_msg("route.py typescript5 → excavate")
+    _, rout_tsc = h.run_py("scripts/lib/route.py", "tsc HELLO.ts")
+    if "emperor-excavate" not in rout_tsc:
+        h.fail_msg("route.py tsc → excavate")
+    _, rout_ts5 = h.run_py("scripts/lib/route.py", "ts5 HELLO.ts")
+    if "emperor-excavate" not in rout_ts5:
+        h.fail_msg("route.py ts5 → excavate")
+    _, rout_ts_abbr = h.run_py("scripts/lib/route.py", "ts HELLO.ts")
+    if "emperor-excavate" not in rout_ts_abbr:
+        h.fail_msg("route.py bare ts → excavate")
+    if _m(".ts", "hello.tsx"):
+        h.fail_msg("route matches(.ts, hello.tsx) must be False after extension-boundary")
+    if _m(".ts", "hello.tsbuildinfo"):
+        h.fail_msg("route matches(.ts, hello.tsbuildinfo) must be False after extension-boundary")
+    if _m(".ts", "hello.mts"):
+        h.fail_msg("route matches(.ts, hello.mts) must be False after extension-boundary")
+    if _m(".ts", "hello.cts"):
+        h.fail_msg("route matches(.ts, hello.cts) must be False after extension-boundary")
+    if not _m(".ts", "hello.ts"):
+        h.fail_msg("route matches(.ts, hello.ts) must be True")
     # bare .l must not be enough alone when colliding; .lisp already routes via .lisp
     _, rout_regina = h.run_py("scripts/lib/route.py", "regina HELLO.REX")
     if "emperor-excavate" not in rout_regina:
@@ -3179,8 +3222,10 @@ def run_evals(root: Path) -> int:
     h.require_contains("0.4.86", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing 0.4.86 tip")
     h.require_contains("0.4.86", "CHANGELOG.md", "CHANGELOG missing 0.4.86")
     h.require_contains("0.4.87", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing 0.4.87 tip")
-    h.require_contains("0.4.87", ".claude-plugin/plugin.json", "plugin.json not at 0.4.87")
     h.require_contains("0.4.87", "CHANGELOG.md", "CHANGELOG missing 0.4.87")
+    h.require_contains("0.4.88", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing 0.4.88 tip")
+    h.require_contains("0.4.88", ".claude-plugin/plugin.json", "plugin.json not at 0.4.88")
+    h.require_contains("0.4.88", "CHANGELOG.md", "CHANGELOG missing 0.4.88")
 
     # session-discovery
     h.section("session-discovery locate HARD-GATE leaf")
