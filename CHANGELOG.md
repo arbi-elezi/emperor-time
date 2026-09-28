@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.4.88
+
+- Archaeology TypeScript leaf: `evals/fixtures/lost-ts/HELLO.ts` + identify smoke; TypeScript 5.6.3 (`tsc`) + Node.js 20.19.2 boot probe VERIFIED (`tsc --target ES2020 --module commonjs HELLO.ts --outDir …` then `node …/HELLO.js` → `EMPEROR-TIME-TS-PROBE-OK`); dialect labels honest (CONJECTURE / UNVERIFIABLE where due); identify fossils `*.ts` only (no `*.tsx` this leaf); bare `ts` allowed as route tag (two-letter abbreviation; word-boundary); bare `.ts` allowed as route tag with extension-boundary matching (does not prefix-hit `.tsx` / `.tsbuildinfo` / `.mts` / `.cts`); prefer `typescript` / `typescript5` / `tsc` / `ts5` / `.ts`; npm-local `typescript` 5.6.3 provides real `tsc` (not bun; bun≠tsc); typed-compile after Python; TeX/LaTeX still deferred; C++ still deferred; CLIPS / embeddings still deferred
+- Jail pin `references/archaeology-typescript-manual.md` — TypeScript Handbook tsc CLI Options / Using the CLI (`tsc index.ts`)
+- Catalog + SKILL.md + archaeology.md + language-agnostic.md link the forty-seventh pin alongside Pascal, ASM, COBOL, Fortran, VHDL, Ada, Forth, Common Lisp, Prolog, Tcl, Erlang, REXX, Modula-2, Algol 68, ALGOL 60, Algol W, Icon, Oberon, SNOBOL4, Simula, APL, BCPL, PL/I, Smalltalk, PostScript, BASIC, Scheme, AWK, sed, m4, ed, Make, dc, lex, yacc, roff, Perl, bc, Expect, Lua, Ruby, Go, Rust, C, JavaScript, and Python; route triggers gain `typescript` / `typescript5` / `tsc` / `ts5` / `ts` / `.ts`; eval locks `*.ts` identify on lost-ts
+- Plugin, marketplace, and SKILL.md at 0.4.88
+
 ## 0.4.87
 
 - Archaeology Python leaf: `evals/fixtures/lost-py/HELLO.py` + identify smoke; Python 3.13.5 boot probe VERIFIED (`python3 HELLO.py` → `EMPEROR-TIME-PY-PROBE-OK`); dialect labels honest (CONJECTURE / UNVERIFIABLE where due); identify fossils `*.py` only; bare `python` refused as route tag (ET meta / house-tooling discourse collision); bare `py` allowed as route tag (two-letter abbreviation; word-boundary); bare `.py` allowed as route tag with extension-boundary matching (does not prefix-hit `.pyc` / `.pyo` / `.pyw` / `.pyx` / `.pyi`); prefer `python3` / `python3.13` / `cpython` / `.py`; Debian package `python3` 3.13.5-1 already on box; classic scripting / runtime after JavaScript; treats Python as peer fossil not house language; TeX/LaTeX still deferred; C++ still deferred; TypeScript still deferred

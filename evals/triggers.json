@@ -546,7 +546,13 @@
         "python3",
         "python3.13",
         "cpython",
-        "py"
+        "py",
+        ".ts",
+        "typescript",
+        "typescript5",
+        "tsc",
+        "ts5",
+        "ts"
       ],
       "tags": [
         "archaeology",
@@ -699,7 +705,12 @@
         "python3",
         "python3.13",
         "cpython",
-        "py"
+        "py",
+        "typescript",
+        "typescript5",
+        "tsc",
+        "ts5",
+        "ts"
       ],
       "target": "skills/emperor-excavate/SKILL.md",
       "reason": "lost/ancient/foreign tree \u2014 excavate before modernizing"
