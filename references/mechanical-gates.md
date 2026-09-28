@@ -68,6 +68,8 @@ Queue Python core: `scripts/lib/queue.py` owns the work picker **and** multi-WIP
 
 Consent Python core: `scripts/lib/consent.py` owns Steal consent-protocol HARD-GATE (`--reject-no-consent` / `--check-consent`; thin `consent.sh` / `consent.ps1` + `steal-consent` alias / `emperor consent`) — CONSENT-header theater without `agent → role` is soft; forge `EMPEROR_CONSENT_PR` is not Steal enlistment consent.
 
+Blind secrets + workspace env Python cores: `scripts/lib/secrets_broker.py` + `workspace_env.py` (wired from `super_context.py`) own blind credentials HARD-GATE (`--reject-secret-leak` / `--check-env-redacted`; thin `secrets.sh` / `env.sh` + `emperor secrets` / `emperor env`) — agent sees names+status only; env show redacted; env sync merges SOT plugin overlays without echoing secrets.
+
 Super-context Python core: `scripts/lib/context.py` (+ `md_graph.py` / `context_store.py` / `thoughttrail.py` / `super_context.py` stubs) owns graph-over-grep + thoughttrail HARD-GATE (`--reject-no-graph` / `--reject-no-trail` / `--check-context` / `--check-trail`; thin `context.sh` / `context.ps1` + aliases). Load L0 before mass-grep. No embeddings; no Graphify copy.
 
 Heal-verify Python core: `scripts/lib/heal_verify.py` owns heal-and-verify HARD-GATE (`--reject-no-triad` / `--reject-no-postmortem` / `--check-heal`; thin `heal-verify.sh` / `heal-verify.ps1` + `heal-and-verify` alias / `emperor heal-verify`) — triad theater or missing postmortem is soft; entry still `emperor heal` four-phase.

@@ -7,8 +7,8 @@ Commands:
   sandbox plan|up|down|ports   (engine: scripts/lib/sandbox_engine.py)
   artifacts list|stub-create|sync
   runtime use|status (compose|podman|k8s)
-  env show|sync (redacted)
-  secrets list|inject|declare (no plaintext)
+  env show|sync (redacted; workspace_env merges overlays)
+  secrets list|inject|declare (blind broker; HARD-GATE leak checks)
   layout   (ensure .emperor inverted dirs)
 
 Tiers:
@@ -18,6 +18,8 @@ Tiers:
 
 Sandbox engine (v0.4.135+): real port allocator (no collisions), compose /
 podman / k8s emitters, loadable isolate|mock|simulate profiles.
+Blind secrets broker + unified workspace env (v0.4.136+): names+status
+only; inject via env-file/vault hook; env sync merges plugin overlays.
 No embeddings. No Graphify code. Stdlib + sqlite3.
 Thin twins: scripts/context.sh / context.ps1 (+ thoughttrail / super-context / sandbox / sot aliases).
 """
@@ -36,6 +38,8 @@ if str(_LIB) not in sys.path:
 import context_store as store
 import thoughttrail as trail
 import sandbox_engine as sbox
+import secrets_broker as secrets
+import workspace_env as wenv
 
 
 LEAF = "references/super-context.md"
@@ -530,113 +534,14 @@ def cmd_runtime(args: argparse.Namespace) -> int:
     return sbox.cmd_runtime_cli(args)
 
 
-def _redact_env_lines(raw: str) -> list[str]:
-    out = []
-    for line in raw.splitlines():
-        s = line.strip()
-        if not s or s.startswith("#"):
-            out.append(line)
-            continue
-        if "=" in line:
-            k, _, _v = line.partition("=")
-            out.append(f"{k}=***REDACTED***")
-        else:
-            out.append(line)
-    return out
-
-
 def cmd_env(args: argparse.Namespace) -> int:
-    """Unified workspace env — show (redacted) | sync stub."""
-    root = Path(args.root).resolve() if args.root else _repo_root()
-    paths = trail.ensure_layout(root)
-    action = args.env_action
-    env_dir = paths["env"]
-    example = env_dir / "workspace.env.example"
-    managed = env_dir / "workspace.env"
-    if action == "show":
-        print("ENV show scope=workspace (redacted; repo≠workspace)")
-        print(f"  example={example}")
-        if managed.is_file():
-            print("  --- workspace.env (redacted) ---")
-            for line in _redact_env_lines(managed.read_text(encoding="utf-8", errors="replace")):
-                print(f"  {line}")
-        else:
-            print("  workspace.env=(absent — copy from example; secrets via broker)")
-        overlays = env_dir / "overlays"
-        if overlays.is_dir():
-            for ov in sorted(overlays.glob("*.env")):
-                print(f"  overlay={ov.name} (redacted)")
-                for line in _redact_env_lines(ov.read_text(encoding="utf-8", errors="replace"))[:20]:
-                    print(f"    {line}")
-        return 0
-    if action == "sync":
-        # merge example keys into managed without copying secret-looking values
-        if not managed.exists() and example.exists():
-            managed.write_text(example.read_text(encoding="utf-8"), encoding="utf-8")
-            print(f"ENV sync created {managed} from example (no secrets)")
-        else:
-            print(f"ENV sync stub managed={managed}")
-        print("NOTE: plugin overlay merge is stub — ET owns workspace env merge")
-        return 0
-    print(f"ENV FAIL: unknown action {action}", file=sys.stderr)
-    return 1
+    """Unified workspace env — show (redacted) | sync (merge overlays)."""
+    return wenv.cmd_env_cli(args)
 
 
 def cmd_secrets(args: argparse.Namespace) -> int:
-    """Blind credentials — list names / inject without plaintext to stdout."""
-    root = Path(args.root).resolve() if args.root else _repo_root()
-    paths = trail.ensure_layout(root)
-    action = args.secrets_action
-    man_path = paths["secrets"] / "manifest.json"
-    data = json.loads(man_path.read_text(encoding="utf-8"))
-    if action == "list":
-        names = data.get("names") or []
-        print(f"SECRETS list broker={data.get('broker', '?')} n={len(names)}")
-        for n in names:
-            # status only — never values
-            print(f"  name={n} status=declared")
-        if not names:
-            print("  (none — register names in .emperor/secrets/manifest.json)")
-        print("IRON: agent must never read plaintext secret values")
-        return 0
-    if action == "inject":
-        names = data.get("names") or []
-        target = args.artifact or "default"
-        # Honest stub: write a broker receipt WITHOUT values
-        receipt = paths["secrets"] / f"inject-{target}.receipt.json"
-        receipt.write_text(
-            json.dumps(
-                {
-                    "artifact": target,
-                    "broker": data.get("broker", "env-file"),
-                    "injected_names": names,
-                    "plaintext_to_stdout": False,
-                    "stub": True,
-                },
-                indent=2,
-            )
-            + "\n",
-            encoding="utf-8",
-        )
-        print(f"SECRETS inject artifact={target} names={len(names)} receipt={receipt}")
-        print("NOTE: broker stub — values not fetched; plaintext withheld from agent")
-        return 0
-    if action == "declare":
-        # register a name only
-        name = (args.name or "").strip()
-        if not name:
-            print("SECRETS FAIL: declare needs --name", file=sys.stderr)
-            return 1
-        names = list(data.get("names") or [])
-        if name not in names:
-            names.append(name)
-        data["names"] = names
-        man_path.write_text(json.dumps(data, indent=2) + "\n", encoding="utf-8")
-        print(f"SECRETS declare name={name} (value never accepted on CLI)")
-        return 0
-    print(f"SECRETS FAIL: unknown action {action}", file=sys.stderr)
-    return 1
-
+    """Blind credentials broker — list/declare/inject; HARD-GATE leak checks."""
+    return secrets.cmd_secrets_cli(args)
 
 
 def build_parser() -> argparse.ArgumentParser:
@@ -716,13 +621,28 @@ def build_parser() -> argparse.ArgumentParser:
     rt.add_argument("runtime_action", choices=["use", "status"])
     rt.add_argument("backend", nargs="?", default="", help="compose|podman|k8s for use")
 
-    ev = sub.add_parser("env", help="workspace env show|sync (redacted)", parents=[parent])
+    ev = sub.add_parser("env", help="workspace env show|sync (redacted merge)", parents=[parent])
     ev.add_argument("env_action", choices=["show", "sync"])
+    ev.add_argument("--artifact", default="", help="artifact id for sync/show scope")
 
     sec = sub.add_parser("secrets", help="blind creds list|inject|declare", parents=[parent])
     sec.add_argument("secrets_action", choices=["list", "inject", "declare"])
     sec.add_argument("--name", default="", help="declare name only (no value)")
     sec.add_argument("--artifact", default="default")
+    sec.add_argument("--from-file", default="", help="bind value from file (never echoed)")
+    sec.add_argument("--broker", default="", help="env-file|vault|1password")
+    sec.add_argument("--names", default="", help="comma-separated inject subset")
+    sec.add_argument("--target", default="", help="override inject env-file path")
+    sec.add_argument(
+        "--reject-secret-leak",
+        action="store_true",
+        help="HARD-GATE: refuse secret-leaking dumps",
+    )
+    sec.add_argument(
+        "--check-env-redacted",
+        default="",
+        help="HARD-GATE: fail when dump would expose values",
+    )
 
     return p
 
@@ -732,8 +652,29 @@ def main(argv: list[str] | None = None) -> int:
     argv = list(sys.argv[1:] if argv is None else argv)
     if not argv:
         return _print_card()
+    # HARD-GATE shortcuts (work with or without secrets subcommand)
+    if "--reject-secret-leak" in argv:
+        sys.stdout.write(secrets.reject_secret_leak())
+        return 1
+    if "--check-env-redacted" in argv:
+        # allow: secrets --check-env-redacted PATH  OR  --check-env-redacted PATH
+        try:
+            idx = argv.index("--check-env-redacted")
+            target = argv[idx + 1] if idx + 1 < len(argv) else ""
+        except ValueError:
+            target = ""
+        if not target or target.startswith("-"):
+            print("SECRETS FAIL: --check-env-redacted needs PATH", file=sys.stderr)
+            return 1
+        ok, msg = secrets.check_env_redacted(Path(target))
+        print(msg)
+        return 0 if ok else 1
     parser = build_parser()
     args = parser.parse_args(argv)
+    # normalize check-env-redacted empty → None for broker adapter
+    if getattr(args, "check_env_redacted", "") in ("", None):
+        if hasattr(args, "check_env_redacted"):
+            args.check_env_redacted = None
     # normalize empty root/db
     if not getattr(args, "root", ""):
         args.root = ""

@@ -20,6 +20,8 @@ LEAVES: list[tuple[str, str, tuple[str, ...]]] = [
     ("heal-verify", "scripts/lib/heal_verify.py", ("heal-verify", "reject-no-triad", "reject-no-postmortem", "heal-and-verify")),
     ("review-isolation", "scripts/lib/review_pack.py", ("review-pack", "reject-unisolated", "reject-author-diary", "check-isolation", "hetero-critique isolation")),
     ("super-context", "scripts/lib/context.py", ("super-context", "thoughttrail", "reject-no-graph", "reject-no-trail", "check-context", "GRAPH_THEN_TRAIL")),
+    ("blind-secrets-broker", "scripts/lib/secrets_broker.py", ("secrets list", "reject-secret-leak", "check-env-redacted", "blind-secrets-broker")),
+    ("workspace-env", "scripts/lib/workspace_env.py", ("env show", "env sync", "managed.env", "blind-secrets-broker")),
     ("sandbox-engine", "scripts/lib/sandbox_engine.py", ("sandbox plan", "runtime use", "podman", "k8s", "isolate", "sandbox-engine")),
     ("sot-artifact-sync", "scripts/lib/super_context.py", ("sot add-plugin", "artifacts sync", "clone --mirror", "sot-artifact-sync")),
     ("critique", "scripts/lib/critique.py", ("critique", "reject-incomplete-critique", "eight-count", "Checked")),

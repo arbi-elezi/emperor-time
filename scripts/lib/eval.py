@@ -5819,7 +5819,7 @@ def run_evals(root: Path) -> int:
     h.require_contains("steal-consent", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing steal-consent")
     h.require_contains("consent.py", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing consent.py")
     h.require_contains("0.4.132", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing 0.4.132 tip")
-    h.require_contains("0.4.135", ".claude-plugin/plugin.json", "plugin.json not at 0.4.135")
+    h.require_contains("0.4.136", ".claude-plugin/plugin.json", "plugin.json not at 0.4.136")
     h.require_contains("0.4.132", "CHANGELOG.md", "CHANGELOG missing 0.4.132")
     h.require_contains("reject-no-triad", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing reject-no-triad")
     h.require_contains("reject-no-postmortem", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing reject-no-postmortem")
@@ -5843,7 +5843,14 @@ def run_evals(root: Path) -> int:
     h.require_contains("0.4.135", "CHANGELOG.md", "CHANGELOG missing 0.4.135")
     h.require_contains("sandbox_engine.py", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing sandbox_engine.py")
     h.require_contains("sandbox-engine", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing sandbox-engine")
-    h.require_contains("0.4.135", ".claude-plugin/marketplace.json", "marketplace.json not at 0.4.135")
+    h.require_contains("0.4.136", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing 0.4.136 tip")
+    h.require_contains("0.4.136", "CHANGELOG.md", "CHANGELOG missing 0.4.136")
+    h.require_contains("secrets_broker.py", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing secrets_broker.py")
+    h.require_contains("workspace_env.py", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing workspace_env.py")
+    h.require_contains("blind-secrets-broker", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing blind-secrets-broker")
+    h.require_contains("reject-secret-leak", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing reject-secret-leak")
+    h.require_contains("check-env-redacted", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing check-env-redacted")
+    h.require_contains("0.4.136", ".claude-plugin/marketplace.json", "marketplace.json not at 0.4.136")
     h.require_contains("finish.py", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing finish.py")
     h.require_contains("reject-red-suite", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing reject-red-suite")
     h.require_contains("require-green", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing require-green")
@@ -6849,9 +6856,9 @@ def run_evals(root: Path) -> int:
         "bakeoff.md missing reject-unisolated inventory",
     )
     h.require_contains(
-        "0.4.135",
+        "0.4.136",
         "SKILL.md",
-        "SKILL.md not bumped to 0.4.135",
+        "SKILL.md not bumped to 0.4.136",
     )
     _, card = h.run_py("scripts/lib/review_pack.py")
     if "checklist=yes" not in card:
@@ -8836,6 +8843,211 @@ def run_evals(root: Path) -> int:
         _sh_sb.rmtree(tmp, ignore_errors=True)
     h.pass_msg("sandbox-engine P2")
 
+
+
+
+
+    # ---- blind secrets broker + unified workspace env (P3) ----
+    h.section("blind-secrets-broker")
+    h.need("scripts/lib/secrets_broker.py")
+    h.need("scripts/lib/workspace_env.py")
+    h.need("evals/fixtures/blind-secrets-broker/README.md")
+    h.need("evals/fixtures/blind-secrets-broker/env-leaky/env-leaky.txt")
+    h.need("evals/fixtures/blind-secrets-broker/env-redacted/env-redacted.txt")
+    h.py_compile("scripts/lib/secrets_broker.py", "secrets_broker.py compile")
+    h.py_compile("scripts/lib/workspace_env.py", "workspace_env.py compile")
+    h.bash_n("scripts/secrets.sh", "secrets.sh syntax")
+    h.bash_n("scripts/env.sh", "env.sh syntax")
+    h.require_contains(
+        "secrets_broker",
+        "scripts/lib/super_context.py",
+        "super_context missing secrets_broker import",
+    )
+    h.require_contains(
+        "workspace_env",
+        "scripts/lib/super_context.py",
+        "super_context missing workspace_env import",
+    )
+    h.require_contains(
+        "--reject-secret-leak",
+        "scripts/lib/secrets_broker.py",
+        "secrets_broker missing --reject-secret-leak",
+    )
+    h.require_contains(
+        "--check-env-redacted",
+        "scripts/lib/secrets_broker.py",
+        "secrets_broker missing --check-env-redacted",
+    )
+    h.require_contains(
+        "Blind secrets broker",
+        "evals/bakeoff.md",
+        "bakeoff missing Blind secrets broker row",
+    )
+    h.require_contains(
+        "blind-secrets-broker",
+        "evals/evals.json",
+        "evals.json missing blind-secrets-broker case",
+    )
+    h.require_contains(
+        "reject-secret-leak",
+        "references/super-context.md",
+        "super-context.md missing reject-secret-leak doctrine",
+    )
+    h.require_contains(
+        "managed.env",
+        "references/super-context.md",
+        "super-context.md missing managed.env doctrine",
+    )
+    h.require_contains(
+        "reject-secret-leak",
+        "references/mechanical-gates.md",
+        "mechanical-gates missing reject-secret-leak",
+    )
+    rc, reject = h.run_py("scripts/lib/secrets_broker.py", "--reject-secret-leak")
+    if rc == 0:
+        h.fail_msg("secrets --reject-secret-leak should exit non-zero")
+    elif "REJECT SECRET LEAK" not in reject and "HARD-GATE" not in reject:
+        h.fail_msg("secrets --reject-secret-leak missing REJECT text")
+    else:
+        h.pass_msg("secrets --reject-secret-leak hard-gates")
+    leaky = root / "evals/fixtures/blind-secrets-broker/env-leaky"
+    rc, err = h.run_py(
+        "scripts/lib/secrets_broker.py", "--check-env-redacted", str(leaky)
+    )
+    if rc == 0:
+        h.fail_msg("check-env-redacted should fail leaky fixture")
+    elif "FAIL" not in err and "leak" not in err.lower():
+        h.fail_msg(f"check-env-redacted leaky missing FAIL: {err}")
+    else:
+        h.pass_msg("check-env-redacted rejects leaky")
+    red = root / "evals/fixtures/blind-secrets-broker/env-redacted"
+    rc, okmsg = h.run_py(
+        "scripts/lib/secrets_broker.py", "--check-env-redacted", str(red)
+    )
+    if rc != 0:
+        h.fail_msg(f"check-env-redacted should accept redacted: {okmsg}")
+    else:
+        h.pass_msg("check-env-redacted accepts redacted")
+    import tempfile as _tf_sec
+    import shutil as _sh_sec
+    tmp = Path(_tf_sec.mkdtemp())
+    try:
+        rc, out = h.run_py(
+            "scripts/lib/super_context.py",
+            "secrets", "declare", "--name", "DB_PASSWORD", "--root", str(tmp),
+        )
+        if rc != 0 or "declare" not in out.lower():
+            h.fail_msg(f"secrets declare failed: {out}")
+        else:
+            h.pass_msg("secrets declare ok")
+        bind = tmp / "bind.secret"
+        bind.write_text("super-secret-value-xyz\n", encoding="utf-8")
+        rc, out = h.run_py(
+            "scripts/lib/super_context.py",
+            "secrets", "declare", "--name", "DB_PASSWORD",
+            "--from-file", str(bind), "--root", str(tmp),
+        )
+        if rc != 0 or "bound" not in out.lower():
+            h.fail_msg(f"secrets bind from-file failed: {out}")
+        elif "super-secret-value-xyz" in out:
+            h.fail_msg("secrets declare --from-file leaked plaintext")
+        else:
+            h.pass_msg("secrets bind from-file blind ok")
+        rc, out = h.run_py(
+            "scripts/lib/super_context.py",
+            "secrets", "list", "--root", str(tmp),
+        )
+        if rc != 0:
+            h.fail_msg(f"secrets list failed: {out}")
+        elif "super-secret-value-xyz" in out:
+            h.fail_msg("secrets list leaked plaintext")
+        elif "DB_PASSWORD" not in out:
+            h.fail_msg(f"secrets list missing name: {out}")
+        else:
+            h.pass_msg("secrets list names+status only")
+        rc, out = h.run_py(
+            "scripts/lib/super_context.py",
+            "secrets", "inject", "--artifact", "demo", "--root", str(tmp),
+        )
+        if rc != 0 or "inject" not in out.lower():
+            h.fail_msg(f"secrets inject failed: {out}")
+        elif "super-secret-value-xyz" in out:
+            h.fail_msg("secrets inject leaked plaintext on stdout")
+        else:
+            h.pass_msg("secrets inject receipt; no plaintext stdout")
+        envf = tmp / ".emperor" / "artifacts" / "demo" / ".env.secrets"
+        if not envf.is_file():
+            h.fail_msg("inject did not write .env.secrets")
+        else:
+            body = envf.read_text(encoding="utf-8")
+            if "DB_PASSWORD=super-secret-value-xyz" not in body:
+                h.fail_msg("env-file missing bound value on disk")
+            else:
+                h.pass_msg("env-file broker wrote secrets on disk")
+        rc, out = h.run_py(
+            "scripts/lib/super_context.py",
+            "secrets", "inject", "--artifact", "vdemo",
+            "--broker", "vault", "--root", str(tmp),
+        )
+        if rc != 0:
+            h.fail_msg(f"vault inject failed: {out}")
+        hook = tmp / ".emperor" / "secrets" / "hook-vault-vdemo.json"
+        if not hook.is_file():
+            h.fail_msg("vault inject missing hook placeholder")
+        elif "super-secret-value-xyz" in out:
+            h.fail_msg("vault inject leaked plaintext")
+        else:
+            h.pass_msg("vault/1password hook placeholder ok")
+        # plugin overlay for env sync
+        plug = tmp / ".emperor" / "sot" / "plugins" / "api"
+        plug.mkdir(parents=True, exist_ok=True)
+        (plug / "env.fragment").write_text(
+            "API_HOST=api.local\nAPI_TOKEN=should-not-echo\n", encoding="utf-8"
+        )
+        rc, out = h.run_py(
+            "scripts/lib/super_context.py",
+            "env", "sync", "--artifact", "demo", "--root", str(tmp),
+        )
+        if rc != 0 or "ENV sync" not in out:
+            h.fail_msg(f"env sync failed: {out}")
+        elif "should-not-echo" in out:
+            h.fail_msg("env sync echoed secret value")
+        else:
+            h.pass_msg("env sync ok; no secret echo")
+        managed = tmp / ".emperor" / "env" / "overlays" / "demo.managed.env"
+        if not managed.is_file():
+            h.fail_msg("env sync missing managed overlay")
+        else:
+            mbody = managed.read_text(encoding="utf-8")
+            if "API_HOST=api.local" not in mbody:
+                h.fail_msg("managed overlay missing plugin public key")
+            elif "API_TOKEN=${API_TOKEN}" not in mbody:
+                h.fail_msg("managed overlay missing secret placeholder")
+            elif "should-not-echo" in mbody:
+                h.fail_msg("managed overlay wrote secret plaintext")
+            else:
+                h.pass_msg("env sync merges plugin overlay; secret placeholder")
+        rc, out = h.run_py(
+            "scripts/lib/super_context.py",
+            "env", "show", "--artifact", "demo", "--root", str(tmp),
+        )
+        if rc != 0:
+            h.fail_msg(f"env show failed: {out}")
+        elif "should-not-echo" in out:
+            h.fail_msg("env show leaked secret")
+        elif "API_TOKEN=***REDACTED***" not in out and "REDACTED" not in out:
+            h.fail_msg(f"env show missing redaction: {out}")
+        else:
+            h.pass_msg("env show redacts secret keys")
+        # emperor peer forward
+        _, emp = h.run_sh("scripts/emperor", "secrets", "--reject-secret-leak")
+        if "REJECT SECRET LEAK" not in emp:
+            h.fail_msg("emperor secrets --reject-secret-leak should forward REJECT")
+        else:
+            h.pass_msg("emperor secrets peer forwards --reject-secret-leak")
+    finally:
+        _sh_sec.rmtree(tmp, ignore_errors=True)
+    h.pass_msg("blind-secrets-broker P3")
 
 
 

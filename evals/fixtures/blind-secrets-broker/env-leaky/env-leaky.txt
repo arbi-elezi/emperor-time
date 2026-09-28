@@ -1,0 +1,3 @@
+# Leaky dump — must FAIL --check-env-redacted
+DB_PASSWORD=plaintext-should-fail-gate
+API_TOKEN=another-leaked-token-value

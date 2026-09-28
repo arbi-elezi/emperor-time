@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.4.136
+
+- Vertical depth: blind secrets broker + unified workspace env — real `secrets list|declare|inject` (names+status only; NEVER plaintext); env-file broker writes artifact `.env.secrets` outside git; vault/1password hook placeholders; HARD-GATE `--reject-secret-leak` / `--check-env-redacted`
+- Unified `env show|sync` merges overlays across SOT plugin `env.fragment`s for an artifact; redacted show; sync writes `.emperor/env/overlays/<id>.managed.env` with `${NAME}` secret placeholders (no echo)
+- Cores: `scripts/lib/secrets_broker.py`, `workspace_env.py` (super_context delegates); fixtures `evals/fixtures/blind-secrets-broker/`; doctrine `references/super-context.md`
+- Not archaeology; not embeddings; no Graphify copy
+- Plugin, marketplace, and SKILL.md at 0.4.136
+
 ## 0.4.135
 
 - Vertical depth: sandbox engine — real port allocator (persist; no collisions across parallel artifacts); compose emitter wiring SOT plugins; podman backend (`podman-compose.yml` + `podman play kube`); k8s backend (Deployment/Service/NetworkPolicy); `sandbox plan|up|down|ports` honor `runtime use compose|podman|k8s`; loadable isolate|mock|simulate profiles
