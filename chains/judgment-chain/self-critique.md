@@ -89,3 +89,24 @@ enough to warrant their own second look.)
 
 Hand the completed critique to `hetero-critique.md` (if an agent is
 available) or directly to `verdicts-and-breaches.md`.
+
+## HARD-GATE (mechanical)
+
+Doctrine above is the law. The lock is an exit code:
+
+```bash
+scripts/emperor critique <task-dir>                    # or --check-critique PATH
+scripts/emperor critique --reject-incomplete-critique  # always fails (card + exit 1)
+scripts/gate.sh g4 <task-dir>                          # calls critique.py
+```
+
+Python core: `scripts/lib/critique.py`. Thin twins: `critique.sh` /
+`critique.ps1` (+ `self-critique` alias). Fails when:
+
+1. Missing critique artifact (`critique.md` / `self-critique.md`)
+2. Incomplete eight-count — any of the eight axes absent
+3. Unexamined counts — axis present but Checked cell empty ("no findings"
+   without naming what was checked)
+
+Critique **file presence** does **not** open G4.
+

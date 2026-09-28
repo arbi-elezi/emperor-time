@@ -47,6 +47,11 @@
       "id": "steal-quarantine-hard-gate",
       "type": "behavioral-fixture",
       "expect": "quarantine.py / gate g4 rejects worker done lacking quarantine dir / CONJECTURE start / ADMITTED|REJECTED; accepts admitted task-ok"
+    },
+    {
+      "id": "critique-eight-count-hard-gate",
+      "type": "behavioral-fixture",
+      "expect": "critique.py / gate g4 rejects critique-file-present theater / missing axes / empty Checked cells; accepts complete eight-count"
     }
   ]
 }

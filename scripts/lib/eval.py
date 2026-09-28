@@ -419,7 +419,12 @@ def run_evals(root: Path) -> int:
             "| 1 | tests pass | VERIFIED | pass | pytest | tests pass | 2026-01-01 |\n",
             encoding="utf-8",
         )
-        (tmp / "critique.md").write_text("self-critique filed\n", encoding="utf-8")
+        # Complete eight-count so G4 reaches VERIFIED quote check (not critique fail)
+        import shutil as _shutil
+        _shutil.copy(
+            root / "evals/fixtures/critique-eight-count/critique-complete.md",
+            tmp / "critique.md",
+        )
         rc, _ = h.run_sh("scripts/gate.sh", "g4", str(tmp))
         if rc == 0:
             h.fail_msg("unquoted VERIFIED was allowed")
@@ -1837,6 +1842,178 @@ def run_evals(root: Path) -> int:
         h.fail_msg("quarantine.sh missing QUARANTINE card")
     else:
         h.pass_msg("quarantine.sh thin twin emits card")
+
+    # ---- critique eight-count HARD-GATE (Judgment G4 vertical depth) ----
+    h.section("critique-eight-count HARD-GATE")
+    h.need("scripts/lib/critique.py")
+    h.need("scripts/critique.sh")
+    h.need("scripts/critique.ps1")
+    h.need("scripts/self-critique.sh")
+    h.need("scripts/self-critique.ps1")
+    h.need("evals/fixtures/critique-eight-count/critique-present-only.md")
+    h.need("evals/fixtures/critique-eight-count/critique-partial.md")
+    h.need("evals/fixtures/critique-eight-count/critique-empty-checked.md")
+    h.need("evals/fixtures/critique-eight-count/critique-complete.md")
+    h.need("evals/fixtures/critique-eight-count/task-ok/ledger.md")
+    h.need("evals/fixtures/critique-eight-count/task-incomplete/ledger.md")
+    h.need("evals/fixtures/critique-eight-count/task-empty-checked/ledger.md")
+    h.bash_n("scripts/critique.sh", "critique.sh syntax")
+    h.bash_n("scripts/self-critique.sh", "self-critique.sh syntax")
+    h.py_compile("scripts/lib/critique.py", "critique.py compile")
+    h.require_contains(
+        "lib/critique.py",
+        "scripts/critique.sh",
+        "critique.sh thin twin missing critique.py",
+    )
+    h.require_contains(
+        "lib/critique.py",
+        "scripts/critique.ps1",
+        "critique.ps1 thin twin missing critique.py",
+    )
+    h.require_contains(
+        "critique",
+        "scripts/emperor",
+        "emperor bash peer missing critique",
+    )
+    h.require_contains(
+        "self-critique",
+        "scripts/emperor",
+        "emperor bash peer missing self-critique",
+    )
+    h.require_contains(
+        "'critique'",
+        "scripts/emperor.ps1",
+        "emperor.ps1 missing critique",
+    )
+    h.require_contains(
+        "critique",
+        "scripts/emperor.cmd",
+        "emperor.cmd missing critique",
+    )
+    h.require_contains(
+        "critique",
+        "scripts/emperor.zsh",
+        "emperor.zsh missing critique",
+    )
+    h.require_contains(
+        "critique.py",
+        "scripts/lib/gate.py",
+        "gate.py does not call critique.py",
+    )
+    h.require_contains(
+        "--reject-incomplete-critique",
+        "scripts/lib/critique.py",
+        "critique.py missing --reject-incomplete-critique",
+    )
+    h.require_contains(
+        "--check-critique",
+        "scripts/lib/critique.py",
+        "critique.py missing --check-critique",
+    )
+    h.require_contains(
+        "HARD-GATE",
+        "chains/judgment-chain/self-critique.md",
+        "self-critique.md missing HARD-GATE mechanical pointer",
+    )
+    h.require_contains(
+        "eight counts",
+        "chains/judgment-chain/self-critique.md",
+        "self-critique.md missing eight counts doctrine",
+    )
+    _, card = h.run_py("scripts/lib/critique.py")
+    if "checklist=yes" not in card:
+        h.fail_msg("critique card missing checklist=yes")
+    elif "NO_G4_WITHOUT_EIGHT_COUNT_CRITIQUE" not in card:
+        h.fail_msg("critique card missing iron law token")
+    else:
+        h.pass_msg("critique prints CRITIQUE card")
+    rc, _ = h.run_py("scripts/lib/critique.py", "--reject-incomplete-critique")
+    if rc == 0:
+        h.fail_msg("critique --reject-incomplete-critique should exit non-zero")
+    else:
+        _, reject = h.run_py(
+            "scripts/lib/critique.py", "--reject-incomplete-critique"
+        )
+        if "REJECT INCOMPLETE CRITIQUE" not in reject and "HARD-GATE" not in reject:
+            h.fail_msg("critique --reject-incomplete-critique missing REJECT text")
+        else:
+            h.pass_msg("critique --reject-incomplete-critique hard-gates")
+    rc, err = h.run_py(
+        "scripts/lib/critique.py",
+        "--check-critique",
+        str(root / "evals/fixtures/critique-eight-count/critique-present-only.md"),
+    )
+    if rc == 0:
+        h.fail_msg("critique-present-only fixture should fail critique")
+    elif not h.grep_out(err, r"incomplete|missing axes|eight-count"):
+        h.fail_msg("critique-present-only should mention missing axes")
+    else:
+        h.pass_msg("critique-present-only rejected")
+    rc, err = h.run_py(
+        "scripts/lib/critique.py",
+        "--check-critique",
+        str(root / "evals/fixtures/critique-eight-count/critique-partial.md"),
+    )
+    if rc == 0:
+        h.fail_msg("critique-partial fixture should fail critique")
+    elif not h.grep_out(err, r"Regression|Security|Simpler|Honesty|missing"):
+        h.fail_msg("critique-partial should mention missing axes")
+    else:
+        h.pass_msg("critique-partial rejected")
+    rc, err = h.run_py(
+        "scripts/lib/critique.py",
+        "--check-critique",
+        str(root / "evals/fixtures/critique-eight-count/critique-empty-checked.md"),
+    )
+    if rc == 0:
+        h.fail_msg("critique-empty-checked fixture should fail critique")
+    elif not h.grep_out(err, r"unexamined|empty Checked|Checked"):
+        h.fail_msg("critique-empty-checked should mention empty Checked")
+    else:
+        h.pass_msg("critique-empty-checked rejected")
+    rc, _ = h.run_py(
+        "scripts/lib/critique.py",
+        "--check-critique",
+        str(root / "evals/fixtures/critique-eight-count/critique-complete.md"),
+    )
+    if rc != 0:
+        h.fail_msg("critique-complete fixture should pass critique")
+    else:
+        h.pass_msg("critique-complete accepted")
+    # G4 wiring: incomplete/empty-checked fail; task-ok passes
+    tmp = Path(tempfile.mkdtemp())
+    try:
+        import shutil as _shutil
+        for name, expect_fail in (
+            ("task-incomplete", True),
+            ("task-empty-checked", True),
+            ("task-ok", False),
+        ):
+            src = root / "evals/fixtures/critique-eight-count" / name
+            dst = tmp / name
+            _shutil.copytree(src, dst)
+            (dst / ".gates").mkdir(exist_ok=True)
+            stamp = _utc_stamp()
+            for g in ("g0", "g1", "g2", "g3"):
+                (dst / ".gates" / g).write_text(stamp + "\n", encoding="utf-8")
+            rc, out = h.run_sh("scripts/gate.sh", "g4", str(dst))
+            if expect_fail:
+                if rc == 0:
+                    h.fail_msg(f"G4 allowed incomplete critique {name}")
+                else:
+                    h.pass_msg(f"G4 rejects incomplete critique {name}")
+            else:
+                if rc != 0:
+                    h.fail_msg(f"G4 should accept complete critique {name}: {out}")
+                else:
+                    h.pass_msg(f"G4 accepts complete critique {name}")
+    finally:
+        shutil.rmtree(tmp, ignore_errors=True)
+    _, sh_card = h.run_sh("scripts/critique.sh")
+    if "CRITIQUE" not in sh_card:
+        h.fail_msg("critique.sh missing CRITIQUE card")
+    else:
+        h.pass_msg("critique.sh thin twin emits card")
 
 
     # ---- finish menu ----
@@ -5093,12 +5270,15 @@ def run_evals(root: Path) -> int:
     h.require_contains("0.4.122", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing 0.4.122 tip")
     h.require_contains("0.4.122", "CHANGELOG.md", "CHANGELOG missing 0.4.122")
     h.require_contains("0.4.123", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing 0.4.123 tip")
-    h.require_contains("0.4.123", ".claude-plugin/plugin.json", "plugin.json not at 0.4.123")
     h.require_contains("0.4.123", "CHANGELOG.md", "CHANGELOG missing 0.4.123")
     h.require_contains("quarantine.py", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing quarantine.py")
-    h.require_contains("reject-unquarantined", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing reject-unquarantined")
-    h.require_contains("CONJECTURE", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing CONJECTURE")
-    h.require_contains("ADMITTED", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing ADMITTED")
+    h.require_contains("0.4.124", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing 0.4.124 tip")
+    h.require_contains("0.4.124", ".claude-plugin/plugin.json", "plugin.json not at 0.4.124")
+    h.require_contains("0.4.124", "CHANGELOG.md", "CHANGELOG missing 0.4.124")
+    h.require_contains("critique.py", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing critique.py")
+    h.require_contains("reject-incomplete-critique", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing reject-incomplete-critique")
+    h.require_contains("eight-count", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing eight-count")
+    h.require_contains("Checked", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing Checked")
 
     # session-discovery
     h.section("session-discovery locate HARD-GATE leaf")

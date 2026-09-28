@@ -3,7 +3,7 @@ name: emperor-verify
 description: >-
   Emperor Time — VERIFY / review / critique. Claim audit, eight-count
   self-critique, isolated hetero-critique, request-review HARD-GATE, receive-review HARD-GATE,
-  verification-before-completion / evidence HARD-GATE, claim-audit HARD-GATE, mechanical G4. Use when
+  verification-before-completion / evidence HARD-GATE, claim-audit HARD-GATE, critique eight-count HARD-GATE, mechanical G4. Use when
   reviewing a diff, requesting code review, claiming tests pass, saying done /
   fixed / green, or before commit/PR/deliver/merge.
 license: MIT
@@ -14,6 +14,13 @@ metadata:
 ---
 
 # Emperor Verify (Judgment wrapper)
+
+## MUST — critique eight-count HARD-GATE before G4
+
+Before opening G4, run `scripts/emperor critique <task-dir>` (or
+`self-critique`). Doctrine: `chains/judgment-chain/self-critique.md`.
+Missing axes / empty Checked cells / critique-file-present theater → exit 1.
+G4 calls `scripts/lib/critique.py`; a critique file alone is theater.
 
 ## MUST — claim-audit HARD-GATE before G4
 
