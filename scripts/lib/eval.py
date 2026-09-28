@@ -668,6 +668,10 @@ def run_evals(root: Path) -> int:
             ("pypptx HELLO.pptx", "emperor-excavate", "route pypptx → excavate"),
             ("ooxml-pptx HELLO.pptx", "emperor-excavate", "route ooxml-pptx → excavate"),
             ("hello.pptx", "emperor-excavate", "route hello.pptx → excavate"),
+            ("pdf HELLO.pdf", "emperor-excavate", "route pdf → excavate"),
+            ("pdftotext HELLO.pdf", "emperor-excavate", "route pdftotext → excavate"),
+            ("poppler HELLO.pdf", "emperor-excavate", "route poppler → excavate"),
+            ("hello.pdf", "emperor-excavate", "route hello.pdf → excavate"),
             ("queue next", "emperor-queue", "route queue next → queue"),
             ("blocked task", "emperor-queue", "route blocked task → queue"),
             ("red build", "emperor-heal", "route red build → heal"),
@@ -1290,6 +1294,13 @@ def run_evals(root: Path) -> int:
             "HELLO.pptx",
             r"[0-9]+ \*\.pptx",
             ["references/archaeology-pptx-manual.md"],
+        ),
+        (
+            "lost-pdf identify finds *.pdf",
+            "lost-pdf",
+            "HELLO.pdf",
+            r"[0-9]+ \*\.pdf",
+            ["references/archaeology-pdf-manual.md"],
         ),
     ]
     # The loop above was messy — clear fail state not affected; rewrite cleanly below by
@@ -2609,6 +2620,28 @@ def run_evals(root: Path) -> int:
         h.fail_msg("route matches(.docx, hello.pptx) must be False (docx leaf must not steal .pptx)")
     if _m(".xlsx", "hello.pptx"):
         h.fail_msg("route matches(.xlsx, hello.pptx) must be False (xlsx leaf must not steal .pptx)")
+    _, rout_pdf = h.run_py("scripts/lib/route.py", "pdf HELLO.pdf")
+    if "emperor-excavate" not in rout_pdf:
+        h.fail_msg("route.py pdf → excavate")
+    _, rout_pdftotext = h.run_py("scripts/lib/route.py", "pdftotext HELLO.pdf")
+    if "emperor-excavate" not in rout_pdftotext:
+        h.fail_msg("route.py pdftotext → excavate")
+    _, rout_poppler = h.run_py("scripts/lib/route.py", "poppler HELLO.pdf")
+    if "emperor-excavate" not in rout_poppler:
+        h.fail_msg("route.py poppler → excavate")
+    _, rout_hello_pdf = h.run_py("scripts/lib/route.py", "hello.pdf")
+    if "emperor-excavate" not in rout_hello_pdf:
+        h.fail_msg("route.py hello.pdf → excavate")
+    if not _m(".pdf", "hello.pdf"):
+        h.fail_msg("route matches(.pdf, hello.pdf) must be True")
+    if _m(".pdf", "hello.pdffoo"):
+        h.fail_msg("route matches(.pdf, hello.pdffoo) must be False after extension-boundary")
+    if _m(".ps", "hello.pdf"):
+        h.fail_msg("route matches(.ps, hello.pdf) must be False (ps leaf must not steal .pdf)")
+    if _m(".pptx", "hello.pdf"):
+        h.fail_msg("route matches(.pptx, hello.pdf) must be False (pptx leaf must not steal .pdf)")
+    if _m(".docx", "hello.pdf"):
+        h.fail_msg("route matches(.docx, hello.pdf) must be False (docx leaf must not steal .pdf)")
     # bare .l must not be enough alone when colliding; .lisp already routes via .lisp
     _, rout_regina = h.run_py("scripts/lib/route.py", "regina HELLO.REX")
     if "emperor-excavate" not in rout_regina:
@@ -4191,8 +4224,10 @@ def run_evals(root: Path) -> int:
     h.require_contains("0.4.114", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing 0.4.114 tip")
     h.require_contains("0.4.114", "CHANGELOG.md", "CHANGELOG missing 0.4.114")
     h.require_contains("0.4.115", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing 0.4.115 tip")
-    h.require_contains("0.4.115", ".claude-plugin/plugin.json", "plugin.json not at 0.4.115")
     h.require_contains("0.4.115", "CHANGELOG.md", "CHANGELOG missing 0.4.115")
+    h.require_contains("0.4.116", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing 0.4.116 tip")
+    h.require_contains("0.4.116", ".claude-plugin/plugin.json", "plugin.json not at 0.4.116")
+    h.require_contains("0.4.116", "CHANGELOG.md", "CHANGELOG missing 0.4.116")
 
     # session-discovery
     h.section("session-discovery locate HARD-GATE leaf")

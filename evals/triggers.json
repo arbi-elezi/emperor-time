@@ -671,7 +671,11 @@
         "pptx",
         "pypptx",
         "ooxml-pptx",
-        ".pptx"
+        ".pptx",
+        "pdf",
+        "pdftotext",
+        "poppler",
+        ".pdf"
       ],
       "tags": [
         "archaeology",
@@ -944,7 +948,11 @@
         "pptx",
         "pypptx",
         "ooxml-pptx",
-        ".pptx"
+        ".pptx",
+        "pdf",
+        "pdftotext",
+        "poppler",
+        ".pdf"
       ],
       "target": "skills/emperor-excavate/SKILL.md",
       "reason": "lost/ancient/foreign tree \u2014 excavate before modernizing"
