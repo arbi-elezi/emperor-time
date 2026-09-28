@@ -7,7 +7,7 @@ description: >-
   implementation. Pairs with G1/G2.
 license: MIT
 metadata:
-  version: 0.4.8
+  version: 0.4.127
   chain: judgment-chain
 ---
 
@@ -27,7 +27,11 @@ No jumping to impl without Step 5 design approval. Do not load whole
 
 1. Run `scripts/emperor grill` → quote `GRILL checklist=yes`. Advance steps
    with `scripts/emperor grill --advance N N+1` (skips fail). Jumping to code
-   → `scripts/emperor grill --reject-impl` (HARD-GATE exit 1).
+   → `scripts/emperor grill --reject-impl` (HARD-GATE exit 1). Path taxonomy:
+   record `Path: spike|bounded|architectural` + `Stage approval: …`; validate
+   with `scripts/emperor grill --check-path <task-dir>` (fails on missing path,
+   stage skip, or impl before approval). Always-fail helpers:
+   `--reject-no-path` / `--reject-stage-skip` / `--reject-impl-before-approval`.
 2. Confirm G0/G1 exist. If not, load `skills/emperor-scope/SKILL.md` first.
 3. Read `references/work-order.md` then copy `templates/work-order.md` to
    `.emperor/tasks/<id>/work-order.md` (architectural path; bounded may stay

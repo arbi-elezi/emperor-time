@@ -55,7 +55,7 @@ mean **disk + eval**, not live multi-vendor win rates.
 | verdict / breach (Judgment G5) | `scripts/lib/verdict.py` (`--reject-hidden-breach` / `--check-verdict` / Verdict citations + honest Breach Register) + `evals/fixtures/verdict-breach/` + `emperor verdict` | TESTED |
 | finish menu suite-green HARD-GATE | `scripts/lib/finish.py` `--reject-red-suite` / `--require-green` + thin `finish.sh`/`finish.ps1` + `finish-menu.md` (done.py / eval) | TESTED |
 | activate / MUST-route | `skills/emperor-resume/must-route.md` + `scripts/lib/activate.py` | TESTED |
-| grill (brainstorm HARD-GATE) | `skills/emperor-require-design/grill-checklist.md` + `emperor grill` | TESTED |
+| grill path taxonomy HARD-GATE | `scripts/lib/grill.py` (`--reject-no-path` / `--reject-stage-skip` / `--reject-impl-before-approval` / `--check-path`) + `evals/fixtures/grill-path-taxonomy/` + `emperor grill` | TESTED |
 | debug four phases | `skills/emperor-heal/debug-four-phases.md` + `emperor heal` | TESTED |
 | TDD iron-law / RGR | `skills/emperor-tdd/red-green-refactor.md` + `emperor tdd` | TESTED |
 | worktree isolation | `skills/emperor-worktree/isolation-checklist.md` + `emperor iso` | TESTED |
