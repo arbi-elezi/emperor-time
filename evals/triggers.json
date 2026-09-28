@@ -502,7 +502,11 @@
         ".lex",
         "lex",
         "flex",
-        "gnu-flex"
+        "gnu-flex",
+        ".y",
+        "yacc",
+        "bison",
+        "gnu-bison"
       ],
       "tags": [
         "archaeology",
@@ -622,7 +626,10 @@
         "gnu-dc",
         "lex",
         "flex",
-        "gnu-flex"
+        "gnu-flex",
+        "yacc",
+        "bison",
+        "gnu-bison"
       ],
       "target": "skills/emperor-excavate/SKILL.md",
       "reason": "lost/ancient/foreign tree \u2014 excavate before modernizing"
