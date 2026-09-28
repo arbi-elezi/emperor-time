@@ -1,0 +1,6 @@
+begin
+   comment HELLO.ALW — archaeology probe fixture (DOS-era 8.3 name);
+   comment Dialect CONJECTURE: see README.md in this directory;
+   comment Intent: smallest Algol W program that prints a known string via WRITE;
+   write("EMPEROR-TIME-ALW-PROBE-OK")
+end.
