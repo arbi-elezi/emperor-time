@@ -13,6 +13,8 @@ metadata:
 # Emperor Build (G3 wrapper)
 
 1. Refuse to build if `scripts/gate.sh g2 <task-dir>` has not passed.
+   G2 runs `scripts/lib/work_order.py` (plan header **and** Task-N structure).
+   Soft skeleton → `scripts/emperor work-order --reject-no-tasks` / `--reject-tbd`.
 2. For standard/heavy tasks: open `skills/emperor-worktree/isolation-checklist.md`
    and/or run `scripts/emperor iso` before mutating the client's checkout.
    Trivial tasks may skip with `worktree: skipped (trivial)` ledgered.

@@ -48,7 +48,7 @@ mean **disk + eval**, not live multi-vendor win rates.
 
 | Leaf | Path / command | Local status |
 |---|---|---|
-| plans (Plan Document Header) | `scripts/lib/work_order.py` + `evals/fixtures/plans-header/` | TESTED |
+| plans (Plan Document Header + Task-N) | `scripts/lib/work_order.py` (`--reject-tbd` / `--reject-no-tasks` / `--check-tasks`) + `evals/fixtures/plans-header/` + `emperor work-order` | TESTED |
 | finish menu (Python core) | `scripts/lib/finish.py` + thin `finish.sh`/`finish.ps1` + `finish-menu.md` | TESTED |
 | activate / MUST-route | `skills/emperor-resume/must-route.md` + `scripts/lib/activate.py` | TESTED |
 | grill (brainstorm HARD-GATE) | `skills/emperor-require-design/grill-checklist.md` + `emperor grill` | TESTED |
@@ -188,7 +188,7 @@ drifts from disk or if live-defect-rate is mislabeled.
 ## Verdict
 
 ET wins this slice on *mechanical lock-in* (eval owns the rows; leaf gates
-above are on disk and eval-locked through v0.4.120).
+above are on disk and eval-locked through v0.4.121).
 Activation *mechanism* is closed on disk (v0.4.5–0.4.6); wild-agent
 activation without a tell stays **UNVERIFIABLE** until a marketplace re-run.
 Live defect-rate vs Superpowers stays **UNVERIFIABLE** — do not invent %.

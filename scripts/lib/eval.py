@@ -1400,6 +1400,114 @@ def run_evals(root: Path) -> int:
     else:
         h.pass_msg("complete plan header accepted")
 
+    # ---- Task-N structure (work-order vertical depth) ----
+    h.section("work-order Task-N structure")
+    h.need("evals/fixtures/plans-header/work-order-no-tasks.md")
+    h.need("evals/fixtures/plans-header/work-order-thin-task.md")
+    h.need("scripts/work-order.sh")
+    h.need("scripts/work-order.ps1")
+    h.bash_n("scripts/work-order.sh", "work-order.sh syntax")
+    h.require_contains(
+        "lib/work_order.py",
+        "scripts/work-order.sh",
+        "work-order.sh thin twin missing work_order.py",
+    )
+    h.require_contains(
+        "lib/work_order.py",
+        "scripts/work-order.ps1",
+        "work-order.ps1 thin twin missing work_order.py",
+    )
+    h.require_contains(
+        "work-order",
+        "scripts/emperor",
+        "emperor bash peer missing work-order",
+    )
+    h.require_contains(
+        "validate_tasks",
+        "scripts/lib/work_order.py",
+        "work_order.py missing validate_tasks",
+    )
+    h.require_contains(
+        "--reject-no-tasks",
+        "scripts/lib/work_order.py",
+        "work_order.py missing --reject-no-tasks",
+    )
+    h.require_contains(
+        "--reject-tbd",
+        "scripts/lib/work_order.py",
+        "work_order.py missing --reject-tbd",
+    )
+    h.require_contains(
+        "Task-N structure",
+        "references/work-order.md",
+        "references/work-order.md missing Task-N mechanical section",
+    )
+    _, card = h.run_py("scripts/lib/work_order.py")
+    if not re.search(r"^WORK-ORDER-TASKS checklist=yes", card, re.M):
+        h.fail_msg("work-order card missing checklist=yes")
+    elif "NO_BUILD_WITHOUT_TASK_N_STRUCTURE" not in card:
+        h.fail_msg("work-order card missing iron law token")
+    else:
+        h.pass_msg("work-order prints TASKS card")
+    rc, _ = h.run_py("scripts/lib/work_order.py", "--reject-tbd")
+    if rc == 0:
+        h.fail_msg("work-order --reject-tbd should exit non-zero")
+    else:
+        _, reject = h.run_py("scripts/lib/work_order.py", "--reject-tbd")
+        if not re.search(r"^REJECT TBD:", reject, re.M):
+            h.fail_msg("reject-tbd missing REJECT line")
+        else:
+            h.pass_msg("work-order --reject-tbd hard-gates")
+    rc, _ = h.run_py("scripts/lib/work_order.py", "--reject-no-tasks")
+    if rc == 0:
+        h.fail_msg("work-order --reject-no-tasks should exit non-zero")
+    else:
+        _, reject = h.run_py("scripts/lib/work_order.py", "--reject-no-tasks")
+        if not re.search(r"^REJECT NO-TASKS:", reject, re.M):
+            h.fail_msg("reject-no-tasks missing REJECT line")
+        else:
+            h.pass_msg("work-order --reject-no-tasks hard-gates")
+    rc, no_out = h.run_py(
+        "scripts/lib/work_order.py",
+        "--check-tasks",
+        str(root / "evals/fixtures/plans-header/work-order-no-tasks.md"),
+    )
+    if rc == 0:
+        h.fail_msg("no-tasks fixture should fail --check-tasks")
+    elif not re.search(r"no Task N|Task N heading", no_out, re.I):
+        h.fail_msg("no-tasks failure message unclear")
+    else:
+        h.pass_msg("no Task N headings rejected")
+    rc, thin_out = h.run_py(
+        "scripts/lib/work_order.py",
+        str(root / "evals/fixtures/plans-header/work-order-thin-task.md"),
+    )
+    if rc == 0:
+        h.fail_msg("thin-task fixture should fail work_order validate")
+    elif not re.search(
+        r"Expected: FAIL|Files:|Commit:|TBD|placeholder|title",
+        thin_out,
+        re.I,
+    ):
+        h.fail_msg("thin-task failure message unclear")
+    else:
+        h.pass_msg("thin Task N skeleton rejected")
+    rc, ok_tasks = h.run_py(
+        "scripts/lib/work_order.py",
+        "--check-tasks",
+        str(root / "evals/fixtures/plans-header/work-order-complete.md"),
+    )
+    if rc != 0:
+        print(ok_tasks)
+        h.fail_msg("complete work-order should pass --check-tasks")
+    else:
+        h.pass_msg("complete Task-N structure accepted")
+    _, sh_card = h.run_sh("scripts/work-order.sh")
+    if not re.search(r"^WORK-ORDER-TASKS checklist=yes", sh_card, re.M):
+        h.fail_msg("work-order.sh missing TASKS card")
+    else:
+        h.pass_msg("work-order.sh thin twin emits card")
+
     # ---- finish menu ----
     h.section("finish menu (forge aspect)")
     h.need("skills/emperor-forge/finish-menu.md")
@@ -4641,12 +4749,17 @@ def run_evals(root: Path) -> int:
     h.require_contains("0.4.119", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing 0.4.119 tip")
     h.require_contains("0.4.119", "CHANGELOG.md", "CHANGELOG missing 0.4.119")
     h.require_contains("0.4.120", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing 0.4.120 tip")
-    h.require_contains("0.4.120", ".claude-plugin/plugin.json", "plugin.json not at 0.4.120")
     h.require_contains("0.4.120", "CHANGELOG.md", "CHANGELOG missing 0.4.120")
     h.require_contains("sdd_workspace.py", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing sdd_workspace.py")
     h.require_contains("task_brief.py", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing task_brief.py")
     h.require_contains("task_start.py", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing task_start.py")
     h.require_contains("task_done.py", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing task_done.py")
+    h.require_contains("0.4.121", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing 0.4.121 tip")
+    h.require_contains("0.4.121", ".claude-plugin/plugin.json", "plugin.json not at 0.4.121")
+    h.require_contains("0.4.121", "CHANGELOG.md", "CHANGELOG missing 0.4.121")
+    h.require_contains("validate_tasks", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing validate_tasks")
+    h.require_contains("reject-no-tasks", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing reject-no-tasks")
+    h.require_contains("Task-N", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing Task-N")
 
     # session-discovery
     h.section("session-discovery locate HARD-GATE leaf")

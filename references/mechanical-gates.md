@@ -19,7 +19,8 @@ A model writing "G4 PASS" in markdown is not a gate. An exit code is.
 
 Python core: `scripts/lib/gate.py` owns G0–G5. Thin twins: `scripts/gate.sh`,
 `scripts/gate.ps1` (same exits). G2 still calls `work_order.py` for the plan
-header.
+header **and** Task-N structure (`--reject-tbd` / `--reject-no-tasks` /
+`--check-tasks`; thin `work-order.sh` / `work-order.ps1`).
 
 Review-pack Python core: `scripts/lib/review_pack.py` owns meta SHAs +
 acceptance-criteria extract + diff (thin `review-pack.sh` / `review-pack.ps1`).
