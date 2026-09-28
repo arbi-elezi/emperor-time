@@ -675,7 +675,11 @@
         "pdf",
         "pdftotext",
         "poppler",
-        ".pdf"
+        ".pdf",
+        ".png",
+        "pil",
+        "pillow",
+        "png"
       ],
       "tags": [
         "archaeology",
@@ -952,7 +956,11 @@
         "pdf",
         "pdftotext",
         "poppler",
-        ".pdf"
+        ".pdf",
+        ".png",
+        "pil",
+        "pillow",
+        "png"
       ],
       "target": "skills/emperor-excavate/SKILL.md",
       "reason": "lost/ancient/foreign tree \u2014 excavate before modernizing"

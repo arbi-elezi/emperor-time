@@ -672,6 +672,10 @@ def run_evals(root: Path) -> int:
             ("pdftotext HELLO.pdf", "emperor-excavate", "route pdftotext → excavate"),
             ("poppler HELLO.pdf", "emperor-excavate", "route poppler → excavate"),
             ("hello.pdf", "emperor-excavate", "route hello.pdf → excavate"),
+            ("png HELLO.png", "emperor-excavate", "route png → excavate"),
+            ("pillow HELLO.png", "emperor-excavate", "route pillow → excavate"),
+            ("pil HELLO.png", "emperor-excavate", "route pil → excavate"),
+            ("hello.png", "emperor-excavate", "route hello.png → excavate"),
             ("queue next", "emperor-queue", "route queue next → queue"),
             ("blocked task", "emperor-queue", "route blocked task → queue"),
             ("red build", "emperor-heal", "route red build → heal"),
@@ -1301,6 +1305,13 @@ def run_evals(root: Path) -> int:
             "HELLO.pdf",
             r"[0-9]+ \*\.pdf",
             ["references/archaeology-pdf-manual.md"],
+        ),
+        (
+            "lost-png identify finds *.png",
+            "lost-png",
+            "HELLO.png",
+            r"[0-9]+ \*\.png",
+            ["references/archaeology-png-manual.md"],
         ),
     ]
     # The loop above was messy — clear fail state not affected; rewrite cleanly below by
@@ -2642,6 +2653,28 @@ def run_evals(root: Path) -> int:
         h.fail_msg("route matches(.pptx, hello.pdf) must be False (pptx leaf must not steal .pdf)")
     if _m(".docx", "hello.pdf"):
         h.fail_msg("route matches(.docx, hello.pdf) must be False (docx leaf must not steal .pdf)")
+    _, rout_png = h.run_py("scripts/lib/route.py", "png HELLO.png")
+    if "emperor-excavate" not in rout_png:
+        h.fail_msg("route.py png → excavate")
+    _, rout_pillow = h.run_py("scripts/lib/route.py", "pillow HELLO.png")
+    if "emperor-excavate" not in rout_pillow:
+        h.fail_msg("route.py pillow → excavate")
+    _, rout_pil = h.run_py("scripts/lib/route.py", "pil HELLO.png")
+    if "emperor-excavate" not in rout_pil:
+        h.fail_msg("route.py pil → excavate")
+    _, rout_hello_png = h.run_py("scripts/lib/route.py", "hello.png")
+    if "emperor-excavate" not in rout_hello_png:
+        h.fail_msg("route.py hello.png → excavate")
+    if not _m(".png", "hello.png"):
+        h.fail_msg("route matches(.png, hello.png) must be True")
+    if _m(".png", "hello.pngfoo"):
+        h.fail_msg("route matches(.png, hello.pngfoo) must be False after extension-boundary")
+    if _m(".pdf", "hello.png"):
+        h.fail_msg("route matches(.pdf, hello.png) must be False (pdf leaf must not steal .png)")
+    if _m(".ps", "hello.png"):
+        h.fail_msg("route matches(.ps, hello.png) must be False (ps leaf must not steal .png)")
+    if _m(".pptx", "hello.png"):
+        h.fail_msg("route matches(.pptx, hello.png) must be False (pptx leaf must not steal .png)")
     # bare .l must not be enough alone when colliding; .lisp already routes via .lisp
     _, rout_regina = h.run_py("scripts/lib/route.py", "regina HELLO.REX")
     if "emperor-excavate" not in rout_regina:
@@ -4225,9 +4258,9 @@ def run_evals(root: Path) -> int:
     h.require_contains("0.4.114", "CHANGELOG.md", "CHANGELOG missing 0.4.114")
     h.require_contains("0.4.115", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing 0.4.115 tip")
     h.require_contains("0.4.115", "CHANGELOG.md", "CHANGELOG missing 0.4.115")
-    h.require_contains("0.4.116", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing 0.4.116 tip")
-    h.require_contains("0.4.116", ".claude-plugin/plugin.json", "plugin.json not at 0.4.116")
-    h.require_contains("0.4.116", "CHANGELOG.md", "CHANGELOG missing 0.4.116")
+    h.require_contains("0.4.117", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing 0.4.117 tip")
+    h.require_contains("0.4.117", ".claude-plugin/plugin.json", "plugin.json not at 0.4.117")
+    h.require_contains("0.4.117", "CHANGELOG.md", "CHANGELOG missing 0.4.117")
 
     # session-discovery
     h.section("session-discovery locate HARD-GATE leaf")

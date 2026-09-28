@@ -123,6 +123,7 @@ FOSSIL_PATTERNS: tuple[str, ...] = (
     "*.jsonl",
     "*.pptx",
     "*.pdf",
+    "*.png",
     "*.l",
     "*.lex",
     "*.y",
