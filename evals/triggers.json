@@ -624,7 +624,11 @@
         "tar",
         "pytar",
         "tarfile",
-        ".tar"
+        ".tar",
+        "gzip",
+        "pygzip",
+        "gzipfile",
+        ".gz"
       ],
       "tags": [
         "archaeology",
@@ -850,7 +854,11 @@
         "tar",
         "pytar",
         "tarfile",
-        ".tar"
+        ".tar",
+        "gzip",
+        "pygzip",
+        "gzipfile",
+        ".gz"
       ],
       "target": "skills/emperor-excavate/SKILL.md",
       "reason": "lost/ancient/foreign tree \u2014 excavate before modernizing"

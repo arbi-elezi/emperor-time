@@ -1,0 +1,9 @@
+== identify evals/fixtures/lost-gz ==
+-- extensions --
+      2 md
+      1 txt
+      1 gz
+-- named fossils --
+1 *.gz
+-- shebangs --
+identify: done (read-only)
