@@ -96,10 +96,11 @@ LEAVES: list[tuple[str, str, tuple[str, ...]]] = [
     ("arch-sed", "evals/fixtures/lost-sed/HELLO.SED", ("lost-sed",)),
     ("arch-m4", "evals/fixtures/lost-m4/HELLO.M4", ("lost-m4",)),
     ("arch-ed", "evals/fixtures/lost-ed/HELLO.ED", ("lost-ed",)),
+    ("arch-make", "evals/fixtures/lost-make/Makefile", ("lost-make",)),
     ("gate-py", "scripts/lib/gate.py", ("gate.py", "mechanical")),
     ("identify-py", "scripts/lib/identify.py", ("identify.py", "survey")),
     ("eval-py", "scripts/lib/eval.py", ("eval.py", "structural eval")),
-    ("route-py", "scripts/lib/route.py", ("route", "fortran", ".f90", "vhdl", ".vhd", "ada", ".adb", "forth", ".fs", "pforth", "lisp", ".lisp", "clisp", "prolog", ".pro", "swipl", "tcl", ".tcl", "tclsh", "erlang", ".erl", "escript", "rexx", ".rex", "regina", "modula", ".mod", "gm2", "algol", ".a68", "a68g", "marst", ".a60", "algol60", "awe", ".alw", "algolw", "icont", ".icn", "iconx", "voc", ".obn", "oberon", "snobol4", ".sno", "snobol", "cim", ".sim", "simula", "apl", ".apl", "gnu-apl", "bcpl", "cintsys", "cintcode", ".bcpl", "plic", "pli", "pl1", "iron-spring", ".pli", ".pl1", "gst", "smalltalk", "gnu-smalltalk", "ghostscript", "postscript", "bwbasic", "bywater", ".bas", "csi", "chicken", "chicken-scheme", ".scm", "gawk", "awk", "nawk", ".awk", "sed", "gsed", ".sed", "m4", "gm4", ".m4", "ed", "gnu-ed", ".ed")),
+    ("route-py", "scripts/lib/route.py", ("route", "fortran", ".f90", "vhdl", ".vhd", "ada", ".adb", "forth", ".fs", "pforth", "lisp", ".lisp", "clisp", "prolog", ".pro", "swipl", "tcl", ".tcl", "tclsh", "erlang", ".erl", "escript", "rexx", ".rex", "regina", "modula", ".mod", "gm2", "algol", ".a68", "a68g", "marst", ".a60", "algol60", "awe", ".alw", "algolw", "icont", ".icn", "iconx", "voc", ".obn", "oberon", "snobol4", ".sno", "snobol", "cim", ".sim", "simula", "apl", ".apl", "gnu-apl", "bcpl", "cintsys", "cintcode", ".bcpl", "plic", "pli", "pl1", "iron-spring", ".pli", ".pl1", "gst", "smalltalk", "gnu-smalltalk", "ghostscript", "postscript", "bwbasic", "bywater", ".bas", "csi", "chicken", "chicken-scheme", ".scm", "gawk", "awk", "nawk", ".awk", "sed", "gsed", ".sed", "m4", "gm4", ".m4", "ed", "gnu-ed", ".ed", "gmake", "gnu-make", ".mk", ".mak", "makefile")),
     ("done-py", "scripts/lib/done.py", ("done.py", "DONE probes")),
     (
         "silent-boot-zsh",

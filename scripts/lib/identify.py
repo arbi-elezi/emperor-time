@@ -85,6 +85,7 @@ FOSSIL_PATTERNS: tuple[str, ...] = (
     "Makefile",
     "makefile",
     "*.mak",
+    "*.mk",
 )
 
 SKIP_PARTS = frozenset({".git", ".emperor", "node_modules"})

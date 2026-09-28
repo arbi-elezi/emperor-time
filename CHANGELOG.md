@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.4.73
+- Archaeology Make leaf: `evals/fixtures/lost-make/Makefile` + `HELLO.MK` + identify smoke; GNU Make 4.4.1 boot probe VERIFIED (`make -C lost-make` / `make -f HELLO.MK` → `EMPEROR-TIME-MAKE-PROBE-OK`); dialect labels honest (CONJECTURE / UNVERIFIABLE where due); identify fossils `Makefile` / `makefile` / `*.mak` / `*.mk`; bare English `make` refused as route tag (factory / common-English collision with "make software")
+- Jail pin `references/archaeology-make-manual.md` — GNU Make make(1) DESCRIPTION default-name search + OPTIONS `-f` / `--file` / `--makefile`
+- Catalog + SKILL.md + archaeology.md + language-agnostic.md link the thirty-second pin alongside Pascal, ASM, COBOL, Fortran, VHDL, Ada, Forth, Common Lisp, Prolog, Tcl, Erlang, REXX, Modula-2, Algol 68, ALGOL 60, Algol W, Icon, Oberon, SNOBOL4, Simula, APL, BCPL, PL/I, Smalltalk, PostScript, BASIC, Scheme, AWK, sed, m4, and ed; route triggers gain `gmake` / `gnu-make` / `.mk` / `.mak` / `makefile` (bare `make` refused); eval locks Makefile identify on lost-make
+- Plugin, marketplace, and SKILL.md at 0.4.73
+
 ## 0.4.72
 - Archaeology ed leaf: `evals/fixtures/lost-ed/HELLO.ED` + identify smoke; GNU ed 1.21.1 boot probe VERIFIED (`ed -s < HELLO.ED` → `EMPEROR-TIME-ED-PROBE-OK`); dialect labels honest (CONJECTURE / UNVERIFIABLE where due); identify fossils `*.ed` only; bare `ed` allowed as route tag (tool binary name — not English collision)
 - Jail pin `references/archaeology-ed-manual.md` — GNU ed Invoking ed / `-s` / `--script`
