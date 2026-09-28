@@ -359,6 +359,7 @@ def run_evals(root: Path) -> int:
     h.require_contains("*.exp", "scripts/lib/identify.py", "identify.py missing *.exp fossil")
     h.require_contains("*.lua", "scripts/lib/identify.py", "identify.py missing *.lua fossil")
     h.require_contains("*.rb", "scripts/lib/identify.py", "identify.py missing *.rb fossil")
+    h.require_contains("*.go", "scripts/lib/identify.py", "identify.py missing *.go fossil")
     h.require_contains(
         "scripts/lib/identify.py",
         "references/archaeology.md",
@@ -505,6 +506,9 @@ def run_evals(root: Path) -> int:
             ("ruby HELLO.RB", "emperor-excavate", "route ruby → excavate"),
             ("ruby3.3 HELLO.RB", "emperor-excavate", "route ruby3.3 → excavate"),
             ("hello.rb", "emperor-excavate", "route hello.rb → excavate"),
+            ("golang HELLO.go", "emperor-excavate", "route golang → excavate"),
+            ("go1.24 HELLO.go", "emperor-excavate", "route go1.24 → excavate"),
+            ("hello.go", "emperor-excavate", "route hello.go → excavate"),
             ("queue next", "emperor-queue", "route queue next → queue"),
             ("blocked task", "emperor-queue", "route blocked task → queue"),
             ("red build", "emperor-heal", "route red build → heal"),
@@ -897,6 +901,13 @@ def run_evals(root: Path) -> int:
             r"[0-9]+ \*\.rb",
             ["references/archaeology-ruby-manual.md"],
         ),
+        (
+            "lost-go identify finds *.go",
+            "lost-go",
+            "HELLO.go",
+            r"[0-9]+ \*\.go",
+            ["references/archaeology-go-manual.md"],
+        ),
     ]
     # The loop above was messy — clear fail state not affected; rewrite cleanly below by
     # only running the clean fixtures list (sections already printed wrongly once).
@@ -1173,6 +1184,9 @@ def run_evals(root: Path) -> int:
     h.require_contains("ruby", "evals/triggers.json", "triggers missing ruby excavate pattern")
     h.require_contains("ruby3.3", "evals/triggers.json", "triggers missing ruby3.3 excavate pattern")
     h.require_contains(".rb", "evals/triggers.json", "triggers missing .rb excavate pattern")
+    h.require_contains("golang", "evals/triggers.json", "triggers missing golang excavate pattern")
+    h.require_contains("go1.24", "evals/triggers.json", "triggers missing go1.24 excavate pattern")
+    h.require_contains(".go", "evals/triggers.json", "triggers missing .go excavate pattern")
     _, rout_py = h.run_py("scripts/lib/route.py", "finish the branch")
     if "emperor-forge" not in rout_py:
         h.fail_msg("route.py finish the branch → forge")
@@ -1460,6 +1474,22 @@ def run_evals(root: Path) -> int:
     _, rout_rbext = h.run_py("scripts/lib/route.py", "hello.rb")
     if "emperor-excavate" not in rout_rbext:
         h.fail_msg("route.py hello.rb → excavate")
+    _, rout_golang = h.run_py("scripts/lib/route.py", "golang HELLO.go")
+    if "emperor-excavate" not in rout_golang:
+        h.fail_msg("route.py golang → excavate")
+    _, rout_go124 = h.run_py("scripts/lib/route.py", "go1.24 HELLO.go")
+    if "emperor-excavate" not in rout_go124:
+        h.fail_msg("route.py go1.24 → excavate")
+    _, rout_goext = h.run_py("scripts/lib/route.py", "hello.go")
+    if "emperor-excavate" not in rout_goext:
+        h.fail_msg("route.py hello.go → excavate")
+    # bare go refused (common English); "let's go" / "go ahead" must not excavate
+    _, rout_bare_go = h.run_py("scripts/lib/route.py", "let's go")
+    if "emperor-excavate" in rout_bare_go:
+        h.fail_msg("route.py bare go / let's go must not → excavate")
+    _, rout_go_ahead = h.run_py("scripts/lib/route.py", "go ahead")
+    if "emperor-excavate" in rout_go_ahead:
+        h.fail_msg("route.py go ahead must not → excavate")
     # bare .l must not be enough alone when colliding; .lisp already routes via .lisp
     _, rout_regina = h.run_py("scripts/lib/route.py", "regina HELLO.REX")
     if "emperor-excavate" not in rout_regina:
@@ -1468,7 +1498,7 @@ def run_evals(root: Path) -> int:
     if rc == 0:
         h.fail_msg("route.py should miss trivia")
     else:
-        h.pass_msg("route.py misses trivia + fortran/vhdl/ada/forth/lisp/prolog/tcl/erlang/rexx/modula/algol/algol60/algolw/icon/oberon/snobol/simula/apl/bcpl/pli/st/ps/bas/scm/awk/sed/m4/ed/make/dc/lex/yacc/roff/perl/bc/expect/lua/ruby excavate + thin twins")
+        h.pass_msg("route.py misses trivia + fortran/vhdl/ada/forth/lisp/prolog/tcl/erlang/rexx/modula/algol/algol60/algolw/icon/oberon/snobol/simula/apl/bcpl/pli/st/ps/bas/scm/awk/sed/m4/ed/make/dc/lex/yacc/roff/perl/bc/expect/lua/ruby/go excavate + thin twins")
 
     # ---- MUST-route doctrine ----
     h.section("MUST-route doctrine + adapters")
@@ -2842,7 +2872,9 @@ def run_evals(root: Path) -> int:
     h.require_contains("lost-lua", "evals/bakeoff.md", "bakeoff.md missing lost-lua inventory")
     h.require_contains("archaeology-lua-manual.md", "SKILL.md", "SKILL.md missing lua Jail pin")
     h.require_contains("lost-ruby", "evals/bakeoff.md", "bakeoff.md missing lost-ruby inventory")
+    h.require_contains("lost-go", "evals/bakeoff.md", "bakeoff.md missing lost-go inventory")
     h.require_contains("archaeology-ruby-manual.md", "SKILL.md", "SKILL.md missing ruby Jail pin")
+    h.require_contains("archaeology-go-manual.md", "SKILL.md", "SKILL.md missing go Jail pin")
     h.require_contains("0.4.38", "CHANGELOG.md", "CHANGELOG missing 0.4.38")
     h.require_contains("root_cause.py", "evals/bakeoff.md", "bakeoff.md missing root_cause.py inventory")
     h.require_contains("root_cause.py", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing root_cause.py")
@@ -2883,6 +2915,7 @@ def run_evals(root: Path) -> int:
     h.require_contains("lost-expect", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing lost-expect")
     h.require_contains("lost-lua", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing lost-lua")
     h.require_contains("lost-ruby", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing lost-ruby")
+    h.require_contains("lost-go", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing lost-go")
     h.require_contains("0.4.39", "CHANGELOG.md", "CHANGELOG missing 0.4.39")
     h.require_contains("defense.py", "evals/bakeoff.md", "bakeoff.md missing defense.py inventory")
     h.require_contains("defense.py", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing defense.py")
@@ -2974,8 +3007,10 @@ def run_evals(root: Path) -> int:
     h.require_contains("0.4.81", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing 0.4.81 tip")
     h.require_contains("0.4.81", "CHANGELOG.md", "CHANGELOG missing 0.4.81")
     h.require_contains("0.4.82", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing 0.4.82 tip")
-    h.require_contains("0.4.82", ".claude-plugin/plugin.json", "plugin.json not at 0.4.82")
     h.require_contains("0.4.82", "CHANGELOG.md", "CHANGELOG missing 0.4.82")
+    h.require_contains("0.4.83", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing 0.4.83 tip")
+    h.require_contains("0.4.83", ".claude-plugin/plugin.json", "plugin.json not at 0.4.83")
+    h.require_contains("0.4.83", "CHANGELOG.md", "CHANGELOG missing 0.4.83")
 
     # session-discovery
     h.section("session-discovery locate HARD-GATE leaf")

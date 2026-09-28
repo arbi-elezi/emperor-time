@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.4.83
+
+- Archaeology Go leaf: `evals/fixtures/lost-go/HELLO.go` + identify smoke; Go 1.24.4 boot probe VERIFIED (`go run HELLO.go` → `EMPEROR-TIME-GO-PROBE-OK`); dialect labels honest (CONJECTURE / UNVERIFIABLE where due); identify fossils `*.go` only; bare `go` refused as route tag (common-English collision); bare `.go` allowed as route tag (no known peer excavate substring collision); prefer `golang` / `go1.24` / `.go`; Debian packages `golang-go` 2:1.24~2 / `golang-1.24-go` 1.24.4-1 already on box; systems compile-and-run after Ruby; TeX/LaTeX still deferred
+- Jail pin `references/archaeology-go-manual.md` — cmd/go Compile and run (`go run`) + fmt.Println
+- Catalog + SKILL.md + archaeology.md + language-agnostic.md link the forty-second pin alongside Pascal, ASM, COBOL, Fortran, VHDL, Ada, Forth, Common Lisp, Prolog, Tcl, Erlang, REXX, Modula-2, Algol 68, ALGOL 60, Algol W, Icon, Oberon, SNOBOL4, Simula, APL, BCPL, PL/I, Smalltalk, PostScript, BASIC, Scheme, AWK, sed, m4, ed, Make, dc, lex, yacc, roff, Perl, bc, Expect, Lua, and Ruby; route triggers gain `golang` / `go1.24` / `.go`; eval locks `*.go` identify on lost-go
+- Plugin, marketplace, and SKILL.md at 0.4.83
+
 ## 0.4.82
 
 - Archaeology Ruby leaf: `evals/fixtures/lost-ruby/HELLO.RB` + identify smoke; Ruby 3.3.8 boot probe VERIFIED (`ruby HELLO.RB` → `EMPEROR-TIME-RUBY-PROBE-OK`); dialect labels honest (CONJECTURE / UNVERIFIABLE where due); identify fossils `*.rb` only; bare `ruby` allowed as route tag (tool binary name; word-boundary); bare `.rb` allowed as route tag (no known peer excavate substring collision); Debian package `ruby` 1:3.3+b1 (Depends `ruby3.3`); classic scripting after Lua
