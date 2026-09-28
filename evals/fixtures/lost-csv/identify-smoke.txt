@@ -1,0 +1,9 @@
+== identify evals/fixtures/lost-csv ==
+-- extensions --
+      2 md
+      1 txt
+      1 csv
+-- named fossils --
+1 *.csv
+-- shebangs --
+identify: done (read-only)
