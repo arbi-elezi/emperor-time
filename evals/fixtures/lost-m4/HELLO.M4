@@ -1,0 +1,2 @@
+define(`HELLO',`EMPEROR-TIME-M4-PROBE-OK')dnl
+HELLO

@@ -483,7 +483,10 @@
         "nawk",
         ".sed",
         "sed",
-        "gsed"
+        "gsed",
+        ".m4",
+        "m4",
+        "gm4"
       ],
       "tags": [
         "archaeology",
@@ -589,7 +592,9 @@
         "gawk",
         "nawk",
         "sed",
-        "gsed"
+        "gsed",
+        "m4",
+        "gm4"
       ],
       "target": "skills/emperor-excavate/SKILL.md",
       "reason": "lost/ancient/foreign tree \u2014 excavate before modernizing"
