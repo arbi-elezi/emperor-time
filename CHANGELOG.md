@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.4.99
+
+- Archaeology JSON leaf: `evals/fixtures/lost-json/HELLO.json` + identify smoke; CPython 3.13.5 stdlib `json` 2.0.9 boot probe VERIFIED (`json.load` → `EMPEROR-TIME-JSON-PROBE-OK`); dialect labels honest (CONJECTURE / UNVERIFIABLE where due); identify fossils `*.json`; bare `pyjson` / `json2.0` allowed as route tags; bare `json` refused (substring collision with jsonl/json5/jsonc); bare `.json` allowed with extension-boundary matching; prefer `pyjson` / `json2.0` / `.json`; CPython stdlib already on box — **zero new Apt Worthy Spend** this leaf; Debian `jsonlint` 1.11.0-2 apt REJECTED (~15 kB; unnecessary vs stdlib); JSON document leaf after CSV; treats JSON as peer fossil not house twin language; distinct from jq (`*.jq` filters) and JS (`.js` already bounds away from `.json`); TeX/LaTeX still deferred; C++ still deferred; graphviz still deferred; `*.tsv` still deferred; CLIPS / embeddings still deferred
+- Jail pin `references/archaeology-json-manual.md` — Python json module load
+- Catalog + SKILL.md + archaeology.md + language-agnostic.md link the fifty-eighth pin alongside Pascal, ASM, COBOL, Fortran, VHDL, Ada, Forth, Common Lisp, Prolog, Tcl, Erlang, REXX, Modula-2, Algol 68, ALGOL 60, Algol W, Icon, Oberon, SNOBOL4, Simula, APL, BCPL, PL/I, Smalltalk, PostScript, BASIC, Scheme, AWK, sed, m4, ed, Make, dc, lex, yacc, roff, Perl, bc, Expect, Lua, Ruby, Go, Rust, C, JavaScript, Python, TypeScript, Bash, PHP, SQL/SQLite, jq, XSLT, XML, YAML, TOML, HTML, and CSV; route triggers gain `pyjson` / `json2.0` / `.json`; eval locks `*.json` identify on lost-json
+- Plugin, marketplace, and SKILL.md at 0.4.99
+
 ## 0.4.98
 
 - Archaeology CSV leaf: `evals/fixtures/lost-csv/HELLO.csv` + identify smoke; CPython 3.13.5 stdlib `csv` 1.0 boot probe VERIFIED (`csv.DictReader` → `EMPEROR-TIME-CSV-PROBE-OK`); dialect labels honest (CONJECTURE / UNVERIFIABLE where due); identify fossils `*.csv`; bare `csv` / `pycsv` / `csv1.0` allowed as route tags; bare `.csv` allowed with extension-boundary matching; prefer `csv` / `pycsv` / `csv1.0` / `.csv`; CPython stdlib already on box — **zero new Apt Worthy Spend** this leaf; Debian `csvkit` 2.0.1-3 apt REJECTED (~10.6 MB archives / ~53 MB Installed-Size / 29 new packages); CSV tabular leaf after HTML; treats CSV as peer fossil not house twin language; TeX/LaTeX still deferred; C++ still deferred; graphviz still deferred; CLIPS / embeddings still deferred

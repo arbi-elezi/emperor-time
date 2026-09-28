@@ -1,0 +1,9 @@
+== identify evals/fixtures/lost-json ==
+-- extensions --
+      2 md
+      1 txt
+      1 json
+-- named fossils --
+1 *.json
+-- shebangs --
+identify: done (read-only)
