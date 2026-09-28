@@ -1,0 +1,9 @@
+== identify evals/fixtures/lost-go ==
+-- extensions --
+      2 md
+      1 txt
+      1 go
+-- named fossils --
+1 *.go
+-- shebangs --
+identify: done (read-only)
