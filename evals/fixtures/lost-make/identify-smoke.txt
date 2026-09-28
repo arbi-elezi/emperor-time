@@ -1,0 +1,11 @@
+== identify /workspace/emperor-time/evals/fixtures/lost-make ==
+-- extensions --
+      2 md
+      1 txt
+      1 mk
+-- named fossils --
+1 Makefile
+1 makefile
+1 *.mk
+-- shebangs --
+identify: done (read-only)

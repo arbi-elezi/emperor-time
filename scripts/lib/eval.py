@@ -347,6 +347,7 @@ def run_evals(root: Path) -> int:
     h.require_contains("*.sed", "scripts/lib/identify.py", "identify.py missing *.sed fossil")
     h.require_contains("*.m4", "scripts/lib/identify.py", "identify.py missing *.m4 fossil")
     h.require_contains("*.ed", "scripts/lib/identify.py", "identify.py missing *.ed fossil")
+    h.require_contains("*.mk", "scripts/lib/identify.py", "identify.py missing *.mk fossil")
     h.require_contains(
         "scripts/lib/identify.py",
         "references/archaeology.md",
@@ -459,6 +460,10 @@ def run_evals(root: Path) -> int:
             ("ed HELLO.ED", "emperor-excavate", "route ed → excavate"),
             ("gnu-ed HELLO.ED", "emperor-excavate", "route gnu-ed → excavate"),
             ("hello.ed", "emperor-excavate", "route hello.ed → excavate"),
+            ("gmake HELLO.MK", "emperor-excavate", "route gmake → excavate"),
+            ("gnu-make HELLO.MK", "emperor-excavate", "route gnu-make → excavate"),
+            ("hello.mk", "emperor-excavate", "route hello.mk → excavate"),
+            ("makefile", "emperor-excavate", "route makefile → excavate"),
             ("queue next", "emperor-queue", "route queue next → queue"),
             ("blocked task", "emperor-queue", "route blocked task → queue"),
             ("red build", "emperor-heal", "route red build → heal"),
@@ -781,6 +786,13 @@ def run_evals(root: Path) -> int:
             r"[0-9]+ \*\.ed",
             ["references/archaeology-ed-manual.md"],
         ),
+        (
+            "lost-make identify finds Makefile",
+            "lost-make",
+            "Makefile",
+            r"[0-9]+ Makefile",
+            ["references/archaeology-make-manual.md"],
+        ),
     ]
     # The loop above was messy — clear fail state not affected; rewrite cleanly below by
     # only running the clean fixtures list (sections already printed wrongly once).
@@ -1022,6 +1034,11 @@ def run_evals(root: Path) -> int:
     h.require_contains("ed", "evals/triggers.json", "triggers missing ed excavate pattern")
     h.require_contains("gnu-ed", "evals/triggers.json", "triggers missing gnu-ed excavate pattern")
     h.require_contains(".ed", "evals/triggers.json", "triggers missing .ed excavate pattern")
+    h.require_contains("gmake", "evals/triggers.json", "triggers missing gmake excavate pattern")
+    h.require_contains("gnu-make", "evals/triggers.json", "triggers missing gnu-make excavate pattern")
+    h.require_contains(".mk", "evals/triggers.json", "triggers missing .mk excavate pattern")
+    h.require_contains(".mak", "evals/triggers.json", "triggers missing .mak excavate pattern")
+    h.require_contains("makefile", "evals/triggers.json", "triggers missing makefile excavate pattern")
     _, rout_py = h.run_py("scripts/lib/route.py", "finish the branch")
     if "emperor-forge" not in rout_py:
         h.fail_msg("route.py finish the branch → forge")
@@ -1202,6 +1219,21 @@ def run_evals(root: Path) -> int:
     _, rout_edf = h.run_py("scripts/lib/route.py", "hello.ed")
     if "emperor-excavate" not in rout_edf:
         h.fail_msg("route.py hello.ed → excavate")
+    _, rout_gmake = h.run_py("scripts/lib/route.py", "gmake HELLO.MK")
+    if "emperor-excavate" not in rout_gmake:
+        h.fail_msg("route.py gmake → excavate")
+    _, rout_gnumake = h.run_py("scripts/lib/route.py", "gnu-make HELLO.MK")
+    if "emperor-excavate" not in rout_gnumake:
+        h.fail_msg("route.py gnu-make → excavate")
+    _, rout_mkf = h.run_py("scripts/lib/route.py", "hello.mk")
+    if "emperor-excavate" not in rout_mkf:
+        h.fail_msg("route.py hello.mk → excavate")
+    _, rout_makefile = h.run_py("scripts/lib/route.py", "makefile")
+    if "emperor-excavate" not in rout_makefile:
+        h.fail_msg("route.py makefile → excavate")
+    rc_make, rout_bare_make = h.run_py("scripts/lib/route.py", "make software")
+    if "emperor-excavate" in rout_bare_make:
+        h.fail_msg("route.py bare make/make software must not → excavate")
     _, rout_regina = h.run_py("scripts/lib/route.py", "regina HELLO.REX")
     if "emperor-excavate" not in rout_regina:
         h.fail_msg("route.py regina → excavate")
@@ -1209,7 +1241,7 @@ def run_evals(root: Path) -> int:
     if rc == 0:
         h.fail_msg("route.py should miss trivia")
     else:
-        h.pass_msg("route.py misses trivia + fortran/vhdl/ada/forth/lisp/prolog/tcl/erlang/rexx/modula/algol/algol60/algolw/icon/oberon/snobol/simula/apl/bcpl/pli/st/ps/bas/scm/awk/sed/m4/ed excavate + thin twins")
+        h.pass_msg("route.py misses trivia + fortran/vhdl/ada/forth/lisp/prolog/tcl/erlang/rexx/modula/algol/algol60/algolw/icon/oberon/snobol/simula/apl/bcpl/pli/st/ps/bas/scm/awk/sed/m4/ed/make excavate + thin twins")
 
     # ---- MUST-route doctrine ----
     h.section("MUST-route doctrine + adapters")
@@ -2564,6 +2596,8 @@ def run_evals(root: Path) -> int:
     h.require_contains("archaeology-m4-manual.md", "SKILL.md", "SKILL.md missing m4 Jail pin")
     h.require_contains("lost-ed", "evals/bakeoff.md", "bakeoff.md missing lost-ed inventory")
     h.require_contains("archaeology-ed-manual.md", "SKILL.md", "SKILL.md missing ed Jail pin")
+    h.require_contains("lost-make", "evals/bakeoff.md", "bakeoff.md missing lost-make inventory")
+    h.require_contains("archaeology-make-manual.md", "SKILL.md", "SKILL.md missing make Jail pin")
     h.require_contains("0.4.38", "CHANGELOG.md", "CHANGELOG missing 0.4.38")
     h.require_contains("root_cause.py", "evals/bakeoff.md", "bakeoff.md missing root_cause.py inventory")
     h.require_contains("root_cause.py", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing root_cause.py")
@@ -2594,6 +2628,7 @@ def run_evals(root: Path) -> int:
     h.require_contains("lost-sed", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing lost-sed")
     h.require_contains("lost-m4", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing lost-m4")
     h.require_contains("lost-ed", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing lost-ed")
+    h.require_contains("lost-make", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing lost-make")
     h.require_contains("0.4.39", "CHANGELOG.md", "CHANGELOG missing 0.4.39")
     h.require_contains("defense.py", "evals/bakeoff.md", "bakeoff.md missing defense.py inventory")
     h.require_contains("defense.py", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing defense.py")
@@ -2665,8 +2700,10 @@ def run_evals(root: Path) -> int:
     h.require_contains("0.4.71", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing 0.4.71 tip")
     h.require_contains("0.4.71", "CHANGELOG.md", "CHANGELOG missing 0.4.71")
     h.require_contains("0.4.72", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing 0.4.72 tip")
-    h.require_contains("0.4.72", ".claude-plugin/plugin.json", "plugin.json not at 0.4.72")
     h.require_contains("0.4.72", "CHANGELOG.md", "CHANGELOG missing 0.4.72")
+    h.require_contains("0.4.73", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing 0.4.73 tip")
+    h.require_contains("0.4.73", ".claude-plugin/plugin.json", "plugin.json not at 0.4.73")
+    h.require_contains("0.4.73", "CHANGELOG.md", "CHANGELOG missing 0.4.73")
 
     # session-discovery
     h.section("session-discovery locate HARD-GATE leaf")
