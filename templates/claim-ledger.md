@@ -19,3 +19,8 @@ Notes:
 - Rows never get deleted — REFUTED rows prevent re-testing dead ends.
 - A row an enlisted agent contributed starts at CONJECTURE no matter what it claimed.
 - Every row must be terminal (VERIFIED/REFUTED/UNVERIFIABLE or explicitly-carried CONJECTURE) before G4 opens.
+
+CLAIM AUDIT: <n> rows — <v> VERIFIED / <r> REFUTED / <c> CONJECTURE-labeled / <u> UNVERIFIABLE-labeled; spot-checks: <…>
+
+Mechanical check: `scripts/emperor claim-audit <task-dir>` (G4 calls this).
+

@@ -49,6 +49,7 @@ mean **disk + eval**, not live multi-vendor win rates.
 | Leaf | Path / command | Local status |
 |---|---|---|
 | plans (Plan Document Header + Task-N) | `scripts/lib/work_order.py` (`--reject-tbd` / `--reject-no-tasks` / `--check-tasks`) + `evals/fixtures/plans-header/` + `emperor work-order` | TESTED |
+| claim-audit (Judgment G4) | `scripts/lib/claim_audit.py` (`--reject-unaudited` / `--check-audit` / CLAIM AUDIT line) + `evals/fixtures/claim-audit/` + `emperor claim-audit` | TESTED |
 | finish menu (Python core) | `scripts/lib/finish.py` + thin `finish.sh`/`finish.ps1` + `finish-menu.md` | TESTED |
 | activate / MUST-route | `skills/emperor-resume/must-route.md` + `scripts/lib/activate.py` | TESTED |
 | grill (brainstorm HARD-GATE) | `skills/emperor-require-design/grill-checklist.md` + `emperor grill` | TESTED |

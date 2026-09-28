@@ -12,7 +12,7 @@ if [[ ! -f .emperor/host.env ]]; then
 fi
 TOOL="${1:-}"
 if [[ -z "$TOOL" ]]; then
-  print -u2 "usage: $0 <done|gate|eval|review-pack|dowse|install|worktree|queue|forge|finish|activate|boot|identify|route|heal|grill|tdd|iso|review|author|evidence|receive|execute|subagent|parallel|excavate|session-discovery|diagnose|trace|defense|wait|polluter|pressure|good-tests|skill-test|persuasion|sdo|brief|task-brief|task-start|task-done|sdd-workspace|sdd-review-pack|work-order> [args]"
+  print -u2 "usage: $0 <done|gate|eval|review-pack|dowse|install|worktree|queue|forge|finish|activate|boot|identify|route|heal|grill|tdd|iso|review|author|evidence|receive|execute|subagent|parallel|excavate|session-discovery|diagnose|trace|defense|wait|polluter|pressure|good-tests|skill-test|persuasion|sdo|brief|task-brief|task-start|task-done|sdd-workspace|sdd-review-pack|work-order|claim-audit|judgment-audit> [args]"
   exit 2
 fi
 shift || true
@@ -48,6 +48,10 @@ fi
 # brief: first-class alias → task-brief (SDD lifecycle)
 if [[ "$TOOL" == brief ]]; then
   exec bash "$ROOT/task-brief.sh" "$@"
+fi
+# judgment-audit: first-class alias → claim-audit HARD-GATE
+if [[ "$TOOL" == judgment-audit ]]; then
+  exec bash "$ROOT/claim-audit.sh" "$@"
 fi
 # pressure: first-class alias → pressure/academic HARD-GATE card
 if [[ "$TOOL" == pressure ]]; then

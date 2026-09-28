@@ -9,6 +9,7 @@ Thin twins: scripts/gate.sh / scripts/gate.ps1 — same CLI:
 
 Preserves gate.sh semantics (including G4 CONJECTURE warn) so bash/ps1
 cannot drift. G2 delegates plan-header check to work_order.py.
+G4 delegates claim-audit sweep to claim_audit.py.
 """
 from __future__ import annotations
 
@@ -84,6 +85,16 @@ def _run_work_order(gate: str, order: Path) -> None:
     )
     if proc.returncode != 0:
         _fail(gate, "plan header (work_order.py)")
+
+
+def _run_claim_audit(gate: str, task: Path) -> None:
+    py = _root() / "scripts" / "lib" / "claim_audit.py"
+    proc = subprocess.run(
+        [sys.executable, str(py), "--check-audit", str(task)],
+        check=False,
+    )
+    if proc.returncode != 0:
+        _fail(gate, "claim audit (claim_audit.py)")
 
 
 def run_gate(gate: str, task: Path) -> None:
@@ -174,6 +185,9 @@ def run_gate(gate: str, task: Path) -> None:
         _need_ledger(gate, ledger)
         if not (critique.is_file() or _has(r"Self-critique", ledger)):
             _fail(gate, "no critique artifact")
+        # Mechanical claim-audit: CLAIM AUDIT line + terminal rows.
+        # Not critique-file-present theater — exit code from claim_audit.py.
+        _run_claim_audit(gate, task)
         if claims.is_file():
             text = claims.read_text(encoding="utf-8", errors="replace")
             for line in text.splitlines():

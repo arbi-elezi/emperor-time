@@ -14,6 +14,7 @@ from pathlib import Path
 # (short name, path relative to repo root, substrings bakeoff.md must contain)
 LEAVES: list[tuple[str, str, tuple[str, ...]]] = [
     ("plans", "scripts/lib/work_order.py", ("plans", "work_order", "Task-N", "reject-tbd")),
+    ("claim-audit", "scripts/lib/claim_audit.py", ("claim-audit", "claim_audit", "reject-unaudited", "CLAIM AUDIT")),
     ("finish", "skills/emperor-forge/finish-menu.md", ("finish",)),
     ("finish-py", "scripts/lib/finish.py", ("finish.py", "finish menu")),
     ("activate", "scripts/lib/activate.py", ("activate", "must-route")),

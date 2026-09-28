@@ -1,11 +1,19 @@
 # Changelog
 
+## 0.4.122
+
+- Vertical depth: Judgment claim-audit HARD-GATE — `scripts/lib/claim_audit.py` mechanically rejects missing CLAIM AUDIT line / unfinished HYPOTHESIS|TESTED rows / soft claim-audit structure (not doctrine-only markdown)
+- Always-fail helper `--reject-unaudited`; `--check-audit PATH`; no-args prints CLAIM-AUDIT card; G4 calls the same module (no longer critique-file-present theater alone)
+- Thin twins `claim-audit.sh` / `claim-audit.ps1` + `judgment-audit` alias + `emperor claim-audit` / `emperor judgment-audit` peers; fixtures `evals/fixtures/claim-audit/` prove reject + accept; references/mechanical-gates + claim-audit.md lockstep
+- Closes soft-gate backlog #1 named in v0.4.121; not archaeology; not whole Superpowers vendor
+- Plugin, marketplace, and SKILL.md at 0.4.122
+
 ## 0.4.121
 
 - Vertical depth: work-order Task-N structure HARD-GATE — `scripts/lib/work_order.py` now mechanically rejects skeleton Task headings / missing Files / Expected FAIL+PASS / Commit / Contract TBD (not doctrine-only markdown)
 - Always-fail helpers `--reject-tbd` / `--reject-no-tasks`; `--check-tasks PATH`; no-args prints WORK-ORDER-TASKS card; G2 still calls the same module (header + Task-N)
 - Thin twins `work-order.sh` / `work-order.ps1` + `emperor work-order` peers; fixtures `work-order-no-tasks.md` / `work-order-thin-task.md`; references/work-order.md + eval/bakeoff lockstep
-- Prefer Task-N over claim-audit this turn (feeds SDD lifecycle already shipped in v0.4.120); claim-audit remains soft-gate backlog #1 next
+- Prefer Task-N over claim-audit this turn (feeds SDD lifecycle already shipped in v0.4.120); claim-audit was soft-gate backlog #1 → shipped in 0.4.122
 - Plugin, marketplace, and SKILL.md at 0.4.121
 
 ## 0.4.120

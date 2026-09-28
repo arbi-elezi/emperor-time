@@ -407,11 +407,15 @@ def run_evals(root: Path) -> int:
         for g in ("g0", "g1", "g2", "g3"):
             (tmp / ".gates" / g).write_text(stamp + "\n", encoding="utf-8")
         (tmp / "ledger.md").write_text(
-            "# Task Ledger\n## G0\n## G1 Acceptance criteria\n## G2\n## G3\n## G4\n- Verdict:\n",
+            "# Task Ledger\n## G0\n## G1 Acceptance criteria\n## G2\n## G3\n## G4\n"
+            "- Verdict:\n"
+            "CLAIM AUDIT: 1 rows — 1 VERIFIED / 0 REFUTED / 0 CONJECTURE-labeled / "
+            "0 UNVERIFIABLE-labeled; spot-checks: row 1\n",
             encoding="utf-8",
         )
         (tmp / "claims.md").write_text(
             "| # | Claim | Status | Prediction | Experiment | Evidence | Date |\n"
+            "|---|---|---|---|---|---|---|\n"
             "| 1 | tests pass | VERIFIED | pass | pytest | tests pass | 2026-01-01 |\n",
             encoding="utf-8",
         )
@@ -1507,6 +1511,160 @@ def run_evals(root: Path) -> int:
         h.fail_msg("work-order.sh missing TASKS card")
     else:
         h.pass_msg("work-order.sh thin twin emits card")
+
+    # ---- claim-audit HARD-GATE (Judgment G4 vertical depth) ----
+    h.section("claim-audit HARD-GATE")
+    h.need("scripts/lib/claim_audit.py")
+    h.need("scripts/claim-audit.sh")
+    h.need("scripts/claim-audit.ps1")
+    h.need("scripts/judgment-audit.sh")
+    h.need("scripts/judgment-audit.ps1")
+    h.need("evals/fixtures/claim-audit/claims-no-audit.md")
+    h.need("evals/fixtures/claim-audit/claims-unfinished.md")
+    h.need("evals/fixtures/claim-audit/claims-audited.md")
+    h.need("evals/fixtures/claim-audit/task-ok/ledger.md")
+    h.need("evals/fixtures/claim-audit/task-no-audit/ledger.md")
+    h.bash_n("scripts/claim-audit.sh", "claim-audit.sh syntax")
+    h.bash_n("scripts/judgment-audit.sh", "judgment-audit.sh syntax")
+    h.py_compile("scripts/lib/claim_audit.py", "claim_audit.py compile")
+    h.require_contains(
+        "lib/claim_audit.py",
+        "scripts/claim-audit.sh",
+        "claim-audit.sh thin twin missing claim_audit.py",
+    )
+    h.require_contains(
+        "lib/claim_audit.py",
+        "scripts/claim-audit.ps1",
+        "claim-audit.ps1 thin twin missing claim_audit.py",
+    )
+    h.require_contains(
+        "claim-audit",
+        "scripts/emperor",
+        "emperor bash peer missing claim-audit",
+    )
+    h.require_contains(
+        "judgment-audit",
+        "scripts/emperor",
+        "emperor bash peer missing judgment-audit",
+    )
+    h.require_contains(
+        "'claim-audit'",
+        "scripts/emperor.ps1",
+        "emperor.ps1 missing claim-audit",
+    )
+    h.require_contains(
+        "claim-audit",
+        "scripts/emperor.cmd",
+        "emperor.cmd missing claim-audit",
+    )
+    h.require_contains(
+        "claim-audit",
+        "scripts/emperor.zsh",
+        "emperor.zsh missing claim-audit",
+    )
+    h.require_contains(
+        "claim_audit.py",
+        "scripts/lib/gate.py",
+        "gate.py does not call claim_audit.py",
+    )
+    h.require_contains(
+        "--reject-unaudited",
+        "scripts/lib/claim_audit.py",
+        "claim_audit.py missing --reject-unaudited",
+    )
+    h.require_contains(
+        "--check-audit",
+        "scripts/lib/claim_audit.py",
+        "claim_audit.py missing --check-audit",
+    )
+    h.require_contains(
+        "CLAIM AUDIT",
+        "chains/judgment-chain/claim-audit.md",
+        "claim-audit.md missing CLAIM AUDIT doctrine",
+    )
+    h.require_contains(
+        "HARD-GATE",
+        "chains/judgment-chain/claim-audit.md",
+        "claim-audit.md missing HARD-GATE mechanical pointer",
+    )
+    _, card = h.run_py("scripts/lib/claim_audit.py")
+    if "checklist=yes" not in card:
+        h.fail_msg("claim-audit card missing checklist=yes")
+    elif "NO_G4_WITHOUT_CLAIM_AUDIT_LINE" not in card:
+        h.fail_msg("claim-audit card missing iron law token")
+    else:
+        h.pass_msg("claim-audit prints CLAIM-AUDIT card")
+    rc, _ = h.run_py("scripts/lib/claim_audit.py", "--reject-unaudited")
+    if rc == 0:
+        h.fail_msg("claim-audit --reject-unaudited should exit non-zero")
+    else:
+        _, reject = h.run_py("scripts/lib/claim_audit.py", "--reject-unaudited")
+        if "REJECT UNAUDITED" not in reject and "HARD-GATE" not in reject:
+            h.fail_msg("claim-audit --reject-unaudited missing REJECT text")
+        else:
+            h.pass_msg("claim-audit --reject-unaudited hard-gates")
+    rc, err = h.run_py(
+        "scripts/lib/claim_audit.py",
+        "--check-audit",
+        str(root / "evals/fixtures/claim-audit/claims-no-audit.md"),
+    )
+    if rc == 0:
+        h.fail_msg("claims-no-audit fixture should fail claim_audit")
+    elif not h.grep_out(err, r"CLAIM AUDIT|missing"):
+        h.fail_msg("claims-no-audit should mention missing CLAIM AUDIT")
+    else:
+        h.pass_msg("claims-no-audit rejected")
+    rc, err = h.run_py(
+        "scripts/lib/claim_audit.py",
+        "--check-audit",
+        str(root / "evals/fixtures/claim-audit/claims-unfinished.md"),
+    )
+    if rc == 0:
+        h.fail_msg("claims-unfinished fixture should fail claim_audit")
+    elif not h.grep_out(err, r"HYPOTHESIS|TESTED|unfinished"):
+        h.fail_msg("claims-unfinished should mention HYPOTHESIS/TESTED")
+    else:
+        h.pass_msg("claims-unfinished rejected")
+    rc, _ = h.run_py(
+        "scripts/lib/claim_audit.py",
+        "--check-audit",
+        str(root / "evals/fixtures/claim-audit/claims-audited.md"),
+    )
+    if rc != 0:
+        h.fail_msg("claims-audited fixture should pass claim_audit")
+    else:
+        h.pass_msg("claims-audited accepted")
+    # G4 wiring: task-no-audit fails; task-ok passes (with prior stamps)
+    tmp = Path(tempfile.mkdtemp())
+    try:
+        import shutil as _shutil
+        for name, expect_fail in (("task-no-audit", True), ("task-ok", False)):
+            src = root / "evals/fixtures/claim-audit" / name
+            dst = tmp / name
+            _shutil.copytree(src, dst)
+            (dst / ".gates").mkdir()
+            stamp = _utc_stamp()
+            for g in ("g0", "g1", "g2", "g3"):
+                (dst / ".gates" / g).write_text(stamp + "\n", encoding="utf-8")
+            rc, out = h.run_sh("scripts/gate.sh", "g4", str(dst))
+            if expect_fail:
+                if rc == 0:
+                    h.fail_msg(f"G4 allowed unaudited {name}")
+                else:
+                    h.pass_msg(f"G4 rejects unaudited {name}")
+            else:
+                if rc != 0:
+                    h.fail_msg(f"G4 should accept audited {name}: {out}")
+                else:
+                    h.pass_msg(f"G4 accepts audited {name}")
+    finally:
+        shutil.rmtree(tmp, ignore_errors=True)
+    _, sh_card = h.run_sh("scripts/claim-audit.sh")
+    if "CLAIM-AUDIT" not in sh_card:
+        h.fail_msg("claim-audit.sh missing CLAIM-AUDIT card")
+    else:
+        h.pass_msg("claim-audit.sh thin twin emits card")
+
 
     # ---- finish menu ----
     h.section("finish menu (forge aspect)")
@@ -4755,11 +4913,16 @@ def run_evals(root: Path) -> int:
     h.require_contains("task_start.py", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing task_start.py")
     h.require_contains("task_done.py", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing task_done.py")
     h.require_contains("0.4.121", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing 0.4.121 tip")
-    h.require_contains("0.4.121", ".claude-plugin/plugin.json", "plugin.json not at 0.4.121")
     h.require_contains("0.4.121", "CHANGELOG.md", "CHANGELOG missing 0.4.121")
     h.require_contains("validate_tasks", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing validate_tasks")
     h.require_contains("reject-no-tasks", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing reject-no-tasks")
     h.require_contains("Task-N", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing Task-N")
+    h.require_contains("0.4.122", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing 0.4.122 tip")
+    h.require_contains("0.4.122", ".claude-plugin/plugin.json", "plugin.json not at 0.4.122")
+    h.require_contains("0.4.122", "CHANGELOG.md", "CHANGELOG missing 0.4.122")
+    h.require_contains("claim_audit.py", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing claim_audit.py")
+    h.require_contains("reject-unaudited", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing reject-unaudited")
+    h.require_contains("CLAIM AUDIT", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing CLAIM AUDIT")
 
     # session-discovery
     h.section("session-discovery locate HARD-GATE leaf")
