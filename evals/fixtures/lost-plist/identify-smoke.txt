@@ -1,0 +1,9 @@
+== identify /workspace/emperor-time/evals/fixtures/lost-plist ==
+-- extensions --
+      2 md
+      1 txt
+      1 plist
+-- named fossils --
+1 *.plist
+-- shebangs --
+identify: done (read-only)

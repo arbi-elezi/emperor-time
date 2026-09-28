@@ -608,7 +608,11 @@
         "ini",
         "pyini",
         "configparser",
-        ".ini"
+        ".ini",
+        "plist",
+        "pyplist",
+        "plistlib",
+        ".plist"
       ],
       "tags": [
         "archaeology",
@@ -818,7 +822,11 @@
         ".csv",
         "pyjson",
         "json2.0",
-        ".json"
+        ".json",
+        "plist",
+        "pyplist",
+        "plistlib",
+        ".plist"
       ],
       "target": "skills/emperor-excavate/SKILL.md",
       "reason": "lost/ancient/foreign tree \u2014 excavate before modernizing"

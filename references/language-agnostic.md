@@ -1,6 +1,6 @@
 # Language-agnostic law
 
-Emperor Time has no home language. Python, JavaScript, TypeScript, Bash, PHP, SQL, jq, XSLT, XML, YAML, TOML, HTML, CSV, JSON, INI, Pascal, COBOL, Forth,
+Emperor Time has no home language. Python, JavaScript, TypeScript, Bash, PHP, SQL, jq, XSLT, XML, YAML, TOML, HTML, CSV, JSON, INI, plist, Pascal, COBOL, Forth,
 Common Lisp, Prolog, Tcl, Erlang, REXX, Modula-2, Algol 68, ALGOL 60, Algol W, Icon, Oberon, SNOBOL4, Simula, APL, BCPL, PL/I, Smalltalk, PostScript, BASIC, Scheme, AWK, sed, m4, ed, Make, dc, lex, yacc, roff, Perl, bc, Expect, Lua, Ruby, Go, Rust, C, 6502, x86, VHDL, and a folder of unmarked binaries are peers.
 
 ## Restrictions
