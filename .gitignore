@@ -20,3 +20,4 @@ __pycache__/
 
 # Git worktree isolation (emperor-worktree)
 .worktrees/
+.apl.history
