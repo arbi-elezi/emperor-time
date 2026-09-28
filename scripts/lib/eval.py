@@ -345,6 +345,7 @@ def run_evals(root: Path) -> int:
     h.require_contains("*.scm", "scripts/lib/identify.py", "identify.py missing *.scm fossil")
     h.require_contains("*.awk", "scripts/lib/identify.py", "identify.py missing *.awk fossil")
     h.require_contains("*.sed", "scripts/lib/identify.py", "identify.py missing *.sed fossil")
+    h.require_contains("*.m4", "scripts/lib/identify.py", "identify.py missing *.m4 fossil")
     h.require_contains(
         "scripts/lib/identify.py",
         "references/archaeology.md",
@@ -451,6 +452,9 @@ def run_evals(root: Path) -> int:
             ("sed HELLO.SED", "emperor-excavate", "route sed → excavate"),
             ("gsed HELLO.SED", "emperor-excavate", "route gsed → excavate"),
             ("hello.sed", "emperor-excavate", "route hello.sed → excavate"),
+            ("m4 HELLO.M4", "emperor-excavate", "route m4 → excavate"),
+            ("gm4 HELLO.M4", "emperor-excavate", "route gm4 → excavate"),
+            ("hello.m4", "emperor-excavate", "route hello.m4 → excavate"),
             ("queue next", "emperor-queue", "route queue next → queue"),
             ("blocked task", "emperor-queue", "route blocked task → queue"),
             ("red build", "emperor-heal", "route red build → heal"),
@@ -759,6 +763,13 @@ def run_evals(root: Path) -> int:
             r"[0-9]+ \*\.sed",
             ["references/archaeology-sed-manual.md"],
         ),
+        (
+            "lost-m4 identify finds *.m4",
+            "lost-m4",
+            "HELLO.M4",
+            r"[0-9]+ \*\.m4",
+            ["references/archaeology-m4-manual.md"],
+        ),
     ]
     # The loop above was messy — clear fail state not affected; rewrite cleanly below by
     # only running the clean fixtures list (sections already printed wrongly once).
@@ -994,6 +1005,9 @@ def run_evals(root: Path) -> int:
     h.require_contains("sed", "evals/triggers.json", "triggers missing sed excavate pattern")
     h.require_contains("gsed", "evals/triggers.json", "triggers missing gsed excavate pattern")
     h.require_contains(".sed", "evals/triggers.json", "triggers missing .sed excavate pattern")
+    h.require_contains("m4", "evals/triggers.json", "triggers missing m4 excavate pattern")
+    h.require_contains("gm4", "evals/triggers.json", "triggers missing gm4 excavate pattern")
+    h.require_contains(".m4", "evals/triggers.json", "triggers missing .m4 excavate pattern")
     _, rout_py = h.run_py("scripts/lib/route.py", "finish the branch")
     if "emperor-forge" not in rout_py:
         h.fail_msg("route.py finish the branch → forge")
@@ -1156,6 +1170,15 @@ def run_evals(root: Path) -> int:
     _, rout_sedf = h.run_py("scripts/lib/route.py", "hello.sed")
     if "emperor-excavate" not in rout_sedf:
         h.fail_msg("route.py hello.sed → excavate")
+    _, rout_m4 = h.run_py("scripts/lib/route.py", "m4 HELLO.M4")
+    if "emperor-excavate" not in rout_m4:
+        h.fail_msg("route.py m4 → excavate")
+    _, rout_gm4 = h.run_py("scripts/lib/route.py", "gm4 HELLO.M4")
+    if "emperor-excavate" not in rout_gm4:
+        h.fail_msg("route.py gm4 → excavate")
+    _, rout_m4f = h.run_py("scripts/lib/route.py", "hello.m4")
+    if "emperor-excavate" not in rout_m4f:
+        h.fail_msg("route.py hello.m4 → excavate")
     _, rout_regina = h.run_py("scripts/lib/route.py", "regina HELLO.REX")
     if "emperor-excavate" not in rout_regina:
         h.fail_msg("route.py regina → excavate")
@@ -1163,7 +1186,7 @@ def run_evals(root: Path) -> int:
     if rc == 0:
         h.fail_msg("route.py should miss trivia")
     else:
-        h.pass_msg("route.py misses trivia + fortran/vhdl/ada/forth/lisp/prolog/tcl/erlang/rexx/modula/algol/algol60/algolw/icon/oberon/snobol/simula/apl/bcpl/pli/st/ps/bas/scm/awk/sed excavate + thin twins")
+        h.pass_msg("route.py misses trivia + fortran/vhdl/ada/forth/lisp/prolog/tcl/erlang/rexx/modula/algol/algol60/algolw/icon/oberon/snobol/simula/apl/bcpl/pli/st/ps/bas/scm/awk/sed/m4 excavate + thin twins")
 
     # ---- MUST-route doctrine ----
     h.section("MUST-route doctrine + adapters")
@@ -2514,6 +2537,8 @@ def run_evals(root: Path) -> int:
     h.require_contains("archaeology-awk-manual.md", "SKILL.md", "SKILL.md missing awk Jail pin")
     h.require_contains("lost-sed", "evals/bakeoff.md", "bakeoff.md missing lost-sed inventory")
     h.require_contains("archaeology-sed-manual.md", "SKILL.md", "SKILL.md missing sed Jail pin")
+    h.require_contains("lost-m4", "evals/bakeoff.md", "bakeoff.md missing lost-m4 inventory")
+    h.require_contains("archaeology-m4-manual.md", "SKILL.md", "SKILL.md missing m4 Jail pin")
     h.require_contains("0.4.38", "CHANGELOG.md", "CHANGELOG missing 0.4.38")
     h.require_contains("root_cause.py", "evals/bakeoff.md", "bakeoff.md missing root_cause.py inventory")
     h.require_contains("root_cause.py", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing root_cause.py")
@@ -2542,6 +2567,7 @@ def run_evals(root: Path) -> int:
     h.require_contains("lost-scm", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing lost-scm")
     h.require_contains("lost-awk", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing lost-awk")
     h.require_contains("lost-sed", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing lost-sed")
+    h.require_contains("lost-m4", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing lost-m4")
     h.require_contains("0.4.39", "CHANGELOG.md", "CHANGELOG missing 0.4.39")
     h.require_contains("defense.py", "evals/bakeoff.md", "bakeoff.md missing defense.py inventory")
     h.require_contains("defense.py", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing defense.py")
@@ -2609,8 +2635,10 @@ def run_evals(root: Path) -> int:
     h.require_contains("0.4.69", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing 0.4.69 tip")
     h.require_contains("0.4.69", "CHANGELOG.md", "CHANGELOG missing 0.4.69")
     h.require_contains("0.4.70", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing 0.4.70 tip")
-    h.require_contains("0.4.70", ".claude-plugin/plugin.json", "plugin.json not at 0.4.70")
     h.require_contains("0.4.70", "CHANGELOG.md", "CHANGELOG missing 0.4.70")
+    h.require_contains("0.4.71", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing 0.4.71 tip")
+    h.require_contains("0.4.71", ".claude-plugin/plugin.json", "plugin.json not at 0.4.71")
+    h.require_contains("0.4.71", "CHANGELOG.md", "CHANGELOG missing 0.4.71")
 
     # session-discovery
     h.section("session-discovery locate HARD-GATE leaf")
