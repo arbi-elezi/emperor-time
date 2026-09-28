@@ -181,6 +181,19 @@ After triage and before heal-and-verify:
 
 See `chains/holy-chain/reproduce-and-bisect.md`.
 
+
+## MUST — holy process-healing HARD-GATE before claiming process healed
+
+When the *process* broke (skipped gate, bad admission, delivered falsehood, derailed waterfall, systemic drift):
+
+1. Write the register entry (`Breach Register:` / `Register:` / `| Vow | what happened | remediation`).
+2. Record the ledger seam (`RE-ENTERED G[0-5] <date> (breach #N)`).
+3. Run `scripts/emperor process-heal <task-dir>` (or `process-healing`) — exit 0.
+   Always-fail helpers: `--reject-no-register` / `--reject-no-reentry`.
+4. Disclose first if the falsehood was delivered; then remediate.
+
+See `chains/holy-chain/process-healing.md`.
+
 ## MUST — heal-and-verify HARD-GATE before claiming heal done
 
 After the four-phase entry (`scripts/emperor heal`) and before DONE:

@@ -64,6 +64,7 @@ if ($Tool -eq 'steal-consent') { $Tool = 'consent' }
 if ($Tool -eq 'heal-and-verify') { $Tool = 'heal-verify' }
 if ($Tool -eq 'reproduce-and-bisect') { $Tool = 'reproduce' }
 if ($Tool -eq 'holy-triage') { $Tool = 'triage' }
+if ($Tool -eq 'process-healing') { $Tool = 'process-heal' }
 if ($Tool -eq 'self-critique') { $Tool = 'critique' }
 if ($Tool -eq 'breach') { $Tool = 'verdict' }
 $ps1 = Join-Path $here "$Tool.ps1"

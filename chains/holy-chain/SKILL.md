@@ -32,7 +32,7 @@ actions past the first wound.
 | Breakage just detected — secure the scene before anything else | `triage.md` (mechanical: `scripts/emperor triage`) |
 | Scene secured — make it fail on demand and isolate the cause | `reproduce-and-bisect.md` (mechanical: `scripts/emperor reproduce`) |
 | Cause isolated — fix minimally and prove the cure | `heal-and-verify.md` (mechanical: `scripts/emperor heal-verify`) |
-| The *process* broke: skipped gate, bad agent-merge, delivered falsehood, derailed loop | `process-healing.md` |
+| The *process* broke: skipped gate, bad agent-merge, delivered falsehood, derailed loop | `process-healing.md` (mechanical: `scripts/emperor process-heal`) |
 
 Code wounds run the sequence: `triage.md` → `reproduce-and-bisect.md` →
 `heal-and-verify.md`. Before proposing fixes, the heal entry MUST run the four-phase checklist

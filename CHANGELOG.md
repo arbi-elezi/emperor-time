@@ -1,11 +1,19 @@
 # Changelog
 
+## 0.4.140
+
+- Vertical depth: Holy process-healing HARD-GATE — `scripts/lib/process_heal.py` card-style `--reject-no-register` / `--reject-no-reentry` / `--check-process-heal` (register entry + RE-ENTERED seam; vacuous PASS when no process-healing activity)
+- Fixtures `evals/fixtures/process-healing/`; thin twins `process-heal.sh`/`.ps1` + `process-healing` alias; `emperor process-heal`
+- Doctrine/SKILL/mechanical-gates/software-factory/bakeoff honesty lockstep; completes Holy hard suite (triage / reproduce / heal-verify / process-healing)
+- Not archaeology; not embeddings; closes soft→hard leftover named in v0.4.139; next soft leftovers: Steal sign-in/dispatch/swarm, Jail pin-and-consent
+- Plugin, marketplace, and SKILL.md at 0.4.140
+
 ## 0.4.139
 
 - Vertical depth: Holy triage HARD-GATE — `scripts/lib/triage.py` card-style `--reject-no-triage` / `--reject-no-snapshot` / `--check-triage` (triage block + snapshot; vacuous PASS when no triage activity)
 - Fixtures `evals/fixtures/holy-triage/`; thin twins `triage.sh`/`.ps1` + `holy-triage` alias; `emperor triage`
 - Doctrine/SKILL/mechanical-gates/software-factory/bakeoff honesty lockstep; reproduce-and-bisect remains the next leaf after scene secure
-- Not archaeology; not embeddings; closes soft→hard leftover named in v0.4.138; next soft gate: Holy process-healing
+- Not archaeology; not embeddings; closes soft→hard leftover named in v0.4.138; next soft gate: Holy process-healing (shipped v0.4.140)
 - Plugin, marketplace, and SKILL.md at 0.4.139
 
 ## 0.4.138

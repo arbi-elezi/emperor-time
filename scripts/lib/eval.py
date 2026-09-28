@@ -5972,7 +5972,7 @@ def run_evals(root: Path) -> int:
     h.require_contains("steal-consent", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing steal-consent")
     h.require_contains("consent.py", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing consent.py")
     h.require_contains("0.4.132", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing 0.4.132 tip")
-    h.require_contains("0.4.139", ".claude-plugin/plugin.json", "plugin.json not at 0.4.139")
+    h.require_contains("0.4.140", ".claude-plugin/plugin.json", "plugin.json not at 0.4.140")
     h.require_contains("0.4.137", "CHANGELOG.md", "CHANGELOG missing retained 0.4.137")
     h.require_contains("0.4.136", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing retained 0.4.136")
     h.require_contains("0.4.132", "CHANGELOG.md", "CHANGELOG missing 0.4.132")
@@ -5998,7 +5998,9 @@ def run_evals(root: Path) -> int:
     h.require_contains("0.4.135", "CHANGELOG.md", "CHANGELOG missing 0.4.135")
     h.require_contains("sandbox_engine.py", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing sandbox_engine.py")
     h.require_contains("sandbox-engine", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing sandbox-engine")
-    h.require_contains("0.4.139", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing 0.4.139 tip")
+    h.require_contains("0.4.140", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing 0.4.140 tip")
+    h.require_contains("0.4.140", "CHANGELOG.md", "CHANGELOG missing 0.4.140")
+    h.require_contains("0.4.139", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing retained 0.4.139 tip")
     h.require_contains("0.4.139", "CHANGELOG.md", "CHANGELOG missing 0.4.139")
     h.require_contains("0.4.138", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing retained 0.4.138")
     h.require_contains("0.4.138", "CHANGELOG.md", "CHANGELOG missing 0.4.138")
@@ -6020,13 +6022,19 @@ def run_evals(root: Path) -> int:
     h.require_contains("holy-triage", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing holy-triage")
     h.require_contains("STOP_SNAPSHOT_BRACKET", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing STOP_SNAPSHOT_BRACKET")
     h.require_contains("triage.py", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing triage.py")
+    h.require_contains("reject-no-register", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing reject-no-register")
+    h.require_contains("reject-no-reentry", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing reject-no-reentry")
+    h.require_contains("check-process-heal", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing check-process-heal")
+    h.require_contains("process-healing", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing process-healing")
+    h.require_contains("REGISTER_THEN_REENTER", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing REGISTER_THEN_REENTER")
+    h.require_contains("process_heal.py", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing process_heal.py")
     h.require_contains("PR_CONSENT_BEFORE_PUBLIC", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing PR_CONSENT_BEFORE_PUBLIC")
     h.require_contains("secrets_broker.py", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing secrets_broker.py")
     h.require_contains("workspace_env.py", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing workspace_env.py")
     h.require_contains("blind-secrets-broker", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing blind-secrets-broker")
     h.require_contains("reject-secret-leak", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing reject-secret-leak")
     h.require_contains("check-env-redacted", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing check-env-redacted")
-    h.require_contains("0.4.139", ".claude-plugin/marketplace.json", "marketplace.json not at 0.4.139")
+    h.require_contains("0.4.140", ".claude-plugin/marketplace.json", "marketplace.json not at 0.4.140")
     h.require_contains("finish.py", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing finish.py")
     h.require_contains("reject-red-suite", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing reject-red-suite")
     h.require_contains("require-green", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing require-green")
@@ -7284,6 +7292,168 @@ def run_evals(root: Path) -> int:
         h.pass_msg("emperor triage peer forwards --reject-no-triage")
     h.pass_msg("triage.py thin twins + holy-triage HARD-GATE")
 
+    # ---- holy process-healing HARD-GATE (Holy Chain vertical depth) ----
+    h.section("holy-process-healing HARD-GATE")
+    h.need("scripts/lib/process_heal.py")
+    h.need("scripts/process-heal.sh")
+    h.need("scripts/process-heal.ps1")
+    h.need("scripts/process-healing.sh")
+    h.need("scripts/process-healing.ps1")
+    h.need("evals/fixtures/process-healing/process-ok.md")
+    h.need("evals/fixtures/process-healing/process-no-register.md")
+    h.need("evals/fixtures/process-healing/process-no-reentry.md")
+    h.need("evals/fixtures/process-healing/process-vacuous.md")
+    h.need("evals/fixtures/process-healing/task-ok/ledger.md")
+    h.need("evals/fixtures/process-healing/task-no-register/ledger.md")
+    h.need("evals/fixtures/process-healing/task-no-reentry/ledger.md")
+    h.bash_n("scripts/process-heal.sh", "process-heal.sh syntax")
+    h.bash_n("scripts/process-healing.sh", "process-healing.sh syntax")
+    h.py_compile("scripts/lib/process_heal.py", "process_heal.py compile")
+    h.require_contains(
+        "lib/process_heal.py",
+        "scripts/process-heal.sh",
+        "process-heal.sh thin twin missing process_heal.py",
+    )
+    h.require_contains(
+        "lib/process_heal.py",
+        "scripts/process-heal.ps1",
+        "process-heal.ps1 thin twin missing process_heal.py",
+    )
+    h.require_contains(
+        "process-heal",
+        "scripts/emperor",
+        "emperor bash peer missing process-heal",
+    )
+    h.require_contains(
+        "process-healing",
+        "scripts/emperor",
+        "emperor bash peer missing process-healing",
+    )
+    h.require_contains(
+        "'process-heal'",
+        "scripts/emperor.ps1",
+        "emperor.ps1 missing process-heal alias map",
+    )
+    h.require_contains(
+        "process-heal",
+        "scripts/emperor.cmd",
+        "emperor.cmd missing process-heal",
+    )
+    h.require_contains(
+        "process-heal",
+        "scripts/emperor.zsh",
+        "emperor.zsh missing process-heal",
+    )
+    h.require_contains(
+        "--reject-no-register",
+        "scripts/lib/process_heal.py",
+        "process_heal.py missing --reject-no-register",
+    )
+    h.require_contains(
+        "--reject-no-reentry",
+        "scripts/lib/process_heal.py",
+        "process_heal.py missing --reject-no-reentry",
+    )
+    h.require_contains(
+        "--check-process-heal",
+        "scripts/lib/process_heal.py",
+        "process_heal.py missing --check-process-heal",
+    )
+    h.require_contains(
+        "HARD-GATE",
+        "chains/holy-chain/process-healing.md",
+        "process-healing.md missing HARD-GATE mechanical pointer",
+    )
+    h.require_contains(
+        "--reject-no-register",
+        "skills/emperor-heal/SKILL.md",
+        "emperor-heal skill missing --reject-no-register",
+    )
+    h.require_contains(
+        "holy-process-healing-hard-gate",
+        "evals/evals.json",
+        "evals.json missing holy-process-healing-hard-gate case",
+    )
+    h.require_contains(
+        "reject-no-register",
+        "references/mechanical-gates.md",
+        "mechanical-gates missing holy process-healing row",
+    )
+    h.require_contains(
+        "check-process-heal",
+        "references/software-factory.md",
+        "software-factory missing check-process-heal",
+    )
+    h.require_contains(
+        "reject-no-register",
+        "evals/bakeoff.md",
+        "bakeoff.md missing process-heal reject-no-register inventory",
+    )
+    _, card = h.run_py("scripts/lib/process_heal.py")
+    if "checklist=yes" not in card:
+        h.fail_msg("process-heal card missing checklist=yes")
+    elif "REGISTER_THEN_REENTER" not in card:
+        h.fail_msg("process-heal card missing iron law token")
+    else:
+        h.pass_msg("process-heal prints PROCESS-HEAL card")
+    rc, reject = h.run_py("scripts/lib/process_heal.py", "--reject-no-register")
+    if rc == 0:
+        h.fail_msg("process-heal --reject-no-register should exit non-zero")
+    elif "REJECT NO REGISTER" not in reject and "HARD-GATE" not in reject:
+        h.fail_msg("process-heal --reject-no-register missing REJECT text")
+    else:
+        h.pass_msg("process-heal --reject-no-register hard-gates")
+    rc, reject = h.run_py("scripts/lib/process_heal.py", "--reject-no-reentry")
+    if rc == 0:
+        h.fail_msg("process-heal --reject-no-reentry should exit non-zero")
+    elif "REJECT NO REENTRY" not in reject and "HARD-GATE" not in reject:
+        h.fail_msg("process-heal --reject-no-reentry missing REJECT text")
+    else:
+        h.pass_msg("process-heal --reject-no-reentry hard-gates")
+    for name, needle in (
+        ("process-no-register.md", r"register|Register|Vow"),
+        ("process-no-reentry.md", r"RE-ENTERED|re-enter"),
+        ("task-no-register", r"register|Register|Vow"),
+        ("task-no-reentry", r"RE-ENTERED|re-enter"),
+    ):
+        target = root / "evals/fixtures/process-healing" / name
+        rc, err = h.run_py(
+            "scripts/lib/process_heal.py",
+            "--check-process-heal",
+            str(target),
+        )
+        if rc == 0:
+            h.fail_msg(f"process-healing {name} should fail check-process-heal")
+        elif not h.grep_out(err, needle):
+            h.fail_msg(f"process-healing {name} should mention {needle}: {err}")
+        else:
+            h.pass_msg(f"process-healing {name} rejected")
+    for name in ("process-ok.md", "process-vacuous.md", "task-ok"):
+        rc, _ = h.run_py(
+            "scripts/lib/process_heal.py",
+            "--check-process-heal",
+            str(root / "evals/fixtures/process-healing" / name),
+        )
+        if rc != 0:
+            h.fail_msg(f"process-healing {name} should pass check-process-heal")
+        else:
+            h.pass_msg(f"process-healing {name} accepted")
+    _, sh_card = h.run_sh("scripts/process-heal.sh")
+    if "checklist=yes" not in sh_card:
+        h.fail_msg("process-heal.sh should print PROCESS-HEAL card")
+    else:
+        h.pass_msg("process-heal.sh thin twin prints card")
+    _, emp_out = h.run_sh(
+        "scripts/emperor",
+        "process-heal",
+        "--reject-no-register",
+    )
+    if "REJECT NO REGISTER" not in emp_out:
+        h.fail_msg("emperor process-heal --reject-no-register should forward REJECT")
+    else:
+        h.pass_msg("emperor process-heal peer forwards --reject-no-register")
+    h.pass_msg("process_heal.py thin twins + holy-process-healing HARD-GATE")
+
     # ---- hetero-critique isolation HARD-GATE (Judgment G4 vertical depth) ----
     h.section("hetero-critique-isolation HARD-GATE")
     h.need("scripts/lib/review_pack.py")
@@ -7356,9 +7526,9 @@ def run_evals(root: Path) -> int:
         "bakeoff.md missing reject-unisolated inventory",
     )
     h.require_contains(
-        "0.4.139",
+        "0.4.140",
         "SKILL.md",
-        "SKILL.md not bumped to 0.4.139",
+        "SKILL.md not bumped to 0.4.140",
     )
     _, card = h.run_py("scripts/lib/review_pack.py")
     if "checklist=yes" not in card:
