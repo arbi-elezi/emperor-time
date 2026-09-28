@@ -53,38 +53,51 @@ not the only workspace.
 - **Workspace ≠ one repo** — a task may bind multiple repos; each is a SOT
   *plugin* recognized by the sandbox engine.
 
-## Sandbox / sim engine (stubs in v1)
+## Sandbox / sim engine (real in v0.4.135+)
 
 Powers: sandboxing, mocking, simulating, isolating, parallel testing.
+Core: `scripts/lib/sandbox_engine.py` (wired from `super_context.py`).
 
-- Ports allocated per artifact (`.emperor/sandbox/ports.json`).
-- Stacks raised per artifact; simulator emits docker-compose (or equivalent)
-  that wires plugin repos so they fire together
-  (`emperor sandbox plan` merges `sot/plugins/*/compose.fragment.yml`).
+- **Port allocator** — persist `.emperor/sandbox/ports.json`; no collisions
+  across parallel artifacts (scans all allocations before assign).
+- **Compose emitter** — `emperor sandbox plan` merges
+  `sot/plugins/*/compose.fragment.yml` (+ artifact plugin list) into
+  `.emperor/artifacts/<id>/compose.yml`.
+- **Podman backend** — emits `podman-compose.yml` (compose-compat) and
+  `podman-play.yaml` for `podman play kube`.
+- **K8s backend** — emits Namespace + Deployment + Service (+ isolate
+  NetworkPolicy) into `k8s-manifests.yaml`.
+- **Profiles** (loadable stubs under `.emperor/sandbox/profiles/`):
+  `isolate` (internal network), `mock` (placeholder svc), `simulate`.
 
-CLI stubs:
+CLI:
 
 ```
 emperor sot status|sync|add-plugin <name> [url]
 emperor sandbox plan|up|down|ports [--artifact ID]
-emperor context artifacts list|stub-create
+emperor context artifacts list|stub-create|sync
+emperor runtime use compose|podman|k8s
+emperor runtime status
 ```
 
-`sandbox up|down` remain honest stubs (no docker shell-out yet).
-**SOT + artifacts sync are real (v0.4.134):** `sot add-plugin` runs
-`git clone --mirror` into `.emperor/sot/plugins/<name>/mirror`;
-`sot sync` fetches; `artifacts sync` clones working copies into
-`.emperor/artifacts/<id>/repos/<plugin>/` from those mirrors.
+`sandbox up|down` invoke docker compose / podman (play kube|compose) /
+kubectl when on PATH; otherwise honest skip (plan artifacts still written).
+**SOT + artifacts sync (v0.4.134):** `sot add-plugin` → `git clone --mirror`;
+`sot sync` fetches; `artifacts sync` clones working copies under
+`.emperor/artifacts/<id>/repos/<plugin>/` (never mutates SOT).
 
 ## Pluggable runtimes
 
 Sandbox simulator backends: **docker compose AND k8s AND podman**.
-Compose is not the only emitter. Select with:
+Compose is not the only emitter. Selection **persists** in
+`.emperor/sandbox/runtime/active`:
 
 ```
 emperor runtime use compose|podman|k8s
 emperor runtime status
 ```
+
+Then `emperor sandbox plan` emits for the active runtime.
 
 ## Blind credentials
 

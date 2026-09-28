@@ -40,6 +40,7 @@ def ensure_layout(repo_root: Path) -> dict[str, Path]:
         "runtime_compose": root / "sandbox" / "runtime" / "compose",
         "runtime_podman": root / "sandbox" / "runtime" / "podman",
         "runtime_k8s": root / "sandbox" / "runtime" / "k8s",
+        "profiles": root / "sandbox" / "profiles",
         "env": root / "env",
         "secrets": root / "secrets",
     }
@@ -129,6 +130,8 @@ def ensure_layout(repo_root: Path) -> dict[str, Path]:
                     "- `manifest.json` — mock/sim declarations",
                     "",
                     "CLI: `emperor sandbox plan|up|down|ports`",
+                    "Profiles: `profiles/{isolate,mock,simulate}.json` (loadable).",
+                    "Runtimes: compose | podman | k8s via `emperor runtime use`.",
                     "",
                 ]
             ),
@@ -160,6 +163,11 @@ def ensure_layout(repo_root: Path) -> dict[str, Path]:
     active = paths["runtime"] / "active"
     if not active.exists():
         active.write_text("compose\n", encoding="utf-8")
+
+    # Loadable sandbox profiles (isolate / mock / simulate) — stubs seeded by
+    # sandbox_engine.ensure_profiles; ensure dir exists for doctrine layout.
+    profiles = paths["sandbox"] / "profiles"
+    profiles.mkdir(parents=True, exist_ok=True)
 
     # Unified workspace env (repo≠workspace; ET merges across plugins)
     env_ex = paths["env"] / "workspace.env.example"

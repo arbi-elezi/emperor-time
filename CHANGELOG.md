@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.4.135
+
+- Vertical depth: sandbox engine — real port allocator (persist; no collisions across parallel artifacts); compose emitter wiring SOT plugins; podman backend (`podman-compose.yml` + `podman play kube`); k8s backend (Deployment/Service/NetworkPolicy); `sandbox plan|up|down|ports` honor `runtime use compose|podman|k8s`; loadable isolate|mock|simulate profiles
+- Core: `scripts/lib/sandbox_engine.py` (super_context delegates); fixtures `evals/fixtures/sandbox-engine/`
+- Not archaeology; not embeddings; no Graphify copy; secrets stay names-only
+- Plugin, marketplace, and SKILL.md at 0.4.135
+
 ## 0.4.134
 
 - Vertical depth: SOT sync/add-plugin + multi-repo artifact sync — real `git clone --mirror` fetch-only mirrors under `.emperor/sot/plugins/<name>/mirror`; `sot sync` fetches all; `artifacts sync` materializes working copies under `.emperor/artifacts/<id>/repos/` from SOT (never mutates SOT)
