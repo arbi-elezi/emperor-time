@@ -5972,7 +5972,8 @@ def run_evals(root: Path) -> int:
     h.require_contains("steal-consent", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing steal-consent")
     h.require_contains("consent.py", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing consent.py")
     h.require_contains("0.4.132", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing 0.4.132 tip")
-    h.require_contains("0.4.137", ".claude-plugin/plugin.json", "plugin.json not at 0.4.137")
+    h.require_contains("0.4.138", ".claude-plugin/plugin.json", "plugin.json not at 0.4.138")
+    h.require_contains("0.4.137", "CHANGELOG.md", "CHANGELOG missing retained 0.4.137")
     h.require_contains("0.4.136", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing retained 0.4.136")
     h.require_contains("0.4.132", "CHANGELOG.md", "CHANGELOG missing 0.4.132")
     h.require_contains("reject-no-triad", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing reject-no-triad")
@@ -5997,19 +5998,27 @@ def run_evals(root: Path) -> int:
     h.require_contains("0.4.135", "CHANGELOG.md", "CHANGELOG missing 0.4.135")
     h.require_contains("sandbox_engine.py", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing sandbox_engine.py")
     h.require_contains("sandbox-engine", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing sandbox-engine")
-    h.require_contains("0.4.137", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing 0.4.137 tip")
+    h.require_contains("0.4.138", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing 0.4.138 tip")
+    h.require_contains("0.4.138", "CHANGELOG.md", "CHANGELOG missing 0.4.138")
+    h.require_contains("0.4.137", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing retained 0.4.137")
     h.require_contains("0.4.137", "CHANGELOG.md", "CHANGELOG missing 0.4.137")
     h.require_contains("0.4.136", "CHANGELOG.md", "CHANGELOG missing 0.4.136")
     h.require_contains("reject-no-pr-consent", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing reject-no-pr-consent")
     h.require_contains("check-pr-consent", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing check-pr-consent")
     h.require_contains("forge-pr-consent", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing forge-pr-consent")
+    h.require_contains("reject-no-repro", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing reject-no-repro")
+    h.require_contains("reject-no-combat-ledger", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing reject-no-combat-ledger")
+    h.require_contains("check-reproduce", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing check-reproduce")
+    h.require_contains("reproduce-and-bisect", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing reproduce-and-bisect")
+    h.require_contains("FINGERPRINT_THEN_COMBAT", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing FINGERPRINT_THEN_COMBAT")
+    h.require_contains("reproduce.py", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing reproduce.py")
     h.require_contains("PR_CONSENT_BEFORE_PUBLIC", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing PR_CONSENT_BEFORE_PUBLIC")
     h.require_contains("secrets_broker.py", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing secrets_broker.py")
     h.require_contains("workspace_env.py", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing workspace_env.py")
     h.require_contains("blind-secrets-broker", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing blind-secrets-broker")
     h.require_contains("reject-secret-leak", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing reject-secret-leak")
     h.require_contains("check-env-redacted", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing check-env-redacted")
-    h.require_contains("0.4.137", ".claude-plugin/marketplace.json", "marketplace.json not at 0.4.137")
+    h.require_contains("0.4.138", ".claude-plugin/marketplace.json", "marketplace.json not at 0.4.138")
     h.require_contains("finish.py", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing finish.py")
     h.require_contains("reject-red-suite", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing reject-red-suite")
     h.require_contains("require-green", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing require-green")
@@ -6943,6 +6952,168 @@ def run_evals(root: Path) -> int:
         h.pass_msg("emperor heal-verify peer forwards --reject-no-triad")
     h.pass_msg("heal_verify.py thin twins + heal-and-verify HARD-GATE")
 
+    # ---- reproduce-and-bisect HARD-GATE (Holy Chain vertical depth) ----
+    h.section("reproduce-and-bisect HARD-GATE")
+    h.need("scripts/lib/reproduce.py")
+    h.need("scripts/reproduce.sh")
+    h.need("scripts/reproduce.ps1")
+    h.need("scripts/reproduce-and-bisect.sh")
+    h.need("scripts/reproduce-and-bisect.ps1")
+    h.need("evals/fixtures/reproduce-and-bisect/repro-ok.md")
+    h.need("evals/fixtures/reproduce-and-bisect/repro-no-fingerprint.md")
+    h.need("evals/fixtures/reproduce-and-bisect/repro-no-combat.md")
+    h.need("evals/fixtures/reproduce-and-bisect/repro-vacuous.md")
+    h.need("evals/fixtures/reproduce-and-bisect/task-ok/ledger.md")
+    h.need("evals/fixtures/reproduce-and-bisect/task-no-fingerprint/ledger.md")
+    h.need("evals/fixtures/reproduce-and-bisect/task-no-combat/ledger.md")
+    h.bash_n("scripts/reproduce.sh", "reproduce.sh syntax")
+    h.bash_n("scripts/reproduce-and-bisect.sh", "reproduce-and-bisect.sh syntax")
+    h.py_compile("scripts/lib/reproduce.py", "reproduce.py compile")
+    h.require_contains(
+        "lib/reproduce.py",
+        "scripts/reproduce.sh",
+        "reproduce.sh thin twin missing reproduce.py",
+    )
+    h.require_contains(
+        "lib/reproduce.py",
+        "scripts/reproduce.ps1",
+        "reproduce.ps1 thin twin missing reproduce.py",
+    )
+    h.require_contains(
+        "reproduce",
+        "scripts/emperor",
+        "emperor bash peer missing reproduce",
+    )
+    h.require_contains(
+        "reproduce-and-bisect",
+        "scripts/emperor",
+        "emperor bash peer missing reproduce-and-bisect",
+    )
+    h.require_contains(
+        "'reproduce'",
+        "scripts/emperor.ps1",
+        "emperor.ps1 missing reproduce alias map",
+    )
+    h.require_contains(
+        "reproduce",
+        "scripts/emperor.cmd",
+        "emperor.cmd missing reproduce",
+    )
+    h.require_contains(
+        "reproduce",
+        "scripts/emperor.zsh",
+        "emperor.zsh missing reproduce",
+    )
+    h.require_contains(
+        "--reject-no-repro",
+        "scripts/lib/reproduce.py",
+        "reproduce.py missing --reject-no-repro",
+    )
+    h.require_contains(
+        "--reject-no-combat-ledger",
+        "scripts/lib/reproduce.py",
+        "reproduce.py missing --reject-no-combat-ledger",
+    )
+    h.require_contains(
+        "--check-reproduce",
+        "scripts/lib/reproduce.py",
+        "reproduce.py missing --check-reproduce",
+    )
+    h.require_contains(
+        "HARD-GATE",
+        "chains/holy-chain/reproduce-and-bisect.md",
+        "reproduce-and-bisect.md missing HARD-GATE mechanical pointer",
+    )
+    h.require_contains(
+        "--reject-no-repro",
+        "skills/emperor-heal/SKILL.md",
+        "emperor-heal skill missing --reject-no-repro",
+    )
+    h.require_contains(
+        "reproduce-and-bisect-hard-gate",
+        "evals/evals.json",
+        "evals.json missing reproduce-and-bisect-hard-gate case",
+    )
+    h.require_contains(
+        "reproduce-and-bisect",
+        "references/mechanical-gates.md",
+        "mechanical-gates missing reproduce-and-bisect row",
+    )
+    h.require_contains(
+        "--reject-no-repro",
+        "references/software-factory.md",
+        "software-factory missing --reject-no-repro",
+    )
+    h.require_contains(
+        "reject-no-repro",
+        "evals/bakeoff.md",
+        "bakeoff.md missing reproduce reject-no-repro inventory",
+    )
+    _, card = h.run_py("scripts/lib/reproduce.py")
+    if "checklist=yes" not in card:
+        h.fail_msg("reproduce card missing checklist=yes")
+    elif "FINGERPRINT_THEN_COMBAT" not in card:
+        h.fail_msg("reproduce card missing iron law token")
+    else:
+        h.pass_msg("reproduce prints REPRODUCE card")
+    rc, reject = h.run_py("scripts/lib/reproduce.py", "--reject-no-repro")
+    if rc == 0:
+        h.fail_msg("reproduce --reject-no-repro should exit non-zero")
+    elif "REJECT NO REPRO" not in reject and "HARD-GATE" not in reject:
+        h.fail_msg("reproduce --reject-no-repro missing REJECT text")
+    else:
+        h.pass_msg("reproduce --reject-no-repro hard-gates")
+    rc, reject = h.run_py("scripts/lib/reproduce.py", "--reject-no-combat-ledger")
+    if rc == 0:
+        h.fail_msg("reproduce --reject-no-combat-ledger should exit non-zero")
+    elif "REJECT NO COMBAT LEDGER" not in reject and "HARD-GATE" not in reject:
+        h.fail_msg("reproduce --reject-no-combat-ledger missing REJECT text")
+    else:
+        h.pass_msg("reproduce --reject-no-combat-ledger hard-gates")
+    for name, needle in (
+        ("repro-no-fingerprint.md", r"fingerprint|REPRO|quoted failure"),
+        ("repro-no-combat.md", r"combat ledger|predict|H#"),
+        ("task-no-fingerprint", r"fingerprint|REPRO|quoted failure"),
+        ("task-no-combat", r"combat ledger|predict|H#"),
+    ):
+        target = root / "evals/fixtures/reproduce-and-bisect" / name
+        rc, err = h.run_py(
+            "scripts/lib/reproduce.py",
+            "--check-reproduce",
+            str(target),
+        )
+        if rc == 0:
+            h.fail_msg(f"reproduce-and-bisect {name} should fail check-reproduce")
+        elif not h.grep_out(err, needle):
+            h.fail_msg(f"reproduce-and-bisect {name} should mention {needle}: {err}")
+        else:
+            h.pass_msg(f"reproduce-and-bisect {name} rejected")
+    for name in ("repro-ok.md", "repro-vacuous.md", "task-ok"):
+        rc, _ = h.run_py(
+            "scripts/lib/reproduce.py",
+            "--check-reproduce",
+            str(root / "evals/fixtures/reproduce-and-bisect" / name),
+        )
+        if rc != 0:
+            h.fail_msg(f"reproduce-and-bisect {name} should pass check-reproduce")
+        else:
+            h.pass_msg(f"reproduce-and-bisect {name} accepted")
+    _, sh_card = h.run_sh("scripts/reproduce.sh")
+    if "checklist=yes" not in sh_card:
+        h.fail_msg("reproduce.sh should print REPRODUCE card")
+    else:
+        h.pass_msg("reproduce.sh thin twin prints card")
+    _, emp_out = h.run_sh(
+        "scripts/emperor",
+        "reproduce",
+        "--reject-no-repro",
+    )
+    if "REJECT NO REPRO" not in emp_out:
+        h.fail_msg("emperor reproduce --reject-no-repro should forward REJECT")
+    else:
+        h.pass_msg("emperor reproduce peer forwards --reject-no-repro")
+    h.pass_msg("reproduce.py thin twins + reproduce-and-bisect HARD-GATE")
+
     # ---- hetero-critique isolation HARD-GATE (Judgment G4 vertical depth) ----
     h.section("hetero-critique-isolation HARD-GATE")
     h.need("scripts/lib/review_pack.py")
@@ -7015,9 +7186,9 @@ def run_evals(root: Path) -> int:
         "bakeoff.md missing reject-unisolated inventory",
     )
     h.require_contains(
-        "0.4.137",
+        "0.4.138",
         "SKILL.md",
-        "SKILL.md not bumped to 0.4.137",
+        "SKILL.md not bumped to 0.4.138",
     )
     _, card = h.run_py("scripts/lib/review_pack.py")
     if "checklist=yes" not in card:

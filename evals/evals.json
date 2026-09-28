@@ -117,6 +117,11 @@
       "id": "forge-pr-consent-hard-gate",
       "type": "behavioral-fixture",
       "expect": "forge.py --reject-no-pr-consent / --check-pr-consent refuses forge/PR activity lacking EMPEROR_CONSENT_PR or ledger PR-consent quote; accepts consented and vacuous non-forge; G5 calls check-pr-consent (Steal --reject-no-consent remains separate)"
+    },
+    {
+      "id": "reproduce-and-bisect-hard-gate",
+      "type": "behavioral-fixture",
+      "expect": "reproduce.py --reject-no-repro / --reject-no-combat-ledger / --check-reproduce refuses missing fingerprint or combat ledger when reproduce activity present; accepts fingerprint+combat and vacuous non-reproduce"
     }
   ]
 }

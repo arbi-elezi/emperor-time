@@ -71,3 +71,27 @@ Vow 6's retry rule is enforced by this ledger being visible).
 Cause isolated + mechanism articulated + reproduction in hand → hand all
 three to `heal-and-verify.md`. The combat ledger goes into the task ledger
 as-is (refuted lines included — they are paid-for knowledge).
+
+## HARD-GATE (mechanical)
+
+Doctrine above is the law. The lock is an exit code:
+
+```bash
+scripts/emperor reproduce <task-dir>              # or --check-reproduce PATH
+scripts/emperor reproduce --reject-no-repro       # always fails
+scripts/emperor reproduce --reject-no-combat-ledger
+scripts/emperor reproduce-and-bisect <task-dir>   # alias
+```
+
+Python core: `scripts/lib/reproduce.py`. Thin twins: `reproduce.sh` /
+`reproduce.ps1` (+ `reproduce-and-bisect` alias). Fails when:
+
+1. Reproduce/bisect activity present but missing reproduction fingerprint
+   (`REPRO:` / fingerprint / fails on demand / quoted failure)
+2. Reproduce/bisect activity present but missing combat ledger line
+   `H#: ... | predict: ... | ran: ... | saw: ... | REFUTED|VERIFIED`
+
+Accepts: fingerprint + combat ledger; vacuous PASS when no reproduce activity
+is claimed. Hands off to `heal-and-verify.md` (mechanical:
+`scripts/emperor heal-verify`) once cause + mechanism + repro are in hand.
+
