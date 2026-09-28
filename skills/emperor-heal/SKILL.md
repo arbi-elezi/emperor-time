@@ -5,7 +5,7 @@ description: >-
   checklist, reproduce, bisect, minimal heal, verify root cause. Use when
   tests go red, a regression appears, state is corrupted, a gate was skipped,
   or you need to locate a harness session transcript before diagnosing,
-  or diagnose why a session went wrong (intake + path:line citations),
+  or diagnose why a session went wrong (intake + path:line citations + cite-or-fail report),
   or trace a deep-stack bug backward to its original trigger before fixing,
   or add multi-layer validation after a source fix so invalid data cannot recur,
   or replace arbitrary sleep/setTimeout waits with condition-based waiting for flaky tests,
@@ -40,16 +40,19 @@ No session claims without a VERIFIED path. Do not load whole
 `diagnosing-superpowers`; ET + Holy Chain orchestrate.
 
 
-## MUST — diagnosing intake + citation before analysis
+## MUST — diagnosing intake + citation + cite-or-fail report
 
 When a partner wants to know why a session went wrong (or wants evidence for a
 bug report), open `skills/emperor-heal/diagnosing.md`
 (Chain Jail leaf from Superpowers `diagnosing-superpowers` → **citation iron
-law + intake-before-analysis only**) and/or run `scripts/emperor diagnose`
-(prints the mechanical DIAGNOSE / INTAKE / CITE / MUST card).
+law + intake-before-analysis + Report path only**) and/or run
+`scripts/emperor diagnose` (prints the mechanical DIAGNOSE / INTAKE / CITE /
+REPORT / MUST card).
 
-No findings without `path:line`. No analysis before partner intake. Do not load
-whole `diagnosing-superpowers`; ET + Holy Chain orchestrate.
+No findings without `path:line`. No analysis before partner intake. No claiming
+diagnosis done without a cite-or-fail report path (`--check-report`). Do not
+load whole `diagnosing-superpowers` or vendor 7-analyst templates; ET + Holy
+Chain orchestrate.
 
 
 
@@ -125,9 +128,11 @@ process. Do not load whole `systematic-debugging`; ET + Holy Chain orchestrate.
    Guessing a session → `scripts/emperor session-discovery --reject-guess`
    (HARD-GATE exit 1).
 3. When diagnosing a session: run `scripts/emperor diagnose` → quote
-   `DIAGNOSE checklist=yes`. Finish intake before analysis. Uncited finding →
+   `DIAGNOSE checklist=yes`. Finish intake before analysis. Write cite-or-fail
+   report → `--check-report <path>`. Uncited finding →
    `scripts/emperor diagnose --reject-uncited`. Skip-intake →
-   `--reject-skip-intake` (HARD-GATE exit 1).
+   `--reject-skip-intake`. No report path → `--reject-no-report`
+   (HARD-GATE exit 1).
 4. When the failure is deep in a call stack: run `scripts/emperor trace` → quote
    `TRACE checklist=yes`. Symptom-only patch →
    `scripts/emperor trace --reject-symptom-fix`. Untraced implement →

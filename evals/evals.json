@@ -67,6 +67,11 @@
       "id": "grill-path-taxonomy-hard-gate",
       "type": "behavioral-fixture",
       "expect": "grill.py --reject-no-path / --reject-stage-skip / --reject-impl-before-approval / --check-path refuses missing path type, skipped stage, idea-only approval, impl before stage approval; accepts Path+Stage for spike|bounded|architectural"
+    },
+    {
+      "id": "diagnose-report-skeleton-hard-gate",
+      "type": "behavioral-fixture",
+      "expect": "diagnose.py --reject-no-report / --check-report refuses missing report / theater problem / missing sessions / uncited findings; accepts cited findings and honest none-found report skeleton"
     }
   ]
 }

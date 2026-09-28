@@ -1,6 +1,6 @@
 <#
 .SYNOPSIS
-  Thin twin of diagnose.sh — diagnosing HARD-GATE card via Python core.
+  Thin twin of diagnose.sh — diagnosing HARD-GATE + cite-or-fail report skeleton via Python core.
 #>
 [CmdletBinding()]
 param(

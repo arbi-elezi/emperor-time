@@ -5789,9 +5789,13 @@ def run_evals(root: Path) -> int:
     h.require_contains("reject-hidden-breach", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing reject-hidden-breach")
     h.require_contains("Breach Register", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing Breach Register")
     h.require_contains("check-verdict", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing check-verdict")
-    h.require_contains("0.4.127", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing 0.4.127 tip")
-    h.require_contains("0.4.127", ".claude-plugin/plugin.json", "plugin.json not at 0.4.127")
-    h.require_contains("0.4.127", "CHANGELOG.md", "CHANGELOG missing 0.4.127")
+    h.require_contains("0.4.128", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing 0.4.128 tip")
+    h.require_contains("0.4.128", ".claude-plugin/plugin.json", "plugin.json not at 0.4.128")
+    h.require_contains("0.4.128", "CHANGELOG.md", "CHANGELOG missing 0.4.128")
+    h.require_contains("reject-no-report", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing reject-no-report")
+    h.require_contains("check-report", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing check-report")
+    h.require_contains("CITE_OR_FAIL_REPORT", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing CITE_OR_FAIL_REPORT")
+    h.require_contains("diagnose-report-skeleton", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing diagnose-report-skeleton")
     h.require_contains("finish.py", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing finish.py")
     h.require_contains("reject-red-suite", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing reject-red-suite")
     h.require_contains("require-green", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing require-green")
@@ -6012,6 +6016,10 @@ def run_evals(root: Path) -> int:
         h.fail_msg("diagnose missing citation iron law token")
     if "INTAKE_BEFORE_ANALYSIS" not in diag_out:
         h.fail_msg("diagnose missing intake iron law token")
+    if "CITE_OR_FAIL_REPORT" not in diag_out:
+        h.fail_msg("diagnose missing CITE_OR_FAIL_REPORT iron")
+    if not re.search(r"^REPORT skeleton=", diag_out, re.M):
+        h.fail_msg("diagnose missing REPORT skeleton line")
     rc, _ = h.run_py("scripts/lib/diagnose.py", "--reject-uncited")
     if rc == 0:
         h.fail_msg("diagnose --reject-uncited should exit non-zero")
@@ -6030,6 +6038,15 @@ def run_evals(root: Path) -> int:
             h.fail_msg("reject-skip-intake missing REJECT line")
         else:
             h.pass_msg("diagnose --reject-skip-intake hard-gates")
+    rc, _ = h.run_py("scripts/lib/diagnose.py", "--reject-no-report")
+    if rc == 0:
+        h.fail_msg("diagnose --reject-no-report should exit non-zero")
+    else:
+        _, reject = h.run_py("scripts/lib/diagnose.py", "--reject-no-report")
+        if not re.search(r"^REJECT NO REPORT:", reject, re.M):
+            h.fail_msg("reject-no-report missing REJECT line")
+        else:
+            h.pass_msg("diagnose --reject-no-report hard-gates")
     rc, cite_ok = h.run_py(
         "scripts/lib/diagnose.py",
         "--check-citation",
@@ -6056,6 +6073,148 @@ def run_evals(root: Path) -> int:
         h.fail_msg("route.py diagnose the session → heal")
     else:
         h.pass_msg("route.py diagnose the session → emperor-heal")
+
+    # ---- diagnose report-skeleton HARD-GATE (heal vertical depth) ----
+    h.section("diagnose-report-skeleton HARD-GATE")
+    h.need("skills/emperor-heal/diagnosing.md")
+    h.need("references/diagnosing.md")
+    h.need("scripts/diagnose.sh")
+    h.need("scripts/diagnose.ps1")
+    h.need("scripts/lib/diagnose.py")
+    h.need("evals/fixtures/diagnose-report-skeleton/report-ok.md")
+    h.need("evals/fixtures/diagnose-report-skeleton/report-none-found.md")
+    h.need("evals/fixtures/diagnose-report-skeleton/report-headings-ok.md")
+    h.need("evals/fixtures/diagnose-report-skeleton/report-no-problem.md")
+    h.need("evals/fixtures/diagnose-report-skeleton/report-theater.md")
+    h.need("evals/fixtures/diagnose-report-skeleton/report-no-sessions.md")
+    h.need("evals/fixtures/diagnose-report-skeleton/report-no-findings.md")
+    h.need("evals/fixtures/diagnose-report-skeleton/report-uncited.md")
+    h.need("evals/fixtures/diagnose-report-skeleton/report-present-only.md")
+    h.need("evals/fixtures/diagnose-report-skeleton/task-ok/report.md")
+    h.need("evals/fixtures/diagnose-report-skeleton/task-no-report/ledger.md")
+    h.need("evals/fixtures/diagnose-report-skeleton/task-uncited/report.md")
+    h.need("evals/fixtures/diagnose-report-skeleton/task-theater/report.md")
+    h.need("evals/fixtures/diagnose-report-skeleton/task-none-found/report.md")
+    h.bash_n("scripts/diagnose.sh", "diagnose.sh syntax (report skeleton)")
+    h.py_compile("scripts/lib/diagnose.py", "diagnose.py compile (report skeleton)")
+    h.require_contains("lib/diagnose.py", "scripts/diagnose.sh", "diagnose.sh thin twin missing diagnose.py")
+    h.require_contains("lib/diagnose.py", "scripts/diagnose.ps1", "diagnose.ps1 thin twin missing diagnose.py")
+    h.require_contains(
+        "--check-report",
+        "skills/emperor-heal/diagnosing.md",
+        "diagnosing.md missing --check-report HARD-GATE",
+    )
+    h.require_contains(
+        "--check-report",
+        "skills/emperor-heal/SKILL.md",
+        "emperor-heal skill missing --check-report",
+    )
+    h.require_contains(
+        "CITE_OR_FAIL_REPORT",
+        "skills/emperor-heal/diagnosing.md",
+        "diagnosing.md missing CITE_OR_FAIL_REPORT",
+    )
+    h.require_contains(
+        "--check-report",
+        "references/diagnosing.md",
+        "diagnosing reference missing --check-report",
+    )
+    h.require_contains("diagnose", "scripts/emperor", "emperor bash missing diagnose")
+    h.require_contains("'diagnose'", "scripts/emperor.ps1", "emperor.ps1 missing diagnose")
+    h.require_contains("diagnose", "scripts/emperor.cmd", "emperor.cmd missing diagnose")
+    h.require_contains("diagnose", "scripts/emperor.zsh", "emperor.zsh missing diagnose")
+    h.require_contains(
+        "--reject-no-report",
+        "scripts/lib/diagnose.py",
+        "diagnose.py missing --reject-no-report",
+    )
+    h.require_contains(
+        "CITE_OR_FAIL_REPORT",
+        "scripts/lib/diagnose.py",
+        "diagnose.py missing CITE_OR_FAIL_REPORT iron",
+    )
+    h.require_contains(
+        "reject-no-report",
+        "evals/bakeoff.md",
+        "bakeoff.md missing diagnose reject-no-report inventory",
+    )
+    h.require_contains(
+        "diagnose-report-skeleton",
+        "evals/evals.json",
+        "evals.json missing diagnose-report-skeleton case",
+    )
+    h.require_contains(
+        "diagnose report skeleton",
+        "references/mechanical-gates.md",
+        "mechanical-gates missing diagnose report skeleton row",
+    )
+    # Reject fixtures
+    for name, needle in (
+        ("report-no-problem.md", r"problem statement missing"),
+        ("report-theater.md", r"problem statement missing"),
+        ("report-no-sessions.md", r"session\(s\) missing"),
+        ("report-no-findings.md", r"findings section missing"),
+        ("report-uncited.md", r"uncited findings|cite-or-fail"),
+        ("report-present-only.md", r"problem statement missing"),
+    ):
+        rc, err = h.run_py(
+            "scripts/lib/diagnose.py",
+            "--check-report",
+            str(root / "evals/fixtures/diagnose-report-skeleton" / name),
+        )
+        if rc == 0:
+            h.fail_msg(f"diagnose {name} should fail check-report")
+        elif not h.grep_out(err, needle):
+            h.fail_msg(f"diagnose {name} should mention {needle}: {err}")
+        else:
+            h.pass_msg(f"diagnose {name} rejected")
+    for name, needle in (
+        ("task-no-report", r"report missing"),
+        ("task-uncited", r"uncited findings|cite-or-fail"),
+        ("task-theater", r"problem statement missing"),
+    ):
+        rc, err = h.run_py(
+            "scripts/lib/diagnose.py",
+            "--check-report",
+            str(root / "evals/fixtures/diagnose-report-skeleton" / name),
+        )
+        if rc == 0:
+            h.fail_msg(f"diagnose {name} should fail check-report")
+        elif not h.grep_out(err, needle):
+            h.fail_msg(f"diagnose {name} should mention {needle}: {err}")
+        else:
+            h.pass_msg(f"diagnose {name} rejected")
+    # Accept fixtures
+    for name in ("report-ok.md", "report-none-found.md", "report-headings-ok.md"):
+        rc, ok_out = h.run_py(
+            "scripts/lib/diagnose.py",
+            "--check-report",
+            str(root / "evals/fixtures/diagnose-report-skeleton" / name),
+        )
+        if rc != 0 or "cite-or-fail report skeleton ok" not in ok_out:
+            h.fail_msg(f"diagnose {name} should pass check-report")
+        else:
+            h.pass_msg(f"diagnose {name} accepted")
+    for name in ("task-ok", "task-none-found"):
+        rc, ok_out = h.run_py(
+            "scripts/lib/diagnose.py",
+            "--check-report",
+            str(root / "evals/fixtures/diagnose-report-skeleton" / name),
+        )
+        if rc != 0 or "cite-or-fail report skeleton ok" not in ok_out:
+            h.fail_msg(f"diagnose {name} should pass check-report")
+        else:
+            h.pass_msg(f"diagnose {name} accepted")
+    _, diag_sh2 = h.run_sh(
+        "scripts/diagnose.sh",
+        "--check-report",
+        str(root / "evals/fixtures/diagnose-report-skeleton/report-ok.md"),
+    )
+    if "cite-or-fail report skeleton ok" not in diag_sh2:
+        h.fail_msg("diagnose.sh --check-report should forward PASS")
+    else:
+        h.pass_msg("diagnose.sh thin twin forwards --check-report")
+    h.pass_msg("diagnose.py thin twins + report-skeleton HARD-GATE")
 
     # root-cause tracing HARD-GATE
     h.section("root-cause tracing HARD-GATE leaf")
