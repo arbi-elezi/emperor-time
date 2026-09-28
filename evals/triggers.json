@@ -437,7 +437,12 @@
         "algol w",
         "icont",
         "iconx",
-        ".icn"
+        ".icn",
+        ".obn",
+        "voc",
+        "oberon",
+        "oberon-2",
+        "oberon2"
       ],
       "tags": [
         "archaeology",
@@ -503,7 +508,12 @@
         "alw",
         "icont",
         "iconx",
-        "icn"
+        "icn",
+        "obn",
+        "voc",
+        "oberon",
+        "oberon-2",
+        "oberon2"
       ],
       "target": "skills/emperor-excavate/SKILL.md",
       "reason": "lost/ancient/foreign tree \u2014 excavate before modernizing"
