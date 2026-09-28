@@ -1,0 +1,9 @@
+== identify evals/fixtures/lost-sql ==
+-- extensions --
+      2 md
+      1 txt
+      1 sql
+-- named fossils --
+1 *.sql
+-- shebangs --
+identify: done (read-only)
