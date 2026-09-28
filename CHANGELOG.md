@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.4.103
+
+- Archaeology zip/zipfile Jail pin: `evals/fixtures/lost-zip/` + `references/archaeology-zip-manual.md` (CPython stdlib `ZipFile.namelist`/`read` → EMPEROR-TIME-ZIP-PROBE-OK; zero new apt; unzip/zip REJECTED)
+- identify/route/eval/honesty/bakeoff/catalog lockstep; fossils `*.zip`; route tags `zip` / `pyzip` / `zipfile` / `.zip`
+- Plugin, marketplace, and SKILL.md at 0.4.103
+
+
 ## 0.4.102
 
 - Archaeology eml/email.parser Jail pin: `evals/fixtures/lost-eml/` + `references/archaeology-eml-manual.md` (CPython stdlib `BytesParser.parsebytes` Subject → EMPEROR-TIME-EML-PROBE-OK; zero new apt; mailutils/mutt REJECTED)
