@@ -514,7 +514,9 @@
         "gnu-groff",
         ".pm",
         "perl",
-        "perl5"
+        "perl5",
+        "bc",
+        "gnu-bc"
       ],
       "tags": [
         "archaeology",
@@ -643,7 +645,9 @@
         "groff",
         "gnu-groff",
         "perl",
-        "perl5"
+        "perl5",
+        "bc",
+        "gnu-bc"
       ],
       "target": "skills/emperor-excavate/SKILL.md",
       "reason": "lost/ancient/foreign tree — excavate before modernizing"
