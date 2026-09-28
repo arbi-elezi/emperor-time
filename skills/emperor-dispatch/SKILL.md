@@ -20,7 +20,12 @@ metadata:
 4. Workers receive the **work order + named files**, never the author's diary.
 5. Capture to `.emperor/runs/<task>/<agent>/` (`prompt.md`, `out.txt`, `meta.md`).
 6. Output is CONJECTURE until Judgment + `scripts/gate.sh g4`.
-7. Sign-in is the client's terminal. You never run interactive logins.
+7. **MUST — quarantine HARD-GATE:** before merging worker output, run
+   `scripts/emperor quarantine <task-dir>` (or `steal-quarantine`).
+   Doctrine: `chains/steal-chain/quarantine.md`. Missing runs layout /
+   CONJECTURE start / ADMITTED|REJECTED → exit 1. G4 calls
+   `scripts/lib/quarantine.py` when steal activity is present.
+8. Sign-in is the client's terminal. You never run interactive logins.
 
 ## MUST — parallel-dispatch checklist for independent domains
 

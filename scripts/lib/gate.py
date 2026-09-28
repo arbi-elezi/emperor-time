@@ -10,6 +10,8 @@ Thin twins: scripts/gate.sh / scripts/gate.ps1 — same CLI:
 Preserves gate.sh semantics (including G4 CONJECTURE warn) so bash/ps1
 cannot drift. G2 delegates plan-header check to work_order.py.
 G4 delegates claim-audit sweep to claim_audit.py.
+G4 also delegates Steal quarantine admission to quarantine.py
+(vacuous PASS when no worker runs / no steal markers).
 """
 from __future__ import annotations
 
@@ -95,6 +97,16 @@ def _run_claim_audit(gate: str, task: Path) -> None:
     )
     if proc.returncode != 0:
         _fail(gate, "claim audit (claim_audit.py)")
+
+
+def _run_quarantine(gate: str, task: Path) -> None:
+    py = _root() / "scripts" / "lib" / "quarantine.py"
+    proc = subprocess.run(
+        [sys.executable, str(py), "--check-quarantine", str(task)],
+        check=False,
+    )
+    if proc.returncode != 0:
+        _fail(gate, "steal quarantine (quarantine.py)")
 
 
 def run_gate(gate: str, task: Path) -> None:
@@ -188,6 +200,9 @@ def run_gate(gate: str, task: Path) -> None:
         # Mechanical claim-audit: CLAIM AUDIT line + terminal rows.
         # Not critique-file-present theater — exit code from claim_audit.py.
         _run_claim_audit(gate, task)
+        # Steal quarantine: runs layout + CONJECTURE start + ADMITTED|REJECTED.
+        # Vacuous PASS when no worker runs / steal markers.
+        _run_quarantine(gate, task)
         if claims.is_file():
             text = claims.read_text(encoding="utf-8", errors="replace")
             for line in text.splitlines():

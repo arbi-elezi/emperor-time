@@ -42,6 +42,11 @@
       "id": "claim-audit-hard-gate",
       "type": "behavioral-fixture",
       "expect": "claim_audit.py / gate g4 rejects missing CLAIM AUDIT line and unfinished HYPOTHESIS/TESTED rows; accepts audited terminal ledger"
+    },
+    {
+      "id": "steal-quarantine-hard-gate",
+      "type": "behavioral-fixture",
+      "expect": "quarantine.py / gate g4 rejects worker done lacking quarantine dir / CONJECTURE start / ADMITTED|REJECTED; accepts admitted task-ok"
     }
   ]
 }

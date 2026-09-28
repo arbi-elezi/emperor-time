@@ -64,7 +64,7 @@ STEPS: list[dict[str, str]] = [
         "name": "INTEGRATE — Review summaries, conflicts, full suite",
         "et": "emperor-verify + quarantine + gate g4; full suite on this tree",
         "success": "Each summary read; no conflicting edits; full suite green; spot-check for systematic agent errors",
-        "key": "Output stays CONJECTURE until Judgment; beautiful-looking diffs still quarantine",
+        "key": "Output stays CONJECTURE until Judgment; run emperor quarantine; beautiful-looking diffs still quarantine",
     },
     {
         "n": "6",

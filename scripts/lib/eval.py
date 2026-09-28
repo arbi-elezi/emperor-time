@@ -1666,6 +1666,179 @@ def run_evals(root: Path) -> int:
         h.pass_msg("claim-audit.sh thin twin emits card")
 
 
+
+    # ---- steal quarantine HARD-GATE (Steal Chain vertical depth) ----
+    h.section("steal-quarantine HARD-GATE")
+    h.need("scripts/lib/quarantine.py")
+    h.need("scripts/quarantine.sh")
+    h.need("scripts/quarantine.ps1")
+    h.need("scripts/steal-quarantine.sh")
+    h.need("scripts/steal-quarantine.ps1")
+    h.need("evals/fixtures/steal-quarantine/task-unquarantined/ledger.md")
+    h.need("evals/fixtures/steal-quarantine/task-no-conjecture/ledger.md")
+    h.need("evals/fixtures/steal-quarantine/task-ok/ledger.md")
+    h.need("evals/fixtures/steal-quarantine/admission-missing.md")
+    h.need("evals/fixtures/steal-quarantine/admission-ok.md")
+    h.bash_n("scripts/quarantine.sh", "quarantine.sh syntax")
+    h.bash_n("scripts/steal-quarantine.sh", "steal-quarantine.sh syntax")
+    h.py_compile("scripts/lib/quarantine.py", "quarantine.py compile")
+    h.require_contains(
+        "lib/quarantine.py",
+        "scripts/quarantine.sh",
+        "quarantine.sh thin twin missing quarantine.py",
+    )
+    h.require_contains(
+        "lib/quarantine.py",
+        "scripts/quarantine.ps1",
+        "quarantine.ps1 thin twin missing quarantine.py",
+    )
+    h.require_contains(
+        "quarantine",
+        "scripts/emperor",
+        "emperor bash peer missing quarantine",
+    )
+    h.require_contains(
+        "steal-quarantine",
+        "scripts/emperor",
+        "emperor bash peer missing steal-quarantine",
+    )
+    h.require_contains(
+        "'quarantine'",
+        "scripts/emperor.ps1",
+        "emperor.ps1 missing quarantine",
+    )
+    h.require_contains(
+        "quarantine",
+        "scripts/emperor.cmd",
+        "emperor.cmd missing quarantine",
+    )
+    h.require_contains(
+        "quarantine",
+        "scripts/emperor.zsh",
+        "emperor.zsh missing quarantine",
+    )
+    h.require_contains(
+        "quarantine.py",
+        "scripts/lib/gate.py",
+        "gate.py does not call quarantine.py",
+    )
+    h.require_contains(
+        "--reject-unquarantined",
+        "scripts/lib/quarantine.py",
+        "quarantine.py missing --reject-unquarantined",
+    )
+    h.require_contains(
+        "--check-quarantine",
+        "scripts/lib/quarantine.py",
+        "quarantine.py missing --check-quarantine",
+    )
+    h.require_contains(
+        "HARD-GATE",
+        "chains/steal-chain/quarantine.md",
+        "quarantine.md missing HARD-GATE mechanical pointer",
+    )
+    h.require_contains(
+        "ADMITTED",
+        "chains/steal-chain/quarantine.md",
+        "quarantine.md missing ADMITTED doctrine",
+    )
+    _, card = h.run_py("scripts/lib/quarantine.py")
+    if "checklist=yes" not in card:
+        h.fail_msg("quarantine card missing checklist=yes")
+    elif "NO_MERGE_WITHOUT_ADMISSION_RECORD" not in card:
+        h.fail_msg("quarantine card missing iron law token")
+    else:
+        h.pass_msg("quarantine prints QUARANTINE card")
+    rc, _ = h.run_py("scripts/lib/quarantine.py", "--reject-unquarantined")
+    if rc == 0:
+        h.fail_msg("quarantine --reject-unquarantined should exit non-zero")
+    else:
+        _, reject = h.run_py("scripts/lib/quarantine.py", "--reject-unquarantined")
+        if "REJECT UNQUARANTINED" not in reject and "HARD-GATE" not in reject:
+            h.fail_msg("quarantine --reject-unquarantined missing REJECT text")
+        else:
+            h.pass_msg("quarantine --reject-unquarantined hard-gates")
+    rc, err = h.run_py(
+        "scripts/lib/quarantine.py",
+        "--check-quarantine",
+        str(root / "evals/fixtures/steal-quarantine/task-unquarantined"),
+    )
+    if rc == 0:
+        h.fail_msg("task-unquarantined fixture should fail quarantine")
+    elif not h.grep_out(err, r"admission|ADMITTED|CONJECTURE"):
+        h.fail_msg("task-unquarantined should mention admission/CONJECTURE")
+    else:
+        h.pass_msg("task-unquarantined rejected")
+    rc, err = h.run_py(
+        "scripts/lib/quarantine.py",
+        "--check-quarantine",
+        str(root / "evals/fixtures/steal-quarantine/task-no-conjecture"),
+    )
+    if rc == 0:
+        h.fail_msg("task-no-conjecture fixture should fail quarantine")
+    elif not h.grep_out(err, r"CONJECTURE"):
+        h.fail_msg("task-no-conjecture should mention CONJECTURE")
+    else:
+        h.pass_msg("task-no-conjecture rejected")
+    rc, err = h.run_py(
+        "scripts/lib/quarantine.py",
+        "--check-quarantine",
+        str(root / "evals/fixtures/steal-quarantine/admission-missing.md"),
+    )
+    if rc == 0:
+        h.fail_msg("admission-missing fixture should fail quarantine")
+    else:
+        h.pass_msg("admission-missing rejected")
+    rc, _ = h.run_py(
+        "scripts/lib/quarantine.py",
+        "--check-quarantine",
+        str(root / "evals/fixtures/steal-quarantine/task-ok"),
+    )
+    if rc != 0:
+        h.fail_msg("task-ok fixture should pass quarantine")
+    else:
+        h.pass_msg("task-ok accepted")
+    rc, _ = h.run_py(
+        "scripts/lib/quarantine.py",
+        "--check-quarantine",
+        str(root / "evals/fixtures/steal-quarantine/admission-ok.md"),
+    )
+    if rc != 0:
+        h.fail_msg("admission-ok fixture should pass quarantine")
+    else:
+        h.pass_msg("admission-ok accepted")
+    # G4 wiring: task-unquarantined fails; task-ok passes (with prior stamps)
+    tmp = Path(tempfile.mkdtemp())
+    try:
+        import shutil as _shutil
+        for name, expect_fail in (("task-unquarantined", True), ("task-ok", False)):
+            src = root / "evals/fixtures/steal-quarantine" / name
+            dst = tmp / name
+            _shutil.copytree(src, dst)
+            (dst / ".gates").mkdir(exist_ok=True)
+            stamp = _utc_stamp()
+            for g in ("g0", "g1", "g2", "g3"):
+                (dst / ".gates" / g).write_text(stamp + "\n", encoding="utf-8")
+            rc, out = h.run_sh("scripts/gate.sh", "g4", str(dst))
+            if expect_fail:
+                if rc == 0:
+                    h.fail_msg(f"G4 allowed unquarantined {name}")
+                else:
+                    h.pass_msg(f"G4 rejects unquarantined {name}")
+            else:
+                if rc != 0:
+                    h.fail_msg(f"G4 should accept quarantined {name}: {out}")
+                else:
+                    h.pass_msg(f"G4 accepts quarantined {name}")
+    finally:
+        shutil.rmtree(tmp, ignore_errors=True)
+    _, sh_card = h.run_sh("scripts/quarantine.sh")
+    if "QUARANTINE" not in sh_card:
+        h.fail_msg("quarantine.sh missing QUARANTINE card")
+    else:
+        h.pass_msg("quarantine.sh thin twin emits card")
+
+
     # ---- finish menu ----
     h.section("finish menu (forge aspect)")
     h.need("skills/emperor-forge/finish-menu.md")
@@ -4918,11 +5091,14 @@ def run_evals(root: Path) -> int:
     h.require_contains("reject-no-tasks", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing reject-no-tasks")
     h.require_contains("Task-N", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing Task-N")
     h.require_contains("0.4.122", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing 0.4.122 tip")
-    h.require_contains("0.4.122", ".claude-plugin/plugin.json", "plugin.json not at 0.4.122")
     h.require_contains("0.4.122", "CHANGELOG.md", "CHANGELOG missing 0.4.122")
-    h.require_contains("claim_audit.py", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing claim_audit.py")
-    h.require_contains("reject-unaudited", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing reject-unaudited")
-    h.require_contains("CLAIM AUDIT", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing CLAIM AUDIT")
+    h.require_contains("0.4.123", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing 0.4.123 tip")
+    h.require_contains("0.4.123", ".claude-plugin/plugin.json", "plugin.json not at 0.4.123")
+    h.require_contains("0.4.123", "CHANGELOG.md", "CHANGELOG missing 0.4.123")
+    h.require_contains("quarantine.py", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing quarantine.py")
+    h.require_contains("reject-unquarantined", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing reject-unquarantined")
+    h.require_contains("CONJECTURE", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing CONJECTURE")
+    h.require_contains("ADMITTED", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing ADMITTED")
 
     # session-discovery
     h.section("session-discovery locate HARD-GATE leaf")
