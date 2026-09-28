@@ -647,7 +647,11 @@
         "war",
         "pywar",
         "web-archive",
-        ".war"
+        ".war",
+        "apk",
+        "pyapk",
+        "android-package",
+        ".apk"
       ],
       "tags": [
         "archaeology",
@@ -896,7 +900,11 @@
         "war",
         "pywar",
         "web-archive",
-        ".war"
+        ".war",
+        "apk",
+        "pyapk",
+        "android-package",
+        ".apk"
       ],
       "target": "skills/emperor-excavate/SKILL.md",
       "reason": "lost/ancient/foreign tree — excavate before modernizing"

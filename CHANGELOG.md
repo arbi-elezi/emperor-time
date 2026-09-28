@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.4.110
+
+- Archaeology APK / stdlib zipfile-on-`.apk` Jail pin: `evals/fixtures/lost-apk/` + `references/archaeology-apk-manual.md` (CPython stdlib `zipfile` on HELLO.apk → EMPEROR-TIME-APK-PROBE-OK; zero new apt; Debian unzip/zip/android-sdk/aapt REJECTED as leaf owner)
+- identify/route/eval/honesty/bakeoff/catalog lockstep; fossils `*.apk`; route tags `apk` / `pyapk` / `android-package` / `.apk`; does not steal plain `*.zip` or `*.whl` or `*.jar` or `*.war`
+- Plugin, marketplace, and SKILL.md at 0.4.110
+
+
 ## 0.4.109
 
 - Archaeology WAR / stdlib zipfile-on-`.war` Jail pin: `evals/fixtures/lost-war/` + `references/archaeology-war-manual.md` (CPython stdlib `zipfile` on HELLO.war → EMPEROR-TIME-WAR-PROBE-OK; zero new apt; Debian unzip/zip/openjdk/tomcat REJECTED as leaf owner)
