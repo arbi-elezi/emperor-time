@@ -81,10 +81,11 @@ LEAVES: list[tuple[str, str, tuple[str, ...]]] = [
     ("arch-a68", "evals/fixtures/lost-a68/HELLO.A68", ("lost-a68",)),
     ("arch-a60", "evals/fixtures/lost-a60/HELLO.A60", ("lost-a60",)),
     ("arch-alw", "evals/fixtures/lost-alw/HELLO.ALW", ("lost-alw",)),
+    ("arch-icn", "evals/fixtures/lost-icn/HELLO.ICN", ("lost-icn",)),
     ("gate-py", "scripts/lib/gate.py", ("gate.py", "mechanical")),
     ("identify-py", "scripts/lib/identify.py", ("identify.py", "survey")),
     ("eval-py", "scripts/lib/eval.py", ("eval.py", "structural eval")),
-    ("route-py", "scripts/lib/route.py", ("route", "fortran", ".f90", "vhdl", ".vhd", "ada", ".adb", "forth", ".fs", "pforth", "lisp", ".lisp", "clisp", "prolog", ".pro", "swipl", "tcl", ".tcl", "tclsh", "erlang", ".erl", "escript", "rexx", ".rex", "regina", "modula", ".mod", "gm2", "algol", ".a68", "a68g", "marst", ".a60", "algol60", "awe", ".alw", "algolw")),
+    ("route-py", "scripts/lib/route.py", ("route", "fortran", ".f90", "vhdl", ".vhd", "ada", ".adb", "forth", ".fs", "pforth", "lisp", ".lisp", "clisp", "prolog", ".pro", "swipl", "tcl", ".tcl", "tclsh", "erlang", ".erl", "escript", "rexx", ".rex", "regina", "modula", ".mod", "gm2", "algol", ".a68", "a68g", "marst", ".a60", "algol60", "awe", ".alw", "algolw", "icont", ".icn", "iconx")),
     ("done-py", "scripts/lib/done.py", ("done.py", "DONE probes")),
     (
         "silent-boot-zsh",
