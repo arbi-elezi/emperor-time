@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.4.91
+
+- Archaeology SQL/SQLite leaf: `evals/fixtures/lost-sql/HELLO.sql` + identify smoke; SQLite 3.46.1 CLI boot probe VERIFIED (`sqlite3 -batch :memory: ".read HELLO.sql"` → `EMPEROR-TIME-SQL-PROBE-OK`); dialect labels honest (CONJECTURE / UNVERIFIABLE where due); identify fossils `*.sql` only (no `*.sqlite` / `*.db` / `*.sqlite3` this leaf); bare `sql` allowed as route tag (three-letter language abbreviation; word-boundary); bare `sqlite` allowed as route tag (tool / language name; word-boundary); bare `.sql` allowed as route tag with extension-boundary matching (does not prefix-hit `.sqlite` / `.sqlite3` / `.sqlitedb`); prefer `sqlite` / `sqlite3` / `sqlite3.46` / `.sql`; Debian package `sqlite3` 3.46.1-7+deb13u2 apt-installed this leaf (~601 kB); SQL scripting leaf after PHP; treats SQLite SQL as peer fossil not house twin language; TeX/LaTeX still deferred; C++ still deferred; CLIPS / embeddings still deferred
+- Jail pin `references/archaeology-sql-manual.md` — SQLite CLI §7.2 Reading SQL from a file (`.read` …)
+- Catalog + SKILL.md + archaeology.md + language-agnostic.md link the fiftieth pin alongside Pascal, ASM, COBOL, Fortran, VHDL, Ada, Forth, Common Lisp, Prolog, Tcl, Erlang, REXX, Modula-2, Algol 68, ALGOL 60, Algol W, Icon, Oberon, SNOBOL4, Simula, APL, BCPL, PL/I, Smalltalk, PostScript, BASIC, Scheme, AWK, sed, m4, ed, Make, dc, lex, yacc, roff, Perl, bc, Expect, Lua, Ruby, Go, Rust, C, JavaScript, Python, TypeScript, Bash, and PHP; route triggers gain `sqlite` / `sqlite3` / `sqlite3.46` / `sql` / `.sql`; eval locks `*.sql` identify on lost-sql
+- Plugin, marketplace, and SKILL.md at 0.4.91
+
 ## 0.4.90
 
 - Archaeology PHP leaf: `evals/fixtures/lost-php/HELLO.php` + identify smoke; PHP 8.4.26 (cli) boot probe VERIFIED (`php HELLO.php` → `EMPEROR-TIME-PHP-PROBE-OK`); dialect labels honest (CONJECTURE / UNVERIFIABLE where due); identify fossils `*.php` only (no `*.phtml` this leaf); bare `php` allowed as route tag (tool binary name; word-boundary); bare `.php` allowed as route tag with extension-boundary matching (does not prefix-hit `.php3` / `.php4` / `.php5` / `.phps`); prefer `php` / `php8` / `php8.4` / `php-cli` / `.php`; Debian packages `php-cli` 2:8.4+96 / `php8.4-cli` 8.4.26-1~deb13u1 apt-installed this leaf; scripting leaf after Bash; treats PHP as peer fossil not house twin language; TeX/LaTeX still deferred; C++ still deferred; CLIPS / embeddings still deferred

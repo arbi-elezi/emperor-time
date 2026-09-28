@@ -562,7 +562,12 @@
         "php",
         "php8",
         "php8.4",
-        "php-cli"
+        "php-cli",
+        "sql",
+        "sqlite3.46",
+        "sqlite3",
+        "sqlite",
+        ".sql"
       ],
       "tags": [
         "archaeology",
@@ -730,7 +735,12 @@
         "php",
         "php8",
         "php8.4",
-        "php-cli"
+        "php-cli",
+        "sql",
+        "sqlite3.46",
+        "sqlite3",
+        "sqlite",
+        ".sql"
       ],
       "target": "skills/emperor-excavate/SKILL.md",
       "reason": "lost/ancient/foreign tree \u2014 excavate before modernizing"
