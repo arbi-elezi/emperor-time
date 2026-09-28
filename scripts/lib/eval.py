@@ -378,6 +378,7 @@ def run_evals(root: Path) -> int:
     h.require_contains("*.html", "scripts/lib/identify.py", "identify.py missing *.html fossil")
     h.require_contains("*.htm", "scripts/lib/identify.py", "identify.py missing *.htm fossil")
     h.require_contains("*.csv", "scripts/lib/identify.py", "identify.py missing *.csv fossil")
+    h.require_contains("*.json", "scripts/lib/identify.py", "identify.py missing *.json fossil")
     h.require_contains(
         "scripts/lib/identify.py",
         "references/archaeology.md",
@@ -596,6 +597,9 @@ def run_evals(root: Path) -> int:
             ("pycsv HELLO.csv", "emperor-excavate", "route pycsv → excavate"),
             ("csv1.0 HELLO.csv", "emperor-excavate", "route csv1.0 → excavate"),
             ("hello.csv", "emperor-excavate", "route hello.csv → excavate"),
+            ("pyjson HELLO.json", "emperor-excavate", "route pyjson → excavate"),
+            ("json2.0 HELLO.json", "emperor-excavate", "route json2.0 → excavate"),
+            ("hello.json", "emperor-excavate", "route hello.json → excavate"),
             ("queue next", "emperor-queue", "route queue next → queue"),
             ("blocked task", "emperor-queue", "route blocked task → queue"),
             ("red build", "emperor-heal", "route red build → heal"),
@@ -1100,6 +1104,13 @@ def run_evals(root: Path) -> int:
             r"[0-9]+ \*\.csv",
             ["references/archaeology-csv-manual.md"],
         ),
+        (
+            "lost-json identify finds *.json",
+            "lost-json",
+            "HELLO.json",
+            r"[0-9]+ \*\.json",
+            ["references/archaeology-json-manual.md"],
+        ),
     ]
     # The loop above was messy — clear fail state not affected; rewrite cleanly below by
     # only running the clean fixtures list (sections already printed wrongly once).
@@ -1447,6 +1458,9 @@ def run_evals(root: Path) -> int:
     h.require_contains("pycsv", "evals/triggers.json", "triggers missing pycsv excavate pattern")
     h.require_contains("csv1.0", "evals/triggers.json", "triggers missing csv1.0 excavate pattern")
     h.require_contains(".csv", "evals/triggers.json", "triggers missing .csv excavate pattern")
+    h.require_contains("pyjson", "evals/triggers.json", "triggers missing pyjson excavate pattern")
+    h.require_contains("json2.0", "evals/triggers.json", "triggers missing json2.0 excavate pattern")
+    h.require_contains(".json", "evals/triggers.json", "triggers missing .json excavate pattern")
     h.require_contains(".js", "evals/triggers.json", "triggers missing .js excavate pattern")
     _, rout_py = h.run_py("scripts/lib/route.py", "finish the branch")
     if "emperor-forge" not in rout_py:
@@ -2078,6 +2092,28 @@ def run_evals(root: Path) -> int:
         h.fail_msg("route matches(.csv, hello.csv) must be True")
     if _m(".csv", "hello.csvfoo"):
         h.fail_msg("route matches(.csv, hello.csvfoo) must be False after extension-boundary")
+    _, rout_pyjson = h.run_py("scripts/lib/route.py", "pyjson HELLO.json")
+    if "emperor-excavate" not in rout_pyjson:
+        h.fail_msg("route.py pyjson → excavate")
+    _, rout_json20 = h.run_py("scripts/lib/route.py", "json2.0 HELLO.json")
+    if "emperor-excavate" not in rout_json20:
+        h.fail_msg("route.py json2.0 → excavate")
+    _, rout_hello_json = h.run_py("scripts/lib/route.py", "hello.json")
+    if "emperor-excavate" not in rout_hello_json:
+        h.fail_msg("route.py hello.json → excavate")
+    if not _m(".json", "hello.json"):
+        h.fail_msg("route matches(.json, hello.json) must be True")
+    if _m(".json", "hello.jsonfoo"):
+        h.fail_msg("route matches(.json, hello.jsonfoo) must be False after extension-boundary")
+    if _m(".json", "hello.jsonl"):
+        h.fail_msg("route matches(.json, hello.jsonl) must be False after extension-boundary")
+    # bare json refused (substring collision with jsonl/json5/jsonc); not in triggers
+    rc_bare_json, rout_bare_json = h.run_py("scripts/lib/route.py", "json")
+    if "emperor-excavate" in rout_bare_json:
+        h.fail_msg("route.py bare json must not → excavate (jsonl/json5/jsonc collision)")
+    rc_jsonl, rout_jsonl = h.run_py("scripts/lib/route.py", "hello.jsonl")
+    if "emperor-excavate" in rout_jsonl:
+        h.fail_msg("route.py hello.jsonl must not → excavate (JSON leaf owns *.json only)")
     # bare .l must not be enough alone when colliding; .lisp already routes via .lisp
     _, rout_regina = h.run_py("scripts/lib/route.py", "regina HELLO.REX")
     if "emperor-excavate" not in rout_regina:
@@ -3630,8 +3666,10 @@ def run_evals(root: Path) -> int:
     h.require_contains("0.4.97", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing 0.4.97 tip")
     h.require_contains("0.4.97", "CHANGELOG.md", "CHANGELOG missing 0.4.97")
     h.require_contains("0.4.98", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing 0.4.98 tip")
-    h.require_contains("0.4.98", ".claude-plugin/plugin.json", "plugin.json not at 0.4.98")
     h.require_contains("0.4.98", "CHANGELOG.md", "CHANGELOG missing 0.4.98")
+    h.require_contains("0.4.99", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing 0.4.99 tip")
+    h.require_contains("0.4.99", ".claude-plugin/plugin.json", "plugin.json not at 0.4.99")
+    h.require_contains("0.4.99", "CHANGELOG.md", "CHANGELOG missing 0.4.99")
 
     # session-discovery
     h.section("session-discovery locate HARD-GATE leaf")
