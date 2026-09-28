@@ -1,11 +1,11 @@
 #!/usr/bin/env python3
-"""Emperor Time super-context CLI — graph-over-grep + thoughttrail + stubs.
+"""Emperor Time super-context CLI — graph-over-grep + thoughttrail + sandbox.
 
 Commands:
   build | find | path | explain | trail | l0 | slice
   sot sync|add-plugin|status
-  sandbox plan|up|down|ports
-  artifacts list|stub-create
+  sandbox plan|up|down|ports   (engine: scripts/lib/sandbox_engine.py)
+  artifacts list|stub-create|sync
   runtime use|status (compose|podman|k8s)
   env show|sync (redacted)
   secrets list|inject|declare (no plaintext)
@@ -16,6 +16,8 @@ Tiers:
   L1 — find / path / explain on edges (EXTRACTED|INFERRED)
   L2 — optional path:line slice cites when asked
 
+Sandbox engine (v0.4.135+): real port allocator (no collisions), compose /
+podman / k8s emitters, loadable isolate|mock|simulate profiles.
 No embeddings. No Graphify code. Stdlib + sqlite3.
 Thin twins: scripts/context.sh / context.ps1 (+ thoughttrail / super-context / sandbox / sot aliases).
 """
@@ -33,6 +35,7 @@ if str(_LIB) not in sys.path:
 
 import context_store as store
 import thoughttrail as trail
+import sandbox_engine as sbox
 
 
 LEAF = "references/super-context.md"
@@ -56,7 +59,7 @@ def _print_card() -> int:
                 "TIER L1: find | path | explain on EXTRACTED|INFERRED edges",
                 "TIER L2: slice path:line cites (only when asked)",
                 "LAYOUT: context/ thoughttrail/ sot/plugins/ artifacts/ sandbox/runtime/{compose,podman,k8s}/ env/ secrets/",
-                "STUBS: sot|sandbox|runtime|env|secrets (blind creds; no plaintext)",
+                "ENGINE: sandbox plan|up|down|ports + runtime use compose|podman|k8s; env|secrets blind",
                 f"MUST: load L0 before mass-grep  IRON={IRON}",
                 "GATE rule=graph-over-grep; no embeddings; no Graphify ports",
             ]
@@ -206,9 +209,12 @@ def cmd_trail(args: argparse.Namespace) -> int:
 def cmd_layout(args: argparse.Namespace) -> int:
     root = Path(args.root).resolve() if args.root else _repo_root()
     paths = trail.ensure_layout(root)
+    profs = sbox.ensure_profiles(root)
     print("LAYOUT ok")
     for k, p in paths.items():
         print(f"  {k}={p}")
+    for k, p in profs.items():
+        print(f"  profile_{k}={p}")
     return 0
 
 
@@ -380,97 +386,24 @@ def cmd_sot(args: argparse.Namespace) -> int:
 
 
 def _allocate_ports(sandbox_dir: Path, artifact_id: str, n: int = 3) -> dict:
-    ports_path = sandbox_dir / "ports.json"
-    data = json.loads(ports_path.read_text(encoding="utf-8"))
-    if artifact_id in data.get("allocations", {}):
-        return data["allocations"][artifact_id]
-    base = int(data.get("next_base", 18000))
-    alloc = {"http": base, "db": base + 1, "aux": base + 2}
-    data.setdefault("allocations", {})[artifact_id] = alloc
-    data["next_base"] = base + max(n, 3)
-    ports_path.write_text(json.dumps(data, indent=2) + "\n", encoding="utf-8")
-    return alloc
+    """Delegate to sandbox_engine PortAllocator (persist; no collisions)."""
+    # sandbox_dir is .emperor/sandbox; root is its parent.parent
+    root = sandbox_dir.parent.parent if sandbox_dir.name == "sandbox" else sandbox_dir
+    # walk up if needed
+    if not (root / ".emperor").is_dir():
+        root = sandbox_dir.parent
+    _ = n  # stride handled inside engine
+    return sbox.allocate_ports(root, artifact_id)
 
 
 def _compose_from_plugins(root: Path, artifact_id: str, alloc: dict) -> str:
-    plugins_dir = root / ".emperor" / "sot" / "plugins"
-    frags: list[str] = []
-    if plugins_dir.is_dir():
-        for p in sorted(plugins_dir.iterdir()):
-            frag = p / "compose.fragment.yml"
-            if frag.is_file():
-                # strip comment-only lead lines; keep service body
-                frags.append(frag.read_text(encoding="utf-8").rstrip() + "\n")
-    if not frags:
-        body = (
-            f"  et-stub:\n"
-            f"    image: alpine:3.20\n"
-            f"    command: [\"sleep\", \"infinity\"]\n"
-            f"    ports: [\"{alloc.get('http', 18000)}:80\"]\n"
-        )
-    else:
-        body = "".join(frags)
-        if not body.lstrip().startswith("services:"):
-            pass
-    header = (
-        f"# ET sandbox compose for artifact={artifact_id}\n"
-        f"# ports http={alloc.get('http')} db={alloc.get('db')} "
-        f"aux={alloc.get('aux')}\n"
-        "# stub generator — full engine later; doctrine: plugins fire together\n"
-        "\n"
-        "services:\n"
-    )
-    networks = (
-        "\nnetworks:\n"
-        "  default:\n"
-        f"    name: et-{artifact_id}\n"
-    )
-    # avoid double 'services:' if fragment already includes it
-    if body.lstrip().startswith("services:"):
-        return (
-            f"# ET sandbox compose for artifact={artifact_id}\n"
-            f"# ports http={alloc.get('http')} db={alloc.get('db')} "
-            f"aux={alloc.get('aux')}\n"
-            "# stub generator — full engine later\n\n"
-            + body
-            + networks
-        )
-    return header + body + networks
+    """Delegate to sandbox_engine compose emitter."""
+    return sbox.emit_compose(root, artifact_id, alloc)
 
 
 def cmd_sandbox(args: argparse.Namespace) -> int:
-    root = Path(args.root).resolve() if args.root else _repo_root()
-    paths = trail.ensure_layout(root)
-    action = args.sandbox_action
-    artifact_id = args.artifact or "default"
-    art_dir = paths["artifacts"] / artifact_id
-    if action == "ports":
-        data = json.loads((paths["sandbox"] / "ports.json").read_text(encoding="utf-8"))
-        print(json.dumps(data, indent=2))
-        return 0
-    if action == "plan":
-        art_dir.mkdir(parents=True, exist_ok=True)
-        alloc = _allocate_ports(paths["sandbox"], artifact_id)
-        compose = _compose_from_plugins(root, artifact_id, alloc)
-        out = art_dir / "compose.yml"
-        out.write_text(compose, encoding="utf-8")
-        print(f"SANDBOX plan artifact={artifact_id} compose={out}")
-        print(f"PORTS {json.dumps(alloc)}")
-        return 0
-    if action == "up":
-        compose = art_dir / "compose.yml"
-        if not compose.is_file():
-            print("SANDBOX FAIL: no compose — run: emperor sandbox plan", file=sys.stderr)
-            return 1
-        print(f"SANDBOX up stub artifact={artifact_id} compose={compose}")
-        print("NOTE: docker compose up not executed in v1 stub")
-        return 0
-    if action == "down":
-        print(f"SANDBOX down stub artifact={artifact_id}")
-        print("NOTE: docker compose down not executed in v1 stub")
-        return 0
-    print(f"SANDBOX FAIL: unknown action {action}", file=sys.stderr)
-    return 1
+    """sandbox plan|up|down|ports — real engine (ports/emitters/profiles)."""
+    return sbox.cmd_sandbox_cli(args)
 
 
 def cmd_artifacts(args: argparse.Namespace) -> int:
@@ -593,29 +526,8 @@ def cmd_artifacts(args: argparse.Namespace) -> int:
 
 
 def cmd_runtime(args: argparse.Namespace) -> int:
-    """Pluggable runtime: use compose|podman|k8s."""
-    root = Path(args.root).resolve() if args.root else _repo_root()
-    paths = trail.ensure_layout(root)
-    action = args.runtime_action
-    active_path = paths["runtime"] / "active"
-    if action == "use":
-        choice = (args.backend or "").strip()
-        if choice not in ("compose", "podman", "k8s"):
-            print("RUNTIME FAIL: use compose|podman|k8s", file=sys.stderr)
-            return 1
-        active_path.write_text(choice + "\n", encoding="utf-8")
-        print(f"RUNTIME use backend={choice}")
-        print(f"EMITTER dir={paths['runtime'] / choice}")
-        return 0
-    if action == "status":
-        cur = active_path.read_text(encoding="utf-8").strip() if active_path.is_file() else "compose"
-        print(f"RUNTIME status backend={cur}")
-        for name in ("compose", "podman", "k8s"):
-            mark = "*" if name == cur else " "
-            print(f"  [{mark}] {name} -> {paths['runtime'] / name}")
-        return 0
-    print(f"RUNTIME FAIL: unknown action {action}", file=sys.stderr)
-    return 1
+    """Pluggable runtime: use compose|podman|k8s (persisted; emitters real)."""
+    return sbox.cmd_runtime_cli(args)
 
 
 def _redact_env_lines(raw: str) -> list[str]:
@@ -734,7 +646,7 @@ def build_parser() -> argparse.ArgumentParser:
 
     p = argparse.ArgumentParser(
         prog="super_context",
-        description="Emperor Time super-context / thoughttrail / sandbox stubs",
+        description="Emperor Time super-context / thoughttrail / sandbox engine",
         parents=[parent],
     )
     sub = p.add_subparsers(dest="cmd")
@@ -786,7 +698,7 @@ def build_parser() -> argparse.ArgumentParser:
     sot.add_argument("url", nargs="?", default="")
     sot.add_argument("--ref", default="main")
 
-    sb = sub.add_parser("sandbox", help="sandbox plan|up|down|ports stubs", parents=[parent])
+    sb = sub.add_parser("sandbox", help="sandbox plan|up|down|ports (engine)", parents=[parent])
     sb.add_argument(
         "sandbox_action",
         choices=["plan", "up", "down", "ports"],

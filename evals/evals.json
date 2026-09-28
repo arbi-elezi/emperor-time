@@ -101,7 +101,11 @@
     {
       "id": "sot-artifact-sync",
       "type": "behavioral-fixture",
-      "expect": "sot add-plugin clones fetch-only mirror; sot sync fetches tip; artifacts sync materializes multi-repo copies under artifacts/<id>/repos/ without mutating SOT"
+          },
+    {
+      "id": "sandbox-engine",
+      "type": "behavioral-fixture",
+      "expect": "sandbox plan emits compose; ports allocate without collision across artifacts; runtime use compose|podman|k8s persists; podman+k8s emitters write manifests; isolate+mock profiles loadable"
     }
   ]
 }

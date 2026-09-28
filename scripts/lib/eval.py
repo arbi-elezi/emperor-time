@@ -5819,7 +5819,7 @@ def run_evals(root: Path) -> int:
     h.require_contains("steal-consent", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing steal-consent")
     h.require_contains("consent.py", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing consent.py")
     h.require_contains("0.4.132", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing 0.4.132 tip")
-    h.require_contains("0.4.134", ".claude-plugin/plugin.json", "plugin.json not at 0.4.134")
+    h.require_contains("0.4.135", ".claude-plugin/plugin.json", "plugin.json not at 0.4.135")
     h.require_contains("0.4.132", "CHANGELOG.md", "CHANGELOG missing 0.4.132")
     h.require_contains("reject-no-triad", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing reject-no-triad")
     h.require_contains("reject-no-postmortem", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing reject-no-postmortem")
@@ -5839,6 +5839,11 @@ def run_evals(root: Path) -> int:
     h.require_contains("sot-artifact-sync", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing sot-artifact-sync")
     h.require_contains("clone --mirror", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing clone --mirror")
     h.require_contains("artifacts sync", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing artifacts sync")
+    h.require_contains("0.4.135", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing 0.4.135 tip")
+    h.require_contains("0.4.135", "CHANGELOG.md", "CHANGELOG missing 0.4.135")
+    h.require_contains("sandbox_engine.py", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing sandbox_engine.py")
+    h.require_contains("sandbox-engine", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing sandbox-engine")
+    h.require_contains("0.4.135", ".claude-plugin/marketplace.json", "marketplace.json not at 0.4.135")
     h.require_contains("finish.py", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing finish.py")
     h.require_contains("reject-red-suite", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing reject-red-suite")
     h.require_contains("require-green", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing require-green")
@@ -6844,9 +6849,9 @@ def run_evals(root: Path) -> int:
         "bakeoff.md missing reject-unisolated inventory",
     )
     h.require_contains(
-        "0.4.134",
+        "0.4.135",
         "SKILL.md",
-        "SKILL.md not bumped to 0.4.134",
+        "SKILL.md not bumped to 0.4.135",
     )
     _, card = h.run_py("scripts/lib/review_pack.py")
     if "checklist=yes" not in card:
@@ -8648,6 +8653,189 @@ def run_evals(root: Path) -> int:
         _sh.rmtree(src_a, ignore_errors=True)
         _sh.rmtree(src_b, ignore_errors=True)
     h.pass_msg("sot-artifact-sync P1")
+
+
+
+    # ---- sandbox engine (P2) ----
+    h.section("sandbox-engine")
+    h.need("scripts/lib/sandbox_engine.py")
+    h.need("evals/fixtures/sandbox-engine/README.md")
+    h.py_compile("scripts/lib/sandbox_engine.py", "sandbox_engine.py compile")
+    h.require_contains(
+        "allocate_ports",
+        "scripts/lib/sandbox_engine.py",
+        "sandbox_engine missing allocate_ports",
+    )
+    h.require_contains(
+        "emit_compose",
+        "scripts/lib/sandbox_engine.py",
+        "sandbox_engine missing emit_compose",
+    )
+    h.require_contains(
+        "emit_podman",
+        "scripts/lib/sandbox_engine.py",
+        "sandbox_engine missing emit_podman",
+    )
+    h.require_contains(
+        "emit_k8s",
+        "scripts/lib/sandbox_engine.py",
+        "sandbox_engine missing emit_k8s",
+    )
+    h.require_contains(
+        "sandbox_engine",
+        "scripts/lib/super_context.py",
+        "super_context missing sandbox_engine import",
+    )
+    h.require_contains(
+        "Sandbox engine",
+        "evals/bakeoff.md",
+        "bakeoff missing Sandbox engine row",
+    )
+    h.require_contains(
+        "sandbox-engine",
+        "evals/evals.json",
+        "evals.json missing sandbox-engine case",
+    )
+    h.require_contains(
+        "Port allocator",
+        "references/super-context.md",
+        "super-context.md missing port allocator doctrine",
+    )
+    h.require_contains(
+        "podman play",
+        "references/super-context.md",
+        "super-context.md missing podman play doctrine",
+    )
+    import tempfile as _tf_sb
+    import shutil as _sh_sb
+    import json as _json_sb
+    tmp = Path(_tf_sb.mkdtemp())
+    try:
+        # plan emits compose
+        rc, out = h.run_py(
+            "scripts/lib/super_context.py",
+            "sandbox", "plan", "--artifact", "a1", "--root", str(tmp),
+        )
+        if rc != 0 or "SANDBOX plan" not in out:
+            h.fail_msg(f"sandbox plan failed: {out}")
+        else:
+            h.pass_msg("sandbox plan ok")
+        compose = tmp / ".emperor" / "artifacts" / "a1" / "compose.yml"
+        if not compose.is_file():
+            h.fail_msg("plan did not emit compose.yml")
+        else:
+            body = compose.read_text(encoding="utf-8")
+            if "services:" not in body:
+                h.fail_msg("compose.yml missing services:")
+            else:
+                h.pass_msg("plan emits compose")
+        # ports allocate
+        ports_file = tmp / ".emperor" / "sandbox" / "ports.json"
+        pdata = _json_sb.loads(ports_file.read_text(encoding="utf-8"))
+        if "a1" not in pdata.get("allocations", {}):
+            h.fail_msg("ports.json missing a1 allocation")
+        else:
+            h.pass_msg("ports allocate for artifact")
+        # second artifact — no collision
+        rc, out = h.run_py(
+            "scripts/lib/super_context.py",
+            "sandbox", "plan", "--artifact", "a2", "--root", str(tmp),
+        )
+        if rc != 0:
+            h.fail_msg(f"sandbox plan a2 failed: {out}")
+        pdata = _json_sb.loads(ports_file.read_text(encoding="utf-8"))
+        a1 = pdata["allocations"]["a1"]
+        a2 = pdata["allocations"]["a2"]
+        s1 = set(a1.values()) if isinstance(list(a1.values())[0], int) else set()
+        # normalize
+        def _vals(d):
+            outv = set()
+            for v in d.values():
+                if isinstance(v, int):
+                    outv.add(v)
+                elif isinstance(v, dict) and "port" in v:
+                    outv.add(int(v["port"]))
+            return outv
+        if _vals(a1) & _vals(a2):
+            h.fail_msg(f"port collision a1={a1} a2={a2}")
+        else:
+            h.pass_msg("ports no collision across artifacts")
+        # runtime switch persists
+        rc, out = h.run_py(
+            "scripts/lib/super_context.py",
+            "runtime", "use", "podman", "--root", str(tmp),
+        )
+        if rc != 0 or "backend=podman" not in out:
+            h.fail_msg(f"runtime use podman failed: {out}")
+        active = (tmp / ".emperor" / "sandbox" / "runtime" / "active").read_text().strip()
+        if active != "podman":
+            h.fail_msg(f"runtime active not persisted: {active!r}")
+        else:
+            h.pass_msg("runtime use podman persists")
+        rc, out = h.run_py(
+            "scripts/lib/super_context.py",
+            "sandbox", "plan", "--artifact", "a3", "--root", str(tmp),
+        )
+        if rc != 0:
+            h.fail_msg(f"sandbox plan podman failed: {out}")
+        play = tmp / ".emperor" / "artifacts" / "a3" / "podman-play.yaml"
+        pcompose = tmp / ".emperor" / "artifacts" / "a3" / "podman-compose.yml"
+        if not play.is_file() or not pcompose.is_file():
+            h.fail_msg("podman plan missing play/compose files")
+        else:
+            h.pass_msg("podman emitter writes compose+play")
+        rc, out = h.run_py(
+            "scripts/lib/super_context.py",
+            "runtime", "use", "k8s", "--root", str(tmp),
+        )
+        if rc != 0:
+            h.fail_msg(f"runtime use k8s failed: {out}")
+        rc, out = h.run_py(
+            "scripts/lib/super_context.py",
+            "sandbox", "plan", "--artifact", "a4", "--root", str(tmp),
+        )
+        if rc != 0:
+            h.fail_msg(f"sandbox plan k8s failed: {out}")
+        mani = tmp / ".emperor" / "artifacts" / "a4" / "k8s-manifests.yaml"
+        if not mani.is_file():
+            h.fail_msg("k8s plan missing manifests")
+        else:
+            mbody = mani.read_text(encoding="utf-8")
+            if "kind: Deployment" not in mbody or "kind: Service" not in mbody:
+                h.fail_msg("k8s manifests missing Deployment/Service")
+            else:
+                h.pass_msg("k8s emitter writes Deployment/Service")
+        # profiles loadable
+        rc, out = h.run_py(
+            "scripts/lib/super_context.py", "layout", "--root", str(tmp)
+        )
+        iso = tmp / ".emperor" / "sandbox" / "profiles" / "isolate.json"
+        mock = tmp / ".emperor" / "sandbox" / "profiles" / "mock.json"
+        if not iso.is_file() or not mock.is_file():
+            h.fail_msg("isolate/mock profiles not loadable")
+        else:
+            h.pass_msg("isolate+mock profiles loadable")
+        # switch back to compose and ensure plan still works
+        rc, out = h.run_py(
+            "scripts/lib/super_context.py",
+            "runtime", "use", "compose", "--root", str(tmp),
+        )
+        if rc != 0:
+            h.fail_msg(f"runtime use compose failed: {out}")
+        else:
+            h.pass_msg("runtime switch compose|podman|k8s ok")
+        # ports subcommand
+        rc, out = h.run_py(
+            "scripts/lib/super_context.py", "sandbox", "ports", "--root", str(tmp)
+        )
+        if rc != 0 or "allocations" not in out:
+            h.fail_msg(f"sandbox ports failed: {out}")
+        else:
+            h.pass_msg("sandbox ports reports map")
+    finally:
+        _sh_sb.rmtree(tmp, ignore_errors=True)
+    h.pass_msg("sandbox-engine P2")
+
 
 
 
