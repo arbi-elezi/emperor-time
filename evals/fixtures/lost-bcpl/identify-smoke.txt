@@ -1,0 +1,9 @@
+== identify evals/fixtures/lost-bcpl ==
+-- extensions --
+      2 md
+      1 txt
+      1 b
+-- named fossils --
+1 *.b
+-- shebangs --
+identify: done (read-only)

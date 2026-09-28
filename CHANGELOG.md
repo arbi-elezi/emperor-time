@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.4.63
+- Archaeology BCPL leaf: `evals/fixtures/lost-bcpl/HELLO.B` + identify smoke; Martin Richards BCPL 32-bit Cintcode (16 May 2026 / compiler 18 Apr 2026) boot probe VERIFIED (`cintsys -q -c 'bcpl hello.b to hello; hello'` → `EMPEROR-TIME-BCPL-PROBE-OK`); dialect labels honest (CONJECTURE / UNVERIFIABLE where due); identify fossils `*.b` + `*.bcpl`; bare `.b` refused as route tag (short-extension collision)
+- Jail pin `references/archaeology-bcpl-manual.md` — Martin Richards `cintsys` Valid arguments `-c args` / README `bcpl <file.b> to <dest>`
+- Catalog + SKILL.md + archaeology.md + language-agnostic.md link the twenty-second pin alongside Pascal, ASM, COBOL, Fortran, VHDL, Ada, Forth, Common Lisp, Prolog, Tcl, Erlang, REXX, Modula-2, Algol 68, ALGOL 60, Algol W, Icon, Oberon, SNOBOL4, Simula, and APL; route triggers gain `bcpl` / `cintsys` / `cintcode` / `.bcpl` (bare English keyword tags and bare `.b` refused); eval locks `*.b` identify on lost-bcpl
+
 ## 0.4.62
 - Archaeology APL leaf: `evals/fixtures/lost-apl/HELLO.APL` + identify smoke; GNU APL 2.0 (source build, `--with-optional_libs=no`) boot probe VERIFIED (`apl -s --OFF -f HELLO.APL` → `EMPEROR-TIME-APL-PROBE-OK`); prebuilt `apl_2.0-1_amd64.deb` needs `libgsl.so.27` (trixie has `libgsl28`) so UNVERIFIABLE here; dialect labels honest (CONJECTURE / UNVERIFIABLE where due); identify fossils `*.apl` only
 - Jail pin `references/archaeology-apl-manual.md` — GNU APL `apl(1)` SYNOPSIS (`apl [options]`) / OPTIONS `-f file`
