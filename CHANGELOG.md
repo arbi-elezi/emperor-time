@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.4.139
+
+- Vertical depth: Holy triage HARD-GATE — `scripts/lib/triage.py` card-style `--reject-no-triage` / `--reject-no-snapshot` / `--check-triage` (triage block + snapshot; vacuous PASS when no triage activity)
+- Fixtures `evals/fixtures/holy-triage/`; thin twins `triage.sh`/`.ps1` + `holy-triage` alias; `emperor triage`
+- Doctrine/SKILL/mechanical-gates/software-factory/bakeoff honesty lockstep; reproduce-and-bisect remains the next leaf after scene secure
+- Not archaeology; not embeddings; closes soft→hard leftover named in v0.4.138; next soft gate: Holy process-healing
+- Plugin, marketplace, and SKILL.md at 0.4.139
+
 ## 0.4.138
 
 - Vertical depth: Holy reproduce-and-bisect HARD-GATE — `scripts/lib/reproduce.py` card-style `--reject-no-repro` / `--reject-no-combat-ledger` / `--check-reproduce` (fingerprint + combat ledger; vacuous PASS when no reproduce activity)

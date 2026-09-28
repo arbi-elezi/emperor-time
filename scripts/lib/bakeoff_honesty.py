@@ -20,6 +20,7 @@ LEAVES: list[tuple[str, str, tuple[str, ...]]] = [
     ("forge-pr-consent", "scripts/lib/forge.py", ("forge", "reject-no-pr-consent", "check-pr-consent", "EMPEROR_CONSENT_PR")),
     ("heal-verify", "scripts/lib/heal_verify.py", ("heal-verify", "reject-no-triad", "reject-no-postmortem", "heal-and-verify")),
     ("reproduce", "scripts/lib/reproduce.py", ("reproduce", "reject-no-repro", "reject-no-combat-ledger", "reproduce-and-bisect")),
+    ("triage", "scripts/lib/triage.py", ("triage", "reject-no-triage", "reject-no-snapshot", "holy-triage")),
     ("review-isolation", "scripts/lib/review_pack.py", ("review-pack", "reject-unisolated", "reject-author-diary", "check-isolation", "hetero-critique isolation")),
     ("super-context", "scripts/lib/context.py", ("super-context", "thoughttrail", "reject-no-graph", "reject-no-trail", "check-context", "GRAPH_THEN_TRAIL")),
     ("blind-secrets-broker", "scripts/lib/secrets_broker.py", ("secrets list", "reject-secret-leak", "check-env-redacted", "blind-secrets-broker")),

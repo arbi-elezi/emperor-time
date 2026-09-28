@@ -159,6 +159,17 @@ process. Do not load whole `systematic-debugging`; ET + Holy Chain orchestrate.
 10. Snapshot. Reproduce. One hypothesis per step. Prediction before probe.
 
 
+## MUST — holy triage HARD-GATE before investigating
+
+Before reproduce-and-bisect (and before any dig):
+
+1. Write the triage block (`Broke:` / `Noticed by:` / `Last-good:` / `First-bad:` / `Class: local|shared|shipped`).
+2. Record `Snapshot:` (stash / rescue branch / copy / HEAD).
+3. Run `scripts/emperor triage <task-dir>` (or `holy-triage`) — exit 0.
+   Always-fail helpers: `--reject-no-triage` / `--reject-no-snapshot`.
+
+See `chains/holy-chain/triage.md`.
+
 ## MUST — reproduce-and-bisect HARD-GATE before claiming cause isolated
 
 After triage and before heal-and-verify:
