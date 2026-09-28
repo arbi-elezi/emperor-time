@@ -1,0 +1,9 @@
+== identify evals/fixtures/lost-bas ==
+-- extensions --
+      2 md
+      1 txt
+      1 bas
+-- named fossils --
+1 *.bas
+-- shebangs --
+identify: done (read-only)
