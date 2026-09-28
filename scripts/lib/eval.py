@@ -362,6 +362,7 @@ def run_evals(root: Path) -> int:
     h.require_contains("*.go", "scripts/lib/identify.py", "identify.py missing *.go fossil")
     h.require_contains("*.rs", "scripts/lib/identify.py", "identify.py missing *.rs fossil")
     h.require_contains("*.c", "scripts/lib/identify.py", "identify.py missing *.c fossil")
+    h.require_contains("*.js", "scripts/lib/identify.py", "identify.py missing *.js fossil")
     h.require_contains(
         "scripts/lib/identify.py",
         "references/archaeology.md",
@@ -519,6 +520,10 @@ def run_evals(root: Path) -> int:
             ("gcc14 HELLO.c", "emperor-excavate", "route gcc14 → excavate"),
             ("c11 HELLO.c", "emperor-excavate", "route c11 → excavate"),
             ("hello.c", "emperor-excavate", "route hello.c → excavate"),
+            ("nodejs HELLO.js", "emperor-excavate", "route nodejs → excavate"),
+            ("node20 HELLO.js", "emperor-excavate", "route node20 → excavate"),
+            ("javascript HELLO.js", "emperor-excavate", "route javascript → excavate"),
+            ("hello.js", "emperor-excavate", "route hello.js → excavate"),
             ("queue next", "emperor-queue", "route queue next → queue"),
             ("blocked task", "emperor-queue", "route blocked task → queue"),
             ("red build", "emperor-heal", "route red build → heal"),
@@ -932,6 +937,13 @@ def run_evals(root: Path) -> int:
             r"[0-9]+ \*\.c",
             ["references/archaeology-c-manual.md"],
         ),
+        (
+            "lost-js identify finds *.js",
+            "lost-js",
+            "HELLO.js",
+            r"[0-9]+ \*\.js",
+            ["references/archaeology-js-manual.md"],
+        ),
     ]
     # The loop above was messy — clear fail state not affected; rewrite cleanly below by
     # only running the clean fixtures list (sections already printed wrongly once).
@@ -1219,6 +1231,10 @@ def run_evals(root: Path) -> int:
     h.require_contains("gcc14", "evals/triggers.json", "triggers missing gcc14 excavate pattern")
     h.require_contains("c11", "evals/triggers.json", "triggers missing c11 excavate pattern")
     h.require_contains(".c", "evals/triggers.json", "triggers missing .c excavate pattern")
+    h.require_contains("nodejs", "evals/triggers.json", "triggers missing nodejs excavate pattern")
+    h.require_contains("node20", "evals/triggers.json", "triggers missing node20 excavate pattern")
+    h.require_contains("javascript", "evals/triggers.json", "triggers missing javascript excavate pattern")
+    h.require_contains(".js", "evals/triggers.json", "triggers missing .js excavate pattern")
     _, rout_py = h.run_py("scripts/lib/route.py", "finish the branch")
     if "emperor-forge" not in rout_py:
         h.fail_msg("route.py finish the branch → forge")
@@ -1564,6 +1580,29 @@ def run_evals(root: Path) -> int:
         h.fail_msg("route matches(.c, hello.cl) must be False after extension-boundary")
     if not _m(".c", "hello.c"):
         h.fail_msg("route matches(.c, hello.c) must be True")
+    _, rout_nodejs = h.run_py("scripts/lib/route.py", "nodejs HELLO.js")
+    if "emperor-excavate" not in rout_nodejs:
+        h.fail_msg("route.py nodejs → excavate")
+    _, rout_node20 = h.run_py("scripts/lib/route.py", "node20 HELLO.js")
+    if "emperor-excavate" not in rout_node20:
+        h.fail_msg("route.py node20 → excavate")
+    _, rout_javascript = h.run_py("scripts/lib/route.py", "javascript HELLO.js")
+    if "emperor-excavate" not in rout_javascript:
+        h.fail_msg("route.py javascript → excavate")
+    _, rout_jsext = h.run_py("scripts/lib/route.py", "hello.js")
+    if "emperor-excavate" not in rout_jsext:
+        h.fail_msg("route.py hello.js → excavate")
+    # .js boundary vs .json/.jsx (reuse matches helper imported above)
+    if _m(".js", "hello.json"):
+        h.fail_msg("route matches(.js, hello.json) must be False after extension-boundary")
+    if _m(".js", "hello.jsx"):
+        h.fail_msg("route matches(.js, hello.jsx) must be False after extension-boundary")
+    if not _m(".js", "hello.js"):
+        h.fail_msg("route matches(.js, hello.js) must be True")
+    # bare node must not excavate (common English / tech "AST node" collision)
+    _, rout_bare_node = h.run_py("scripts/lib/route.py", "ast node notes")
+    if "emperor-excavate" in rout_bare_node:
+        h.fail_msg("route.py bare node English must not → excavate")
     # bare .l must not be enough alone when colliding; .lisp already routes via .lisp
     _, rout_regina = h.run_py("scripts/lib/route.py", "regina HELLO.REX")
     if "emperor-excavate" not in rout_regina:
@@ -1572,7 +1611,7 @@ def run_evals(root: Path) -> int:
     if rc == 0:
         h.fail_msg("route.py should miss trivia")
     else:
-        h.pass_msg("route.py misses trivia + fortran/vhdl/ada/forth/lisp/prolog/tcl/erlang/rexx/modula/algol/algol60/algolw/icon/oberon/snobol/simula/apl/bcpl/pli/st/ps/bas/scm/awk/sed/m4/ed/make/dc/lex/yacc/roff/perl/bc/expect/lua/ruby/go/rust/c excavate + thin twins")
+        h.pass_msg("route.py misses trivia + fortran/vhdl/ada/forth/lisp/prolog/tcl/erlang/rexx/modula/algol/algol60/algolw/icon/oberon/snobol/simula/apl/bcpl/pli/st/ps/bas/scm/awk/sed/m4/ed/make/dc/lex/yacc/roff/perl/bc/expect/lua/ruby/go/rust/c/js excavate + thin twins")
 
     # ---- MUST-route doctrine ----
     h.section("MUST-route doctrine + adapters")
@@ -2949,10 +2988,12 @@ def run_evals(root: Path) -> int:
     h.require_contains("lost-go", "evals/bakeoff.md", "bakeoff.md missing lost-go inventory")
     h.require_contains("lost-rust", "evals/bakeoff.md", "bakeoff.md missing lost-rust inventory")
     h.require_contains("lost-c", "evals/bakeoff.md", "bakeoff.md missing lost-c inventory")
+    h.require_contains("lost-js", "evals/bakeoff.md", "bakeoff.md missing lost-js inventory")
     h.require_contains("archaeology-ruby-manual.md", "SKILL.md", "SKILL.md missing ruby Jail pin")
     h.require_contains("archaeology-go-manual.md", "SKILL.md", "SKILL.md missing go Jail pin")
     h.require_contains("archaeology-rust-manual.md", "SKILL.md", "SKILL.md missing rust Jail pin")
     h.require_contains("archaeology-c-manual.md", "SKILL.md", "SKILL.md missing c Jail pin")
+    h.require_contains("archaeology-js-manual.md", "SKILL.md", "SKILL.md missing js Jail pin")
     h.require_contains("0.4.38", "CHANGELOG.md", "CHANGELOG missing 0.4.38")
     h.require_contains("root_cause.py", "evals/bakeoff.md", "bakeoff.md missing root_cause.py inventory")
     h.require_contains("root_cause.py", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing root_cause.py")
@@ -2996,6 +3037,7 @@ def run_evals(root: Path) -> int:
     h.require_contains("lost-go", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing lost-go")
     h.require_contains("lost-rust", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing lost-rust")
     h.require_contains("lost-c", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing lost-c")
+    h.require_contains("lost-js", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing lost-js")
     h.require_contains("0.4.39", "CHANGELOG.md", "CHANGELOG missing 0.4.39")
     h.require_contains("defense.py", "evals/bakeoff.md", "bakeoff.md missing defense.py inventory")
     h.require_contains("defense.py", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing defense.py")
@@ -3093,8 +3135,10 @@ def run_evals(root: Path) -> int:
     h.require_contains("0.4.84", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing 0.4.84 tip")
     h.require_contains("0.4.84", "CHANGELOG.md", "CHANGELOG missing 0.4.84")
     h.require_contains("0.4.85", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing 0.4.85 tip")
-    h.require_contains("0.4.85", ".claude-plugin/plugin.json", "plugin.json not at 0.4.85")
     h.require_contains("0.4.85", "CHANGELOG.md", "CHANGELOG missing 0.4.85")
+    h.require_contains("0.4.86", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing 0.4.86 tip")
+    h.require_contains("0.4.86", ".claude-plugin/plugin.json", "plugin.json not at 0.4.86")
+    h.require_contains("0.4.86", "CHANGELOG.md", "CHANGELOG missing 0.4.86")
 
     # session-discovery
     h.section("session-discovery locate HARD-GATE leaf")

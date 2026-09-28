@@ -1,0 +1,9 @@
+== identify evals/fixtures/lost-js ==
+-- extensions --
+      2 md
+      1 txt
+      1 js
+-- named fossils --
+1 *.js
+-- shebangs --
+identify: done (read-only)
