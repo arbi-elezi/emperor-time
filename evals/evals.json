@@ -82,6 +82,11 @@
       "id": "steal-consent-hard-gate",
       "type": "behavioral-fixture",
       "expect": "consent.py / gate g4 rejects steal activity lacking CONSENT record / header theater / uncovered enlisted agent; accepts CONSENT + agent \u2192 role / EMPEROR_CONSENT_AGENTS / solo"
+    },
+    {
+      "id": "heal-and-verify-hard-gate",
+      "type": "behavioral-fixture",
+      "expect": "heal_verify.py --reject-no-triad / --reject-no-postmortem / --check-heal refuses missing triad or postmortem when heal activity present; accepts triad+postmortem and vacuous non-heal"
     }
   ]
 }

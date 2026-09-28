@@ -52,6 +52,7 @@ mean **disk + eval**, not live multi-vendor win rates.
 | claim-audit (Judgment G4) | `scripts/lib/claim_audit.py` (`--reject-unaudited` / `--check-audit` / CLAIM AUDIT line) + `evals/fixtures/claim-audit/` + `emperor claim-audit` | TESTED |
 | quarantine (Steal admission) | `scripts/lib/quarantine.py` (`--reject-unquarantined` / `--check-quarantine` / CONJECTURE + ADMITTED) + `evals/fixtures/steal-quarantine/` + `emperor quarantine` | TESTED |
 | consent-protocol (Steal enlistment) HARD-GATE | `scripts/lib/consent.py` (`--reject-no-consent` / `--check-consent`) + `evals/fixtures/steal-consent/` + `emperor consent` | TESTED |
+| heal-and-verify (triad + postmortem) HARD-GATE | `scripts/lib/heal_verify.py` (`--reject-no-triad` / `--reject-no-postmortem` / `--check-heal`) + `evals/fixtures/heal-and-verify/` + `emperor heal-verify` | TESTED |
 | critique eight-count (Judgment G4) | `scripts/lib/critique.py` (`--reject-incomplete-critique` / `--check-critique` / eight axes + Checked) + `evals/fixtures/critique-eight-count/` + `emperor critique` | TESTED |
 | verdict / breach (Judgment G5) | `scripts/lib/verdict.py` (`--reject-hidden-breach` / `--check-verdict` / Verdict citations + honest Breach Register) + `evals/fixtures/verdict-breach/` + `emperor verdict` | TESTED |
 | finish menu suite-green HARD-GATE | `scripts/lib/finish.py` `--reject-red-suite` / `--require-green` + thin `finish.sh`/`finish.ps1` + `finish-menu.md` (done.py / eval) | TESTED |
