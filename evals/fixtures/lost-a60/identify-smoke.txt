@@ -1,0 +1,9 @@
+== identify evals/fixtures/lost-a60 ==
+-- extensions --
+      2 md
+      1 txt
+      1 a60
+-- named fossils --
+1 *.a60
+-- shebangs --
+identify: done (read-only)

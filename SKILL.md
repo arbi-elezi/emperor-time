@@ -3,13 +3,13 @@ name: emperor-time
 description: >-
   Emperor Time is a software factory and digital coding archaeologist disguised
   as a skill. Use when the user throws a repo and a loose task, a lost or
-  ancient codebase (Pascal, assembly, COBOL, Fortran, VHDL, Ada, Forth, Common Lisp, Prolog, Tcl, Erlang, REXX, Modula-2, Algol 68, ROM, unmarked binaries), says
+  ancient codebase (Pascal, assembly, COBOL, Fortran, VHDL, Ada, Forth, Common Lisp, Prolog, Tcl, Erlang, REXX, Modula-2, Algol 68, ALGOL 60, ROM, unmarked binaries), says
   emperor time, find work, next, ship, or open a PR. Language-agnostic.
   Host-agnostic (AGENTS.md). Not trivia. SessionStart MUST-routes without
   waiting to be told.
 license: MIT
 metadata:
-  version: 0.4.55
+  version: 0.4.56
   homepage: https://github.com/arbi-elezi/emperor-time
   standard: Agent Skills (SKILL.md)
 ---
@@ -23,7 +23,7 @@ and not language-specific. Pascal and raw assembly are in-scope.
 Read `AGENTS.md` if the host wants a single standing-order file.
 Read `references/software-factory.md` once per repo, not per turn.
 Read `references/language-agnostic.md` before assuming a stack.
-Read `references/archaeology.md` when the tree is lost, ancient, or foreign (Jail pins: `references/archaeology-pascal-manual.md`, `references/archaeology-asm-manual.md`, `references/archaeology-cobol-manual.md`, `references/archaeology-fortran-manual.md`, `references/archaeology-vhdl-manual.md`, `references/archaeology-ada-manual.md`, `references/archaeology-forth-manual.md`, `references/archaeology-lisp-manual.md`, `references/archaeology-prolog-manual.md`, `references/archaeology-tcl-manual.md`, `references/archaeology-erlang-manual.md`, `references/archaeology-rexx-manual.md`, `references/archaeology-modula2-manual.md`, `references/archaeology-algol68-manual.md`).
+Read `references/archaeology.md` when the tree is lost, ancient, or foreign (Jail pins: `references/archaeology-pascal-manual.md`, `references/archaeology-asm-manual.md`, `references/archaeology-cobol-manual.md`, `references/archaeology-fortran-manual.md`, `references/archaeology-vhdl-manual.md`, `references/archaeology-ada-manual.md`, `references/archaeology-forth-manual.md`, `references/archaeology-lisp-manual.md`, `references/archaeology-prolog-manual.md`, `references/archaeology-tcl-manual.md`, `references/archaeology-erlang-manual.md`, `references/archaeology-rexx-manual.md`, `references/archaeology-modula2-manual.md`, `references/archaeology-algol68-manual.md`, `references/archaeology-algol60-manual.md`).
 
 ## Six Vows (load-bearing)
 

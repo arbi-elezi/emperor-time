@@ -425,7 +425,11 @@
         ".a68",
         ".alg",
         " algol",
-        "algol "
+        "algol ",
+        "marst",
+        "algol60",
+        ".a60",
+        "algol 60"
       ],
       "tags": [
         "archaeology",
@@ -481,7 +485,10 @@
         "algol68",
         "algol",
         "a68",
-        "alg"
+        "alg",
+        "marst",
+        "algol60",
+        "a60"
       ],
       "target": "skills/emperor-excavate/SKILL.md",
       "reason": "lost/ancient/foreign tree \u2014 excavate before modernizing"
