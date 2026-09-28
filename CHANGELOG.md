@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.4.134
+
+- Vertical depth: SOT sync/add-plugin + multi-repo artifact sync — real `git clone --mirror` fetch-only mirrors under `.emperor/sot/plugins/<name>/mirror`; `sot sync` fetches all; `artifacts sync` materializes working copies under `.emperor/artifacts/<id>/repos/` from SOT (never mutates SOT)
+- Extends super_context stubs shipped in v0.4.133; compose regenerated per artifact; fixtures `evals/fixtures/sot-artifact-sync/`
+- Not archaeology; not embeddings; no Graphify copy
+- Plugin, marketplace, and SKILL.md at 0.4.134
+
 ## 0.4.133
 
 - Vertical depth: thoughttrail + super-context (graph-over-grep) — clean-room first-principles MD structural extract → SQLite graph with EXTRACTED|INFERRED; tiered L0/L1/L2; append-only thoughttrail linked to node ids

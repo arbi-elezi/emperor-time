@@ -70,8 +70,11 @@ emperor sandbox plan|up|down|ports [--artifact ID]
 emperor context artifacts list|stub-create
 ```
 
-`up`/`down`/`sync` are honest stubs in v1 (print NOTE; do not shell out to
-docker/git fetch unless a later vertical deepens them).
+`sandbox up|down` remain honest stubs (no docker shell-out yet).
+**SOT + artifacts sync are real (v0.4.134):** `sot add-plugin` runs
+`git clone --mirror` into `.emperor/sot/plugins/<name>/mirror`;
+`sot sync` fetches; `artifacts sync` clones working copies into
+`.emperor/artifacts/<id>/repos/<plugin>/` from those mirrors.
 
 ## Pluggable runtimes
 
