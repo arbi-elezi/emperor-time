@@ -1,0 +1,8 @@
+== identify evals/fixtures/lost-wav ==
+-- extensions --
+      2 md
+      1 wav
+-- named fossils --
+1 *.wav
+-- shebangs --
+identify: done (read-only)
