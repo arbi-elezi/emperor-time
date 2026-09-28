@@ -1,6 +1,6 @@
 # This upgrade — archaeology JavaScript Jail pin (v0.4.86)
 
-- **Task:** Add JavaScript / Node.js archaeology Jail pin leaf (forty-fifth language after pas/asm/cbl/f90/vhd/ada/fs/lisp/prolog/tcl/erlang/rexx/mod/a68/a60/alw/icn/obn/sno/cim/apl/bcpl/pli/st/ps/bas/scm/awk/sed/m4/ed/make/dc/lex/yacc/roff/pl/bc/expect/lua/ruby/go/rust/c): lost-js fixture + Node.js 20.19 probe + manual pin + identify/route/eval/honesty lockstep. Fossils `*.js`. Prefer `nodejs` / `node20` / `javascript` / `.js` as route tags. Bare `js` allowed (two-letter abbreviation; word-boundary). Bare `.js` allowed with extension-boundary matching (no prefix-hit on `.json` / `.jsx`). Classic scripting / runtime leaf after C; toolchain already on box (Worthy Spend vs TeXlive).
+- **Task:** Add JavaScript / Node.js archaeology Jail pin leaf (forty-fifth language after pas/asm/cbl/f90/vhd/ada/fs/lisp/prolog/tcl/erlang/rexx/mod/a68/a60/alw/icn/obn/sno/cim/apl/bcpl/pli/st/ps/bas/scm/awk/sed/m4/ed/make/dc/lex/yacc/roff/pl/bc/expect/lua/ruby/go/rust/c): lost-js fixture + Node.js 20.19 probe + manual pin + identify/route/eval/honesty lockstep. Fossils `*.js`. Prefer `nodejs` / `node20` / `javascript` / `.js` as route tags. Bare `node` refused (common-English / tech collision). Bare `js` allowed (two-letter abbreviation; word-boundary). Bare `.js` allowed with extension-boundary matching (no prefix-hit on `.json` / `.jsx`). Classic scripting / runtime leaf after C; toolchain already on box (Worthy Spend vs TeXlive).
 - **Client quote:** Soft-ET consented Worthy Spend after v0.4.85 C archaeology. Writing-skills Superpowers leaves exhausted; systematic-debugging leaves stay closed. Ship JavaScript archaeology leaf (v0.4.86) — ET strength crank (language-agnostic peers + scripting runtime after C; Node already on box; language-agnostic.md already named JS as a peer). Chain Jail leaf only; do not vendor foreign whole skills. Skip CLIPS. Prefer JS over TeX/LaTeX this turn (TeXlive ~90MB+ vs nodejs already installed; Worthy Spend). TeX/LaTeX still deferred. C++ still deferred (g++ not installed).
 - **Consent:** Soft-ET continuous improvement standing consent (2026-09-27); Worthy Spend for one archaeology Jail pin.
 - **Queue id:** archaeology-js / v0.4.86
@@ -11,7 +11,7 @@
 1. SKILL.md version ≥ 0.4.86; `evals/fixtures/lost-js/HELLO.js` exists with PROBE.md / README.md / identify-smoke.txt.
 2. Jail pin `references/archaeology-js-manual.md` cites Node.js Command-line API Synopsis (`node … script.js`) (URL + access date 2026-09-28 Europe/Tirane + quote).
 3. `identify.py` fossils include `*.js`; identify on lost-js finds `*.js`.
-4. Route triggers include node/nodejs/node20/javascript/.js → excavate; `route.py` matches; bare `js` allowed; bare `.js` allowed with extension-boundary (`.js` does not match `hello.json` / `hello.jsx`).
+4. Route triggers include nodejs/node20/javascript/.js → excavate; `route.py` matches; bare `node` refused; bare `js` allowed; bare `.js` allowed with extension-boundary (`.js` does not match `hello.json` / `hello.jsx`).
 5. Catalog + SKILL.md + archaeology.md + language-agnostic.md link the forty-fifth pin; bakeoff + honesty name lost-js.
 
 ## Out of scope
