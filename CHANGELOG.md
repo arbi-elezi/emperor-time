@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.4.81
+
+- Archaeology Lua leaf: `evals/fixtures/lost-lua/HELLO.LUA` + identify smoke; Lua 5.4.7 boot probe VERIFIED (`lua HELLO.LUA` → `EMPEROR-TIME-LUA-PROBE-OK`); dialect labels honest (CONJECTURE / UNVERIFIABLE where due); identify fossils `*.lua` only; bare `lua` allowed as route tag (tool binary name; word-boundary); bare `.lua` allowed as route tag (no known peer excavate substring collision); Debian package `lua5.4` (provides `lua` via alternatives); classic embeddable scripting after Expect
+- Jail pin `references/archaeology-lua-manual.md` — lua(1) SYNOPSIS script + DESCRIPTION script-file evaluation + print
+- Catalog + SKILL.md + archaeology.md + language-agnostic.md link the fortieth pin alongside Pascal, ASM, COBOL, Fortran, VHDL, Ada, Forth, Common Lisp, Prolog, Tcl, Erlang, REXX, Modula-2, Algol 68, ALGOL 60, Algol W, Icon, Oberon, SNOBOL4, Simula, APL, BCPL, PL/I, Smalltalk, PostScript, BASIC, Scheme, AWK, sed, m4, ed, Make, dc, lex, yacc, roff, Perl, bc, and Expect; route triggers gain `lua` / `lua5.4` / `.lua`; eval locks `*.lua` identify on lost-lua
+- Plugin, marketplace, and SKILL.md at 0.4.81
+
 ## 0.4.80
 
 - Archaeology Expect leaf: `evals/fixtures/lost-expect/HELLO.EXP` + identify smoke; Expect 5.45.4 boot probe VERIFIED (`expect HELLO.EXP` → `EMPEROR-TIME-EXPECT-PROBE-OK`); dialect labels honest (CONJECTURE / UNVERIFIABLE where due); identify fossils `*.exp` only; bare `expect` allowed as route tag (tool binary name; word-boundary); bare `.exp` allowed as route tag (no known peer excavate substring collision); companion to Tcl leaf (Expect sits on Tcl / Don Libes); Debian packages `expect` + `tcl-expect`

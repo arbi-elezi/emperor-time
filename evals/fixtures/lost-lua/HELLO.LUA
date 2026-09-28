@@ -1,0 +1,1 @@
+print("EMPEROR-TIME-LUA-PROBE-OK")

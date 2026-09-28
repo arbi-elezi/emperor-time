@@ -519,7 +519,10 @@
         "gnu-bc",
         ".exp",
         "expect",
-        "tcl-expect"
+        "tcl-expect",
+        ".lua",
+        "lua",
+        "lua5.4"
       ],
       "tags": [
         "archaeology",
@@ -652,7 +655,9 @@
         "bc",
         "gnu-bc",
         "expect",
-        "tcl-expect"
+        "tcl-expect",
+        "lua",
+        "lua5.4"
       ],
       "target": "skills/emperor-excavate/SKILL.md",
       "reason": "lost/ancient/foreign tree — excavate before modernizing"
