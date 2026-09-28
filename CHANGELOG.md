@@ -1,5 +1,15 @@
 # Changelog
 
+## 0.4.133
+
+- Vertical depth: thoughttrail + super-context (graph-over-grep) — clean-room first-principles MD structural extract → SQLite graph with EXTRACTED|INFERRED; tiered L0/L1/L2; append-only thoughttrail linked to node ids
+- Cores: `scripts/lib/md_graph.py`, `context_store.py`, `thoughttrail.py`, `super_context.py`; thin twins `context.sh`/`.ps1` + aliases thoughttrail/super-context/sandbox/sot/runtime/env/secrets
+- Inverted workspace doctrine + stubs: `.emperor/context/`, `thoughttrail/`, `sot/plugins/`, `artifacts/`, `sandbox/runtime/{compose,podman,k8s}/`, `env/`, `secrets/` — SOT fetch-only; artifacts=SDLC PRs; workspace≠repo; multi-repo plugins
+- Sandbox/sim stubs: `emperor sandbox plan|up|down|ports`; pluggable `runtime use compose|podman|k8s`; unified `env show|sync` (redacted); blind `secrets list|inject|declare` (no plaintext to agent)
+- Resume: load L0 before mass-grep; fixtures `evals/fixtures/thoughttrail-context/`; `references/super-context.md`
+- Not archaeology; not embeddings; no Graphify copy; stdlib+sqlite3
+- Plugin, marketplace, and SKILL.md at 0.4.133
+
 ## 0.4.132
 
 - Vertical depth: hetero-critique isolation HARD-GATE — `scripts/lib/review_pack.py` mechanically refuses unisolated examiner handoffs and author diary / self-critique / CoT / worker out.txt inside the review pack (not soft vow / iron-law-9 markdown alone)

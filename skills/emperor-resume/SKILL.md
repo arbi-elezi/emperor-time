@@ -22,8 +22,10 @@ Then continue below when the target is this skill (or after that skill finishes)
 
 ## Resume from disk
 
+0. Load L0 super-context before mass-grep when `.emperor/context/l0.md` exists (`scripts/emperor context l0` / `references/super-context.md`).
 1. Read `.emperor/state.md` if it exists. Then the latest
    `.emperor/tasks/<id>/{PROGRESS,PLAN,FINDINGS,DONE,ledger}.md`.
+   If `.emperor/context/l0.md` exists, read it before mass-grep (`scripts/emperor context l0` / `references/super-context.md`).
 2. Do not recap what those files already say. One line: current gate + blocker.
 3. If DONE.md exists and `scripts/emperor done` still fails, you are not done.
 4. If DONE passes and no PR, open `skills/emperor-forge/SKILL.md` (finish menu first).

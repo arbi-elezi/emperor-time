@@ -46,7 +46,7 @@
 [CmdletBinding()]
 param(
     [Parameter(Mandatory = $true, Position = 0)]
-    [ValidateSet('done','gate','eval','review-pack','dowse','install','worktree','queue','forge','finish','activate','boot','identify','route','heal','grill','tdd','iso','review','author','evidence','receive','execute','subagent','parallel','excavate','session-discovery','diagnose','trace','defense','wait','polluter','pressure','good-tests','skill-test','persuasion','sdo','task-brief','task-start','task-done','sdd-workspace','sdd-review-pack','work-order','claim-audit','judgment-audit','quarantine','steal-quarantine','consent','steal-consent','critique','self-critique','verdict','breach','brief')]
+    [ValidateSet('done','gate','eval','review-pack','dowse','install','worktree','queue','forge','finish','activate','boot','identify','route','heal','grill','tdd','iso','review','author','evidence','receive','execute','subagent','parallel','excavate','session-discovery','diagnose','trace','defense','wait','polluter','pressure','good-tests','skill-test','persuasion','sdo','task-brief','task-start','task-done','sdd-workspace','sdd-review-pack','work-order','claim-audit','judgment-audit','quarantine','steal-quarantine','consent','steal-consent','critique','self-critique','verdict','breach','brief','context','thoughttrail','super-context','sandbox','sot','runtime','env','secrets')]
     [string]$Tool,
     [Parameter(ValueFromRemainingArguments = $true)]
     [string[]]$ToolArgs

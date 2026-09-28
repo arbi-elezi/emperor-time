@@ -1,0 +1,6 @@
+workspace.env
+*.local.env
+overlays/*.env
+!.gitignore
+!workspace.env.example
+!overlays/README.md

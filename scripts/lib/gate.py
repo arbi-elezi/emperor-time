@@ -18,6 +18,8 @@ G4 also delegates Steal consent-protocol to consent.py
 (vacuous PASS when no worker runs / no steal markers).
 G4 also delegates hetero-critique isolation to review_pack.py
 (vacuous PASS when no review-pack / no hetero markers).
+G0 also delegates thoughttrail + super-context to context.py
+(vacuous PASS when no context / thoughttrail markers).
 G5 delegates verdict + Breach Register honesty to verdict.py
 (PASS substring + header-only theater is not enough).
 """
@@ -147,6 +149,18 @@ def _run_review_isolation(gate: str, task: Path) -> None:
         _fail(gate, "hetero-critique isolation (review_pack.py)")
 
 
+
+def _run_context(gate: str, task: Path) -> None:
+    py = _root() / "scripts" / "lib" / "context.py"
+    for flag in ("--check-context", "--check-trail"):
+        proc = subprocess.run(
+            [sys.executable, str(py), flag, str(task)],
+            check=False,
+        )
+        if proc.returncode != 0:
+            _fail(gate, f"thoughttrail/super-context ({flag})")
+
+
 def _run_verdict(gate: str, task: Path) -> None:
     py = _root() / "scripts" / "lib" / "verdict.py"
     proc = subprocess.run(
@@ -173,6 +187,9 @@ def run_gate(gate: str, task: Path) -> None:
             _fail(gate, "ledger has no G0 section")
         if not _has(r"quoted|Origin|Task:", ledger):
             _fail(gate, "ledger missing origin/task line")
+        # Thoughttrail + super-context: graph/trail when activity claimed.
+        # Vacuous PASS when no context / thoughttrail markers.
+        _run_context(gate, task)
         _mark(stamp, gate)
         _ok(gate, str(ledger))
         return

@@ -9,7 +9,7 @@ description: >-
   waiting to be told.
 license: MIT
 metadata:
-  version: 0.4.132
+  version: 0.4.133
   homepage: https://github.com/arbi-elezi/emperor-time
   standard: Agent Skills (SKILL.md)
 ---
@@ -22,6 +22,8 @@ You are the chain-user. The human is the client. This is not Claude-specific
 and not language-specific. Pascal and raw assembly are in-scope.
 Read `AGENTS.md` if the host wants a single standing-order file.
 Read `references/software-factory.md` once per repo, not per turn.
+Read `references/super-context.md` for graph-over-grep + inverted workspace
+(load L0 via `scripts/emperor context l0` before mass-grep).
 Read `references/language-agnostic.md` before assuming a stack.
 Read `references/archaeology.md` when the tree is lost, ancient, or foreign (Jail pins: `references/archaeology-pascal-manual.md`, `references/archaeology-asm-manual.md`, `references/archaeology-cobol-manual.md`, `references/archaeology-fortran-manual.md`, `references/archaeology-vhdl-manual.md`, `references/archaeology-ada-manual.md`, `references/archaeology-forth-manual.md`, `references/archaeology-lisp-manual.md`, `references/archaeology-prolog-manual.md`, `references/archaeology-tcl-manual.md`, `references/archaeology-erlang-manual.md`, `references/archaeology-rexx-manual.md`, `references/archaeology-modula2-manual.md`, `references/archaeology-algol68-manual.md`, `references/archaeology-algol60-manual.md`, `references/archaeology-algolw-manual.md`, `references/archaeology-icon-manual.md`, `references/archaeology-oberon-manual.md`, `references/archaeology-snobol-manual.md`, `references/archaeology-simula-manual.md`, `references/archaeology-apl-manual.md`, `references/archaeology-bcpl-manual.md`, `references/archaeology-pli-manual.md`, `references/archaeology-smalltalk-manual.md`, `references/archaeology-postscript-manual.md`, `references/archaeology-basic-manual.md`, `references/archaeology-scheme-manual.md`, `references/archaeology-awk-manual.md`, `references/archaeology-sed-manual.md`, `references/archaeology-m4-manual.md`, `references/archaeology-ed-manual.md`, `references/archaeology-make-manual.md`, `references/archaeology-dc-manual.md`, `references/archaeology-lex-manual.md`, `references/archaeology-yacc-manual.md`, `references/archaeology-roff-manual.md`, `references/archaeology-perl-manual.md`, `references/archaeology-bc-manual.md`, `references/archaeology-expect-manual.md`, `references/archaeology-lua-manual.md`, `references/archaeology-ruby-manual.md`, `references/archaeology-go-manual.md`, `references/archaeology-rust-manual.md`, `references/archaeology-c-manual.md`, `references/archaeology-js-manual.md`, `references/archaeology-python-manual.md`, `references/archaeology-typescript-manual.md`, `references/archaeology-bash-manual.md`, `references/archaeology-php-manual.md`, `references/archaeology-sql-manual.md`, `references/archaeology-jq-manual.md`, `references/archaeology-xslt-manual.md`, `references/archaeology-xml-manual.md`, `references/archaeology-yaml-manual.md`, `references/archaeology-toml-manual.md`, `references/archaeology-html-manual.md`, `references/archaeology-csv-manual.md`, `references/archaeology-json-manual.md`, `references/archaeology-ini-manual.md`, `references/archaeology-plist-manual.md`, `references/archaeology-eml-manual.md`, `references/archaeology-zip-manual.md`, `references/archaeology-tar-manual.md`, `references/archaeology-gzip-manual.md`, `references/archaeology-targz-manual.md`, `references/archaeology-whl-manual.md`, `references/archaeology-jar-manual.md`, `references/archaeology-war-manual.md`, `references/archaeology-apk-manual.md`, `references/archaeology-docx-manual.md`, `references/archaeology-xlsx-manual.md`, `references/archaeology-tsv-manual.md`, `references/archaeology-jsonl-manual.md`, `references/archaeology-pptx-manual.md`, `references/archaeology-pdf-manual.md`, `references/archaeology-png-manual.md`, `references/archaeology-wav-manual.md`, `references/archaeology-jpg-manual.md`).
 
@@ -65,7 +67,7 @@ client to say "emperor time".
 
 | When | Open |
 |---|---|
-| Session start / continue / compacted | `skills/emperor-resume/SKILL.md` (+ `must-route.md`) |
+| Session start / continue / compacted | `skills/emperor-resume/SKILL.md` (+ `must-route.md`) + L0 super-context |
 | No task / find work / next / issues / Linear | `skills/emperor-queue/SKILL.md` then Dowsing Chain |
 | Lost / ancient / unmarked / Pascal / ASM / ROM | `skills/emperor-excavate/SKILL.md` then Dowsing `excavate.md` |
 | Vague ask / intake | `skills/emperor-scope/SKILL.md` then Dowsing Chain |
