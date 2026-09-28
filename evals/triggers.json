@@ -522,7 +522,10 @@
         "tcl-expect",
         ".lua",
         "lua",
-        "lua5.4"
+        "lua5.4",
+        ".rb",
+        "ruby",
+        "ruby3.3"
       ],
       "tags": [
         "archaeology",
@@ -657,7 +660,9 @@
         "expect",
         "tcl-expect",
         "lua",
-        "lua5.4"
+        "lua5.4",
+        "ruby",
+        "ruby3.3"
       ],
       "target": "skills/emperor-excavate/SKILL.md",
       "reason": "lost/ancient/foreign tree — excavate before modernizing"

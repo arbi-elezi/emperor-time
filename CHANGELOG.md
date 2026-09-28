@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.4.82
+
+- Archaeology Ruby leaf: `evals/fixtures/lost-ruby/HELLO.RB` + identify smoke; Ruby 3.3.8 boot probe VERIFIED (`ruby HELLO.RB` → `EMPEROR-TIME-RUBY-PROBE-OK`); dialect labels honest (CONJECTURE / UNVERIFIABLE where due); identify fossils `*.rb` only; bare `ruby` allowed as route tag (tool binary name; word-boundary); bare `.rb` allowed as route tag (no known peer excavate substring collision); Debian package `ruby` 1:3.3+b1 (Depends `ruby3.3`); classic scripting after Lua
+- Jail pin `references/archaeology-ruby-manual.md` — ruby3.3(1) SYNOPSIS program_file + DESCRIPTION interpretive scripting + puts
+- Catalog + SKILL.md + archaeology.md + language-agnostic.md link the forty-first pin alongside Pascal, ASM, COBOL, Fortran, VHDL, Ada, Forth, Common Lisp, Prolog, Tcl, Erlang, REXX, Modula-2, Algol 68, ALGOL 60, Algol W, Icon, Oberon, SNOBOL4, Simula, APL, BCPL, PL/I, Smalltalk, PostScript, BASIC, Scheme, AWK, sed, m4, ed, Make, dc, lex, yacc, roff, Perl, bc, Expect, and Lua; route triggers gain `ruby` / `ruby3.3` / `.rb`; eval locks `*.rb` identify on lost-ruby
+- Plugin, marketplace, and SKILL.md at 0.4.82
+
 ## 0.4.81
 
 - Archaeology Lua leaf: `evals/fixtures/lost-lua/HELLO.LUA` + identify smoke; Lua 5.4.7 boot probe VERIFIED (`lua HELLO.LUA` → `EMPEROR-TIME-LUA-PROBE-OK`); dialect labels honest (CONJECTURE / UNVERIFIABLE where due); identify fossils `*.lua` only; bare `lua` allowed as route tag (tool binary name; word-boundary); bare `.lua` allowed as route tag (no known peer excavate substring collision); Debian package `lua5.4` (provides `lua` via alternatives); classic embeddable scripting after Expect
