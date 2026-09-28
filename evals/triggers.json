@@ -604,7 +604,11 @@
         ".csv",
         "pyjson",
         "json2.0",
-        ".json"
+        ".json",
+        "ini",
+        "pyini",
+        "configparser",
+        ".ini"
       ],
       "tags": [
         "archaeology",

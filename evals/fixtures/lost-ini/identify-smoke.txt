@@ -1,0 +1,9 @@
+== identify evals/fixtures/lost-ini ==
+-- extensions --
+      2 md
+      1 txt
+      1 ini
+-- named fossils --
+1 *.ini
+-- shebangs --
+identify: done (read-only)
