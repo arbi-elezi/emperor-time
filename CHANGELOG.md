@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.4.129
+
+- Vertical depth: queue multi-WIP HARD-GATE — `scripts/lib/queue.py` mechanically refuses >1 in-progress / active `[~]` on the ledger (not `queue next` refuse theater alone; agents who skip the script still hit always-fail `--reject-multi-wip`)
+- Always-fail `--reject-multi-wip`; `--check-wip [PATH]` fails when non-placeholder active count > 1; zero or one active → PASS
+- Thin twins + emperor queue peers; emperor-queue skill + mechanical-gates + software-factory lockstep; eval fixtures `queue-reject-multi-wip/`
+- Plugin, marketplace, and SKILL.md at 0.4.129
+
+
+
 ## 0.4.128
 
 - Vertical depth: diagnose cite-or-fail report skeleton HARD-GATE — `scripts/lib/diagnose.py` mechanically refuses claiming diagnosis done without a written report path (not intake+cite theater alone; Superpowers diagnosing Report step — path + cited findings only, not 7-analyst templates)

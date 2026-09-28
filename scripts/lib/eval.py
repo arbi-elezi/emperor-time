@@ -736,6 +736,16 @@ def run_evals(root: Path) -> int:
         "skills/emperor-queue/SKILL.md",
         "emperor-queue skill missing queue.py",
     )
+    h.require_contains(
+        "--reject-multi-wip",
+        "scripts/lib/queue.py",
+        "queue.py core missing --reject-multi-wip flag",
+    )
+    h.require_contains(
+        "--check-wip",
+        "scripts/lib/queue.py",
+        "queue.py core missing --check-wip flag",
+    )
     with tempfile.NamedTemporaryFile("w", encoding="utf-8", delete=False, suffix=".md") as qf:
         qpath = qf.name
         qf.write(
@@ -5790,12 +5800,18 @@ def run_evals(root: Path) -> int:
     h.require_contains("Breach Register", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing Breach Register")
     h.require_contains("check-verdict", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing check-verdict")
     h.require_contains("0.4.128", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing 0.4.128 tip")
-    h.require_contains("0.4.128", ".claude-plugin/plugin.json", "plugin.json not at 0.4.128")
     h.require_contains("0.4.128", "CHANGELOG.md", "CHANGELOG missing 0.4.128")
     h.require_contains("reject-no-report", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing reject-no-report")
     h.require_contains("check-report", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing check-report")
     h.require_contains("CITE_OR_FAIL_REPORT", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing CITE_OR_FAIL_REPORT")
     h.require_contains("diagnose-report-skeleton", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing diagnose-report-skeleton")
+    h.require_contains("0.4.129", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing 0.4.129 tip")
+    h.require_contains("0.4.129", ".claude-plugin/plugin.json", "plugin.json not at 0.4.129")
+    h.require_contains("0.4.129", "CHANGELOG.md", "CHANGELOG missing 0.4.129")
+    h.require_contains("reject-multi-wip", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing reject-multi-wip")
+    h.require_contains("check-wip", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing check-wip")
+    h.require_contains("REJECT MULTI WIP", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing REJECT MULTI WIP")
+    h.require_contains("queue-reject-multi-wip", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing queue-reject-multi-wip")
     h.require_contains("finish.py", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing finish.py")
     h.require_contains("reject-red-suite", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing reject-red-suite")
     h.require_contains("require-green", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing require-green")
@@ -6215,6 +6231,145 @@ def run_evals(root: Path) -> int:
     else:
         h.pass_msg("diagnose.sh thin twin forwards --check-report")
     h.pass_msg("diagnose.py thin twins + report-skeleton HARD-GATE")
+
+    # ---- queue multi-WIP HARD-GATE (queue maturity vertical depth) ----
+    h.section("queue-reject-multi-wip HARD-GATE")
+    h.need("skills/emperor-queue/SKILL.md")
+    h.need("scripts/lib/queue.py")
+    h.need("scripts/queue.sh")
+    h.need("scripts/queue.ps1")
+    h.need("evals/fixtures/queue-reject-multi-wip/queue-multi-two.md")
+    h.need("evals/fixtures/queue-reject-multi-wip/queue-multi-three.md")
+    h.need("evals/fixtures/queue-reject-multi-wip/queue-ok-one.md")
+    h.need("evals/fixtures/queue-reject-multi-wip/queue-ok-zero.md")
+    h.need("evals/fixtures/queue-reject-multi-wip/queue-ok-placeholder.md")
+    h.bash_n("scripts/queue.sh", "queue.sh syntax (multi-wip)")
+    h.py_compile("scripts/lib/queue.py", "queue.py compile (multi-wip)")
+    h.require_contains(
+        "--reject-multi-wip",
+        "scripts/lib/queue.py",
+        "queue.py missing --reject-multi-wip",
+    )
+    h.require_contains(
+        "--check-wip",
+        "scripts/lib/queue.py",
+        "queue.py missing --check-wip",
+    )
+    h.require_contains(
+        "REJECT MULTI WIP",
+        "scripts/lib/queue.py",
+        "queue.py missing REJECT MULTI WIP iron",
+    )
+    h.require_contains(
+        "--check-wip",
+        "skills/emperor-queue/SKILL.md",
+        "emperor-queue skill missing --check-wip HARD-GATE",
+    )
+    h.require_contains(
+        "--reject-multi-wip",
+        "skills/emperor-queue/SKILL.md",
+        "emperor-queue skill missing --reject-multi-wip",
+    )
+    h.require_contains(
+        "queue",
+        "scripts/emperor",
+        "emperor bash missing queue",
+    )
+    h.require_contains(
+        "'queue'",
+        "scripts/emperor.ps1",
+        "emperor.ps1 missing queue",
+    )
+    h.require_contains(
+        "queue",
+        "scripts/emperor.cmd",
+        "emperor.cmd missing queue",
+    )
+    h.require_contains(
+        "queue",
+        "scripts/emperor.zsh",
+        "emperor.zsh missing queue",
+    )
+    h.require_contains(
+        "reject-multi-wip",
+        "evals/bakeoff.md",
+        "bakeoff.md missing queue reject-multi-wip inventory",
+    )
+    h.require_contains(
+        "queue-reject-multi-wip",
+        "evals/evals.json",
+        "evals.json missing queue-reject-multi-wip case",
+    )
+    h.require_contains(
+        "queue multi-WIP",
+        "references/mechanical-gates.md",
+        "mechanical-gates missing queue multi-WIP row",
+    )
+    h.require_contains(
+        "--reject-multi-wip",
+        "references/software-factory.md",
+        "software-factory missing --reject-multi-wip",
+    )
+    # Always-fail iron
+    rc, out = h.run_py("scripts/lib/queue.py", "--reject-multi-wip")
+    if rc == 0 or "REJECT MULTI WIP" not in out:
+        h.fail_msg("queue --reject-multi-wip should always fail with REJECT MULTI WIP")
+    else:
+        h.pass_msg("queue --reject-multi-wip always fails")
+    # Reject fixtures
+    for name, needle in (
+        ("queue-multi-two.md", r"multi-WIP|2 active"),
+        ("queue-multi-three.md", r"multi-WIP|3 active"),
+    ):
+        rc, err = h.run_py(
+            "scripts/lib/queue.py",
+            "--check-wip",
+            str(root / "evals/fixtures/queue-reject-multi-wip" / name),
+        )
+        if rc == 0:
+            h.fail_msg(f"queue {name} should fail check-wip")
+        elif not h.grep_out(err, needle):
+            h.fail_msg(f"queue {name} should mention {needle}: {err}")
+        else:
+            h.pass_msg(f"queue {name} rejected")
+    # Missing file
+    missing = root / "evals/fixtures/queue-reject-multi-wip" / "does-not-exist.md"
+    rc, err = h.run_py("scripts/lib/queue.py", "--check-wip", str(missing))
+    if rc == 0 or "missing" not in err.lower():
+        h.fail_msg("queue --check-wip missing file should fail")
+    else:
+        h.pass_msg("queue missing file rejected")
+    # Accept fixtures
+    for name in ("queue-ok-one.md", "queue-ok-zero.md", "queue-ok-placeholder.md"):
+        rc, ok_out = h.run_py(
+            "scripts/lib/queue.py",
+            "--check-wip",
+            str(root / "evals/fixtures/queue-reject-multi-wip" / name),
+        )
+        if rc != 0 or "WIP=1 ok" not in ok_out:
+            h.fail_msg(f"queue {name} should pass check-wip: rc={rc} out={ok_out}")
+        else:
+            h.pass_msg(f"queue {name} accepted")
+    _, q_sh = h.run_sh(
+        "scripts/queue.sh",
+        "--check-wip",
+        str(root / "evals/fixtures/queue-reject-multi-wip/queue-ok-one.md"),
+    )
+    if "WIP=1 ok" not in q_sh:
+        h.fail_msg("queue.sh --check-wip should forward PASS")
+    else:
+        h.pass_msg("queue.sh thin twin forwards --check-wip")
+    # emperor peer
+    _, emp_out = h.run_sh(
+        "scripts/emperor",
+        "queue",
+        "--reject-multi-wip",
+    )
+    if "REJECT MULTI WIP" not in emp_out:
+        h.fail_msg("emperor queue --reject-multi-wip should forward REJECT")
+    else:
+        h.pass_msg("emperor queue peer forwards --reject-multi-wip")
+    h.pass_msg("queue.py thin twins + multi-WIP HARD-GATE")
 
     # root-cause tracing HARD-GATE
     h.section("root-cause tracing HARD-GATE leaf")

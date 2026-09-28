@@ -8,7 +8,7 @@ front door. The job is **make software**, not emit code.
 Given a repo and a loose task (or no task):
 
 1. Resume from disk (`PLAN.md` / `PROGRESS.md` / `.emperor/state.md`) — do not restate.
-2. If no task: `scripts/emperor queue next` (Python core `scripts/lib/queue.py`; GitHub issues → Linear → `.emperor/queue.md`).
+2. If no task: `scripts/emperor queue next` (Python core `scripts/lib/queue.py`; WIP=1 via `--reject-multi-wip` / `--check-wip`; GitHub issues → Linear → `.emperor/queue.md`).
 3. Scope it (G0/G1). Write DONE probes *before* code.
 4. Design on disk. Build the smallest shippable change. TDD.
 5. Verify with quoted tails. `scripts/emperor done` must exit 0.
