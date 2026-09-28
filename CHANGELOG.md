@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.4.80
+
+- Archaeology Expect leaf: `evals/fixtures/lost-expect/HELLO.EXP` + identify smoke; Expect 5.45.4 boot probe VERIFIED (`expect HELLO.EXP` → `EMPEROR-TIME-EXPECT-PROBE-OK`); dialect labels honest (CONJECTURE / UNVERIFIABLE where due); identify fossils `*.exp` only; bare `expect` allowed as route tag (tool binary name; word-boundary); bare `.exp` allowed as route tag (no known peer excavate substring collision); companion to Tcl leaf (Expect sits on Tcl / Don Libes); Debian packages `expect` + `tcl-expect`
+- Jail pin `references/archaeology-expect-manual.md` — Expect SYNOPSIS cmdfile + USAGE script-file evaluation + COMMANDS exit / Tcl puts
+- Catalog + SKILL.md + archaeology.md + language-agnostic.md link the thirty-ninth pin alongside Pascal, ASM, COBOL, Fortran, VHDL, Ada, Forth, Common Lisp, Prolog, Tcl, Erlang, REXX, Modula-2, Algol 68, ALGOL 60, Algol W, Icon, Oberon, SNOBOL4, Simula, APL, BCPL, PL/I, Smalltalk, PostScript, BASIC, Scheme, AWK, sed, m4, ed, Make, dc, lex, yacc, roff, Perl, and bc; route triggers gain `expect` / `tcl-expect` / `.exp`; eval locks `*.exp` identify on lost-expect
+- Plugin, marketplace, and SKILL.md at 0.4.80
+
 ## 0.4.79
 
 - Archaeology bc leaf: `evals/fixtures/lost-bc/HELLO.BC` + identify smoke; GNU bc 1.07.1 boot probe VERIFIED (`bc HELLO.BC` / `bc -q HELLO.BC` → `EMPEROR-TIME-BC-PROBE-OK`); dialect labels honest (CONJECTURE / UNVERIFIABLE where due); identify fossils `*.bc` only; bare `bc` allowed as route tag (tool binary name; word-boundary); bare `.bc` refused as route tag (substring collision with BCPL `.bcpl`); companion to dc leaf (GNU bc/dc family); deferred earlier on apt 500, now installed
