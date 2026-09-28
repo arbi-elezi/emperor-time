@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.4.98
+
+- Archaeology CSV leaf: `evals/fixtures/lost-csv/HELLO.csv` + identify smoke; CPython 3.13.5 stdlib `csv` 1.0 boot probe VERIFIED (`csv.DictReader` → `EMPEROR-TIME-CSV-PROBE-OK`); dialect labels honest (CONJECTURE / UNVERIFIABLE where due); identify fossils `*.csv`; bare `csv` / `pycsv` / `csv1.0` allowed as route tags; bare `.csv` allowed with extension-boundary matching; prefer `csv` / `pycsv` / `csv1.0` / `.csv`; CPython stdlib already on box — **zero new Apt Worthy Spend** this leaf; Debian `csvkit` 2.0.1-3 apt REJECTED (~10.6 MB archives / ~53 MB Installed-Size / 29 new packages); CSV tabular leaf after HTML; treats CSV as peer fossil not house twin language; TeX/LaTeX still deferred; C++ still deferred; graphviz still deferred; CLIPS / embeddings still deferred
+- Jail pin `references/archaeology-csv-manual.md` — Python csv module DictReader
+- Catalog + SKILL.md + archaeology.md + language-agnostic.md link the fifty-seventh pin alongside Pascal, ASM, COBOL, Fortran, VHDL, Ada, Forth, Common Lisp, Prolog, Tcl, Erlang, REXX, Modula-2, Algol 68, ALGOL 60, Algol W, Icon, Oberon, SNOBOL4, Simula, APL, BCPL, PL/I, Smalltalk, PostScript, BASIC, Scheme, AWK, sed, m4, ed, Make, dc, lex, yacc, roff, Perl, bc, Expect, Lua, Ruby, Go, Rust, C, JavaScript, Python, TypeScript, Bash, PHP, SQL/SQLite, jq, XSLT, XML, YAML, TOML, and HTML; route triggers gain `csv` / `pycsv` / `csv1.0` / `.csv`; eval locks `*.csv` identify on lost-csv
+- Plugin, marketplace, and SKILL.md at 0.4.98
+
 ## 0.4.97
 
 - Archaeology HTML leaf: `evals/fixtures/lost-html/HELLO.html` + identify smoke; HTML Tidy 5.8.0 boot probe VERIFIED (`tidy -q -utf8 --show-body-only yes -asxml HELLO.html` → body containing `EMPEROR-TIME-TIDY-PROBE-OK`); dialect labels honest (CONJECTURE / UNVERIFIABLE where due); identify fossils `*.html` / `*.htm`; bare `html` / `tidy` / `html-tidy` / `tidy5.8` allowed as route tags; bare `.html` / `.htm` allowed with extension-boundary matching (`.htm` does not prefix-hit `.html`); prefer `tidy` / `html-tidy` / `tidy5.8` / `html` / `.html` / `.htm`; Debian packages `tidy` 2:5.8.0-2 + `libtidy58` 2:5.8.0-2 apt-installed this leaf (~252 kB archives; Installed-Size sum ~1170 kB / ~1198 kB disk); HTML document leaf after XML/TOML; treats HTML as peer fossil not house twin language; TeX/LaTeX still deferred; C++ still deferred; csvkit/CSV still deferred; CLIPS / embeddings still deferred
