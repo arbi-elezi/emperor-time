@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.4.60
+- Archaeology SNOBOL4 leaf: `evals/fixtures/lost-sno/HELLO.SNO` + identify smoke; CSNOBOL4B 2.3.4 boot probe VERIFIED (`snobol4 -b HELLO.SNO` → `EMPEROR-TIME-SNO-PROBE-OK`); dialect labels honest (CONJECTURE / UNVERIFIABLE where due); identify fossils `*.sno` only
+- Jail pin `references/archaeology-snobol-manual.md` — CSNOBOL4 snobol4cmd(1) SYNOPSIS (`snobol4 [ options ... ] [ file ... ]`)
+- Catalog + SKILL.md + archaeology.md + language-agnostic.md link the nineteenth pin alongside Pascal, ASM, COBOL, Fortran, VHDL, Ada, Forth, Common Lisp, Prolog, Tcl, Erlang, REXX, Modula-2, Algol 68, ALGOL 60, Algol W, Icon, and Oberon; route triggers gain `snobol4` / `snobol` / `csnobol4` / `.sno` (bare English `output` refused); eval locks `*.sno` identify on lost-sno
+- Plugin, marketplace, and SKILL.md at 0.4.60
+
+
 ## 0.4.59
 - Archaeology Oberon leaf: `evals/fixtures/lost-obn/HELLO.OBN` + identify smoke; Vishap Oberon voc 2.1.0 boot probe VERIFIED (`voc -M HELLO.OBN` → `EMPEROR-TIME-OBN-PROBE-OK`); dialect labels honest (CONJECTURE / UNVERIFIABLE where due); identify fossils `*.obn` only (not `*.mod` / `*.Mod` — Modula-2 leaf)
 - Jail pin `references/archaeology-oberon-manual.md` — Vishap Compiling Main module (`voc` `-m` / `-M`)

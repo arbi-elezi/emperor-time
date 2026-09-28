@@ -1,0 +1,9 @@
+== identify evals/fixtures/lost-sno ==
+-- extensions --
+      2 md
+      1 txt
+      1 sno
+-- named fossils --
+1 *.sno
+-- shebangs --
+identify: done (read-only)

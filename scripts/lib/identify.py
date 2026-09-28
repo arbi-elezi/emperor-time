@@ -62,6 +62,7 @@ FOSSIL_PATTERNS: tuple[str, ...] = (
     "*.alw",
     "*.icn",
     "*.obn",
+    "*.sno",
     "*.rel",
     "*.hex",
     "*.bin",
