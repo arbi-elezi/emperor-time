@@ -567,7 +567,11 @@
         "sqlite3.46",
         "sqlite3",
         "sqlite",
-        ".sql"
+        ".sql",
+        "jq",
+        "jq1.7",
+        "jqlang",
+        ".jq"
       ],
       "tags": [
         "archaeology",
@@ -740,7 +744,11 @@
         "sqlite3.46",
         "sqlite3",
         "sqlite",
-        ".sql"
+        ".sql",
+        "jq",
+        "jq1.7",
+        "jqlang",
+        ".jq"
       ],
       "target": "skills/emperor-excavate/SKILL.md",
       "reason": "lost/ancient/foreign tree \u2014 excavate before modernizing"
