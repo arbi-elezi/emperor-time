@@ -83,10 +83,11 @@ LEAVES: list[tuple[str, str, tuple[str, ...]]] = [
     ("arch-alw", "evals/fixtures/lost-alw/HELLO.ALW", ("lost-alw",)),
     ("arch-icn", "evals/fixtures/lost-icn/HELLO.ICN", ("lost-icn",)),
     ("arch-obn", "evals/fixtures/lost-obn/HELLO.OBN", ("lost-obn",)),
+    ("arch-sno", "evals/fixtures/lost-sno/HELLO.SNO", ("lost-sno",)),
     ("gate-py", "scripts/lib/gate.py", ("gate.py", "mechanical")),
     ("identify-py", "scripts/lib/identify.py", ("identify.py", "survey")),
     ("eval-py", "scripts/lib/eval.py", ("eval.py", "structural eval")),
-    ("route-py", "scripts/lib/route.py", ("route", "fortran", ".f90", "vhdl", ".vhd", "ada", ".adb", "forth", ".fs", "pforth", "lisp", ".lisp", "clisp", "prolog", ".pro", "swipl", "tcl", ".tcl", "tclsh", "erlang", ".erl", "escript", "rexx", ".rex", "regina", "modula", ".mod", "gm2", "algol", ".a68", "a68g", "marst", ".a60", "algol60", "awe", ".alw", "algolw", "icont", ".icn", "iconx", "voc", ".obn", "oberon")),
+    ("route-py", "scripts/lib/route.py", ("route", "fortran", ".f90", "vhdl", ".vhd", "ada", ".adb", "forth", ".fs", "pforth", "lisp", ".lisp", "clisp", "prolog", ".pro", "swipl", "tcl", ".tcl", "tclsh", "erlang", ".erl", "escript", "rexx", ".rex", "regina", "modula", ".mod", "gm2", "algol", ".a68", "a68g", "marst", ".a60", "algol60", "awe", ".alw", "algolw", "icont", ".icn", "iconx", "voc", ".obn", "oberon", "snobol4", ".sno", "snobol")),
     ("done-py", "scripts/lib/done.py", ("done.py", "DONE probes")),
     (
         "silent-boot-zsh",

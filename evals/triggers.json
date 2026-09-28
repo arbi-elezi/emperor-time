@@ -442,7 +442,11 @@
         "voc",
         "oberon",
         "oberon-2",
-        "oberon2"
+        "oberon2",
+        ".sno",
+        "snobol4",
+        "snobol",
+        "csnobol4"
       ],
       "tags": [
         "archaeology",
@@ -513,7 +517,11 @@
         "voc",
         "oberon",
         "oberon-2",
-        "oberon2"
+        "oberon2",
+        "sno",
+        "snobol4",
+        "snobol",
+        "csnobol4"
       ],
       "target": "skills/emperor-excavate/SKILL.md",
       "reason": "lost/ancient/foreign tree \u2014 excavate before modernizing"

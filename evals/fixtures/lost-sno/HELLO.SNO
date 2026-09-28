@@ -1,0 +1,5 @@
+* HELLO.SNO — archaeology probe fixture (DOS-era 8.3 name)
+* Dialect CONJECTURE: see README.md in this directory
+* Intent: smallest SNOBOL4 program that prints a known string via OUTPUT
+        OUTPUT = "EMPEROR-TIME-SNO-PROBE-OK"
+END
