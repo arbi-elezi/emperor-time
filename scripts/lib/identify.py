@@ -119,6 +119,7 @@ FOSSIL_PATTERNS: tuple[str, ...] = (
     "*.apk",
     "*.docx",
     "*.xlsx",
+    "*.tsv",
     "*.l",
     "*.lex",
     "*.y",

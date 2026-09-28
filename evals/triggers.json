@@ -659,7 +659,11 @@
         "xlsx",
         "pyxlsx",
         "ooxml-excel",
-        ".xlsx"
+        ".xlsx",
+        "tsv",
+        "pytsv",
+        "tab-separated",
+        ".tsv"
       ],
       "tags": [
         "archaeology",
@@ -920,7 +924,11 @@
         "xlsx",
         "pyxlsx",
         "ooxml-excel",
-        ".xlsx"
+        ".xlsx",
+        "tsv",
+        "pytsv",
+        "tab-separated",
+        ".tsv"
       ],
       "target": "skills/emperor-excavate/SKILL.md",
       "reason": "lost/ancient/foreign tree — excavate before modernizing"
