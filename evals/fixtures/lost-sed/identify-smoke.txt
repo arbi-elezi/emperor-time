@@ -1,0 +1,9 @@
+== identify evals/fixtures/lost-sed ==
+-- extensions --
+      2 md
+      1 txt
+      1 sed
+-- named fossils --
+1 *.sed
+-- shebangs --
+identify: done (read-only)

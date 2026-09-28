@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.4.70
+- Archaeology sed leaf: `evals/fixtures/lost-sed/HELLO.SED` + identify smoke; GNU sed 4.9 boot probe VERIFIED (`sed -f HELLO.SED` → `EMPEROR-TIME-SED-PROBE-OK`); dialect labels honest (CONJECTURE / UNVERIFIABLE where due); identify fossils `*.sed` only; bare `sed` allowed as route tag (POSIX / tool binary name — not English collision)
+- Jail pin `references/archaeology-sed-manual.md` — GNU sed Command-Line Options / `-f` / `--file=script-file`
+- Catalog + SKILL.md + archaeology.md + language-agnostic.md link the twenty-ninth pin alongside Pascal, ASM, COBOL, Fortran, VHDL, Ada, Forth, Common Lisp, Prolog, Tcl, Erlang, REXX, Modula-2, Algol 68, ALGOL 60, Algol W, Icon, Oberon, SNOBOL4, Simula, APL, BCPL, PL/I, Smalltalk, PostScript, BASIC, Scheme, and AWK; route triggers gain `sed` / `gsed` / `.sed`; eval locks `*.sed` identify on lost-sed
+- Plugin, marketplace, and SKILL.md at 0.4.70
+
 ## 0.4.69
 - Archaeology AWK leaf: `evals/fixtures/lost-awk/HELLO.AWK` + identify smoke; GNU Awk 5.2.1 boot probe VERIFIED (`gawk -f HELLO.AWK` → `EMPEROR-TIME-AWK-PROBE-OK`); dialect labels honest (CONJECTURE / UNVERIFIABLE where due); identify fossils `*.awk` only; bare `awk` allowed as route tag (POSIX / tool binary name — not English collision)
 - Jail pin `references/archaeology-awk-manual.md` — GAWK Effective AWK Programming Command-Line Options / `-f` / `--file source-file`
