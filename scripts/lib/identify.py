@@ -106,6 +106,7 @@ FOSSIL_PATTERNS: tuple[str, ...] = (
     "*.ini",
     "*.plist",
     "*.eml",
+    "*.zip",
     "*.l",
     "*.lex",
     "*.y",

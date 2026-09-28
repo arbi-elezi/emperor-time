@@ -1,0 +1,9 @@
+== identify /workspace/emperor-time/evals/fixtures/lost-zip ==
+-- extensions --
+      2 md
+      1 zip
+      1 txt
+-- named fossils --
+1 *.zip
+-- shebangs --
+identify: done (read-only)

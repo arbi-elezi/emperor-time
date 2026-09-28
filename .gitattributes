@@ -10,3 +10,4 @@ Modelfile.example text eol=lf
 # Rendered art
 *.png -text
 evals/fixtures/lost-eml/HELLO.eml text eol=crlf
+evals/fixtures/lost-zip/HELLO.zip -text

@@ -616,7 +616,11 @@
         "eml",
         "pyemail",
         "email.parser",
-        ".eml"
+        ".eml",
+        "zip",
+        "pyzip",
+        "zipfile",
+        ".zip"
       ],
       "tags": [
         "archaeology",
@@ -834,7 +838,11 @@
         "eml",
         "pyemail",
         "email.parser",
-        ".eml"
+        ".eml",
+        "zip",
+        "pyzip",
+        "zipfile",
+        ".zip"
       ],
       "target": "skills/emperor-excavate/SKILL.md",
       "reason": "lost/ancient/foreign tree — excavate before modernizing"
