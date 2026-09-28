@@ -196,6 +196,11 @@ def run_evals(root: Path) -> int:
         "execute",
         "subagent",
         "parallel",
+        "task-brief",
+        "task-start",
+        "task-done",
+        "sdd-workspace",
+        "sdd-review-pack",
     ):
         h.need(f"scripts/{pair}.sh")
         h.need(f"scripts/{pair}.ps1")
@@ -3383,7 +3388,305 @@ def run_evals(root: Path) -> int:
     if not re.search(r"^SUBAGENT checklist=yes", sub_sh, re.M):
         h.fail_msg("subagent.sh missing checklist card")
 
+    # ---- SDD task lifecycle (plan-scoped, mutating) ----
+    h.section("SDD task lifecycle (brief / BASE / task-done)")
+    for rel in (
+        "scripts/lib/sdd_workspace.py",
+        "scripts/lib/task_brief.py",
+        "scripts/lib/task_start.py",
+        "scripts/lib/task_done.py",
+        "scripts/lib/sdd_review_pack.py",
+        "scripts/sdd-workspace.sh",
+        "scripts/sdd-workspace.ps1",
+        "scripts/task-brief.sh",
+        "scripts/task-brief.ps1",
+        "scripts/task-start.sh",
+        "scripts/task-start.ps1",
+        "scripts/task-done.sh",
+        "scripts/task-done.ps1",
+        "scripts/sdd-review-pack.sh",
+        "scripts/sdd-review-pack.ps1",
+        "evals/fixtures/sdd-lifecycle/alpha/work-order.md",
+        "evals/fixtures/sdd-lifecycle/beta/work-order.md",
+    ):
+        h.need(rel)
+    for py in (
+        "scripts/lib/sdd_workspace.py",
+        "scripts/lib/task_brief.py",
+        "scripts/lib/task_start.py",
+        "scripts/lib/task_done.py",
+        "scripts/lib/sdd_review_pack.py",
+    ):
+        h.py_compile(py, f"{Path(py).name} compile")
+    for twin, core in (
+        ("scripts/task-brief.sh", "task_brief.py"),
+        ("scripts/task-brief.ps1", "task_brief.py"),
+        ("scripts/task-start.sh", "task_start.py"),
+        ("scripts/task-start.ps1", "task_start.py"),
+        ("scripts/task-done.sh", "task_done.py"),
+        ("scripts/task-done.ps1", "task_done.py"),
+        ("scripts/sdd-workspace.sh", "sdd_workspace.py"),
+        ("scripts/sdd-workspace.ps1", "sdd_workspace.py"),
+        ("scripts/sdd-review-pack.sh", "sdd_review_pack.py"),
+        ("scripts/sdd-review-pack.ps1", "sdd_review_pack.py"),
+    ):
+        h.require_contains(core, twin, f"{twin} thin twin missing {core}")
+    for name in (
+        "task-brief",
+        "task-start",
+        "task-done",
+        "sdd-workspace",
+        "sdd-review-pack",
+        "brief",
+    ):
+        h.require_contains(name, "scripts/emperor", f"emperor bash missing {name}")
+        h.require_contains(f"'{name}'", "scripts/emperor.ps1", f"emperor.ps1 missing {name}")
+        h.require_contains(name, "scripts/emperor.cmd", f"emperor.cmd missing {name}")
+        h.require_contains(name, "scripts/emperor.zsh", f"emperor.zsh missing {name}")
+    h.require_contains(
+        "task-brief",
+        "skills/emperor-build/executing-plans-checklist.md",
+        "executing-plans checklist missing task-brief lifecycle",
+    )
+    h.require_contains(
+        "task-done",
+        "skills/emperor-build/subagent-driven-checklist.md",
+        "subagent-driven checklist missing task-done lifecycle",
+    )
+    h.require_contains(
+        ".emperor/sdd/",
+        "skills/emperor-build/SKILL.md",
+        "emperor-build SKILL missing .emperor/sdd/ layout",
+    )
+    # Refuse archaeology / whole-SP vendoring in this leaf
+    for bad_path in (
+        "scripts/lib/sdd_workspace.py",
+        "scripts/lib/task_brief.py",
+        "scripts/lib/task_start.py",
+        "scripts/lib/task_done.py",
+    ):
+        body = h.read(bad_path)
+        if ".superpowers/sdd" in body and "NOT `.superpowers/`" not in body and "NOT `.superpowers/" not in body:
+            # allow negation mentions
+            if "NOT" not in body and "never" not in body.lower():
+                h.fail_msg(f"{bad_path} must not target .superpowers/sdd as layout")
+        if "implementer-prompt" in body or "re-review-prompt.md" in body:
+            h.fail_msg(f"{bad_path} must not vendor whole SP prompt templates")
 
+    alpha = root / "evals/fixtures/sdd-lifecycle/alpha/work-order.md"
+    beta = root / "evals/fixtures/sdd-lifecycle/beta/work-order.md"
+
+    # task-brief: non-empty Task 1
+    rc, out = h.run_py("scripts/lib/task_brief.py", str(alpha), "1")
+    if rc != 0:
+        h.fail_msg(f"task-brief Task 1 should exit 0, got {rc}: {out}")
+    elif "brief:" not in out:
+        h.fail_msg("task-brief missing brief: line")
+    else:
+        brief_path = out.strip().split("brief:", 1)[-1].strip()
+        bp = Path(brief_path)
+        if not bp.is_file() or bp.stat().st_size == 0:
+            h.fail_msg("task-brief wrote empty/missing file")
+        elif "Task 1" not in bp.read_text(encoding="utf-8"):
+            h.fail_msg("task-brief content missing Task 1 heading")
+        else:
+            h.pass_msg("task-brief writes non-empty Task 1 brief")
+
+    # task-brief: missing task → ≠0
+    rc, out = h.run_py("scripts/lib/task_brief.py", str(alpha), "99")
+    if rc == 0:
+        h.fail_msg("task-brief Task 99 should exit ≠0")
+    else:
+        h.pass_msg("task-brief exits ≠0 when Task missing")
+
+    # workspace plan-scoping + collision
+    rc1, ws1 = h.run_py("scripts/lib/sdd_workspace.py", str(alpha))
+    rc2, ws2 = h.run_py("scripts/lib/sdd_workspace.py", str(beta))
+    if rc1 != 0 or rc2 != 0:
+        h.fail_msg(f"sdd_workspace failed: {ws1!r} / {ws2!r}")
+    else:
+        w1 = Path(ws1.strip())
+        w2 = Path(ws2.strip())
+        if w1 == w2:
+            h.fail_msg("two plans with same basename must not share workspace")
+        elif not (w1 / "plan-path").is_file() or not (w2 / "plan-path").is_file():
+            h.fail_msg("workspace missing plan-path marker")
+        else:
+            # self-ignore
+            gi = root / ".emperor" / "sdd" / ".gitignore"
+            if not gi.is_file() or gi.read_text(encoding="utf-8").strip() != "*":
+                h.fail_msg(".emperor/sdd/.gitignore must be self-ignore *")
+            else:
+                h.pass_msg("sdd_workspace plan-scoped + collision marker + self-ignore")
+
+    # task-start: prints brief: + base:
+    rc, out = h.run_py("scripts/lib/task_start.py", str(alpha), "1")
+    if rc != 0:
+        h.fail_msg(f"task-start should exit 0: {out}")
+    elif not re.search(r"^brief:\s+\S", out, re.M):
+        h.fail_msg("task-start missing brief: line")
+    elif not re.search(r"^base:\s+[0-9a-f]{7,}", out, re.M):
+        h.fail_msg("task-start missing base: SHA line")
+    else:
+        h.pass_msg("task-start prints brief: + base:")
+
+    # task-done: refuse empty BASE..HEAD (no new commits since start)
+    rc, out = h.run_py(
+        "scripts/lib/task_done.py",
+        str(alpha),
+        "1",
+        "--probe",
+        "true",
+    )
+    if rc == 0:
+        h.fail_msg("task-done should refuse empty BASE..HEAD")
+    elif "empty commit range" not in out and "empty commit range" not in out.lower():
+        # stderr merged in run()
+        if "empty commit range" not in out:
+            h.fail_msg(f"task-done empty-range refusal unclear: {out[:300]}")
+        else:
+            h.pass_msg("task-done refuses empty BASE..HEAD")
+    else:
+        h.pass_msg("task-done refuses empty BASE..HEAD")
+
+    # task-done: refuse failing probe (need a non-empty range first — use a throwaway commit in tmp clone)
+    with tempfile.TemporaryDirectory(prefix="et-sdd-") as tmp:
+        tmp_p = Path(tmp)
+        # minimal git repo with plan copy + one commit after BASE
+        subprocess.run(["git", "init"], cwd=tmp_p, capture_output=True, check=True)
+        subprocess.run(
+            ["git", "config", "user.email", "eval@emperor.local"],
+            cwd=tmp_p,
+            capture_output=True,
+            check=True,
+        )
+        subprocess.run(
+            ["git", "config", "user.name", "ET Eval"],
+            cwd=tmp_p,
+            capture_output=True,
+            check=True,
+        )
+        plan_tmp = tmp_p / "plan.md"
+        plan_tmp.write_text(alpha.read_text(encoding="utf-8"), encoding="utf-8")
+        subprocess.run(["git", "add", "plan.md"], cwd=tmp_p, capture_output=True, check=True)
+        subprocess.run(
+            ["git", "commit", "-m", "base"],
+            cwd=tmp_p,
+            capture_output=True,
+            check=True,
+        )
+        # run task_start from tmp (scripts still from root)
+        rc_s, out_s = h.run(
+            [
+                "python3",
+                str(root / "scripts/lib/task_start.py"),
+                str(plan_tmp),
+                "1",
+            ],
+            cwd=tmp_p,
+        )
+        if rc_s != 0:
+            h.fail_msg(f"task-start in tmp repo failed: {out_s}")
+        else:
+            (tmp_p / "change.txt").write_text("x\n", encoding="utf-8")
+            subprocess.run(["git", "add", "change.txt"], cwd=tmp_p, capture_output=True, check=True)
+            subprocess.run(
+                ["git", "commit", "-m", "work"],
+                cwd=tmp_p,
+                capture_output=True,
+                check=True,
+            )
+            # failing probe
+            rc_f, out_f = h.run(
+                [
+                    "python3",
+                    str(root / "scripts/lib/task_done.py"),
+                    str(plan_tmp),
+                    "1",
+                    "--probe",
+                    "false",
+                ],
+                cwd=tmp_p,
+            )
+            if rc_f == 0:
+                h.fail_msg("task-done should refuse failing probe")
+            else:
+                h.pass_msg("task-done refuses failing probe")
+            # green probe → ledger
+            rc_g, out_g = h.run(
+                [
+                    "python3",
+                    str(root / "scripts/lib/task_done.py"),
+                    str(plan_tmp),
+                    "1",
+                    "--probe",
+                    "true",
+                ],
+                cwd=tmp_p,
+            )
+            if rc_g != 0:
+                h.fail_msg(f"task-done green probe should pass: {out_g}")
+            elif "Task 1: complete" not in out_g:
+                h.fail_msg(f"task-done missing complete line: {out_g}")
+            else:
+                # progress under tmp .emperor/sdd
+                progs = list((tmp_p / ".emperor" / "sdd").rglob("progress.md"))
+                if not progs or "Task 1: complete" not in progs[0].read_text(encoding="utf-8"):
+                    h.fail_msg("task-done did not append progress.md")
+                else:
+                    h.pass_msg("task-done appends progress on green probe")
+
+            # sdd_review_pack ancestor + non-empty
+            base_files = list((tmp_p / ".emperor" / "sdd").rglob("task-1-base"))
+            if not base_files:
+                h.fail_msg("missing task-1-base after start")
+            else:
+                base_sha = base_files[0].read_text(encoding="utf-8").strip()
+                head_sha = subprocess.run(
+                    ["git", "rev-parse", "HEAD"],
+                    cwd=tmp_p,
+                    capture_output=True,
+                    text=True,
+                    check=True,
+                ).stdout.strip()
+                rc_rp, out_rp = h.run(
+                    [
+                        "python3",
+                        str(root / "scripts/lib/sdd_review_pack.py"),
+                        str(plan_tmp),
+                        base_sha,
+                        head_sha,
+                    ],
+                    cwd=tmp_p,
+                )
+                if rc_rp != 0:
+                    h.fail_msg(f"sdd_review_pack should pass: {out_rp}")
+                elif "wrote " not in out_rp:
+                    h.fail_msg(f"sdd_review_pack missing wrote line: {out_rp}")
+                else:
+                    h.pass_msg("sdd_review_pack writes plan-scoped package")
+                # empty range refusal
+                rc_empty, out_empty = h.run(
+                    [
+                        "python3",
+                        str(root / "scripts/lib/sdd_review_pack.py"),
+                        str(plan_tmp),
+                        head_sha,
+                        head_sha,
+                    ],
+                    cwd=tmp_p,
+                )
+                if rc_empty == 0:
+                    h.fail_msg("sdd_review_pack should refuse empty range")
+                else:
+                    h.pass_msg("sdd_review_pack refuses empty range")
+
+    # thin twin via emperor dispatcher
+    rc, out = h.run_sh("scripts/emperor", "task-brief", str(alpha), "2")
+    if rc != 0 or "brief:" not in out:
+        h.fail_msg(f"emperor task-brief peer failed: rc={rc} {out[:200]}")
+    else:
+        h.pass_msg("emperor task-brief peer works")
 
     # parallel-dispatch
     h.section("dispatching-parallel-agents / parallel HARD-GATE leaf")
@@ -4336,8 +4639,14 @@ def run_evals(root: Path) -> int:
     h.require_contains("0.4.115", "CHANGELOG.md", "CHANGELOG missing 0.4.115")
     h.require_contains("0.4.117", "CHANGELOG.md", "CHANGELOG missing 0.4.117")
     h.require_contains("0.4.119", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing 0.4.119 tip")
-    h.require_contains("0.4.119", ".claude-plugin/plugin.json", "plugin.json not at 0.4.119")
     h.require_contains("0.4.119", "CHANGELOG.md", "CHANGELOG missing 0.4.119")
+    h.require_contains("0.4.120", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing 0.4.120 tip")
+    h.require_contains("0.4.120", ".claude-plugin/plugin.json", "plugin.json not at 0.4.120")
+    h.require_contains("0.4.120", "CHANGELOG.md", "CHANGELOG missing 0.4.120")
+    h.require_contains("sdd_workspace.py", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing sdd_workspace.py")
+    h.require_contains("task_brief.py", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing task_brief.py")
+    h.require_contains("task_start.py", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing task_start.py")
+    h.require_contains("task_done.py", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing task_done.py")
 
     # session-discovery
     h.section("session-discovery locate HARD-GATE leaf")

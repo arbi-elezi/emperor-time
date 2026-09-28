@@ -10,6 +10,7 @@
 **Contract:** when executing a work-order / plan with *independent tasks* and a subagent tool is available (client did **not** choose inline), complete the subagent-driven checklist. Fresh implementer per task. Task review (spec + quality) before the next task. Fix loop capped at 5. Controller coordinates; does not implement or skip review. Four stops still apply (same as `executing-plans-checklist.md`). Finish with whole-branch review then `emperor finish`. Emperor Time stays the orchestrator via emperor-build + dispatch + verify + finish; do **not** announce or load whole `subagent-driven-development`.
 
 Mechanical card: `scripts/emperor subagent` (Python: `scripts/lib/subagent.py`).
+Plan-scoped SDD lifecycle (mutating): `scripts/emperor task-brief` / `task-start` / `task-done` + `sdd-review-pack` (Python under `scripts/lib/`; workspace `.emperor/sdd/<plan-slug>/`). Cards may still print; lifecycle is mechanical. Never vendor whole Superpowers prompt templates.
 Companion leaves: `skills/emperor-build/executing-plans-checklist.md` (inline path), `skills/emperor-verify/request-review-checklist.md`, `skills/emperor-forge/finish-menu.md`.
 Steal-chain enlistment of *external* CLIs stays `skills/emperor-dispatch/SKILL.md` — different door.
 
@@ -61,7 +62,7 @@ Never paste session history or "state after Tasks 1–N". Never dispatch multipl
 Implementer never spawns reviewers or helpers — review arrives from you after the report.
 Record implementer agent id (fix rounds 1–3 resume it).
 
-ET: brief + report under `.emperor/runs/<task>/`; harness subagent tool (not Steal-chain CLI unless client consented).
+ET: `emperor task-start <work-order> N` → `brief:` + `base:` under `.emperor/sdd/<slug>/` (plan-scoped; not `.superpowers/`). Report path still under `.emperor/runs/<task>/` or the SDD dir. Harness subagent tool (not Steal-chain CLI unless client consented).
 
 ### Step 3: REPORT — Status triage
 
@@ -79,7 +80,7 @@ Both verdicts required: spec compliance AND task quality. Implementer self-revie
 Do not pre-judge ("do not flag X"). Do not re-run tests the report already evidenced without cause.
 Confirm ⚠️ "Cannot verify from diff" items yourself before marking the task complete.
 
-ET: `emperor review` / review-pack for packaging; keep controller context clean.
+ET: `emperor sdd-review-pack <work-order> BASE HEAD` (ancestor + non-empty range guards → SDD dir) or `emperor review-pack` for task-dir packs; keep controller context clean.
 
 ### Step 5: FIX — Loop R of 5; controller never fixes
 
@@ -96,6 +97,7 @@ Never fix findings yourself in the controller session.
 ### Step 6: COMPLETE — Task-done, next task, final review, finish
 
 Ledger `Task <N>: complete (...)` only when review is clean or every open finding is parked-with-ruling at the cap.
+Mechanical: `emperor task-done <work-order> N --probe '<cmd>'` appends the progress line only on green probe + non-empty BASE..HEAD (refuses otherwise).
 Next incomplete task → back to Step 2 without asking permission.
 After all tasks: whole-branch review (fresh reviewer; diff package from merge-base). ONE fix wave + one scoped re-review; adjudicate residuals.
 Collect every `Ruling:` into the final message. Then `emperor finish`. Do not assume they want a PR.

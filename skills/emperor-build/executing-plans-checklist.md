@@ -10,6 +10,7 @@
 **Contract:** when executing a work-order / plan *inline* in this session (client chose inline, or no subagent tool), complete the executing-plans checklist. Setup once. Task loop without pause-for-permission between tasks. Ledger every ruling. Stop only for the four named stops. Finish with whole-branch review then `emperor finish`. Emperor Time stays the orchestrator via emperor-build + TDD + evidence + finish; do **not** announce or load whole `executing-plans`.
 
 Mechanical card: `scripts/emperor execute` (Python: `scripts/lib/execute.py`).
+Plan-scoped SDD lifecycle (mutating): `scripts/emperor task-brief` / `task-start` / `task-done` (Python: `scripts/lib/task_brief.py`, `task_start.py`, `task_done.py`; workspace: `scripts/lib/sdd_workspace.py` → `.emperor/sdd/<plan-slug>/`). Cards may still print; lifecycle is mechanical.
 Companion leaves: `skills/emperor-tdd/red-green-refactor.md`, `skills/emperor-verify/verification-checklist.md`, `skills/emperor-forge/finish-menu.md`.
 
 ## HARD-GATE — The Iron Law
@@ -49,7 +50,7 @@ ET: `emperor iso` + task ledger under `.emperor/` + `emperor tdd` card loaded.
 Take the next incomplete task. Read its brief (exact values, not memory of setup).
 Mark in progress. BASE is the commit the task range starts from.
 
-ET: open **current work-order task only**; do not reload sibling aspects.
+ET: `emperor task-start <work-order> N` (writes brief under `.emperor/sdd/<slug>/`, records BASE, prints `brief:` + `base:`). Or `emperor task-brief <work-order> N` then record BASE. Open **current brief file only**; do not reload sibling aspects.
 
 ### Step 3: WORK — Steps in TDD order; compare every Expected
 
@@ -78,7 +79,7 @@ Before the ledger completion line, all true with evidence in this session:
 If any item missing: finish the task; do not mark complete.
 Then take the next task (back to Step 2) without asking permission.
 
-ET: `emperor evidence` / verification-before-completion still gates the claim.
+ET: `emperor task-done <work-order> N --probe '<cmd>'` appends progress only on green probe + non-empty BASE..HEAD (refuses empty range / failed probe). `emperor evidence` / verification-before-completion still gates the claim.
 
 ### Step 6: FINAL — Whole-branch review, then finish menu
 
@@ -104,15 +105,16 @@ Then `emperor finish` (integration menu). Do not assume they want a PR.
 | Step | ET home |
 |---|---|
 | 1 SETUP | emperor-worktree iso + ledger + tdd |
-| 2 TASK | emperor-build current work-order task |
+| 2 TASK | `emperor task-start` / `task-brief` → `.emperor/sdd/` |
 | 3 WORK | emperor-tdd + emperor-heal |
 | 4 RULE | ledger Ruling lines |
-| 5 COMPLETE | emperor-verify evidence |
+| 5 COMPLETE | `emperor task-done` + emperor-verify evidence |
 | 6 FINAL | emperor-verify review + emperor-forge finish |
 
 ## Forbidden
 
 - Vendor whole `executing-plans` or `subagent-driven-development` into always-on prompt.
+- Use `.superpowers/sdd/` — ET layout is `.emperor/sdd/` only.
 - Check-in theater between tasks after inline was chosen.
 - Unledgered plan deviation.
 - Claiming task complete without the completion contract.

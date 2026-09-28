@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.4.120
+
+- Vertical depth: plan-scoped SDD task lifecycle (brief / BASE / task-done) under `.emperor/sdd/<plan-slug>/` — closes largest Superpowers *script* gap without vendoring whole SP prompts/templates
+- Python cores: `sdd_workspace.py` (plan-path marker + self-ignore), `task_brief.py`, `task_start.py`, `task_done.py` (refuse empty BASE..HEAD / failed probe), `sdd_review_pack.py` (ancestor + non-empty range guards)
+- Thin twins + `emperor` peers: `task-brief` / `task-start` / `task-done` / `sdd-workspace` / `sdd-review-pack` (+ `brief` alias)
+- Checklists (`executing-plans` / `subagent-driven`) + emperor-build SKILL point at mechanical lifecycle; cards may still print
+- Eval fixtures `evals/fixtures/sdd-lifecycle/` + bakeoff/honesty inventory; not archaeology
+- Plugin, marketplace, and SKILL.md at 0.4.120
+
 ## 0.4.119
 
 - Archaeology JPEG / Pillow Image.open+COM-on-`.jpg` Jail pin: `evals/fixtures/lost-jpg/` + `references/archaeology-jpg-manual.md` (Pillow 11.1.0 on HELLO.jpg → EMPEROR-TIME-JPEG-PROBE-OK; zero new apt; ImageMagick/ffmpeg REJECTED as leaf owner; Python Pillow probe)

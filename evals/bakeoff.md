@@ -166,6 +166,12 @@ mean **disk + eval**, not live multi-vendor win rates.
 | persuasion-principles (HARD-GATE) | `scripts/lib/persuasion.py` + thin twins + `chains/chain-jail/persuasion-principles.md` + `emperor persuasion` | TESTED |
 | skill-discovery / SDO (HARD-GATE) | `scripts/lib/sdo.py` + thin twins + `chains/chain-jail/skill-discovery.md` + `emperor sdo` | TESTED |
 
+| sdd-workspace (Python core) | `scripts/lib/sdd_workspace.py` + thin `sdd-workspace.sh`/`sdd-workspace.ps1` → `.emperor/sdd/<slug>/` (plan-path marker + self-ignore) | TESTED |
+| task-brief (Python core) | `scripts/lib/task_brief.py` + thin `task-brief.sh`/`task-brief.ps1` + `emperor task-brief` / `brief` | TESTED |
+| task-start (Python core) | `scripts/lib/task_start.py` + thin twins — brief + BASE SHA (`brief:` / `base:`) | TESTED |
+| task-done (Python core) | `scripts/lib/task_done.py` + thin twins — probe + non-empty BASE..HEAD → progress (refuses otherwise) | TESTED |
+| sdd-review-pack (Python core) | `scripts/lib/sdd_review_pack.py` + thin twins — plan-scoped BASE..HEAD package (ancestor + non-empty) | TESTED |
+
 Honesty helper: `scripts/lib/bakeoff_honesty.py` fails if this inventory
 drifts from disk or if live-defect-rate is mislabeled.
 
@@ -182,7 +188,7 @@ drifts from disk or if live-defect-rate is mislabeled.
 ## Verdict
 
 ET wins this slice on *mechanical lock-in* (eval owns the rows; leaf gates
-above are on disk and eval-locked through v0.4.53).
+above are on disk and eval-locked through v0.4.120).
 Activation *mechanism* is closed on disk (v0.4.5–0.4.6); wild-agent
 activation without a tell stays **UNVERIFIABLE** until a marketplace re-run.
 Live defect-rate vs Superpowers stays **UNVERIFIABLE** — do not invent %.

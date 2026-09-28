@@ -57,3 +57,20 @@ Fresh implementer per task. Task review (spec + quality) before the next task.
 Controller coordinates; does not implement or skip review.
 Do not load whole `subagent-driven-development` or its prompt templates;
 ET + emperor-build orchestrate. Inline path stays `emperor execute`.
+
+
+## MUST — plan-scoped SDD task lifecycle (mutating)
+
+Deepens execute/subagent from print-cards into mechanics. Plan-scoped under
+`.emperor/sdd/<plan-slug>/` (NOT `.superpowers/`):
+
+| Command | Role |
+|---|---|
+| `emperor task-brief <work-order> N` | Extract `### Task N` → brief file (exit ≠0 if missing/empty) |
+| `emperor task-start <work-order> N` | Write brief + record BASE; prints `brief:` + `base:` |
+| `emperor task-done <work-order> N --probe '…'` | Append progress only on green probe + non-empty BASE..HEAD |
+| `emperor sdd-workspace <work-order>` | Resolve/create plan workspace (collision marker) |
+| `emperor sdd-review-pack <work-order> BASE HEAD` | Plan-scoped review package (ancestor + non-empty guards) |
+
+Cards (`emperor execute` / `emperor subagent`) may still print; lifecycle is mechanical.
+Never vendor whole Superpowers prompts/templates.

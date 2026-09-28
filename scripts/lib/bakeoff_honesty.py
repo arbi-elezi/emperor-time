@@ -225,6 +225,31 @@ LEAVES: list[tuple[str, str, tuple[str, ...]]] = [
         "scripts/lib/sdo.py",
         ("sdo.py", "sdo"),
     ),
+    (
+        "sdd-workspace",
+        "scripts/lib/sdd_workspace.py",
+        ("sdd_workspace.py", "sdd-workspace"),
+    ),
+    (
+        "task-brief",
+        "scripts/lib/task_brief.py",
+        ("task_brief.py", "task-brief"),
+    ),
+    (
+        "task-start",
+        "scripts/lib/task_start.py",
+        ("task_start.py", "task-start"),
+    ),
+    (
+        "task-done",
+        "scripts/lib/task_done.py",
+        ("task_done.py", "task-done"),
+    ),
+    (
+        "sdd-review-pack",
+        "scripts/lib/sdd_review_pack.py",
+        ("sdd_review_pack.py", "sdd-review-pack"),
+    ),
 ]
 
 
