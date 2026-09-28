@@ -1,0 +1,4 @@
+# Redacted dump — must PASS --check-env-redacted
+DB_PASSWORD=***REDACTED***
+API_TOKEN=***REDACTED***
+ET_RUNTIME=compose

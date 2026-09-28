@@ -99,27 +99,48 @@ emperor runtime status
 
 Then `emperor sandbox plan` emits for the active runtime.
 
-## Blind credentials
+## Blind credentials (real in v0.4.136+)
 
 Unified secret obtain/inject into workspace/stacks **without the LLM
 seeing values** (vault / 1Password / env-file broker). Agent sees
 names + status only — never plaintext on stdout.
 
+Core: `scripts/lib/secrets_broker.py` (wired from `super_context.py`).
+
+- **Manifest** — `.emperor/secrets/manifest.json` (names + status).
+- **Bind** — `declare --from-file PATH` copies into gitignored
+  `secrets/values/` (or `EMPEROR_SECRET_<NAME>`); value never echoed.
+- **Inject** — env-file broker writes artifact `.env.secrets` (outside
+  git) + public receipt; vault/1password write hook placeholders.
+- **HARD-GATE** — `--reject-secret-leak` (always-fail) /
+  `--check-env-redacted PATH` (refuse dumps with unredacted secret values).
+
 ```
 emperor secrets list
 emperor secrets declare --name DB_PASSWORD
+emperor secrets declare --name DB_PASSWORD --from-file ./local.secret
 emperor secrets inject --artifact <id>   # receipt only; no values printed
+emperor secrets --reject-secret-leak
+emperor secrets --check-env-redacted PATH
 ```
 
-## Unified workspace env
+## Unified workspace env (real in v0.4.136+)
 
 Env management is for the *workspace* (multi-repo artifact), not
 per-repo classical dotenv alone — **repo≠workspace**. ET owns merge/
-override across plugins.
+override across SOT plugins for an artifact.
+
+Core: `scripts/lib/workspace_env.py`.
+
+- **show** — merged view of `workspace.env.example` + `workspace.env` +
+  `overlays/*.env` + `sot/plugins/*/env.fragment`; values **redacted**.
+- **sync** — writes `.emperor/env/overlays/<artifact>.managed.env`
+  without echoing secrets; secret keys kept as `${NAME}` placeholders
+  (broker inject owns plaintext).
 
 ```
-emperor env show    # redacted
-emperor env sync    # merge stub; no secrets from example
+emperor env show [--artifact ID]    # redacted merge
+emperor env sync [--artifact ID]    # managed overlay; no secret echo
 ```
 
 Layout: `.emperor/env/workspace.env.example`, `overlays/`, gitignore

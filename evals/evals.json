@@ -101,11 +101,17 @@
     {
       "id": "sot-artifact-sync",
       "type": "behavioral-fixture",
-          },
+      "expect": "sot add-plugin clones --mirror; sot sync fetches tip; artifacts sync materializes repos under artifacts/<id>/repos/; SOT remains fetch-only"
+    },
     {
       "id": "sandbox-engine",
       "type": "behavioral-fixture",
       "expect": "sandbox plan emits compose; ports allocate without collision across artifacts; runtime use compose|podman|k8s persists; podman+k8s emitters write manifests; isolate+mock profiles loadable"
+    },
+    {
+      "id": "blind-secrets-broker",
+      "type": "behavioral-fixture",
+      "expect": "secrets_broker.py list|declare|inject never echoes plaintext; env-file inject + vault hook; --reject-secret-leak / --check-env-redacted; workspace_env show redacted + sync merges plugin overlays into managed.env"
     }
   ]
 }
