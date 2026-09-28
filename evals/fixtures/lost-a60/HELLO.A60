@@ -1,0 +1,6 @@
+begin
+   comment HELLO.A60 — archaeology probe fixture (DOS-era 8.3 name);
+   comment Dialect CONJECTURE: see README.md in this directory;
+   comment Intent: smallest ALGOL 60 program that prints a known string via outstring;
+   outstring(1, "EMPEROR-TIME-A60-PROBE-OK\n")
+end

@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.4.56
+- Archaeology ALGOL 60 leaf: `evals/fixtures/lost-a60/HELLO.A60` + identify smoke; GNU MARST 2.8 boot probe VERIFIED (`marst HELLO.A60` → `gcc -lalgol -lm`); dialect labels honest (CONJECTURE / UNVERIFIABLE where due); identify fossils `*.a60` (not `*.alg` — Algol 68 leaf)
+- Jail pin `references/archaeology-algol60-manual.md` — GNU MARST Usage Example / `outstring` (`marst … -o …` / `gcc … -lalgol -lm`)
+- Catalog + SKILL.md + archaeology.md + language-agnostic.md link the fifteenth pin alongside Pascal, ASM, COBOL, Fortran, VHDL, Ada, Forth, Common Lisp, Prolog, Tcl, Erlang, REXX, Modula-2, and Algol 68; route triggers gain `marst` / `algol60` / `.a60` / space-intent `algol 60` (bare English `outstring` refused); eval locks `*.a60` identify on lost-a60
+- Plugin, marketplace, and SKILL.md at 0.4.56
+
 ## 0.4.55
 - Archaeology Algol 68 leaf: `evals/fixtures/lost-a68/HELLO.A68` + identify smoke; Algol 68 Genie 3.1.2 boot probe VERIFIED (`a68g HELLO.A68`); dialect labels honest (CONJECTURE / UNVERIFIABLE where due); identify fossils `*.a68` / `*.alg`
 - Jail pin `references/archaeology-algol68-manual.md` — Algol 68 Genie Synopsis / Transput `print` (`a68g [option | file] ...`)
