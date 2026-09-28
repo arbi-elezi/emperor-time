@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.4.61
+- Archaeology Simula leaf: `evals/fixtures/lost-cim/HELLO.SIM` + identify smoke; Portable Simula 2.0 (Setup R21) / Temurin JDK 21 boot probe VERIFIED (`java -jar simula.jar … HELLO.SIM` → `EMPEROR-TIME-CIM-PROBE-OK`); GNU Cim 3.37 built but segfaults here (UNVERIFIABLE); dialect labels honest (CONJECTURE / UNVERIFIABLE where due); identify fossils `*.sim` only
+- Jail pin `references/archaeology-simula-manual.md` — Portable Simula Usage synopsis (`java -jar simula.jar [options] sourceFile`)
+- Catalog + SKILL.md + archaeology.md + language-agnostic.md link the twentieth pin alongside Pascal, ASM, COBOL, Fortran, VHDL, Ada, Forth, Common Lisp, Prolog, Tcl, Erlang, REXX, Modula-2, Algol 68, ALGOL 60, Algol W, Icon, Oberon, and SNOBOL4; route triggers gain `cim` / `simula` / `.sim` (bare English `begin` / `outtext` / `outimage` refused); eval locks `*.sim` identify on lost-cim
+- Plugin, marketplace, and SKILL.md at 0.4.61
+
 ## 0.4.60
 - Archaeology SNOBOL4 leaf: `evals/fixtures/lost-sno/HELLO.SNO` + identify smoke; CSNOBOL4B 2.3.4 boot probe VERIFIED (`snobol4 -b HELLO.SNO` → `EMPEROR-TIME-SNO-PROBE-OK`); dialect labels honest (CONJECTURE / UNVERIFIABLE where due); identify fossils `*.sno` only
 - Jail pin `references/archaeology-snobol-manual.md` — CSNOBOL4 snobol4cmd(1) SYNOPSIS (`snobol4 [ options ... ] [ file ... ]`)

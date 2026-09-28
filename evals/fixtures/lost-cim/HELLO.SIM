@@ -1,0 +1,4 @@
+BEGIN
+   OutText("EMPEROR-TIME-CIM-PROBE-OK");
+   OutImage;
+END

@@ -1,0 +1,9 @@
+== identify evals/fixtures/lost-cim ==
+-- extensions --
+      2 md
+      1 txt
+      1 sim
+-- named fossils --
+1 *.sim
+-- shebangs --
+identify: done (read-only)
