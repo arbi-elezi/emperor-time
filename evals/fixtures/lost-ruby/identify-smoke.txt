@@ -1,0 +1,9 @@
+== identify evals/fixtures/lost-ruby ==
+-- extensions --
+      2 md
+      1 txt
+      1 rb
+-- named fossils --
+1 *.rb
+-- shebangs --
+identify: done (read-only)
