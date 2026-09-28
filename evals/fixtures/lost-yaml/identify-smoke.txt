@@ -1,0 +1,9 @@
+== identify evals/fixtures/lost-yaml ==
+-- extensions --
+      2 md
+      1 yaml
+      1 txt
+-- named fossils --
+1 *.yaml
+-- shebangs --
+identify: done (read-only)
