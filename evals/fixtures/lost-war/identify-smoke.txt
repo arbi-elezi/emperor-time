@@ -1,0 +1,9 @@
+== identify evals/fixtures/lost-war ==
+-- extensions --
+      2 md
+      1 war
+      1 txt
+-- named fossils --
+1 *.war
+-- shebangs --
+identify: done (read-only)
