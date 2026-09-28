@@ -1,0 +1,16 @@
+== identify evals/fixtures/lost-targz ==
+-- extensions --
+      2 md
+      1 xz
+      1 txt
+      1 tgz
+      1 gz
+      1 bz2
+-- named fossils --
+1 *.gz
+1 *.tar.gz
+1 *.tgz
+1 *.tar.bz2
+1 *.tar.xz
+-- shebangs --
+identify: done (read-only)
