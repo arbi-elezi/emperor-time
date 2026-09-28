@@ -1,0 +1,9 @@
+== identify evals/fixtures/lost-rust ==
+-- extensions --
+      2 md
+      1 txt
+      1 rs
+-- named fossils --
+1 *.rs
+-- shebangs --
+identify: done (read-only)

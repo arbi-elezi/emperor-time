@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.4.84
+
+- Archaeology Rust leaf: `evals/fixtures/lost-rust/HELLO.rs` + identify smoke; rustc 1.85.1 boot probe VERIFIED (`rustc HELLO.rs` → `./HELLO` → `EMPEROR-TIME-RUST-PROBE-OK`); dialect labels honest (CONJECTURE / UNVERIFIABLE where due); identify fossils `*.rs` only; bare `rust` allowed as route tag (language name; word-boundary); bare `.rs` allowed as route tag (no known peer excavate substring collision); prefer `rust` / `rustc` / `rust1.85` / `.rs`; Debian package `rustc` 1.85.1+dfsg1-1+deb13u1 already on box; systems compile-and-run after Go; TeX/LaTeX still deferred
+- Jail pin `references/archaeology-rust-manual.md` — rustc Basic usage (`rustc FILE`) + println!
+- Catalog + SKILL.md + archaeology.md + language-agnostic.md link the forty-third pin alongside Pascal, ASM, COBOL, Fortran, VHDL, Ada, Forth, Common Lisp, Prolog, Tcl, Erlang, REXX, Modula-2, Algol 68, ALGOL 60, Algol W, Icon, Oberon, SNOBOL4, Simula, APL, BCPL, PL/I, Smalltalk, PostScript, BASIC, Scheme, AWK, sed, m4, ed, Make, dc, lex, yacc, roff, Perl, bc, Expect, Lua, Ruby, and Go; route triggers gain `rust` / `rustc` / `rust1.85` / `.rs`; eval locks `*.rs` identify on lost-rust
+- Plugin, marketplace, and SKILL.md at 0.4.84
+
 ## 0.4.83
 
 - Archaeology Go leaf: `evals/fixtures/lost-go/HELLO.go` + identify smoke; Go 1.24.4 boot probe VERIFIED (`go run HELLO.go` → `EMPEROR-TIME-GO-PROBE-OK`); dialect labels honest (CONJECTURE / UNVERIFIABLE where due); identify fossils `*.go` only; bare `go` refused as route tag (common-English collision); bare `.go` allowed as route tag (no known peer excavate substring collision); prefer `golang` / `go1.24` / `.go`; Debian packages `golang-go` 2:1.24~2 / `golang-1.24-go` 1.24.4-1 already on box; systems compile-and-run after Ruby; TeX/LaTeX still deferred
