@@ -1,0 +1,1 @@
+BEGIN { print "EMPEROR-TIME-AWK-PROBE-OK" }

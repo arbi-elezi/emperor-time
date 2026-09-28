@@ -1,0 +1,9 @@
+== identify evals/fixtures/lost-awk ==
+-- extensions --
+      2 md
+      1 txt
+      1 awk
+-- named fossils --
+1 *.awk
+-- shebangs --
+identify: done (read-only)

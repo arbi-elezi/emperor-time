@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.4.69
+- Archaeology AWK leaf: `evals/fixtures/lost-awk/HELLO.AWK` + identify smoke; GNU Awk 5.2.1 boot probe VERIFIED (`gawk -f HELLO.AWK` → `EMPEROR-TIME-AWK-PROBE-OK`); dialect labels honest (CONJECTURE / UNVERIFIABLE where due); identify fossils `*.awk` only; bare `awk` allowed as route tag (POSIX / tool binary name — not English collision)
+- Jail pin `references/archaeology-awk-manual.md` — GAWK Effective AWK Programming Command-Line Options / `-f` / `--file source-file`
+- Catalog + SKILL.md + archaeology.md + language-agnostic.md link the twenty-eighth pin alongside Pascal, ASM, COBOL, Fortran, VHDL, Ada, Forth, Common Lisp, Prolog, Tcl, Erlang, REXX, Modula-2, Algol 68, ALGOL 60, Algol W, Icon, Oberon, SNOBOL4, Simula, APL, BCPL, PL/I, Smalltalk, PostScript, BASIC, and Scheme; route triggers gain `gawk` / `awk` / `nawk` / `.awk`; eval locks `*.awk` identify on lost-awk
+- Plugin, marketplace, and SKILL.md at 0.4.69
+
 ## 0.4.68
 - Archaeology Scheme leaf: `evals/fixtures/lost-scm/HELLO.SCM` + identify smoke; CHICKEN 5.3.0 boot probe VERIFIED (`csi -s HELLO.SCM` → `EMPEROR-TIME-SCM-PROBE-OK`); dialect labels honest (CONJECTURE / UNVERIFIABLE where due); identify fossils `*.scm` only; bare English `scheme` refused as route tag (common-English collision)
 - Jail pin `references/archaeology-scheme-manual.md` — CHICKEN User's Manual Using the interpreter / csi `-s` / `-script PATHNAME`
