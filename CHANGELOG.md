@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.4.121
+
+- Vertical depth: work-order Task-N structure HARD-GATE — `scripts/lib/work_order.py` now mechanically rejects skeleton Task headings / missing Files / Expected FAIL+PASS / Commit / Contract TBD (not doctrine-only markdown)
+- Always-fail helpers `--reject-tbd` / `--reject-no-tasks`; `--check-tasks PATH`; no-args prints WORK-ORDER-TASKS card; G2 still calls the same module (header + Task-N)
+- Thin twins `work-order.sh` / `work-order.ps1` + `emperor work-order` peers; fixtures `work-order-no-tasks.md` / `work-order-thin-task.md`; references/work-order.md + eval/bakeoff lockstep
+- Prefer Task-N over claim-audit this turn (feeds SDD lifecycle already shipped in v0.4.120); claim-audit remains soft-gate backlog #1 next
+- Plugin, marketplace, and SKILL.md at 0.4.121
+
 ## 0.4.120
 
 - Vertical depth: plan-scoped SDD task lifecycle (brief / BASE / task-done) under `.emperor/sdd/<plan-slug>/` — closes largest Superpowers *script* gap without vendoring whole SP prompts/templates
