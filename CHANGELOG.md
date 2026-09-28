@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.4.106
+
+- Archaeology compressed-TAR / stdlib tarfile Jail pin: `evals/fixtures/lost-targz/` + `references/archaeology-targz-manual.md` (CPython stdlib `tarfile` `r:gz`/`r:bz2`/`r:xz` → EMPEROR-TIME-TARGZ-PROBE-OK; zero new apt; Debian tar/gzip/bzip2/xz-utils REJECTED as leaf owner)
+- identify/route/eval/honesty/bakeoff/catalog lockstep; fossils `*.tar.gz` / `*.tgz` / `*.tar.bz2` / `*.tar.xz`; route tags `targz` / `tarball` / `pytargz` / `.tar.gz` / `.tgz` / `.tar.bz2` / `.tar.xz`
+- Plugin, marketplace, and SKILL.md at 0.4.106
+
 ## 0.4.105
 
 - Archaeology gzip/stdlib gzip Jail pin: `evals/fixtures/lost-gz/` + `references/archaeology-gzip-manual.md` (CPython stdlib `gzip.open`/read → EMPEROR-TIME-GZIP-PROBE-OK; zero new apt; Debian gzip REJECTED as leaf owner)

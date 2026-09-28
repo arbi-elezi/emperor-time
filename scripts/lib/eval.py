@@ -625,6 +625,13 @@ def run_evals(root: Path) -> int:
             ("pygzip HELLO.gz", "emperor-excavate", "route pygzip → excavate"),
             ("gzipfile HELLO.gz", "emperor-excavate", "route gzipfile → excavate"),
             ("hello.gz", "emperor-excavate", "route hello.gz → excavate"),
+            ("targz HELLO.tar.gz", "emperor-excavate", "route targz → excavate"),
+            ("tarball HELLO.tar.gz", "emperor-excavate", "route tarball → excavate"),
+            ("pytargz HELLO.tar.gz", "emperor-excavate", "route pytargz → excavate"),
+            ("hello.tar.gz", "emperor-excavate", "route hello.tar.gz → excavate"),
+            ("hello.tgz", "emperor-excavate", "route hello.tgz → excavate"),
+            ("hello.tar.bz2", "emperor-excavate", "route hello.tar.bz2 → excavate"),
+            ("hello.tar.xz", "emperor-excavate", "route hello.tar.xz → excavate"),
             ("queue next", "emperor-queue", "route queue next → queue"),
             ("blocked task", "emperor-queue", "route blocked task → queue"),
             ("red build", "emperor-heal", "route red build → heal"),
@@ -1178,6 +1185,13 @@ def run_evals(root: Path) -> int:
             r"[0-9]+ \*\.gz",
             ["references/archaeology-gzip-manual.md"],
         ),
+        (
+            "lost-targz identify finds *.tar.gz",
+            "lost-targz",
+            "HELLO.tar.gz",
+            r"[0-9]+ \*\.tar\.gz",
+            ["references/archaeology-targz-manual.md"],
+        ),
     ]
     # The loop above was messy — clear fail state not affected; rewrite cleanly below by
     # only running the clean fixtures list (sections already printed wrongly once).
@@ -1552,6 +1566,13 @@ def run_evals(root: Path) -> int:
     h.require_contains("pygzip", "evals/triggers.json", "triggers missing pygzip excavate pattern")
     h.require_contains("gzipfile", "evals/triggers.json", "triggers missing gzipfile excavate pattern")
     h.require_contains(".gz", "evals/triggers.json", "triggers missing .gz excavate pattern")
+    h.require_contains("targz", "evals/triggers.json", "triggers missing targz excavate pattern")
+    h.require_contains("tarball", "evals/triggers.json", "triggers missing tarball excavate pattern")
+    h.require_contains("pytargz", "evals/triggers.json", "triggers missing pytargz excavate pattern")
+    h.require_contains(".tar.gz", "evals/triggers.json", "triggers missing .tar.gz excavate pattern")
+    h.require_contains(".tgz", "evals/triggers.json", "triggers missing .tgz excavate pattern")
+    h.require_contains(".tar.bz2", "evals/triggers.json", "triggers missing .tar.bz2 excavate pattern")
+    h.require_contains(".tar.xz", "evals/triggers.json", "triggers missing .tar.xz excavate pattern")
     h.require_contains(".js", "evals/triggers.json", "triggers missing .js excavate pattern")
     _, rout_py = h.run_py("scripts/lib/route.py", "finish the branch")
     if "emperor-forge" not in rout_py:
@@ -2309,6 +2330,35 @@ def run_evals(root: Path) -> int:
         h.fail_msg("route matches(.gz, hello.gz) must be True")
     if _m(".gz", "hello.gzfoo"):
         h.fail_msg("route matches(.gz, hello.gzfoo) must be False after extension-boundary")
+    _, rout_targz = h.run_py("scripts/lib/route.py", "targz HELLO.tar.gz")
+    if "emperor-excavate" not in rout_targz:
+        h.fail_msg("route.py targz → excavate")
+    _, rout_tarball = h.run_py("scripts/lib/route.py", "tarball HELLO.tar.gz")
+    if "emperor-excavate" not in rout_tarball:
+        h.fail_msg("route.py tarball → excavate")
+    _, rout_pytargz = h.run_py("scripts/lib/route.py", "pytargz HELLO.tar.gz")
+    if "emperor-excavate" not in rout_pytargz:
+        h.fail_msg("route.py pytargz → excavate")
+    _, rout_hello_targz = h.run_py("scripts/lib/route.py", "hello.tar.gz")
+    if "emperor-excavate" not in rout_hello_targz:
+        h.fail_msg("route.py hello.tar.gz → excavate")
+    _, rout_hello_tgz = h.run_py("scripts/lib/route.py", "hello.tgz")
+    if "emperor-excavate" not in rout_hello_tgz:
+        h.fail_msg("route.py hello.tgz → excavate")
+    _, rout_hello_tbz2 = h.run_py("scripts/lib/route.py", "hello.tar.bz2")
+    if "emperor-excavate" not in rout_hello_tbz2:
+        h.fail_msg("route.py hello.tar.bz2 → excavate")
+    _, rout_hello_txz = h.run_py("scripts/lib/route.py", "hello.tar.xz")
+    if "emperor-excavate" not in rout_hello_txz:
+        h.fail_msg("route.py hello.tar.xz → excavate")
+    if not _m(".tar.gz", "hello.tar.gz"):
+        h.fail_msg("route matches(.tar.gz, hello.tar.gz) must be True")
+    if _m(".tar.gz", "hello.tar.gzfoo"):
+        h.fail_msg("route matches(.tar.gz, hello.tar.gzfoo) must be False after extension-boundary")
+    if not _m(".tgz", "hello.tgz"):
+        h.fail_msg("route matches(.tgz, hello.tgz) must be True")
+    if _m(".tgz", "hello.tgzfoo"):
+        h.fail_msg("route matches(.tgz, hello.tgzfoo) must be False after extension-boundary")
     # bare .l must not be enough alone when colliding; .lisp already routes via .lisp
     _, rout_regina = h.run_py("scripts/lib/route.py", "regina HELLO.REX")
     if "emperor-excavate" not in rout_regina:
@@ -3871,8 +3921,10 @@ def run_evals(root: Path) -> int:
     h.require_contains("0.4.102", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing 0.4.102 tip")
     h.require_contains("0.4.102", "CHANGELOG.md", "CHANGELOG missing 0.4.102")
     h.require_contains("0.4.105", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing 0.4.105 tip")
-    h.require_contains("0.4.105", ".claude-plugin/plugin.json", "plugin.json not at 0.4.105")
     h.require_contains("0.4.105", "CHANGELOG.md", "CHANGELOG missing 0.4.105")
+    h.require_contains("0.4.106", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing 0.4.106 tip")
+    h.require_contains("0.4.106", ".claude-plugin/plugin.json", "plugin.json not at 0.4.106")
+    h.require_contains("0.4.106", "CHANGELOG.md", "CHANGELOG missing 0.4.106")
 
     # session-discovery
     h.section("session-discovery locate HARD-GATE leaf")
