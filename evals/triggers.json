@@ -457,7 +457,14 @@
         ".bcpl",
         "bcpl",
         "cintsys",
-        "cintcode"
+        "cintcode",
+        ".pli",
+        ".pl1",
+        "plic",
+        "pli",
+        "pl1",
+        "iron-spring",
+        "ironspring"
       ],
       "tags": [
         "archaeology",
@@ -541,7 +548,12 @@
         "gnuapl",
         "bcpl",
         "cintsys",
-        "cintcode"
+        "cintcode",
+        "plic",
+        "pli",
+        "pl1",
+        "iron-spring",
+        "ironspring"
       ],
       "target": "skills/emperor-excavate/SKILL.md",
       "reason": "lost/ancient/foreign tree \u2014 excavate before modernizing"

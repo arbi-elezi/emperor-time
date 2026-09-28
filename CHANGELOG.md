@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.4.64
+- Archaeology PL/I leaf: `evals/fixtures/lost-pli/HELLO.PLI` + identify smoke; Iron Spring PL/I 1.4.1 (15 Apr 2026) boot probe VERIFIED (`plic -C -lixg -ew HELLO.PLI -o hello.o` + `ld … -lprf` + `./hello` → `EMPEROR-TIME-PLI-PROBE-OK`); dialect labels honest (CONJECTURE / UNVERIFIABLE where due); identify fossils `*.pli` + `*.pl1`
+- Jail pin `references/archaeology-pli-manual.md` — Iron Spring Programming Guide Running the Compiler / `plic` `-C` + readme_linux SA_make `ld … -lprf`
+- Catalog + SKILL.md + archaeology.md + language-agnostic.md link the twenty-third pin alongside Pascal, ASM, COBOL, Fortran, VHDL, Ada, Forth, Common Lisp, Prolog, Tcl, Erlang, REXX, Modula-2, Algol 68, ALGOL 60, Algol W, Icon, Oberon, SNOBOL4, Simula, APL, and BCPL; route triggers gain `plic` / `pli` / `pl1` / `iron-spring` / `.pli` / `.pl1` (bare English keyword tags refused); eval locks `*.pli` identify on lost-pli
+- Plugin, marketplace, and SKILL.md at 0.4.64
+
 ## 0.4.63
 - Archaeology BCPL leaf: `evals/fixtures/lost-bcpl/HELLO.B` + identify smoke; Martin Richards BCPL 32-bit Cintcode (16 May 2026 / compiler 18 Apr 2026) boot probe VERIFIED (`cintsys -q -c 'bcpl hello.b to hello; hello'` → `EMPEROR-TIME-BCPL-PROBE-OK`); dialect labels honest (CONJECTURE / UNVERIFIABLE where due); identify fossils `*.b` + `*.bcpl`; bare `.b` refused as route tag (short-extension collision)
 - Jail pin `references/archaeology-bcpl-manual.md` — Martin Richards `cintsys` Valid arguments `-c args` / README `bcpl <file.b> to <dest>`
