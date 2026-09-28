@@ -85,10 +85,11 @@ LEAVES: list[tuple[str, str, tuple[str, ...]]] = [
     ("arch-obn", "evals/fixtures/lost-obn/HELLO.OBN", ("lost-obn",)),
     ("arch-sno", "evals/fixtures/lost-sno/HELLO.SNO", ("lost-sno",)),
     ("arch-cim", "evals/fixtures/lost-cim/HELLO.SIM", ("lost-cim",)),
+    ("arch-apl", "evals/fixtures/lost-apl/HELLO.APL", ("lost-apl",)),
     ("gate-py", "scripts/lib/gate.py", ("gate.py", "mechanical")),
     ("identify-py", "scripts/lib/identify.py", ("identify.py", "survey")),
     ("eval-py", "scripts/lib/eval.py", ("eval.py", "structural eval")),
-    ("route-py", "scripts/lib/route.py", ("route", "fortran", ".f90", "vhdl", ".vhd", "ada", ".adb", "forth", ".fs", "pforth", "lisp", ".lisp", "clisp", "prolog", ".pro", "swipl", "tcl", ".tcl", "tclsh", "erlang", ".erl", "escript", "rexx", ".rex", "regina", "modula", ".mod", "gm2", "algol", ".a68", "a68g", "marst", ".a60", "algol60", "awe", ".alw", "algolw", "icont", ".icn", "iconx", "voc", ".obn", "oberon", "snobol4", ".sno", "snobol", "cim", ".sim", "simula")),
+    ("route-py", "scripts/lib/route.py", ("route", "fortran", ".f90", "vhdl", ".vhd", "ada", ".adb", "forth", ".fs", "pforth", "lisp", ".lisp", "clisp", "prolog", ".pro", "swipl", "tcl", ".tcl", "tclsh", "erlang", ".erl", "escript", "rexx", ".rex", "regina", "modula", ".mod", "gm2", "algol", ".a68", "a68g", "marst", ".a60", "algol60", "awe", ".alw", "algolw", "icont", ".icn", "iconx", "voc", ".obn", "oberon", "snobol4", ".sno", "snobol", "cim", ".sim", "simula", "apl", ".apl", "gnu-apl")),
     ("done-py", "scripts/lib/done.py", ("done.py", "DONE probes")),
     (
         "silent-boot-zsh",
