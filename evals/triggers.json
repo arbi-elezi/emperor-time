@@ -446,7 +446,10 @@
         ".sno",
         "snobol4",
         "snobol",
-        "csnobol4"
+        "csnobol4",
+        ".sim",
+        "cim",
+        "simula"
       ],
       "tags": [
         "archaeology",
@@ -521,7 +524,10 @@
         "sno",
         "snobol4",
         "snobol",
-        "csnobol4"
+        "csnobol4",
+        "cim",
+        "sim",
+        "simula"
       ],
       "target": "skills/emperor-excavate/SKILL.md",
       "reason": "lost/ancient/foreign tree \u2014 excavate before modernizing"
