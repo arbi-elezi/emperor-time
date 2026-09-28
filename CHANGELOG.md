@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.4.74
+- Archaeology dc leaf: `evals/fixtures/lost-dc/HELLO.DC` + identify smoke; GNU dc 1.4.1 (GNU bc 1.07.1) boot probe VERIFIED (`dc -f HELLO.DC` / `dc HELLO.DC` → `EMPEROR-TIME-DC-PROBE-OK`); dialect labels honest (CONJECTURE / UNVERIFIABLE where due); identify fossils `*.dc` only; bare `dc` allowed as route tag (tool binary name)
+- Jail pin `references/archaeology-dc-manual.md` — GNU dc dc(1) DESCRIPTION file arguments + OPTIONS `-f` / `--file`
+- Catalog + SKILL.md + archaeology.md + language-agnostic.md link the thirty-third pin alongside Pascal, ASM, COBOL, Fortran, VHDL, Ada, Forth, Common Lisp, Prolog, Tcl, Erlang, REXX, Modula-2, Algol 68, ALGOL 60, Algol W, Icon, Oberon, SNOBOL4, Simula, APL, BCPL, PL/I, Smalltalk, PostScript, BASIC, Scheme, AWK, sed, m4, ed, and Make; route triggers gain `dc` / `gnu-dc` / `.dc`; eval locks `*.dc` identify on lost-dc
+- Plugin, marketplace, and SKILL.md at 0.4.74
+
 ## 0.4.73
 - Archaeology Make leaf: `evals/fixtures/lost-make/Makefile` + `HELLO.MK` + identify smoke; GNU Make 4.4.1 boot probe VERIFIED (`make -C lost-make` / `make -f HELLO.MK` → `EMPEROR-TIME-MAKE-PROBE-OK`); dialect labels honest (CONJECTURE / UNVERIFIABLE where due); identify fossils `Makefile` / `makefile` / `*.mak` / `*.mk`; bare English `make` refused as route tag (factory / common-English collision with "make software")
 - Jail pin `references/archaeology-make-manual.md` — GNU Make make(1) DESCRIPTION default-name search + OPTIONS `-f` / `--file` / `--makefile`
