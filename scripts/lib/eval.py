@@ -2015,6 +2015,204 @@ def run_evals(root: Path) -> int:
     else:
         h.pass_msg("critique.sh thin twin emits card")
 
+    # ---- verdict + breach HARD-GATE (Judgment G5 vertical depth) ----
+    h.section("verdict-breach HARD-GATE")
+    h.need("scripts/lib/verdict.py")
+    h.need("scripts/verdict.sh")
+    h.need("scripts/verdict.ps1")
+    h.need("scripts/breach.sh")
+    h.need("scripts/breach.ps1")
+    h.need("evals/fixtures/verdict-breach/verdict-ok.md")
+    h.need("evals/fixtures/verdict-breach/verdict-empty-rows.md")
+    h.need("evals/fixtures/verdict-breach/verdict-theater.md")
+    h.need("evals/fixtures/verdict-breach/verdict-no-citations.md")
+    h.need("evals/fixtures/verdict-breach/verdict-fail.md")
+    h.need("evals/fixtures/verdict-breach/verdict-filled.md")
+    h.need("evals/fixtures/verdict-breach/task-ok/ledger.md")
+    h.need("evals/fixtures/verdict-breach/task-empty-rows/ledger.md")
+    h.need("evals/fixtures/verdict-breach/task-theater/ledger.md")
+    h.need("evals/fixtures/verdict-breach/task-no-verdict/ledger.md")
+    h.need("evals/fixtures/verdict-breach/task-fail-verdict/ledger.md")
+    h.bash_n("scripts/verdict.sh", "verdict.sh syntax")
+    h.bash_n("scripts/breach.sh", "breach.sh syntax")
+    h.py_compile("scripts/lib/verdict.py", "verdict.py compile")
+    h.require_contains(
+        "lib/verdict.py",
+        "scripts/verdict.sh",
+        "verdict.sh thin twin missing verdict.py",
+    )
+    h.require_contains(
+        "lib/verdict.py",
+        "scripts/verdict.ps1",
+        "verdict.ps1 thin twin missing verdict.py",
+    )
+    h.require_contains(
+        "verdict",
+        "scripts/emperor",
+        "emperor bash peer missing verdict",
+    )
+    h.require_contains(
+        "breach",
+        "scripts/emperor",
+        "emperor bash peer missing breach",
+    )
+    h.require_contains(
+        "'verdict'",
+        "scripts/emperor.ps1",
+        "emperor.ps1 missing verdict",
+    )
+    h.require_contains(
+        "verdict",
+        "scripts/emperor.cmd",
+        "emperor.cmd missing verdict",
+    )
+    h.require_contains(
+        "verdict",
+        "scripts/emperor.zsh",
+        "emperor.zsh missing verdict",
+    )
+    h.require_contains(
+        "verdict.py",
+        "scripts/lib/gate.py",
+        "gate.py does not call verdict.py",
+    )
+    h.require_contains(
+        "--reject-hidden-breach",
+        "scripts/lib/verdict.py",
+        "verdict.py missing --reject-hidden-breach",
+    )
+    h.require_contains(
+        "--check-verdict",
+        "scripts/lib/verdict.py",
+        "verdict.py missing --check-verdict",
+    )
+    h.require_contains(
+        "HARD-GATE",
+        "chains/judgment-chain/verdicts-and-breaches.md",
+        "verdicts-and-breaches.md missing HARD-GATE mechanical pointer",
+    )
+    h.require_contains(
+        "Breach Register",
+        "chains/judgment-chain/verdicts-and-breaches.md",
+        "verdicts-and-breaches.md missing Breach Register doctrine",
+    )
+    _, card = h.run_py("scripts/lib/verdict.py")
+    if "checklist=yes" not in card:
+        h.fail_msg("verdict card missing checklist=yes")
+    elif "NO_G5_WITHOUT_VERDICT_AND_HONEST_BREACH_REGISTER" not in card:
+        h.fail_msg("verdict card missing iron law token")
+    else:
+        h.pass_msg("verdict prints VERDICT card")
+    rc, _ = h.run_py("scripts/lib/verdict.py", "--reject-hidden-breach")
+    if rc == 0:
+        h.fail_msg("verdict --reject-hidden-breach should exit non-zero")
+    else:
+        _, reject = h.run_py(
+            "scripts/lib/verdict.py", "--reject-hidden-breach"
+        )
+        if "REJECT HIDDEN BREACH" not in reject and "HARD-GATE" not in reject:
+            h.fail_msg("verdict --reject-hidden-breach missing REJECT text")
+        else:
+            h.pass_msg("verdict --reject-hidden-breach hard-gates")
+    rc, err = h.run_py(
+        "scripts/lib/verdict.py",
+        "--check-verdict",
+        str(root / "evals/fixtures/verdict-breach/verdict-empty-rows.md"),
+    )
+    if rc == 0:
+        h.fail_msg("verdict-empty-rows fixture should fail verdict")
+    elif not h.grep_out(err, r"empty breach|blank register"):
+        h.fail_msg("verdict-empty-rows should mention empty breach rows")
+    else:
+        h.pass_msg("verdict-empty-rows rejected")
+    rc, err = h.run_py(
+        "scripts/lib/verdict.py",
+        "--check-verdict",
+        str(root / "evals/fixtures/verdict-breach/verdict-theater.md"),
+    )
+    if rc == 0:
+        h.fail_msg("verdict-theater fixture should fail verdict")
+    elif not h.grep_out(err, r"theater-only|theater breach|TBD|placeholder"):
+        h.fail_msg("verdict-theater should mention theater-only register")
+    else:
+        h.pass_msg("verdict-theater rejected")
+    rc, err = h.run_py(
+        "scripts/lib/verdict.py",
+        "--check-verdict",
+        str(root / "evals/fixtures/verdict-breach/verdict-no-citations.md"),
+    )
+    if rc == 0:
+        h.fail_msg("verdict-no-citations fixture should fail verdict")
+    elif not h.grep_out(err, r"citation|claim audit|critique|hetero"):
+        h.fail_msg("verdict-no-citations should mention missing citations")
+    else:
+        h.pass_msg("verdict-no-citations rejected")
+    rc, err = h.run_py(
+        "scripts/lib/verdict.py",
+        "--check-verdict",
+        str(root / "evals/fixtures/verdict-breach/verdict-fail.md"),
+    )
+    if rc == 0:
+        h.fail_msg("verdict-fail fixture should fail verdict")
+    elif not h.grep_out(err, r"FAIL|re-enter|do not deliver"):
+        h.fail_msg("verdict-fail should mention FAIL not deliverable")
+    else:
+        h.pass_msg("verdict-fail rejected")
+    rc, _ = h.run_py(
+        "scripts/lib/verdict.py",
+        "--check-verdict",
+        str(root / "evals/fixtures/verdict-breach/verdict-ok.md"),
+    )
+    if rc != 0:
+        h.fail_msg("verdict-ok fixture should pass verdict")
+    else:
+        h.pass_msg("verdict-ok accepted")
+    rc, _ = h.run_py(
+        "scripts/lib/verdict.py",
+        "--check-verdict",
+        str(root / "evals/fixtures/verdict-breach/verdict-filled.md"),
+    )
+    if rc != 0:
+        h.fail_msg("verdict-filled fixture should pass verdict")
+    else:
+        h.pass_msg("verdict-filled accepted")
+    # G5 wiring: empty/theater/no-verdict/fail fail; task-ok passes
+    tmp = Path(tempfile.mkdtemp())
+    try:
+        import shutil as _shutil
+        for name, expect_fail in (
+            ("task-empty-rows", True),
+            ("task-theater", True),
+            ("task-no-verdict", True),
+            ("task-fail-verdict", True),
+            ("task-ok", False),
+        ):
+            src = root / "evals/fixtures/verdict-breach" / name
+            dst = tmp / name
+            _shutil.copytree(src, dst)
+            (dst / ".gates").mkdir(exist_ok=True)
+            stamp = _utc_stamp()
+            for g in ("g0", "g1", "g2", "g3", "g4"):
+                (dst / ".gates" / g).write_text(stamp + "\n", encoding="utf-8")
+            rc, out = h.run_sh("scripts/gate.sh", "g5", str(dst))
+            if expect_fail:
+                if rc == 0:
+                    h.fail_msg(f"G5 allowed soft verdict/breach {name}")
+                else:
+                    h.pass_msg(f"G5 rejects soft verdict/breach {name}")
+            else:
+                if rc != 0:
+                    h.fail_msg(f"G5 should accept honest verdict {name}: {out}")
+                else:
+                    h.pass_msg(f"G5 accepts honest verdict {name}")
+    finally:
+        shutil.rmtree(tmp, ignore_errors=True)
+    _, sh_card = h.run_sh("scripts/verdict.sh")
+    if "VERDICT" not in sh_card:
+        h.fail_msg("verdict.sh missing VERDICT card")
+    else:
+        h.pass_msg("verdict.sh thin twin emits card")
+
 
     # ---- finish menu ----
     h.section("finish menu (forge aspect)")
@@ -5273,12 +5471,18 @@ def run_evals(root: Path) -> int:
     h.require_contains("0.4.123", "CHANGELOG.md", "CHANGELOG missing 0.4.123")
     h.require_contains("quarantine.py", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing quarantine.py")
     h.require_contains("0.4.124", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing 0.4.124 tip")
-    h.require_contains("0.4.124", ".claude-plugin/plugin.json", "plugin.json not at 0.4.124")
     h.require_contains("0.4.124", "CHANGELOG.md", "CHANGELOG missing 0.4.124")
     h.require_contains("critique.py", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing critique.py")
     h.require_contains("reject-incomplete-critique", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing reject-incomplete-critique")
     h.require_contains("eight-count", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing eight-count")
     h.require_contains("Checked", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing Checked")
+    h.require_contains("0.4.125", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing 0.4.125 tip")
+    h.require_contains("0.4.125", ".claude-plugin/plugin.json", "plugin.json not at 0.4.125")
+    h.require_contains("0.4.125", "CHANGELOG.md", "CHANGELOG missing 0.4.125")
+    h.require_contains("verdict.py", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing verdict.py")
+    h.require_contains("reject-hidden-breach", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing reject-hidden-breach")
+    h.require_contains("Breach Register", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing Breach Register")
+    h.require_contains("check-verdict", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing check-verdict")
 
     # session-discovery
     h.section("session-discovery locate HARD-GATE leaf")

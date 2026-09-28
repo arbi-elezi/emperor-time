@@ -33,7 +33,8 @@ jump straight to a PR. Open `finish-menu.md` and/or run `scripts/emperor finish`
 ## Forge (option 2 — Push and create a Pull Request)
 
 1. `scripts/emperor done <task-dir>` must exit 0. Quote the tail.
-2. `scripts/emperor gate g5 <task-dir>` must exit 0.
+2. `scripts/emperor gate g5 <task-dir>` must exit 0 (calls `verdict.py` — deliverable Verdict with citations; no empty/theater Breach Register rows).
+   Or run `scripts/emperor verdict <task-dir>` first. Doctrine: `chains/judgment-chain/verdicts-and-breaches.md`.
 3. Consent: ledger must contain a quoted client yes **or**
    `EMPEROR_CONSENT_PR=1`. Otherwise stop and ask.
 4. Run `scripts/emperor forge <task-dir>` (Python core `scripts/lib/forge.py`; thin `forge.sh` / `forge.ps1`).

@@ -3,7 +3,7 @@ name: emperor-verify
 description: >-
   Emperor Time — VERIFY / review / critique. Claim audit, eight-count
   self-critique, isolated hetero-critique, request-review HARD-GATE, receive-review HARD-GATE,
-  verification-before-completion / evidence HARD-GATE, claim-audit HARD-GATE, critique eight-count HARD-GATE, mechanical G4. Use when
+  verification-before-completion / evidence HARD-GATE, claim-audit HARD-GATE, critique eight-count HARD-GATE, verdict/breach HARD-GATE (G5), mechanical G4/G5. Use when
   reviewing a diff, requesting code review, claiming tests pass, saying done /
   fixed / green, or before commit/PR/deliver/merge.
 license: MIT
@@ -94,4 +94,4 @@ whole `verification-before-completion`; ET + emperor-verify orchestrate.
 8. Act on Critical immediately; Important before proceed; Minor noted; pushback
    only with quoted evidence (run `emperor receive` when implementing feedback).
 9. Run `scripts/gate.sh g4 <task-dir>` and quote the tail.
-10. Deliver only after `scripts/gate.sh g5 <task-dir>`.
+10. Deliver only after `scripts/emperor verdict <task-dir>` and `scripts/gate.sh g5 <task-dir>` (verdict.py: no empty/theater Breach Register; Verdict cites claim audit / critique / hetero).

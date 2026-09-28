@@ -52,6 +52,7 @@ mean **disk + eval**, not live multi-vendor win rates.
 | claim-audit (Judgment G4) | `scripts/lib/claim_audit.py` (`--reject-unaudited` / `--check-audit` / CLAIM AUDIT line) + `evals/fixtures/claim-audit/` + `emperor claim-audit` | TESTED |
 | quarantine (Steal admission) | `scripts/lib/quarantine.py` (`--reject-unquarantined` / `--check-quarantine` / CONJECTURE + ADMITTED) + `evals/fixtures/steal-quarantine/` + `emperor quarantine` | TESTED |
 | critique eight-count (Judgment G4) | `scripts/lib/critique.py` (`--reject-incomplete-critique` / `--check-critique` / eight axes + Checked) + `evals/fixtures/critique-eight-count/` + `emperor critique` | TESTED |
+| verdict / breach (Judgment G5) | `scripts/lib/verdict.py` (`--reject-hidden-breach` / `--check-verdict` / Verdict citations + honest Breach Register) + `evals/fixtures/verdict-breach/` + `emperor verdict` | TESTED |
 | finish menu (Python core) | `scripts/lib/finish.py` + thin `finish.sh`/`finish.ps1` + `finish-menu.md` | TESTED |
 | activate / MUST-route | `skills/emperor-resume/must-route.md` + `scripts/lib/activate.py` | TESTED |
 | grill (brainstorm HARD-GATE) | `skills/emperor-require-design/grill-checklist.md` + `emperor grill` | TESTED |

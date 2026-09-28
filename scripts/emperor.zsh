@@ -12,7 +12,7 @@ if [[ ! -f .emperor/host.env ]]; then
 fi
 TOOL="${1:-}"
 if [[ -z "$TOOL" ]]; then
-  print -u2 "usage: $0 <done|gate|eval|review-pack|dowse|install|worktree|queue|forge|finish|activate|boot|identify|route|heal|grill|tdd|iso|review|author|evidence|receive|execute|subagent|parallel|excavate|session-discovery|diagnose|trace|defense|wait|polluter|pressure|good-tests|skill-test|persuasion|sdo|brief|task-brief|task-start|task-done|sdd-workspace|sdd-review-pack|work-order|claim-audit|judgment-audit|quarantine|steal-quarantine|critique|self-critique> [args]"
+  print -u2 "usage: $0 <done|gate|eval|review-pack|dowse|install|worktree|queue|forge|finish|activate|boot|identify|route|heal|grill|tdd|iso|review|author|evidence|receive|execute|subagent|parallel|excavate|session-discovery|diagnose|trace|defense|wait|polluter|pressure|good-tests|skill-test|persuasion|sdo|brief|task-brief|task-start|task-done|sdd-workspace|sdd-review-pack|work-order|claim-audit|judgment-audit|quarantine|steal-quarantine|critique|self-critique|verdict|breach> [args]"
   exit 2
 fi
 shift || true
@@ -60,6 +60,10 @@ fi
 # self-critique: first-class alias → critique eight-count HARD-GATE
 if [[ "$TOOL" == self-critique ]]; then
   exec bash "$ROOT/critique.sh" "$@"
+fi
+# breach: first-class alias → verdict + Breach Register HARD-GATE
+if [[ "$TOOL" == breach ]]; then
+  exec bash "$ROOT/verdict.sh" "$@"
 fi
 # pressure: first-class alias → pressure/academic HARD-GATE card
 if [[ "$TOOL" == pressure ]]; then

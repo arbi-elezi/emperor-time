@@ -75,3 +75,27 @@ register line, one remediation, one disclosure if owed, one lesson. Then move.
   itself unverified.
 - Verdicts are claims: a later-discovered wrong PASS is processed as a breach
   (Vow 1 — the evidence didn't support the ruling), not as bad luck.
+
+## HARD-GATE (mechanical)
+
+Doctrine above is the law. The lock is an exit code:
+
+```bash
+scripts/emperor verdict <task-dir>                 # or --check-verdict PATH
+scripts/emperor verdict --reject-hidden-breach     # always fails (card + exit 1)
+scripts/gate.sh g5 <task-dir>                      # calls verdict.py
+```
+
+Python core: `scripts/lib/verdict.py`. Thin twins: `verdict.sh` /
+`verdict.ps1` (+ `breach` alias). Fails when:
+
+1. Missing Verdict line, or ruling is not PASS / PASS-WITH-CONDITIONS / FAIL → phase
+2. FAIL verdict offered to G5 (re-enter; do not deliver)
+3. Verdict missing required citations: claim audit / critique / hetero
+4. PASS-WITH-CONDITIONS without named conditions
+5. Breach Register missing
+6. Empty breach rows (blank table lines) or theater-only register (TBD/TODO/placeholder)
+
+Breach Register **header alone** with honest empty (`- empty` / no data rows) is
+allowed. Blank or TBD rows under the header are **hidden-breach theater** and fail.
+
