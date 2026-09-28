@@ -75,6 +75,7 @@ G4 opens only on PASS or PASS-WITH-CONDITIONS.
 - [ ] Provenance included if agents were enlisted.
 - [ ] Lifespan Ledger closed; empty "bought" cells got register lines.
 - [ ] Breach Register state (even "empty") reflected honestly in the ledger.
+- [ ] Mechanical: `scripts/emperor verdict <task-dir>` / `gate.sh g5` exit 0 (no empty/theater Stake rows; Verdict cites claim audit / critique / hetero).
 
 ## Right-sizing at the gate
 

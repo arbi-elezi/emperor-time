@@ -21,6 +21,8 @@
   .\emperor.ps1 steal-quarantine
   .\emperor.ps1 critique
   .\emperor.ps1 self-critique
+  .\emperor.ps1 verdict
+  .\emperor.ps1 breach
   .\emperor.ps1 iso
   .\emperor.ps1 review
   .\emperor.ps1 author
@@ -44,7 +46,7 @@
 [CmdletBinding()]
 param(
     [Parameter(Mandatory = $true, Position = 0)]
-    [ValidateSet('done','gate','eval','review-pack','dowse','install','worktree','queue','forge','finish','activate','boot','identify','route','heal','grill','tdd','iso','review','author','evidence','receive','execute','subagent','parallel','excavate','session-discovery','diagnose','trace','defense','wait','polluter','pressure','good-tests','skill-test','persuasion','sdo','task-brief','task-start','task-done','sdd-workspace','sdd-review-pack','work-order','claim-audit','judgment-audit','quarantine','steal-quarantine','critique','self-critique','brief')]
+    [ValidateSet('done','gate','eval','review-pack','dowse','install','worktree','queue','forge','finish','activate','boot','identify','route','heal','grill','tdd','iso','review','author','evidence','receive','execute','subagent','parallel','excavate','session-discovery','diagnose','trace','defense','wait','polluter','pressure','good-tests','skill-test','persuasion','sdo','task-brief','task-start','task-done','sdd-workspace','sdd-review-pack','work-order','claim-audit','judgment-audit','quarantine','steal-quarantine','critique','self-critique','verdict','breach','brief')]
     [string]$Tool,
     [Parameter(ValueFromRemainingArguments = $true)]
     [string[]]$ToolArgs
@@ -59,6 +61,7 @@ if ($Tool -eq 'brief') { $Tool = 'task-brief' }
 if ($Tool -eq 'judgment-audit') { $Tool = 'claim-audit' }
 if ($Tool -eq 'steal-quarantine') { $Tool = 'quarantine' }
 if ($Tool -eq 'self-critique') { $Tool = 'critique' }
+if ($Tool -eq 'breach') { $Tool = 'verdict' }
 $ps1 = Join-Path $here "$Tool.ps1"
 $sh  = Join-Path $here "$Tool.sh"
 $isWin = ($env:OS -eq 'Windows_NT')

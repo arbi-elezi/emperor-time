@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.4.125
+
+- Vertical depth: Judgment verdict + Breach Register HARD-GATE — `scripts/lib/verdict.py` mechanically rejects empty/theater Stake rows / missing Verdict citations / FAIL delivered as G5 (not PASS-substring + header-only theater)
+- Always-fail helper `--reject-hidden-breach`; `--check-verdict PATH`; no-args prints VERDICT card; G5 calls the same module (honest empty `- empty` / header-only OK; blank/TBD rows fail)
+- Thin twins `verdict.sh` / `verdict.ps1` + `breach` alias + `emperor verdict` / `emperor breach` peers; fixtures `evals/fixtures/verdict-breach/` prove reject + accept; references/mechanical-gates + verdicts-and-breaches.md HARD-GATE lockstep
+- Required Verdict fields: deliverable PASS|PASS-WITH-CONDITIONS (named conditions) with citations `(claim audit; critique; hetero)`; FAIL → re-enter, not deliver
+- Not archaeology; not embeddings; closes next soft-gate after critique eight-count (v0.4.124)
+- Plugin, marketplace, and SKILL.md at 0.4.125
+
 ## 0.4.124
 
 - Vertical depth: Judgment self-critique eight-count HARD-GATE — `scripts/lib/critique.py` mechanically rejects critique-file-present theater / missing axes / empty Checked cells (not doctrine-only markdown)

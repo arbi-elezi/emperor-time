@@ -14,6 +14,8 @@ G4 delegates self-critique eight-count to critique.py
 (critique file presence ≠ eight-count completeness).
 G4 also delegates Steal quarantine admission to quarantine.py
 (vacuous PASS when no worker runs / no steal markers).
+G5 delegates verdict + Breach Register honesty to verdict.py
+(PASS substring + header-only theater is not enough).
 """
 from __future__ import annotations
 
@@ -119,6 +121,16 @@ def _run_quarantine(gate: str, task: Path) -> None:
     )
     if proc.returncode != 0:
         _fail(gate, "steal quarantine (quarantine.py)")
+
+
+def _run_verdict(gate: str, task: Path) -> None:
+    py = _root() / "scripts" / "lib" / "verdict.py"
+    proc = subprocess.run(
+        [sys.executable, str(py), "--check-verdict", str(task)],
+        check=False,
+    )
+    if proc.returncode != 0:
+        _fail(gate, "verdict + breach register (verdict.py)")
 
 
 def run_gate(gate: str, task: Path) -> None:
@@ -241,10 +253,9 @@ def run_gate(gate: str, task: Path) -> None:
     if gate == "g5":
         _require_prior(stamp, gate)
         _need_ledger(gate, ledger)
-        if not _has(r"PASS", ledger):
-            _fail(gate, "no PASS / PASS-WITH-CONDITIONS on ledger")
-        if not _has(r"Breach Register", ledger):
-            _fail(gate, "breach register missing (must exist even if empty)")
+        # Mechanical verdict + Breach Register: deliverable ruling + citations;
+        # empty/theater Stake rows fail (verdict.py). Header-only PASS theater ≠ G5.
+        _run_verdict(gate, task)
         _mark(stamp, gate)
         _ok(gate, "deliverable artifacts present")
         return
