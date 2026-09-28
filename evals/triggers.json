@@ -571,7 +571,12 @@
         "jq",
         "jq1.7",
         "jqlang",
-        ".jq"
+        ".jq",
+        "xsltproc",
+        "libxslt",
+        "xslt",
+        ".xsl",
+        ".xslt"
       ],
       "tags": [
         "archaeology",
@@ -748,7 +753,12 @@
         "jq",
         "jq1.7",
         "jqlang",
-        ".jq"
+        ".jq",
+        "xsltproc",
+        "libxslt",
+        "xslt",
+        ".xsl",
+        ".xslt"
       ],
       "target": "skills/emperor-excavate/SKILL.md",
       "reason": "lost/ancient/foreign tree \u2014 excavate before modernizing"

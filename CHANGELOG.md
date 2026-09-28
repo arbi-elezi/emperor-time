@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.4.93
+
+- Archaeology XSLT leaf: `evals/fixtures/lost-xsl/HELLO.xsl` + identify smoke; xsltproc 1.1.35 (libxslt) boot probe VERIFIED (`xsltproc HELLO.xsl HELLO.xml` → `EMPEROR-TIME-XSLT-PROBE-OK`); dialect labels honest (CONJECTURE / UNVERIFIABLE where due); identify fossils `*.xsl` / `*.xslt` only (not bare `*.xml`); bare `xslt` / `xsltproc` / `libxslt` allowed as route tags; bare `.xsl` / `.xslt` allowed with extension-boundary matching (`.xsl` does not alone prefix-hit `.xslt` — both listed); prefer `xsltproc` / `libxslt` / `xslt` / `.xsl` / `.xslt`; Debian package `xsltproc` 1.1.35-1.2+deb13u3 apt-installed this leaf (115 kB archive; Installed-Size 151 kB; libxslt1.1 already on box); XML/XSLT leaf after jq; treats XSLT as peer fossil not house twin language; TeX/LaTeX still deferred; C++ still deferred; CLIPS / embeddings still deferred
+- Jail pin `references/archaeology-xslt-manual.md` — xsltproc(1) SYNOPSIS (stylesheet + XML-FILE …)
+- Catalog + SKILL.md + archaeology.md + language-agnostic.md link the fifty-second pin alongside Pascal, ASM, COBOL, Fortran, VHDL, Ada, Forth, Common Lisp, Prolog, Tcl, Erlang, REXX, Modula-2, Algol 68, ALGOL 60, Algol W, Icon, Oberon, SNOBOL4, Simula, APL, BCPL, PL/I, Smalltalk, PostScript, BASIC, Scheme, AWK, sed, m4, ed, Make, dc, lex, yacc, roff, Perl, bc, Expect, Lua, Ruby, Go, Rust, C, JavaScript, Python, TypeScript, Bash, PHP, SQL/SQLite, and jq; route triggers gain `xsltproc` / `libxslt` / `xslt` / `.xsl` / `.xslt`; eval locks `*.xsl` identify on lost-xsl
+- Plugin, marketplace, and SKILL.md at 0.4.93
+
 ## 0.4.92
 
 - Archaeology jq leaf: `evals/fixtures/lost-jq/HELLO.jq` + identify smoke; jq 1.7 CLI boot probe VERIFIED (`jq -nr -f HELLO.jq` → `EMPEROR-TIME-JQ-PROBE-OK`); dialect labels honest (CONJECTURE / UNVERIFIABLE where due); identify fossils `*.jq` only; bare `jq` allowed as route tag (tool binary name; word-boundary); bare `.jq` allowed as route tag with extension-boundary matching (does not prefix-hit `.jquery`); prefer `jq` / `jq1.7` / `jqlang` / `.jq`; Debian package `jq` 1.7.1-6+deb13u4 already on box this leaf (Worthy Spend 0 B apt; Installed-Size 125 kB); JSON filter leaf after SQL; treats jq as peer fossil not house twin language; TeX/LaTeX still deferred; C++ still deferred; CLIPS / embeddings still deferred
