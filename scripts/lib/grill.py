@@ -501,16 +501,11 @@ def main(argv: Sequence[str] | None = None) -> int:
         sys.stdout.write(msg + "\n")
         if not ok:
             return 1
-        sys.stdout.write(format_card(focus=to))
-        return 0
+        # Real grill progress counts as critique thrash (not --check-path).
+        try:
+            from proportionality import bump_and_check
 
-    target = args.check_path if args.check_path is not None else args.path
-    if target is not None:
-        # Proportionality: grill on a task workspace counts as critique thrash.
-        task_dir = target if target.is_dir() else (
-            target.parent if target.is_file() else None
-        )
-        if task_dir is not None and task_dir.is_dir():
+            cwd = Path.cwd()
             markers = (
                 "ledger.md",
                 "ask-spec.md",
@@ -519,17 +514,20 @@ def main(argv: Sequence[str] | None = None) -> int:
                 "claims.md",
                 "critique.md",
             )
-            if any((task_dir / m).exists() for m in markers):
-                try:
-                    from proportionality import bump_and_check
+            if any((cwd / m).exists() for m in markers):
+                prop_errs = bump_and_check(cwd, "critique")
+                if prop_errs:
+                    for e in prop_errs:
+                        print(f"grill FAIL: {e}", file=sys.stderr)
+                    return 1
+        except Exception:
+            pass
+        sys.stdout.write(format_card(focus=to))
+        return 0
 
-                    prop_errs = bump_and_check(task_dir, "critique")
-                    if prop_errs:
-                        for e in prop_errs:
-                            print(f"grill FAIL: {e}", file=sys.stderr)
-                        return 1
-                except Exception:
-                    pass
+    target = args.check_path if args.check_path is not None else args.path
+    if target is not None:
+        # --check-path is read-only: no effort-cycles stamp (eval/idempotent probes).
         errs = check_path(target)
         if errs:
             for e in errs:
