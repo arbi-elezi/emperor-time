@@ -24,4 +24,4 @@ This skill does **not** replace Dowsing Chain. It is the phase trigger.
 
 Invocation Ritual still applies: router → one aspect. Record the aspect path in the ledger.
 
-Ask→spec before setup thrash: `scripts/emperor ask-spec --emit "<ask>" --write .emperor/tasks/<id>/ask-spec.md` (HARD-GATE `--reject-no-spec` / `--check-ask-spec`; G0 calls it).
+Ask→spec before setup thrash: `scripts/emperor ask-spec --emit "<ask>" --write .emperor/tasks/<id>/ask-spec.md` (HARD-GATE `--reject-no-spec` / `--check-ask-spec`; G0 calls it). SessionStart nudges emit; omitting effort_class still gets tiny hard caps on critique/finish/grill.

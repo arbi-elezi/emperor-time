@@ -506,6 +506,30 @@ def main(argv: Sequence[str] | None = None) -> int:
 
     target = args.check_path if args.check_path is not None else args.path
     if target is not None:
+        # Proportionality: grill on a task workspace counts as critique thrash.
+        task_dir = target if target.is_dir() else (
+            target.parent if target.is_file() else None
+        )
+        if task_dir is not None and task_dir.is_dir():
+            markers = (
+                "ledger.md",
+                "ask-spec.md",
+                "ask_spec.md",
+                "effort-cycles.json",
+                "claims.md",
+                "critique.md",
+            )
+            if any((task_dir / m).exists() for m in markers):
+                try:
+                    from proportionality import bump_and_check
+
+                    prop_errs = bump_and_check(task_dir, "critique")
+                    if prop_errs:
+                        for e in prop_errs:
+                            print(f"grill FAIL: {e}", file=sys.stderr)
+                        return 1
+                except Exception:
+                    pass
         errs = check_path(target)
         if errs:
             for e in errs:

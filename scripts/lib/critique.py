@@ -367,13 +367,17 @@ def main(argv: Sequence[str] | None = None) -> int:
         sys.stdout.write(format_card())
         return 0
 
-    # Proportionality: count critique invocations when effort_class is declared.
+    # Proportionality: always count critique on a task dir. Missing
+    # effort_class stamps DEFAULT_EFFORT_CLASS=tiny and enforces tiny caps.
     if target.is_dir():
         try:
-            from proportionality import record_cycle, resolve_effort_class
+            from proportionality import bump_and_check
 
-            if resolve_effort_class(target) is not None:
-                record_cycle(target, "critique")
+            prop_errs = bump_and_check(target, "critique")
+            if prop_errs:
+                for e in prop_errs:
+                    print(f"critique FAIL: {e}", file=sys.stderr)
+                return 1
         except Exception:
             pass
 

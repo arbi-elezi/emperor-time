@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.4.146
+
+- Vertical depth: default-tiny hard-cap when effort_class missing — `proportionality.py` (`ensure_effort_class` / `bump_and_check` / `MISSING_CLASS_DEFAULTS_TINY`); critique / finish / grill always record cycles and enforce tiny caps when ask→spec omitted (no more unbounded thrash by skipping the class)
+- SessionStart prompt nudges ask→spec before setup; fixtures `task-no-class` / `task-no-class-over`; cycle ledger without class still hits tiny cap
+- Doctrine/SKILL/mechanical-gates/software-factory/bakeoff honesty lockstep; idle vacuous PASS unchanged when neither class nor cycle ledger
+- Not archaeology; not embeddings; not Nen/museum/k8s growth; closes proportionality gap left after v0.4.143
+- Plugin, marketplace, and SKILL.md at 0.4.146
+
 ## 0.4.145
 
 - Vertical depth: vacuous-PASS honesty peers — extend `check_report.py` `report_check` to activity-scoped forge / review-pack isolation / super-context / ask→spec / proportionality so idle checks emit `SKIP (vacuous — no activity)` (exit 0) instead of bare `PASS`

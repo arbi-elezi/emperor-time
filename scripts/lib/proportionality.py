@@ -19,6 +19,10 @@ Alias: anti-loop → same core.
 G4 in gate.py records a gate cycle then calls --check-proportionality.
 Vacuous PASS when no effort_class and no cycle ledger (idle paths).
 Activity-scoped: SKIP (vacuous — no activity) when no effort_class / cycle ledger.
+When critique/finish/grill (or --record-cycle) run without a declared
+effort_class, stamp DEFAULT_EFFORT_CLASS=tiny and enforce tiny caps —
+agents cannot thrash unbounded by omitting the class.
+Steal/Jail/Holy vacuous PASS is separate — this is task-path thrash.
 """
 from __future__ import annotations
 
@@ -47,6 +51,9 @@ EFFORT_CAPS: dict[str, dict[str, int]] = {
     "medium": {"verify": 8, "critique": 8, "gate": 12, "total": 20},
     "large": {"verify": 16, "critique": 16, "gate": 24, "total": 40},
 }
+
+# Missing effort_class on thrash paths → tiny hard caps (not unbounded).
+DEFAULT_EFFORT_CLASS = "tiny"
 
 _EFFORT = re.compile(
     r"(?im)\beffort[_ -]?class\s*[:=]\s*(tiny|small|medium|large)\b"
@@ -163,6 +170,53 @@ def resolve_effort_class(task: Path) -> str | None:
     return None
 
 
+def ensure_effort_class(
+    task: Path,
+    *,
+    default: str = DEFAULT_EFFORT_CLASS,
+    warn: bool = True,
+) -> str:
+    """Return declared effort_class, or stamp *default* (tiny) into the ledger.
+
+    Critique / finish / grill call this before recording so omitting
+    effort_class cannot leave thrash unbounded.
+    """
+    cls = resolve_effort_class(task)
+    if cls:
+        return cls
+    d = (default or DEFAULT_EFFORT_CLASS).lower().strip()
+    if d not in EFFORT_CAPS:
+        raise ValueError(
+            f"default effort_class must be one of {tuple(EFFORT_CAPS)}, got {d}"
+        )
+    counts = _load_cycles(task)
+    save_cycles(task, counts, effort_class=d)
+    if warn:
+        print(
+            f"proportionality WARN: no effort_class; defaulting to {d} caps "
+            f"— emit ask→spec (scripts/emperor ask-spec --emit) before thrash",
+            file=sys.stderr,
+        )
+    return d
+
+
+def bump_and_check(
+    task: Path,
+    kind: str,
+    *,
+    default: str = DEFAULT_EFFORT_CLASS,
+) -> list[str]:
+    """Stamp default class if missing, record KIND, return over-cap errors.
+
+    Used by critique / finish / grill so missing effort_class still has a
+    hard tiny cap (not unbounded).
+    """
+    root = _task_root(task)
+    ensure_effort_class(root, default=default)
+    record_cycle(root, kind)
+    return validate(root, bump_gate=False)
+
+
 def _has_activity(task: Path) -> bool:
     root = _task_root(task)
     if _cycle_path(task).is_file():
@@ -179,6 +233,9 @@ def validate(path: Path, *, bump_gate: bool = False) -> list[str]:
     """Check cycles against effort_class caps.
 
     bump_gate=True records a gate cycle before checking (G4 wiring).
+    Missing effort_class with an existing cycle ledger defaults to tiny
+    (hard cap) — agents cannot thrash by omitting the class. Idle paths
+    with neither class nor ledger remain vacuous PASS.
     """
     if not path.exists():
         return [f"missing path: {path}"]
@@ -186,7 +243,7 @@ def validate(path: Path, *, bump_gate: bool = False) -> list[str]:
     root = _task_root(path)
     cls = resolve_effort_class(root)
     # Only bump when a class is declared — do not create orphan cycle ledgers
-    # on vacuous paths (would force a false "missing effort_class" fail).
+    # on vacuous paths (G4 idle Steal/Jail/Holy stays vacuous).
     if bump_gate and cls is not None:
         record_cycle(root, "gate")
 
@@ -195,11 +252,8 @@ def validate(path: Path, *, bump_gate: bool = False) -> list[str]:
         return []
 
     if cls is None:
-        return [
-            "effort activity without effort_class "
-            f"(need effort_class: tiny|small|medium|large from ask→spec — "
-            f"see {LEAF})"
-        ]
+        # Cycle activity without declared class → tiny hard cap (not unbounded).
+        cls = DEFAULT_EFFORT_CLASS
 
     caps = EFFORT_CAPS[cls]
     counts = _load_cycles(root)
@@ -221,9 +275,10 @@ def format_card() -> str:
         "PROPORTIONALITY checklist=yes",
         f"PROPORTIONALITY leaf={LEAF}",
         "PROPORTIONALITY iron=EFFORT_CAP_BY_CLASS",
+        "PROPORTIONALITY iron=MISSING_CLASS_DEFAULTS_TINY",
         "STEP 1 id=class name=Read effort_class from ask→spec "
         "et=tiny|small|medium|large",
-        "STEP 1 key=No class → emit ask-spec first",
+        "STEP 1 key=No class → default tiny hard cap (emit ask-spec to declare)",
         "STEP 2 id=caps name=Honor class caps "
         "et="
         + "; ".join(
@@ -236,14 +291,16 @@ def format_card() -> str:
         "STEP 3 key=Loops across invocations are detectable",
         "STEP 4 id=gate name=HARD-GATE on over-cap "
         "et=--reject-over-verify / --check-proportionality; G4 records+checks",
-        "STEP 4 key=Nonzero exit when thrash exceeds class",
+        "STEP 4 key=Nonzero exit when thrash exceeds class; critique/finish/grill stamp tiny if undeclared",
         "",
-        "MUST: Scale verify/critique/gate effort to effort_class. Tiny asks "
-        "do not re-run the museum of gates. Open "
+        "MUST: Scale verify/critique/gate effort to effort_class. Missing class "
+        "defaults to tiny hard caps (critique/finish/grill / --record-cycle). "
+        "Tiny asks do not re-run the museum of gates. Open "
         f"{LEAF}; run scripts/emperor proportionality --check-proportionality "
         "<task-dir>.",
         "MUST-NOT: ~20 verifications for a 2-line change; endless "
-        "critique/gate loops that burn tokens without shipping.",
+        "critique/gate/grill loops that burn tokens without shipping; "
+        "omit effort_class to dodge caps (default-tiny still bites).",
         "HONESTY: Idle paths emit SKIP (vacuous — no activity); this HARD-GATE "
         "is task-path thrash only.",
     ]
@@ -308,12 +365,15 @@ def main(argv: Sequence[str] | None = None) -> int:
         kind, raw = args.record_cycle
         target = Path(raw)
         try:
+            ensure_effort_class(target)
             counts = record_cycle(target, kind)
         except (ValueError, OSError) as exc:
             print(f"proportionality FAIL: {exc}", file=sys.stderr)
             return 2
+        cls = resolve_effort_class(target) or DEFAULT_EFFORT_CLASS
         print(
             f"proportionality RECORD: kind={kind.lower()} "
+            f"effort_class={cls} "
             f"verify={counts['verify']} critique={counts['critique']} "
             f"gate={counts['gate']} total={counts['total']} path={target}"
         )
