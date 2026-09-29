@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.4.169
+
+### Added
+- **Adjustable rigor config (PR1)** — thin extension of `effort_class` (no parallel ladder). `scripts/lib/config.py` schema v1 YAML load/merge: defaults ← `.emperor/config.yaml` ← `~/.config/emperor-time/config.yaml` (user overlay wins). Aliases `standard`→**small**, `full`→**large**. Default `default_effort_class: tiny`; `auto_detect_little: true`. Iron `gates.always_hard` never soft (forge-pr-consent, pin-and-consent, quarantine, steal-consent, secrets-no-leak). CLI `emperor config show|get|set|edit` + thin twins. Wired into `ask_spec.emit_spec` / `proportionality.ensure_effort_class` (missing class stamps config default). Shipped `.emperor/config.yaml`. Fixtures `adjustable-rigor-config/`. Freeze *-hint-bind; not archaeology; not embeddings; not Nen/museum/k8s growth. Local eval only (Actions stay disabled).
+
 ## 0.4.168
 
 ### Added

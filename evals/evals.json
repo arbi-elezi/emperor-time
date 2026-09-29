@@ -267,6 +267,12 @@
       "id": "harness-review-pack-checks-hard-gate",
       "prompt": "Harness-driven G4 review-pack isolation",
       "expect": "review_pack.py --check-isolation follows g4_check_mode / HARNESS_DRIVES_G4_CHECKS; tiny SKIP; medium missing FAIL; medium ok PASS; medium dirty FAIL; no-plan vacuous SKIP; no-plan signal FAIL; fixtures harness-review-pack-checks/; G4 _run_review_isolation; v0.4.168"
+    },
+    {
+      "id": "adjustable-rigor-config-hard-gate",
+      "prompt": "Adjustable rigor config schema v1",
+      "expect": "config.py schema v1 load/merge; aliases standard\u2192small full\u2192large; default tiny; emperor config show|get|set|edit; ask_spec emit / ensure_effort_class from config; fixtures adjustable-rigor-config/; iron always_hard never soft; v0.4.169",
+      "type": "behavioral-fixture"
     }
   ]
 }

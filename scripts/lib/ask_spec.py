@@ -129,6 +129,12 @@ from pathlib import Path
 from typing import Sequence
 from check_report import report_check
 
+_LIB = Path(__file__).resolve().parent
+if str(_LIB) not in sys.path:
+    sys.path.insert(0, str(_LIB))
+
+import config as et_config  # noqa: E402
+
 LEAF = "references/mechanical-gates.md"
 EFFORT_CLASSES = ("tiny", "small", "medium", "large")
 
@@ -331,14 +337,31 @@ def emit_spec(
     goal: str | None = None,
     done_when: str | None = None,
     out_of_scope: str | None = None,
+    root: Path | None = None,
 ) -> str:
-    """Emit a minimal ask→spec markdown block."""
+    """Emit a minimal ask→spec markdown block.
+
+    Missing effort_class: when auto_detect_little (config default true) use
+    infer_effort_class; otherwise stamp rigor.default_effort_class from config
+    (aliases resolved: standard→small, full→large). Missing config → tiny.
+    """
     ask = (ask or "").strip()
     if not ask:
         raise ValueError("empty ask — cannot emit ask→spec")
-    cls = (effort_class or infer_effort_class(ask)).lower().strip()
+    if effort_class:
+        cls = et_config.resolve_effort_alias(effort_class.lower().strip())
+    elif et_config.auto_detect_little(root):
+        cls = infer_effort_class(ask)
+    else:
+        cls = et_config.default_effort_class(root)
     if cls not in EFFORT_CLASSES:
-        raise ValueError(f"effort_class must be one of {EFFORT_CLASSES}, got {cls}")
+        # Accept config aliases already resolved; still reject unknowns.
+        try:
+            cls = et_config.normalize_effort_class(cls)
+        except ValueError as exc:
+            raise ValueError(
+                f"effort_class must be one of {EFFORT_CLASSES}, got {cls}"
+            ) from exc
     # First sentence / line as default goal.
     first = re.split(r"[.\n]", ask, maxsplit=1)[0].strip() or ask[:120]
     g = (goal or first).strip()
@@ -1600,9 +1623,11 @@ def main(argv: Sequence[str] | None = None) -> int:
     )
     p.add_argument(
         "--effort-class",
-        choices=list(EFFORT_CLASSES),
         default=None,
-        help="Override inferred effort_class on emit",
+        help=(
+            "Override inferred effort_class on emit "
+            "(tiny|small|medium|large; aliases standard→small, full→large)"
+        ),
     )
     p.add_argument(
         "--goal",

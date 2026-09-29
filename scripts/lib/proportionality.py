@@ -20,8 +20,9 @@ G4 in gate.py records a gate cycle then calls --check-proportionality.
 Vacuous PASS when no effort_class and no cycle ledger (idle paths).
 Activity-scoped: SKIP (vacuous — no activity) when no effort_class / cycle ledger.
 When critique/finish/grill (or --record-cycle) run without a declared
-effort_class, stamp DEFAULT_EFFORT_CLASS=tiny and enforce tiny caps —
-agents cannot thrash unbounded by omitting the class.
+effort_class, stamp config rigor.default_effort_class (DEFAULT_EFFORT_CLASS=tiny
+when config missing) and enforce that class caps — agents cannot thrash
+unbounded by omitting the class. Aliases standard→small, full→large.
 Steal/Jail/Holy vacuous PASS is separate — this is task-path thrash.
 """
 from __future__ import annotations
@@ -39,6 +40,7 @@ if str(_LIB) not in sys.path:
     sys.path.insert(0, str(_LIB))
 
 from ask_spec import parse_effort_class  # noqa: E402
+import config as et_config  # noqa: E402
 
 LEAF = "references/mechanical-gates.md"
 CYCLE_FILE = "effort-cycles.json"
@@ -173,18 +175,26 @@ def resolve_effort_class(task: Path) -> str | None:
 def ensure_effort_class(
     task: Path,
     *,
-    default: str = DEFAULT_EFFORT_CLASS,
+    default: str | None = None,
     warn: bool = True,
 ) -> str:
-    """Return declared effort_class, or stamp *default* (tiny) into the ledger.
+    """Return declared effort_class, or stamp *default* into the ledger.
 
-    Critique / finish / grill call this before recording so omitting
-    effort_class cannot leave thrash unbounded.
+    Default comes from config rigor.default_effort_class (aliases resolved;
+    missing config → tiny / DEFAULT_EFFORT_CLASS). Critique / finish / grill
+    call this before recording so omitting effort_class cannot leave thrash
+    unbounded.
     """
     cls = resolve_effort_class(task)
     if cls:
         return cls
-    d = (default or DEFAULT_EFFORT_CLASS).lower().strip()
+    if default is None:
+        try:
+            d = et_config.default_effort_class(_task_root(task))
+        except Exception:
+            d = DEFAULT_EFFORT_CLASS
+    else:
+        d = et_config.resolve_effort_alias(str(default).lower().strip())
     if d not in EFFORT_CAPS:
         raise ValueError(
             f"default effort_class must be one of {tuple(EFFORT_CAPS)}, got {d}"
@@ -204,12 +214,12 @@ def bump_and_check(
     task: Path,
     kind: str,
     *,
-    default: str = DEFAULT_EFFORT_CLASS,
+    default: str | None = None,
 ) -> list[str]:
     """Stamp default class if missing, record KIND, return over-cap errors.
 
     Used by critique / finish / grill so missing effort_class still has a
-    hard tiny cap (not unbounded).
+    hard cap from config (default tiny; not unbounded).
     """
     root = _task_root(task)
     ensure_effort_class(root, default=default)

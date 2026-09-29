@@ -1,5 +1,8 @@
 # Emperor Time runtime artifacts — generated per task, not part of the skill
-.emperor/
+# Ignore contents (not the dir) so !.emperor/config.yaml can be committed.
+.emperor/*
+# Allow committed default adjustable-rigor config (schema v1)
+!.emperor/config.yaml
 # (includes .emperor/sdd/ plan-scoped SDD workspaces; also self-ignored via .emperor/sdd/.gitignore)
 
 
