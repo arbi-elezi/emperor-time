@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.4.170
+
+### Added
+- **Rigor judge + meta-skills pack (PR2)** — `scripts/lib/rigor_judge.py` cheap deterministic heuristics (scope / blast radius / secrets-auth-forge / archaeology markers) stamp recommended `effort_class` on ask→spec emit when `auto_detect_little` and no class declared. User override always wins (config / `--effort-class` / "use full rigor"). No LLM loop on tiny; optional judgment provider **not** in this PR. Light skill `skills/meta-rigor/` + on-demand `references/meta/{when-to-engage,rigor-tiers,config-from-any-harness,gates-map,little-ask-playbook}.md`. SessionStart activate card lists **paths only** (`META paths_only=yes`). Config schema knobs: `features.archaeology_depth` (off|shallow|full), `features.sandbox`, `features.sot`, `wip.max`, `critique.scale_with_effort` / `require_eight_count_at` — wired read paths (queue `wip.max`; judge reads archaeology_depth). Thin twins `rigor-judge.sh/.ps1`; `emperor rigor-judge`. Fixtures `rigor-judge-meta/`. Freeze `*-hint-bind`. No museum/Nen/k8s growth. Local eval only (Actions stay disabled).
+- **Config iron harden (F1)** — `emperor config set gates.always_hard []` (or any list omitting iron gates) **non-zero refuses**; no silent restore. Load WARNs if a file omitted iron then unions for ops.
+- **Config smoke note (F2)** — `references/meta/config-from-any-harness.md`: prefer `scripts/config.sh` / `lib/config.py` for smoke; `./scripts/emperor` may stall/boot without `.emperor/host.env`.
+
 ## 0.4.169
 
 ### Added

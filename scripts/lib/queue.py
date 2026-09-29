@@ -35,6 +35,12 @@ _ANY_OPEN = re.compile(r"^- \[[ ~!]\]")
 _PLACEHOLDER_BARE = re.compile(r"^- \[[ ~!]\] *$")
 _PLACEHOLDER_PARENS = re.compile(r"^- \[[ ~!]\] +\(.*\) *$")
 
+import sys as _sys_q
+_LIB_Q = Path(__file__).resolve().parent
+if str(_LIB_Q) not in _sys_q.path:
+    _sys_q.path.insert(0, str(_LIB_Q))
+import config as et_config  # noqa: E402
+
 _DEFAULT_HEADER = (
     "# Emperor queue\n"
     "# WIP=1 — one [~] active at a time. Statuses: [ ] ready · [~] active"
@@ -193,7 +199,7 @@ def reject_multi_wip() -> str:
     """Always-fail iron: agents who skip queue next still hit this gate."""
     return (
         "REJECT MULTI WIP: HARD-GATE — queue refuses >1 in-progress / active "
-        "[~] (WIP=1). Do not start a second item while another [~] exists; "
+        "[~] (wip.max from config, default 1). Do not exceed the WIP ceiling; "
         "finish or `queue done` first. Agents who skip `queue next` must still "
         "run scripts/emperor queue --check-wip before claiming multi-ready "
         "parallel work.\n"
@@ -201,16 +207,22 @@ def reject_multi_wip() -> str:
 
 
 def check_wip(path: Path) -> list[str]:
-    """Return errors when ledger has more than one active [~] (WIP=1)."""
+    """Return errors when ledger has more than wip.max active [~] (default 1)."""
     if not path.is_file():
         return [f"queue file missing: {path}"]
     active = list_active(path)
     n = len(active)
-    if n > 1:
+    try:
+        ceiling = int(et_config.wip_max(path.parent if path.name == "queue.md" else path.parent))
+    except Exception:
+        ceiling = 1
+    if ceiling < 1:
+        ceiling = 1
+    if n > ceiling:
         preview = "; ".join(active[:5])
         more = f" (+{n - 5} more)" if n > 5 else ""
         return [
-            f"multi-WIP: {n} active [~] (WIP=1 allows at most one): "
+            f"multi-WIP: {n} active [~] (wip.max={ceiling} allows at most {ceiling}): "
             f"{preview}{more}"
         ]
     return []

@@ -290,6 +290,16 @@ LEAVES: list[tuple[str, str, tuple[str, ...]]] = [
         "scripts/lib/sdd_review_pack.py",
         ("sdd_review_pack.py", "sdd-review-pack"),
     ),
+    (
+        "adjustable-rigor-config",
+        "evals/fixtures/adjustable-rigor-config/README.md",
+        ("adjustable-rigor-config", "config.py", "default_effort_class"),
+    ),
+    (
+        "rigor-judge-meta",
+        "evals/fixtures/rigor-judge-meta/README.md",
+        ("rigor-judge-meta", "rigor_judge", "little-ask", "META"),
+    ),
 ]
 
 

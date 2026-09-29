@@ -3,6 +3,7 @@
 # Aliases: standard→small, full→large. Missing file → defaults (tiny).
 # Iron gates (always_hard) NEVER soft: forge-pr-consent, pin-and-consent,
 # quarantine, steal-consent, secrets-no-leak (+ enlist/credentials via those).
+# Feature knobs: archaeology_depth off|shallow|full; sandbox; sot; wip.max; critique.
 version: 1
 rigor:
   default_effort_class: tiny
@@ -22,3 +23,12 @@ harness:
   force_table_source: builtin
   require_plan: true
   require_spec: true
+features:
+  archaeology_depth: off
+  sandbox: false
+  sot: false
+wip:
+  max: 1
+critique:
+  scale_with_effort: true
+  require_eight_count_at: medium

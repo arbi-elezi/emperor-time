@@ -1,5 +1,5 @@
 {
-  "version": "0.4.167",
+  "version": "0.4.170",
   "harness": "emperor-time",
   "notes": "Structural evals run via scripts/lib/eval.py (thin eval.sh / eval.ps1). Behavioral cases are fixtures for model trials, not executed here.",
   "cases": [
@@ -272,6 +272,12 @@
       "id": "adjustable-rigor-config-hard-gate",
       "prompt": "Adjustable rigor config schema v1",
       "expect": "config.py schema v1 load/merge; aliases standard\u2192small full\u2192large; default tiny; emperor config show|get|set|edit; ask_spec emit / ensure_effort_class from config; fixtures adjustable-rigor-config/; iron always_hard never soft; v0.4.169",
+      "type": "behavioral-fixture"
+    },
+    {
+      "id": "rigor-judge-meta-hard-gate",
+      "prompt": "Rigor judge + meta-skills pack + feature knobs",
+      "expect": "rigor_judge.py cheap heuristics; ask_spec emit wire when auto_detect_little; user override wins; meta pack references/meta/*; SessionStart META paths_only; config features.archaeology_depth/sandbox/sot wip.max critique.*; fixtures rigor-judge-meta/; v0.4.170",
       "type": "behavioral-fixture"
     }
   ]

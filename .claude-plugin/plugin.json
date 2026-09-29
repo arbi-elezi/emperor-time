@@ -1,7 +1,7 @@
 {
   "name": "emperor-time",
   "displayName": "Emperor Time",
-  "version": "0.4.169",
+  "version": "0.4.170",
   "description": "Software factory and digital coding archaeologist disguised as a skill. Language-agnostic. Host-agnostic.",
   "author": {
     "name": "Arbi Elezi",
@@ -35,6 +35,7 @@
     "./skills/emperor-forge",
     "./skills/emperor-dispatch",
     "./skills/emperor-heal",
-    "./skills/emperor-capture"
+    "./skills/emperor-capture",
+    "./skills/meta-rigor"
   ]
 }
