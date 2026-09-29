@@ -23,3 +23,5 @@ This skill does **not** replace Dowsing Chain. It is the phase trigger.
 6. If the client has not chosen among options, stop and ask — do not invent scope.
 
 Invocation Ritual still applies: router → one aspect. Record the aspect path in the ledger.
+
+Ask→spec before setup thrash: `scripts/emperor ask-spec --emit "<ask>" --write .emperor/tasks/<id>/ask-spec.md` (HARD-GATE `--reject-no-spec` / `--check-ask-spec`; G0 calls it).

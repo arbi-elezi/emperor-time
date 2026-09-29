@@ -142,6 +142,11 @@
       "id": "jail-pin-and-consent-hard-gate",
       "type": "behavioral-fixture",
       "expect": "pin_consent.py --reject-unpinned / --reject-no-skill-consent / --check-pin-consent refuses missing provenance pin or named-skill consent when Jail pin activity present; accepts ok+vacuous; G4 calls when Jail pin activity present"
+    },
+    {
+      "id": "ask-spec-proportionality-hard-gate",
+      "type": "behavioral-fixture",
+      "expect": "ask_spec.py --reject-no-spec / --check-ask-spec / --emit; proportionality.py --reject-over-verify / --check-proportionality / --record-cycle; missing spec fails; tiny ask → tiny effort_class; over-verify fails; under-cap + vacuous pass; G0 calls ask-spec; G4 calls proportionality"
     }
   ]
 }

@@ -351,7 +351,19 @@ def main(argv: Sequence[str] | None = None) -> int:
         sys.stdout.write(format_card())
         return 0
 
+    def _bump_verify(task: Path | None) -> None:
+        if task is None or not task.is_dir():
+            return
+        try:
+            from proportionality import record_cycle, resolve_effort_class
+
+            if resolve_effort_class(task) is not None:
+                record_cycle(task, "verify")
+        except Exception:
+            pass
+
     if args.check_suite is not None:
+        _bump_verify(args.check_suite)
         errs = check_suite(args.check_suite, use_eval=args.with_eval)
         if errs:
             for e in errs:
@@ -362,6 +374,7 @@ def main(argv: Sequence[str] | None = None) -> int:
 
     if args.require_green:
         target = args.path
+        _bump_verify(target)
         errs = check_suite(target, use_eval=args.with_eval)
         if errs:
             for e in errs:

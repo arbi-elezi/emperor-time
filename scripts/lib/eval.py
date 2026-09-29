@@ -5972,7 +5972,7 @@ def run_evals(root: Path) -> int:
     h.require_contains("steal-consent", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing steal-consent")
     h.require_contains("consent.py", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing consent.py")
     h.require_contains("0.4.132", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing 0.4.132 tip")
-    h.require_contains("0.4.142", ".claude-plugin/plugin.json", "plugin.json not at 0.4.142")
+    h.require_contains("0.4.143", ".claude-plugin/plugin.json", "plugin.json not at 0.4.143")
     h.require_contains("0.4.137", "CHANGELOG.md", "CHANGELOG missing retained 0.4.137")
     h.require_contains("0.4.136", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing retained 0.4.136")
     h.require_contains("0.4.132", "CHANGELOG.md", "CHANGELOG missing 0.4.132")
@@ -6039,7 +6039,8 @@ def run_evals(root: Path) -> int:
     h.require_contains("steal-sign-dispatch-swarm", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing steal-sign-dispatch-swarm")
     h.require_contains("SIGNIN_THEN_DISPATCH_THEN_BOUNDED_SWARM", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing SIGNIN_THEN_DISPATCH_THEN_BOUNDED_SWARM")
     h.require_contains("steal_flow.py", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing steal_flow.py")
-    h.require_contains("0.4.142", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing 0.4.142 tip")
+    h.require_contains("0.4.143", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing 0.4.143 tip")
+    h.require_contains("0.4.143", "CHANGELOG.md", "CHANGELOG missing 0.4.143")
     h.require_contains("0.4.142", "CHANGELOG.md", "CHANGELOG missing 0.4.142")
     h.require_contains("reject-unpinned", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing reject-unpinned")
     h.require_contains("reject-no-skill-consent", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing reject-no-skill-consent")
@@ -6047,13 +6048,23 @@ def run_evals(root: Path) -> int:
     h.require_contains("jail-pin-and-consent", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing jail-pin-and-consent")
     h.require_contains("PIN_THEN_CONSENT_BEFORE_ADAPT", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing PIN_THEN_CONSENT_BEFORE_ADAPT")
     h.require_contains("pin_consent.py", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing pin_consent.py")
+    h.require_contains("reject-no-spec", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing reject-no-spec")
+    h.require_contains("reject-over-verify", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing reject-over-verify")
+    h.require_contains("check-ask-spec", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing check-ask-spec")
+    h.require_contains("check-proportionality", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing check-proportionality")
+    h.require_contains("ask-spec-proportionality", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing ask-spec-proportionality")
+    h.require_contains("ASK_THEN_SPEC_BEFORE_SETUP", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing ASK_THEN_SPEC_BEFORE_SETUP")
+    h.require_contains("EFFORT_CAP_BY_CLASS", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing EFFORT_CAP_BY_CLASS")
+    h.require_contains("ask_spec.py", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing ask_spec.py")
+    h.require_contains("proportionality.py", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing proportionality.py")
     h.require_contains("PR_CONSENT_BEFORE_PUBLIC", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing PR_CONSENT_BEFORE_PUBLIC")
     h.require_contains("secrets_broker.py", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing secrets_broker.py")
     h.require_contains("workspace_env.py", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing workspace_env.py")
     h.require_contains("blind-secrets-broker", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing blind-secrets-broker")
     h.require_contains("reject-secret-leak", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing reject-secret-leak")
     h.require_contains("check-env-redacted", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing check-env-redacted")
-    h.require_contains("0.4.142", ".claude-plugin/marketplace.json", "marketplace.json not at 0.4.142")
+    h.require_contains("0.4.143", ".claude-plugin/marketplace.json", "marketplace.json not at 0.4.143")
+    h.require_contains("0.4.142", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing retained 0.4.142")
     h.require_contains("finish.py", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing finish.py")
     h.require_contains("reject-red-suite", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing reject-red-suite")
     h.require_contains("require-green", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing require-green")
@@ -7932,6 +7943,335 @@ def run_evals(root: Path) -> int:
         h.pass_msg("emperor pin-and-consent peer forwards --reject-unpinned")
     h.pass_msg("pin_consent.py thin twins + jail-pin-and-consent HARD-GATE")
 
+
+    # ---- ask→spec + proportionality HARD-GATE (task-path thrash) ----
+    h.section("ask-spec-proportionality HARD-GATE")
+    h.need("scripts/lib/ask_spec.py")
+    h.need("scripts/lib/proportionality.py")
+    h.need("scripts/ask-spec.sh")
+    h.need("scripts/ask-spec.ps1")
+    h.need("scripts/proportionality.sh")
+    h.need("scripts/proportionality.ps1")
+    h.need("scripts/anti-loop.sh")
+    h.need("scripts/anti-loop.ps1")
+    h.need("evals/fixtures/ask-spec-proportionality/spec-ok-tiny.md")
+    h.need("evals/fixtures/ask-spec-proportionality/spec-missing.md")
+    h.need("evals/fixtures/ask-spec-proportionality/ask-tiny.txt")
+    h.need("evals/fixtures/ask-spec-proportionality/task-ok/ledger.md")
+    h.need("evals/fixtures/ask-spec-proportionality/task-no-spec/ledger.md")
+    h.need("evals/fixtures/ask-spec-proportionality/task-over-verify/ledger.md")
+    h.need("evals/fixtures/ask-spec-proportionality/task-under-cap/ledger.md")
+    h.need("evals/fixtures/ask-spec-proportionality/task-vacuous/ledger.md")
+    h.bash_n("scripts/ask-spec.sh", "ask-spec.sh syntax")
+    h.bash_n("scripts/proportionality.sh", "proportionality.sh syntax")
+    h.bash_n("scripts/anti-loop.sh", "anti-loop.sh syntax")
+    h.py_compile("scripts/lib/ask_spec.py", "ask_spec.py compile")
+    h.py_compile("scripts/lib/proportionality.py", "proportionality.py compile")
+    h.require_contains(
+        "lib/ask_spec.py",
+        "scripts/ask-spec.sh",
+        "ask-spec.sh thin twin missing ask_spec.py",
+    )
+    h.require_contains(
+        "lib/ask_spec.py",
+        "scripts/ask-spec.ps1",
+        "ask-spec.ps1 thin twin missing ask_spec.py",
+    )
+    h.require_contains(
+        "lib/proportionality.py",
+        "scripts/proportionality.sh",
+        "proportionality.sh thin twin missing proportionality.py",
+    )
+    h.require_contains(
+        "lib/proportionality.py",
+        "scripts/proportionality.ps1",
+        "proportionality.ps1 thin twin missing proportionality.py",
+    )
+    h.require_contains(
+        "ask-spec",
+        "scripts/emperor",
+        "emperor bash peer missing ask-spec",
+    )
+    h.require_contains(
+        "proportionality",
+        "scripts/emperor",
+        "emperor bash peer missing proportionality",
+    )
+    h.require_contains(
+        "anti-loop",
+        "scripts/emperor",
+        "emperor bash peer missing anti-loop",
+    )
+    h.require_contains(
+        "'ask-spec'",
+        "scripts/emperor.ps1",
+        "emperor.ps1 missing ask-spec",
+    )
+    h.require_contains(
+        "ask-spec",
+        "scripts/emperor.cmd",
+        "emperor.cmd missing ask-spec",
+    )
+    h.require_contains(
+        "ask-spec",
+        "scripts/emperor.zsh",
+        "emperor.zsh missing ask-spec",
+    )
+    h.require_contains(
+        "ask_spec.py",
+        "scripts/lib/gate.py",
+        "gate.py does not call ask_spec.py",
+    )
+    h.require_contains(
+        "--check-ask-spec",
+        "scripts/lib/gate.py",
+        "gate.py missing --check-ask-spec wiring",
+    )
+    h.require_contains(
+        "proportionality.py",
+        "scripts/lib/gate.py",
+        "gate.py does not call proportionality.py",
+    )
+    h.require_contains(
+        "--check-proportionality",
+        "scripts/lib/gate.py",
+        "gate.py missing --check-proportionality wiring",
+    )
+    h.require_contains(
+        "--reject-no-spec",
+        "scripts/lib/ask_spec.py",
+        "ask_spec.py missing --reject-no-spec",
+    )
+    h.require_contains(
+        "--check-ask-spec",
+        "scripts/lib/ask_spec.py",
+        "ask_spec.py missing --check-ask-spec",
+    )
+    h.require_contains(
+        "--reject-over-verify",
+        "scripts/lib/proportionality.py",
+        "proportionality.py missing --reject-over-verify",
+    )
+    h.require_contains(
+        "--check-proportionality",
+        "scripts/lib/proportionality.py",
+        "proportionality.py missing --check-proportionality",
+    )
+    h.require_contains(
+        "--record-cycle",
+        "scripts/lib/proportionality.py",
+        "proportionality.py missing --record-cycle",
+    )
+    h.require_contains(
+        "ask-spec-proportionality-hard-gate",
+        "evals/evals.json",
+        "evals.json missing ask-spec-proportionality-hard-gate case",
+    )
+    h.require_contains(
+        "ask-spec",
+        "references/mechanical-gates.md",
+        "mechanical-gates missing ask-spec row",
+    )
+    h.require_contains(
+        "proportionality",
+        "references/mechanical-gates.md",
+        "mechanical-gates missing proportionality row",
+    )
+    h.require_contains(
+        "check-ask-spec",
+        "references/software-factory.md",
+        "software-factory missing check-ask-spec",
+    )
+    h.require_contains(
+        "reject-no-spec",
+        "evals/bakeoff.md",
+        "bakeoff.md missing ask-spec reject-no-spec inventory",
+    )
+    h.require_contains(
+        "reject-over-verify",
+        "evals/bakeoff.md",
+        "bakeoff.md missing proportionality reject-over-verify inventory",
+    )
+    h.require_contains(
+        "--reject-no-spec",
+        "skills/emperor-scope/SKILL.md",
+        "emperor-scope skill missing --reject-no-spec",
+    )
+    h.require_contains(
+        "--reject-over-verify",
+        "skills/emperor-verify/SKILL.md",
+        "emperor-verify skill missing --reject-over-verify",
+    )
+    _, card = h.run_py("scripts/lib/ask_spec.py")
+    if "checklist=yes" not in card:
+        h.fail_msg("ask-spec card missing checklist=yes")
+    elif "ASK_THEN_SPEC_BEFORE_SETUP" not in card:
+        h.fail_msg("ask-spec card missing iron law token")
+    else:
+        h.pass_msg("ask-spec prints ASK-SPEC card")
+    _, pcard = h.run_py("scripts/lib/proportionality.py")
+    if "checklist=yes" not in pcard:
+        h.fail_msg("proportionality card missing checklist=yes")
+    elif "EFFORT_CAP_BY_CLASS" not in pcard:
+        h.fail_msg("proportionality card missing iron law token")
+    else:
+        h.pass_msg("proportionality prints PROPORTIONALITY card")
+    for flag, needle in (
+        ("--reject-no-spec", "REJECT NO SPEC"),
+        ("--reject-over-verify", "REJECT OVER-VERIFY"),
+    ):
+        mod = (
+            "scripts/lib/ask_spec.py"
+            if "no-spec" in flag
+            else "scripts/lib/proportionality.py"
+        )
+        rc, reject = h.run_py(mod, flag)
+        if rc == 0:
+            h.fail_msg(f"{mod} {flag} should exit non-zero")
+        elif needle not in reject and "HARD-GATE" not in reject:
+            h.fail_msg(f"{mod} {flag} missing REJECT text")
+        else:
+            h.pass_msg(f"{Path(mod).name} {flag} hard-gates")
+    # emit tiny ask → tiny effort_class
+    rc, out = h.run_py(
+        "scripts/lib/ask_spec.py",
+        "--emit",
+        "--ask-file",
+        str(root / "evals/fixtures/ask-spec-proportionality/ask-tiny.txt"),
+    )
+    if rc != 0:
+        h.fail_msg(f"ask-spec --emit tiny ask failed: {out}")
+    elif "effort_class:** tiny" not in out and "**effort_class:** tiny" not in out:
+        h.fail_msg(f"ask-spec tiny ask should emit effort_class=tiny: {out}")
+    else:
+        h.pass_msg("ask-spec emit tiny → effort_class=tiny")
+    # check-ask-spec reject / accept
+    for name, expect_fail in (
+        ("spec-missing.md", True),
+        ("task-no-spec", True),
+        ("spec-ok-tiny.md", False),
+        ("task-ok", False),
+        ("task-vacuous", False),
+    ):
+        target = root / "evals/fixtures/ask-spec-proportionality" / name
+        rc, err = h.run_py(
+            "scripts/lib/ask_spec.py", "--check-ask-spec", str(target)
+        )
+        if expect_fail:
+            if rc == 0:
+                h.fail_msg(f"ask-spec {name} should fail --check-ask-spec")
+            else:
+                h.pass_msg(f"ask-spec {name} rejected")
+        else:
+            if rc != 0:
+                h.fail_msg(f"ask-spec {name} should pass: {err}")
+            else:
+                h.pass_msg(f"ask-spec {name} accepted")
+    # proportionality reject / accept
+    for name, expect_fail in (
+        ("task-over-verify", True),
+        ("task-under-cap", False),
+        ("task-ok", False),
+        ("task-vacuous", False),
+    ):
+        target = root / "evals/fixtures/ask-spec-proportionality" / name
+        rc, err = h.run_py(
+            "scripts/lib/proportionality.py",
+            "--check-proportionality",
+            str(target),
+        )
+        if expect_fail:
+            if rc == 0:
+                h.fail_msg(f"proportionality {name} should fail")
+            elif not h.grep_out(err, r"over-verify|cap"):
+                h.fail_msg(f"proportionality {name} should mention over-verify/cap: {err}")
+            else:
+                h.pass_msg(f"proportionality {name} rejected")
+        else:
+            if rc != 0:
+                h.fail_msg(f"proportionality {name} should pass: {err}")
+            else:
+                h.pass_msg(f"proportionality {name} accepted")
+    # G0 wiring (ask-spec)
+    tmp = Path(tempfile.mkdtemp())
+    try:
+        import shutil as _shutil
+        for name, expect_fail in (
+            ("task-no-spec", True),
+            ("task-ok", False),
+            ("task-vacuous", False),
+        ):
+            src = root / "evals/fixtures/ask-spec-proportionality" / name
+            dst = tmp / f"g0-{name}"
+            _shutil.copytree(src, dst)
+            rc, out = h.run_sh("scripts/gate.sh", "g0", str(dst))
+            if expect_fail:
+                if rc == 0:
+                    h.fail_msg(f"G0 allowed bad ask-spec {name}")
+                else:
+                    h.pass_msg(f"G0 rejects bad ask-spec {name}")
+            else:
+                if rc != 0:
+                    h.fail_msg(f"G0 should accept ask-spec {name}: {out}")
+                else:
+                    h.pass_msg(f"G0 accepts ask-spec {name}")
+    finally:
+        shutil.rmtree(tmp, ignore_errors=True)
+    # G4 wiring (proportionality) — stamp priors; bump-gate must not push under-cap over
+    tmp = Path(tempfile.mkdtemp())
+    try:
+        import shutil as _shutil
+        for name, expect_fail in (
+            ("task-over-verify", True),
+            ("task-under-cap", False),
+            ("task-ok", False),
+            ("task-vacuous", False),
+        ):
+            src = root / "evals/fixtures/ask-spec-proportionality" / name
+            dst = tmp / f"g4-{name}"
+            _shutil.copytree(src, dst)
+            (dst / ".gates").mkdir(exist_ok=True)
+            stamp = _utc_stamp()
+            for g in ("g0", "g1", "g2", "g3"):
+                (dst / ".gates" / g).write_text(stamp + "\n", encoding="utf-8")
+            rc, out = h.run_sh("scripts/gate.sh", "g4", str(dst))
+            if expect_fail:
+                if rc == 0:
+                    h.fail_msg(f"G4 allowed over-verify {name}")
+                else:
+                    h.pass_msg(f"G4 rejects over-verify {name}")
+            else:
+                if rc != 0:
+                    h.fail_msg(f"G4 should accept proportionality {name}: {out}")
+                else:
+                    h.pass_msg(f"G4 accepts proportionality {name}")
+    finally:
+        shutil.rmtree(tmp, ignore_errors=True)
+    _, sh_card = h.run_sh("scripts/ask-spec.sh")
+    if "checklist=yes" not in sh_card:
+        h.fail_msg("ask-spec.sh should print ASK-SPEC card")
+    else:
+        h.pass_msg("ask-spec.sh thin twin prints card")
+    _, emp_out = h.run_sh(
+        "scripts/emperor",
+        "ask-spec",
+        "--reject-no-spec",
+    )
+    if "REJECT NO SPEC" not in emp_out:
+        h.fail_msg("emperor ask-spec --reject-no-spec should forward REJECT")
+    else:
+        h.pass_msg("emperor ask-spec peer forwards --reject-no-spec")
+    _, emp_out2 = h.run_sh(
+        "scripts/emperor",
+        "proportionality",
+        "--reject-over-verify",
+    )
+    if "REJECT OVER-VERIFY" not in emp_out2:
+        h.fail_msg("emperor proportionality --reject-over-verify should forward REJECT")
+    else:
+        h.pass_msg("emperor proportionality peer forwards --reject-over-verify")
+    h.pass_msg("ask_spec.py + proportionality.py thin twins + HARD-GATE")
+
     # ---- hetero-critique isolation HARD-GATE (Judgment G4 vertical depth) ----
     h.section("hetero-critique-isolation HARD-GATE")
     h.need("scripts/lib/review_pack.py")
@@ -8004,9 +8344,9 @@ def run_evals(root: Path) -> int:
         "bakeoff.md missing reject-unisolated inventory",
     )
     h.require_contains(
-        "0.4.142",
+        "0.4.143",
         "SKILL.md",
-        "SKILL.md not bumped to 0.4.142",
+        "SKILL.md not bumped to 0.4.143",
     )
     _, card = h.run_py("scripts/lib/review_pack.py")
     if "checklist=yes" not in card:
