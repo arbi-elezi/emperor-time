@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.4.162
+
+### Added
+- **Notes-hint-bind HARD-GATE** — `ask_spec.py --check-notes-hints` / `--reject-over-notes-class` (`NOTES_HINT_BIND`). Ask→spec `effort_class` must not exceed the hint ceiling of notes.md; parking tiny-hint language ("fix typo" / "one-line" / wording / trivial / nit / changelog only) in notes.md while ask-spec+ledger/work-order/brief/claims stay clean can no longer unlock `FORCE_TABLE[large]` / `EFFORT_CAPS[large]` while `TASK_HINT_BIND` stays green. Length-only infer stays advisory; only strong `_TINY_HINTS` bind; `_LARGE_HINTS` lift the ceiling; tighter-than-hint class OK. G4 `_run_notes_hints` after `_run_task_hints`. Fixtures `notes-hint-bind/` (task-notes-park FAIL / task-clean PASS / task-tighter PASS / task-vacuous SKIP). Distrust spine untouched. Local eval only (Actions stay disabled).
+
 ## 0.4.161
 
 ### Added
