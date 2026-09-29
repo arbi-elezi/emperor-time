@@ -296,6 +296,11 @@ LEAVES: list[tuple[str, str, tuple[str, ...]]] = [
         ("adjustable-rigor-config", "config.py", "default_effort_class"),
     ),
     (
+        "judgment-adapter-stub",
+        "evals/fixtures/judgment-adapter-stub/README.md",
+        ("judgment-adapter-stub", "judgment.py", "provider off", "tiny clear"),
+    ),
+    (
         "rigor-judge-meta",
         "evals/fixtures/rigor-judge-meta/README.md",
         ("rigor-judge-meta", "rigor_judge", "little-ask", "META"),
