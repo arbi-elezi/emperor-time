@@ -154,6 +154,11 @@
       "expect": "ask_spec.py --reject-over-body-class / --check-body-hints; BODY_HINT_BIND; Notes/freeform-park tiny hints with effort_class large FAIL; tiny-hint+tiny PASS; no-tiny-hints medium PASS; vacuous SKIP; scope-hints may PASS while body-hints FAIL; G4 _run_body_hints; fixtures body-hint-bind/; v0.4.160"
     },
     {
+      "id": "task-hint-bind-hard-gate",
+      "type": "behavioral-fixture",
+      "expect": "ask_spec.py --reject-over-task-class / --check-task-hints; TASK_HINT_BIND; ledger-park tiny hints with effort_class large FAIL; tiny-hint+tiny PASS; no-tiny-hints medium PASS; vacuous SKIP; body-hints may PASS while task-hints FAIL; G4 _run_task_hints; fixtures task-hint-bind/; v0.4.161"
+    },
+    {
       "id": "scope-hint-bind-hard-gate",
       "type": "behavioral-fixture",
       "expect": "ask_spec.py --reject-over-scope-class / --check-scope-hints; SCOPE_HINT_BIND; out-of-scope-park tiny hints with effort_class large FAIL; tiny-hint+tiny PASS; no-tiny-hints medium PASS; vacuous SKIP; spec-hints may PASS while scope-hints FAIL; G4 _run_scope_hints; fixtures scope-hint-bind/; v0.4.159"
