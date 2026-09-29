@@ -139,6 +139,11 @@
       "expect": "harness_plan.py --reject-over-class-tools / --check-class-tools; CLASS_TOOLS_BIND; inflated Tools FAIL; unforbid FAIL; clean PASS; vacuous SKIP; G4 _run_harness_class_tools; fixtures harness-class-tools-bind/; v0.4.154"
     },
     {
+      "id": "harness-ask-class-bind-hard-gate",
+      "type": "structural",
+      "expect": "harness_plan.py --reject-class-mismatch / --check-ask-class; ASK_CLASS_BIND; plan vs ask→spec mismatch FAIL; clean PASS; vacuous SKIP; G4 _run_harness_ask_class; fixtures harness-ask-class-bind/; v0.4.155"
+    },
+    {
       "id": "harness-plan-caps-enforce-hard-gate",
       "kind": "structural",
       "expect": "harness_plan.py --reject-over-plan-caps / --check-caps; PLAN_CAPS_BIND; plan Caps tighter than class table FAIL when cycles exceed; clean PASS; vacuous SKIP; G4 _run_harness_caps; fixtures harness-plan-caps-enforce/; v0.4.153"

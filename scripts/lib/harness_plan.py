@@ -17,6 +17,8 @@ Always-fail HARD-GATE helpers:
   --reject-over-plan-caps   refuse when effort-cycles exceed plan Caps
   --reject-over-class-tools refuse when plan Tools/Optional/Forbidden
                             diverge from FORCE_TABLE[effort_class]
+  --reject-class-mismatch   refuse when plan effort_class mismatches
+                            ask→spec effort_class
 
 Check / require / emit:
   --check-harness-plan PATH activity-scoped idle check (SKIP vacuous when idle)
@@ -34,6 +36,10 @@ Check / require / emit:
   --check-class-tools PATH  activity-scoped: SKIP vacuous when no plan / idle;
                             FAIL when plan Tools∪Optional exceed FORCE_TABLE
                             for effort_class, or Forbidden omits a class ban
+  --check-ask-class PATH    activity-scoped: SKIP vacuous when no plan / idle;
+                            FAIL when plan effort_class mismatches ask→spec
+                            (ASK_CLASS_BIND — tiny→large rewrite cannot dodge
+                            CLASS_TOOLS_BIND by upgrading the plan class)
                             (agent cannot upgrade tiny→tdd by rewriting the plan)
   --require-plan PATH       always-on when task active: missing/invalid plan FAILS
                             (never vacuous — G0 calls this after ask→spec)
@@ -44,7 +50,7 @@ Thin twins: scripts/harness-plan.sh / scripts/harness-plan.ps1
 Alias: tool-force → same core.
 G0 calls --require-plan after ask→spec.
 G4 calls --check-forbidden then --check-allowed then --check-caps then
---check-class-tools after proportionality.
+--check-class-tools then --check-ask-class after proportionality.
 """
 from __future__ import annotations
 
@@ -69,6 +75,7 @@ IRON_FORBID = "FORBIDDEN_TOOLS_NEVER_RUN"
 IRON_ALLOW = "ALLOWED_TOOLS_ONLY"
 IRON_CAPS = "PLAN_CAPS_BIND"
 IRON_CLASS = "CLASS_TOOLS_BIND"
+IRON_ASK_CLASS = "ASK_CLASS_BIND"
 PLAN_FILENAMES = {
     "harness-plan.md",
     "harness_plan.md",
@@ -1283,6 +1290,70 @@ def reject_over_class_tools() -> str:
     )
 
 
+def list_ask_class_mismatch(path: Path) -> list[tuple[str, str]]:
+    """Return (plan_class, ask_class) when they diverge; else []."""
+    root = _task_root(path)
+    plan = _load_plan(root)
+    if plan is None:
+        return []
+    plan_cls = plan.get("effort_class")
+    if not isinstance(plan_cls, str) or plan_cls.lower() not in EFFORT_CLASSES:
+        return []
+    plan_cls = plan_cls.lower()
+    ask_cls = parse_effort_class(root)
+    if ask_cls is None:
+        return []
+    ask_cls = ask_cls.lower()
+    if plan_cls != ask_cls:
+        return [(plan_cls, ask_cls)]
+    return []
+
+
+def validate_ask_class(path: Path) -> list[str]:
+    """Activity-scoped: empty errs when no plan (idle / vacuous).
+
+    When a harness plan exists, FAIL if plan.effort_class mismatches
+    ask→spec effort_class, or ask→spec class is missing while a plan exists.
+    Closes the tiny→large rewrite bypass of CLASS_TOOLS_BIND: upgrading the
+    plan class makes FORCE_TABLE[large] green while ask→spec stayed tiny.
+    """
+    if not path.exists():
+        return [f"missing path: {path}"]
+    root = _task_root(path)
+    plan = _load_plan(root)
+    if plan is None:
+        return []
+    plan_cls = plan.get("effort_class")
+    if not isinstance(plan_cls, str) or plan_cls.lower() not in EFFORT_CLASSES:
+        return [
+            f"harness plan missing effort_class for ask→spec bind "
+            f"({IRON_ASK_CLASS}; see {LEAF})"
+        ]
+    plan_cls = plan_cls.lower()
+    ask_cls = parse_effort_class(root)
+    if ask_cls is None:
+        return [
+            f"missing ask→spec effort_class to bind plan effort_class={plan_cls} "
+            f"({IRON_ASK_CLASS}; see {LEAF})"
+        ]
+    ask_cls = ask_cls.lower()
+    if plan_cls != ask_cls:
+        return [
+            f"harness plan effort_class={plan_cls} mismatches ask→spec "
+            f"effort_class={ask_cls} ({IRON_ASK_CLASS}; see {LEAF})"
+        ]
+    return []
+
+
+def reject_class_mismatch() -> str:
+    return (
+        "REJECT CLASS MISMATCH: HARD-GATE — harness plan effort_class must "
+        "match ask→spec effort_class. Agent cannot upgrade force by rewriting "
+        "a tiny plan to large (which would make CLASS_TOOLS_BIND green against "
+        f"FORCE_TABLE[large]). Open {LEAF}; re-check with "
+        f"--check-ask-class <task-dir>. IRON={IRON_ASK_CLASS}\n"
+    )
+
 
 def validate(path: Path) -> list[str]:
     """Activity-scoped: empty errs when idle (no plan/ask-spec signal)."""
@@ -1321,7 +1392,7 @@ def format_card() -> str:
         "STEP 2 key=Not agent recall — harness owns tool+force",
         "STEP 3 id=emit name=Write harness-plan.md (+ json) "
         "et=tools / caps / forbidden / notes",
-        "STEP 3 key=HARD-GATE --reject-no-plan / --require-plan / --check-harness-plan / --check-forbidden / --reject-forbidden-used / --check-class-tools / --reject-over-class-tools",
+        "STEP 3 key=HARD-GATE --reject-no-plan / --require-plan / --check-harness-plan / --check-forbidden / --reject-forbidden-used / --check-class-tools / --reject-over-class-tools / --check-ask-class / --reject-class-mismatch",
         "STEP 4 id=drive name=Do-once at proportional scale "
         "et=tiny → few tools + low caps; forbid excavate/sandbox/critique museum",
         "STEP 4 key=LLM does not choose 20 verifications for a 2-line change",
@@ -1333,19 +1404,23 @@ def format_card() -> str:
         "G4 --check-allowed FAILS when an unlisted tool outside Tools/Optional "
         "ran. G4 --check-caps FAILS when effort-cycles exceed plan Caps. "
         "G4 --check-class-tools FAILS when plan Tools/Optional/Forbidden "
-        "diverge from FORCE_TABLE[effort_class].",
+        "diverge from FORCE_TABLE[effort_class]. "
+        "G4 --check-ask-class FAILS when plan effort_class mismatches "
+        "ask→spec (tiny→large rewrite cannot dodge CLASS_TOOLS_BIND).",
         "MUST-NOT: treat tool selection as agent-facing CLI trivia; run heavy "
         "paths (excavate/sandbox/critique/steal) on tiny asks; omit plan so "
         "the model invents force; write a tiny plan then thrash forbidden "
-        "tools; rewrite a tiny plan to list tdd/work-order or un-forbid excavate.",
+        "tools; rewrite a tiny plan to list tdd/work-order or un-forbid excavate; "
+        "rewrite plan effort_class tiny→large to dodge CLASS_TOOLS_BIND.",
         "HONESTY: --check-harness-plan / --check-forbidden / --check-allowed / "
-        "--check-caps / --check-class-tools idle SKIP; "
+        "--check-caps / --check-class-tools / --check-ask-class idle SKIP; "
         "G0 --require-plan never vacuous; plan file listing a tool under "
         "Forbidden is not itself 'use' of that tool.",
         f"IRON forbid={IRON_FORBID}",
         f"IRON allow={IRON_ALLOW}",
         f"IRON caps={IRON_CAPS}",
         f"IRON class={IRON_CLASS}",
+        f"IRON ask-class={IRON_ASK_CLASS}",
     ]
     return "\n".join(lines) + "\n"
 
@@ -1457,6 +1532,24 @@ def main(argv: Sequence[str] | None = None) -> int:
         ),
     )
     p.add_argument(
+        "--check-ask-class",
+        type=Path,
+        metavar="PATH",
+        default=None,
+        help=(
+            "Ask-class bind: FAIL when plan effort_class mismatches ask→spec; "
+            "SKIP vacuous when no plan / idle"
+        ),
+    )
+    p.add_argument(
+        "--reject-class-mismatch",
+        action="store_true",
+        help=(
+            "Hard-gate card: refuse when plan effort_class mismatches ask→spec "
+            "(always exit 1)"
+        ),
+    )
+    p.add_argument(
         "--emit",
         action="store_true",
         help="Emit harness plan from effort_class / --from ask-spec task",
@@ -1506,6 +1599,17 @@ def main(argv: Sequence[str] | None = None) -> int:
     if args.reject_over_class_tools:
         sys.stdout.write(reject_over_class_tools())
         return 1
+
+    if args.reject_class_mismatch:
+        sys.stdout.write(reject_class_mismatch())
+        return 1
+
+    if args.check_ask_class is not None:
+        target = args.check_ask_class
+        errs = validate_ask_class(target)
+        plan = _load_plan(target) if target.exists() else None
+        vacuous = target.exists() and plan is None and not errs
+        return report_check("harness-ask-class", target, errs, vacuous=vacuous)
 
     if args.check_class_tools is not None:
         target = args.check_class_tools

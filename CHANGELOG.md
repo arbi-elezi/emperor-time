@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.4.155
+
+### Added
+- **Harness ask-class-bind HARD-GATE** — `harness_plan.py --check-ask-class` / `--reject-class-mismatch` (`ASK_CLASS_BIND`). Plan `effort_class` must match ask→spec; tiny→large rewrite can no longer make `CLASS_TOOLS_BIND` green against `FORCE_TABLE[large]`. G4 `_run_harness_ask_class` after `_run_harness_class_tools`. Fixtures `harness-ask-class-bind/` (task-mismatch FAIL / task-clean PASS / task-vacuous SKIP). Distrust spine untouched. Local eval only (Actions stay disabled).
+
 ## 0.4.154
 
 ### Added

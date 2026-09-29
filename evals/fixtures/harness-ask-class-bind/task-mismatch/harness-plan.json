@@ -1,0 +1,48 @@
+{
+  "effort_class": "large",
+  "owner": "harness",
+  "tools": [
+    "ask-spec",
+    "harness-plan",
+    "activate",
+    "route",
+    "gate",
+    "work-order",
+    "tdd",
+    "proportionality",
+    "critique",
+    "claim-audit",
+    "grill",
+    "review-pack",
+    "forge",
+    "context",
+    "heal",
+    "iso",
+    "sandbox",
+    "sot",
+    "excavate",
+    "steal-flow",
+    "triage",
+    "reproduce",
+    "process-heal",
+    "done",
+    "finish"
+  ],
+  "optional": [
+    "parallel",
+    "subagent",
+    "pin-and-consent",
+    "quarantine"
+  ],
+  "forbidden": [
+    "unbounded-swarm"
+  ],
+  "caps": {
+    "verify": 16,
+    "critique": 16,
+    "gate": 24,
+    "total": 40
+  },
+  "notes": "full factory; still capped by effort_class totals",
+  "iron": "HARNESS_OWNS_TOOL_AND_FORCE"
+}
