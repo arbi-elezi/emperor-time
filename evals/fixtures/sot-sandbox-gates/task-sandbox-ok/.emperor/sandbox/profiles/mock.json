@@ -1,0 +1,31 @@
+{
+  "name": "mock",
+  "kind": "service",
+  "description": "Placeholder mock service (alpine sleep) for dependent plugins.",
+  "compose": {
+    "services": {
+      "et-mock": {
+        "image": "alpine:3.20",
+        "command": [
+          "sleep",
+          "infinity"
+        ],
+        "profiles": [
+          "et-mock"
+        ],
+        "labels": {
+          "et.profile": "mock"
+        }
+      }
+    }
+  },
+  "k8s": {
+    "deployment": "et-mock",
+    "image": "alpine:3.20",
+    "command": [
+      "sleep",
+      "infinity"
+    ]
+  },
+  "loadable": true
+}

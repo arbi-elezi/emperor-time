@@ -1,0 +1,8 @@
+{
+  "name": "fixture-plug",
+  "url": "file:///fixture/local-plugin.git",
+  "fetch_only": true,
+  "ref": "main",
+  "mirror": "mirror",
+  "stub": false
+}

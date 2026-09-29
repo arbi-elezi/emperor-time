@@ -1,0 +1,10 @@
+{
+  "next_base": 18010,
+  "allocations": {
+    "demo": {
+      "http": 18000,
+      "db": 18001,
+      "aux": 18002
+    }
+  }
+}

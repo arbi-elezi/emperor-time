@@ -1,0 +1,23 @@
+{
+  "name": "isolate",
+  "kind": "network",
+  "description": "Isolate artifact stack on an internal network (no host publish except allocated ports).",
+  "compose": {
+    "networks": {
+      "et-isolate": {
+        "driver": "bridge",
+        "internal": true
+      }
+    },
+    "service_defaults": {
+      "networks": [
+        "et-isolate",
+        "default"
+      ]
+    }
+  },
+  "k8s": {
+    "networkPolicy": "default-deny-egress-optional"
+  },
+  "loadable": true
+}

@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.4.149
+
+- Vertical depth: SOT fetch-only + sandbox plan HARD-GATE — `super_context.py` (`--reject-mutated-sot` / `--check-sot`) and `sandbox_engine.py` (`--reject-no-sandbox-plan` / `--check-sandbox`); activity-scoped SKIP (vacuous) via `report_check`; G0 `_run_sot_sandbox`
+- Closes soft claim theater after v0.4.134/135 engines: SOT READY without bare mirrors and SANDBOX READY without ports+runtime+emit now FAIL; fixtures `evals/fixtures/sot-sandbox-gates/`
+- Iron tokens `FETCH_ONLY_NEVER_MUTATE_SOT` / `PLAN_BEFORE_SANDBOX_UP`; doctrine/SKILL/bakeoff/mechanical-gates lockstep
+- Not archaeology; not embeddings; not Nen/museum/k8s growth
+- Plugin, marketplace, and SKILL.md at 0.4.149
+
 ## 0.4.148
 
 - Vertical depth: check-readonly cycles — `finish.py --check-suite` and `grill.py --check-path` are read-only probes (no `effort-cycles.json` stamp); `--require-green` and grill `--advance` still bump for thrash caps

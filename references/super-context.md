@@ -85,6 +85,10 @@ kubectl when on PATH; otherwise honest skip (plan artifacts still written).
 **SOT + artifacts sync (v0.4.134):** `sot add-plugin` → `git clone --mirror`;
 `sot sync` fetches; `artifacts sync` clones working copies under
 `.emperor/artifacts/<id>/repos/<plugin>/` (never mutates SOT).
+**HARD-GATE (v0.4.149):** `--reject-mutated-sot` / `--check-sot` refuse SOT READY
+when plugins/mirrors missing or mirrors are non-bare (working-tree mutation risk).
+`--reject-no-sandbox-plan` / `--check-sandbox` refuse SANDBOX READY without
+ports.json + runtime/active + emitted plan. Idle → SKIP (vacuous). G0 wires both.
 
 ## Pluggable runtimes
 

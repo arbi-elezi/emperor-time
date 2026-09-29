@@ -18,6 +18,7 @@ No embeddings. No Graphify. Stdlib only. Blind secrets stay names-only.
 from __future__ import annotations
 
 import json
+import re
 import shutil
 import subprocess
 import sys
@@ -30,6 +31,7 @@ if str(_LIB) not in sys.path:
     sys.path.insert(0, str(_LIB))
 
 import thoughttrail as trail
+from check_report import report_check
 
 DEFAULT_BASE = 18000
 DEFAULT_STRIDE = 10  # ports reserved per artifact block
@@ -940,6 +942,179 @@ def ports_report(root: Path) -> dict[str, Any]:
     return load_ports(root)
 
 
+
+
+# ---------------------------------------------------------------------------
+# HARD-GATE: sandbox plan claim (activity-scoped)
+# ---------------------------------------------------------------------------
+
+LEAF_SANDBOX = "references/super-context.md"
+IRON_SANDBOX = "PLAN_BEFORE_SANDBOX_UP"
+
+_SANDBOX_SIGNAL = re.compile(
+    r"(?i)\b(SANDBOX\s+(READY|UP|PLAN)|sandbox\s+(plan|up|down|ports)"
+    r"|runtime\s+use|PORTS\s+ALLOC|sandbox-engine)\b"
+)
+
+
+def reject_no_sandbox_plan() -> str:
+    return (
+        "REJECT NO SANDBOX PLAN: HARD-GATE — refuse SANDBOX READY / sandbox up "
+        "without ports.json + runtime/active + at least one emitted plan "
+        f"(compose/podman/k8s). Open {LEAF_SANDBOX}; run "
+        "scripts/emperor sandbox plan --artifact <id>. "
+        f"IRON={IRON_SANDBOX}\n"
+    )
+
+
+def _repo_of_sandbox(path: Path) -> Path:
+    """Prefer task dir / local .emperor; do not inherit host checkout."""
+    p = path.resolve()
+    if p.is_file():
+        p = p.parent
+    if (p / "ledger.md").is_file() or (p / ".emperor").is_dir():
+        return p
+    if p.name in {"sandbox", "ports.json", "active"} or "sandbox" in str(p):
+        for cand in [p, *p.parents]:
+            if (cand / "ledger.md").is_file() or (cand / ".emperor" / "sandbox").is_dir():
+                return cand
+    return p
+
+
+def _read_activity_text(path: Path) -> str:
+    chunks: list[str] = []
+    p = path.resolve()
+    if p.is_file():
+        try:
+            chunks.append(p.read_text(encoding="utf-8", errors="replace"))
+        except OSError:
+            pass
+        return "\n".join(chunks)
+    for name in (
+        "ledger.md",
+        "ask-spec.md",
+        "ask_spec.md",
+        "claims.md",
+        "README.md",
+        "sandbox.md",
+        "sot.md",
+    ):
+        f = p / name
+        if f.is_file():
+            try:
+                chunks.append(f.read_text(encoding="utf-8", errors="replace"))
+            except OSError:
+                pass
+    # shallow scan of .md
+    try:
+        for child in sorted(p.iterdir()):
+            if child.is_file() and child.suffix.lower() == ".md":
+                try:
+                    chunks.append(child.read_text(encoding="utf-8", errors="replace")[:8000])
+                except OSError:
+                    pass
+    except OSError:
+        pass
+    return "\n".join(chunks)
+
+
+def _has_sandbox_signal(path: Path, text: str) -> bool:
+    if _SANDBOX_SIGNAL.search(text or ""):
+        return True
+    p = path.resolve()
+    if p.name == "sandbox" and p.parent.name == ".emperor":
+        return True
+    if p.name in {"ports.json", "active"} and "sandbox" in str(p):
+        return True
+    if (p.is_dir() and (p / ".emperor" / "sandbox" / "ports.json").is_file()
+            and _SANDBOX_SIGNAL.search(text or "")):
+        return True
+    return False
+
+
+def _sandbox_errors(root: Path) -> list[str]:
+    errs: list[str] = []
+    sandbox = root / ".emperor" / "sandbox"
+    ports = sandbox / "ports.json"
+    active = sandbox / "runtime" / "active"
+    if not ports.is_file():
+        errs.append("missing .emperor/sandbox/ports.json (no plan/ports)")
+    else:
+        try:
+            data = json.loads(ports.read_text(encoding="utf-8"))
+            allocs = data.get("allocations") or {}
+            if not isinstance(allocs, dict) or not allocs:
+                errs.append("ports.json has no allocations (plan theater)")
+        except Exception as exc:  # noqa: BLE001
+            errs.append(f"ports.json unreadable: {exc}")
+    if not active.is_file():
+        errs.append("missing .emperor/sandbox/runtime/active (runtime use)")
+    else:
+        rt = active.read_text(encoding="utf-8", errors="replace").strip()
+        if rt not in RUNTIMES:
+            errs.append(f"runtime/active invalid backend={rt!r}")
+    # Need at least one emitted plan under artifacts/
+    arts = root / ".emperor" / "artifacts"
+    emitted = False
+    if arts.is_dir():
+        for art in arts.iterdir():
+            if not art.is_dir():
+                continue
+            for name in ("compose.yml", "docker-compose.yml", "podman-compose.yml",
+                         "podman-play.yaml", "k8s-manifests.yaml"):
+                if (art / name).is_file():
+                    emitted = True
+                    break
+            if emitted:
+                break
+            state = art / "sandbox.state.json"
+            if state.is_file():
+                emitted = True
+                break
+    if not emitted:
+        # also accept plan state under sandbox itself
+        states = list(sandbox.glob("**/sandbox.state.json")) if sandbox.is_dir() else []
+        if not states:
+            errs.append(
+                "no emitted sandbox plan "
+                "(compose.yml / podman-compose.yml / k8s-manifests.yaml / sandbox-state)"
+            )
+    return errs
+
+
+def validate_sandbox(path: Path) -> list[str]:
+    """Vacuous (no errs) when no sandbox activity claimed."""
+    if not path.exists():
+        return [f"missing path: {path}"]
+    text = _read_activity_text(path)
+    p = path.resolve()
+    forced = False
+    if p.name == "sandbox" and p.parent.name == ".emperor":
+        forced = True
+    elif p.name == "ports.json" and "sandbox" in str(p):
+        forced = True
+    if not forced and not _has_sandbox_signal(p, text):
+        return []
+    root = _repo_of_sandbox(p)
+    return _sandbox_errors(root)
+
+
+def check_sandbox(path: Path) -> int:
+    """CLI helper: PASS / SKIP vacuous / FAIL."""
+    errs = validate_sandbox(path)
+    text = _read_activity_text(path) if path.exists() else ""
+    vacuous = path.exists() and not errs and not _has_sandbox_signal(path, text)
+    # Forced paths (sandbox dir / ports.json) are never vacuous once validated empty of activity claim
+    p = path.resolve()
+    if p.name == "sandbox" and p.parent.name == ".emperor":
+        vacuous = False
+    elif p.name == "ports.json" and "sandbox" in str(p):
+        vacuous = False
+    elif path.exists() and not _has_sandbox_signal(path, text) and not errs:
+        vacuous = True
+    return report_check("sandbox", path, errs, vacuous=vacuous)
+
+
 # ---------------------------------------------------------------------------
 # CLI (also imported by super_context)
 # ---------------------------------------------------------------------------
@@ -1040,4 +1215,42 @@ __all__ = [
     "list_plugins",
     "cmd_sandbox_cli",
     "cmd_runtime_cli",
+    "reject_no_sandbox_plan",
+    "validate_sandbox",
+    "check_sandbox",
 ]
+
+
+def main(argv: list[str] | None = None) -> int:
+    """Minimal CLI for HARD-GATE flags (super_context also wires these)."""
+    import argparse as _ap
+    argv = list(sys.argv[1:] if argv is None else argv)
+    if "--reject-no-sandbox-plan" in argv:
+        sys.stdout.write(reject_no_sandbox_plan())
+        return 1
+    if "--check-sandbox" in argv:
+        try:
+            idx = argv.index("--check-sandbox")
+            target = argv[idx + 1] if idx + 1 < len(argv) else ""
+        except ValueError:
+            target = ""
+        if not target or target.startswith("-"):
+            print("SANDBOX FAIL: --check-sandbox needs PATH", file=sys.stderr)
+            return 1
+        return check_sandbox(Path(target))
+    p = _ap.ArgumentParser(prog="sandbox_engine", description="Emperor Time sandbox engine")
+    p.add_argument("--reject-no-sandbox-plan", action="store_true")
+    p.add_argument("--check-sandbox", type=Path, default=None)
+    # Keep plan/up/down via super_context; this main is gate-focused.
+    args = p.parse_args(argv)
+    if args.reject_no_sandbox_plan:
+        sys.stdout.write(reject_no_sandbox_plan())
+        return 1
+    if args.check_sandbox is not None:
+        return check_sandbox(args.check_sandbox)
+    print("usage: sandbox_engine.py --check-sandbox PATH | --reject-no-sandbox-plan", file=sys.stderr)
+    return 2
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())

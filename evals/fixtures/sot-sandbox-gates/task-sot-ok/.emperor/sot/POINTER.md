@@ -1,0 +1,1 @@
+SOT pointer — fetch-only
