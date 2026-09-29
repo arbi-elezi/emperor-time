@@ -38,6 +38,9 @@ binds plan Tools/Optional/Forbidden — CLASS_TOOLS_BIND).
 G4 also delegates harness ask-class bind to harness_plan.py
 (--check-ask-class; activity-scoped SKIP when no plan; plan.effort_class
 must match ask→spec — ASK_CLASS_BIND).
+G4 also delegates harness class-caps-bind to harness_plan.py
+(--check-class-caps; activity-scoped SKIP when no plan; plan Caps must not
+exceed EFFORT_CAPS[effort_class] — CLASS_CAPS_BIND).
 (records a gate cycle, then checks caps; SKIP (vacuous) when no
 effort_class / cycle ledger).
 G4 also delegates hetero-critique isolation to review_pack.py
@@ -283,6 +286,20 @@ def _run_harness_ask_class(gate: str, task: Path) -> None:
         )
 
 
+def _run_harness_class_caps(gate: str, task: Path) -> None:
+    """Activity-scoped: plan Caps must not exceed EFFORT_CAPS[effort_class]."""
+    py = _root() / "scripts" / "lib" / "harness_plan.py"
+    proc = subprocess.run(
+        [sys.executable, str(py), "--check-class-caps", str(task)],
+        check=False,
+    )
+    if proc.returncode != 0:
+        _fail(
+            gate,
+            "harness class-caps-bind (harness_plan.py --check-class-caps)",
+        )
+
+
 def _run_review_isolation(gate: str, task: Path) -> None:
     py = _root() / "scripts" / "lib" / "review_pack.py"
     proc = subprocess.run(
@@ -478,6 +495,10 @@ def run_gate(gate: str, task: Path) -> None:
         # SKIP (vacuous) when no harness plan; FAIL when tiny→large rewrite
         # would make CLASS_TOOLS_BIND green against FORCE_TABLE[large].
         _run_harness_ask_class(gate, task)
+        # Harness class-caps-bind: plan Caps must honor EFFORT_CAPS[class].
+        # SKIP (vacuous) when no harness plan; FAIL when Caps inflate past
+        # class table (tiny verify:16) while class+tools stay green.
+        _run_harness_class_caps(gate, task)
         # Hetero-critique isolation: review-pack has no author diary / CoT.
         # SKIP (vacuous) when no review-pack / no hetero markers.
         _run_review_isolation(gate, task)

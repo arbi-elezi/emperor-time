@@ -141,7 +141,12 @@
     {
       "id": "harness-ask-class-bind-hard-gate",
       "type": "structural",
-      "expect": "harness_plan.py --reject-class-mismatch / --check-ask-class; ASK_CLASS_BIND; plan vs ask→spec mismatch FAIL; clean PASS; vacuous SKIP; G4 _run_harness_ask_class; fixtures harness-ask-class-bind/; v0.4.155"
+      "expect": "harness_plan.py --reject-class-mismatch / --check-ask-class; ASK_CLASS_BIND; plan vs ask\u2192spec mismatch FAIL; clean PASS; vacuous SKIP; G4 _run_harness_ask_class; fixtures harness-ask-class-bind/; v0.4.155"
+    },
+    {
+      "id": "harness-class-caps-bind-hard-gate",
+      "type": "structural",
+      "expect": "harness_plan.py --reject-over-class-caps / --check-class-caps; CLASS_CAPS_BIND; inflated Caps past EFFORT_CAPS FAIL; tighter PASS; clean PASS; vacuous SKIP; G4 _run_harness_class_caps; fixtures harness-class-caps-bind/; v0.4.156"
     },
     {
       "id": "harness-plan-caps-enforce-hard-gate",

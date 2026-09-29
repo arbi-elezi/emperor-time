@@ -1,0 +1,44 @@
+{
+  "effort_class": "tiny",
+  "owner": "harness",
+  "tools": [
+    "ask-spec",
+    "harness-plan",
+    "activate",
+    "route",
+    "gate",
+    "done"
+  ],
+  "optional": [
+    "finish",
+    "proportionality"
+  ],
+  "forbidden": [
+    "excavate",
+    "sandbox",
+    "sot",
+    "steal-flow",
+    "heal",
+    "critique",
+    "grill",
+    "parallel",
+    "subagent",
+    "forge",
+    "context-build",
+    "triage",
+    "reproduce",
+    "process-heal",
+    "pin-and-consent",
+    "quarantine",
+    "swarm-emulate",
+    "review-pack"
+  ],
+  "caps": {
+    "verify": 16,
+    "critique": 16,
+    "gate": 24,
+    "total": 40
+  },
+  "notes": "do-once; verify-at-scale for tiny \u2248 1\u20132 checks; no museum of gates for a 2-line change",
+  "iron": "HARNESS_OWNS_TOOL_AND_FORCE"
+}

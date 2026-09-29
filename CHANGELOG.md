@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.4.156
+
+### Added
+- **Harness class-caps-bind HARD-GATE** — `harness_plan.py --check-class-caps` / `--reject-over-class-caps` (`CLASS_CAPS_BIND`). Plan Caps must not exceed `EFFORT_CAPS[effort_class]`; inflate verify:16 on a tiny plan can no longer finish green while `CLASS_TOOLS_BIND` / `ASK_CLASS_BIND` stay green. Tighter-than-class Caps remain allowed (`PLAN_CAPS_BIND`). G4 `_run_harness_class_caps` after `_run_harness_ask_class`. Fixtures `harness-class-caps-bind/` (task-inflated FAIL / task-tighter PASS / task-clean PASS / task-vacuous SKIP). Distrust spine untouched. Local eval only (Actions stay disabled).
+
 ## 0.4.155
 
 ### Added

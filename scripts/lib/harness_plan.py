@@ -19,6 +19,7 @@ Always-fail HARD-GATE helpers:
                             diverge from FORCE_TABLE[effort_class]
   --reject-class-mismatch   refuse when plan effort_class mismatches
                             ask→spec effort_class
+  --reject-over-class-caps  refuse when plan Caps exceed EFFORT_CAPS[class]
 
 Check / require / emit:
   --check-harness-plan PATH activity-scoped idle check (SKIP vacuous when idle)
@@ -41,6 +42,10 @@ Check / require / emit:
                             (ASK_CLASS_BIND — tiny→large rewrite cannot dodge
                             CLASS_TOOLS_BIND by upgrading the plan class)
                             (agent cannot upgrade tiny→tdd by rewriting the plan)
+  --check-class-caps PATH   activity-scoped: SKIP vacuous when no plan / idle;
+                            FAIL when plan Caps exceed EFFORT_CAPS[effort_class]
+                            (CLASS_CAPS_BIND — inflate verify:16 on tiny plan
+                            cannot finish green; tighter-than-class Caps OK)
   --require-plan PATH       always-on when task active: missing/invalid plan FAILS
                             (never vacuous — G0 calls this after ask→spec)
   --emit / --from / --effort-class / --write PATH
@@ -50,7 +55,8 @@ Thin twins: scripts/harness-plan.sh / scripts/harness-plan.ps1
 Alias: tool-force → same core.
 G0 calls --require-plan after ask→spec.
 G4 calls --check-forbidden then --check-allowed then --check-caps then
---check-class-tools then --check-ask-class after proportionality.
+--check-class-tools then --check-ask-class then --check-class-caps after
+proportionality.
 """
 from __future__ import annotations
 
@@ -76,6 +82,7 @@ IRON_ALLOW = "ALLOWED_TOOLS_ONLY"
 IRON_CAPS = "PLAN_CAPS_BIND"
 IRON_CLASS = "CLASS_TOOLS_BIND"
 IRON_ASK_CLASS = "ASK_CLASS_BIND"
+IRON_CLASS_CAPS = "CLASS_CAPS_BIND"
 PLAN_FILENAMES = {
     "harness-plan.md",
     "harness_plan.md",
@@ -545,18 +552,8 @@ def _field_errors(plan: dict[str, Any] | None, expected_class: str | None) -> li
         for k in ("verify", "critique", "gate", "total"):
             if k not in caps:
                 errs.append(f"harness plan caps missing {k}")
-    # Cap honesty: declared caps must not exceed class table
-    if cls and isinstance(caps, dict) and cls in EFFORT_CAPS:
-        table = EFFORT_CAPS[cls]
-        for k in ("verify", "critique", "gate", "total"):
-            try:
-                n = int(caps.get(k, -1))
-            except (TypeError, ValueError):
-                continue
-            if n > table[k]:
-                errs.append(
-                    f"harness plan caps.{k}={n} exceeds {cls} table cap={table[k]}"
-                )
+    # Cap honesty: declared caps must not exceed class table (CLASS_CAPS_BIND)
+    errs.extend(_class_caps_errors(plan))
     # Class tools bind: Tools∪Optional ⊆ FORCE_TABLE; Forbidden ⊇ class bans
     errs.extend(_class_tools_errors(plan))
     return errs
@@ -1355,6 +1352,114 @@ def reject_class_mismatch() -> str:
     )
 
 
+def _class_caps_errors(plan: dict[str, Any]) -> list[str]:
+    """Plan Caps must not exceed EFFORT_CAPS[effort_class].
+
+    Closes cap-inflate soft theater: a tiny plan that keeps Tools inside
+    FORCE_TABLE[tiny] but rewrites Caps to large (verify:16) can no longer
+    finish green. Tighter-than-class Caps remain allowed (PLAN_CAPS_BIND).
+    Returns [] when effort_class is missing/invalid — other validators own that.
+    """
+    cls = plan.get("effort_class")
+    if not isinstance(cls, str) or cls.lower() not in EFFORT_CAPS:
+        return []
+    cls = cls.lower()
+    caps = plan.get("caps") or {}
+    if not isinstance(caps, dict):
+        return []
+    table = EFFORT_CAPS[cls]
+    errs: list[str] = []
+    for k in ("verify", "critique", "gate", "total"):
+        if k not in caps:
+            continue
+        try:
+            n = int(caps[k])
+        except (TypeError, ValueError):
+            continue
+        if n > table[k]:
+            errs.append(
+                f"harness plan caps.{k}={n} exceeds {cls} table cap={table[k]} "
+                f"({IRON_CLASS_CAPS}; see {LEAF})"
+            )
+    return errs
+
+
+def list_over_class_caps(path: Path) -> list[tuple[str, int, int]]:
+    """Return (kind, plan_cap, table_cap) where plan Caps exceed class table."""
+    root = _task_root(path)
+    plan = _load_plan(root)
+    if plan is None:
+        return []
+    cls = plan.get("effort_class")
+    if not isinstance(cls, str) or cls.lower() not in EFFORT_CAPS:
+        return []
+    cls = cls.lower()
+    caps = plan.get("caps") or {}
+    if not isinstance(caps, dict):
+        return []
+    table = EFFORT_CAPS[cls]
+    over: list[tuple[str, int, int]] = []
+    for k in ("verify", "critique", "gate", "total"):
+        if k not in caps:
+            continue
+        try:
+            n = int(caps[k])
+        except (TypeError, ValueError):
+            continue
+        if n > table[k]:
+            over.append((k, n, table[k]))
+    return over
+
+
+def validate_class_caps(path: Path) -> list[str]:
+    """Activity-scoped: empty errs when no plan (idle / vacuous).
+
+    When a harness plan exists, FAIL if plan Caps exceed EFFORT_CAPS for the
+    plan's effort_class. Incomplete Caps (missing verify/critique/gate/total)
+    FAIL so plan theater cannot dodge by omitting the budget lines.
+    Tighter-than-class Caps PASS (PLAN_CAPS_BIND owns that force).
+    """
+    if not path.exists():
+        return [f"missing path: {path}"]
+    root = _task_root(path)
+    plan = _load_plan(root)
+    if plan is None:
+        return []
+    cls = plan.get("effort_class")
+    if not isinstance(cls, str) or cls.lower() not in EFFORT_CAPS:
+        return [
+            f"harness plan missing effort_class for EFFORT_CAPS bind "
+            f"({IRON_CLASS_CAPS}; see {LEAF})"
+        ]
+    caps = plan.get("caps") or {}
+    errs: list[str] = []
+    if not isinstance(caps, dict):
+        return [
+            f"harness plan missing caps "
+            f"(class Caps bind force — {IRON_CLASS_CAPS}; see {LEAF})"
+        ]
+    for k in ("verify", "critique", "gate", "total"):
+        if k not in caps:
+            errs.append(
+                f"harness plan caps missing {k} "
+                f"({IRON_CLASS_CAPS}; see {LEAF})"
+            )
+    if errs:
+        return errs
+    return _class_caps_errors(plan)
+
+
+def reject_over_class_caps() -> str:
+    return (
+        "REJECT OVER CLASS CAPS: HARD-GATE — harness plan Caps must not exceed "
+        "EFFORT_CAPS[effort_class]. Agent cannot inflate force by rewriting a "
+        "tiny plan's Caps to large (verify:16) while CLASS_TOOLS_BIND and "
+        "ASK_CLASS_BIND stay green. Tighter-than-class Caps remain allowed "
+        f"(PLAN_CAPS_BIND). Open {LEAF}; re-check with "
+        f"--check-class-caps <task-dir>. IRON={IRON_CLASS_CAPS}\n"
+    )
+
+
 def validate(path: Path) -> list[str]:
     """Activity-scoped: empty errs when idle (no plan/ask-spec signal)."""
     if not path.exists():
@@ -1392,7 +1497,7 @@ def format_card() -> str:
         "STEP 2 key=Not agent recall — harness owns tool+force",
         "STEP 3 id=emit name=Write harness-plan.md (+ json) "
         "et=tools / caps / forbidden / notes",
-        "STEP 3 key=HARD-GATE --reject-no-plan / --require-plan / --check-harness-plan / --check-forbidden / --reject-forbidden-used / --check-class-tools / --reject-over-class-tools / --check-ask-class / --reject-class-mismatch",
+        "STEP 3 key=HARD-GATE --reject-no-plan / --require-plan / --check-harness-plan / --check-forbidden / --reject-forbidden-used / --check-class-tools / --reject-over-class-tools / --check-ask-class / --reject-class-mismatch / --check-class-caps / --reject-over-class-caps",
         "STEP 4 id=drive name=Do-once at proportional scale "
         "et=tiny → few tools + low caps; forbid excavate/sandbox/critique museum",
         "STEP 4 key=LLM does not choose 20 verifications for a 2-line change",
@@ -1406,21 +1511,26 @@ def format_card() -> str:
         "G4 --check-class-tools FAILS when plan Tools/Optional/Forbidden "
         "diverge from FORCE_TABLE[effort_class]. "
         "G4 --check-ask-class FAILS when plan effort_class mismatches "
-        "ask→spec (tiny→large rewrite cannot dodge CLASS_TOOLS_BIND).",
+        "ask→spec (tiny→large rewrite cannot dodge CLASS_TOOLS_BIND). "
+        "G4 --check-class-caps FAILS when plan Caps exceed EFFORT_CAPS"
+        "[effort_class] (inflate verify:16 on tiny cannot finish green).",
         "MUST-NOT: treat tool selection as agent-facing CLI trivia; run heavy "
         "paths (excavate/sandbox/critique/steal) on tiny asks; omit plan so "
         "the model invents force; write a tiny plan then thrash forbidden "
         "tools; rewrite a tiny plan to list tdd/work-order or un-forbid excavate; "
-        "rewrite plan effort_class tiny→large to dodge CLASS_TOOLS_BIND.",
+        "rewrite plan effort_class tiny→large to dodge CLASS_TOOLS_BIND; "
+        "inflate plan Caps past EFFORT_CAPS[class] while keeping class+tools green.",
         "HONESTY: --check-harness-plan / --check-forbidden / --check-allowed / "
-        "--check-caps / --check-class-tools / --check-ask-class idle SKIP; "
+        "--check-caps / --check-class-tools / --check-ask-class / "
+        "--check-class-caps idle SKIP; "
         "G0 --require-plan never vacuous; plan file listing a tool under "
-        "Forbidden is not itself 'use' of that tool.",
+        "Forbidden is not itself 'use' of that tool; tighter-than-class Caps OK.",
         f"IRON forbid={IRON_FORBID}",
         f"IRON allow={IRON_ALLOW}",
         f"IRON caps={IRON_CAPS}",
         f"IRON class={IRON_CLASS}",
         f"IRON ask-class={IRON_ASK_CLASS}",
+        f"IRON class-caps={IRON_CLASS_CAPS}",
     ]
     return "\n".join(lines) + "\n"
 
@@ -1550,6 +1660,24 @@ def main(argv: Sequence[str] | None = None) -> int:
         ),
     )
     p.add_argument(
+        "--check-class-caps",
+        type=Path,
+        metavar="PATH",
+        default=None,
+        help=(
+            "Class-caps bind: FAIL when plan Caps exceed EFFORT_CAPS[effort_class]; "
+            "SKIP vacuous when no plan / idle"
+        ),
+    )
+    p.add_argument(
+        "--reject-over-class-caps",
+        action="store_true",
+        help=(
+            "Hard-gate card: refuse when plan Caps exceed class table "
+            "(always exit 1)"
+        ),
+    )
+    p.add_argument(
         "--emit",
         action="store_true",
         help="Emit harness plan from effort_class / --from ask-spec task",
@@ -1603,6 +1731,17 @@ def main(argv: Sequence[str] | None = None) -> int:
     if args.reject_class_mismatch:
         sys.stdout.write(reject_class_mismatch())
         return 1
+
+    if args.reject_over_class_caps:
+        sys.stdout.write(reject_over_class_caps())
+        return 1
+
+    if args.check_class_caps is not None:
+        target = args.check_class_caps
+        errs = validate_class_caps(target)
+        plan = _load_plan(target) if target.exists() else None
+        vacuous = target.exists() and plan is None and not errs
+        return report_check("harness-class-caps", target, errs, vacuous=vacuous)
 
     if args.check_ask_class is not None:
         target = args.check_ask_class
