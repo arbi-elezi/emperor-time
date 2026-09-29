@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.4.165
+
+### Added
+- **Done-hint-bind HARD-GATE** — `ask_spec.py --check-done-hints` / `--reject-over-done-class` (`DONE_HINT_BIND`). Ask→spec `effort_class` must not exceed the hint ceiling of DONE.md / done.md (G1 done probes); parking tiny-hint language ("fix typo" / "one-line" / wording / trivial / nit / changelog only) in DONE.md while ask-spec+ledger+notes+plan+state stay clean can no longer unlock `FORCE_TABLE[large]` / `EFFORT_CAPS[large]` while `STATE_HINT_BIND` stays green. Length-only infer stays advisory; only strong `_TINY_HINTS` bind; `_LARGE_HINTS` lift the ceiling; tighter-than-hint class OK. G4 `_run_done_hints` after `_run_state_hints`. Fixtures `done-hint-bind/` (task-done-park FAIL / task-clean PASS / task-tighter PASS / task-vacuous SKIP). Distrust spine untouched. Local eval only (Actions stay disabled).
+
 ## 0.4.164
 
 ### Added
