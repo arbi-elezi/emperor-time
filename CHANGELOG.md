@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.4.164
+
+### Added
+- **State-hint-bind HARD-GATE** — `ask_spec.py --check-state-hints` / `--reject-over-state-class` (`STATE_HINT_BIND`). Ask→spec `effort_class` must not exceed the hint ceiling of STATE.md / state.md (resume disk); parking tiny-hint language ("fix typo" / "one-line" / wording / trivial / nit / changelog only) in STATE.md while ask-spec+ledger+notes+plan stay clean can no longer unlock `FORCE_TABLE[large]` / `EFFORT_CAPS[large]` while `PLAN_HINT_BIND` stays green. Length-only infer stays advisory; only strong `_TINY_HINTS` bind; `_LARGE_HINTS` lift the ceiling; tighter-than-hint class OK. G4 `_run_state_hints` after `_run_plan_hints`. Fixtures `state-hint-bind/` (task-state-park FAIL / task-clean PASS / task-tighter PASS / task-vacuous SKIP). Distrust spine untouched. Local eval only (Actions stay disabled).
+
 ## 0.4.163
 
 ### Added

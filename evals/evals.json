@@ -169,6 +169,11 @@
       "expect": "ask_spec.py --reject-over-plan-class / --check-plan-hints; PLAN_HINT_BIND; PLAN.md/FINDINGS.md/PROGRESS.md-park tiny hints with effort_class large FAIL; tiny-hint+tiny PASS; no-tiny-hints medium PASS; vacuous SKIP; notes-hints may PASS while plan-hints FAIL; G4 _run_plan_hints; fixtures plan-hint-bind/; v0.4.163"
     },
     {
+      "id": "state-hint-bind-hard-gate",
+      "type": "behavioral-fixture",
+      "expect": "ask_spec.py --reject-over-state-class / --check-state-hints; STATE_HINT_BIND; STATE.md/state.md-park tiny hints with effort_class large FAIL; tiny-hint+tiny PASS; no-tiny-hints medium PASS; vacuous SKIP; plan-hints may PASS while state-hints FAIL; G4 _run_state_hints; fixtures state-hint-bind/; v0.4.164"
+    },
+    {
       "id": "scope-hint-bind-hard-gate",
       "type": "behavioral-fixture",
       "expect": "ask_spec.py --reject-over-scope-class / --check-scope-hints; SCOPE_HINT_BIND; out-of-scope-park tiny hints with effort_class large FAIL; tiny-hint+tiny PASS; no-tiny-hints medium PASS; vacuous SKIP; spec-hints may PASS while scope-hints FAIL; G4 _run_scope_hints; fixtures scope-hint-bind/; v0.4.159"

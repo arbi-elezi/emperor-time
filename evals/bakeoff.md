@@ -72,6 +72,7 @@ mean **disk + eval**, not live multi-vendor win rates.
 | task-hint-bind HARD-GATE | `ask_spec.py` (`--reject-over-task-class` / `--check-task-hints` / `TASK_HINT_BIND`) + `evals/fixtures/task-hint-bind/` + G4 `_run_task_hints` (after body-hints) | TESTED |
 | notes-hint-bind HARD-GATE | `ask_spec.py` (`--reject-over-notes-class` / `--check-notes-hints` / `NOTES_HINT_BIND`) + `evals/fixtures/notes-hint-bind/` + G4 `_run_notes_hints` (after task-hints) | TESTED |
 | plan-hint-bind HARD-GATE | `ask_spec.py` (`--reject-over-plan-class` / `--check-plan-hints` / `PLAN_HINT_BIND`) + `evals/fixtures/plan-hint-bind/` + G4 `_run_plan_hints` (after notes-hints) | TESTED |
+| state-hint-bind HARD-GATE | `ask_spec.py` (`--reject-over-state-class` / `--check-state-hints` / `STATE_HINT_BIND`) + `evals/fixtures/state-hint-bind/` + G4 `_run_state_hints` (after plan-hints) | TESTED |
 | ask-spec require-before-setup | `ask_spec.py --require-spec` always-on at G0; SessionStart/activate MUST; idle `--check-ask-spec` SKIP retained; v0.4.147 | TESTED |
 | proportionality / anti-loop HARD-GATE | `scripts/lib/proportionality.py` (`--reject-over-verify` / `--check-proportionality` / `--record-cycle` / `bump_and_check` / `MISSING_CLASS_DEFAULTS_TINY`) + fixtures ask-spec-proportionality + `emperor proportionality` | TESTED |
 | heal-and-verify (triad + postmortem) HARD-GATE | `scripts/lib/heal_verify.py` (`--reject-no-triad` / `--reject-no-postmortem` / `--check-heal`) + `evals/fixtures/heal-and-verify/` + `emperor heal-verify` | TESTED |
