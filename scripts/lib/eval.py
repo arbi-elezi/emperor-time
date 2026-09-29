@@ -6060,7 +6060,7 @@ def run_evals(root: Path) -> int:
     h.require_contains("steal-consent", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing steal-consent")
     h.require_contains("consent.py", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing consent.py")
     h.require_contains("0.4.132", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing 0.4.132 tip")
-    h.require_contains("0.4.153", ".claude-plugin/plugin.json", "plugin.json not at 0.4.153")
+    h.require_contains("0.4.154", ".claude-plugin/plugin.json", "plugin.json not at 0.4.154")
     h.require_contains("0.4.151", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing retained 0.4.151")
     h.require_contains("0.4.137", "CHANGELOG.md", "CHANGELOG missing retained 0.4.137")
     h.require_contains("0.4.136", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing retained 0.4.136")
@@ -6137,6 +6137,7 @@ def run_evals(root: Path) -> int:
     h.require_contains("0.4.147", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing 0.4.147 tip")
     h.require_contains("0.4.149", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing 0.4.149 tip")
     h.require_contains("0.4.153", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing 0.4.153 tip")
+    h.require_contains("0.4.154", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing 0.4.154 tip")
     h.require_contains("0.4.151", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing 0.4.151 tip")
     h.require_contains("0.4.150", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing retained 0.4.150")
     h.require_contains("0.4.148", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing 0.4.148 tip")
@@ -6145,6 +6146,7 @@ def run_evals(root: Path) -> int:
     h.require_contains("0.4.143", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing retained 0.4.143")
     h.require_contains("0.4.149", "CHANGELOG.md", "CHANGELOG missing 0.4.149")
     h.require_contains("0.4.153", "CHANGELOG.md", "CHANGELOG missing 0.4.153")
+    h.require_contains("0.4.154", "CHANGELOG.md", "CHANGELOG missing 0.4.154")
     h.require_contains("0.4.151", "CHANGELOG.md", "CHANGELOG missing retained 0.4.151")
     h.require_contains("0.4.150", "CHANGELOG.md", "CHANGELOG missing retained 0.4.150")
     h.require_contains("0.4.148", "CHANGELOG.md", "CHANGELOG missing 0.4.148")
@@ -6191,6 +6193,10 @@ def run_evals(root: Path) -> int:
     h.require_contains("PLAN_CAPS_BIND", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing PLAN_CAPS_BIND")
     h.require_contains("harness-plan-caps-enforce", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing harness-plan-caps-enforce")
     h.require_contains("harness-plan-caps-enforce-hard-gate", "evals/evals.json", "evals.json missing harness-plan-caps-enforce-hard-gate")
+    h.require_contains("check-class-tools", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing check-class-tools")
+    h.require_contains("CLASS_TOOLS_BIND", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing CLASS_TOOLS_BIND")
+    h.require_contains("harness-class-tools-bind", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing harness-class-tools-bind")
+    h.require_contains("harness-class-tools-bind-hard-gate", "evals/evals.json", "evals.json missing harness-class-tools-bind-hard-gate")
     h.require_contains("proportionality.py", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing proportionality.py")
     h.require_contains("0.4.147", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing 0.4.147 tip keyword")
     h.require_contains("vacuous-pass-peers", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing vacuous-pass-peers")
@@ -6226,7 +6232,7 @@ def run_evals(root: Path) -> int:
     h.require_contains("blind-secrets-broker", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing blind-secrets-broker")
     h.require_contains("reject-secret-leak", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing reject-secret-leak")
     h.require_contains("check-env-redacted", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing check-env-redacted")
-    h.require_contains("0.4.153", ".claude-plugin/marketplace.json", "marketplace.json not at 0.4.153")
+    h.require_contains("0.4.154", ".claude-plugin/marketplace.json", "marketplace.json not at 0.4.154")
     h.require_contains("0.4.149", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing retained 0.4.149 tip keyword")
     h.require_contains("0.4.142", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing retained 0.4.142")
     h.require_contains("finish.py", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing finish.py")
@@ -8833,9 +8839,9 @@ def run_evals(root: Path) -> int:
         "bakeoff.md missing reject-unisolated inventory",
     )
     h.require_contains(
-        "0.4.153",
+        "0.4.154",
         "SKILL.md",
-        "SKILL.md not bumped to 0.4.153",
+        "SKILL.md not bumped to 0.4.154",
     )
     _, card = h.run_py("scripts/lib/review_pack.py")
     if "checklist=yes" not in card:
@@ -11098,9 +11104,9 @@ def run_evals(root: Path) -> int:
         "SKILL.md missing harness-plan",
     )
     h.require_contains(
-        "0.4.153",
+        "0.4.154",
         "SKILL.md",
-        "SKILL.md not at 0.4.153",
+        "SKILL.md not at 0.4.154",
     )
     rc, out = h.run_py(
         "scripts/lib/harness_plan.py",
@@ -11277,9 +11283,9 @@ def run_evals(root: Path) -> int:
         "SKILL.md missing check-forbidden",
     )
     h.require_contains(
-        "0.4.153",
+        "0.4.154",
         "SKILL.md",
-        "SKILL.md not at 0.4.153 (allowlist-enforce)",
+        "SKILL.md not at 0.4.154 (allowlist-enforce)",
     )
     rc, out = h.run_py(
         "scripts/lib/harness_plan.py",
@@ -11387,9 +11393,9 @@ def run_evals(root: Path) -> int:
         "SKILL.md missing check-allowed",
     )
     h.require_contains(
-        "0.4.153",
+        "0.4.154",
         "SKILL.md",
-        "SKILL.md not at 0.4.153 (allowlist-enforce)",
+        "SKILL.md not at 0.4.154 (allowlist-enforce)",
     )
     rc, out = h.run_py(
         "scripts/lib/harness_plan.py",
@@ -11507,9 +11513,9 @@ def run_evals(root: Path) -> int:
         "SKILL.md missing check-caps",
     )
     h.require_contains(
-        "0.4.153",
+        "0.4.154",
         "SKILL.md",
-        "SKILL.md not at 0.4.153 (plan-caps-enforce)",
+        "SKILL.md not at 0.4.154 (plan-caps-enforce)",
     )
     rc, out = h.run_py(
         "scripts/lib/harness_plan.py",
@@ -11579,16 +11585,137 @@ def run_evals(root: Path) -> int:
         h.pass_msg("emperor harness-plan peer forwards REJECT OVER PLAN CAPS")
     h.pass_msg("harness-plan-caps-enforce HARD-GATE")
 
-
-
-
-
-
-
-
-
-
-
+    # ---- harness class-tools-bind HARD-GATE (v0.4.154) ----
+    h.section("harness-class-tools-bind")
+    h.need("evals/fixtures/harness-class-tools-bind/README.md")
+    h.need("evals/fixtures/harness-class-tools-bind/task-inflated/harness-plan.md")
+    h.need("evals/fixtures/harness-class-tools-bind/task-unforbid/harness-plan.md")
+    h.need("evals/fixtures/harness-class-tools-bind/task-clean/harness-plan.md")
+    h.need("evals/fixtures/harness-class-tools-bind/task-vacuous/ledger.md")
+    h.require_contains(
+        "--check-class-tools",
+        "scripts/lib/harness_plan.py",
+        "harness_plan.py missing --check-class-tools",
+    )
+    h.require_contains(
+        "--reject-over-class-tools",
+        "scripts/lib/harness_plan.py",
+        "harness_plan.py missing --reject-over-class-tools",
+    )
+    h.require_contains(
+        "CLASS_TOOLS_BIND",
+        "scripts/lib/harness_plan.py",
+        "harness_plan.py missing CLASS_TOOLS_BIND",
+    )
+    h.require_contains(
+        "_run_harness_class_tools",
+        "scripts/lib/gate.py",
+        "gate.py missing _run_harness_class_tools",
+    )
+    h.require_contains(
+        "--check-class-tools",
+        "scripts/lib/gate.py",
+        "gate.py missing --check-class-tools wiring",
+    )
+    h.require_contains(
+        "CLASS_TOOLS_BIND",
+        "references/mechanical-gates.md",
+        "mechanical-gates missing CLASS_TOOLS_BIND",
+    )
+    h.require_contains(
+        "harness-class-tools-bind",
+        "evals/bakeoff.md",
+        "bakeoff missing harness-class-tools-bind",
+    )
+    h.require_contains(
+        "check-class-tools",
+        "SKILL.md",
+        "SKILL.md missing check-class-tools",
+    )
+    h.require_contains(
+        "0.4.154",
+        "SKILL.md",
+        "SKILL.md not at 0.4.154 (class-tools-bind)",
+    )
+    rc, out = h.run_py(
+        "scripts/lib/harness_plan.py",
+        "--check-class-tools",
+        str(root / "evals/fixtures/harness-class-tools-bind/task-vacuous"),
+    )
+    if rc != 0 or "SKIP (vacuous" not in out:
+        h.fail_msg(f"task-vacuous --check-class-tools should SKIP: {out}")
+    else:
+        h.pass_msg("task-vacuous --check-class-tools SKIP vacuous")
+    rc, out = h.run_py(
+        "scripts/lib/harness_plan.py",
+        "--check-class-tools",
+        str(root / "evals/fixtures/harness-class-tools-bind/task-clean"),
+    )
+    if rc != 0 or "PASS" not in out:
+        h.fail_msg(f"task-clean --check-class-tools should PASS: {out}")
+    else:
+        h.pass_msg("task-clean --check-class-tools PASS")
+    rc, out = h.run_py(
+        "scripts/lib/harness_plan.py",
+        "--check-class-tools",
+        str(root / "evals/fixtures/harness-class-tools-bind/task-inflated"),
+    )
+    if rc == 0:
+        h.fail_msg(f"task-inflated should FAIL: {out}")
+    elif "over-class tool" not in out and "tdd" not in out:
+        h.fail_msg(f"task-inflated FAIL missing over-class/tdd signal: {out}")
+    else:
+        h.pass_msg("task-inflated --check-class-tools FAIL")
+    rc, out = h.run_py(
+        "scripts/lib/harness_plan.py",
+        "--check-class-tools",
+        str(root / "evals/fixtures/harness-class-tools-bind/task-unforbid"),
+    )
+    if rc == 0:
+        h.fail_msg(f"task-unforbid should FAIL: {out}")
+    elif "missing forbidden" not in out and "excavate" not in out:
+        h.fail_msg(f"task-unforbid FAIL missing excavate signal: {out}")
+    else:
+        h.pass_msg("task-unforbid --check-class-tools FAIL")
+    # Honesty: allowlist may PASS on inflated plan (tdd listed under Tools)
+    # while class-tools FAILS — distinct from ALLOWED_TOOLS_ONLY.
+    rc, out = h.run_py(
+        "scripts/lib/harness_plan.py",
+        "--check-allowed",
+        str(root / "evals/fixtures/harness-class-tools-bind/task-inflated"),
+    )
+    if rc != 0 or "PASS" not in out:
+        h.fail_msg(f"inflated should still PASS allowlist (tdd listed): {out}")
+    else:
+        h.pass_msg("allowlist PASS while class-tools FAIL (distinct)")
+    # G0 require-plan also binds (field errors)
+    rc, out = h.run_py(
+        "scripts/lib/harness_plan.py",
+        "--require-plan",
+        str(root / "evals/fixtures/harness-class-tools-bind/task-inflated"),
+    )
+    if rc == 0:
+        h.fail_msg(f"task-inflated --require-plan should FAIL: {out}")
+    else:
+        h.pass_msg("task-inflated --require-plan FAIL (G0 field bind)")
+    rc, rej = h.run_py(
+        "scripts/lib/harness_plan.py",
+        "--reject-over-class-tools",
+    )
+    if rc != 1 or "REJECT OVER CLASS TOOLS" not in rej:
+        h.fail_msg(f"--reject-over-class-tools card failed: rc={rc} {rej}")
+    else:
+        h.pass_msg("--reject-over-class-tools always-fail card")
+    _, emp = h.run_sh(
+        "scripts/emperor",
+        "harness-plan",
+        "--reject-over-class-tools",
+    )
+    if "REJECT OVER CLASS TOOLS" not in emp:
+        h.fail_msg("emperor harness-plan --reject-over-class-tools should forward REJECT")
+    else:
+        h.pass_msg("emperor harness-plan peer forwards REJECT OVER CLASS TOOLS")
+    h.pass_msg("harness-class-tools-bind HARD-GATE")
 
 
     # ---- blind secrets broker + unified workspace env (P3) ----

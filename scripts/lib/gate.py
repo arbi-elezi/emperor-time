@@ -32,6 +32,9 @@ G4 also delegates harness allowlist enforce to harness_plan.py
 G4 also delegates harness plan-caps enforce to harness_plan.py
 (--check-caps; activity-scoped SKIP when no plan; plan Caps bind
 even when tighter than class-table EFFORT_CAPS).
+G4 also delegates harness class-tools bind to harness_plan.py
+(--check-class-tools; activity-scoped SKIP when no plan; FORCE_TABLE
+binds plan Tools/Optional/Forbidden — CLASS_TOOLS_BIND).
 (records a gate cycle, then checks caps; SKIP (vacuous) when no
 effort_class / cycle ledger).
 G4 also delegates hetero-critique isolation to review_pack.py
@@ -249,6 +252,20 @@ def _run_harness_caps(gate: str, task: Path) -> None:
         _fail(gate, "harness plan-caps-enforce (harness_plan.py --check-caps)")
 
 
+def _run_harness_class_tools(gate: str, task: Path) -> None:
+    """Activity-scoped: plan Tools/Optional/Forbidden must honor FORCE_TABLE."""
+    py = _root() / "scripts" / "lib" / "harness_plan.py"
+    proc = subprocess.run(
+        [sys.executable, str(py), "--check-class-tools", str(task)],
+        check=False,
+    )
+    if proc.returncode != 0:
+        _fail(
+            gate,
+            "harness class-tools-bind (harness_plan.py --check-class-tools)",
+        )
+
+
 def _run_review_isolation(gate: str, task: Path) -> None:
     py = _root() / "scripts" / "lib" / "review_pack.py"
     proc = subprocess.run(
@@ -436,6 +453,10 @@ def run_gate(gate: str, task: Path) -> None:
         # SKIP (vacuous) when no harness plan; FAIL when over plan budget.
         # Plan Caps bind even when tighter than class-table EFFORT_CAPS.
         _run_harness_caps(gate, task)
+        # Harness class-tools-bind: plan Tools/Optional/Forbidden honor FORCE_TABLE.
+        # SKIP (vacuous) when no harness plan; FAIL when agent upgrades force
+        # (tiny plan listing tdd / un-forbidding excavate).
+        _run_harness_class_tools(gate, task)
         # Hetero-critique isolation: review-pack has no author diary / CoT.
         # SKIP (vacuous) when no review-pack / no hetero markers.
         _run_review_isolation(gate, task)
