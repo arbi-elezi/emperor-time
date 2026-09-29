@@ -1,0 +1,19 @@
+version: 1
+rigor:
+  default_effort_class: tiny
+  aliases:
+    standard: small
+    full: large
+  auto_detect_little: true
+gates:
+  always_hard:
+    - forge-pr-consent
+    - pin-and-consent
+    - quarantine
+    - steal-consent
+    - secrets-no-leak
+  scale_with_effort: true
+harness:
+  force_table_source: builtin
+  require_plan: true
+  require_spec: true

@@ -1,0 +1,4 @@
+version: 1
+rigor:
+  default_effort_class: medium
+  auto_detect_little: true

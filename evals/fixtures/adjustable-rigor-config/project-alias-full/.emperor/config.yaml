@@ -1,0 +1,4 @@
+version: 1
+rigor:
+  default_effort_class: full
+  auto_detect_little: false

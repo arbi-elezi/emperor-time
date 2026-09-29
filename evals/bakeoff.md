@@ -76,6 +76,7 @@ mean **disk + eval**, not live multi-vendor win rates.
 | done-hint-bind HARD-GATE | `ask_spec.py` (`--reject-over-done-class` / `--check-done-hints` / `DONE_HINT_BIND`) + `evals/fixtures/done-hint-bind/` + G4 `_run_done_hints` (after state-hints) | TESTED |
 | harness-g4-class-checks HARD-GATE | `harness_plan.g4_check_mode` + `critique.py` / `claim_audit.py` (`HARNESS_DRIVES_G4_CHECKS`) + `evals/fixtures/harness-g4-class-checks/` + G4 `_run_critique` / `_run_claim_audit` | TESTED |
 | harness-verdict-cites HARD-GATE | `verdict.py` follows `g4_check_mode` (`HARNESS_DRIVES_G4_CHECKS`) for G5 citation fields + `evals/fixtures/harness-verdict-cites/` + G5 `_run_verdict` | TESTED |
+| adjustable-rigor-config | `config.py` schema v1 load/merge + aliases standard→small / full→large + default tiny + `emperor config show\|get\|set\|edit` + fixtures adjustable-rigor-config/ + ask_spec/proportionality wire | TESTED |
 | harness-review-pack-checks HARD-GATE | `review_pack.py --check-isolation` follows `g4_check_mode` (`HARNESS_DRIVES_G4_CHECKS`) + `evals/fixtures/harness-review-pack-checks/` + G4 `_run_review_isolation` | TESTED |
 | ask-spec require-before-setup | `ask_spec.py --require-spec` always-on at G0; SessionStart/activate MUST; idle `--check-ask-spec` SKIP retained; v0.4.147 | TESTED |
 | proportionality / anti-loop HARD-GATE | `scripts/lib/proportionality.py` (`--reject-over-verify` / `--check-proportionality` / `--record-cycle` / `bump_and_check` / `MISSING_CLASS_DEFAULTS_TINY`) + fixtures ask-spec-proportionality + `emperor proportionality` | TESTED |

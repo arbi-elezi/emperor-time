@@ -1,0 +1,3 @@
+version: 1
+rigor:
+  default_effort_class: standard
