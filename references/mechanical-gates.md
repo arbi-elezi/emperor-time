@@ -7,7 +7,7 @@ A model writing "G4 PASS" in markdown is not a gate. An exit code is.
 
 | Script | Gate | Fails when |
 |---|---|---|
-| `scripts/gate.sh g0` (Python core) | G0 | no task dir, no client quote in ledger; ask→spec missing/incomplete (`ask_spec.py --require-spec` — never vacuous) |
+| `scripts/gate.sh g0` (Python core) | G0 | no task dir, no client quote in ledger; ask→spec missing/incomplete (`ask_spec.py --require-spec` — never vacuous); harness plan missing/invalid (`harness_plan.py --require-plan` — never vacuous) |
 | `scripts/gate.sh g1` | G1 | no acceptance criteria |
 | `scripts/gate.sh g2` | G2 | non-trivial task missing work-order or Expected: lines |
 | `scripts/gate.sh g3` | G3 | impact-map paths missing from `git diff --stat` (when in a git repo) |
@@ -23,6 +23,7 @@ A model writing "G4 PASS" in markdown is not a gate. An exit code is.
 | `scripts/pin-and-consent.sh` (Python core) | Jail pin-and-consent | missing provenance pin / named-skill consent (`pin_consent.py --reject-unpinned` / `--reject-no-skill-consent` / `--check-pin-consent`) |
 | `scripts/ask-spec.sh` (Python core) | ask→spec | missing goal/done-when/out-of-scope/effort_class (`ask_spec.py --reject-no-spec` / `--require-spec` always-on at G0+thrash; `--check-ask-spec` idle SKIP) |
 | `scripts/proportionality.sh` (Python core) | proportionality / anti-loop | verify/critique/gate cycles exceed effort_class caps (`proportionality.py --reject-over-verify` / `--check-proportionality` / `--record-cycle`); missing class → tiny hard cap (`ensure_effort_class` / `bump_and_check` / `MISSING_CLASS_DEFAULTS_TINY`) |
+| `scripts/harness-plan.sh` (Python core) | harness tool+force | missing tools/caps/forbidden plan from effort_class (`harness_plan.py --reject-no-plan` / `--require-plan` always-on at G0; `--check-harness-plan` idle SKIP); tiny forbids excavate/sandbox/critique museum (`HARNESS_OWNS_TOOL_AND_FORCE`) |
 | `scripts/heal-verify.sh` (Python core) | heal-and-verify triad + postmortem | missing Cure/No-new-wounds/Mechanism or postmortem (`heal_verify.py --reject-no-triad` / `--reject-no-postmortem` / `--check-heal`) |
 | `scripts/reproduce.sh` (Python core) | reproduce-and-bisect fingerprint + combat ledger | missing fingerprint or combat ledger (`reproduce.py --reject-no-repro` / `--reject-no-combat-ledger` / `--check-reproduce`) |
 | `scripts/triage.sh` (Python core) | holy triage block + snapshot | missing triage block or snapshot (`triage.py --reject-no-triage` / `--reject-no-snapshot` / `--check-triage`) |
@@ -111,7 +112,7 @@ activity-scoped check is honesty theater — the gate was never exercised.
 | Kind | Gates | Idle outcome |
 |---|---|---|
 | **Always-on** (when that G* runs) | G0 task/quote + ask→spec (`--require-spec`); G1 acceptance; G2 work-order; G3 impact-map; G4 critique eight-count + claim-audit; G5 verdict + Breach Register; ask→spec at G0 | No vacuous path — missing evidence FAILS |
-| **Activity-scoped** (Steal / Jail / Holy + peers) | Steal consent / quarantine / sign-in / dispatch / swarm; Jail pin-and-consent; Holy triage / reproduce / heal-verify / process-healing; ask→spec `--check-ask-spec` idle honesty / proportionality; forge PR-consent; review-pack isolation; super-context / thoughttrail; SOT fetch-only; sandbox plan | No matching activity → **`SKIP (vacuous — no activity)`** (exit 0). Exercised green → **`PASS`**. Soft missing evidence while activity claimed → **`FAIL`**. |
+| **Activity-scoped** (Steal / Jail / Holy + peers) | Steal consent / quarantine / sign-in / dispatch / swarm; Jail pin-and-consent; Holy triage / reproduce / heal-verify / process-healing; ask→spec `--check-ask-spec` idle honesty / proportionality / harness-plan `--check-harness-plan`; forge PR-consent; review-pack isolation; super-context / thoughttrail; SOT fetch-only; sandbox plan | No matching activity → **`SKIP (vacuous — no activity)`** (exit 0). Exercised green → **`PASS`**. Soft missing evidence while activity claimed → **`FAIL`**. |
 
 Mechanical reporter: `scripts/lib/check_report.py` (`report_check`). Eval fixtures
 force the label (`vacuous.md` / `task-vacuous` → SKIP; `*-ok` → PASS). Agents
@@ -124,7 +125,7 @@ must quote the SKIP/PASS line — do not paraphrase idle SKIP as "gate PASS".
 - Vow of Phases → gate order; `gate.sh g4` refuses if g2 never passed
 - Vow of the Ledger → missing ledger is a hard fail
 - Vow of Critique → G4 critique eight-count HARD-GATE (all eight axes + Checked evidence; file presence alone fails) + hetero-critique isolation HARD-GATE (review pack only; no author diary)
-- Vow of Consent → Steal consent-protocol HARD-GATE (CONSENT + agent → role / EMPEROR_CONSENT_AGENTS / solo; G4 calls consent.py) + Steal sign-in/dispatch/swarm HARD-GATE (SIGN-IN HANDOFF + runs layout + bound swarm; G4 calls steal_flow.py) + Jail pin-and-consent HARD-GATE (source-url+hash + named-skill consent; G4 calls pin_consent.py) + ask→spec HARD-GATE (goal/done-when/out-of-scope/effort_class; G0 calls ask_spec.py `--require-spec`) + proportionality HARD-GATE (effort caps + cycle ledger; G4 calls proportionality.py) + forge PR-consent HARD-GATE (`--reject-no-pr-consent` / `--check-pr-consent`; G5 calls forge.py)
+- Vow of Consent → Steal consent-protocol HARD-GATE (CONSENT + agent → role / EMPEROR_CONSENT_AGENTS / solo; G4 calls consent.py) + Steal sign-in/dispatch/swarm HARD-GATE (SIGN-IN HANDOFF + runs layout + bound swarm; G4 calls steal_flow.py) + Jail pin-and-consent HARD-GATE (source-url+hash + named-skill consent; G4 calls pin_consent.py) + ask→spec HARD-GATE (goal/done-when/out-of-scope/effort_class; G0 calls ask_spec.py `--require-spec`) + proportionality HARD-GATE (effort caps + cycle ledger; G4 calls proportionality.py) + harness tool+force HARD-GATE (tools/caps/forbidden from effort_class; G0 calls harness_plan.py `--require-plan`) + forge PR-consent HARD-GATE (`--reject-no-pr-consent` / `--check-pr-consent`; G5 calls forge.py)
 - Vow of Worthy Spend → lifespan section with empty "bought" is a warning, not a pass decoration
 - Verdict / Stake of Retribution → G5 verdict + Breach Register HARD-GATE (deliverable Verdict with citations; no empty/theater Stake rows)
 

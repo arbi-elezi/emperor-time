@@ -22,6 +22,8 @@ G4 also delegates Jail pin-and-consent to pin_consent.py
 (SKIP (vacuous) when no captured-skill / pin markers).
 G0 also delegates ask→spec to ask_spec.py --require-spec
 (always-on: thrash without a written ask→spec FAILS; never vacuous).
+G0 also delegates harness tool+force plan to harness_plan.py --require-plan
+(always-on after ask→spec: active task without harness plan FAILS).
 G4 also delegates proportionality / anti-loop to proportionality.py
 (records a gate cycle, then checks caps; SKIP (vacuous) when no
 effort_class / cycle ledger).
@@ -182,6 +184,16 @@ def _run_ask_spec(gate: str, task: Path) -> None:
         _fail(gate, "ask→spec (ask_spec.py --require-spec)")
 
 
+def _run_harness_plan(gate: str, task: Path) -> None:
+    py = _root() / "scripts" / "lib" / "harness_plan.py"
+    proc = subprocess.run(
+        [sys.executable, str(py), "--require-plan", str(task)],
+        check=False,
+    )
+    if proc.returncode != 0:
+        _fail(gate, "harness tool+force plan (harness_plan.py --require-plan)")
+
+
 def _run_proportionality(gate: str, task: Path) -> None:
     py = _root() / "scripts" / "lib" / "proportionality.py"
     proc = subprocess.run(
@@ -280,6 +292,9 @@ def run_gate(gate: str, task: Path) -> None:
         # Ask→spec: always-on scoped brief before setup thrash.
         # Missing written ask-spec FAILS (never vacuous SKIP).
         _run_ask_spec(gate, task)
+        # Harness tool+force plan: always-on after ask→spec.
+        # Missing harness-plan FAILS (never vacuous SKIP).
+        _run_harness_plan(gate, task)
         _mark(stamp, gate)
         _ok(gate, str(ledger))
         return

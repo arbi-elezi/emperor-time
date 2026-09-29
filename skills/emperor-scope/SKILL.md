@@ -24,4 +24,4 @@ This skill does **not** replace Dowsing Chain. It is the phase trigger.
 
 Invocation Ritual still applies: router → one aspect. Record the aspect path in the ledger.
 
-Ask→spec before setup thrash: `scripts/emperor ask-spec --emit "<ask>" --write .emperor/tasks/<id>/ask-spec.md` (HARD-GATE `--reject-no-spec` / `--require-spec` / `--check-ask-spec`). G0 calls `--require-spec` — setup without a written spec FAILS. SessionStart MUST emits; omitting effort_class still gets tiny hard caps.
+Ask→spec before setup thrash: `scripts/emperor ask-spec --emit "<ask>" --write .emperor/tasks/<id>/ask-spec.md` (HARD-GATE `--reject-no-spec` / `--require-spec` / `--check-ask-spec`). G0 calls `--require-spec` — setup without a written spec FAILS. SessionStart MUST emits; omitting effort_class still gets tiny hard caps. Harness tool+force: `scripts/emperor harness-plan --emit --from .emperor/tasks/<id> --write .emperor/tasks/<id>/harness-plan.md` (HARD-GATE `--reject-no-plan` / `--require-plan` / `--check-harness-plan`). G0 calls `--require-plan` — harness selects tools/caps/forbidden from effort_class; tiny forbids excavate/sandbox/critique museum.
