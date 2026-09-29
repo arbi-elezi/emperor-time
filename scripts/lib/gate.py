@@ -63,7 +63,7 @@ G4 also runs ask_spec.py --check-done-hints
 (records a gate cycle, then checks caps; SKIP (vacuous) when no
 effort_class / cycle ledger).
 G4 also delegates hetero-critique isolation to review_pack.py
-(SKIP (vacuous) when no review-pack / no hetero markers).
+(harness-driven via g4_check_mode: Tools require pack; forbidden/unlisted SKIP; no plan → SKIP when no pack / no hetero).
 G0 also delegates thoughttrail + super-context to context.py
 and SOT fetch-only / sandbox plan HARD-GATEs to super_context.py
 (SKIP (vacuous) when no context / thoughttrail markers).
@@ -694,7 +694,9 @@ def run_gate(gate: str, task: Path) -> None:
         # (STATE_HINT_BIND green, FORCE_TABLE[large]).
         _run_done_hints(gate, task)
         # Hetero-critique isolation: review-pack has no author diary / CoT.
-        # SKIP (vacuous) when no review-pack / no hetero markers.
+        # Harness-driven (HARNESS_DRIVES_G4_CHECKS): review_pack.py SKIPs when
+        # plan forbids/unlists review-pack (tiny); Tools → require pack;
+        # no plan → legacy SKIP when no pack / no hetero markers.
         _run_review_isolation(gate, task)
         if claims.is_file():
             text = claims.read_text(encoding="utf-8", errors="replace")

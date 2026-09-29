@@ -262,6 +262,11 @@
       "id": "harness-verdict-cites-hard-gate",
       "prompt": "Harness-driven G5 verdict citations",
       "expect": "verdict.py follows g4_check_mode / HARNESS_DRIVES_G4_CHECKS; tiny bare Verdict: PASS OK; medium *: absent FAIL; medium real cites PASS; no-plan legacy cite fields; fixtures harness-verdict-cites/; G5 --check-verdict; v0.4.167"
+    },
+    {
+      "id": "harness-review-pack-checks-hard-gate",
+      "prompt": "Harness-driven G4 review-pack isolation",
+      "expect": "review_pack.py --check-isolation follows g4_check_mode / HARNESS_DRIVES_G4_CHECKS; tiny SKIP; medium missing FAIL; medium ok PASS; medium dirty FAIL; no-plan vacuous SKIP; no-plan signal FAIL; fixtures harness-review-pack-checks/; G4 _run_review_isolation; v0.4.168"
     }
   ]
 }
