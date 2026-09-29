@@ -296,6 +296,16 @@ LEAVES: list[tuple[str, str, tuple[str, ...]]] = [
         ("adjustable-rigor-config", "config.py", "default_effort_class"),
     ),
     (
+        "ask-spec-harness-plan-emit",
+        "evals/fixtures/ask-spec-harness-plan-emit/README.md",
+        (
+            "ask-spec-harness-plan-emit",
+            "write_plan_files",
+            "chains harness-plan",
+            "one mechanical path",
+        ),
+    ),
+    (
         "judgment-adapter-stub",
         "evals/fixtures/judgment-adapter-stub/README.md",
         ("judgment-adapter-stub", "judgment.py", "provider off", "tiny clear"),

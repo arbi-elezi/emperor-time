@@ -57,6 +57,7 @@ G4 check selection (critique / claim-audit / review-pack):
   --require-plan PATH       always-on when task active: missing/invalid plan FAILS
                             (never vacuous — G0 calls this after ask→spec)
   --emit / --from / --effort-class / --write PATH
+  write_plan_files(task_dir) — idempotent md+json helper (ask-spec --write chains)
 
 Positional PATH runs --check-harness-plan. No args prints the HARNESS-PLAN card.
 Thin twins: scripts/harness-plan.sh / scripts/harness-plan.ps1
@@ -375,6 +376,32 @@ def emit_plan(
 ) -> dict[str, Any]:
     cls = resolve_effort_class(from_path, override=effort_class)
     return select_force(cls)
+
+
+
+def write_plan_files(
+    task_dir: Path,
+    *,
+    effort_class: str | None = None,
+    from_path: Path | None = None,
+) -> Path:
+    """Idempotent write of harness-plan.md + harness-plan.json under task_dir.
+
+    Returns the markdown path. Overwrites prior plan from FORCE_TABLE[class]
+    so ask→spec --write can chain one mechanical path (no second agent CLI).
+    """
+    root = Path(task_dir)
+    if root.is_file():
+        root = root.parent
+    root.mkdir(parents=True, exist_ok=True)
+    src = from_path if from_path is not None else root
+    plan = emit_plan(effort_class=effort_class, from_path=src)
+    md = root / "harness-plan.md"
+    jp = root / PLAN_JSON
+    md.write_text(plan_to_markdown(plan), encoding="utf-8")
+    jp.write_text(plan_to_json(plan), encoding="utf-8")
+    return md
+
 
 
 def _combined_text(task_or_file: Path) -> tuple[str, list[Path]]:
@@ -1839,23 +1866,31 @@ def main(argv: Sequence[str] | None = None) -> int:
         if args.write is not None:
             out = args.write
             out.parent.mkdir(parents=True, exist_ok=True)
-            if out.suffix.lower() == ".json":
+            # Prefer canonical task-dir write (md+json) when targeting plan names.
+            if (
+                out.name.lower() in PLAN_FILENAMES
+                or out.name == PLAN_JSON
+                or (
+                    out.suffix.lower() == ".md"
+                    and out.stem.lower().replace("_", "-") == "harness-plan"
+                )
+            ):
+                md = write_plan_files(
+                    out.parent,
+                    effort_class=plan["effort_class"],
+                    from_path=args.from_path,
+                )
+                out_show = md if out.suffix.lower() != ".json" else (out.parent / PLAN_JSON)
+            elif out.suffix.lower() == ".json":
                 out.write_text(plan_to_json(plan), encoding="utf-8")
-                md = out.with_suffix(".md")
-                if md.name == "harness-plan.md" or True:
-                    # also write md sibling when writing json named harness-plan.json
-                    if out.name == PLAN_JSON:
-                        (out.parent / "harness-plan.md").write_text(
-                            plan_to_markdown(plan), encoding="utf-8"
-                        )
+                out_show = out
             else:
                 out.write_text(plan_to_markdown(plan), encoding="utf-8")
-                jp = out.with_name(PLAN_JSON) if out.suffix.lower() == ".md" else out.parent / PLAN_JSON
-                # Prefer same-dir harness-plan.json
-                if out.name.lower() in PLAN_FILENAMES or out.suffix.lower() == ".md":
-                    jp = out.parent / PLAN_JSON
-                jp.write_text(plan_to_json(plan), encoding="utf-8")
-            print(f"harness-plan: {out.resolve()}")
+                (out.parent / PLAN_JSON).write_text(
+                    plan_to_json(plan), encoding="utf-8"
+                )
+                out_show = out
+            print(f"harness-plan: {out_show.resolve()}")
             print(f"effort_class: {plan['effort_class']}")
             print(f"tools: {', '.join(plan['tools'])}")
             print(

@@ -16,8 +16,8 @@ Emperor Time stays the orchestrator. Do **not** announce or load `using-superpow
 2. Run `scripts/emperor activate` (Python: `scripts/lib/activate.py`). Quote the `ACTIVATION next=` line.
 3. Open that skill **before** clarifying questions, exploring, or answering.
 4. If the user utterance is available: `scripts/emperor route "<utterance>"` may refine the target; prefer route hit over disk default.
-5. Before setup thrash: `scripts/emperor ask-spec --emit "<ask>" --write .emperor/tasks/<id>/ask-spec.md`. G0 `--require-spec` FAILS without a written scoped brief.
-6. After ask→spec: `scripts/emperor harness-plan --emit --from .emperor/tasks/<id> --write .emperor/tasks/<id>/harness-plan.md`. Harness owns tool+force from `effort_class`; G0 `--require-plan` FAILS without a plan.
+5. Before setup thrash: `scripts/emperor ask-spec --emit "<ask>" --write .emperor/tasks/<id>/ask-spec.md` (chains harness-plan). G0 `--require-spec` FAILS without a written scoped brief.
+6. `ask-spec --write` chains idempotent `harness-plan.md` emit from stamped `effort_class` (one mechanical path — no second `harness-plan --emit` CLI). Harness owns tool+force; G0 `--require-plan` FAILS without a plan.
 6. Subagents dispatched with an explicit task may skip this card (they already have a governing file).
 
 ## MUST
