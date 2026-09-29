@@ -129,6 +129,11 @@
       "expect": "harness_plan.py --reject-forbidden-used / --check-forbidden; FORBIDDEN_TOOLS_NEVER_RUN; plan+forbidden activity FAIL; clean PASS; vacuous SKIP; G4 _run_harness_forbid; fixtures harness-forbid-enforce/; v0.4.151"
     },
     {
+      "id": "harness-allowlist-enforce-hard-gate",
+      "type": "behavioral-fixture",
+      "expect": "harness_plan.py --reject-extra-tools / --check-allowed; ALLOWED_TOOLS_ONLY; plan+extra activity FAIL; clean PASS; vacuous SKIP; G4 _run_harness_allow; fixtures harness-allowlist-enforce/; v0.4.152"
+    },
+    {
       "id": "blind-secrets-broker",
       "type": "behavioral-fixture",
       "expect": "secrets_broker.py list|declare|inject never echoes plaintext; env-file inject + vault hook; --reject-secret-leak / --check-env-redacted; workspace_env show redacted + sync merges plugin overlays into managed.env"

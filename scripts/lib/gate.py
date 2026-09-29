@@ -27,6 +27,8 @@ G0 also delegates harness tool+force plan to harness_plan.py --require-plan
 G4 also delegates proportionality / anti-loop to proportionality.py
 G4 also delegates harness forbidden-tool enforce to harness_plan.py
 (--check-forbidden; activity-scoped SKIP when no plan).
+G4 also delegates harness allowlist enforce to harness_plan.py
+(--check-allowed; activity-scoped SKIP when no plan).
 (records a gate cycle, then checks caps; SKIP (vacuous) when no
 effort_class / cycle ledger).
 G4 also delegates hetero-critique isolation to review_pack.py
@@ -222,6 +224,17 @@ def _run_harness_forbid(gate: str, task: Path) -> None:
     if proc.returncode != 0:
         _fail(gate, "harness forbid-enforce (harness_plan.py --check-forbidden)")
 
+def _run_harness_allow(gate: str, task: Path) -> None:
+    """Activity-scoped: tools outside plan Tools∪Optional must not show use."""
+    py = _root() / "scripts" / "lib" / "harness_plan.py"
+    rc = subprocess.run(
+        [sys.executable, str(py), "--check-allowed", str(task)],
+        cwd=str(_root()),
+    ).returncode
+    if rc != 0:
+        _fail(gate, "harness allowlist-enforce (harness_plan.py --check-allowed)")
+
+
 
 def _run_review_isolation(gate: str, task: Path) -> None:
     py = _root() / "scripts" / "lib" / "review_pack.py"
@@ -402,6 +415,10 @@ def run_gate(gate: str, task: Path) -> None:
         # Harness forbid-enforce: plan-forbidden tools must not show use.
         # SKIP (vacuous) when no harness plan; FAIL when forbidden tool used.
         _run_harness_forbid(gate, task)
+        # Harness allowlist-enforce: unlisted tools outside Tools∪Optional.
+        # SKIP (vacuous) when no harness plan; FAIL when extra tool used.
+        # Forbid owns named bans; allowlist owns unlisted thrash (tdd/…).
+        _run_harness_allow(gate, task)
         # Hetero-critique isolation: review-pack has no author diary / CoT.
         # SKIP (vacuous) when no review-pack / no hetero markers.
         _run_review_isolation(gate, task)
