@@ -6060,7 +6060,7 @@ def run_evals(root: Path) -> int:
     h.require_contains("steal-consent", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing steal-consent")
     h.require_contains("consent.py", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing consent.py")
     h.require_contains("0.4.132", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing 0.4.132 tip")
-    h.require_contains("0.4.149", ".claude-plugin/plugin.json", "plugin.json not at 0.4.149")
+    h.require_contains("0.4.150", ".claude-plugin/plugin.json", "plugin.json not at 0.4.150")
     h.require_contains("0.4.137", "CHANGELOG.md", "CHANGELOG missing retained 0.4.137")
     h.require_contains("0.4.136", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing retained 0.4.136")
     h.require_contains("0.4.132", "CHANGELOG.md", "CHANGELOG missing 0.4.132")
@@ -6135,11 +6135,13 @@ def run_evals(root: Path) -> int:
     h.require_contains("steal_flow.py", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing steal_flow.py")
     h.require_contains("0.4.147", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing 0.4.147 tip")
     h.require_contains("0.4.149", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing 0.4.149 tip")
+    h.require_contains("0.4.150", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing 0.4.150 tip")
     h.require_contains("0.4.148", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing 0.4.148 tip")
     h.require_contains("0.4.145", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing retained 0.4.145")
     h.require_contains("0.4.144", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing retained 0.4.144")
     h.require_contains("0.4.143", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing retained 0.4.143")
     h.require_contains("0.4.149", "CHANGELOG.md", "CHANGELOG missing 0.4.149")
+    h.require_contains("0.4.150", "CHANGELOG.md", "CHANGELOG missing 0.4.150")
     h.require_contains("0.4.148", "CHANGELOG.md", "CHANGELOG missing 0.4.148")
     h.require_contains("0.4.145", "CHANGELOG.md", "CHANGELOG missing retained 0.4.145")
     h.require_contains("0.4.144", "CHANGELOG.md", "CHANGELOG missing retained 0.4.144")
@@ -6161,6 +6163,13 @@ def run_evals(root: Path) -> int:
     h.require_contains("ASK_THEN_SPEC_BEFORE_SETUP", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing ASK_THEN_SPEC_BEFORE_SETUP")
     h.require_contains("EFFORT_CAP_BY_CLASS", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing EFFORT_CAP_BY_CLASS")
     h.require_contains("ask_spec.py", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing ask_spec.py")
+    h.require_contains("harness_plan.py", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing harness_plan.py")
+    h.require_contains("harness-tool-force", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing harness-tool-force")
+    h.require_contains("reject-no-plan", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing reject-no-plan")
+    h.require_contains("require-plan", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing require-plan")
+    h.require_contains("check-harness-plan", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing check-harness-plan")
+    h.require_contains("HARNESS_OWNS_TOOL_AND_FORCE", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing HARNESS_OWNS_TOOL_AND_FORCE")
+    h.require_contains("harness-tool-force-hard-gate", "evals/evals.json", "evals.json missing harness-tool-force-hard-gate")
     h.require_contains("proportionality.py", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing proportionality.py")
     h.require_contains("0.4.147", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing 0.4.147 tip keyword")
     h.require_contains("vacuous-pass-peers", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing vacuous-pass-peers")
@@ -6196,7 +6205,8 @@ def run_evals(root: Path) -> int:
     h.require_contains("blind-secrets-broker", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing blind-secrets-broker")
     h.require_contains("reject-secret-leak", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing reject-secret-leak")
     h.require_contains("check-env-redacted", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing check-env-redacted")
-    h.require_contains("0.4.149", ".claude-plugin/marketplace.json", "marketplace.json not at 0.4.149")
+    h.require_contains("0.4.150", ".claude-plugin/marketplace.json", "marketplace.json not at 0.4.150")
+    h.require_contains("0.4.149", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing retained 0.4.149 tip keyword")
     h.require_contains("0.4.142", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing retained 0.4.142")
     h.require_contains("finish.py", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing finish.py")
     h.require_contains("reject-red-suite", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing reject-red-suite")
@@ -8488,6 +8498,18 @@ def run_evals(root: Path) -> int:
             src = root / "evals/fixtures/ask-spec-proportionality" / name
             dst = tmp / f"g0-{name}"
             _shutil.copytree(src, dst)
+            # G0 also requires harness plan when ask→spec present (v0.4.150).
+            if name == "task-ok":
+                rc_hp, out_hp = h.run_py(
+                    "scripts/lib/harness_plan.py",
+                    "--emit",
+                    "--from",
+                    str(dst),
+                    "--write",
+                    str(dst / "harness-plan.md"),
+                )
+                if rc_hp != 0:
+                    h.fail_msg(f"harness-plan emit for g0-{name} failed: {out_hp}")
             rc, out = h.run_sh("scripts/gate.sh", "g0", str(dst))
             if expect_fail:
                 if rc == 0:
@@ -8790,9 +8812,9 @@ def run_evals(root: Path) -> int:
         "bakeoff.md missing reject-unisolated inventory",
     )
     h.require_contains(
-        "0.4.149",
+        "0.4.150",
         "SKILL.md",
-        "SKILL.md not bumped to 0.4.149",
+        "SKILL.md not bumped to 0.4.150",
     )
     _, card = h.run_py("scripts/lib/review_pack.py")
     if "checklist=yes" not in card:
@@ -10945,6 +10967,246 @@ def run_evals(root: Path) -> int:
     else:
         h.pass_msg("--reject-no-sandbox-plan always-fail card")
     h.pass_msg("sot-sandbox-hard-gates HARD-GATE")
+
+    # ---- harness tool+force planner HARD-GATE (v0.4.150) ----
+    h.section("harness-tool-force")
+    h.need("scripts/lib/harness_plan.py")
+    h.need("scripts/harness-plan.sh")
+    h.need("scripts/harness-plan.ps1")
+    h.need("evals/fixtures/harness-tool-force/README.md")
+    h.need("evals/fixtures/harness-tool-force/task-ok/harness-plan.md")
+    h.need("evals/fixtures/harness-tool-force/task-no-plan/ask-spec.md")
+    h.need("evals/fixtures/harness-tool-force/task-tiny-heavy/harness-plan.md")
+    h.need("evals/fixtures/harness-tool-force/task-vacuous/ledger.md")
+    h.need("evals/fixtures/harness-tool-force/task-small-ok/harness-plan.md")
+    h.bash_n("scripts/harness-plan.sh", "harness-plan.sh syntax")
+    h.py_compile("scripts/lib/harness_plan.py", "harness_plan.py compile")
+    h.require_contains(
+        "lib/harness_plan.py",
+        "scripts/harness-plan.sh",
+        "harness-plan.sh thin twin missing harness_plan.py",
+    )
+    h.require_contains(
+        "lib/harness_plan.py",
+        "scripts/harness-plan.ps1",
+        "harness-plan.ps1 thin twin missing harness_plan.py",
+    )
+    h.require_contains(
+        "harness-plan",
+        "scripts/emperor",
+        "emperor bash peer missing harness-plan",
+    )
+    h.require_contains(
+        "tool-force",
+        "scripts/emperor",
+        "emperor bash peer missing tool-force alias",
+    )
+    h.require_contains(
+        "harness-plan",
+        "scripts/emperor.ps1",
+        "emperor.ps1 missing harness-plan",
+    )
+    h.require_contains(
+        "--require-plan",
+        "scripts/lib/harness_plan.py",
+        "harness_plan.py missing --require-plan",
+    )
+    h.require_contains(
+        "--reject-no-plan",
+        "scripts/lib/harness_plan.py",
+        "harness_plan.py missing --reject-no-plan",
+    )
+    h.require_contains(
+        "--check-harness-plan",
+        "scripts/lib/harness_plan.py",
+        "harness_plan.py missing --check-harness-plan",
+    )
+    h.require_contains(
+        "FORCE_TABLE",
+        "scripts/lib/harness_plan.py",
+        "harness_plan.py missing FORCE_TABLE",
+    )
+    h.require_contains(
+        "HARNESS_OWNS_TOOL_AND_FORCE",
+        "scripts/lib/harness_plan.py",
+        "harness_plan.py missing HARNESS_OWNS_TOOL_AND_FORCE",
+    )
+    h.require_contains(
+        "report_check",
+        "scripts/lib/harness_plan.py",
+        "harness_plan.py missing report_check",
+    )
+    h.require_contains(
+        "_run_harness_plan",
+        "scripts/lib/gate.py",
+        "gate.py missing _run_harness_plan",
+    )
+    h.require_contains(
+        "--require-plan",
+        "scripts/lib/gate.py",
+        "gate.py missing --require-plan wiring",
+    )
+    h.require_contains(
+        "harness-tool-force",
+        "evals/bakeoff.md",
+        "bakeoff missing harness-tool-force",
+    )
+    h.require_contains(
+        "harness-plan",
+        "scripts/lib/activate.py",
+        "activate.py missing harness-plan MUST",
+    )
+    h.require_contains(
+        "harness-plan",
+        "hooks/hooks.json",
+        "SessionStart missing harness-plan",
+    )
+    h.require_contains(
+        "harness-plan",
+        "skills/emperor-resume/must-route.md",
+        "must-route missing harness-plan",
+    )
+    h.require_contains(
+        "HARNESS_OWNS_TOOL_AND_FORCE",
+        "references/mechanical-gates.md",
+        "mechanical-gates missing HARNESS_OWNS_TOOL_AND_FORCE",
+    )
+    h.require_contains(
+        "harness-plan",
+        "SKILL.md",
+        "SKILL.md missing harness-plan",
+    )
+    h.require_contains(
+        "0.4.150",
+        "SKILL.md",
+        "SKILL.md not at 0.4.150",
+    )
+    rc, out = h.run_py(
+        "scripts/lib/harness_plan.py",
+        "--check-harness-plan",
+        str(root / "evals/fixtures/harness-tool-force/task-vacuous"),
+    )
+    if rc != 0 or "SKIP (vacuous" not in out:
+        h.fail_msg(f"task-vacuous --check-harness-plan should SKIP: {out}")
+    else:
+        h.pass_msg("task-vacuous --check-harness-plan SKIP vacuous")
+    rc, _out = h.run_py(
+        "scripts/lib/harness_plan.py",
+        "--require-plan",
+        str(root / "evals/fixtures/harness-tool-force/task-vacuous"),
+    )
+    if rc == 0:
+        h.fail_msg("task-vacuous --require-plan should FAIL")
+    else:
+        h.pass_msg("task-vacuous --require-plan FAIL (never vacuous)")
+    rc, out = h.run_py(
+        "scripts/lib/harness_plan.py",
+        "--check-harness-plan",
+        str(root / "evals/fixtures/harness-tool-force/task-ok"),
+    )
+    if rc != 0 or "PASS" not in out:
+        h.fail_msg(f"task-ok should PASS: {out}")
+    else:
+        h.pass_msg("task-ok --check-harness-plan PASS")
+    rc, out = h.run_py(
+        "scripts/lib/harness_plan.py",
+        "--require-plan",
+        str(root / "evals/fixtures/harness-tool-force/task-ok"),
+    )
+    if rc != 0 or "PASS" not in out:
+        h.fail_msg(f"task-ok --require-plan should PASS: {out}")
+    else:
+        h.pass_msg("task-ok --require-plan PASS")
+    rc, _out = h.run_py(
+        "scripts/lib/harness_plan.py",
+        "--require-plan",
+        str(root / "evals/fixtures/harness-tool-force/task-no-plan"),
+    )
+    if rc == 0:
+        h.fail_msg("task-no-plan --require-plan should FAIL")
+    else:
+        h.pass_msg("task-no-plan --require-plan FAIL")
+    rc, out = h.run_py(
+        "scripts/lib/harness_plan.py",
+        "--require-plan",
+        str(root / "evals/fixtures/harness-tool-force/task-tiny-heavy"),
+    )
+    if rc == 0:
+        h.fail_msg("task-tiny-heavy should FAIL (heavy tools on tiny)")
+    else:
+        h.pass_msg("task-tiny-heavy --require-plan FAIL")
+    rc, out = h.run_py(
+        "scripts/lib/harness_plan.py",
+        "--require-plan",
+        str(root / "evals/fixtures/harness-tool-force/task-small-ok"),
+    )
+    if rc != 0 or "PASS" not in out:
+        h.fail_msg(f"task-small-ok should PASS: {out}")
+    else:
+        h.pass_msg("task-small-ok --require-plan PASS")
+    # emit tiny → few tools
+    import tempfile as _tf_hp
+    tmp = Path(_tf_hp.mkdtemp())
+    try:
+        ask = tmp / "ask-spec.md"
+        ask.write_text(
+            "goal: typo\ndone-when: fixed\nout-of-scope: rewrite\neffort_class: tiny\n",
+            encoding="utf-8",
+        )
+        plan_path = tmp / "harness-plan.md"
+        rc, out = h.run_py(
+            "scripts/lib/harness_plan.py",
+            "--emit",
+            "--from",
+            str(tmp),
+            "--write",
+            str(plan_path),
+        )
+        if rc != 0:
+            h.fail_msg(f"emit tiny failed: {out}")
+        else:
+            body = plan_path.read_text(encoding="utf-8")
+            if "effort_class: tiny" not in body:
+                h.fail_msg("emit tiny missing effort_class")
+            elif "excavate" in body.split("## Tools")[1].split("##")[0]:
+                h.fail_msg("emit tiny selected excavate in tools")
+            elif "verify: 2" not in body:
+                h.fail_msg("emit tiny missing verify: 2 cap")
+            else:
+                h.pass_msg("emit tiny → few tools / low caps")
+        rc, out = h.run_py(
+            "scripts/lib/harness_plan.py",
+            "--emit",
+            "--effort-class",
+            "large",
+            "--json-only",
+        )
+        if rc != 0 or '"effort_class": "large"' not in out:
+            h.fail_msg(f"emit large json failed: {out}")
+        elif "sandbox" not in out:
+            h.fail_msg("large plan should allow sandbox tool")
+        else:
+            h.pass_msg("emit large includes heavier tools")
+    finally:
+        import shutil as _sh_hp
+        _sh_hp.rmtree(tmp, ignore_errors=True)
+    rc, rej = h.run_py("scripts/lib/harness_plan.py", "--reject-no-plan")
+    if rc != 1 or "REJECT NO PLAN" not in rej:
+        h.fail_msg(f"--reject-no-plan card failed: rc={rc} {rej}")
+    else:
+        h.pass_msg("--reject-no-plan always-fail card")
+    _, emp = h.run_sh("scripts/emperor", "harness-plan", "--reject-no-plan")
+    if "REJECT NO PLAN" not in emp:
+        h.fail_msg("emperor harness-plan --reject-no-plan should forward REJECT")
+    else:
+        h.pass_msg("emperor harness-plan peer forwards REJECT")
+    _, emp2 = h.run_sh("scripts/emperor", "tool-force", "--reject-no-plan")
+    if "REJECT NO PLAN" not in emp2:
+        h.fail_msg("emperor tool-force alias should forward REJECT")
+    else:
+        h.pass_msg("emperor tool-force alias forwards REJECT")
+    h.pass_msg("harness-tool-force HARD-GATE")
+
 
 
 

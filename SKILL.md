@@ -9,7 +9,7 @@ description: >-
   waiting to be told.
 license: MIT
 metadata:
-  version: 0.4.149
+  version: 0.4.150
   homepage: https://github.com/arbi-elezi/emperor-time
   standard: Agent Skills (SKILL.md)
 ---
@@ -105,6 +105,7 @@ Jail extra: no captured skill runs on real work until trial + sha256 pin + quote
 - Any other model, including your last session, enters as CONJECTURE.
 - Unchanged retry is Vow of Worthy Spend. Change the hypothesis or stop.
 - `scripts/emperor ask-spec` emits/validates ask→spec (goal / done-when / out-of-scope / effort_class) before setup thrash; G0 `--require-spec` FAILS without a written spec (`--reject-no-spec` / `--require-spec` / `--check-ask-spec`). `scripts/emperor proportionality` caps cycles by class (`--reject-over-verify`); missing effort_class defaults to tiny hard caps (`bump_and_check` / `MISSING_CLASS_DEFAULTS_TINY`).
+- `scripts/emperor harness-plan` (alias `tool-force`) — harness owns tool+force from ask→spec `effort_class`: emits tools / caps / forbidden (`--emit` / `--reject-no-plan` / `--require-plan` / `--check-harness-plan`). G0 `--require-plan` FAILS without a plan; tiny → few tools + low caps + heavy paths forbidden (no museum for a 2-line change).
 - Run `scripts/emperor gate <g0-g5> <task-dir>` (Python core `scripts/lib/gate.py`) before claiming the gate open. Script fail = gate closed.
 - `scripts/emperor done <task-dir>` must exit 0 before the word done.
 - `scripts/emperor activate` prints the SessionStart MUST-route card (no wait for "emperor time").

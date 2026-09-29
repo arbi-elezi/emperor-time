@@ -109,6 +109,13 @@ def format_card(*, next_skill: str, source: str, utterance: str | None) -> str:
         "calls --require-spec — setup without a written spec FAILS."
     )
     lines.append(
+        "MUST: After ask→spec, emit harness plan "
+        "(scripts/emperor harness-plan --emit --from "
+        ".emperor/tasks/<id> --write "
+        ".emperor/tasks/<id>/harness-plan.md). Harness owns "
+        "tool+force from effort_class. G0 --require-plan FAILS without a plan."
+    )
+    lines.append(
         "MUST-NOT: load using-superpowers or another master router; "
         "ET remains the orchestrator (see must-route.md)."
     )

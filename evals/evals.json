@@ -119,6 +119,11 @@
       "expect": "super_context --check-sot / --reject-mutated-sot and sandbox_engine --check-sandbox / --reject-no-sandbox-plan: vacuous SKIP; SOT READY without bare mirrors FAIL; SANDBOX READY without ports+runtime+emit FAIL; green fixtures PASS; G0 wires _run_sot_sandbox"
     },
     {
+      "id": "harness-tool-force-hard-gate",
+      "kind": "structural",
+      "expect": "harness_plan.py --reject-no-plan / --require-plan / --check-harness-plan / --emit; tiny → few tools/low caps/forbidden heavy; missing plan fails; G0 calls --require-plan; thin harness-plan/tool-force; v0.4.150"
+    },
+    {
       "id": "blind-secrets-broker",
       "type": "behavioral-fixture",
       "expect": "secrets_broker.py list|declare|inject never echoes plaintext; env-file inject + vault hook; --reject-secret-leak / --check-env-redacted; workspace_env show redacted + sync merges plugin overlays into managed.env"

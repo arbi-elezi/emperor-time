@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.4.150
+
+### Added
+- Harness tool+force planner: `harness_plan.py` selects tools / caps / forbidden from ask→spec `effort_class` (`--emit` / `--reject-no-plan` / `--require-plan` / `--check-harness-plan`; thin `harness-plan` / `tool-force`; G0 `_run_harness_plan`). Tiny → few tools + low caps; heavy paths forbidden — harness owns force, not agent recall. Fixtures `evals/fixtures/harness-tool-force/`
+- Closes agent-facing CLI thrash after ask→spec/proportionality: orchestrator emits concrete plan so LLM cannot invent 20 verifications for a 2-line change
+- Plugin, marketplace, and SKILL.md at 0.4.150
+
 ## 0.4.149
 
 - Vertical depth: SOT fetch-only + sandbox plan HARD-GATE — `super_context.py` (`--reject-mutated-sot` / `--check-sot`) and `sandbox_engine.py` (`--reject-no-sandbox-plan` / `--check-sandbox`); activity-scoped SKIP (vacuous) via `report_check`; G0 `_run_sot_sandbox`
