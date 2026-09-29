@@ -47,6 +47,7 @@ LEAVES: list[tuple[str, str, tuple[str, ...]]] = [
     ("plan-hint-bind", "evals/fixtures/plan-hint-bind/README.md", ("plan-hint-bind", "check-plan-hints", "reject-over-plan-class", "PLAN_HINT_BIND")),
     ("state-hint-bind", "evals/fixtures/state-hint-bind/README.md", ("state-hint-bind", "check-state-hints", "reject-over-state-class", "STATE_HINT_BIND")),
     ("done-hint-bind", "evals/fixtures/done-hint-bind/README.md", ("done-hint-bind", "check-done-hints", "reject-over-done-class", "DONE_HINT_BIND")),
+    ("harness-g4-class-checks", "evals/fixtures/harness-g4-class-checks/README.md", ("harness-g4-class-checks", "g4_check_mode", "HARNESS_DRIVES_G4_CHECKS")),
     ("sot-artifact-sync", "scripts/lib/super_context.py", ("sot add-plugin", "artifacts sync", "clone --mirror", "sot-artifact-sync", "reject-mutated-sot", "check-sot", "FETCH_ONLY_NEVER_MUTATE_SOT")),
     ("critique", "scripts/lib/critique.py", ("critique", "reject-incomplete-critique", "eight-count", "Checked")),
     ("verdict", "scripts/lib/verdict.py", ("verdict", "reject-hidden-breach", "Breach Register", "claim audit")),

@@ -252,6 +252,11 @@
       "id": "ask-spec-require-before-setup-hard-gate",
       "type": "behavioral-fixture",
       "expect": "ask_spec.py --require-spec always-on (never vacuous); G0 refuses without written ask\u2192spec; --check-ask-spec idle still SKIP; SessionStart/activate MUST; v0.4.147"
+    },
+    {
+      "id": "harness-g4-class-checks-hard-gate",
+      "type": "behavioral-fixture",
+      "expect": "harness_plan.g4_check_mode / HARNESS_DRIVES_G4_CHECKS; critique.py --check-critique + claim_audit.py --check-audit SKIP when plan forbids/unlists tool (tiny); Optional unused SKIP; Tools require eight-count/CLAIM AUDIT; no-plan legacy always-on FAIL; fixtures harness-g4-class-checks/; G4 _run_critique/_run_claim_audit; v0.4.166"
     }
   ]
 }

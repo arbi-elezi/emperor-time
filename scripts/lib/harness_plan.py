@@ -46,6 +46,12 @@ Check / require / emit:
                             FAIL when plan Caps exceed EFFORT_CAPS[effort_class]
                             (CLASS_CAPS_BIND — inflate verify:16 on tiny plan
                             cannot finish green; tighter-than-class Caps OK)
+
+G4 check selection (critique / claim-audit):
+  g4_check_mode(task, tool) → require|activity|skip|always from plan Tools/
+  Optional/Forbidden. Tiny forbids critique → G4 SKIP eight-count (no museum);
+  medium Tools include critique → eight-count still always-on for that class.
+  Iron: HARNESS_DRIVES_G4_CHECKS (harness chooses which checks / how many).
   --require-plan PATH       always-on when task active: missing/invalid plan FAILS
                             (never vacuous — G0 calls this after ask→spec)
   --emit / --from / --effort-class / --write PATH
@@ -83,6 +89,7 @@ IRON_CAPS = "PLAN_CAPS_BIND"
 IRON_CLASS = "CLASS_TOOLS_BIND"
 IRON_ASK_CLASS = "ASK_CLASS_BIND"
 IRON_CLASS_CAPS = "CLASS_CAPS_BIND"
+IRON_G4 = "HARNESS_DRIVES_G4_CHECKS"
 PLAN_FILENAMES = {
     "harness-plan.md",
     "harness_plan.md",
@@ -975,6 +982,38 @@ def tool_was_used(root: Path, tool: str) -> bool:
     return False
 
 
+
+def g4_check_mode(path: Path, tool: str) -> str:
+    """How G4 should treat *tool* under the harness plan.
+
+    Returns one of:
+      "require"  — tool listed under Tools; check always runs (FAIL if soft)
+      "activity" — tool listed under Optional; SKIP when unused, validate when used
+      "skip"     — tool forbidden or unlisted; SKIP (forbid/allow own use FAIL)
+      "always"   — no harness plan; legacy always-on (no vacuous path)
+
+    Closes the tiny catch-22: FORCE_TABLE[tiny] forbids critique while G4
+    always required eight-count — harness owns which checks run (ask→spec →
+    effort_class → which checks / how many). Iron: HARNESS_DRIVES_G4_CHECKS.
+    """
+    root = _task_root(path)
+    plan = _load_plan(root)
+    name = _normalize_tool(tool)
+    if plan is None:
+        return "always"
+    tools = {_normalize_tool(t) for t in (plan.get("tools") or []) if t}
+    optional = {_normalize_tool(t) for t in (plan.get("optional") or []) if t}
+    forbidden = {_normalize_tool(t) for t in (plan.get("forbidden") or []) if t}
+    if name in tools:
+        return "require"
+    if name in optional:
+        return "activity"
+    # Forbidden or unlisted — G4 must not force the museum; forbid/allow bind use.
+    if name in forbidden or name not in tools.union(optional):
+        return "skip"
+    return "skip"
+
+
 def list_forbidden_used(path: Path) -> list[str]:
     """Return forbidden tools that show activity markers under task."""
     root = _task_root(path)
@@ -1500,7 +1539,7 @@ def format_card() -> str:
         "STEP 3 key=HARD-GATE --reject-no-plan / --require-plan / --check-harness-plan / --check-forbidden / --reject-forbidden-used / --check-class-tools / --reject-over-class-tools / --check-ask-class / --reject-class-mismatch / --check-class-caps / --reject-over-class-caps",
         "STEP 4 id=drive name=Do-once at proportional scale "
         "et=tiny → few tools + low caps; forbid excavate/sandbox/critique museum",
-        "STEP 4 key=LLM does not choose 20 verifications for a 2-line change",
+        "STEP 4 key=g4_check_mode drives G4 critique/claim-audit (SKIP when not selected; require when in Tools)",
         "",
         "MUST: After ask→spec, emit harness plan "
         "(scripts/emperor harness-plan --emit --from <task> --write "
@@ -1531,6 +1570,7 @@ def format_card() -> str:
         f"IRON class={IRON_CLASS}",
         f"IRON ask-class={IRON_ASK_CLASS}",
         f"IRON class-caps={IRON_CLASS_CAPS}",
+        f"IRON g4-checks={IRON_G4}",
     ]
     return "\n".join(lines) + "\n"
 

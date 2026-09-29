@@ -4,6 +4,11 @@
 Doctrine: chains/judgment-chain/claim-audit.md — every Claim Ledger row
 terminates; CLAIM AUDIT line written; HYPOTHESIS/TESTED are unfinished.
 
+Harness-driven G4 (HARNESS_DRIVES_G4_CHECKS):
+  When a harness plan exists, --check-audit SKIPs if claim-audit is
+  forbidden/unlisted; Optional → SKIP when unused; Tools → require
+  CLAIM AUDIT line. No plan → legacy always-on.
+
 Always-fail HARD-GATE helpers:
   --reject-unaudited   refuse missing CLAIM AUDIT / unfinished rows
 
@@ -20,6 +25,7 @@ import argparse
 import re
 import sys
 from pathlib import Path
+from check_report import report_check
 from typing import Sequence
 
 LEAF = "chains/judgment-chain/claim-audit.md"
@@ -212,6 +218,7 @@ def format_card() -> str:
         f"CLAIM-AUDIT leaf={LEAF}",
         f"CLAIM-AUDIT template={TEMPLATE}",
         "CLAIM-AUDIT iron=NO_G4_WITHOUT_CLAIM_AUDIT_LINE",
+        "CLAIM-AUDIT iron=HARNESS_DRIVES_G4_CHECKS",
         "STEP 1 id=completeness name=Claims in the ledger "
         "et=every assertion is a row; no smuggled obviously/always claims",
         "STEP 1 key=Scan deliverable; unrowed claims → CONJECTURE then continue",
@@ -225,9 +232,11 @@ def format_card() -> str:
         "et=CLAIM AUDIT: n rows — v VERIFIED / r REFUTED / c labeled / u labeled",
         "STEP 4 key=Hand to self-critique only after the audit line exists",
         "",
-        "MUST: Before G4, Claim Ledger rows are terminal and ledger carries "
-        f"CLAIM AUDIT line. Open {LEAF}; run scripts/emperor claim-audit "
-        "<task-dir>. G4 calls this module.",
+        "MUST: Before G4, when harness plan selects claim-audit (Tools) or "
+        "optional claim-audit shows activity, Claim Ledger rows are "
+        "terminal and ledger carries CLAIM AUDIT line. Tiny/unlisted → "
+        f"SKIP (HARNESS_DRIVES_G4_CHECKS). Open {LEAF}; run "
+        "scripts/emperor claim-audit <task-dir>. G4 calls this.",
         "MUST-NOT: missing CLAIM AUDIT; HYPOTHESIS/TESTED left open; "
         "critique-file-present theater without the audit sweep; "
         "unlabeled CONJECTURE in delivery.",
@@ -282,13 +291,27 @@ def main(argv: Sequence[str] | None = None) -> int:
         sys.stdout.write(format_card())
         return 0
 
+    # Harness drives which G4 checks run. Tiny does not select claim-audit
+    # → SKIP (no museum CLAIM AUDIT for a 2-line change). No plan → always-on.
+    if target.is_dir() or target.exists():
+        try:
+            from harness_plan import g4_check_mode, tool_was_used
+
+            mode = g4_check_mode(target, "claim-audit")
+            if mode == "skip":
+                return report_check(
+                    "claim_audit", target, [], vacuous=True
+                )
+            root = target if target.is_dir() else target.parent
+            if mode == "activity" and not tool_was_used(root, "claim-audit"):
+                return report_check(
+                    "claim_audit", target, [], vacuous=True
+                )
+        except Exception:
+            pass
+
     errs = validate(target)
-    if errs:
-        for e in errs:
-            print(f"claim_audit FAIL: {e}", file=sys.stderr)
-        return 1
-    print(f"claim_audit PASS: {target}")
-    return 0
+    return report_check("claim_audit", target, errs, vacuous=False)
 
 
 if __name__ == "__main__":

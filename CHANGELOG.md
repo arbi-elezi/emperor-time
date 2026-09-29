@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.4.166
+
+### Added
+- **Harness G4 class-checks** — `harness_plan.g4_check_mode` / `HARNESS_DRIVES_G4_CHECKS`. Ask→spec `effort_class` → FORCE_TABLE Tools/Optional/Forbidden now drives which G4 checks run: `critique.py --check-critique` and `claim_audit.py --check-audit` SKIP when the tool is forbidden or unlisted (tiny forbids critique museum); Optional unused → SKIP; Tools → require eight-count / CLAIM AUDIT; no plan → legacy always-on. Closes the tiny catch-22 where FORCE_TABLE forbids critique while G4 always required eight-count (and burned a critique cycle on every check). Forbid/allow still own use FAIL. Also fixes critique ledger-fold regex for Python 3.13 inline flags. Fixtures `harness-g4-class-checks/`. Distrust spine untouched. Local eval only (Actions stay disabled).
+
 ## 0.4.165
 
 ### Added
