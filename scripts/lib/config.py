@@ -15,7 +15,8 @@ quarantine/steal consent, secrets-no-leak, enlist/credentials. Documented in
 schema comments; scale_with_effort may soften *other* gates only.
 
 CLI: `emperor config show|get|set|edit` (host-agnostic thin twins).
-Missing file → defaults (tiny). Freeze *-hint-bind; no museum/Nen/k8s growth.
+Missing file → defaults (tiny). Feature knobs: archaeology_depth/sandbox/sot/
+wip.max/critique.*. Freeze *-hint-bind; no museum/Nen/k8s growth.
 
 Stdlib only — hand-rolled YAML subset (no PyYAML).
 """
@@ -69,6 +70,21 @@ DEFAULT_CONFIG: dict[str, Any] = {
         "require_plan": True,
         "require_spec": True,
     },
+    # Feature knobs (PR2) — read paths only; no k8s/Nen/museum invention.
+    "features": {
+        # off | shallow | full — archaeology engage depth (not museum growth)
+        "archaeology_depth": "off",
+        "sandbox": False,
+        "sot": False,
+    },
+    "wip": {
+        "max": 1,  # queue WIP ceiling (default WIP=1)
+    },
+    "critique": {
+        # scale_with_effort: tiny may SKIP museum critique; iron consent untouched
+        "scale_with_effort": True,
+        "require_eight_count_at": "medium",  # tiny|small|medium|large floor
+    },
 }
 
 # Minimal default file body shipped / created-on-set.
@@ -78,6 +94,7 @@ DEFAULT_YAML = """\
 # Aliases: standard→small, full→large. Missing file → defaults (tiny).
 # Iron gates (always_hard) NEVER soft: forge-pr-consent, pin-and-consent,
 # quarantine, steal-consent, secrets-no-leak (+ enlist/credentials via those).
+# Feature knobs: archaeology_depth off|shallow|full; sandbox; sot; wip.max; critique.
 version: 1
 rigor:
   default_effort_class: tiny
@@ -97,6 +114,15 @@ harness:
   force_table_source: builtin
   require_plan: true
   require_spec: true
+features:
+  archaeology_depth: off
+  sandbox: false
+  sot: false
+wip:
+  max: 1
+critique:
+  scale_with_effort: true
+  require_eight_count_at: medium
 """
 
 
@@ -514,6 +540,15 @@ def _normalize_loaded(data: dict[str, Any]) -> dict[str, Any]:
         # Iron gates always present / never soft — enforce union with defaults.
         hard = gates.get("always_hard")
         if isinstance(hard, list):
+            missing = [g for g in ALWAYS_HARD_GATES if g not in {str(x) for x in hard}]
+            if missing or len(hard) == 0:
+                # WARN — operational merge still enforces iron; set-path refuses soften.
+                print(
+                    "config WARN: gates.always_hard omitted iron "
+                    f"{missing or ALWAYS_HARD_GATES}; enforcing union "
+                    "(iron cannot be softened — use a complete always_hard list)",
+                    file=sys.stderr,
+                )
             seen = []
             for g in list(ALWAYS_HARD_GATES) + [str(x) for x in hard]:
                 if g not in seen:
@@ -523,6 +558,47 @@ def _normalize_loaded(data: dict[str, Any]) -> dict[str, Any]:
             gates["always_hard"] = list(ALWAYS_HARD_GATES)
         if "scale_with_effort" not in gates:
             gates["scale_with_effort"] = True
+    # Feature / wip / critique knobs (PR2) — fill defaults when absent.
+    feats = out.setdefault("features", {})
+    if not isinstance(feats, dict):
+        raise ValueError("features must be a mapping")
+    depth = str(feats.get("archaeology_depth", "off")).lower().strip()
+    if depth in ("0", "false", "no", "none", ""):
+        depth = "off"
+    if depth in ("1", "true", "yes", "on"):
+        depth = "shallow"
+    if depth not in ("off", "shallow", "full"):
+        raise ValueError(
+            f"features.archaeology_depth must be off|shallow|full, got {depth!r}"
+        )
+    feats["archaeology_depth"] = depth
+    feats["sandbox"] = bool(feats.get("sandbox", False))
+    feats["sot"] = bool(feats.get("sot", False))
+    wip = out.setdefault("wip", {})
+    if not isinstance(wip, dict):
+        raise ValueError("wip must be a mapping")
+    try:
+        wip_max = int(wip.get("max", 1))
+    except (TypeError, ValueError) as exc:
+        raise ValueError(f"wip.max must be int >= 1, got {wip.get('max')!r}") from exc
+    if wip_max < 1:
+        raise ValueError(f"wip.max must be >= 1, got {wip_max}")
+    wip["max"] = wip_max
+    crit = out.setdefault("critique", {})
+    if not isinstance(crit, dict):
+        raise ValueError("critique must be a mapping")
+    if "scale_with_effort" not in crit:
+        crit["scale_with_effort"] = True
+    else:
+        crit["scale_with_effort"] = bool(crit.get("scale_with_effort"))
+    floor = str(crit.get("require_eight_count_at", "medium")).lower().strip()
+    if floor in EFFORT_ALIASES:
+        floor = EFFORT_ALIASES[floor]
+    if floor not in EFFORT_CLASSES:
+        raise ValueError(
+            f"critique.require_eight_count_at must be one of {EFFORT_CLASSES}, got {floor!r}"
+        )
+    crit["require_eight_count_at"] = floor
     out.setdefault("version", SCHEMA_VERSION)
     return out
 
@@ -549,6 +625,62 @@ def default_effort_class(root: Path | None = None) -> str:
 def auto_detect_little(root: Path | None = None) -> bool:
     cfg = load_config(root)
     return bool(cfg.get("rigor", {}).get("auto_detect_little", True))
+
+
+def archaeology_depth(root: Path | None = None) -> str:
+    """features.archaeology_depth: off | shallow | full."""
+    cfg = load_config(root)
+    return str(cfg.get("features", {}).get("archaeology_depth", "off"))
+
+
+def sandbox_enabled(root: Path | None = None) -> bool:
+    cfg = load_config(root)
+    return bool(cfg.get("features", {}).get("sandbox", False))
+
+
+def sot_enabled(root: Path | None = None) -> bool:
+    cfg = load_config(root)
+    return bool(cfg.get("features", {}).get("sot", False))
+
+
+def wip_max(root: Path | None = None) -> int:
+    """Queue WIP ceiling from config (default 1)."""
+    cfg = load_config(root)
+    try:
+        return int(cfg.get("wip", {}).get("max", 1))
+    except (TypeError, ValueError):
+        return 1
+
+
+def critique_eight_count_floor(root: Path | None = None) -> str:
+    """effort_class floor at which eight-count critique is required."""
+    cfg = load_config(root)
+    return str(cfg.get("critique", {}).get("require_eight_count_at", "medium"))
+
+
+
+def assert_iron_always_hard(hard: Any, *, context: str = "gates.always_hard") -> list[str]:
+    """Return error strings when iron gates are missing from always_hard.
+
+    Softening iron (empty list / omitting forge-pr-consent etc.) is refused —
+    never silently restore on `config set`. Callers WARN or exit non-zero.
+    """
+    if not isinstance(hard, list):
+        return [f"{context} must be a list (refusing non-list soften attempt)"]
+    have = {str(x) for x in hard}
+    missing = [g for g in ALWAYS_HARD_GATES if g not in have]
+    if missing:
+        return [
+            f"{context} cannot soften iron gates — missing {missing}; "
+            f"required always_hard ⊇ {list(ALWAYS_HARD_GATES)} "
+            f"(refusing silent restore)"
+        ]
+    if len(hard) == 0:
+        return [
+            f"{context} cannot be empty — iron gates never soft "
+            f"(required ⊇ {list(ALWAYS_HARD_GATES)})"
+        ]
+    return []
 
 
 def get_path(cfg: dict[str, Any], dotted: str) -> Any:
@@ -606,6 +738,9 @@ def write_project_config(cfg: dict[str, Any], root: Path | None = None) -> Path:
             "rigor": cfg.get("rigor", DEFAULT_CONFIG["rigor"]),
             "gates": cfg.get("gates", DEFAULT_CONFIG["gates"]),
             "harness": cfg.get("harness", DEFAULT_CONFIG["harness"]),
+            "features": cfg.get("features", DEFAULT_CONFIG["features"]),
+            "wip": cfg.get("wip", DEFAULT_CONFIG["wip"]),
+            "critique": cfg.get("critique", DEFAULT_CONFIG["critique"]),
         }
     )
     # Prepend iron-gate comment header.
@@ -660,7 +795,33 @@ def _cli_set(args: argparse.Namespace) -> int:
     project = _read_yaml_file(path)
     base = deep_merge(copy.deepcopy(DEFAULT_CONFIG), project) if project else copy.deepcopy(DEFAULT_CONFIG)
     try:
-        updated = set_path(base, args.key, args.value)
+        # Pre-parse list values for gates.always_hard so [] is visible before normalize.
+        raw_val: Any = args.value
+        if args.key in ("gates.always_hard",) or args.key.endswith(".always_hard"):
+            parsed = _parse_scalar(str(args.value))
+            # Also accept empty string / "[]"
+            if str(args.value).strip() in ("", "[]"):
+                parsed = []
+            errs = assert_iron_always_hard(parsed if isinstance(parsed, list) else parsed)
+            if errs:
+                for e in errs:
+                    print(f"config FAIL: {e}", file=sys.stderr)
+                print(
+                    "config FAIL: iron always_hard cannot be softened "
+                    "(non-zero refuse — not silently restored)",
+                    file=sys.stderr,
+                )
+                return 2
+            raw_val = parsed
+        updated = set_path(base, args.key, raw_val)
+        # After set, re-check always_hard if present
+        gates = updated.get("gates") if isinstance(updated, dict) else None
+        if isinstance(gates, dict) and "always_hard" in gates:
+            errs = assert_iron_always_hard(gates.get("always_hard"))
+            if errs:
+                for e in errs:
+                    print(f"config FAIL: {e}", file=sys.stderr)
+                return 2
         updated = _normalize_loaded(updated)
     except (ValueError, KeyError) as exc:
         print(f"config FAIL: {exc}", file=sys.stderr)
@@ -698,6 +859,10 @@ def format_card() -> str:
         f"  aliases: standard→small, full→large; default tiny; see {LEAF}\n"
         "  iron always_hard NEVER soft (forge-pr-consent, pin-and-consent,\n"
         "  quarantine, steal-consent, secrets-no-leak)\n"
+        "  features.archaeology_depth off|shallow|full; features.sandbox; features.sot\n"
+        "  wip.max (default 1); critique.scale_with_effort / require_eight_count_at\n"
+        "  edit documented — load references/meta/config-from-any-harness.md on demand\n"
+        "  gates.always_hard soften (e.g. set []) → non-zero refuse (no silent restore)\n"
     )
 
 

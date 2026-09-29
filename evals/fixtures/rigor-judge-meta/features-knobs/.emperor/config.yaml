@@ -1,0 +1,13 @@
+version: 1
+rigor:
+  default_effort_class: tiny
+  auto_detect_little: true
+features:
+  archaeology_depth: shallow
+  sandbox: true
+  sot: true
+wip:
+  max: 2
+critique:
+  scale_with_effort: true
+  require_eight_count_at: small

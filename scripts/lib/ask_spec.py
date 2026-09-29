@@ -106,7 +106,8 @@ Check / emit:
   --emit / --ask-file / stdin / positional ask → print or --write PATH
 
 Positional PATH runs --check-ask-spec. No args prints the ASK-SPEC card.
-Thin twins: scripts/ask-spec.sh / scripts/ask-spec.ps1
+Emit stamps effort_class via rigor_judge when auto_detect_little / no class
+(user override always wins). Thin twins: scripts/ask-spec.sh / ask-spec.ps1
 G0 calls --require-spec (setup without a written spec FAILS).
 G4 calls --check-ask-hints after harness class-caps-bind.
 G4 calls --check-spec-hints after --check-ask-hints.
@@ -134,6 +135,7 @@ if str(_LIB) not in sys.path:
     sys.path.insert(0, str(_LIB))
 
 import config as et_config  # noqa: E402
+import rigor_judge as et_judge  # noqa: E402
 
 LEAF = "references/mechanical-gates.md"
 EFFORT_CLASSES = ("tiny", "small", "medium", "large")
@@ -342,16 +344,21 @@ def emit_spec(
     """Emit a minimal ask→spec markdown block.
 
     Missing effort_class: when auto_detect_little (config default true) use
-    infer_effort_class; otherwise stamp rigor.default_effort_class from config
-    (aliases resolved: standard→small, full→large). Missing config → tiny.
+    rigor_judge.recommend_effort_class (cheap heuristics; no LLM); otherwise
+    stamp rigor.default_effort_class from config (aliases resolved:
+    standard→small, full→large). Explicit effort_class / "use full rigor"
+    always wins. Missing config → tiny.
     """
     ask = (ask or "").strip()
     if not ask:
         raise ValueError("empty ask — cannot emit ask→spec")
     if effort_class:
-        cls = et_config.resolve_effort_alias(effort_class.lower().strip())
+        # Explicit override — still go through judge so aliases + override flag apply.
+        cls = et_judge.recommend_effort_class(
+            ask, root=root, explicit_class=effort_class
+        ).effort_class
     elif et_config.auto_detect_little(root):
-        cls = infer_effort_class(ask)
+        cls = et_judge.recommend_effort_class(ask, root=root).effort_class
     else:
         cls = et_config.default_effort_class(root)
     if cls not in EFFORT_CLASSES:

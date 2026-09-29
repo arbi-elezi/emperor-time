@@ -9,7 +9,7 @@ description: >-
   waiting to be told.
 license: MIT
 metadata:
-  version: 0.4.169
+  version: 0.4.170
   homepage: https://github.com/arbi-elezi/emperor-time
   standard: Agent Skills (SKILL.md)
 ---
@@ -25,7 +25,7 @@ Read `references/software-factory.md` once per repo, not per turn.
 Read `references/super-context.md` for graph-over-grep + inverted workspace
 (load L0 via `scripts/emperor context l0` before mass-grep; sandbox engine:
 `emperor sandbox plan|up|down|ports` + `emperor runtime use compose|podman|k8s`;
-adjustable rigor: `emperor config show|get|set|edit` (schema v1 — `.emperor/config.yaml` + user overlay; aliases standard→small / full→large; default tiny; iron always_hard never soft);
+adjustable rigor: `emperor config show|get|set|edit` (schema v1 — `.emperor/config.yaml` + user overlay; aliases standard→small / full→large; default tiny; iron always_hard never soft; features.archaeology_depth/sandbox/sot, wip.max, critique.*); rigor judge: `emperor rigor-judge` + ask→spec emit auto-stamp when auto_detect_little (user override wins; no LLM on tiny); meta pack paths on SessionStart activate card (`references/meta/*`, `skills/meta-rigor`);
 blind secrets: `emperor secrets list|declare|inject` + HARD-GATE `--reject-secret-leak` /
 `--check-env-redacted`; unified env: `emperor env show|sync`; forge PR-consent HARD-GATE:
 `emperor forge --reject-no-pr-consent` / `--check-pr-consent`).

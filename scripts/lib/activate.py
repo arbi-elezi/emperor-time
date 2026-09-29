@@ -119,6 +119,20 @@ def format_card(*, next_skill: str, source: str, utterance: str | None) -> str:
         "MUST-NOT: load using-superpowers or another master router; "
         "ET remains the orchestrator (see must-route.md)."
     )
+    # SessionStart light card — paths only; load on demand (do not bloat context).
+    lines.append("")
+    lines.append("META paths_only=yes load=on_demand")
+    lines.append("META rigor_judge=scripts/lib/rigor_judge.py")
+    lines.append("META skill=skills/meta-rigor/SKILL.md")
+    lines.append("META when_to_engage=references/meta/when-to-engage.md")
+    lines.append("META rigor_tiers=references/meta/rigor-tiers.md")
+    lines.append("META config=references/meta/config-from-any-harness.md")
+    lines.append("META gates_map=references/meta/gates-map.md")
+    lines.append("META little_ask=references/meta/little-ask-playbook.md")
+    lines.append(
+        "META hint=open a path only when needed; tiny skips museum, "
+        "never skips iron consent (see little-ask-playbook)."
+    )
     return "\n".join(lines) + "\n"
 
 

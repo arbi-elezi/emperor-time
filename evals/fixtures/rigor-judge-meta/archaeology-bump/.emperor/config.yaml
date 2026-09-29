@@ -1,0 +1,5 @@
+version: 1
+rigor:
+  auto_detect_little: true
+features:
+  archaeology_depth: shallow
