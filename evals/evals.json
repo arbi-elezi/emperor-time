@@ -121,7 +121,12 @@
     {
       "id": "harness-tool-force-hard-gate",
       "kind": "structural",
-      "expect": "harness_plan.py --reject-no-plan / --require-plan / --check-harness-plan / --emit; tiny → few tools/low caps/forbidden heavy; missing plan fails; G0 calls --require-plan; thin harness-plan/tool-force; v0.4.150"
+      "expect": "harness_plan.py --reject-no-plan / --require-plan / --check-harness-plan / --emit; tiny \u2192 few tools/low caps/forbidden heavy; missing plan fails; G0 calls --require-plan; thin harness-plan/tool-force; v0.4.150"
+    },
+    {
+      "id": "harness-forbid-enforce-hard-gate",
+      "kind": "structural",
+      "expect": "harness_plan.py --reject-forbidden-used / --check-forbidden; FORBIDDEN_TOOLS_NEVER_RUN; plan+forbidden activity FAIL; clean PASS; vacuous SKIP; G4 _run_harness_forbid; fixtures harness-forbid-enforce/; v0.4.151"
     },
     {
       "id": "blind-secrets-broker",

@@ -6060,7 +6060,7 @@ def run_evals(root: Path) -> int:
     h.require_contains("steal-consent", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing steal-consent")
     h.require_contains("consent.py", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing consent.py")
     h.require_contains("0.4.132", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing 0.4.132 tip")
-    h.require_contains("0.4.150", ".claude-plugin/plugin.json", "plugin.json not at 0.4.150")
+    h.require_contains("0.4.151", ".claude-plugin/plugin.json", "plugin.json not at 0.4.151")
     h.require_contains("0.4.137", "CHANGELOG.md", "CHANGELOG missing retained 0.4.137")
     h.require_contains("0.4.136", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing retained 0.4.136")
     h.require_contains("0.4.132", "CHANGELOG.md", "CHANGELOG missing 0.4.132")
@@ -6135,13 +6135,15 @@ def run_evals(root: Path) -> int:
     h.require_contains("steal_flow.py", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing steal_flow.py")
     h.require_contains("0.4.147", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing 0.4.147 tip")
     h.require_contains("0.4.149", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing 0.4.149 tip")
-    h.require_contains("0.4.150", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing 0.4.150 tip")
+    h.require_contains("0.4.151", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing 0.4.151 tip")
+    h.require_contains("0.4.150", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing retained 0.4.150")
     h.require_contains("0.4.148", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing 0.4.148 tip")
     h.require_contains("0.4.145", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing retained 0.4.145")
     h.require_contains("0.4.144", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing retained 0.4.144")
     h.require_contains("0.4.143", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing retained 0.4.143")
     h.require_contains("0.4.149", "CHANGELOG.md", "CHANGELOG missing 0.4.149")
-    h.require_contains("0.4.150", "CHANGELOG.md", "CHANGELOG missing 0.4.150")
+    h.require_contains("0.4.151", "CHANGELOG.md", "CHANGELOG missing 0.4.151")
+    h.require_contains("0.4.150", "CHANGELOG.md", "CHANGELOG missing retained 0.4.150")
     h.require_contains("0.4.148", "CHANGELOG.md", "CHANGELOG missing 0.4.148")
     h.require_contains("0.4.145", "CHANGELOG.md", "CHANGELOG missing retained 0.4.145")
     h.require_contains("0.4.144", "CHANGELOG.md", "CHANGELOG missing retained 0.4.144")
@@ -6170,6 +6172,11 @@ def run_evals(root: Path) -> int:
     h.require_contains("check-harness-plan", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing check-harness-plan")
     h.require_contains("HARNESS_OWNS_TOOL_AND_FORCE", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing HARNESS_OWNS_TOOL_AND_FORCE")
     h.require_contains("harness-tool-force-hard-gate", "evals/evals.json", "evals.json missing harness-tool-force-hard-gate")
+    h.require_contains("check-forbidden", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing check-forbidden")
+    h.require_contains("reject-forbidden-used", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing reject-forbidden-used")
+    h.require_contains("FORBIDDEN_TOOLS_NEVER_RUN", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing FORBIDDEN_TOOLS_NEVER_RUN")
+    h.require_contains("harness-forbid-enforce", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing harness-forbid-enforce")
+    h.require_contains("harness-forbid-enforce-hard-gate", "evals/evals.json", "evals.json missing harness-forbid-enforce-hard-gate")
     h.require_contains("proportionality.py", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing proportionality.py")
     h.require_contains("0.4.147", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing 0.4.147 tip keyword")
     h.require_contains("vacuous-pass-peers", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing vacuous-pass-peers")
@@ -6205,7 +6212,7 @@ def run_evals(root: Path) -> int:
     h.require_contains("blind-secrets-broker", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing blind-secrets-broker")
     h.require_contains("reject-secret-leak", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing reject-secret-leak")
     h.require_contains("check-env-redacted", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing check-env-redacted")
-    h.require_contains("0.4.150", ".claude-plugin/marketplace.json", "marketplace.json not at 0.4.150")
+    h.require_contains("0.4.151", ".claude-plugin/marketplace.json", "marketplace.json not at 0.4.151")
     h.require_contains("0.4.149", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing retained 0.4.149 tip keyword")
     h.require_contains("0.4.142", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing retained 0.4.142")
     h.require_contains("finish.py", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing finish.py")
@@ -8812,9 +8819,9 @@ def run_evals(root: Path) -> int:
         "bakeoff.md missing reject-unisolated inventory",
     )
     h.require_contains(
-        "0.4.150",
+        "0.4.151",
         "SKILL.md",
-        "SKILL.md not bumped to 0.4.150",
+        "SKILL.md not bumped to 0.4.151",
     )
     _, card = h.run_py("scripts/lib/review_pack.py")
     if "checklist=yes" not in card:
@@ -11077,9 +11084,9 @@ def run_evals(root: Path) -> int:
         "SKILL.md missing harness-plan",
     )
     h.require_contains(
-        "0.4.150",
+        "0.4.151",
         "SKILL.md",
-        "SKILL.md not at 0.4.150",
+        "SKILL.md not at 0.4.151",
     )
     rc, out = h.run_py(
         "scripts/lib/harness_plan.py",
@@ -11206,6 +11213,118 @@ def run_evals(root: Path) -> int:
     else:
         h.pass_msg("emperor tool-force alias forwards REJECT")
     h.pass_msg("harness-tool-force HARD-GATE")
+
+
+    # ---- harness forbid-enforce HARD-GATE (v0.4.151) ----
+    h.section("harness-forbid-enforce")
+    h.need("evals/fixtures/harness-forbid-enforce/README.md")
+    h.need("evals/fixtures/harness-forbid-enforce/task-forbidden-used/critique.md")
+    h.need("evals/fixtures/harness-forbid-enforce/task-forbidden-used/harness-plan.md")
+    h.need("evals/fixtures/harness-forbid-enforce/task-clean/harness-plan.md")
+    h.need("evals/fixtures/harness-forbid-enforce/task-vacuous/ledger.md")
+    h.require_contains(
+        "--check-forbidden",
+        "scripts/lib/harness_plan.py",
+        "harness_plan.py missing --check-forbidden",
+    )
+    h.require_contains(
+        "--reject-forbidden-used",
+        "scripts/lib/harness_plan.py",
+        "harness_plan.py missing --reject-forbidden-used",
+    )
+    h.require_contains(
+        "FORBIDDEN_TOOLS_NEVER_RUN",
+        "scripts/lib/harness_plan.py",
+        "harness_plan.py missing FORBIDDEN_TOOLS_NEVER_RUN",
+    )
+    h.require_contains(
+        "_run_harness_forbid",
+        "scripts/lib/gate.py",
+        "gate.py missing _run_harness_forbid",
+    )
+    h.require_contains(
+        "--check-forbidden",
+        "scripts/lib/gate.py",
+        "gate.py missing --check-forbidden wiring",
+    )
+    h.require_contains(
+        "FORBIDDEN_TOOLS_NEVER_RUN",
+        "references/mechanical-gates.md",
+        "mechanical-gates missing FORBIDDEN_TOOLS_NEVER_RUN",
+    )
+    h.require_contains(
+        "harness-forbid-enforce",
+        "evals/bakeoff.md",
+        "bakeoff missing harness-forbid-enforce",
+    )
+    h.require_contains(
+        "check-forbidden",
+        "SKILL.md",
+        "SKILL.md missing check-forbidden",
+    )
+    h.require_contains(
+        "0.4.151",
+        "SKILL.md",
+        "SKILL.md not at 0.4.151 (forbid-enforce)",
+    )
+    rc, out = h.run_py(
+        "scripts/lib/harness_plan.py",
+        "--check-forbidden",
+        str(root / "evals/fixtures/harness-forbid-enforce/task-vacuous"),
+    )
+    if rc != 0 or "SKIP (vacuous" not in out:
+        h.fail_msg(f"task-vacuous --check-forbidden should SKIP: {out}")
+    else:
+        h.pass_msg("task-vacuous --check-forbidden SKIP vacuous")
+    rc, out = h.run_py(
+        "scripts/lib/harness_plan.py",
+        "--check-forbidden",
+        str(root / "evals/fixtures/harness-forbid-enforce/task-clean"),
+    )
+    if rc != 0 or "PASS" not in out:
+        h.fail_msg(f"task-clean --check-forbidden should PASS: {out}")
+    else:
+        h.pass_msg("task-clean --check-forbidden PASS")
+    rc, out = h.run_py(
+        "scripts/lib/harness_plan.py",
+        "--check-forbidden",
+        str(root / "evals/fixtures/harness-forbid-enforce/task-forbidden-used"),
+    )
+    if rc == 0:
+        h.fail_msg(f"task-forbidden-used should FAIL: {out}")
+    elif "forbidden tool used" not in out and "critique" not in out:
+        h.fail_msg(f"task-forbidden-used FAIL missing critique signal: {out}")
+    else:
+        h.pass_msg("task-forbidden-used --check-forbidden FAIL")
+    # Honesty: Forbidden list in plan alone must not trip (task-ok from v0.4.150)
+    rc, out = h.run_py(
+        "scripts/lib/harness_plan.py",
+        "--check-forbidden",
+        str(root / "evals/fixtures/harness-tool-force/task-ok"),
+    )
+    if rc != 0 or "PASS" not in out:
+        h.fail_msg(f"plan Forbidden list alone must PASS (not false positive): {out}")
+    else:
+        h.pass_msg("plan Forbidden list alone is not use (PASS)")
+    rc, rej = h.run_py(
+        "scripts/lib/harness_plan.py",
+        "--reject-forbidden-used",
+    )
+    if rc != 1 or "REJECT FORBIDDEN USED" not in rej:
+        h.fail_msg(f"--reject-forbidden-used card failed: rc={rc} {rej}")
+    else:
+        h.pass_msg("--reject-forbidden-used always-fail card")
+    _, emp = h.run_sh(
+        "scripts/emperor",
+        "harness-plan",
+        "--reject-forbidden-used",
+    )
+    if "REJECT FORBIDDEN USED" not in emp:
+        h.fail_msg("emperor harness-plan --reject-forbidden-used should forward REJECT")
+    else:
+        h.pass_msg("emperor harness-plan peer forwards REJECT FORBIDDEN USED")
+    h.pass_msg("harness-forbid-enforce HARD-GATE")
+
 
 
 

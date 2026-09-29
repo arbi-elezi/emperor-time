@@ -25,6 +25,8 @@ G0 also delegates ask→spec to ask_spec.py --require-spec
 G0 also delegates harness tool+force plan to harness_plan.py --require-plan
 (always-on after ask→spec: active task without harness plan FAILS).
 G4 also delegates proportionality / anti-loop to proportionality.py
+G4 also delegates harness forbidden-tool enforce to harness_plan.py
+(--check-forbidden; activity-scoped SKIP when no plan).
 (records a gate cycle, then checks caps; SKIP (vacuous) when no
 effort_class / cycle ledger).
 G4 also delegates hetero-critique isolation to review_pack.py
@@ -210,6 +212,17 @@ def _run_proportionality(gate: str, task: Path) -> None:
         _fail(gate, "proportionality / anti-loop (proportionality.py)")
 
 
+def _run_harness_forbid(gate: str, task: Path) -> None:
+    """Activity-scoped: plan-forbidden tools must not show use markers."""
+    py = _root() / "scripts" / "lib" / "harness_plan.py"
+    proc = subprocess.run(
+        [sys.executable, str(py), "--check-forbidden", str(task)],
+        check=False,
+    )
+    if proc.returncode != 0:
+        _fail(gate, "harness forbid-enforce (harness_plan.py --check-forbidden)")
+
+
 def _run_review_isolation(gate: str, task: Path) -> None:
     py = _root() / "scripts" / "lib" / "review_pack.py"
     proc = subprocess.run(
@@ -386,6 +399,9 @@ def run_gate(gate: str, task: Path) -> None:
         # Records a gate cycle then checks effort_class caps.
         # SKIP (vacuous) when no effort_class / cycle ledger.
         _run_proportionality(gate, task)
+        # Harness forbid-enforce: plan-forbidden tools must not show use.
+        # SKIP (vacuous) when no harness plan; FAIL when forbidden tool used.
+        _run_harness_forbid(gate, task)
         # Hetero-critique isolation: review-pack has no author diary / CoT.
         # SKIP (vacuous) when no review-pack / no hetero markers.
         _run_review_isolation(gate, task)
