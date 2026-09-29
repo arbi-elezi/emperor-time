@@ -2244,6 +2244,13 @@ def run_evals(root: Path) -> int:
 
     # ---- finish suite-green HARD-GATE (forge aspect vertical depth) ----
     h.section("finish-suite-green HARD-GATE")
+    # Scrub leftover effort-cycles from prior runs / require-green bumps so
+    # --check-suite stays a read-only probe and re-eval is idempotent.
+    for _p in (root / "evals/fixtures/finish-suite-green").glob("*/effort-cycles.json"):
+        try:
+            _p.unlink()
+        except OSError:
+            pass
     h.need("skills/emperor-forge/finish-menu.md")
     h.need("scripts/finish.sh")
     h.need("scripts/finish.ps1")
@@ -2397,6 +2404,32 @@ def run_evals(root: Path) -> int:
         h.fail_msg("finish --require-green task-ok missing MENU")
     else:
         h.pass_msg("finish --require-green task-ok prints MENU")
+    # --check-suite must stay idempotent (no cycle stamp); re-probe task-ok.
+    rc_re, ok_re = h.run_py(
+        "scripts/lib/finish.py",
+        "--check-suite",
+        str(root / "evals/fixtures/finish-suite-green/task-ok"),
+    )
+    if rc_re != 0 or "suite green" not in ok_re:
+        h.fail_msg("finish --check-suite task-ok re-probe should stay pass (read-only)")
+    else:
+        h.pass_msg("finish --check-suite task-ok idempotent")
+    cyc_ok = root / "evals/fixtures/finish-suite-green/task-ok/effort-cycles.json"
+    # require-green may have stamped; --check-suite alone must not be the writer of concern —
+    # scrub then ensure a pure check-suite path writes nothing:
+    if cyc_ok.is_file():
+        cyc_ok.unlink()
+    rc_pure, _ = h.run_py(
+        "scripts/lib/finish.py",
+        "--check-suite",
+        str(root / "evals/fixtures/finish-suite-green/task-ok"),
+    )
+    if rc_pure != 0:
+        h.fail_msg("finish pure --check-suite should pass after scrub")
+    elif cyc_ok.is_file():
+        h.fail_msg("finish --check-suite must not write effort-cycles.json")
+    else:
+        h.pass_msg("finish --check-suite writes no effort-cycles")
     rc, req_red = h.run_py(
         "scripts/lib/finish.py",
         "--require-green",
@@ -3907,6 +3940,11 @@ def run_evals(root: Path) -> int:
 
     # ---- grill path-taxonomy HARD-GATE (require-design vertical depth) ----
     h.section("grill-path-taxonomy HARD-GATE")
+    for _p in (root / "evals/fixtures/grill-path-taxonomy").glob("*/effort-cycles.json"):
+        try:
+            _p.unlink()
+        except OSError:
+            pass
     h.need("skills/emperor-require-design/grill-checklist.md")
     h.need("scripts/grill.sh")
     h.need("scripts/grill.ps1")
@@ -4042,6 +4080,20 @@ def run_evals(root: Path) -> int:
         h.fail_msg("grill task-ok should pass check-path")
     else:
         h.pass_msg("grill task-ok accepted")
+    g_cyc = root / "evals/fixtures/grill-path-taxonomy/task-ok/effort-cycles.json"
+    if g_cyc.is_file():
+        h.fail_msg("grill --check-path must not write effort-cycles.json")
+    else:
+        h.pass_msg("grill --check-path writes no effort-cycles")
+    rc_g2, ok_g2 = h.run_py(
+        "scripts/lib/grill.py",
+        "--check-path",
+        str(root / "evals/fixtures/grill-path-taxonomy/task-ok"),
+    )
+    if rc_g2 != 0 or "path taxonomy ok" not in ok_g2:
+        h.fail_msg("grill --check-path task-ok re-probe should stay pass")
+    else:
+        h.pass_msg("grill --check-path task-ok idempotent")
     _, grill_sh2 = h.run_sh("scripts/grill.sh", "--check-path",
                             str(root / "evals/fixtures/grill-path-taxonomy/path-ok.md"))
     if "path taxonomy ok" not in grill_sh2 and "PASS" not in grill_sh2:
@@ -6008,7 +6060,7 @@ def run_evals(root: Path) -> int:
     h.require_contains("steal-consent", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing steal-consent")
     h.require_contains("consent.py", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing consent.py")
     h.require_contains("0.4.132", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing 0.4.132 tip")
-    h.require_contains("0.4.147", ".claude-plugin/plugin.json", "plugin.json not at 0.4.147")
+    h.require_contains("0.4.148", ".claude-plugin/plugin.json", "plugin.json not at 0.4.148")
     h.require_contains("0.4.137", "CHANGELOG.md", "CHANGELOG missing retained 0.4.137")
     h.require_contains("0.4.136", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing retained 0.4.136")
     h.require_contains("0.4.132", "CHANGELOG.md", "CHANGELOG missing 0.4.132")
@@ -6076,10 +6128,11 @@ def run_evals(root: Path) -> int:
     h.require_contains("SIGNIN_THEN_DISPATCH_THEN_BOUNDED_SWARM", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing SIGNIN_THEN_DISPATCH_THEN_BOUNDED_SWARM")
     h.require_contains("steal_flow.py", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing steal_flow.py")
     h.require_contains("0.4.147", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing 0.4.147 tip")
+    h.require_contains("0.4.148", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing 0.4.148 tip")
     h.require_contains("0.4.145", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing retained 0.4.145")
     h.require_contains("0.4.144", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing retained 0.4.144")
     h.require_contains("0.4.143", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing retained 0.4.143")
-    h.require_contains("0.4.147", "CHANGELOG.md", "CHANGELOG missing 0.4.147")
+    h.require_contains("0.4.148", "CHANGELOG.md", "CHANGELOG missing 0.4.148")
     h.require_contains("0.4.145", "CHANGELOG.md", "CHANGELOG missing retained 0.4.145")
     h.require_contains("0.4.144", "CHANGELOG.md", "CHANGELOG missing retained 0.4.144")
     h.require_contains("0.4.143", "CHANGELOG.md", "CHANGELOG missing retained 0.4.143")
@@ -6115,6 +6168,8 @@ def run_evals(root: Path) -> int:
     h.require_contains("vacuous-pass-honesty-hard-gate", "evals/evals.json", "evals.json missing vacuous-pass-honesty-hard-gate")
     h.require_contains("vacuous-pass-peers-hard-gate", "evals/evals.json", "evals.json missing vacuous-pass-peers-hard-gate")
     h.require_contains("default-tiny-hard-cap", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing default-tiny-hard-cap")
+    h.require_contains("check-readonly-cycles", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing check-readonly-cycles")
+    h.require_contains("read-only", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing read-only")
     h.require_contains("MISSING_CLASS_DEFAULTS_TINY", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing MISSING_CLASS_DEFAULTS_TINY")
     h.require_contains("bump_and_check", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing bump_and_check")
     h.require_contains("vacuous-pass-honesty", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing retained vacuous-pass-honesty")
@@ -6133,7 +6188,7 @@ def run_evals(root: Path) -> int:
     h.require_contains("blind-secrets-broker", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing blind-secrets-broker")
     h.require_contains("reject-secret-leak", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing reject-secret-leak")
     h.require_contains("check-env-redacted", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing check-env-redacted")
-    h.require_contains("0.4.147", ".claude-plugin/marketplace.json", "marketplace.json not at 0.4.147")
+    h.require_contains("0.4.148", ".claude-plugin/marketplace.json", "marketplace.json not at 0.4.148")
     h.require_contains("0.4.142", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing retained 0.4.142")
     h.require_contains("finish.py", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing finish.py")
     h.require_contains("reject-red-suite", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing reject-red-suite")
@@ -8727,9 +8782,9 @@ def run_evals(root: Path) -> int:
         "bakeoff.md missing reject-unisolated inventory",
     )
     h.require_contains(
-        "0.4.147",
+        "0.4.148",
         "SKILL.md",
-        "SKILL.md not bumped to 0.4.147",
+        "SKILL.md not bumped to 0.4.148",
     )
     _, card = h.run_py("scripts/lib/review_pack.py")
     if "checklist=yes" not in card:

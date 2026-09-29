@@ -352,7 +352,11 @@ def main(argv: Sequence[str] | None = None) -> int:
         return 0
 
     def _bump_verify(task: Path | None) -> list[str]:
-        """Record verify cycle; missing effort_class → tiny hard cap."""
+        """Record verify cycle on real finish attempts; missing class → tiny.
+
+        --check-suite is read-only (no ledger write) so probes / eval re-runs
+        stay idempotent. --require-green still bumps (menu advance thrash).
+        """
         if task is None or not task.is_dir():
             return []
         try:
@@ -363,11 +367,7 @@ def main(argv: Sequence[str] | None = None) -> int:
             return []
 
     if args.check_suite is not None:
-        prop_errs = _bump_verify(args.check_suite)
-        if prop_errs:
-            for e in prop_errs:
-                print(f"finish FAIL: {e}", file=sys.stderr)
-            return 1
+        # Read-only probe — do not stamp effort-cycles.json.
         errs = check_suite(args.check_suite, use_eval=args.with_eval)
         if errs:
             for e in errs:

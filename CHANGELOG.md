@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.4.148
+
+- Vertical depth: check-readonly cycles — `finish.py --check-suite` and `grill.py --check-path` are read-only probes (no `effort-cycles.json` stamp); `--require-green` and grill `--advance` still bump for thrash caps
+- Closes shared-box / re-eval pollution after v0.4.146 default-tiny: fixture trees no longer accumulate tiny-cap ledger writes from mechanical checks; eval scrubs leftovers + asserts idempotence
+- Critique `--check-critique` thrash surface unchanged (intentional default-tiny detector)
+- Doctrine/SKILL/bakeoff honesty lockstep; not archaeology; not embeddings; not Nen/museum/k8s growth
+- Plugin, marketplace, and SKILL.md at 0.4.148
+
 ## 0.4.147
 
 - Vertical depth: ask→spec require-before-setup — `ask_spec.py --require-spec` always-on (never vacuous SKIP); G0 `--require-spec` refuses open without a written scoped brief (goal / done-when / out-of-scope / effort_class)
