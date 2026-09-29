@@ -48,6 +48,8 @@ G4 also runs ask_spec.py --check-spec-hints (Ask∪goal∪done-when
 tiny hints bind class — SPEC_HINT_BIND).
 G4 also runs ask_spec.py --check-scope-hints
 (Ask∪goal∪done-when∪out-of-scope tiny hints bind class — SCOPE_HINT_BIND).
+G4 also runs ask_spec.py --check-body-hints
+(full ask→spec body tiny hints bind class — BODY_HINT_BIND).
 (records a gate cycle, then checks caps; SKIP (vacuous) when no
 effort_class / cycle ledger).
 G4 also delegates hetero-critique isolation to review_pack.py
@@ -349,6 +351,20 @@ def _run_scope_hints(gate: str, task: Path) -> None:
         )
 
 
+def _run_body_hints(gate: str, task: Path) -> None:
+    """Activity-scoped: ask→spec effort_class must honor full-file body hints."""
+    py = _root() / "scripts" / "lib" / "ask_spec.py"
+    proc = subprocess.run(
+        [sys.executable, str(py), "--check-body-hints", str(task)],
+        check=False,
+    )
+    if proc.returncode != 0:
+        _fail(
+            gate,
+            "body-hint-bind (ask_spec.py --check-body-hints)",
+        )
+
+
 def _run_review_isolation(gate: str, task: Path) -> None:
     py = _root() / "scripts" / "lib" / "review_pack.py"
     proc = subprocess.run(
@@ -562,6 +578,11 @@ def run_gate(gate: str, task: Path) -> None:
         # "fix typo" while Ask/goal/done-when stay clean (SPEC_HINT_BIND
         # green, FORCE_TABLE[large]).
         _run_scope_hints(gate, task)
+        # Body-hint-bind: full ask→spec file body tiny hints bind class.
+        # SKIP (vacuous) when no ask→spec; FAIL when ## Notes / freeform
+        # parks "fix typo" while Ask/goal/done-when/out-of-scope stay clean
+        # (SCOPE_HINT_BIND green, FORCE_TABLE[large]).
+        _run_body_hints(gate, task)
         # Hetero-critique isolation: review-pack has no author diary / CoT.
         # SKIP (vacuous) when no review-pack / no hetero markers.
         _run_review_isolation(gate, task)
