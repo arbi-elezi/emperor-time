@@ -1,5 +1,16 @@
 # Changelog
 
+## 0.4.152
+
+### Added
+- Harness allowlist-enforce: `harness_plan.py --check-allowed` / `--reject-extra-tools` — tools outside plan Tools∪Optional must not show use markers (tdd / work-order / diagnose / …). Activity-scoped SKIP when no plan; G4 `_run_harness_allow` after `_run_harness_forbid`
+- Iron token `ALLOWED_TOOLS_ONLY` (alongside `HARNESS_OWNS_TOOL_AND_FORCE` / `FORBIDDEN_TOOLS_NEVER_RUN`); fixtures `evals/fixtures/harness-allowlist-enforce/`; Optional section parsed from markdown plans
+- Closes unlisted-thrash soft theater after v0.4.151 forbid-enforce: tiny plan can no longer run tdd/work-order/diagnose (neither allowed nor forbidden) and still finish green
+- Not archaeology; not embeddings; not Nen/museum/k8s growth; distrust spine untouched
+- Plugin, marketplace, and SKILL.md at 0.4.152
+
+
+
 ## 0.4.151
 
 ### Added

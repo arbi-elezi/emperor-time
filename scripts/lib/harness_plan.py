@@ -13,12 +13,17 @@ not more agent-facing CLI the model must recall. Flow:
 Always-fail HARD-GATE helpers:
   --reject-no-plan          refuse without a harness plan (card; exit 1)
   --reject-forbidden-used   refuse when a plan-forbidden tool was actually used
+  --reject-extra-tools      refuse when a tool outside Tools∪Optional was used
 
 Check / require / emit:
   --check-harness-plan PATH activity-scoped idle check (SKIP vacuous when idle)
   --check-forbidden PATH    activity-scoped: SKIP vacuous when no plan / idle;
                             FAIL when plan forbids a tool and task markers show
                             that tool was used; PASS when clean
+  --check-allowed PATH      activity-scoped: SKIP vacuous when no plan / idle;
+                            FAIL when a watched tool outside Tools∪Optional shows
+                            use markers (forbid owns named bans; allowlist owns
+                            unlisted thrash like tdd/work-order on tiny)
   --require-plan PATH       always-on when task active: missing/invalid plan FAILS
                             (never vacuous — G0 calls this after ask→spec)
   --emit / --from / --effort-class / --write PATH
@@ -27,7 +32,7 @@ Positional PATH runs --check-harness-plan. No args prints the HARNESS-PLAN card.
 Thin twins: scripts/harness-plan.sh / scripts/harness-plan.ps1
 Alias: tool-force → same core.
 G0 calls --require-plan after ask→spec.
-G4 calls --check-forbidden after proportionality (thrash peer).
+G4 calls --check-forbidden then --check-allowed after proportionality.
 """
 from __future__ import annotations
 
@@ -49,6 +54,7 @@ from proportionality import EFFORT_CAPS  # noqa: E402
 LEAF = "references/mechanical-gates.md"
 IRON = "HARNESS_OWNS_TOOL_AND_FORCE"
 IRON_FORBID = "FORBIDDEN_TOOLS_NEVER_RUN"
+IRON_ALLOW = "ALLOWED_TOOLS_ONLY"
 PLAN_FILENAMES = {
     "harness-plan.md",
     "harness_plan.md",
@@ -206,6 +212,9 @@ _TOOLS_HDR = re.compile(r"(?im)^\s{0,6}#{1,6}\s+Tools\b|^\s{0,6}(?:\*\*)?tools:?
 _CAPS_HDR = re.compile(r"(?im)^\s{0,6}#{1,6}\s+Caps\b|^\s{0,6}(?:\*\*)?caps:?\*?\*?\s*$")
 _FORBID_HDR = re.compile(
     r"(?im)^\s{0,6}#{1,6}\s+Forbidden\b|^\s{0,6}(?:\*\*)?forbidden:?\*?\*?\s*$"
+)
+_OPTIONAL_HDR = re.compile(
+    r"(?im)^\s{0,6}#{1,6}\s+Optional\b|^\s{0,6}(?:\*\*)?optional:?\*?\*?\s*$"
 )
 
 
@@ -403,12 +412,16 @@ def _parse_plan_markdown(text: str) -> dict[str, Any]:
                 cls = g.lower()
                 break
     tools: list[str] = []
+    optional: list[str] = []
     forbidden: list[str] = []
     caps: dict[str, int] = {}
     section = None
     for line in text.splitlines():
         if _TOOLS_HDR.search(line):
             section = "tools"
+            continue
+        if _OPTIONAL_HDR.search(line):
+            section = "optional"
             continue
         if _CAPS_HDR.search(line):
             section = "caps"
@@ -418,7 +431,12 @@ def _parse_plan_markdown(text: str) -> dict[str, Any]:
             continue
         if re.match(r"(?im)^\s{0,6}#{1,6}\s+\S", line) and section:
             # new unrelated header
-            if not (_TOOLS_HDR.search(line) or _CAPS_HDR.search(line) or _FORBID_HDR.search(line)):
+            if not (
+                _TOOLS_HDR.search(line)
+                or _OPTIONAL_HDR.search(line)
+                or _CAPS_HDR.search(line)
+                or _FORBID_HDR.search(line)
+            ):
                 section = None
             continue
         m = re.match(r"^\s*[-*]\s+(\S.+?)\s*$", line)
@@ -434,13 +452,21 @@ def _parse_plan_markdown(text: str) -> dict[str, Any]:
         item = m.group(1).strip().strip("*").strip("`")
         if section == "tools":
             tools.append(item.split()[0].lower())
+        elif section == "optional":
+            optional.append(item.split()[0].lower())
         elif section == "forbidden":
             forbidden.append(item.split()[0].lower())
         elif section == "caps":
             cm = re.match(r"(?i)(verify|critique|gate|total)\s*[:=]\s*(\d+)", item)
             if cm:
                 caps[cm.group(1).lower()] = int(cm.group(2))
-    return {"effort_class": cls, "tools": tools, "forbidden": forbidden, "caps": caps}
+    return {
+        "effort_class": cls,
+        "tools": tools,
+        "optional": optional,
+        "forbidden": forbidden,
+        "caps": caps,
+    }
 
 
 def _load_plan(path: Path) -> dict[str, Any] | None:
@@ -718,6 +744,84 @@ TOOL_ACTIVITY: dict[str, dict[str, Any]] = {
             r"(?i)\bREVIEW[- ]PACK\s+(PASS|READY|EMIT)\b",
         ),
     },
+    "tdd": {
+        "files": ("tdd.md", "red-green.md", "rgr.md"),
+        "signals": (
+            r"(?i)\bTDD\s+(PASS|FAIL|RED|GREEN)\b",
+            r"(?i)\bred[- ]green[- ]refactor\b",
+            r"(?i)--reject-prod\b",
+            r"(?i)\bemperor\s+tdd\b",
+        ),
+    },
+    "work-order": {
+        "files": ("work-order.md", "work_order.md"),
+        "signals": (
+            r"(?i)\bwork[- ]order\b.*\b(PASS|READY|EMIT)\b",
+            r"(?i)--reject-tbd\b",
+            r"(?i)--reject-no-tasks\b",
+            r"(?i)\bemperor\s+work-order\b",
+        ),
+    },
+    "claim-audit": {
+        "files": ("claim-audit.md", "claims.md"),
+        "signals": (
+            r"(?i)CLAIM\s+AUDIT",
+            r"(?i)--check-audit\b",
+            r"(?i)--reject-unaudited\b",
+            r"(?i)\bemperor\s+claim-audit\b",
+        ),
+    },
+    "diagnose": {
+        "files": ("diagnose.md", "diagnosis.md"),
+        "signals": (
+            r"(?i)CITE_OR_FAIL_REPORT",
+            r"(?i)--check-report\b",
+            r"(?i)--reject-no-report\b",
+            r"(?i)\bemperor\s+diagnose\b",
+        ),
+    },
+    "evidence": {
+        "files": ("evidence.md", "verification.md"),
+        "signals": (
+            r"(?i)\bevidence\s+(PASS|READY|COMPLETE)\b",
+            r"(?i)\bemperor\s+evidence\b",
+            r"(?i)verification[- ]before[- ]completion",
+        ),
+    },
+    "iso": {
+        "files": ("iso.md", "worktree.md", "isolation.md"),
+        "signals": (
+            r"(?i)--reject-blind-create\b",
+            r"(?i)\bemperor\s+iso\b",
+            r"(?i)\bWORKTREE\s+(PASS|READY)\b",
+        ),
+    },
+    "author": {
+        "files": ("author.md", "skill-rgr.md"),
+        "signals": (
+            r"(?i)\bemperor\s+author\b",
+            r"(?i)\bAUTHOR\s+(PASS|READY)\b",
+            r"(?i)skill[- ]RGR",
+        ),
+    },
+    "secrets": {
+        "files": ("secrets.md",),
+        "signals": (
+            r"(?i)--reject-secret-leak\b",
+            r"(?i)--check-env-redacted\b",
+            r"(?i)\bemperor\s+secrets\b",
+            r"(?i)\bSECRETS\s+(PASS|READY|LIST)\b",
+        ),
+    },
+    "queue": {
+        "files": ("queue.md",),
+        "signals": (
+            r"(?i)--reject-multi-wip\b",
+            r"(?i)--check-wip\b",
+            r"(?i)\bemperor\s+queue\b",
+            r"(?i)REJECT\s+MULTI\s+WIP",
+        ),
+    },
     "unbounded-steal": {
         "files": ("steal-flow.md", "swarm.md"),
         "signals": (
@@ -917,6 +1021,85 @@ def reject_forbidden_used() -> str:
     )
 
 
+def _allowed_set(plan: dict[str, Any]) -> set[str]:
+    allowed: set[str] = set()
+    for key in ("tools", "optional"):
+        raw = plan.get(key) or []
+        if not isinstance(raw, list):
+            continue
+        for item in raw:
+            name = _normalize_tool(item)
+            if name:
+                allowed.add(name)
+    return allowed
+
+
+def _forbidden_set(plan: dict[str, Any]) -> set[str]:
+    raw = plan.get("forbidden") or []
+    if not isinstance(raw, list):
+        return set()
+    out: set[str] = set()
+    for item in raw:
+        name = _normalize_tool(item)
+        if name:
+            out.add(name)
+    return out
+
+
+def list_extra_used(path: Path) -> list[str]:
+    """Return watched tools used outside plan Tools∪Optional.
+
+    Named Forbidden tools are owned by --check-forbidden (sharper card);
+    this list only reports unlisted extras (the allowlist gap).
+    """
+    root = _task_root(path)
+    plan = _load_plan(root)
+    if plan is None:
+        return []
+    allowed = _allowed_set(plan)
+    forbidden = _forbidden_set(plan)
+    extras: list[str] = []
+    for name in sorted(TOOL_ACTIVITY.keys()):
+        if name in allowed or name in forbidden:
+            continue
+        if tool_was_used(root, name):
+            extras.append(name)
+    return extras
+
+
+def validate_allowed(path: Path) -> list[str]:
+    """Activity-scoped: empty errs when no plan (idle / vacuous).
+
+    When a harness plan exists, FAIL if a watched tool outside Tools∪Optional
+    shows use markers (and is not already named Forbidden).
+    """
+    if not path.exists():
+        return [f"missing path: {path}"]
+    root = _task_root(path)
+    plan = _load_plan(root)
+    if plan is None:
+        return []
+    extras = list_extra_used(root)
+    if not extras:
+        return []
+    return [
+        f"extra tool used: {name} "
+        f"(not in plan Tools/Optional — {IRON_ALLOW}; see {LEAF})"
+        for name in extras
+    ]
+
+
+def reject_extra_tools() -> str:
+    return (
+        "REJECT EXTRA TOOLS: HARD-GATE — harness plan Tools∪Optional is the "
+        "allowlist, but task markers show an unlisted tool ran (tdd.md / "
+        "work-order.md / diagnose.md / …). Forbid-enforce owns named bans; "
+        "allowlist owns unlisted thrash. Open "
+        f"{LEAF}; re-check with --check-allowed <task-dir>. "
+        f"IRON={IRON_ALLOW}\n"
+    )
+
+
 def validate(path: Path) -> list[str]:
     """Activity-scoped: empty errs when idle (no plan/ask-spec signal)."""
     if not path.exists():
@@ -962,11 +1145,11 @@ def format_card() -> str:
         "MUST: After ask→spec, emit harness plan "
         "(scripts/emperor harness-plan --emit --from <task> --write "
         "<task>/harness-plan.md). G0 --require-plan FAILS without a plan. "
-        "G4 --check-forbidden FAILS when a forbidden tool was actually used.",
+        "G4 --check-forbidden FAILS when a forbidden tool was actually used. G4 --check-allowed FAILS when an unlisted tool outside Tools/Optional ran.",
         "MUST-NOT: treat tool selection as agent-facing CLI trivia; run heavy "
         "paths (excavate/sandbox/critique/steal) on tiny asks; omit plan so "
         "the model invents force; write a tiny plan then thrash forbidden tools.",
-        "HONESTY: --check-harness-plan / --check-forbidden idle SKIP; "
+        "HONESTY: --check-harness-plan / --check-forbidden / --check-allowed idle SKIP; "
         "G0 --require-plan never vacuous; plan file listing a tool under "
         "Forbidden is not itself 'use' of that tool.",
         f"IRON forbid={IRON_FORBID}",
@@ -1033,6 +1216,21 @@ def main(argv: Sequence[str] | None = None) -> int:
         help="Hard-gate card: refuse when forbidden tools were used (always exit 1)",
     )
     p.add_argument(
+        "--check-allowed",
+        type=Path,
+        metavar="PATH",
+        default=None,
+        help=(
+            "Allowlist enforce: FAIL when a watched tool outside Tools∪Optional "
+            "was used; SKIP vacuous when no plan / idle"
+        ),
+    )
+    p.add_argument(
+        "--reject-extra-tools",
+        action="store_true",
+        help="Hard-gate card: refuse when extra (unlisted) tools were used (always exit 1)",
+    )
+    p.add_argument(
         "--emit",
         action="store_true",
         help="Emit harness plan from effort_class / --from ask-spec task",
@@ -1071,12 +1269,23 @@ def main(argv: Sequence[str] | None = None) -> int:
         sys.stdout.write(reject_forbidden_used())
         return 1
 
+    if args.reject_extra_tools:
+        sys.stdout.write(reject_extra_tools())
+        return 1
+
     if args.check_forbidden is not None:
         target = args.check_forbidden
         errs = validate_forbidden(target)
         plan = _load_plan(target) if target.exists() else None
         vacuous = target.exists() and plan is None and not errs
         return report_check("harness-forbid", target, errs, vacuous=vacuous)
+
+    if args.check_allowed is not None:
+        target = args.check_allowed
+        errs = validate_allowed(target)
+        plan = _load_plan(target) if target.exists() else None
+        vacuous = target.exists() and plan is None and not errs
+        return report_check("harness-allow", target, errs, vacuous=vacuous)
 
     if args.require_plan is not None:
         errs = require_plan(args.require_plan)
