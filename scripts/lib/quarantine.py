@@ -16,7 +16,7 @@ Positional PATH runs the same check. No args prints the QUARANTINE card.
 Thin twins: scripts/quarantine.sh / scripts/quarantine.ps1
 Alias: steal-quarantine → same core.
 G4 in gate.py calls --check-quarantine when steal activity is present
-(vacuous PASS when no worker runs / no steal markers).
+(activity-scoped; SKIP (vacuous — no activity) when no steal markers).
 """
 from __future__ import annotations
 
@@ -25,6 +25,7 @@ import re
 import sys
 from pathlib import Path
 from typing import Sequence
+from check_report import report_check
 
 LEAF = "chains/steal-chain/quarantine.md"
 RUN_LAYOUT = ".emperor/runs/<task>/<agent>/{prompt.md,out.txt,meta.md}"
@@ -298,12 +299,13 @@ def main(argv: Sequence[str] | None = None) -> int:
         return 0
 
     errs = validate(target)
-    if errs:
-        for e in errs:
-            print(f"quarantine FAIL: {e}", file=sys.stderr)
-        return 1
-    print(f"quarantine PASS: {target}")
-    return 0
+    if not target.exists():
+        return report_check("quarantine", target, errs, vacuous=False)
+    text_blob, _ = _combined_text(target)
+    root = target if target.is_dir() else target.parent
+    steal = _has_steal_signal(target if target.is_dir() else root, text_blob)
+    vacuous = not steal
+    return report_check("quarantine", target, errs, vacuous=vacuous)
 
 
 if __name__ == "__main__":

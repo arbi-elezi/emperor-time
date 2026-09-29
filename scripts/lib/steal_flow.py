@@ -14,10 +14,12 @@ Always-fail HARD-GATE helpers:
   --reject-no-dispatch-layout   refuse missing runs layout / prompt anatomy
   --reject-unbounded-swarm      refuse unbounded / overlapping swarm
 
-Check modes (vacuous PASS when no matching activity):
+Check modes (activity-scoped; honest SKIP when no matching activity):
   --check-signin PATH
   --check-dispatch PATH
   --check-swarm PATH
+
+Vacuous paths print ``SKIP (vacuous — no activity)`` (exit 0), not bare PASS.
 
 Positional PATH runs all three checks. No args prints the STEAL-FLOW card.
 Thin twins: scripts/steal-flow.sh / scripts/steal-flow.ps1
@@ -32,6 +34,7 @@ import re
 import sys
 from pathlib import Path
 from typing import Sequence
+from check_report import report_check
 
 LEAF_SIGNIN = "chains/steal-chain/sign-in-handoff.md"
 LEAF_DISPATCH = "chains/steal-chain/dispatch.md"
@@ -649,30 +652,38 @@ def main(argv: Sequence[str] | None = None) -> int:
         return 1
 
     if args.check_signin is not None:
-        errs = validate_signin(args.check_signin)
-        label = "signin"
         target = args.check_signin
-    elif args.check_dispatch is not None:
-        errs = validate_dispatch(args.check_dispatch)
-        label = "dispatch"
+        errs = validate_signin(target)
+        text = _combined_text(target) if target.exists() else ""
+        vacuous = target.exists() and not _has_signin_signal(target, text)
+        return report_check("signin", target, errs, vacuous=vacuous)
+    if args.check_dispatch is not None:
         target = args.check_dispatch
-    elif args.check_swarm is not None:
-        errs = validate_swarm(args.check_swarm)
-        label = "swarm"
+        errs = validate_dispatch(target)
+        text = _combined_text(target) if target.exists() else ""
+        agents = _iter_run_agents(target) if target.is_dir() else []
+        vacuous = target.exists() and not _has_dispatch_signal(target, text, agents)
+        return report_check("dispatch", target, errs, vacuous=vacuous)
+    if args.check_swarm is not None:
         target = args.check_swarm
-    elif args.path is not None:
-        errs = validate_all(args.path)
-        label = "steal-flow"
+        errs = validate_swarm(target)
+        text = _combined_text(target) if target.exists() else ""
+        swarm_dirs = _swarm_dirs(target) if target.is_dir() else []
+        vacuous = target.exists() and not _has_swarm_signal(target, text, swarm_dirs)
+        return report_check("swarm", target, errs, vacuous=vacuous)
+    if args.path is not None:
         target = args.path
-    else:
-        sys.stdout.write(format_card())
-        return 0
-
-    if errs:
-        for e in errs:
-            print(f"{label} FAIL: {e}", file=sys.stderr)
-        return 1
-    print(f"{label} PASS: {target}")
+        errs = validate_all(target)
+        text = _combined_text(target) if target.exists() else ""
+        agents = _iter_run_agents(target) if target.is_dir() else []
+        swarm_dirs = _swarm_dirs(target) if target.is_dir() else []
+        vacuous = target.exists() and not (
+            _has_signin_signal(target, text)
+            or _has_dispatch_signal(target, text, agents)
+            or _has_swarm_signal(target, text, swarm_dirs)
+        )
+        return report_check("steal-flow", target, errs, vacuous=vacuous)
+    sys.stdout.write(format_card())
     return 0
 
 

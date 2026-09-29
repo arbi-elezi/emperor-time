@@ -43,32 +43,31 @@ Judgment claim-audit sweep (`--reject-unaudited` / `--check-audit`; thin
 `claim-audit.sh` / `claim-audit.ps1` + `judgment-audit` alias / `emperor
 claim-audit`). G4 also calls `consent.py` for Steal consent-protocol
 (`--reject-no-consent` / `--check-consent`; thin `consent.sh` /
-`consent.ps1` + `steal-consent` alias / `emperor consent`) — vacuous PASS
-when no worker runs. G4 also calls `quarantine.py` for Steal quarantine
+`consent.ps1` + `steal-consent` alias / `emperor consent`) — SKIP (vacuous) when no worker runs. G4 also calls `quarantine.py` for Steal quarantine
 admission (`--reject-unquarantined` / `--check-quarantine`; thin
 `quarantine.sh` / `quarantine.ps1` + `steal-quarantine` alias /
-`emperor quarantine`) — vacuous PASS when no worker runs. G4 also calls
+`emperor quarantine`) — SKIP (vacuous) when no worker runs. G4 also calls
 `steal_flow.py` for Steal sign-in / dispatch / swarm (`--check-signin` /
 `--check-dispatch` / `--check-swarm`; thin `steal-flow.sh` / `steal-flow.ps1`
-+ aliases / `emperor steal-flow`) — vacuous PASS when no matching markers.
++ aliases / `emperor steal-flow`) — SKIP (vacuous) when no matching markers.
 G4 also calls
 `review_pack.py` for hetero-critique isolation (`--reject-unisolated` /
 `--reject-author-diary` / `--check-isolation`; thin `review-pack.sh` /
-`review-pack.ps1` / `emperor review-pack`) — vacuous PASS when no pack.
+`review-pack.ps1` / `emperor review-pack`) — SKIP (vacuous) when no pack.
 G5 calls `verdict.py` for Judgment verdict + Breach Register honesty
 (`--reject-hidden-breach` / `--check-verdict`; thin `verdict.sh` /
 `verdict.ps1` + `breach` alias / `emperor verdict`) — PASS-substring +
 Breach Register header alone with blank/TBD rows is hidden-breach theater.
 G5 also calls `forge.py` for forge PR-consent (`--reject-no-pr-consent` /
 `--check-pr-consent`; thin `forge.sh` / `forge.ps1` / `emperor forge`) —
-vacuous PASS when no forge / public-PR markers (merge-locally OK). Steal
+SKIP (vacuous) when no forge / public-PR markers (merge-locally OK). Steal
 `--reject-no-consent` remains a different gate.
 
 Review-pack Python core: `scripts/lib/review_pack.py` owns meta SHAs +
 acceptance-criteria extract + diff **and** hetero-critique isolation HARD-GATE
 (`--reject-unisolated` / `--reject-author-diary` / `--check-isolation`; thin
 `review-pack.sh` / `review-pack.ps1`). G4 calls `--check-isolation` when
-review-pack / hetero activity is present (vacuous PASS otherwise). Closes
+review-pack / hetero activity is present (SKIP vacuous otherwise). Closes
 bash↔ps1 drift on criteria (ps1 used to dump the full work-order).
 
 Dowse Python core: `scripts/lib/dowse.py` owns PATH detect + bounded version/auth probes + table/`--as-json` richer roster (thin `dowse.sh` / `dowse.ps1`). Closes bash↔ps1 drift on AsJson + Headless/SignIn metadata.
@@ -101,6 +100,20 @@ Forge Python core: `scripts/lib/forge.py` owns consent + DONE gate + title/G1 PR
 
 Harness health Python core: `scripts/lib/eval.py` owns the structural assertion
 suite. Thin twins: `scripts/eval.sh`, `scripts/eval.ps1` (same exits 0/1).
+
+## Activity-scoped vs always-on
+
+Not every HARD-GATE runs on every task. Quoting a bare `PASS` from an idle
+activity-scoped check is honesty theater — the gate was never exercised.
+
+| Kind | Gates | Idle outcome |
+|---|---|---|
+| **Always-on** (when that G* runs) | G0 task/quote; G1 acceptance; G2 work-order; G3 impact-map; G4 critique eight-count + claim-audit; G5 verdict + Breach Register | No vacuous path — missing evidence FAILS |
+| **Activity-scoped** (Steal / Jail / Holy + peers) | Steal consent / quarantine / sign-in / dispatch / swarm; Jail pin-and-consent; Holy triage / reproduce / heal-verify / process-healing; ask→spec / proportionality; forge PR-consent; review-pack isolation; super-context / thoughttrail | No matching activity → **`SKIP (vacuous — no activity)`** (exit 0). Exercised green → **`PASS`**. Soft missing evidence while activity claimed → **`FAIL`**. |
+
+Mechanical reporter: `scripts/lib/check_report.py` (`report_check`). Eval fixtures
+force the label (`vacuous.md` / `task-vacuous` → SKIP; `*-ok` → PASS). Agents
+must quote the SKIP/PASS line — do not paraphrase idle SKIP as "gate PASS".
 
 ## Vow mapping
 

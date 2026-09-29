@@ -16,7 +16,7 @@ Positional PATH runs the same check. No args prints the CONSENT card.
 Thin twins: scripts/consent.sh / scripts/consent.ps1
 Alias: steal-consent → same core.
 G4 in gate.py calls --check-consent when steal activity is present
-(vacuous PASS when no worker runs / no steal markers).
+(activity-scoped; SKIP (vacuous — no activity) when no steal markers).
 CI: EMPEROR_CONSENT_AGENTS=codex,claude (or "none") replaces chat consent.
 """
 from __future__ import annotations
@@ -27,6 +27,7 @@ import re
 import sys
 from pathlib import Path
 from typing import Sequence
+from check_report import report_check
 
 LEAF = "chains/steal-chain/consent-protocol.md"
 
@@ -343,12 +344,20 @@ def main(argv: Sequence[str] | None = None) -> int:
         return 0
 
     errs = validate(target)
-    if errs:
-        for e in errs:
-            print(f"consent FAIL: {e}", file=sys.stderr)
-        return 1
-    print(f"consent PASS: {target}")
-    return 0
+    if not target.exists():
+        return report_check("consent", target, errs, vacuous=False)
+    text_blob, _ = _combined_text(target)
+    root = target if target.is_dir() else target.parent
+    agents = _iter_run_agents(root)
+    if target.is_file():
+        agents = agents or _iter_run_agents(target.parent)
+    steal = _has_steal_signal(target if target.is_dir() else root, text_blob)
+    forced = target.is_file() and (
+        bool(_CONSENT_HEADER.search(text_blob))
+        or target.name.lower() in {"consent.md"}
+    )
+    vacuous = (not steal) and (not forced) and (not agents)
+    return report_check("consent", target, errs, vacuous=vacuous)
 
 
 if __name__ == "__main__":

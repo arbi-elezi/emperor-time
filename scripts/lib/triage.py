@@ -16,7 +16,7 @@ Check mode:
 Positional PATH runs the same check. No args prints the TRIAGE card.
 Thin twins: scripts/triage.sh / scripts/triage.ps1
 Alias: holy-triage → same core.
-Vacuous PASS when no triage activity is claimed.
+Activity-scoped: SKIP (vacuous — no activity) when no triage activity claimed.
 """
 from __future__ import annotations
 
@@ -25,6 +25,7 @@ import re
 import sys
 from pathlib import Path
 from typing import Sequence
+from check_report import report_check
 
 LEAF = "chains/holy-chain/triage.md"
 
@@ -285,12 +286,9 @@ def main(argv: Sequence[str] | None = None) -> int:
         return 0
 
     errs = validate(target)
-    if errs:
-        for e in errs:
-            print(f"triage FAIL: {e}", file=sys.stderr)
-        return 1
-    print(f"triage PASS: {target}")
-    return 0
+    text_blob = _combined_text(target) if target.exists() else ""
+    vacuous = target.exists() and not _has_triage_signal(target, text_blob)
+    return report_check("triage", target, errs, vacuous=vacuous)
 
 
 if __name__ == "__main__":

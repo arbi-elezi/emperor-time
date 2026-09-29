@@ -16,7 +16,7 @@ Check mode:
 Positional PATH runs the same check. No args prints the HEAL-VERIFY card.
 Thin twins: scripts/heal-verify.sh / scripts/heal-verify.ps1
 Alias: heal-and-verify → same core.
-Vacuous PASS when no heal activity is claimed.
+Activity-scoped: SKIP (vacuous — no activity) when no heal activity claimed.
 """
 from __future__ import annotations
 
@@ -25,6 +25,7 @@ import re
 import sys
 from pathlib import Path
 from typing import Sequence
+from check_report import report_check
 
 LEAF = "chains/holy-chain/heal-and-verify.md"
 
@@ -278,12 +279,9 @@ def main(argv: Sequence[str] | None = None) -> int:
         return 0
 
     errs = validate(target)
-    if errs:
-        for e in errs:
-            print(f"heal-verify FAIL: {e}", file=sys.stderr)
-        return 1
-    print(f"heal-verify PASS: {target}")
-    return 0
+    text_blob = _combined_text(target) if target.exists() else ""
+    vacuous = target.exists() and not _has_heal_signal(target, text_blob)
+    return report_check("heal-verify", target, errs, vacuous=vacuous)
 
 
 if __name__ == "__main__":

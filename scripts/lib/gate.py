@@ -13,26 +13,26 @@ G4 delegates claim-audit sweep to claim_audit.py.
 G4 delegates self-critique eight-count to critique.py
 (critique file presence ≠ eight-count completeness).
 G4 also delegates Steal quarantine admission to quarantine.py
-(vacuous PASS when no worker runs / no steal markers).
+(SKIP (vacuous) when no worker runs / no steal markers).
 G4 also delegates Steal consent-protocol to consent.py
-(vacuous PASS when no worker runs / no steal markers).
+(SKIP (vacuous) when no worker runs / no steal markers).
 G4 also delegates Steal sign-in / dispatch / swarm to steal_flow.py
-(vacuous PASS when no matching steal-flow activity).
+(SKIP (vacuous) when no matching steal-flow activity).
 G4 also delegates Jail pin-and-consent to pin_consent.py
-(vacuous PASS when no captured-skill / pin markers).
+(SKIP (vacuous) when no captured-skill / pin markers).
 G0 also delegates ask→spec to ask_spec.py
-(vacuous PASS when no ask-spec / effort_class markers).
+(SKIP (vacuous) when no ask-spec / effort_class markers).
 G4 also delegates proportionality / anti-loop to proportionality.py
-(records a gate cycle, then checks caps; vacuous PASS when no
+(records a gate cycle, then checks caps; SKIP (vacuous) when no
 effort_class / cycle ledger).
 G4 also delegates hetero-critique isolation to review_pack.py
-(vacuous PASS when no review-pack / no hetero markers).
+(SKIP (vacuous) when no review-pack / no hetero markers).
 G0 also delegates thoughttrail + super-context to context.py
-(vacuous PASS when no context / thoughttrail markers).
+(SKIP (vacuous) when no context / thoughttrail markers).
 G5 delegates verdict + Breach Register honesty to verdict.py
 (PASS substring + header-only theater is not enough).
 G5 also delegates forge PR-consent to forge.py
-(vacuous PASS when no forge / public-PR markers).
+(SKIP (vacuous) when no forge / public-PR markers).
 """
 from __future__ import annotations
 
@@ -255,10 +255,10 @@ def run_gate(gate: str, task: Path) -> None:
         if not _has(r"quoted|Origin|Task:", ledger):
             _fail(gate, "ledger missing origin/task line")
         # Thoughttrail + super-context: graph/trail when activity claimed.
-        # Vacuous PASS when no context / thoughttrail markers.
+        # SKIP (vacuous) when no context / thoughttrail markers.
         _run_context(gate, task)
         # Ask→spec: scoped brief before setup thrash when activity claimed.
-        # Vacuous PASS when no ask-spec / effort_class markers.
+        # SKIP (vacuous) when no ask-spec / effort_class markers.
         _run_ask_spec(gate, task)
         _mark(stamp, gate)
         _ok(gate, str(ledger))
@@ -336,23 +336,23 @@ def run_gate(gate: str, task: Path) -> None:
         # Not critique-file-present theater — exit code from claim_audit.py.
         _run_claim_audit(gate, task)
         # Steal consent: CONSENT record before enlistment.
-        # Vacuous PASS when no worker runs / steal markers.
+        # SKIP (vacuous) when no worker runs / steal markers.
         _run_consent(gate, task)
         # Steal quarantine: runs layout + CONJECTURE start + ADMITTED|REJECTED.
-        # Vacuous PASS when no worker runs / steal markers.
+        # SKIP (vacuous) when no worker runs / steal markers.
         _run_quarantine(gate, task)
         # Steal sign-in / dispatch / swarm HARD-GATE (steal_flow.py).
-        # Vacuous PASS when no matching activity.
+        # SKIP (vacuous) when no matching activity.
         _run_steal_flow(gate, task)
         # Jail pin-and-consent HARD-GATE (pin_consent.py).
-        # Vacuous PASS when no captured-skill / pin markers.
+        # SKIP (vacuous) when no captured-skill / pin markers.
         _run_pin_consent(gate, task)
         # Proportionality / anti-loop HARD-GATE (proportionality.py).
         # Records a gate cycle then checks effort_class caps.
-        # Vacuous PASS when no effort_class / cycle ledger.
+        # SKIP (vacuous) when no effort_class / cycle ledger.
         _run_proportionality(gate, task)
         # Hetero-critique isolation: review-pack has no author diary / CoT.
-        # Vacuous PASS when no review-pack / no hetero markers.
+        # SKIP (vacuous) when no review-pack / no hetero markers.
         _run_review_isolation(gate, task)
         if claims.is_file():
             text = claims.read_text(encoding="utf-8", errors="replace")
@@ -384,7 +384,7 @@ def run_gate(gate: str, task: Path) -> None:
         # empty/theater Stake rows fail (verdict.py). Header-only PASS theater ≠ G5.
         _run_verdict(gate, task)
         # Forge PR consent: EMPEROR_CONSENT_PR or ledger quote when forge/PR claimed.
-        # Vacuous PASS when no forge / public-PR markers (merge-locally OK).
+        # SKIP (vacuous) when no forge / public-PR markers (merge-locally OK).
         _run_forge_consent(gate, task)
         _mark(stamp, gate)
         _ok(gate, "deliverable artifacts present")
