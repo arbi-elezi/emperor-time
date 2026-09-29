@@ -13,7 +13,7 @@ Always-fail HARD-GATE helpers:
 Check mode:
   --check-isolation PATH   review-pack dir or task dir
                            (exit 1 on forbidden files / author-diary content;
-                            vacuous PASS when no pack / no hetero signal)
+                            SKIP vacuous when no pack / no hetero signal)
 
 Emit mode (unchanged):
   review_pack.py <task-dir> [base] [head]
@@ -21,7 +21,8 @@ Emit mode (unchanged):
 No args prints the ISOLATION card.
 Thin twins: scripts/review-pack.sh / scripts/review-pack.ps1
 G4 in gate.py calls --check-isolation when review-pack / hetero activity
-is present (vacuous PASS otherwise).
+is present.
+Activity-scoped: SKIP (vacuous — no activity) when no pack / no hetero signal.
 
 Doctrine: chains/judgment-chain/hetero-critique.md + iron law 9
 (Reviewer isolation) + templates/review-pack.md.
@@ -35,6 +36,7 @@ import sys
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Sequence
+from check_report import report_check
 
 LEAF = "chains/judgment-chain/hetero-critique.md"
 IRON = "references/iron-laws.md"
@@ -374,7 +376,7 @@ def format_card() -> str:
         "et=fresh context; builder does not write hetero verdict",
         "STEP 3 key=Iron law 9 — examiner receives the review pack only",
         "STEP 4 id=gate name=G4 calls --check-isolation "
-        "et=vacuous PASS when no pack / no hetero signal",
+        "et=SKIP (vacuous) when no pack / no hetero signal",
         "STEP 4 key=Pack-present theater with diary still fails",
         "",
         "MUST: Before hetero-critique dispatch, emit an isolated pack and keep "
@@ -462,13 +464,13 @@ def main(argv: Sequence[str] | None = None) -> int:
         return 1
 
     if args.check_isolation is not None:
-        errs = validate_isolation(args.check_isolation)
-        if errs:
-            for e in errs:
-                print(f"isolation FAIL: {e}", file=sys.stderr)
-            return 1
-        print(f"isolation PASS: {args.check_isolation}")
-        return 0
+        target = args.check_isolation
+        errs = validate_isolation(target)
+        text = _combined_signal_text(target) if target.exists() else ""
+        pack = _pack_dir(target) if target.exists() else None
+        hetero = _has_hetero_signal(target, text) if target.exists() else False
+        vacuous = target.exists() and (not hetero) and pack is None
+        return report_check("isolation", target, errs, vacuous=vacuous)
 
     if args.path is None:
         sys.stdout.write(format_card())

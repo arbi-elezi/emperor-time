@@ -18,7 +18,7 @@ Thin twins: scripts/proportionality.sh / scripts/proportionality.ps1
 Alias: anti-loop → same core.
 G4 in gate.py records a gate cycle then calls --check-proportionality.
 Vacuous PASS when no effort_class and no cycle ledger (idle paths).
-Steal/Jail/Holy vacuous PASS is separate — this is task-path thrash.
+Activity-scoped: SKIP (vacuous — no activity) when no effort_class / cycle ledger.
 """
 from __future__ import annotations
 
@@ -28,6 +28,7 @@ import re
 import sys
 from pathlib import Path
 from typing import Sequence
+from check_report import report_check
 
 _LIB = Path(__file__).resolve().parent
 if str(_LIB) not in sys.path:
@@ -243,7 +244,7 @@ def format_card() -> str:
         "<task-dir>.",
         "MUST-NOT: ~20 verifications for a 2-line change; endless "
         "critique/gate loops that burn tokens without shipping.",
-        "HONESTY: Idle Steal/Jail/Holy vacuous PASS is separate; this HARD-GATE "
+        "HONESTY: Idle paths emit SKIP (vacuous — no activity); this HARD-GATE "
         "is task-path thrash only.",
     ]
     return "\n".join(lines) + "\n"
@@ -328,17 +329,8 @@ def main(argv: Sequence[str] | None = None) -> int:
         return 0
 
     errs = validate(target, bump_gate=args.bump_gate)
-    if errs:
-        for e in errs:
-            print(f"proportionality FAIL: {e}", file=sys.stderr)
-        return 1
-    cls = resolve_effort_class(target) or "vacuous"
-    counts = _load_cycles(target)
-    print(
-        f"proportionality PASS: {target} effort_class={cls} "
-        f"total={counts.get('total', 0)}"
-    )
-    return 0
+    vacuous = target.exists() and not _has_activity(target)
+    return report_check("proportionality", target, errs, vacuous=vacuous)
 
 
 if __name__ == "__main__":

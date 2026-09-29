@@ -37,6 +37,7 @@ import re
 import sys
 from pathlib import Path
 from typing import Sequence
+from check_report import report_check
 
 _LIB = Path(__file__).resolve().parent
 if str(_LIB) not in sys.path:
@@ -234,8 +235,45 @@ def _trail_errors(repo: Path) -> list[str]:
     return errs
 
 
+
+def _context_vacuous(path: Path) -> bool:
+    """True when --check-context would idle-skip (no graph activity claimed)."""
+    if not path.exists():
+        return False
+    text = _read_activity_text(path)
+    p = path.resolve()
+    if p.name == "context" and p.parent.name == ".emperor":
+        return False
+    if p.name == "graph.sqlite" or (p.is_dir() and (p / "graph.sqlite").is_file()):
+        return False
+    if not _GRAPH_SIGNAL.search(text) and not _CONTEXT_SIGNAL.search(text):
+        return True
+    if _TRAIL_SIGNAL.search(text) and not _GRAPH_SIGNAL.search(text):
+        if not re.search(
+            r"(?i)super-?context|CONTEXT\s+READY|context\s+build|L0", text
+        ):
+            return True
+    return False
+
+
+def _trail_vacuous(path: Path) -> bool:
+    """True when --check-trail would idle-skip (no trail activity claimed)."""
+    if not path.exists():
+        return False
+    text = _read_activity_text(path)
+    p = path.resolve()
+    if p.name == "thoughttrail" and p.parent.name == ".emperor":
+        return False
+    if p.name == "trail.jsonl":
+        return False
+    if not _TRAIL_SIGNAL.search(text) and not _CONTEXT_SIGNAL.search(text):
+        return True
+    if _GRAPH_SIGNAL.search(text) and not _TRAIL_SIGNAL.search(text):
+        return True
+    return False
+
 def validate_context(path: Path) -> list[str]:
-    """Vacuous PASS when no graph activity claimed."""
+    """SKIP (vacuous — no activity) when no graph activity claimed."""
     text = _read_activity_text(path)
     # Direct pointer at context dir / db → always validate
     p = path.resolve()
@@ -496,22 +534,16 @@ def main(argv: Sequence[str] | None = None) -> int:
         return 1
 
     if args.check_context is not None:
-        errs = validate_context(args.check_context)
-        if errs:
-            for e in errs:
-                print(f"context FAIL: {e}", file=sys.stderr)
-            return 1
-        print(f"context PASS: {args.check_context}")
-        return 0
+        target = args.check_context
+        errs = validate_context(target)
+        vacuous = _context_vacuous(target)
+        return report_check("context", target, errs, vacuous=vacuous)
 
     if args.check_trail is not None:
-        errs = validate_trail(args.check_trail)
-        if errs:
-            for e in errs:
-                print(f"trail FAIL: {e}", file=sys.stderr)
-            return 1
-        print(f"trail PASS: {args.check_trail}")
-        return 0
+        target = args.check_trail
+        errs = validate_trail(target)
+        vacuous = _trail_vacuous(target)
+        return report_check("trail", target, errs, vacuous=vacuous)
 
     if args.cmd is None:
         sys.stdout.write(format_card())

@@ -17,8 +17,8 @@ Check / emit:
 
 Positional PATH runs the same check. No args prints the ASK-SPEC card.
 Thin twins: scripts/ask-spec.sh / scripts/ask-spec.ps1
-G0 in gate.py calls --check-ask-spec (vacuous PASS when no ask-spec activity).
-Idle Steal/Jail/Holy vacuous PASS is separate — this is task-path thrash.
+G0 in gate.py calls --check-ask-spec.
+Activity-scoped: SKIP (vacuous — no activity) when no ask-spec activity.
 """
 from __future__ import annotations
 
@@ -27,6 +27,7 @@ import re
 import sys
 from pathlib import Path
 from typing import Sequence
+from check_report import report_check
 
 LEAF = "references/mechanical-gates.md"
 EFFORT_CLASSES = ("tiny", "small", "medium", "large")
@@ -270,7 +271,7 @@ def format_card() -> str:
         "scripts/emperor ask-spec --emit \"<ask>\" --write <task>/ask-spec.md.",
         "MUST-NOT: burn token budget on setup+verify loops without a scoped "
         "spec; run ~20 verifications for a tiny ask.",
-        "HONESTY: Idle Steal/Jail/Holy vacuous PASS is separate; this HARD-GATE "
+        "HONESTY: Idle paths emit SKIP (vacuous — no activity); this HARD-GATE "
         "is task-path thrash only.",
     ]
     return "\n".join(lines) + "\n"
@@ -407,12 +408,9 @@ def main(argv: Sequence[str] | None = None) -> int:
         return 0
 
     errs = validate(target)
-    if errs:
-        for e in errs:
-            print(f"ask-spec FAIL: {e}", file=sys.stderr)
-        return 1
-    print(f"ask-spec PASS: {target}")
-    return 0
+    text, _sources = _combined_text(target) if target.exists() else ("", [])
+    vacuous = target.exists() and not _has_ask_signal(target, text)
+    return report_check("ask-spec", target, errs, vacuous=vacuous)
 
 
 if __name__ == "__main__":
