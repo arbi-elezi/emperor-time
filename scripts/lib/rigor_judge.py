@@ -4,7 +4,9 @@
 Stamps recommended effort_class before gates when no explicit override.
 Heuristics from ask text + cheap repo signals (scope, blast radius,
 secrets/auth/forge paths, archaeology markers). NO LLM loop on tiny.
-Optional judgment provider is NOT in this PR.
+Optional judgment adapter (scripts/lib/judgment.py) hooks only when
+class is ambiguous AND judgment.provider != off; still skips clear tiny.
+Provider off / no key / timeout → None; existing gates decide.
 
 Precedence (user override always wins):
   1. explicit --effort-class / effort_class arg
@@ -271,7 +273,108 @@ def recommend_effort_class(
 
     # features.sandbox / sot: informational only here (gated elsewhere)
     signals["recommended"] = cls
-    return Judgment(cls, reasons=reasons, signals=signals, source="heuristics")
+
+    result = Judgment(cls, reasons=reasons, signals=signals, source="heuristics")
+    return _maybe_optional_judgment(ask, result, root_resolved)
+
+
+def _is_clear_tiny(ask: str, judgment: Judgment) -> bool:
+    """Tiny happy-path — NEVER call optional judgment provider."""
+    if judgment.override:
+        return judgment.effort_class == "tiny"
+    if judgment.effort_class != "tiny":
+        return False
+    ask = ask or ""
+    if _TINY_HINTS.search(ask) or len(ask) <= 80:
+        return True
+    return False
+
+
+def _is_ambiguous(ask: str, judgment: Judgment) -> bool:
+    """True when heuristics leave class disputed / mid-zone (not clear tiny)."""
+    if judgment.override:
+        return False
+    if judgment.source != "heuristics":
+        return False
+    if _is_clear_tiny(ask, judgment):
+        return False
+    ask = ask or ""
+    strong_tiny = bool(_TINY_HINTS.search(ask))
+    strong_large = bool(_LARGE_HINTS.search(ask) or _FULL_RIGOR.search(ask))
+    bump_n = sum(1 for r in judgment.reasons if "bump" in r)
+    # Competing strong hints or multiple bumps → dispute
+    if strong_tiny and strong_large:
+        return True
+    if bump_n >= 1 and judgment.effort_class in ("small", "medium"):
+        return True
+    # Mid-length ask without a single strong class hint
+    if 80 < len(ask) < 800 and not strong_tiny and not strong_large:
+        if not _SMALL_HINTS.search(ask) and not _MEDIUM_HINTS.search(ask):
+            return True
+        # small/medium hint present but another domain signal also fired
+        if bump_n >= 1:
+            return True
+    # Explicit dispute marker from callers
+    return False
+
+
+def _maybe_optional_judgment(
+    ask: str, judgment: Judgment, root: Path | None
+) -> Judgment:
+    """Optional judgment hook — only ambiguous + provider != off; skip tiny clear."""
+    if _is_clear_tiny(ask, judgment):
+        judgment.signals["optional_judgment"] = "skipped_tiny_clear"
+        return judgment
+    try:
+        provider = et_config.judgment_provider(root)
+    except Exception:
+        judgment.signals["optional_judgment"] = "skipped_config_error"
+        return judgment
+    if provider == "off":
+        judgment.signals["optional_judgment"] = "skipped_provider_off"
+        return judgment
+    if not _is_ambiguous(ask, judgment):
+        judgment.signals["optional_judgment"] = "skipped_not_ambiguous"
+        return judgment
+    try:
+        import judgment as et_judgment  # local scripts/lib
+    except Exception:
+        judgment.signals["optional_judgment"] = "skipped_import_error"
+        return judgment
+    ctx = {
+        "use_case": "effort_class_dispute",
+        "heuristic_class": judgment.effort_class,
+        "reasons": list(judgment.reasons),
+        "ask_len": len(ask or ""),
+    }
+    prompt = (
+        "Resolve effort_class dispute. Heuristic recommends "
+        f"{judgment.effort_class}. Ask follows.\n\n{ask}"
+    )
+    try:
+        out = et_judgment.judge(prompt, ctx, root=root)
+    except Exception:
+        out = None
+    if out is None:
+        judgment.signals["optional_judgment"] = None
+        judgment.signals["optional_judgment_soft"] = "none"
+        return judgment
+    judgment.signals["optional_judgment"] = out
+    # Soft advisory only — never overrides user override (already returned earlier).
+    # May nudge heuristics class when decision names a valid effort_class.
+    decision = str(out.get("decision") or "").strip().lower()
+    try:
+        nudged = et_config.normalize_effort_class(decision)
+    except ValueError:
+        return judgment
+    if nudged != judgment.effort_class:
+        judgment.reasons.append(
+            f"optional judgment nudge {judgment.effort_class}→{nudged}"
+        )
+        judgment.effort_class = nudged
+        judgment.source = "optional-judgment"
+        judgment.signals["recommended"] = nudged
+    return judgment
 
 
 def format_card() -> str:

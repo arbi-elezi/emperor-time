@@ -32,3 +32,15 @@ wip:
 critique:
   scale_with_effort: true
   require_eight_count_at: medium
+
+# Optional judgment adapter (PR3) — off by default; never required for core factory.
+# Env: EMPEROR_JUDGMENT_API_KEY + EMPEROR_JUDGMENT_BASE_URL (openai_compat/openrouter).
+# NEVER call on tiny happy-path; soft None → existing gates decide.
+judgment:
+  provider: off   # off | openrouter | openai_compat
+  model: null     # JEV: no concrete model slug shipped
+  timeout_s: 8
+  use_for:
+    - effort_class_dispute
+    - ship_no_ship
+    - critique_conflict

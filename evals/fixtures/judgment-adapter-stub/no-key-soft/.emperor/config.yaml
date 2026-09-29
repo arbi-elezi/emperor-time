@@ -1,0 +1,12 @@
+version: 1
+rigor:
+  default_effort_class: tiny
+  auto_detect_little: true
+judgment:
+  provider: openai_compat
+  model: operator-set-model
+  timeout_s: 8
+  use_for:
+    - effort_class_dispute
+    - ship_no_ship
+    - critique_conflict

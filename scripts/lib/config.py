@@ -85,6 +85,17 @@ DEFAULT_CONFIG: dict[str, Any] = {
         "scale_with_effort": True,
         "require_eight_count_at": "medium",  # tiny|small|medium|large floor
     },
+    # Optional judgment adapter (PR3) — provider off by default; never required.
+    "judgment": {
+        "provider": "off",  # off | openrouter | openai_compat
+        "model": None,  # JEV: no concrete model slug shipped
+        "timeout_s": 8,
+        "use_for": [
+            "effort_class_dispute",
+            "ship_no_ship",
+            "critique_conflict",
+        ],
+    },
 }
 
 # Minimal default file body shipped / created-on-set.
@@ -95,6 +106,7 @@ DEFAULT_YAML = """\
 # Iron gates (always_hard) NEVER soft: forge-pr-consent, pin-and-consent,
 # quarantine, steal-consent, secrets-no-leak (+ enlist/credentials via those).
 # Feature knobs: archaeology_depth off|shallow|full; sandbox; sot; wip.max; critique.
+# Optional judgment: provider off|openrouter|openai_compat (never required; no tiny happy-path).
 version: 1
 rigor:
   default_effort_class: tiny
@@ -123,6 +135,14 @@ wip:
 critique:
   scale_with_effort: true
   require_eight_count_at: medium
+judgment:
+  provider: off
+  model: null
+  timeout_s: 8
+  use_for:
+    - effort_class_dispute
+    - ship_no_ship
+    - critique_conflict
 """
 
 
@@ -599,6 +619,37 @@ def _normalize_loaded(data: dict[str, Any]) -> dict[str, Any]:
             f"critique.require_eight_count_at must be one of {EFFORT_CLASSES}, got {floor!r}"
         )
     crit["require_eight_count_at"] = floor
+    # Optional judgment adapter (PR3) — fill defaults; never required.
+    jud = out.setdefault("judgment", {})
+    if not isinstance(jud, dict):
+        raise ValueError("judgment must be a mapping")
+    prov = str(jud.get("provider", "off")).lower().strip()
+    if prov in ("", "false", "no", "none", "0"):
+        prov = "off"
+    if prov not in ("off", "openrouter", "openai_compat"):
+        raise ValueError(
+            f"judgment.provider must be off|openrouter|openai_compat, got {prov!r}"
+        )
+    jud["provider"] = prov
+    model = jud.get("model")
+    if model is not None and str(model).strip() in ("", "null", "None"):
+        model = None
+    jud["model"] = model
+    try:
+        timeout_s = int(jud.get("timeout_s", 8))
+    except (TypeError, ValueError) as exc:
+        raise ValueError(
+            f"judgment.timeout_s must be int >= 1, got {jud.get('timeout_s')!r}"
+        ) from exc
+    if timeout_s < 1:
+        raise ValueError(f"judgment.timeout_s must be >= 1, got {timeout_s}")
+    jud["timeout_s"] = timeout_s
+    use_for = jud.get("use_for")
+    if use_for is None:
+        use_for = list(DEFAULT_CONFIG["judgment"]["use_for"])
+    if not isinstance(use_for, list):
+        raise ValueError("judgment.use_for must be a list")
+    jud["use_for"] = [str(x) for x in use_for]
     out.setdefault("version", SCHEMA_VERSION)
     return out
 
@@ -657,6 +708,16 @@ def critique_eight_count_floor(root: Path | None = None) -> str:
     cfg = load_config(root)
     return str(cfg.get("critique", {}).get("require_eight_count_at", "medium"))
 
+
+def judgment_provider(root: Path | None = None) -> str:
+    """judgment.provider: off | openrouter | openai_compat."""
+    cfg = load_config(root)
+    return str(cfg.get("judgment", {}).get("provider", "off"))
+
+
+def judgment_enabled(root: Path | None = None) -> bool:
+    """True when optional judgment provider is not off."""
+    return judgment_provider(root) != "off"
 
 
 def assert_iron_always_hard(hard: Any, *, context: str = "gates.always_hard") -> list[str]:
@@ -741,6 +802,7 @@ def write_project_config(cfg: dict[str, Any], root: Path | None = None) -> Path:
             "features": cfg.get("features", DEFAULT_CONFIG["features"]),
             "wip": cfg.get("wip", DEFAULT_CONFIG["wip"]),
             "critique": cfg.get("critique", DEFAULT_CONFIG["critique"]),
+            "judgment": cfg.get("judgment", DEFAULT_CONFIG["judgment"]),
         }
     )
     # Prepend iron-gate comment header.
@@ -861,6 +923,7 @@ def format_card() -> str:
         "  quarantine, steal-consent, secrets-no-leak)\n"
         "  features.archaeology_depth off|shallow|full; features.sandbox; features.sot\n"
         "  wip.max (default 1); critique.scale_with_effort / require_eight_count_at\n"
+        "  judgment.provider off|openrouter|openai_compat (optional; never required)\n"
         "  edit documented — load references/meta/config-from-any-harness.md on demand\n"
         "  gates.always_hard soften (e.g. set []) → non-zero refuse (no silent restore)\n"
     )

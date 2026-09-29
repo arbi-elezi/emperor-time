@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.4.171
+
+### Added
+- **Optional judgment adapter stub (PR3)** — `scripts/lib/judgment.py` interface `judge(prompt, context) -> {decision, rationale} | None`. Config `judgment.provider: off|openrouter|openai_compat` (default **off**), `model: null` (JEV — no concrete model slug), `timeout_s: 8`, `use_for: [effort_class_dispute, ship_no_ship, critique_conflict]`. Env `EMPEROR_JUDGMENT_API_KEY` + `EMPEROR_JUDGMENT_BASE_URL` for openai_compat/openrouter. Soft refuse → `None` (provider off / no key / no model / timeout / transport); existing gates decide. **NEVER** call on tiny happy-path; **never** required for core factory. Optional hook from `rigor_judge` only when class ambiguous AND provider != off (still skips clear tiny). Thin twins `judgment.sh/.ps1`; `emperor judgment`. Fixtures `judgment-adapter-stub/` (off→None, no-key soft, refuse-require soft, tiny-clear skip). Freeze *-hint-bind. No museum/Nen/k8s growth. Local eval only (Actions stay disabled).
+
 ## 0.4.170
 
 ### Added
