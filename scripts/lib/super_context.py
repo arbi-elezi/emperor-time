@@ -27,6 +27,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import re
 import subprocess
 import sys
 from pathlib import Path
@@ -40,6 +41,7 @@ import thoughttrail as trail
 import sandbox_engine as sbox
 import secrets_broker as secrets
 import workspace_env as wenv
+from check_report import report_check
 
 
 LEAF = "references/super-context.md"
@@ -65,6 +67,8 @@ def _print_card() -> int:
                 "LAYOUT: context/ thoughttrail/ sot/plugins/ artifacts/ sandbox/runtime/{compose,podman,k8s}/ env/ secrets/",
                 "ENGINE: sandbox plan|up|down|ports + runtime use compose|podman|k8s; env|secrets blind",
                 f"MUST: load L0 before mass-grep  IRON={IRON}",
+                f"GATE sot=--reject-mutated-sot / --check-sot  IRON={IRON_SOT}",
+                "GATE sandbox=--reject-no-sandbox-plan / --check-sandbox  IRON=PLAN_BEFORE_SANDBOX_UP",
                 "GATE rule=graph-over-grep; no embeddings; no Graphify ports",
             ]
         )
@@ -544,6 +548,206 @@ def cmd_secrets(args: argparse.Namespace) -> int:
     return secrets.cmd_secrets_cli(args)
 
 
+
+# ---------------------------------------------------------------------------
+# HARD-GATE: SOT fetch-only claim (activity-scoped)
+# ---------------------------------------------------------------------------
+
+IRON_SOT = "FETCH_ONLY_NEVER_MUTATE_SOT"
+
+_SOT_SIGNAL = re.compile(
+    r"(?i)\b(SOT\s+READY|sot\s+(sync|add-plugin|status)|fetch-?only|"
+    r"inverted\s+workspace|never\s+mutate\s+SOT|sot/plugins|"
+    r"artifacts\s+sync|SOT\s+mirror)\b"
+)
+
+
+def reject_mutated_sot() -> str:
+    return (
+        "REJECT MUTATED SOT: HARD-GATE — refuse SOT READY when plugins are "
+        "missing, mirrors are non-bare (working-tree mutation risk), or "
+        "fetch-only mirrors are absent. Open "
+        f"{LEAF}; run scripts/emperor sot add-plugin|sync. "
+        f"IRON={IRON_SOT}\n"
+    )
+
+
+def _read_task_activity(path: Path) -> str:
+    chunks: list[str] = []
+    p = path.resolve()
+    if p.is_file():
+        try:
+            chunks.append(p.read_text(encoding="utf-8", errors="replace"))
+        except OSError:
+            pass
+        return "\n".join(chunks)
+    for name in (
+        "ledger.md",
+        "ask-spec.md",
+        "ask_spec.md",
+        "claims.md",
+        "README.md",
+        "sot.md",
+        "sandbox.md",
+    ):
+        f = p / name
+        if f.is_file():
+            try:
+                chunks.append(f.read_text(encoding="utf-8", errors="replace"))
+            except OSError:
+                pass
+    try:
+        for child in sorted(p.iterdir()):
+            if child.is_file() and child.suffix.lower() == ".md":
+                try:
+                    chunks.append(child.read_text(encoding="utf-8", errors="replace")[:8000])
+                except OSError:
+                    pass
+    except OSError:
+        pass
+    return "\n".join(chunks)
+
+
+def _has_sot_signal(path: Path, text: str) -> bool:
+    if _SOT_SIGNAL.search(text or ""):
+        return True
+    p = path.resolve()
+    if p.name == "sot" and p.parent.name == ".emperor":
+        return True
+    if p.name == "plugins" and "sot" in str(p):
+        return True
+    if p.name == "plugin.json" and "sot" in str(p):
+        return True
+    return False
+
+
+def _mirror_is_fetch_only(mirror: Path) -> tuple[bool, str]:
+    """True when mirror looks like a bare/mirror clone (no working tree)."""
+    if not mirror.is_dir():
+        return False, "mirror dir missing"
+    # Non-bare clone has .git subdirectory
+    if (mirror / ".git").exists():
+        return False, "non-bare clone (.git present — mutation risk)"
+    head = mirror / "HEAD"
+    refs = mirror / "refs"
+    objects = mirror / "objects"
+    if not head.is_file():
+        return False, "mirror missing HEAD"
+    if not refs.is_dir() and not (mirror / "packed-refs").is_file():
+        return False, "mirror missing refs/ or packed-refs"
+    if not objects.is_dir():
+        return False, "mirror missing objects/"
+    # Working-tree theater: tracked source files at mirror root (README.md etc.)
+    # Bare mirrors should not have project source beside git internals.
+    git_internals = {
+        "HEAD", "config", "description", "hooks", "info", "objects", "refs",
+        "packed-refs", "shallow", "alternates", "fetch_head", "FETCH_HEAD",
+        "logs", "branches", "mirror", "worktrees", "commondir", "gc.pid",
+        "svn", "sequencer",
+    }
+    strangers = []
+    try:
+        for child in mirror.iterdir():
+            name = child.name
+            if name.startswith("."):
+                continue
+            if name.lower() in git_internals or name in git_internals:
+                continue
+            # allow mirror.meta sidecar etc.
+            if name.endswith(".json") or name.endswith(".md") and name.upper() == "POINTER.MD":
+                continue
+            strangers.append(name)
+    except OSError as exc:
+        return False, f"mirror unreadable: {exc}"
+    if strangers:
+        return False, (
+            "mirror has working-tree files "
+            f"({', '.join(strangers[:5])}) — not fetch-only bare"
+        )
+    # git confirmation when available
+    rc, out = _run_git(["-C", str(mirror), "rev-parse", "--is-bare-repository"])
+    if rc == 0 and out.strip().lower() == "false":
+        return False, "git reports non-bare repository"
+    return True, "ok"
+
+
+def _sot_errors(root: Path) -> list[str]:
+    errs: list[str] = []
+    plugins_dir = root / ".emperor" / "sot" / "plugins"
+    if not plugins_dir.is_dir():
+        errs.append("missing .emperor/sot/plugins/ (no inverted SOT)")
+        return errs
+    plugins = [
+        p for p in sorted(plugins_dir.iterdir())
+        if p.is_dir() and (p / "plugin.json").is_file()
+    ]
+    if not plugins:
+        errs.append("no SOT plugins with plugin.json (SOT READY theater)")
+        return errs
+    for pdir in plugins:
+        meta = _load_plugin_meta(pdir)
+        mirror = _plugin_mirror(pdir)
+        if not mirror.is_dir():
+            errs.append(f"plugin {pdir.name}: missing fetch-only mirror/")
+            continue
+        ok, why = _mirror_is_fetch_only(mirror)
+        if not ok:
+            errs.append(f"plugin {pdir.name}: {why}")
+        if meta.get("fetch_only") is False:
+            errs.append(f"plugin {pdir.name}: plugin.json fetch_only=false")
+    return errs
+
+
+def _gate_root(path: Path) -> Path:
+    """Root for activity-scoped SOT/sandbox gates.
+
+    Prefer the path itself when it is a task dir (ledger.md) or already
+    carries `.emperor/`. Do not walk into a parent host checkout — fixture
+    trees under emperor-time must not inherit the host `.emperor/`.
+    """
+    p = path.resolve()
+    if p.is_file():
+        p = p.parent
+    if (p / "ledger.md").is_file() or (p / ".emperor").is_dir():
+        return p
+    if p.name in {"sot", "plugins", "sandbox"} or p.name.endswith(".json"):
+        for cand in [p, *p.parents]:
+            if (cand / ".emperor").is_dir():
+                return cand
+            if (cand / "ledger.md").is_file():
+                return cand
+    return p
+
+
+def validate_sot(path: Path) -> list[str]:
+    """Vacuous (no errs) when no SOT activity claimed."""
+    if not path.exists():
+        return [f"missing path: {path}"]
+    text = _read_task_activity(path)
+    p = path.resolve()
+    forced = (
+        (p.name == "sot" and p.parent.name == ".emperor")
+        or (p.name == "plugins" and p.parent.name == "sot")
+        or (p.name == "plugin.json" and "sot" in str(p))
+    )
+    if not forced and not _has_sot_signal(p, text):
+        return []
+    return _sot_errors(_gate_root(p))
+
+
+def check_sot(path: Path) -> int:
+    errs = validate_sot(path)
+    text = _read_task_activity(path) if path.exists() else ""
+    p = path.resolve()
+    forced = (
+        (p.name == "sot" and p.parent.name == ".emperor")
+        or (p.name == "plugins" and "sot" in str(p))
+        or (p.name == "plugin.json" and "sot" in str(p))
+    )
+    vacuous = path.exists() and not forced and not _has_sot_signal(path, text)
+    return report_check("sot", path, errs, vacuous=vacuous)
+
+
 def build_parser() -> argparse.ArgumentParser:
     parent = argparse.ArgumentParser(add_help=False)
     parent.add_argument("--root", default="", help="repo root (default: detect)")
@@ -652,10 +856,36 @@ def main(argv: list[str] | None = None) -> int:
     argv = list(sys.argv[1:] if argv is None else argv)
     if not argv:
         return _print_card()
-    # HARD-GATE shortcuts (work with or without secrets subcommand)
+    # HARD-GATE shortcuts (work with or without secrets/sot/sandbox subcommands)
     if "--reject-secret-leak" in argv:
         sys.stdout.write(secrets.reject_secret_leak())
         return 1
+    if "--reject-mutated-sot" in argv or "--reject-no-sot" in argv:
+        sys.stdout.write(reject_mutated_sot())
+        return 1
+    if "--reject-no-sandbox-plan" in argv:
+        sys.stdout.write(sbox.reject_no_sandbox_plan())
+        return 1
+    if "--check-sot" in argv:
+        try:
+            idx = argv.index("--check-sot")
+            target = argv[idx + 1] if idx + 1 < len(argv) else ""
+        except ValueError:
+            target = ""
+        if not target or target.startswith("-"):
+            print("SOT FAIL: --check-sot needs PATH", file=sys.stderr)
+            return 1
+        return check_sot(Path(target))
+    if "--check-sandbox" in argv:
+        try:
+            idx = argv.index("--check-sandbox")
+            target = argv[idx + 1] if idx + 1 < len(argv) else ""
+        except ValueError:
+            target = ""
+        if not target or target.startswith("-"):
+            print("SANDBOX FAIL: --check-sandbox needs PATH", file=sys.stderr)
+            return 1
+        return sbox.check_sandbox(Path(target))
     if "--check-env-redacted" in argv:
         # allow: secrets --check-env-redacted PATH  OR  --check-env-redacted PATH
         try:

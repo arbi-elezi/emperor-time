@@ -86,6 +86,8 @@ Steal-flow Python core: `scripts/lib/steal_flow.py` owns Steal sign-in / dispatc
 
 Blind secrets + workspace env Python cores: `scripts/lib/secrets_broker.py` + `workspace_env.py` (wired from `super_context.py`) own blind credentials HARD-GATE (`--reject-secret-leak` / `--check-env-redacted`; thin `secrets.sh` / `env.sh` + `emperor secrets` / `emperor env`) — agent sees names+status only; env show redacted; env sync merges SOT plugin overlays without echoing secrets.
 
+SOT fetch-only + sandbox plan Python HARD-GATEs: `scripts/lib/super_context.py` (`--reject-mutated-sot` / `--check-sot`) + `scripts/lib/sandbox_engine.py` (`--reject-no-sandbox-plan` / `--check-sandbox`) — refuse SOT READY with missing/non-bare mirrors and SANDBOX READY without ports+runtime+emitted plan; activity-scoped SKIP (vacuous) when idle; G0 calls both via `_run_sot_sandbox`. Iron: `FETCH_ONLY_NEVER_MUTATE_SOT` / `PLAN_BEFORE_SANDBOX_UP`.
+
 Super-context Python core: `scripts/lib/context.py` (+ `md_graph.py` / `context_store.py` / `thoughttrail.py` / `super_context.py` stubs) owns graph-over-grep + thoughttrail HARD-GATE (`--reject-no-graph` / `--reject-no-trail` / `--check-context` / `--check-trail`; thin `context.sh` / `context.ps1` + aliases). Load L0 before mass-grep. No embeddings; no Graphify copy.
 
 Heal-verify Python core: `scripts/lib/heal_verify.py` owns heal-and-verify HARD-GATE (`--reject-no-triad` / `--reject-no-postmortem` / `--check-heal`; thin `heal-verify.sh` / `heal-verify.ps1` + `heal-and-verify` alias / `emperor heal-verify`) — triad theater or missing postmortem is soft; entry still `emperor heal` four-phase.
@@ -109,7 +111,7 @@ activity-scoped check is honesty theater — the gate was never exercised.
 | Kind | Gates | Idle outcome |
 |---|---|---|
 | **Always-on** (when that G* runs) | G0 task/quote + ask→spec (`--require-spec`); G1 acceptance; G2 work-order; G3 impact-map; G4 critique eight-count + claim-audit; G5 verdict + Breach Register; ask→spec at G0 | No vacuous path — missing evidence FAILS |
-| **Activity-scoped** (Steal / Jail / Holy + peers) | Steal consent / quarantine / sign-in / dispatch / swarm; Jail pin-and-consent; Holy triage / reproduce / heal-verify / process-healing; ask→spec `--check-ask-spec` idle honesty / proportionality; forge PR-consent; review-pack isolation; super-context / thoughttrail | No matching activity → **`SKIP (vacuous — no activity)`** (exit 0). Exercised green → **`PASS`**. Soft missing evidence while activity claimed → **`FAIL`**. |
+| **Activity-scoped** (Steal / Jail / Holy + peers) | Steal consent / quarantine / sign-in / dispatch / swarm; Jail pin-and-consent; Holy triage / reproduce / heal-verify / process-healing; ask→spec `--check-ask-spec` idle honesty / proportionality; forge PR-consent; review-pack isolation; super-context / thoughttrail; SOT fetch-only; sandbox plan | No matching activity → **`SKIP (vacuous — no activity)`** (exit 0). Exercised green → **`PASS`**. Soft missing evidence while activity claimed → **`FAIL`**. |
 
 Mechanical reporter: `scripts/lib/check_report.py` (`report_check`). Eval fixtures
 force the label (`vacuous.md` / `task-vacuous` → SKIP; `*-ok` → PASS). Agents

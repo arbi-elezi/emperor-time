@@ -1,0 +1,8 @@
+[core]
+	repositoryformatversion = 0
+	filemode = true
+	bare = true
+[remote "origin"]
+	url = /tmp/tmp8555sq4h
+	fetch = +refs/*:refs/*
+	mirror = true

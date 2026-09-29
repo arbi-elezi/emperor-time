@@ -1,0 +1,20 @@
+{
+  "artifact": "demo",
+  "runtime": "compose",
+  "status": "planned",
+  "ports": {
+    "http": 18000,
+    "db": 18001,
+    "aux": 18002
+  },
+  "profiles": [
+    "isolate",
+    "mock"
+  ],
+  "plugins": [],
+  "emitted": {
+    "compose": "evals/fixtures/sot-sandbox-gates/task-sandbox-ok/.emperor/artifacts/demo/compose.yml"
+  },
+  "stub_up": false,
+  "updated": "2026-09-29T15:58:07Z"
+}

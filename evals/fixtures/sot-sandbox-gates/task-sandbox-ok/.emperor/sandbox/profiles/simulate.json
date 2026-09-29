@@ -1,0 +1,20 @@
+{
+  "name": "simulate",
+  "kind": "sim",
+  "description": "Simulate profile stub \u2014 marks stack as sim-only (no external side effects).",
+  "compose": {
+    "x-et-simulate": true,
+    "service_defaults": {
+      "labels": {
+        "et.profile": "simulate",
+        "et.simulate": "true"
+      }
+    }
+  },
+  "k8s": {
+    "annotations": {
+      "et.profile": "simulate"
+    }
+  },
+  "loadable": true
+}

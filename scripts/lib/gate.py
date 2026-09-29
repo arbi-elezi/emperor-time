@@ -28,6 +28,7 @@ effort_class / cycle ledger).
 G4 also delegates hetero-critique isolation to review_pack.py
 (SKIP (vacuous) when no review-pack / no hetero markers).
 G0 also delegates thoughttrail + super-context to context.py
+and SOT fetch-only / sandbox plan HARD-GATEs to super_context.py
 (SKIP (vacuous) when no context / thoughttrail markers).
 G5 delegates verdict + Breach Register honesty to verdict.py
 (PASS substring + header-only theater is not enough).
@@ -207,6 +208,22 @@ def _run_review_isolation(gate: str, task: Path) -> None:
         _fail(gate, "hetero-critique isolation (review_pack.py)")
 
 
+
+def _run_sot_sandbox(gate: str, task: Path) -> None:
+    """Activity-scoped SOT fetch-only + sandbox plan HARD-GATEs."""
+    py = _root() / "scripts" / "lib" / "super_context.py"
+    for flag, label in (
+        ("--check-sot", "SOT fetch-only"),
+        ("--check-sandbox", "sandbox plan"),
+    ):
+        proc = subprocess.run(
+            [sys.executable, str(py), flag, str(task)],
+            check=False,
+        )
+        if proc.returncode != 0:
+            _fail(gate, f"{label} ({flag})")
+
+
 def _run_context(gate: str, task: Path) -> None:
     py = _root() / "scripts" / "lib" / "context.py"
     for flag in ("--check-context", "--check-trail"):
@@ -257,6 +274,9 @@ def run_gate(gate: str, task: Path) -> None:
         # Thoughttrail + super-context: graph/trail when activity claimed.
         # SKIP (vacuous) when no context / thoughttrail markers.
         _run_context(gate, task)
+        # SOT fetch-only + sandbox plan HARD-GATEs (activity-scoped).
+        # SKIP (vacuous) when no SOT / sandbox markers.
+        _run_sot_sandbox(gate, task)
         # Ask→spec: always-on scoped brief before setup thrash.
         # Missing written ask-spec FAILS (never vacuous SKIP).
         _run_ask_spec(gate, task)

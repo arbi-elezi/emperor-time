@@ -1,0 +1,27 @@
+# ET sandbox compose for artifact=demo
+# runtime=compose ports={"http": 18000, "db": 18001, "aux": 18002}
+# profiles=isolate,mock
+# generated=2026-09-29T15:58:07Z
+# emitters: compose|podman|k8s — selected via `emperor runtime use`
+
+services:
+  et-stub:
+    image: alpine:3.20
+    command: ["sleep", "infinity"]
+    ports: ["18000:80"]
+    labels:
+      et.plugin: "et-stub"
+  et-mock:
+    image: alpine:3.20
+    command: ["sleep", "infinity"]
+    profiles: ["et-mock"]
+    labels:
+      et.profile: "mock"
+
+networks:
+  default:
+    name: et-demo
+  et-isolate:
+    driver: bridge
+    internal: true
+    name: et-demo-iso

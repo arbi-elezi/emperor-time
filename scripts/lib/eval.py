@@ -6060,7 +6060,7 @@ def run_evals(root: Path) -> int:
     h.require_contains("steal-consent", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing steal-consent")
     h.require_contains("consent.py", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing consent.py")
     h.require_contains("0.4.132", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing 0.4.132 tip")
-    h.require_contains("0.4.148", ".claude-plugin/plugin.json", "plugin.json not at 0.4.148")
+    h.require_contains("0.4.149", ".claude-plugin/plugin.json", "plugin.json not at 0.4.149")
     h.require_contains("0.4.137", "CHANGELOG.md", "CHANGELOG missing retained 0.4.137")
     h.require_contains("0.4.136", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing retained 0.4.136")
     h.require_contains("0.4.132", "CHANGELOG.md", "CHANGELOG missing 0.4.132")
@@ -6086,6 +6086,12 @@ def run_evals(root: Path) -> int:
     h.require_contains("0.4.135", "CHANGELOG.md", "CHANGELOG missing 0.4.135")
     h.require_contains("sandbox_engine.py", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing sandbox_engine.py")
     h.require_contains("sandbox-engine", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing sandbox-engine")
+    h.require_contains("sot-sandbox-hard-gates", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing sot-sandbox-hard-gates")
+    h.require_contains("reject-mutated-sot", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing reject-mutated-sot")
+    h.require_contains("reject-no-sandbox-plan", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing reject-no-sandbox-plan")
+    h.require_contains("FETCH_ONLY_NEVER_MUTATE_SOT", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing FETCH_ONLY_NEVER_MUTATE_SOT")
+    h.require_contains("PLAN_BEFORE_SANDBOX_UP", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing PLAN_BEFORE_SANDBOX_UP")
+    h.require_contains("0.4.149", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing retained 0.4.149 keyword")
     h.require_contains("0.4.141", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing 0.4.141 tip")
     h.require_contains("0.4.140", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing 0.4.140 tip")
     h.require_contains("0.4.141", "CHANGELOG.md", "CHANGELOG missing 0.4.141")
@@ -6128,10 +6134,12 @@ def run_evals(root: Path) -> int:
     h.require_contains("SIGNIN_THEN_DISPATCH_THEN_BOUNDED_SWARM", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing SIGNIN_THEN_DISPATCH_THEN_BOUNDED_SWARM")
     h.require_contains("steal_flow.py", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing steal_flow.py")
     h.require_contains("0.4.147", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing 0.4.147 tip")
+    h.require_contains("0.4.149", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing 0.4.149 tip")
     h.require_contains("0.4.148", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing 0.4.148 tip")
     h.require_contains("0.4.145", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing retained 0.4.145")
     h.require_contains("0.4.144", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing retained 0.4.144")
     h.require_contains("0.4.143", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing retained 0.4.143")
+    h.require_contains("0.4.149", "CHANGELOG.md", "CHANGELOG missing 0.4.149")
     h.require_contains("0.4.148", "CHANGELOG.md", "CHANGELOG missing 0.4.148")
     h.require_contains("0.4.145", "CHANGELOG.md", "CHANGELOG missing retained 0.4.145")
     h.require_contains("0.4.144", "CHANGELOG.md", "CHANGELOG missing retained 0.4.144")
@@ -6188,7 +6196,7 @@ def run_evals(root: Path) -> int:
     h.require_contains("blind-secrets-broker", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing blind-secrets-broker")
     h.require_contains("reject-secret-leak", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing reject-secret-leak")
     h.require_contains("check-env-redacted", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing check-env-redacted")
-    h.require_contains("0.4.148", ".claude-plugin/marketplace.json", "marketplace.json not at 0.4.148")
+    h.require_contains("0.4.149", ".claude-plugin/marketplace.json", "marketplace.json not at 0.4.149")
     h.require_contains("0.4.142", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing retained 0.4.142")
     h.require_contains("finish.py", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing finish.py")
     h.require_contains("reject-red-suite", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing reject-red-suite")
@@ -8782,9 +8790,9 @@ def run_evals(root: Path) -> int:
         "bakeoff.md missing reject-unisolated inventory",
     )
     h.require_contains(
-        "0.4.148",
+        "0.4.149",
         "SKILL.md",
-        "SKILL.md not bumped to 0.4.148",
+        "SKILL.md not bumped to 0.4.149",
     )
     _, card = h.run_py("scripts/lib/review_pack.py")
     if "checklist=yes" not in card:
@@ -10802,6 +10810,143 @@ def run_evals(root: Path) -> int:
     finally:
         _sh_sb.rmtree(tmp, ignore_errors=True)
     h.pass_msg("sandbox-engine P2")
+
+
+    # ---- SOT fetch-only + sandbox plan HARD-GATE (v0.4.149) ----
+    h.section("sot-sandbox-hard-gates")
+    h.need("evals/fixtures/sot-sandbox-gates/README.md")
+    h.need("evals/fixtures/sot-sandbox-gates/task-vacuous/ledger.md")
+    h.need("evals/fixtures/sot-sandbox-gates/task-sot-ok/ledger.md")
+    h.need("evals/fixtures/sot-sandbox-gates/task-sot-missing/ledger.md")
+    h.need("evals/fixtures/sot-sandbox-gates/task-sot-mutated/ledger.md")
+    h.need("evals/fixtures/sot-sandbox-gates/task-sandbox-ok/ledger.md")
+    h.need("evals/fixtures/sot-sandbox-gates/task-sandbox-no-plan/ledger.md")
+    h.require_contains(
+        "--check-sot",
+        "scripts/lib/super_context.py",
+        "super_context missing --check-sot",
+    )
+    h.require_contains(
+        "--reject-mutated-sot",
+        "scripts/lib/super_context.py",
+        "super_context missing --reject-mutated-sot",
+    )
+    h.require_contains(
+        "FETCH_ONLY_NEVER_MUTATE_SOT",
+        "scripts/lib/super_context.py",
+        "super_context missing FETCH_ONLY_NEVER_MUTATE_SOT",
+    )
+    h.require_contains(
+        "--check-sandbox",
+        "scripts/lib/sandbox_engine.py",
+        "sandbox_engine missing --check-sandbox",
+    )
+    h.require_contains(
+        "--reject-no-sandbox-plan",
+        "scripts/lib/sandbox_engine.py",
+        "sandbox_engine missing --reject-no-sandbox-plan",
+    )
+    h.require_contains(
+        "PLAN_BEFORE_SANDBOX_UP",
+        "scripts/lib/sandbox_engine.py",
+        "sandbox_engine missing PLAN_BEFORE_SANDBOX_UP",
+    )
+    h.require_contains(
+        "report_check",
+        "scripts/lib/sandbox_engine.py",
+        "sandbox_engine missing report_check",
+    )
+    h.require_contains(
+        "_run_sot_sandbox",
+        "scripts/lib/gate.py",
+        "gate.py missing _run_sot_sandbox",
+    )
+    h.require_contains(
+        "sot-sandbox-hard-gates",
+        "evals/bakeoff.md",
+        "bakeoff missing sot-sandbox-hard-gates",
+    )
+    h.require_contains(
+        "reject-mutated-sot",
+        "evals/fixtures/this-upgrade.md",
+        "this-upgrade.md missing reject-mutated-sot",
+    )
+    rc, out = h.run_py(
+        "scripts/lib/super_context.py",
+        "--check-sot",
+        str(root / "evals/fixtures/sot-sandbox-gates/task-vacuous"),
+    )
+    if rc != 0 or "SKIP (vacuous" not in out:
+        h.fail_msg(f"task-vacuous --check-sot should SKIP: {out}")
+    else:
+        h.pass_msg("task-vacuous --check-sot SKIP vacuous")
+    rc, out = h.run_py(
+        "scripts/lib/sandbox_engine.py",
+        "--check-sandbox",
+        str(root / "evals/fixtures/sot-sandbox-gates/task-vacuous"),
+    )
+    if rc != 0 or "SKIP (vacuous" not in out:
+        h.fail_msg(f"task-vacuous --check-sandbox should SKIP: {out}")
+    else:
+        h.pass_msg("task-vacuous --check-sandbox SKIP vacuous")
+    rc, out = h.run_py(
+        "scripts/lib/super_context.py",
+        "--check-sot",
+        str(root / "evals/fixtures/sot-sandbox-gates/task-sot-ok"),
+    )
+    if rc != 0 or "PASS" not in out:
+        h.fail_msg(f"task-sot-ok should PASS: {out}")
+    else:
+        h.pass_msg("task-sot-ok --check-sot PASS")
+    rc, _out = h.run_py(
+        "scripts/lib/super_context.py",
+        "--check-sot",
+        str(root / "evals/fixtures/sot-sandbox-gates/task-sot-missing"),
+    )
+    if rc == 0:
+        h.fail_msg("task-sot-missing should FAIL")
+    else:
+        h.pass_msg("task-sot-missing --check-sot FAIL")
+    rc, _out = h.run_py(
+        "scripts/lib/super_context.py",
+        "--check-sot",
+        str(root / "evals/fixtures/sot-sandbox-gates/task-sot-mutated"),
+    )
+    if rc == 0:
+        h.fail_msg("task-sot-mutated should FAIL")
+    else:
+        h.pass_msg("task-sot-mutated --check-sot FAIL")
+    rc, out = h.run_py(
+        "scripts/lib/sandbox_engine.py",
+        "--check-sandbox",
+        str(root / "evals/fixtures/sot-sandbox-gates/task-sandbox-ok"),
+    )
+    if rc != 0 or "PASS" not in out:
+        h.fail_msg(f"task-sandbox-ok should PASS: {out}")
+    else:
+        h.pass_msg("task-sandbox-ok --check-sandbox PASS")
+    rc, _out = h.run_py(
+        "scripts/lib/sandbox_engine.py",
+        "--check-sandbox",
+        str(root / "evals/fixtures/sot-sandbox-gates/task-sandbox-no-plan"),
+    )
+    if rc == 0:
+        h.fail_msg("task-sandbox-no-plan should FAIL")
+    else:
+        h.pass_msg("task-sandbox-no-plan --check-sandbox FAIL")
+    rc, rej = h.run_py("scripts/lib/super_context.py", "--reject-mutated-sot")
+    if rc != 1 or "REJECT MUTATED SOT" not in rej:
+        h.fail_msg(f"--reject-mutated-sot card failed: rc={rc} {rej}")
+    else:
+        h.pass_msg("--reject-mutated-sot always-fail card")
+    rc, rej = h.run_py("scripts/lib/sandbox_engine.py", "--reject-no-sandbox-plan")
+    if rc != 1 or "REJECT NO SANDBOX PLAN" not in rej:
+        h.fail_msg(f"--reject-no-sandbox-plan card failed: rc={rc} {rej}")
+    else:
+        h.pass_msg("--reject-no-sandbox-plan always-fail card")
+    h.pass_msg("sot-sandbox-hard-gates HARD-GATE")
+
+
 
 
 
