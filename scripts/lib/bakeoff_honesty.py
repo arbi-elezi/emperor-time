@@ -18,6 +18,7 @@ LEAVES: list[tuple[str, str, tuple[str, ...]]] = [
     ("quarantine", "scripts/lib/quarantine.py", ("quarantine", "reject-unquarantined", "CONJECTURE", "ADMITTED")),
     ("consent", "scripts/lib/consent.py", ("consent", "reject-no-consent", "CONSENT", "consent-protocol")),
     ("steal-flow", "scripts/lib/steal_flow.py", ("steal-flow", "reject-no-signin", "reject-no-dispatch-layout", "reject-unbounded-swarm")),
+    ("pin-and-consent", "scripts/lib/pin_consent.py", ("pin-and-consent", "reject-unpinned", "reject-no-skill-consent", "check-pin-consent")),
     ("forge-pr-consent", "scripts/lib/forge.py", ("forge", "reject-no-pr-consent", "check-pr-consent", "EMPEROR_CONSENT_PR")),
     ("heal-verify", "scripts/lib/heal_verify.py", ("heal-verify", "reject-no-triad", "reject-no-postmortem", "heal-and-verify")),
     ("reproduce", "scripts/lib/reproduce.py", ("reproduce", "reject-no-repro", "reject-no-combat-ledger", "reproduce-and-bisect")),

@@ -39,7 +39,7 @@ borrows agents. This chain borrows procedures.
 | Bytes in hand — cut one heading for this hole | `extract-aspect.md` |
 | Sliver needs harness dialect | `adaptation.md` |
 | Nothing adaptable — write one | `authoring.md` + `authoring-checklist.md` (`emperor author`) |
-| Hash + named client yes | `pin-and-consent.md` |
+| Hash + named client yes | `pin-and-consent.md` (`emperor pin-and-consent` HARD-GATE) |
 | Trial then register | `trial-and-register.md` |
 
 Full sequence: absence → navigation → hunt → extract-aspect → adaptation → pin-and-consent → trial.

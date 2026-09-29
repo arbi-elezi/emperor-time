@@ -32,6 +32,9 @@ metadata:
    Workflow summary → `scripts/emperor sdo --reject-workflow-summary`.
 7. **Pin + consent + trial are mandatory** before the captured skill may fire:
    read `chains/chain-jail/pin-and-consent.md` then `trial-and-register.md`.
+   HARD-GATE: `scripts/emperor pin-and-consent <task-dir>` (`pin_consent.py`
+   `--reject-unpinned` / `--reject-no-skill-consent` / `--check-pin-consent`).
+   Soft theater without exit code → refuse bind.
 8. Captured skills live in `.emperor/captured-skills/` with provenance headers.
 9. A captured skill that fails trial stays quarantined. Using it is a Vow of
    Evidence + Vow of Consent breach.
