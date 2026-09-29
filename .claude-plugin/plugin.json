@@ -2,7 +2,7 @@
   "name": "emperor-time",
   "displayName": "Emperor Time",
   "version": "0.4.171",
-  "description": "Software factory and digital coding archaeologist disguised as a skill. Language-agnostic. Host-agnostic.",
+  "description": "Tiny by default, full factory when the ask earns it. Thin always-on (~trigger only); mechanical gates escalate for verify, forge, secrets, and lost trees. Software factory \u2014 not a daily autocomplete skill. Language-agnostic. Host-agnostic.",
   "author": {
     "name": "Arbi Elezi",
     "url": "https://github.com/arbi-elezi"
@@ -19,7 +19,9 @@
     "multi-agent",
     "agent-skills",
     "software-factory",
-    "software-archaeology"
+    "software-archaeology",
+    "tiny-default",
+    "mechanical-gates"
   ],
   "skills": [
     "./",
