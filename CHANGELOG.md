@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.4.163
+
+### Added
+- **Plan-hint-bind HARD-GATE** — `ask_spec.py --check-plan-hints` / `--reject-over-plan-class` (`PLAN_HINT_BIND`). Ask→spec `effort_class` must not exceed the hint ceiling of PLAN.md / FINDINGS.md / PROGRESS.md (G2 resume artifacts); parking tiny-hint language ("fix typo" / "one-line" / wording / trivial / nit / changelog only) in PLAN.md while ask-spec+ledger+notes stay clean can no longer unlock `FORCE_TABLE[large]` / `EFFORT_CAPS[large]` while `NOTES_HINT_BIND` stays green. Length-only infer stays advisory; only strong `_TINY_HINTS` bind; `_LARGE_HINTS` lift the ceiling; tighter-than-hint class OK. G4 `_run_plan_hints` after `_run_notes_hints`. Fixtures `plan-hint-bind/` (task-plan-park FAIL / task-clean PASS / task-tighter PASS / task-vacuous SKIP). Distrust spine untouched. Local eval only (Actions stay disabled).
+
 ## 0.4.162
 
 ### Added
