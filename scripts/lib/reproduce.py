@@ -16,7 +16,7 @@ Check mode:
 Positional PATH runs the same check. No args prints the REPRODUCE card.
 Thin twins: scripts/reproduce.sh / scripts/reproduce.ps1
 Alias: reproduce-and-bisect → same core.
-Vacuous PASS when no reproduce/bisect activity is claimed.
+Activity-scoped: SKIP (vacuous — no activity) when no reproduce/bisect claimed.
 """
 from __future__ import annotations
 
@@ -25,6 +25,7 @@ import re
 import sys
 from pathlib import Path
 from typing import Sequence
+from check_report import report_check
 
 LEAF = "chains/holy-chain/reproduce-and-bisect.md"
 
@@ -252,12 +253,9 @@ def main(argv: Sequence[str] | None = None) -> int:
         return 0
 
     errs = validate(target)
-    if errs:
-        for e in errs:
-            print(f"reproduce FAIL: {e}", file=sys.stderr)
-        return 1
-    print(f"reproduce PASS: {target}")
-    return 0
+    text_blob = _combined_text(target) if target.exists() else ""
+    vacuous = target.exists() and not _has_repro_signal(target, text_blob)
+    return report_check("reproduce", target, errs, vacuous=vacuous)
 
 
 if __name__ == "__main__":

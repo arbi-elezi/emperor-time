@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.4.144
+
+- Vertical depth: vacuous-PASS honesty for activity-scoped Steal/Jail/Holy HARD-GATEs — `scripts/lib/check_report.py` (`report_check`) makes idle checks emit `SKIP (vacuous — no activity)` (exit 0) instead of bare `PASS`; exercised green still prints `PASS`
+- Cores wired: `steal_flow.py`, `consent.py`, `quarantine.py`, `pin_consent.py`, `triage.py`, `reproduce.py`, `heal_verify.py`, `process_heal.py`
+- Eval fixtures force the label (`vacuous.md` / `task-vacuous` → SKIP; `*-ok` → PASS); new steal-consent / steal-quarantine vacuous fixtures
+- Doctrine: `references/mechanical-gates.md` activity-scoped vs always-on table; software-factory / bakeoff / SKILL honesty lockstep
+- Not archaeology; not embeddings; not Nen/museum/k8s growth; closes honesty gap where agents could quote idle `signin PASS` as exercised
+- Plugin, marketplace, and SKILL.md at 0.4.144
+
 ## 0.4.143
 
 - Vertical depth: ask→spec + proportionality / anti-loop HARD-GATE — `scripts/lib/ask_spec.py` (`--reject-no-spec` / `--check-ask-spec` / `--emit`) translates user ask → goal / done-when / out-of-scope / effort_class before setup thrash; `scripts/lib/proportionality.py` (`--reject-over-verify` / `--check-proportionality` / `--record-cycle`) caps verify/critique/gate cycles by class via `effort-cycles.json`

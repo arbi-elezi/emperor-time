@@ -12,3 +12,4 @@ Prove Steal consent-protocol HARD-GATE (`consent.py --reject-no-consent` /
 | `task-ok/` | PASS — ledger CONSENT names codex + quarantine-ready |
 | `task-no-consent/` | FAIL — runs present, no CONSENT |
 | `task-header-only/` | FAIL — CONSENT header without assignment |
+| `vacuous.md` / `task-vacuous/` | SKIP vacuous — no steal activity (honest N/A) |

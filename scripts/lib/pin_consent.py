@@ -18,7 +18,7 @@ Positional PATH runs the same check. No args prints the PIN-CONSENT card.
 Thin twins: scripts/pin-and-consent.sh / scripts/pin-and-consent.ps1
 Alias: jail-pin → same core.
 G4 in gate.py calls --check-pin-consent when Jail pin activity is present
-(vacuous PASS when no captured-skill / pin markers).
+(activity-scoped; SKIP (vacuous — no activity) when no Jail pin markers).
 """
 from __future__ import annotations
 
@@ -27,6 +27,7 @@ import re
 import sys
 from pathlib import Path
 from typing import Sequence
+from check_report import report_check
 
 LEAF = "chains/chain-jail/pin-and-consent.md"
 
@@ -339,12 +340,9 @@ def main(argv: Sequence[str] | None = None) -> int:
         return 0
 
     errs = validate(target)
-    if errs:
-        for e in errs:
-            print(f"pin-consent FAIL: {e}", file=sys.stderr)
-        return 1
-    print(f"pin-consent PASS: {target}")
-    return 0
+    text_blob, _ = _combined_text(target) if target.exists() else ("", [])
+    vacuous = target.exists() and not _has_jail_signal(target, text_blob)
+    return report_check("pin-consent", target, errs, vacuous=vacuous)
 
 
 if __name__ == "__main__":

@@ -1694,6 +1694,8 @@ def run_evals(root: Path) -> int:
     h.need("evals/fixtures/steal-quarantine/task-ok/ledger.md")
     h.need("evals/fixtures/steal-quarantine/admission-missing.md")
     h.need("evals/fixtures/steal-quarantine/admission-ok.md")
+    h.need("evals/fixtures/steal-quarantine/vacuous.md")
+    h.need("evals/fixtures/steal-quarantine/task-vacuous/ledger.md")
     h.bash_n("scripts/quarantine.sh", "quarantine.sh syntax")
     h.bash_n("scripts/steal-quarantine.sh", "steal-quarantine.sh syntax")
     h.py_compile("scripts/lib/quarantine.py", "quarantine.py compile")
@@ -1813,15 +1815,31 @@ def run_evals(root: Path) -> int:
         h.fail_msg("task-ok fixture should pass quarantine")
     else:
         h.pass_msg("task-ok accepted")
-    rc, _ = h.run_py(
+    rc, out = h.run_py(
         "scripts/lib/quarantine.py",
         "--check-quarantine",
         str(root / "evals/fixtures/steal-quarantine/admission-ok.md"),
     )
     if rc != 0:
         h.fail_msg("admission-ok fixture should pass quarantine")
+    elif "PASS:" not in out or "SKIP (vacuous" in out:
+        h.fail_msg(f"admission-ok should PASS non-vacuous (got: {out.strip()})")
     else:
-        h.pass_msg("admission-ok accepted")
+        h.pass_msg("admission-ok PASS exercised")
+    for name in ("vacuous.md", "task-vacuous"):
+        rc, out = h.run_py(
+            "scripts/lib/quarantine.py",
+            "--check-quarantine",
+            str(root / "evals/fixtures/steal-quarantine" / name),
+        )
+        if rc != 0:
+            h.fail_msg(f"steal-quarantine {name} should pass check-quarantine")
+        elif "SKIP (vacuous" not in out:
+            h.fail_msg(
+                f"steal-quarantine {name} should SKIP vacuous (got: {out.strip()})"
+            )
+        else:
+            h.pass_msg(f"steal-quarantine {name} SKIP vacuous")
     # G4 wiring: task-unquarantined fails; task-ok passes (with prior stamps)
     tmp = Path(tempfile.mkdtemp())
     try:
@@ -5972,7 +5990,7 @@ def run_evals(root: Path) -> int:
     h.require_contains("steal-consent", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing steal-consent")
     h.require_contains("consent.py", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing consent.py")
     h.require_contains("0.4.132", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing 0.4.132 tip")
-    h.require_contains("0.4.143", ".claude-plugin/plugin.json", "plugin.json not at 0.4.143")
+    h.require_contains("0.4.144", ".claude-plugin/plugin.json", "plugin.json not at 0.4.144")
     h.require_contains("0.4.137", "CHANGELOG.md", "CHANGELOG missing retained 0.4.137")
     h.require_contains("0.4.136", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing retained 0.4.136")
     h.require_contains("0.4.132", "CHANGELOG.md", "CHANGELOG missing 0.4.132")
@@ -6039,8 +6057,10 @@ def run_evals(root: Path) -> int:
     h.require_contains("steal-sign-dispatch-swarm", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing steal-sign-dispatch-swarm")
     h.require_contains("SIGNIN_THEN_DISPATCH_THEN_BOUNDED_SWARM", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing SIGNIN_THEN_DISPATCH_THEN_BOUNDED_SWARM")
     h.require_contains("steal_flow.py", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing steal_flow.py")
-    h.require_contains("0.4.143", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing 0.4.143 tip")
-    h.require_contains("0.4.143", "CHANGELOG.md", "CHANGELOG missing 0.4.143")
+    h.require_contains("0.4.144", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing 0.4.144 tip")
+    h.require_contains("0.4.143", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing retained 0.4.143")
+    h.require_contains("0.4.144", "CHANGELOG.md", "CHANGELOG missing 0.4.144")
+    h.require_contains("0.4.143", "CHANGELOG.md", "CHANGELOG missing retained 0.4.143")
     h.require_contains("0.4.142", "CHANGELOG.md", "CHANGELOG missing 0.4.142")
     h.require_contains("reject-unpinned", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing reject-unpinned")
     h.require_contains("reject-no-skill-consent", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing reject-no-skill-consent")
@@ -6057,13 +6077,26 @@ def run_evals(root: Path) -> int:
     h.require_contains("EFFORT_CAP_BY_CLASS", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing EFFORT_CAP_BY_CLASS")
     h.require_contains("ask_spec.py", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing ask_spec.py")
     h.require_contains("proportionality.py", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing proportionality.py")
+    h.require_contains("0.4.144", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing 0.4.144 tip keyword")
+    h.require_contains("check_report.py", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing check_report.py")
+    h.require_contains("SKIP (vacuous", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing SKIP (vacuous")
+    h.require_contains("activity-scoped", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing activity-scoped")
+    h.require_contains("vacuous-pass-honesty", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing vacuous-pass-honesty")
+    h.require_contains("vacuous-pass-honesty-hard-gate", "evals/evals.json", "evals.json missing vacuous-pass-honesty-hard-gate")
+    h.require_contains("SKIP (vacuous", "references/mechanical-gates.md", "mechanical-gates missing SKIP (vacuous")
+    h.require_contains("Activity-scoped vs always-on", "references/mechanical-gates.md", "mechanical-gates missing activity-scoped table")
+    h.require_contains("check_report.py", "evals/bakeoff.md", "bakeoff.md missing check_report.py")
+    h.require_contains("SKIP (vacuous", "scripts/lib/check_report.py", "check_report.py missing SKIP (vacuous")
+    h.require_contains("report_check", "scripts/lib/steal_flow.py", "steal_flow missing report_check")
+    h.require_contains("report_check", "scripts/lib/pin_consent.py", "pin_consent missing report_check")
+    h.require_contains("report_check", "scripts/lib/triage.py", "triage missing report_check")
     h.require_contains("PR_CONSENT_BEFORE_PUBLIC", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing PR_CONSENT_BEFORE_PUBLIC")
     h.require_contains("secrets_broker.py", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing secrets_broker.py")
     h.require_contains("workspace_env.py", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing workspace_env.py")
     h.require_contains("blind-secrets-broker", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing blind-secrets-broker")
     h.require_contains("reject-secret-leak", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing reject-secret-leak")
     h.require_contains("check-env-redacted", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing check-env-redacted")
-    h.require_contains("0.4.143", ".claude-plugin/marketplace.json", "marketplace.json not at 0.4.143")
+    h.require_contains("0.4.144", ".claude-plugin/marketplace.json", "marketplace.json not at 0.4.144")
     h.require_contains("0.4.142", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing retained 0.4.142")
     h.require_contains("finish.py", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing finish.py")
     h.require_contains("reject-red-suite", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing reject-red-suite")
@@ -6638,6 +6671,8 @@ def run_evals(root: Path) -> int:
     h.need("evals/fixtures/steal-consent/consent-header-only.md")
     h.need("evals/fixtures/steal-consent/consent-ok.md")
     h.need("evals/fixtures/steal-consent/consent-solo.md")
+    h.need("evals/fixtures/steal-consent/vacuous.md")
+    h.need("evals/fixtures/steal-consent/task-vacuous/ledger.md")
     h.bash_n("scripts/consent.sh", "consent.sh syntax")
     h.bash_n("scripts/steal-consent.sh", "steal-consent.sh syntax")
     h.py_compile("scripts/lib/consent.py", "consent.py compile")
@@ -6758,16 +6793,35 @@ def run_evals(root: Path) -> int:
             h.fail_msg(f"steal-consent {name} should mention {needle}: {err}")
         else:
             h.pass_msg(f"steal-consent {name} rejected")
-    for name in ("consent-ok.md", "consent-solo.md", "task-ok"):
-        rc, _ = h.run_py(
+    for name, expect_skip in (
+        ("consent-ok.md", False),
+        ("consent-solo.md", False),  # solo is exercised PASS, not vacuous
+        ("task-ok", False),
+        ("vacuous.md", True),
+        ("task-vacuous", True),
+    ):
+        rc, out = h.run_py(
             "scripts/lib/consent.py",
             "--check-consent",
             str(root / "evals/fixtures/steal-consent" / name),
         )
         if rc != 0:
             h.fail_msg(f"steal-consent {name} should pass check-consent")
+        elif expect_skip and "SKIP (vacuous" not in out:
+            h.fail_msg(
+                f"steal-consent {name} should SKIP vacuous (got: {out.strip()})"
+            )
+        elif (not expect_skip) and (
+            "PASS:" not in out or "SKIP (vacuous" in out
+        ):
+            h.fail_msg(
+                f"steal-consent {name} should PASS non-vacuous (got: {out.strip()})"
+            )
         else:
-            h.pass_msg(f"steal-consent {name} accepted")
+            h.pass_msg(
+                f"steal-consent {name} "
+                + ("SKIP vacuous" if expect_skip else "PASS exercised")
+            )
     # CI env standing
     rc, _ = h.run(
         [
@@ -6972,16 +7026,33 @@ def run_evals(root: Path) -> int:
             h.fail_msg(f"heal-and-verify {name} should mention {needle}: {err}")
         else:
             h.pass_msg(f"heal-and-verify {name} rejected")
-    for name in ("heal-ok.md", "heal-vacuous.md", "task-ok"):
-        rc, _ = h.run_py(
+    for name, expect_skip in (
+        ("heal-ok.md", False),
+        ("heal-vacuous.md", True),
+        ("task-ok", False),
+    ):
+        rc, out = h.run_py(
             "scripts/lib/heal_verify.py",
             "--check-heal",
             str(root / "evals/fixtures/heal-and-verify" / name),
         )
         if rc != 0:
             h.fail_msg(f"heal-and-verify {name} should pass check-heal")
+        elif expect_skip and "SKIP (vacuous" not in out:
+            h.fail_msg(
+                f"heal-and-verify {name} should SKIP vacuous (got: {out.strip()})"
+            )
+        elif (not expect_skip) and (
+            "PASS:" not in out or "SKIP (vacuous" in out
+        ):
+            h.fail_msg(
+                f"heal-and-verify {name} should PASS non-vacuous (got: {out.strip()})"
+            )
         else:
-            h.pass_msg(f"heal-and-verify {name} accepted")
+            h.pass_msg(
+                f"heal-and-verify {name} "
+                + ("SKIP vacuous" if expect_skip else "PASS exercised")
+            )
     _, sh_card = h.run_sh("scripts/heal-verify.sh")
     if "checklist=yes" not in sh_card:
         h.fail_msg("heal-verify.sh should print HEAL-VERIFY card")
@@ -7134,16 +7205,33 @@ def run_evals(root: Path) -> int:
             h.fail_msg(f"reproduce-and-bisect {name} should mention {needle}: {err}")
         else:
             h.pass_msg(f"reproduce-and-bisect {name} rejected")
-    for name in ("repro-ok.md", "repro-vacuous.md", "task-ok"):
-        rc, _ = h.run_py(
+    for name, expect_skip in (
+        ("repro-ok.md", False),
+        ("repro-vacuous.md", True),
+        ("task-ok", False),
+    ):
+        rc, out = h.run_py(
             "scripts/lib/reproduce.py",
             "--check-reproduce",
             str(root / "evals/fixtures/reproduce-and-bisect" / name),
         )
         if rc != 0:
             h.fail_msg(f"reproduce-and-bisect {name} should pass check-reproduce")
+        elif expect_skip and "SKIP (vacuous" not in out:
+            h.fail_msg(
+                f"reproduce-and-bisect {name} should SKIP vacuous (got: {out.strip()})"
+            )
+        elif (not expect_skip) and (
+            "PASS:" not in out or "SKIP (vacuous" in out
+        ):
+            h.fail_msg(
+                f"reproduce-and-bisect {name} should PASS non-vacuous (got: {out.strip()})"
+            )
         else:
-            h.pass_msg(f"reproduce-and-bisect {name} accepted")
+            h.pass_msg(
+                f"reproduce-and-bisect {name} "
+                + ("SKIP vacuous" if expect_skip else "PASS exercised")
+            )
     _, sh_card = h.run_sh("scripts/reproduce.sh")
     if "checklist=yes" not in sh_card:
         h.fail_msg("reproduce.sh should print REPRODUCE card")
@@ -7296,16 +7384,33 @@ def run_evals(root: Path) -> int:
             h.fail_msg(f"holy-triage {name} should mention {needle}: {err}")
         else:
             h.pass_msg(f"holy-triage {name} rejected")
-    for name in ("triage-ok.md", "triage-vacuous.md", "task-ok"):
-        rc, _ = h.run_py(
+    for name, expect_skip in (
+        ("triage-ok.md", False),
+        ("triage-vacuous.md", True),
+        ("task-ok", False),
+    ):
+        rc, out = h.run_py(
             "scripts/lib/triage.py",
             "--check-triage",
             str(root / "evals/fixtures/holy-triage" / name),
         )
         if rc != 0:
             h.fail_msg(f"holy-triage {name} should pass check-triage")
+        elif expect_skip and "SKIP (vacuous" not in out:
+            h.fail_msg(
+                f"holy-triage {name} should SKIP vacuous (got: {out.strip()})"
+            )
+        elif (not expect_skip) and (
+            "PASS:" not in out or "SKIP (vacuous" in out
+        ):
+            h.fail_msg(
+                f"holy-triage {name} should PASS non-vacuous (got: {out.strip()})"
+            )
         else:
-            h.pass_msg(f"holy-triage {name} accepted")
+            h.pass_msg(
+                f"holy-triage {name} "
+                + ("SKIP vacuous" if expect_skip else "PASS exercised")
+            )
     _, sh_card = h.run_sh("scripts/triage.sh")
     if "checklist=yes" not in sh_card:
         h.fail_msg("triage.sh should print TRIAGE card")
@@ -7458,16 +7563,33 @@ def run_evals(root: Path) -> int:
             h.fail_msg(f"process-healing {name} should mention {needle}: {err}")
         else:
             h.pass_msg(f"process-healing {name} rejected")
-    for name in ("process-ok.md", "process-vacuous.md", "task-ok"):
-        rc, _ = h.run_py(
+    for name, expect_skip in (
+        ("process-ok.md", False),
+        ("process-vacuous.md", True),
+        ("task-ok", False),
+    ):
+        rc, out = h.run_py(
             "scripts/lib/process_heal.py",
             "--check-process-heal",
             str(root / "evals/fixtures/process-healing" / name),
         )
         if rc != 0:
             h.fail_msg(f"process-healing {name} should pass check-process-heal")
+        elif expect_skip and "SKIP (vacuous" not in out:
+            h.fail_msg(
+                f"process-healing {name} should SKIP vacuous (got: {out.strip()})"
+            )
+        elif (not expect_skip) and (
+            "PASS:" not in out or "SKIP (vacuous" in out
+        ):
+            h.fail_msg(
+                f"process-healing {name} should PASS non-vacuous (got: {out.strip()})"
+            )
         else:
-            h.pass_msg(f"process-healing {name} accepted")
+            h.pass_msg(
+                f"process-healing {name} "
+                + ("SKIP vacuous" if expect_skip else "PASS exercised")
+            )
     _, sh_card = h.run_sh("scripts/process-heal.sh")
     if "checklist=yes" not in sh_card:
         h.fail_msg("process-heal.sh should print PROCESS-HEAL card")
@@ -7486,6 +7608,7 @@ def run_evals(root: Path) -> int:
 
     # ---- steal sign-in/dispatch/swarm HARD-GATE (Steal Chain vertical depth) ----
     h.section("steal-sign-dispatch-swarm HARD-GATE")
+    h.need("scripts/lib/check_report.py")
     h.need("scripts/lib/steal_flow.py")
     h.need("scripts/steal-flow.sh")
     h.need("scripts/steal-flow.ps1")
@@ -7664,29 +7787,42 @@ def run_evals(root: Path) -> int:
             h.fail_msg(f"steal-flow {name} should mention {needle}: {err}")
         else:
             h.pass_msg(f"steal-flow {name} rejected via {flag}")
-    for name, flag in (
-        ("signin-ok.md", "--check-signin"),
-        ("dispatch-ok.md", "--check-dispatch"),
-        ("swarm-ok.md", "--check-swarm"),
-        ("vacuous.md", "--check-signin"),
-        ("vacuous.md", "--check-dispatch"),
-        ("vacuous.md", "--check-swarm"),
-        ("task-ok", "--check-signin"),
-        ("task-ok", "--check-dispatch"),
-        ("task-ok", "--check-swarm"),
-        ("task-vacuous", "--check-signin"),
-        ("task-vacuous", "--check-dispatch"),
-        ("task-vacuous", "--check-swarm"),
+    for name, flag, expect_skip in (
+        ("signin-ok.md", "--check-signin", False),
+        ("dispatch-ok.md", "--check-dispatch", False),
+        ("swarm-ok.md", "--check-swarm", False),
+        ("vacuous.md", "--check-signin", True),
+        ("vacuous.md", "--check-dispatch", True),
+        ("vacuous.md", "--check-swarm", True),
+        ("task-ok", "--check-signin", False),
+        ("task-ok", "--check-dispatch", False),
+        ("task-ok", "--check-swarm", False),
+        ("task-vacuous", "--check-signin", True),
+        ("task-vacuous", "--check-dispatch", True),
+        ("task-vacuous", "--check-swarm", True),
     ):
-        rc, _ = h.run_py(
+        rc, out = h.run_py(
             "scripts/lib/steal_flow.py",
             flag,
             str(root / "evals/fixtures/steal-sign-dispatch-swarm" / name),
         )
         if rc != 0:
             h.fail_msg(f"steal-flow {name} should pass {flag}")
+        elif expect_skip and "SKIP (vacuous" not in out:
+            h.fail_msg(
+                f"steal-flow {name} {flag} should SKIP vacuous (got: {out.strip()})"
+            )
+        elif (not expect_skip) and (
+            "PASS:" not in out or "SKIP (vacuous" in out
+        ):
+            h.fail_msg(
+                f"steal-flow {name} {flag} should PASS non-vacuous (got: {out.strip()})"
+            )
         else:
-            h.pass_msg(f"steal-flow {name} accepted via {flag}")
+            h.pass_msg(
+                f"steal-flow {name} via {flag} "
+                + ("SKIP vacuous" if expect_skip else "PASS exercised")
+            )
     # G4 wiring
     tmp = Path(tempfile.mkdtemp())
     try:
@@ -7879,21 +8015,34 @@ def run_evals(root: Path) -> int:
             h.fail_msg(f"pin-consent {name} should mention {needle}: {err}")
         else:
             h.pass_msg(f"pin-consent {name} rejected")
-    for name in (
-        "pin-ok.md",
-        "pin-vacuous.md",
-        "task-ok",
-        "task-vacuous",
+    for name, expect_skip in (
+        ("pin-ok.md", False),
+        ("pin-vacuous.md", True),
+        ("task-ok", False),
+        ("task-vacuous", True),
     ):
-        rc, _ = h.run_py(
+        rc, out = h.run_py(
             "scripts/lib/pin_consent.py",
             "--check-pin-consent",
             str(root / "evals/fixtures/jail-pin-and-consent" / name),
         )
         if rc != 0:
             h.fail_msg(f"pin-consent {name} should pass --check-pin-consent")
+        elif expect_skip and "SKIP (vacuous" not in out:
+            h.fail_msg(
+                f"pin-consent {name} should SKIP vacuous (got: {out.strip()})"
+            )
+        elif (not expect_skip) and (
+            "PASS:" not in out or "SKIP (vacuous" in out
+        ):
+            h.fail_msg(
+                f"pin-consent {name} should PASS non-vacuous (got: {out.strip()})"
+            )
         else:
-            h.pass_msg(f"pin-consent {name} accepted")
+            h.pass_msg(
+                f"pin-consent {name} "
+                + ("SKIP vacuous" if expect_skip else "PASS exercised")
+            )
     # G4 wiring
     tmp = Path(tempfile.mkdtemp())
     try:
@@ -8344,9 +8493,9 @@ def run_evals(root: Path) -> int:
         "bakeoff.md missing reject-unisolated inventory",
     )
     h.require_contains(
-        "0.4.143",
+        "0.4.144",
         "SKILL.md",
-        "SKILL.md not bumped to 0.4.143",
+        "SKILL.md not bumped to 0.4.144",
     )
     _, card = h.run_py("scripts/lib/review_pack.py")
     if "checklist=yes" not in card:
