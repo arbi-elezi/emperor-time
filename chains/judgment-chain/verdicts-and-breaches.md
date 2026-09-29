@@ -72,7 +72,10 @@ register line, one remediation, one disclosure if owed, one lesson. Then move.
 - One ruling per trial; "PASS, mostly" is not a verdict.
 - The verdict cites its inputs: `(claim audit: <line>; critique: <file>;
   hetero: <file|absent>)` — a verdict that can't cite its trial record is
-  itself unverified.
+  itself unverified. Harness-driven (`HARNESS_DRIVES_G4_CHECKS`): when the
+  plan forbids/unlists critique/claim-audit/review-pack, bare `Verdict: PASS`
+  is enough (no museum parenthetical); when Tools select them, `*: absent`
+  is refused — name the artifact.
 - Verdicts are claims: a later-discovered wrong PASS is processed as a breach
   (Vow 1 — the evidence didn't support the ruling), not as bad luck.
 
@@ -91,7 +94,7 @@ Python core: `scripts/lib/verdict.py`. Thin twins: `verdict.sh` /
 
 1. Missing Verdict line, or ruling is not PASS / PASS-WITH-CONDITIONS / FAIL → phase
 2. FAIL verdict offered to G5 (re-enter; do not deliver)
-3. Verdict missing required citations: claim audit / critique / hetero
+3. Verdict missing required citations for harness-selected tools (claim audit / critique / hetero); or cites `*: absent` when Tools require them (`HARNESS_DRIVES_G4_CHECKS`)
 4. PASS-WITH-CONDITIONS without named conditions
 5. Breach Register missing
 6. Empty breach rows (blank table lines) or theater-only register (TBD/TODO/placeholder)

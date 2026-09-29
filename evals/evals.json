@@ -1,5 +1,5 @@
 {
-  "version": "0.3.0",
+  "version": "0.4.167",
   "harness": "emperor-time",
   "notes": "Structural evals run via scripts/lib/eval.py (thin eval.sh / eval.ps1). Behavioral cases are fixtures for model trials, not executed here.",
   "cases": [
@@ -257,6 +257,11 @@
       "id": "harness-g4-class-checks-hard-gate",
       "type": "behavioral-fixture",
       "expect": "harness_plan.g4_check_mode / HARNESS_DRIVES_G4_CHECKS; critique.py --check-critique + claim_audit.py --check-audit SKIP when plan forbids/unlists tool (tiny); Optional unused SKIP; Tools require eight-count/CLAIM AUDIT; no-plan legacy always-on FAIL; fixtures harness-g4-class-checks/; G4 _run_critique/_run_claim_audit; v0.4.166"
+    },
+    {
+      "id": "harness-verdict-cites-hard-gate",
+      "prompt": "Harness-driven G5 verdict citations",
+      "expect": "verdict.py follows g4_check_mode / HARNESS_DRIVES_G4_CHECKS; tiny bare Verdict: PASS OK; medium *: absent FAIL; medium real cites PASS; no-plan legacy cite fields; fixtures harness-verdict-cites/; G5 --check-verdict; v0.4.167"
     }
   ]
 }

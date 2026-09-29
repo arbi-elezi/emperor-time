@@ -724,6 +724,8 @@ def run_gate(gate: str, task: Path) -> None:
         _need_ledger(gate, ledger)
         # Mechanical verdict + Breach Register: deliverable ruling + citations;
         # empty/theater Stake rows fail (verdict.py). Header-only PASS theater ≠ G5.
+        # Harness-driven cites (HARNESS_DRIVES_G4_CHECKS): tiny bare Verdict OK;
+        # Tools refuse *: absent (verdict.py consults g4_check_mode).
         _run_verdict(gate, task)
         # Forge PR consent: EMPEROR_CONSENT_PR or ledger quote when forge/PR claimed.
         # SKIP (vacuous) when no forge / public-PR markers (merge-locally OK).
