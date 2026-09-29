@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Optional judgment adapter stub (PR3 / v0.4.171).
+"""Optional judgment adapter stub (PR3 / v0.4.172).
 
 Interface: judge(prompt, context) -> {decision, rationale} | None
 

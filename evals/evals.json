@@ -1,5 +1,5 @@
 {
-  "version": "0.4.170",
+  "version": "0.4.172",
   "harness": "emperor-time",
   "notes": "Structural evals run via scripts/lib/eval.py (thin eval.sh / eval.ps1). Behavioral cases are fixtures for model trials, not executed here.",
   "cases": [
@@ -81,7 +81,7 @@
     {
       "id": "steal-consent-hard-gate",
       "type": "behavioral-fixture",
-      "expect": "consent.py / gate g4 rejects steal activity lacking CONSENT record / header theater / uncovered enlisted agent; accepts CONSENT + agent → role / EMPEROR_CONSENT_AGENTS / solo"
+      "expect": "consent.py / gate g4 rejects steal activity lacking CONSENT record / header theater / uncovered enlisted agent; accepts CONSENT + agent \u2192 role / EMPEROR_CONSENT_AGENTS / solo"
     },
     {
       "id": "steal-sign-dispatch-swarm-hard-gate",
@@ -121,7 +121,7 @@
     {
       "id": "harness-tool-force-hard-gate",
       "kind": "structural",
-      "expect": "harness_plan.py --reject-no-plan / --require-plan / --check-harness-plan / --emit; tiny → few tools/low caps/forbidden heavy; missing plan fails; G0 calls --require-plan; thin harness-plan/tool-force; v0.4.150"
+      "expect": "harness_plan.py --reject-no-plan / --require-plan / --check-harness-plan / --emit; tiny \u2192 few tools/low caps/forbidden heavy; missing plan fails; G0 calls --require-plan; thin harness-plan/tool-force; v0.4.150"
     },
     {
       "id": "harness-forbid-enforce-hard-gate",
@@ -141,7 +141,7 @@
     {
       "id": "harness-ask-class-bind-hard-gate",
       "type": "structural",
-      "expect": "harness_plan.py --reject-class-mismatch / --check-ask-class; ASK_CLASS_BIND; plan vs ask→spec mismatch FAIL; clean PASS; vacuous SKIP; G4 _run_harness_ask_class; fixtures harness-ask-class-bind/; v0.4.155"
+      "expect": "harness_plan.py --reject-class-mismatch / --check-ask-class; ASK_CLASS_BIND; plan vs ask\u2192spec mismatch FAIL; clean PASS; vacuous SKIP; G4 _run_harness_ask_class; fixtures harness-ask-class-bind/; v0.4.155"
     },
     {
       "id": "harness-class-caps-bind-hard-gate",
@@ -231,17 +231,17 @@
     {
       "id": "ask-spec-proportionality-hard-gate",
       "type": "behavioral-fixture",
-      "expect": "ask_spec.py --reject-no-spec / --check-ask-spec / --emit; proportionality.py --reject-over-verify / --check-proportionality / --record-cycle; missing spec fails; tiny ask → tiny effort_class; over-verify fails; under-cap + vacuous pass; G0 calls ask-spec; G4 calls proportionality"
+      "expect": "ask_spec.py --reject-no-spec / --check-ask-spec / --emit; proportionality.py --reject-over-verify / --check-proportionality / --record-cycle; missing spec fails; tiny ask \u2192 tiny effort_class; over-verify fails; under-cap + vacuous pass; G0 calls ask-spec; G4 calls proportionality"
     },
     {
       "id": "vacuous-pass-honesty-hard-gate",
       "type": "behavioral-fixture",
-      "expect": "check_report.py report_check; Steal/Jail/Holy + forge/isolation/context/ask-spec/proportionality activity-scoped --check-* emit SKIP (vacuous — no activity) when idle and PASS when exercised; fixtures vacuous.md/task-vacuous/forge-vacuous force SKIP; *-ok force PASS; mechanical-gates activity-scoped vs always-on table; vacuous-pass-peers v0.4.145"
+      "expect": "check_report.py report_check; Steal/Jail/Holy + forge/isolation/context/ask-spec/proportionality activity-scoped --check-* emit SKIP (vacuous \u2014 no activity) when idle and PASS when exercised; fixtures vacuous.md/task-vacuous/forge-vacuous force SKIP; *-ok force PASS; mechanical-gates activity-scoped vs always-on table; vacuous-pass-peers v0.4.145"
     },
     {
       "id": "vacuous-pass-peers-hard-gate",
       "type": "behavioral-fixture",
-      "expect": "forge.py / review_pack.py / context.py / ask_spec.py / proportionality.py use report_check; idle SKIP (vacuous — no activity); exercised PASS; eval fixtures force label; vacuous-pass-peers v0.4.145"
+      "expect": "forge.py / review_pack.py / context.py / ask_spec.py / proportionality.py use report_check; idle SKIP (vacuous \u2014 no activity); exercised PASS; eval fixtures force label; vacuous-pass-peers v0.4.145"
     },
     {
       "id": "default-tiny-hard-cap-hard-gate",
@@ -251,7 +251,7 @@
     {
       "id": "ask-spec-require-before-setup-hard-gate",
       "type": "behavioral-fixture",
-      "expect": "ask_spec.py --require-spec always-on (never vacuous); G0 refuses without written ask→spec; --check-ask-spec idle still SKIP; SessionStart/activate MUST; v0.4.147"
+      "expect": "ask_spec.py --require-spec always-on (never vacuous); G0 refuses without written ask\u2192spec; --check-ask-spec idle still SKIP; SessionStart/activate MUST; v0.4.147"
     },
     {
       "id": "harness-g4-class-checks-hard-gate",
@@ -271,7 +271,7 @@
     {
       "id": "adjustable-rigor-config-hard-gate",
       "prompt": "Adjustable rigor config schema v1",
-      "expect": "config.py schema v1 load/merge; aliases standard→small full→large; default tiny; emperor config show|get|set|edit; ask_spec emit / ensure_effort_class from config; fixtures adjustable-rigor-config/; iron always_hard never soft; v0.4.169",
+      "expect": "config.py schema v1 load/merge; aliases standard\u2192small full\u2192large; default tiny; emperor config show|get|set|edit; ask_spec emit / ensure_effort_class from config; fixtures adjustable-rigor-config/; iron always_hard never soft; v0.4.169",
       "type": "behavioral-fixture"
     },
     {
@@ -283,7 +283,13 @@
     {
       "id": "judgment-adapter-stub-hard-gate",
       "prompt": "Optional judgment adapter stub",
-      "expect": "judgment.py judge()→{decision,rationale}|None; provider off default; EMPEROR_JUDGMENT_API_KEY/BASE_URL; soft None on off/no-key/timeout; never tiny happy-path; never required; rigor_judge ambiguous hook; fixtures judgment-adapter-stub/; v0.4.171",
+      "expect": "judgment.py judge()\u2192{decision,rationale}|None; provider off default; EMPEROR_JUDGMENT_API_KEY/BASE_URL; soft None on off/no-key/timeout; never tiny happy-path; never required; rigor_judge ambiguous hook; fixtures judgment-adapter-stub/; v0.4.171",
+      "type": "behavioral-fixture"
+    },
+    {
+      "id": "ask-spec-harness-plan-emit-hard-gate",
+      "prompt": "ask-spec --write chains harness-plan emit",
+      "expect": "ask_spec.py --emit --write chains idempotent harness-plan.md (+ json) from stamped effort_class; one mechanical path; no second harness-plan CLI; --require-plan PASS after write; emit-without-write no disk plan; fixtures ask-spec-harness-plan-emit/; freeze *-hint-bind; v0.4.172",
       "type": "behavioral-fixture"
     }
   ]

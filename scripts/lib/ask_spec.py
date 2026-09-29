@@ -104,10 +104,15 @@ Check / emit:
                             clean can no longer unlock FORCE_TABLE[large] while
                             STATE_HINT_BIND stays green)
   --emit / --ask-file / stdin / positional ask → print or --write PATH
+                            (--write also idempotently emits harness-plan.md
+                            + json from stamped effort_class — one mechanical
+                            path; agent need not recall harness-plan --emit)
 
 Positional PATH runs --check-ask-spec. No args prints the ASK-SPEC card.
 Emit stamps effort_class via rigor_judge when auto_detect_little / no class
-(user override always wins). Thin twins: scripts/ask-spec.sh / ask-spec.ps1
+(user override always wins). --write also chains idempotent harness-plan.md
+emit from that class (FORCE_TABLE Caps/Forbidden materialize before G0
+--require-plan / mid-loop thrash). Thin twins: scripts/ask-spec.sh / ask-spec.ps1
 G0 calls --require-spec (setup without a written spec FAILS).
 G4 calls --check-ask-hints after harness class-caps-bind.
 G4 calls --check-spec-hints after --check-ask-hints.
@@ -1389,7 +1394,9 @@ def format_card() -> str:
         "",
         "MUST: Before heavy setup / repeated verify, emit ask→spec "
         f"(goal, done-when, out-of-scope, effort_class). Open {LEAF}; run "
-        "scripts/emperor ask-spec --emit \"<ask>\" --write <task>/ask-spec.md.",
+        "scripts/emperor ask-spec --emit \"<ask>\" --write <task>/ask-spec.md "
+        "(--write chains idempotent harness-plan.md from stamped effort_class; "
+        "one mechanical path — no second harness-plan CLI).",
         "MUST-NOT: burn token budget on setup+verify loops without a scoped "
         "spec; run ~20 verifications for a tiny ask; declare effort_class:large "
         "on a fix-typo / one-line ask (ASK_HINT_BIND); park tiny language in goal while Ask(quoted) stays clean (SPEC_HINT_BIND); park tiny language in out-of-scope while Ask/goal/done-when stay clean (SCOPE_HINT_BIND); park tiny language in ## Notes / freeform body while Ask/goal/done-when/out-of-scope stay clean (BODY_HINT_BIND); park tiny language in ledger.md / work-order.md while ask-spec.md body stays clean (TASK_HINT_BIND); park tiny language in notes.md while ask-spec+ledger stay clean (NOTES_HINT_BIND); park tiny language in PLAN.md / FINDINGS.md / PROGRESS.md while ask-spec+ledger+notes stay clean (PLAN_HINT_BIND); park tiny language in STATE.md while ask-spec+ledger+notes+plan stay clean (STATE_HINT_BIND); park tiny language in DONE.md while ask-spec+ledger+notes+plan+state stay clean (DONE_HINT_BIND).",
@@ -1626,7 +1633,10 @@ def main(argv: Sequence[str] | None = None) -> int:
         "--write",
         type=Path,
         default=None,
-        help="Write emitted spec to PATH (implies --emit)",
+        help=(
+            "Write emitted spec to PATH (implies --emit); also idempotently "
+            "emits harness-plan.md + json beside it from stamped effort_class"
+        ),
     )
     p.add_argument(
         "--effort-class",
@@ -1801,6 +1811,30 @@ def main(argv: Sequence[str] | None = None) -> int:
             # Also print effort_class for callers.
             cls = parse_effort_class(args.write) or args.effort_class or infer_effort_class(ask)
             print(f"effort_class: {cls}")
+            # Chain: idempotent harness-plan.md (+ json) from stamped class.
+            # One mechanical path — SessionStart/MUST need not recall a second CLI.
+            # Lazy import avoids ask_spec ↔ harness_plan cycle at module load.
+            import harness_plan as et_hp  # noqa: WPS433
+
+            task_dir = args.write.parent
+            try:
+                plan_md = et_hp.write_plan_files(
+                    task_dir,
+                    effort_class=cls,
+                    from_path=args.write,
+                )
+            except ValueError as plan_exc:
+                print(
+                    f"ask-spec FAIL: harness-plan chain: {plan_exc}",
+                    file=sys.stderr,
+                )
+                return 2
+            plan = et_hp.emit_plan(effort_class=cls, from_path=args.write)
+            print(f"harness-plan: {plan_md.resolve()}")
+            print(
+                "caps: "
+                + ", ".join(f"{k}≤{v}" for k, v in plan["caps"].items())
+            )
             return 0
         sys.stdout.write(spec)
         return 0

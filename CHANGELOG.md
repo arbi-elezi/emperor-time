@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.4.172
+
+### Added
+- **ask-spec --write chains harness-plan emit** — `ask_spec.py --emit --write` now idempotently materializes `harness-plan.md` + `harness-plan.json` beside the stamped ask→spec from `effort_class` / FORCE_TABLE (Caps / Forbidden). One mechanical path: SessionStart/MUST need not recall a second `harness-plan --emit` CLI before G0 `--require-plan` fires (closes Mac thrash window where EFFORT_CAPS still allow tiny verify:2 before plan Caps bind). Helper `harness_plan.write_plan_files`. Activate/hooks/must-route folded to the chained path; standalone `harness-plan` remains for re-emit/checks. Fixtures `ask-spec-harness-plan-emit/`. Freeze `*-hint-bind` (no new HINT_BIND / CAPS_BIND / peer-echo binders). No museum/Nen/k8s/embeddings. Local eval only (Actions stay disabled).
+
 ## 0.4.171
 
 ### Added
