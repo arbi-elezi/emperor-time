@@ -1,5 +1,15 @@
 # Changelog
 
+## 0.4.151
+
+### Added
+- Harness forbid-enforce: `harness_plan.py --check-forbidden` / `--reject-forbidden-used` — plan-forbidden tools must not show use markers (critique.md / effort-cycles critique stamps / sandbox emits / excavate markers / …). Activity-scoped SKIP when no plan; G4 `_run_harness_forbid` after proportionality
+- Iron token `FORBIDDEN_TOOLS_NEVER_RUN` (alongside `HARNESS_OWNS_TOOL_AND_FORCE`); fixtures `evals/fixtures/harness-forbid-enforce/`
+- Closes plan-without-enforcement soft theater after v0.4.150: tiny plan forbidding critique/sandbox/grill can no longer thrash those paths and still finish green
+- Not archaeology; not embeddings; not Nen/museum/k8s growth; distrust spine untouched
+- Plugin, marketplace, and SKILL.md at 0.4.151
+
+
 ## 0.4.150
 
 ### Added

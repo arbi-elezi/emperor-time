@@ -32,6 +32,7 @@ LEAVES: list[tuple[str, str, tuple[str, ...]]] = [
     ("workspace-env", "scripts/lib/workspace_env.py", ("env show", "env sync", "managed.env", "blind-secrets-broker")),
     ("sandbox-engine", "scripts/lib/sandbox_engine.py", ("sandbox plan", "runtime use", "podman", "k8s", "isolate", "sandbox-engine", "reject-no-sandbox-plan", "check-sandbox", "PLAN_BEFORE_SANDBOX_UP")),
     ("sot-sandbox-hard-gates", "evals/fixtures/sot-sandbox-gates/README.md", ("sot-sandbox-hard-gates", "reject-mutated-sot", "reject-no-sandbox-plan", "check-sot", "check-sandbox")),
+    ("harness-forbid-enforce", "evals/fixtures/harness-forbid-enforce/README.md", ("harness-forbid-enforce", "check-forbidden", "reject-forbidden-used", "FORBIDDEN_TOOLS_NEVER_RUN")),
     ("sot-artifact-sync", "scripts/lib/super_context.py", ("sot add-plugin", "artifacts sync", "clone --mirror", "sot-artifact-sync", "reject-mutated-sot", "check-sot", "FETCH_ONLY_NEVER_MUTATE_SOT")),
     ("critique", "scripts/lib/critique.py", ("critique", "reject-incomplete-critique", "eight-count", "Checked")),
     ("verdict", "scripts/lib/verdict.py", ("verdict", "reject-hidden-breach", "Breach Register", "claim audit")),

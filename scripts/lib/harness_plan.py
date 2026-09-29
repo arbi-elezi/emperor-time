@@ -12,9 +12,13 @@ not more agent-facing CLI the model must recall. Flow:
 
 Always-fail HARD-GATE helpers:
   --reject-no-plan          refuse without a harness plan (card; exit 1)
+  --reject-forbidden-used   refuse when a plan-forbidden tool was actually used
 
 Check / require / emit:
   --check-harness-plan PATH activity-scoped idle check (SKIP vacuous when idle)
+  --check-forbidden PATH    activity-scoped: SKIP vacuous when no plan / idle;
+                            FAIL when plan forbids a tool and task markers show
+                            that tool was used; PASS when clean
   --require-plan PATH       always-on when task active: missing/invalid plan FAILS
                             (never vacuous — G0 calls this after ask→spec)
   --emit / --from / --effort-class / --write PATH
@@ -23,6 +27,7 @@ Positional PATH runs --check-harness-plan. No args prints the HARNESS-PLAN card.
 Thin twins: scripts/harness-plan.sh / scripts/harness-plan.ps1
 Alias: tool-force → same core.
 G0 calls --require-plan after ask→spec.
+G4 calls --check-forbidden after proportionality (thrash peer).
 """
 from __future__ import annotations
 
@@ -43,6 +48,7 @@ from proportionality import EFFORT_CAPS  # noqa: E402
 
 LEAF = "references/mechanical-gates.md"
 IRON = "HARNESS_OWNS_TOOL_AND_FORCE"
+IRON_FORBID = "FORBIDDEN_TOOLS_NEVER_RUN"
 PLAN_FILENAMES = {
     "harness-plan.md",
     "harness_plan.md",
@@ -522,6 +528,395 @@ def _field_errors(plan: dict[str, Any] | None, expected_class: str | None) -> li
     return errs
 
 
+# ---------------------------------------------------------------------------
+# Forbidden-tool enforcement (plan-without-run theater → HARD-GATE)
+# ---------------------------------------------------------------------------
+# Detect "used" via peer-style activity markers. Plan files themselves list
+# forbidden tool *names* — those mentions must NOT trip (false positive).
+
+_PLAN_EXCLUDE_NAMES = frozenset(
+    {
+        "harness-plan.md",
+        "harness_plan.md",
+        "tool-force.md",
+        "tool_force.md",
+        "harness-plan.json",
+        "ask-spec.md",
+        "ask_spec.md",
+        "README.md",
+    }
+)
+
+# Per-tool activity: files / relative paths / cycle keys / text signals.
+# Keep proportional — prefer concrete artifacts over loose word matches.
+TOOL_ACTIVITY: dict[str, dict[str, Any]] = {
+    "critique": {
+        "files": ("critique.md", "self-critique.md"),
+        "cycle_key": "critique",
+        "signals": (
+            r"(?i)\bCRITIQUE\s+(PASS|FAIL|COMPLETE|EIGHT)",
+            r"(?i)\beight[- ]count\b",
+            r"(?i)--check-critique\b",
+            r"(?i)--reject-incomplete-critique\b",
+        ),
+    },
+    "grill": {
+        "files": ("grill.md", "path.md"),
+        "signals": (
+            r"(?i)\bgrill\s+(path|advance|PASS|FAIL)\b",
+            r"(?i)PATH_AND_STAGE_BEFORE_IMPL",
+            r"(?i)--check-path\b",
+            r"(?i)--reject-no-path\b",
+        ),
+    },
+    "sandbox": {
+        "files": ("sandbox.md",),
+        "paths": (
+            ".emperor/sandbox/ports.json",
+            ".emperor/sandbox/runtime/active",
+        ),
+        "signals": (
+            r"(?i)\bSANDBOX\s+(READY|UP|PLAN)\b",
+            r"(?i)\bsandbox\s+(plan|up|down|ports)\b",
+            r"(?i)PLAN_BEFORE_SANDBOX_UP",
+        ),
+    },
+    "excavate": {
+        "files": ("excavate.md", "survey.md", "identify.md"),
+        "signals": (
+            r"(?i)\bexcavated\s+(from|as|language)\b",
+            r"(?i)\bIDENTIFY\s+(PASS|FAIL)\b",
+            r"(?i)\bemperor\s+excavate\b",
+            r"(?i)--excavate\b",
+            r"(?i)\bSURVEY\s+(PASS|READY)\b",
+        ),
+    },
+    "sot": {
+        "files": ("sot.md",),
+        "paths": (".emperor/sot/",),
+        "signals": (
+            r"(?i)\bSOT\s+(READY|SYNC|FETCH)\b",
+            r"(?i)FETCH_ONLY_NEVER_MUTATE_SOT",
+            r"(?i)\bsot\s+(add-plugin|sync)\b",
+        ),
+    },
+    "steal-flow": {
+        "files": (
+            "steal-flow.md",
+            "sign-in.md",
+            "signin.md",
+            "dispatch.md",
+            "steal-dispatch.md",
+            "swarm.md",
+        ),
+        "signals": (
+            r"(?i)SIGN-IN\s+HANDOFF",
+            r"(?i)\bemperor\s+steal-flow\b",
+            r"(?i)--check-signin\b",
+            r"(?i)--check-dispatch\b",
+            r"(?i)unbounded[- ]swarm",
+        ),
+    },
+    "heal": {
+        "files": ("heal.md", "heal-verify.md", "postmortem.md"),
+        "signals": (
+            r"(?i)\bheal[- ]?verify\b",
+            r"(?i)TRIAD_THEN_POSTMORTEM",
+            r"(?i)--check-heal\b",
+            r"(?i)--reject-no-triad\b",
+        ),
+    },
+    "parallel": {
+        "files": ("parallel.md", "dispatch-parallel.md"),
+        "signals": (
+            r"(?i)\bparallel[- ]dispatch\b",
+            r"(?i)--check-parallel\b",
+            r"(?i)\bPARALLEL\s+(PASS|READY)\b",
+        ),
+    },
+    "subagent": {
+        "files": ("subagent.md", "subagents.md"),
+        "signals": (
+            r"(?i)\bsubagent[- ]driven\b",
+            r"(?i)\bSUBAGENT\s+(PASS|READY)\b",
+        ),
+    },
+    "forge": {
+        "files": ("forge.md", "pr-consent.md"),
+        "signals": (
+            r"(?i)EMPEROR_CONSENT_PR",
+            r"(?i)PR_CONSENT_BEFORE_PUBLIC",
+            r"(?i)--check-pr-consent\b",
+            r"(?i)\bforge\s+(PASS|READY|PR)\b",
+        ),
+    },
+    "context-build": {
+        "files": ("context.md", "thoughttrail.md", "super-context.md"),
+        "signals": (
+            r"(?i)GRAPH_THEN_TRAIL",
+            r"(?i)--check-context\b",
+            r"(?i)--check-trail\b",
+            r"(?i)\bcontext[- ]build\b",
+        ),
+    },
+    "triage": {
+        "files": ("triage.md", "holy-triage.md"),
+        "signals": (
+            r"(?i)STOP_SNAPSHOT_BRACKET",
+            r"(?i)--check-triage\b",
+            r"(?i)--reject-no-triage\b",
+            r"(?i)\bTRIAGE\s+(PASS|BLOCK)\b",
+        ),
+    },
+    "reproduce": {
+        "files": ("reproduce.md", "combat-ledger.md", "fingerprint.md"),
+        "signals": (
+            r"(?i)FINGERPRINT_THEN_COMBAT",
+            r"(?i)--check-reproduce\b",
+            r"(?i)--reject-no-repro\b",
+        ),
+    },
+    "process-heal": {
+        "files": ("process-heal.md", "process-healing.md"),
+        "signals": (
+            r"(?i)REGISTER_THEN_REENTER",
+            r"(?i)--check-process-heal\b",
+            r"(?i)--reject-no-register\b",
+        ),
+    },
+    "pin-and-consent": {
+        "files": ("pin-and-consent.md", "pin-consent.md", "jail-pin.md"),
+        "signals": (
+            r"(?i)PIN_THEN_CONSENT_BEFORE_ADAPT",
+            r"(?i)--check-pin-consent\b",
+            r"(?i)--reject-unpinned\b",
+        ),
+    },
+    "quarantine": {
+        "files": ("quarantine.md", "steal-quarantine.md"),
+        "signals": (
+            r"(?i)--check-quarantine\b",
+            r"(?i)--reject-unquarantined\b",
+            r"(?i)\bADMITTED\b.*\bREJECTED\b|\bQUARANTINE\s+(PASS|ADMIT)",
+        ),
+    },
+    "swarm-emulate": {
+        "files": ("swarm.md", "swarm-emulate.md"),
+        "signals": (
+            r"(?i)\bswarm[- ]emulate\b",
+            r"(?i)--check-swarm\b",
+            r"(?i)--reject-unbounded-swarm\b",
+        ),
+    },
+    "review-pack": {
+        "files": ("review-pack.md", "review_pack.md", "hetero.md"),
+        "signals": (
+            r"(?i)--check-isolation\b",
+            r"(?i)--reject-unisolated\b",
+            r"(?i)--reject-author-diary\b",
+            r"(?i)\bemperor\s+review-pack\b",
+            r"(?i)\bREVIEW[- ]PACK\s+(PASS|READY|EMIT)\b",
+        ),
+    },
+    "unbounded-steal": {
+        "files": ("steal-flow.md", "swarm.md"),
+        "signals": (
+            r"(?i)unbounded[- ](steal|swarm)",
+            r"(?i)--reject-unbounded-swarm\b",
+        ),
+    },
+    "unbounded-swarm": {
+        "files": ("swarm.md", "swarm-emulate.md"),
+        "signals": (
+            r"(?i)unbounded[- ]swarm",
+            r"(?i)--reject-unbounded-swarm\b",
+        ),
+    },
+}
+
+
+def _normalize_tool(name: str) -> str:
+    return str(name).split()[0].lower().strip().strip("*").strip("`")
+
+
+def _activity_text_excluding_plan(root: Path) -> str:
+    """Scan task dir for activity text, excluding plan/spec files.
+
+    Mentions of forbidden tool names inside harness-plan.md must not trip.
+    """
+    if root.is_file():
+        if root.name.lower() in {n.lower() for n in _PLAN_EXCLUDE_NAMES}:
+            return ""
+        try:
+            return _read(root)
+        except OSError:
+            return ""
+    if not root.is_dir():
+        return ""
+    parts: list[str] = []
+    for name in (
+        "ledger.md",
+        "claims.md",
+        "brief.md",
+        "work-order.md",
+        "critique.md",
+        "self-critique.md",
+        "grill.md",
+        "path.md",
+        "sandbox.md",
+        "sot.md",
+        "heal.md",
+        "heal-verify.md",
+        "postmortem.md",
+        "excavate.md",
+        "survey.md",
+        "identify.md",
+        "triage.md",
+        "reproduce.md",
+        "process-heal.md",
+        "forge.md",
+        "context.md",
+        "thoughttrail.md",
+        "review-pack.md",
+        "quarantine.md",
+        "steal-flow.md",
+        "dispatch.md",
+        "sign-in.md",
+        "swarm.md",
+        "parallel.md",
+        "subagent.md",
+        "pin-and-consent.md",
+        "notes.md",
+    ):
+        p = root / name
+        if p.is_file():
+            try:
+                parts.append(_read(p)[:12000])
+            except OSError:
+                pass
+    # Shallow extra .md (still skip plan/spec/README)
+    try:
+        for child in sorted(root.iterdir()):
+            if not child.is_file() or child.suffix.lower() != ".md":
+                continue
+            if child.name.lower() in {n.lower() for n in _PLAN_EXCLUDE_NAMES}:
+                continue
+            if child.name in {
+                "ledger.md",
+                "claims.md",
+                "brief.md",
+                "work-order.md",
+                "critique.md",
+                "self-critique.md",
+                "grill.md",
+                "path.md",
+            }:
+                continue  # already read
+            try:
+                parts.append(_read(child)[:4000])
+            except OSError:
+                pass
+    except OSError:
+        pass
+    return "\n".join(parts)
+
+
+def _cycle_count(root: Path, key: str) -> int:
+    p = root / "effort-cycles.json"
+    if not p.is_file():
+        return 0
+    try:
+        data = json.loads(_read(p))
+    except (OSError, json.JSONDecodeError):
+        return 0
+    if not isinstance(data, dict):
+        return 0
+    try:
+        return int(data.get(key, 0) or 0)
+    except (TypeError, ValueError):
+        return 0
+
+
+def tool_was_used(root: Path, tool: str) -> bool:
+    """True when task markers show *tool* actually ran (not plan theater)."""
+    name = _normalize_tool(tool)
+    spec = TOOL_ACTIVITY.get(name)
+    if spec is None:
+        # Unknown forbidden name: only trip on a dedicated marker file
+        # `<tool>.md` or `<tool>_ran.md` — avoid false positives on words.
+        for cand in (f"{name}.md", f"{name.replace('-', '_')}.md", f"{name}-ran.md"):
+            if (root / cand).is_file():
+                return True
+        return False
+
+    for fname in spec.get("files") or ():
+        if (root / fname).is_file():
+            return True
+    for rel in spec.get("paths") or ():
+        p = root / rel
+        if p.exists():
+            return True
+    cycle_key = spec.get("cycle_key")
+    if isinstance(cycle_key, str) and _cycle_count(root, cycle_key) > 0:
+        return True
+    text = _activity_text_excluding_plan(root)
+    for pat in spec.get("signals") or ():
+        if re.search(pat, text or ""):
+            return True
+    return False
+
+
+def list_forbidden_used(path: Path) -> list[str]:
+    """Return forbidden tools that show activity markers under task."""
+    root = _task_root(path)
+    plan = _load_plan(root)
+    if plan is None:
+        return []
+    forbidden = plan.get("forbidden") or []
+    if not isinstance(forbidden, list):
+        return []
+    used: list[str] = []
+    for raw in forbidden:
+        name = _normalize_tool(raw)
+        if not name:
+            continue
+        if tool_was_used(root, name):
+            used.append(name)
+    return used
+
+
+def validate_forbidden(path: Path) -> list[str]:
+    """Activity-scoped: empty errs when no plan (idle / vacuous).
+
+    When a harness plan exists, FAIL if any forbidden tool shows use markers.
+    """
+    if not path.exists():
+        return [f"missing path: {path}"]
+    root = _task_root(path)
+    plan = _load_plan(root)
+    if plan is None:
+        return []
+    used = list_forbidden_used(root)
+    if not used:
+        return []
+    return [
+        f"forbidden tool used: {name} "
+        f"(plan forbids it — {IRON_FORBID}; see {LEAF})"
+        for name in used
+    ]
+
+
+def reject_forbidden_used() -> str:
+    return (
+        "REJECT FORBIDDEN USED: HARD-GATE — harness plan listed a tool as "
+        "forbidden, but task markers show that tool actually ran (critique.md / "
+        "effort-cycles critique stamps / sandbox plan emits / excavate markers / "
+        "…). Plan-without-enforcement is soft theater. Open "
+        f"{LEAF}; re-check with --check-forbidden <task-dir>. "
+        f"IRON={IRON_FORBID}\n"
+    )
+
+
 def validate(path: Path) -> list[str]:
     """Activity-scoped: empty errs when idle (no plan/ask-spec signal)."""
     if not path.exists():
@@ -559,19 +954,22 @@ def format_card() -> str:
         "STEP 2 key=Not agent recall — harness owns tool+force",
         "STEP 3 id=emit name=Write harness-plan.md (+ json) "
         "et=tools / caps / forbidden / notes",
-        "STEP 3 key=HARD-GATE --reject-no-plan / --require-plan / --check-harness-plan",
+        "STEP 3 key=HARD-GATE --reject-no-plan / --require-plan / --check-harness-plan / --check-forbidden / --reject-forbidden-used",
         "STEP 4 id=drive name=Do-once at proportional scale "
         "et=tiny → few tools + low caps; forbid excavate/sandbox/critique museum",
         "STEP 4 key=LLM does not choose 20 verifications for a 2-line change",
         "",
         "MUST: After ask→spec, emit harness plan "
         "(scripts/emperor harness-plan --emit --from <task> --write "
-        "<task>/harness-plan.md). G0 --require-plan FAILS without a plan.",
+        "<task>/harness-plan.md). G0 --require-plan FAILS without a plan. "
+        "G4 --check-forbidden FAILS when a forbidden tool was actually used.",
         "MUST-NOT: treat tool selection as agent-facing CLI trivia; run heavy "
         "paths (excavate/sandbox/critique/steal) on tiny asks; omit plan so "
-        "the model invents force.",
-        "HONESTY: --check-harness-plan idle SKIP; G0 --require-plan never "
-        "vacuous when a task dir is checked.",
+        "the model invents force; write a tiny plan then thrash forbidden tools.",
+        "HONESTY: --check-harness-plan / --check-forbidden idle SKIP; "
+        "G0 --require-plan never vacuous; plan file listing a tool under "
+        "Forbidden is not itself 'use' of that tool.",
+        f"IRON forbid={IRON_FORBID}",
     ]
     return "\n".join(lines) + "\n"
 
@@ -620,6 +1018,21 @@ def main(argv: Sequence[str] | None = None) -> int:
         help="Always-on: missing/invalid harness plan FAILS (never vacuous)",
     )
     p.add_argument(
+        "--check-forbidden",
+        type=Path,
+        metavar="PATH",
+        default=None,
+        help=(
+            "Forbidden-tool enforce: FAIL when plan forbids a tool that was "
+            "used; SKIP vacuous when no plan / idle"
+        ),
+    )
+    p.add_argument(
+        "--reject-forbidden-used",
+        action="store_true",
+        help="Hard-gate card: refuse when forbidden tools were used (always exit 1)",
+    )
+    p.add_argument(
         "--emit",
         action="store_true",
         help="Emit harness plan from effort_class / --from ask-spec task",
@@ -653,6 +1066,17 @@ def main(argv: Sequence[str] | None = None) -> int:
     if args.reject_no_plan:
         sys.stdout.write(reject_no_plan())
         return 1
+
+    if args.reject_forbidden_used:
+        sys.stdout.write(reject_forbidden_used())
+        return 1
+
+    if args.check_forbidden is not None:
+        target = args.check_forbidden
+        errs = validate_forbidden(target)
+        plan = _load_plan(target) if target.exists() else None
+        vacuous = target.exists() and plan is None and not errs
+        return report_check("harness-forbid", target, errs, vacuous=vacuous)
 
     if args.require_plan is not None:
         errs = require_plan(args.require_plan)
