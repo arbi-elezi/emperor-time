@@ -20,6 +20,11 @@ G4 also delegates Steal sign-in / dispatch / swarm to steal_flow.py
 (vacuous PASS when no matching steal-flow activity).
 G4 also delegates Jail pin-and-consent to pin_consent.py
 (vacuous PASS when no captured-skill / pin markers).
+G0 also delegates ask→spec to ask_spec.py
+(vacuous PASS when no ask-spec / effort_class markers).
+G4 also delegates proportionality / anti-loop to proportionality.py
+(records a gate cycle, then checks caps; vacuous PASS when no
+effort_class / cycle ledger).
 G4 also delegates hetero-critique isolation to review_pack.py
 (vacuous PASS when no review-pack / no hetero markers).
 G0 also delegates thoughttrail + super-context to context.py
@@ -166,6 +171,32 @@ def _run_pin_consent(gate: str, task: Path) -> None:
         _fail(gate, "jail pin-and-consent (pin_consent.py)")
 
 
+def _run_ask_spec(gate: str, task: Path) -> None:
+    py = _root() / "scripts" / "lib" / "ask_spec.py"
+    proc = subprocess.run(
+        [sys.executable, str(py), "--check-ask-spec", str(task)],
+        check=False,
+    )
+    if proc.returncode != 0:
+        _fail(gate, "ask→spec (ask_spec.py)")
+
+
+def _run_proportionality(gate: str, task: Path) -> None:
+    py = _root() / "scripts" / "lib" / "proportionality.py"
+    proc = subprocess.run(
+        [
+            sys.executable,
+            str(py),
+            "--bump-gate",
+            "--check-proportionality",
+            str(task),
+        ],
+        check=False,
+    )
+    if proc.returncode != 0:
+        _fail(gate, "proportionality / anti-loop (proportionality.py)")
+
+
 def _run_review_isolation(gate: str, task: Path) -> None:
     py = _root() / "scripts" / "lib" / "review_pack.py"
     proc = subprocess.run(
@@ -226,6 +257,9 @@ def run_gate(gate: str, task: Path) -> None:
         # Thoughttrail + super-context: graph/trail when activity claimed.
         # Vacuous PASS when no context / thoughttrail markers.
         _run_context(gate, task)
+        # Ask→spec: scoped brief before setup thrash when activity claimed.
+        # Vacuous PASS when no ask-spec / effort_class markers.
+        _run_ask_spec(gate, task)
         _mark(stamp, gate)
         _ok(gate, str(ledger))
         return
@@ -313,6 +347,10 @@ def run_gate(gate: str, task: Path) -> None:
         # Jail pin-and-consent HARD-GATE (pin_consent.py).
         # Vacuous PASS when no captured-skill / pin markers.
         _run_pin_consent(gate, task)
+        # Proportionality / anti-loop HARD-GATE (proportionality.py).
+        # Records a gate cycle then checks effort_class caps.
+        # Vacuous PASS when no effort_class / cycle ledger.
+        _run_proportionality(gate, task)
         # Hetero-critique isolation: review-pack has no author diary / CoT.
         # Vacuous PASS when no review-pack / no hetero markers.
         _run_review_isolation(gate, task)

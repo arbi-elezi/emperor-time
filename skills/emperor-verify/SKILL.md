@@ -95,3 +95,5 @@ whole `verification-before-completion`; ET + emperor-verify orchestrate.
    only with quoted evidence (run `emperor receive` when implementing feedback).
 9. Run `scripts/gate.sh g4 <task-dir>` and quote the tail.
 10. Deliver only after `scripts/emperor verdict <task-dir>` and `scripts/gate.sh g5 <task-dir>` (verdict.py: no empty/theater Breach Register; Verdict cites claim audit / critique / hetero).
+
+Proportionality / anti-loop: honor `effort_class` caps via `scripts/emperor proportionality --check-proportionality <task-dir>` (HARD-GATE `--reject-over-verify`; G4 records+checks). Tiny asks do not re-run the museum of gates. Idle Steal/Jail/Holy vacuous PASS is separate.

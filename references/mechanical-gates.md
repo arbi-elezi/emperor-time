@@ -7,11 +7,11 @@ A model writing "G4 PASS" in markdown is not a gate. An exit code is.
 
 | Script | Gate | Fails when |
 |---|---|---|
-| `scripts/gate.sh g0` (Python core) | G0 | no task dir, no client quote in ledger |
+| `scripts/gate.sh g0` (Python core) | G0 | no task dir, no client quote in ledger; ask→spec soft when markers present (`ask_spec.py`) |
 | `scripts/gate.sh g1` | G1 | no acceptance criteria |
 | `scripts/gate.sh g2` | G2 | non-trivial task missing work-order or Expected: lines |
 | `scripts/gate.sh g3` | G3 | impact-map paths missing from `git diff --stat` (when in a git repo) |
-| `scripts/gate.sh g4` | G4 | incomplete eight-count critique (via `critique.py`); missing CLAIM AUDIT / unfinished HYPOTHESIS\|TESTED (via `claim_audit.py`); steal no-consent (via `consent.py`); steal unquarantined (via `quarantine.py`); steal sign-in/dispatch/swarm (via `steal_flow.py`); Jail pin+consent (via `pin_consent.py`); unisolated / author-diary review-pack (via `review_pack.py`); VERIFIED without quote |
+| `scripts/gate.sh g4` | G4 | incomplete eight-count critique (via `critique.py`); missing CLAIM AUDIT / unfinished HYPOTHESIS\|TESTED (via `claim_audit.py`); steal no-consent (via `consent.py`); steal unquarantined (via `quarantine.py`); steal sign-in/dispatch/swarm (via `steal_flow.py`); Jail pin+consent (via `pin_consent.py`); over-verify thrash (via `proportionality.py`); unisolated / author-diary review-pack (via `review_pack.py`); VERIFIED without quote |
 | `scripts/gate.sh g5` | G5 | verdict soft/missing citations / FAIL delivered; empty or theater Breach Register rows (via `verdict.py`); forge no-PR-consent when forge/PR claimed (via `forge.py`) |
 | `scripts/review-pack.sh` (Python core) | G4 hetero isolation | cannot emit isolated pack; pack missing when hetero claimed; author diary / forbidden files / CoT in pack (`review_pack.py --reject-unisolated` / `--reject-author-diary` / `--check-isolation`) |
 | `scripts/finish.sh` (Python core) | finish menu / suite-green | red suite / missing DONE probes (`finish.py --reject-red-suite` / `--require-green`; no menu until green) |
@@ -21,6 +21,8 @@ A model writing "G4 PASS" in markdown is not a gate. An exit code is.
 | `scripts/consent.sh` (Python core) | Steal consent-protocol | missing CONSENT / header theater / uncovered enlisted agent (`consent.py --reject-no-consent` / `--check-consent`) |
 | `scripts/steal-flow.sh` (Python core) | Steal sign-in / dispatch / swarm | missing SIGN-IN HANDOFF / runs layout / unbounded swarm (`steal_flow.py --reject-no-signin` / `--reject-no-dispatch-layout` / `--reject-unbounded-swarm` / `--check-signin` / `--check-dispatch` / `--check-swarm`) |
 | `scripts/pin-and-consent.sh` (Python core) | Jail pin-and-consent | missing provenance pin / named-skill consent (`pin_consent.py --reject-unpinned` / `--reject-no-skill-consent` / `--check-pin-consent`) |
+| `scripts/ask-spec.sh` (Python core) | ask→spec | missing goal/done-when/out-of-scope/effort_class when ask-spec activity present (`ask_spec.py --reject-no-spec` / `--check-ask-spec`) |
+| `scripts/proportionality.sh` (Python core) | proportionality / anti-loop | verify/critique/gate cycles exceed effort_class caps (`proportionality.py --reject-over-verify` / `--check-proportionality` / `--record-cycle`) |
 | `scripts/heal-verify.sh` (Python core) | heal-and-verify triad + postmortem | missing Cure/No-new-wounds/Mechanism or postmortem (`heal_verify.py --reject-no-triad` / `--reject-no-postmortem` / `--check-heal`) |
 | `scripts/reproduce.sh` (Python core) | reproduce-and-bisect fingerprint + combat ledger | missing fingerprint or combat ledger (`reproduce.py --reject-no-repro` / `--reject-no-combat-ledger` / `--check-reproduce`) |
 | `scripts/triage.sh` (Python core) | holy triage block + snapshot | missing triage block or snapshot (`triage.py --reject-no-triage` / `--reject-no-snapshot` / `--check-triage`) |
@@ -107,7 +109,7 @@ suite. Thin twins: `scripts/eval.sh`, `scripts/eval.ps1` (same exits 0/1).
 - Vow of Phases → gate order; `gate.sh g4` refuses if g2 never passed
 - Vow of the Ledger → missing ledger is a hard fail
 - Vow of Critique → G4 critique eight-count HARD-GATE (all eight axes + Checked evidence; file presence alone fails) + hetero-critique isolation HARD-GATE (review pack only; no author diary)
-- Vow of Consent → Steal consent-protocol HARD-GATE (CONSENT + agent → role / EMPEROR_CONSENT_AGENTS / solo; G4 calls consent.py) + Steal sign-in/dispatch/swarm HARD-GATE (SIGN-IN HANDOFF + runs layout + bound swarm; G4 calls steal_flow.py) + Jail pin-and-consent HARD-GATE (source-url+hash + named-skill consent; G4 calls pin_consent.py) + forge PR-consent HARD-GATE (`--reject-no-pr-consent` / `--check-pr-consent`; G5 calls forge.py)
+- Vow of Consent → Steal consent-protocol HARD-GATE (CONSENT + agent → role / EMPEROR_CONSENT_AGENTS / solo; G4 calls consent.py) + Steal sign-in/dispatch/swarm HARD-GATE (SIGN-IN HANDOFF + runs layout + bound swarm; G4 calls steal_flow.py) + Jail pin-and-consent HARD-GATE (source-url+hash + named-skill consent; G4 calls pin_consent.py) + ask→spec HARD-GATE (goal/done-when/out-of-scope/effort_class; G0 calls ask_spec.py) + proportionality HARD-GATE (effort caps + cycle ledger; G4 calls proportionality.py) + forge PR-consent HARD-GATE (`--reject-no-pr-consent` / `--check-pr-consent`; G5 calls forge.py)
 - Vow of Worthy Spend → lifespan section with empty "bought" is a warning, not a pass decoration
 - Verdict / Stake of Retribution → G5 verdict + Breach Register HARD-GATE (deliverable Verdict with citations; no empty/theater Stake rows)
 

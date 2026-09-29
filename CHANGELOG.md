@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.4.143
+
+- Vertical depth: ask→spec + proportionality / anti-loop HARD-GATE — `scripts/lib/ask_spec.py` (`--reject-no-spec` / `--check-ask-spec` / `--emit`) translates user ask → goal / done-when / out-of-scope / effort_class before setup thrash; `scripts/lib/proportionality.py` (`--reject-over-verify` / `--check-proportionality` / `--record-cycle`) caps verify/critique/gate cycles by class via `effort-cycles.json`
+- Fixtures `evals/fixtures/ask-spec-proportionality/`; thin twins `ask-spec` / `proportionality` / `anti-loop`; `emperor ask-spec` / `emperor proportionality`; G0 calls ask-spec; G4 records gate cycle + checks caps; critique/finish bump cycles when class declared
+- Doctrine/SKILL/mechanical-gates/software-factory/bakeoff honesty lockstep; idle Steal/Jail/Holy vacuous PASS remains separate (task-path thrash only)
+- Not archaeology; not embeddings; not Nen/museum/k8s growth; field failure fix for token-budget setup+verify thrash
+- Plugin, marketplace, and SKILL.md at 0.4.143
+
 ## 0.4.142
 
 - Vertical depth: Jail pin-and-consent HARD-GATE — `scripts/lib/pin_consent.py` card-style `--reject-unpinned` / `--reject-no-skill-consent` / `--check-pin-consent` (source-url+hash provenance pin + named-skill client consent before adaptation; vacuous PASS when no Jail pin activity)

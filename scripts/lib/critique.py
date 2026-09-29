@@ -367,6 +367,16 @@ def main(argv: Sequence[str] | None = None) -> int:
         sys.stdout.write(format_card())
         return 0
 
+    # Proportionality: count critique invocations when effort_class is declared.
+    if target.is_dir():
+        try:
+            from proportionality import record_cycle, resolve_effort_class
+
+            if resolve_effort_class(target) is not None:
+                record_cycle(target, "critique")
+        except Exception:
+            pass
+
     errs = validate(target)
     if errs:
         for e in errs:
