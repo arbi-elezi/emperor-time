@@ -631,12 +631,25 @@ def _mirror_is_fetch_only(mirror: Path) -> tuple[bool, str]:
     head = mirror / "HEAD"
     refs = mirror / "refs"
     objects = mirror / "objects"
+    cfg = mirror / "config"
     if not head.is_file():
         return False, "mirror missing HEAD"
     if not refs.is_dir() and not (mirror / "packed-refs").is_file():
         return False, "mirror missing refs/ or packed-refs"
     if not objects.is_dir():
         return False, "mirror missing objects/"
+    # Prefer config core.bare (nested checkouts under a host worktree can make
+    # `git -C mirror rev-parse --is-bare-repository` lie on some CI hosts).
+    bare_cfg = False
+    if cfg.is_file():
+        try:
+            raw = cfg.read_text(encoding="utf-8", errors="replace")
+        except OSError as exc:
+            return False, f"mirror config unreadable: {exc}"
+        if re.search(r"(?im)^\s*bare\s*=\s*true\s*$", raw):
+            bare_cfg = True
+        elif re.search(r"(?im)^\s*bare\s*=\s*false\s*$", raw):
+            return False, "config core.bare=false (not fetch-only)"
     # Working-tree theater: tracked source files at mirror root (README.md etc.)
     # Bare mirrors should not have project source beside git internals.
     git_internals = {
@@ -654,7 +667,9 @@ def _mirror_is_fetch_only(mirror: Path) -> tuple[bool, str]:
             if name.lower() in git_internals or name in git_internals:
                 continue
             # allow mirror.meta sidecar etc.
-            if name.endswith(".json") or name.endswith(".md") and name.upper() == "POINTER.MD":
+            if name.endswith(".json") or (
+                name.endswith(".md") and name.upper() == "POINTER.MD"
+            ):
                 continue
             strangers.append(name)
     except OSError as exc:
@@ -664,10 +679,21 @@ def _mirror_is_fetch_only(mirror: Path) -> tuple[bool, str]:
             "mirror has working-tree files "
             f"({', '.join(strangers[:5])}) — not fetch-only bare"
         )
-    # git confirmation when available
+    if bare_cfg:
+        return True, "ok"
+    # Fallback: ask git when config omitted bare=
     rc, out = _run_git(["-C", str(mirror), "rev-parse", "--is-bare-repository"])
-    if rc == 0 and out.strip().lower() == "false":
+    line = ""
+    for ln in (out or "").splitlines():
+        s = ln.strip().lower()
+        if s in {"true", "false"}:
+            line = s
+            break
+    if rc == 0 and line == "false":
         return False, "git reports non-bare repository"
+    if rc == 0 and line == "true":
+        return True, "ok"
+    # Structural bare-ish (HEAD+objects+refs, no strangers, no .git) — accept
     return True, "ok"
 
 
