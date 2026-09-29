@@ -1,0 +1,1 @@
+effort_class present

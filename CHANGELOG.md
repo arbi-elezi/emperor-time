@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.4.159
+
+### Added
+- **Scope-hint-bind HARD-GATE** — `ask_spec.py --check-scope-hints` / `--reject-over-scope-class` (`SCOPE_HINT_BIND`). Ask→spec `effort_class` must not exceed the hint ceiling of Ask(quoted)∪goal∪done-when∪out-of-scope; parking tiny-hint language ("fix typo" / "one-line") in out-of-scope while Ask/goal/done-when stay clean can no longer unlock `FORCE_TABLE[large]` / `EFFORT_CAPS[large]` while `SPEC_HINT_BIND` stays green. Length-only infer stays advisory; only strong `_TINY_HINTS` bind; `_LARGE_HINTS` lift the ceiling; tighter-than-hint class OK. G4 `_run_scope_hints` after `_run_spec_hints`. Fixtures `scope-hint-bind/` (task-scope-park FAIL / task-clean PASS / task-tighter PASS / task-vacuous SKIP). Distrust spine untouched. Local eval only (Actions stay disabled).
+
 ## 0.4.158
 
 ### Added
