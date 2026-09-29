@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.4.168
+
+### Added
+- **Harness review-pack checks** — `review_pack.py --check-isolation` follows `harness_plan.g4_check_mode` / `HARNESS_DRIVES_G4_CHECKS`. Ask→spec `effort_class` → FORCE_TABLE Tools/Optional/Forbidden now drives G4 isolation: forbidden/unlisted → SKIP (tiny forbids review-pack museum); Optional unused → SKIP; Tools → require isolated `review-pack/` (FAIL when missing or author-diary contaminated); no plan → legacy activity-scoped (idle SKIP; hetero-claimed without pack still FAILS). Closes the medium hole left after v0.4.167: Tools listed review-pack and G5 required a hetero cite, but G4 always SKIP'd absent packs (cite theater). Also detects `review-pack/` dir via `TOOL_ACTIVITY` paths. Fixtures `harness-review-pack-checks/`. Distrust spine untouched. Local eval only (Actions stay disabled).
+
 ## 0.4.167
 
 ### Added

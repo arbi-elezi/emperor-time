@@ -1,0 +1,39 @@
+{
+  "effort_class": "medium",
+  "owner": "harness",
+  "tools": [
+    "ask-spec",
+    "harness-plan",
+    "activate",
+    "route",
+    "gate",
+    "work-order",
+    "tdd",
+    "proportionality",
+    "critique",
+    "claim-audit",
+    "grill",
+    "review-pack",
+    "forge",
+    "context",
+    "done",
+    "finish"
+  ],
+  "optional": [
+    "heal",
+    "iso"
+  ],
+  "forbidden": [
+    "excavate",
+    "swarm-emulate",
+    "unbounded-steal"
+  ],
+  "caps": {
+    "verify": 8,
+    "critique": 8,
+    "gate": 12,
+    "total": 20
+  },
+  "notes": "feature-scale; harness caps cycles \u2014 agent does not invent force",
+  "iron": "HARNESS_OWNS_TOOL_AND_FORCE"
+}

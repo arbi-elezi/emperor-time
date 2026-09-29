@@ -6,23 +6,32 @@ Closes bash↔ps1 twin drift: review-pack.ps1 copied the entire work-order
 into criteria.md while review-pack.sh extracted only the
 ## Acceptance criteria section.
 
+Harness-driven G4 (HARNESS_DRIVES_G4_CHECKS):
+  --check-isolation follows harness_plan.g4_check_mode("review-pack"):
+  forbidden/unlisted → SKIP; Optional unused → SKIP; Tools → require pack
+  (FAIL when missing/unisolated); no plan → legacy activity-scoped
+  (SKIP when no pack / no hetero signal). Closes medium Tools listing
+  review-pack while G4 always SKIP'd absent packs (cite-theater hole after
+  v0.4.167 G5 hetero cites).
+
 Always-fail HARD-GATE helpers:
   --reject-unisolated      refuse non-isolated examiner handoff
   --reject-author-diary    refuse author CoT / self-critique / diary in pack
 
 Check mode:
   --check-isolation PATH   review-pack dir or task dir
-                           (exit 1 on forbidden files / author-diary content;
-                            SKIP vacuous when no pack / no hetero signal)
+                           (exit 1 on forbidden files / author-diary content /
+                            missing pack when harness requires review-pack;
+                            SKIP vacuous when harness skips or legacy idle)
 
 Emit mode (unchanged):
   review_pack.py <task-dir> [base] [head]
 
 No args prints the ISOLATION card.
 Thin twins: scripts/review-pack.sh / scripts/review-pack.ps1
-G4 in gate.py calls --check-isolation when review-pack / hetero activity
-is present.
-Activity-scoped: SKIP (vacuous — no activity) when no pack / no hetero signal.
+G4 in gate.py calls --check-isolation; core SKIPs when harness does not
+select review-pack.
+Iron: HARNESS_DRIVES_G4_CHECKS.
 
 Doctrine: chains/judgment-chain/hetero-critique.md + iron law 9
 (Reviewer isolation) + templates/review-pack.md.
@@ -40,6 +49,7 @@ from check_report import report_check
 
 LEAF = "chains/judgment-chain/hetero-critique.md"
 IRON = "references/iron-laws.md"
+IRON_G4 = "HARNESS_DRIVES_G4_CHECKS"
 
 # Files the emitter may place (and the examiner may receive).
 ALLOWED_PACK_NAMES = frozenset(
@@ -375,14 +385,16 @@ def format_card() -> str:
         "STEP 3 id=dispatch name=Hand pack only to hetero-critic "
         "et=fresh context; builder does not write hetero verdict",
         "STEP 3 key=Iron law 9 — examiner receives the review pack only",
-        "STEP 4 id=gate name=G4 calls --check-isolation "
-        "et=SKIP (vacuous) when no pack / no hetero signal",
-        "STEP 4 key=Pack-present theater with diary still fails",
+        f"STEP 4 id=gate name=G4 calls --check-isolation "
+        f"et=harness g4_check_mode (iron={IRON_G4}): Tools require pack; "
+        "forbidden/unlisted SKIP; no plan → SKIP when idle",
+        "STEP 4 key=Pack-present theater with diary still fails; "
+        "medium Tools without pack FAILS",
         "",
         "MUST: Before hetero-critique dispatch, emit an isolated pack and keep "
         f"author diary out of it. Open {LEAF}; run "
         "scripts/emperor review-pack --check-isolation <task-dir>. "
-        "G4 calls this module when review-pack / hetero activity is present.",
+        f"G4 follows harness plan ({IRON_G4}).",
         "MUST-NOT: hand the full task dir; pack self-critique.md / critique.md / "
         "diary / CoT / worker out.txt; claim isolation without "
         "--check-isolation exit 0.",
@@ -465,10 +477,54 @@ def main(argv: Sequence[str] | None = None) -> int:
 
     if args.check_isolation is not None:
         target = args.check_isolation
+        # Harness drives whether G4 requires an isolated pack
+        # (ask→spec → effort_class → Tools). Medium Tools include
+        # review-pack → missing pack FAILS. Tiny forbids → SKIP.
+        # No plan → legacy activity-scoped (idle SKIP).
+        mode = "always"
+        if target.exists():
+            try:
+                from harness_plan import g4_check_mode, tool_was_used
+
+                mode = g4_check_mode(target, "review-pack")
+                if mode == "skip":
+                    return report_check(
+                        "isolation", target, [], vacuous=True
+                    )
+                if mode == "activity" and not tool_was_used(
+                    target if target.is_dir() else target.parent,
+                    "review-pack",
+                ):
+                    return report_check(
+                        "isolation", target, [], vacuous=True
+                    )
+            except Exception:
+                mode = "always"
+
+        if mode == "require":
+            pack = _pack_dir(target) if target.exists() else None
+            if pack is None:
+                errs = [
+                    "missing isolated review-pack/ "
+                    f"(harness Tools require review-pack — {IRON_G4}; "
+                    "run scripts/emperor review-pack <task-dir>; "
+                    f"see {LEAF})"
+                ]
+                return report_check(
+                    "isolation", target, errs, vacuous=False
+                )
+            errs = validate_isolation(target)
+            return report_check(
+                "isolation", target, errs, vacuous=False
+            )
+
+        # always | activity+used — legacy activity-scoped validate
         errs = validate_isolation(target)
-        text = _combined_signal_text(target) if target.exists() else ""
+        body = _combined_signal_text(target) if target.exists() else ""
         pack = _pack_dir(target) if target.exists() else None
-        hetero = _has_hetero_signal(target, text) if target.exists() else False
+        hetero = (
+            _has_hetero_signal(target, body) if target.exists() else False
+        )
         vacuous = target.exists() and (not hetero) and pack is None
         return report_check("isolation", target, errs, vacuous=vacuous)
 

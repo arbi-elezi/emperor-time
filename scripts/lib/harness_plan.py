@@ -47,11 +47,13 @@ Check / require / emit:
                             (CLASS_CAPS_BIND — inflate verify:16 on tiny plan
                             cannot finish green; tighter-than-class Caps OK)
 
-G4 check selection (critique / claim-audit):
+G4 check selection (critique / claim-audit / review-pack):
   g4_check_mode(task, tool) → require|activity|skip|always from plan Tools/
   Optional/Forbidden. Tiny forbids critique → G4 SKIP eight-count (no museum);
   medium Tools include critique → eight-count still always-on for that class.
-  Iron: HARNESS_DRIVES_G4_CHECKS (harness chooses which checks / how many).
+  Medium Tools include review-pack → G4 --check-isolation requires pack;
+  tiny forbids review-pack → SKIP isolation museum. Iron: HARNESS_DRIVES_G4_CHECKS
+  (harness chooses which checks / how many).
   --require-plan PATH       always-on when task active: missing/invalid plan FAILS
                             (never vacuous — G0 calls this after ask→spec)
   --emit / --from / --effort-class / --write PATH
@@ -748,6 +750,7 @@ TOOL_ACTIVITY: dict[str, dict[str, Any]] = {
     },
     "review-pack": {
         "files": ("review-pack.md", "review_pack.md", "hetero.md"),
+        "paths": ("review-pack/",),
         "signals": (
             r"(?i)--check-isolation\b",
             r"(?i)--reject-unisolated\b",
@@ -1539,7 +1542,7 @@ def format_card() -> str:
         "STEP 3 key=HARD-GATE --reject-no-plan / --require-plan / --check-harness-plan / --check-forbidden / --reject-forbidden-used / --check-class-tools / --reject-over-class-tools / --check-ask-class / --reject-class-mismatch / --check-class-caps / --reject-over-class-caps",
         "STEP 4 id=drive name=Do-once at proportional scale "
         "et=tiny → few tools + low caps; forbid excavate/sandbox/critique museum",
-        "STEP 4 key=g4_check_mode drives G4 critique/claim-audit + G5 verdict cites (SKIP when not selected; require when in Tools)",
+        "STEP 4 key=g4_check_mode drives G4 critique/claim-audit/review-pack + G5 verdict cites (SKIP when not selected; require when in Tools)",
         "",
         "MUST: After ask→spec, emit harness plan "
         "(scripts/emperor harness-plan --emit --from <task> --write "
