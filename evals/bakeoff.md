@@ -68,6 +68,7 @@ mean **disk + eval**, not live multi-vendor win rates.
 | ask-hint-bind HARD-GATE | `ask_spec.py` (`--reject-over-ask-class` / `--check-ask-hints` / `ASK_HINT_BIND`) + `evals/fixtures/ask-hint-bind/` + G4 `_run_ask_hints` (after class-caps) | TESTED |
 | spec-hint-bind HARD-GATE | `ask_spec.py` (`--reject-over-spec-class` / `--check-spec-hints` / `SPEC_HINT_BIND`) + `evals/fixtures/spec-hint-bind/` + G4 `_run_spec_hints` (after ask-hints) | TESTED |
 | scope-hint-bind HARD-GATE | `ask_spec.py` (`--reject-over-scope-class` / `--check-scope-hints` / `SCOPE_HINT_BIND`) + `evals/fixtures/scope-hint-bind/` + G4 `_run_scope_hints` (after spec-hints) | TESTED |
+| body-hint-bind HARD-GATE | `ask_spec.py` (`--reject-over-body-class` / `--check-body-hints` / `BODY_HINT_BIND`) + `evals/fixtures/body-hint-bind/` + G4 `_run_body_hints` (after scope-hints) | TESTED |
 | ask-spec require-before-setup | `ask_spec.py --require-spec` always-on at G0; SessionStart/activate MUST; idle `--check-ask-spec` SKIP retained; v0.4.147 | TESTED |
 | proportionality / anti-loop HARD-GATE | `scripts/lib/proportionality.py` (`--reject-over-verify` / `--check-proportionality` / `--record-cycle` / `bump_and_check` / `MISSING_CLASS_DEFAULTS_TINY`) + fixtures ask-spec-proportionality + `emperor proportionality` | TESTED |
 | heal-and-verify (triad + postmortem) HARD-GATE | `scripts/lib/heal_verify.py` (`--reject-no-triad` / `--reject-no-postmortem` / `--check-heal`) + `evals/fixtures/heal-and-verify/` + `emperor heal-verify` | TESTED |
