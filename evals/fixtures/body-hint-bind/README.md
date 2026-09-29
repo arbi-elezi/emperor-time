@@ -12,8 +12,8 @@ owns force — agent does not inflate class by editing freeform sections.
 
 Length-only infer stays advisory. Only strong `_TINY_HINTS` bind.
 `_LARGE_HINTS` lift the ceiling. Tighter-than-hint class remains OK.
-Rejected: binding noisy `_SMALL_HINTS` (HARD-GATE/fixture/patch);
-ledger-wide park (separate surface).
+Rejected: binding noisy `_SMALL_HINTS` (HARD-GATE/fixture/patch).
+Ledger-wide park closed by `TASK_HINT_BIND` (v0.4.161).
 
 | Fixture | Expect |
 |---|---|
