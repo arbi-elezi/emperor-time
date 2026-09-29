@@ -4,6 +4,12 @@
 Doctrine: chains/judgment-chain/self-critique.md — eight counts, each showing
 what was examined. Critique *file presence* is not eight-count completeness.
 
+Harness-driven G4 (HARNESS_DRIVES_G4_CHECKS):
+  When a harness plan exists, --check-critique SKIPs if critique is
+  forbidden/unlisted; Optional → SKIP when unused; Tools → require
+  eight-count. No plan → legacy always-on. Closes tiny catch-22 where
+  FORCE_TABLE forbids critique but G4 demanded eight-count.
+
 Always-fail HARD-GATE helpers:
   --reject-incomplete-critique   refuse missing/partial/unexamined counts
 
@@ -22,6 +28,7 @@ import re
 import sys
 from pathlib import Path
 from typing import Sequence
+from check_report import report_check
 
 LEAF = "chains/judgment-chain/self-critique.md"
 TEMPLATE = "templates/critique.md"
@@ -108,8 +115,8 @@ def _combined_text(task_or_file: Path) -> tuple[str, list[Path]]:
         # Prefer dedicated files; still fold Self-critique / eight-counts
         # sections when those files are absent.
         if not parts and re.search(
-            r"(?im)^#{1,6}\s+.*(?:Self-critique|eight counts)\b|"
-            r"(?i)Self-critique\s*:",
+            r"(?im)(?:^#{1,6}\s+.*(?:Self-critique|eight counts)\b|"
+            r"Self-critique\s*:)",
             text,
         ):
             parts.append(text)
@@ -297,6 +304,7 @@ def format_card() -> str:
         f"CRITIQUE leaf={LEAF}",
         f"CRITIQUE template={TEMPLATE}",
         "CRITIQUE iron=NO_G4_WITHOUT_EIGHT_COUNT_CRITIQUE",
+        "CRITIQUE iron=HARNESS_DRIVES_G4_CHECKS",
         "STEP 1 id=presence name=Critique artifact "
         "et=critique.md or self-critique section exists",
         "STEP 1 key=File presence alone is theater — continue to eight-count",
@@ -311,9 +319,10 @@ def format_card() -> str:
         "et=blocker/should-fix/note; PASS|PASS-WITH-CONDITIONS|FAIL",
         "STEP 4 key=Hand to hetero-critique or verdicts-and-breaches",
         "",
-        "MUST: Before G4, critique carries all eight counts with Checked "
-        f"evidence. Open {LEAF}; run scripts/emperor critique <task-dir>. "
-        "G4 calls this module.",
+        "MUST: Before G4, when harness plan selects critique (Tools) or optional "
+        "critique shows activity, critique carries all eight counts with "
+        f"Checked evidence. Tiny/unlisted → SKIP (HARNESS_DRIVES_G4_CHECKS). "
+        f"Open {LEAF}; run scripts/emperor critique <task-dir>. G4 calls this.",
         "MUST-NOT: critique-file-present theater; empty Checked cells; "
         "batching 'criteria 1–4 look fine'; skipping an axis.",
     ]
@@ -367,11 +376,31 @@ def main(argv: Sequence[str] | None = None) -> int:
         sys.stdout.write(format_card())
         return 0
 
-    # Proportionality: always count critique on a task dir. Missing
-    # effort_class stamps DEFAULT_EFFORT_CLASS=tiny and enforces tiny caps.
-    # Ask→spec always-on is G0 --require-spec (not re-checked here — G4 peers
-    # stamp .gates/g0 without rewriting every fixture ask-spec.md).
-    if target.is_dir():
+    # Harness drives which G4 checks run (ask→spec → effort_class → tools).
+    # Tiny forbids critique → SKIP eight-count (closes catch-22 vs
+    # FORBIDDEN_TOOLS_NEVER_RUN). No plan → legacy always-on.
+    mode = "always"
+    if target.is_dir() or target.exists():
+        try:
+            from harness_plan import g4_check_mode, tool_was_used
+
+            mode = g4_check_mode(target, "critique")
+            if mode == "skip":
+                return report_check(
+                    "critique", target, [], vacuous=True
+                )
+            if mode == "activity" and not tool_was_used(
+                target if target.is_dir() else target.parent, "critique"
+            ):
+                return report_check(
+                    "critique", target, [], vacuous=True
+                )
+        except Exception:
+            mode = "always"
+
+    # Proportionality: count critique only when the check actually runs.
+    # Missing effort_class stamps DEFAULT_EFFORT_CLASS=tiny.
+    if target.is_dir() and mode in ("require", "activity", "always"):
         try:
             from proportionality import bump_and_check
 
@@ -384,12 +413,7 @@ def main(argv: Sequence[str] | None = None) -> int:
             pass
 
     errs = validate(target)
-    if errs:
-        for e in errs:
-            print(f"critique FAIL: {e}", file=sys.stderr)
-        return 1
-    print(f"critique PASS: {target}")
-    return 0
+    return report_check("critique", target, errs, vacuous=False)
 
 
 if __name__ == "__main__":

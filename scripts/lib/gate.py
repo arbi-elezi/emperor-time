@@ -602,10 +602,12 @@ def run_gate(gate: str, task: Path) -> None:
         _require_prior(stamp, gate)
         _need_ledger(gate, ledger)
         # Mechanical eight-count: all axes + Checked evidence.
-        # Critique file presence ≠ eight-count completeness (critique.py).
+        # Harness-driven (HARNESS_DRIVES_G4_CHECKS): critique.py SKIPs when
+        # plan forbids/unlists critique (tiny); Optional unused → SKIP;
+        # Tools → require eight-count; no plan → legacy always-on.
         _run_critique(gate, task)
         # Mechanical claim-audit: CLAIM AUDIT line + terminal rows.
-        # Not critique-file-present theater — exit code from claim_audit.py.
+        # Same harness-driven SKIP/require via claim_audit.py.
         _run_claim_audit(gate, task)
         # Steal consent: CONSENT record before enlistment.
         # SKIP (vacuous) when no worker runs / steal markers.

@@ -11,9 +11,10 @@ Exercised green paths still print:
 
     {label} PASS: {target}
 
-Exit 0 for both SKIP and PASS; exit 1 for FAIL. Always-on gates (critique
-eight-count, claim-audit, verdict, …) never use this helper — they have
-no vacuous path.
+Exit 0 for both SKIP and PASS; exit 1 for FAIL. Legacy always-on gates
+(verdict, …) may still avoid this helper. Critique eight-count and
+claim-audit use report_check when harness plan selects skip/activity
+(HARNESS_DRIVES_G4_CHECKS); no-plan paths stay require-or-fail.
 """
 from __future__ import annotations
 
