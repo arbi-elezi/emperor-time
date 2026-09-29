@@ -15,7 +15,7 @@
           },
           {
             "type": "prompt",
-            "prompt": "Emperor Time: make software. MUST-route is already on — do not wait for the client to say emperor time. Read ACTIVATION next= from the activate card (or run scripts/emperor activate) and open that skill before clarifying questions. Do not ask OS or language; read .emperor/host.env and .emperor/survey.md. Resume .emperor/state.md. If no task: scripts/emperor queue next. Lost trees: skills/emperor-excavate. DONE is scripts/emperor done / emperor.ps1 done / emperor.cmd done. Leaf: skills/emperor-resume/must-route.md. Memory is CONJECTURE."
+            "prompt": "Emperor Time: make software. MUST-route is already on \u2014 do not wait for the client to say emperor time. Read ACTIVATION next= from the activate card (or run scripts/emperor activate) and open that skill before clarifying questions. Do not ask OS or language; read .emperor/host.env and .emperor/survey.md. Resume .emperor/state.md. Before setup thrash: scripts/emperor ask-spec --emit \"<ask>\" --write .emperor/tasks/<id>/ask-spec.md (effort_class caps critique/finish/grill; missing class \u2192 tiny hard cap). If no task: scripts/emperor queue next. Lost trees: skills/emperor-excavate. DONE is scripts/emperor done / emperor.ps1 done / emperor.cmd done. Leaf: skills/emperor-resume/must-route.md. Memory is CONJECTURE."
           }
         ]
       }

@@ -351,19 +351,23 @@ def main(argv: Sequence[str] | None = None) -> int:
         sys.stdout.write(format_card())
         return 0
 
-    def _bump_verify(task: Path | None) -> None:
+    def _bump_verify(task: Path | None) -> list[str]:
+        """Record verify cycle; missing effort_class → tiny hard cap."""
         if task is None or not task.is_dir():
-            return
+            return []
         try:
-            from proportionality import record_cycle, resolve_effort_class
+            from proportionality import bump_and_check
 
-            if resolve_effort_class(task) is not None:
-                record_cycle(task, "verify")
+            return bump_and_check(task, "verify")
         except Exception:
-            pass
+            return []
 
     if args.check_suite is not None:
-        _bump_verify(args.check_suite)
+        prop_errs = _bump_verify(args.check_suite)
+        if prop_errs:
+            for e in prop_errs:
+                print(f"finish FAIL: {e}", file=sys.stderr)
+            return 1
         errs = check_suite(args.check_suite, use_eval=args.with_eval)
         if errs:
             for e in errs:
@@ -374,7 +378,11 @@ def main(argv: Sequence[str] | None = None) -> int:
 
     if args.require_green:
         target = args.path
-        _bump_verify(target)
+        prop_errs = _bump_verify(target)
+        if prop_errs:
+            for e in prop_errs:
+                print(f"finish FAIL: {e}", file=sys.stderr)
+            return 1
         errs = check_suite(target, use_eval=args.with_eval)
         if errs:
             for e in errs:

@@ -6008,7 +6008,7 @@ def run_evals(root: Path) -> int:
     h.require_contains("steal-consent", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing steal-consent")
     h.require_contains("consent.py", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing consent.py")
     h.require_contains("0.4.132", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing 0.4.132 tip")
-    h.require_contains("0.4.145", ".claude-plugin/plugin.json", "plugin.json not at 0.4.145")
+    h.require_contains("0.4.146", ".claude-plugin/plugin.json", "plugin.json not at 0.4.146")
     h.require_contains("0.4.137", "CHANGELOG.md", "CHANGELOG missing retained 0.4.137")
     h.require_contains("0.4.136", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing retained 0.4.136")
     h.require_contains("0.4.132", "CHANGELOG.md", "CHANGELOG missing 0.4.132")
@@ -6075,10 +6075,12 @@ def run_evals(root: Path) -> int:
     h.require_contains("steal-sign-dispatch-swarm", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing steal-sign-dispatch-swarm")
     h.require_contains("SIGNIN_THEN_DISPATCH_THEN_BOUNDED_SWARM", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing SIGNIN_THEN_DISPATCH_THEN_BOUNDED_SWARM")
     h.require_contains("steal_flow.py", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing steal_flow.py")
-    h.require_contains("0.4.145", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing 0.4.145 tip")
+    h.require_contains("0.4.146", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing 0.4.146 tip")
+    h.require_contains("0.4.145", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing retained 0.4.145")
     h.require_contains("0.4.144", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing retained 0.4.144")
     h.require_contains("0.4.143", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing retained 0.4.143")
-    h.require_contains("0.4.145", "CHANGELOG.md", "CHANGELOG missing 0.4.145")
+    h.require_contains("0.4.146", "CHANGELOG.md", "CHANGELOG missing 0.4.146")
+    h.require_contains("0.4.145", "CHANGELOG.md", "CHANGELOG missing retained 0.4.145")
     h.require_contains("0.4.144", "CHANGELOG.md", "CHANGELOG missing retained 0.4.144")
     h.require_contains("0.4.143", "CHANGELOG.md", "CHANGELOG missing retained 0.4.143")
     h.require_contains("0.4.142", "CHANGELOG.md", "CHANGELOG missing 0.4.142")
@@ -6097,7 +6099,7 @@ def run_evals(root: Path) -> int:
     h.require_contains("EFFORT_CAP_BY_CLASS", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing EFFORT_CAP_BY_CLASS")
     h.require_contains("ask_spec.py", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing ask_spec.py")
     h.require_contains("proportionality.py", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing proportionality.py")
-    h.require_contains("0.4.145", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing 0.4.145 tip keyword")
+    h.require_contains("0.4.146", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing 0.4.146 tip keyword")
     h.require_contains("vacuous-pass-peers", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing vacuous-pass-peers")
     h.require_contains("report_check", "scripts/lib/forge.py", "forge missing report_check")
     h.require_contains("report_check", "scripts/lib/review_pack.py", "review_pack missing report_check")
@@ -6110,6 +6112,12 @@ def run_evals(root: Path) -> int:
     h.require_contains("vacuous-pass-honesty", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing vacuous-pass-honesty")
     h.require_contains("vacuous-pass-honesty-hard-gate", "evals/evals.json", "evals.json missing vacuous-pass-honesty-hard-gate")
     h.require_contains("vacuous-pass-peers-hard-gate", "evals/evals.json", "evals.json missing vacuous-pass-peers-hard-gate")
+    h.require_contains("default-tiny-hard-cap", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing default-tiny-hard-cap")
+    h.require_contains("MISSING_CLASS_DEFAULTS_TINY", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing MISSING_CLASS_DEFAULTS_TINY")
+    h.require_contains("bump_and_check", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing bump_and_check")
+    h.require_contains("vacuous-pass-honesty", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing retained vacuous-pass-honesty")
+    h.require_contains("default-tiny-hard-cap-hard-gate", "evals/evals.json", "evals.json missing default-tiny-hard-cap-hard-gate")
+    h.require_contains("vacuous-pass-honesty-hard-gate", "evals/evals.json", "evals.json missing retained vacuous-pass-honesty-hard-gate")
     h.require_contains("SKIP (vacuous", "references/mechanical-gates.md", "mechanical-gates missing SKIP (vacuous")
     h.require_contains("Activity-scoped vs always-on", "references/mechanical-gates.md", "mechanical-gates missing activity-scoped table")
     h.require_contains("check_report.py", "evals/bakeoff.md", "bakeoff.md missing check_report.py")
@@ -6123,7 +6131,7 @@ def run_evals(root: Path) -> int:
     h.require_contains("blind-secrets-broker", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing blind-secrets-broker")
     h.require_contains("reject-secret-leak", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing reject-secret-leak")
     h.require_contains("check-env-redacted", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing check-env-redacted")
-    h.require_contains("0.4.145", ".claude-plugin/marketplace.json", "marketplace.json not at 0.4.145")
+    h.require_contains("0.4.146", ".claude-plugin/marketplace.json", "marketplace.json not at 0.4.146")
     h.require_contains("0.4.142", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing retained 0.4.142")
     h.require_contains("finish.py", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing finish.py")
     h.require_contains("reject-red-suite", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing reject-red-suite")
@@ -8478,6 +8486,111 @@ def run_evals(root: Path) -> int:
         h.pass_msg("emperor proportionality peer forwards --reject-over-verify")
     h.pass_msg("ask_spec.py + proportionality.py thin twins + HARD-GATE")
 
+    # ---- default-tiny hard-cap (missing effort_class still bites) ----
+    h.section("default-tiny hard-cap")
+    h.need("evals/fixtures/ask-spec-proportionality/task-no-class/ledger.md")
+    h.need("evals/fixtures/ask-spec-proportionality/task-no-class-over/effort-cycles.json")
+    h.require_contains(
+        "DEFAULT_EFFORT_CLASS",
+        "scripts/lib/proportionality.py",
+        "proportionality.py missing DEFAULT_EFFORT_CLASS",
+    )
+    h.require_contains(
+        "ensure_effort_class",
+        "scripts/lib/proportionality.py",
+        "proportionality.py missing ensure_effort_class",
+    )
+    h.require_contains(
+        "bump_and_check",
+        "scripts/lib/proportionality.py",
+        "proportionality.py missing bump_and_check",
+    )
+    h.require_contains(
+        "MISSING_CLASS_DEFAULTS_TINY",
+        "scripts/lib/proportionality.py",
+        "proportionality.py missing MISSING_CLASS_DEFAULTS_TINY",
+    )
+    h.require_contains(
+        "bump_and_check",
+        "scripts/lib/critique.py",
+        "critique.py missing bump_and_check",
+    )
+    h.require_contains(
+        "bump_and_check",
+        "scripts/lib/finish.py",
+        "finish.py missing bump_and_check",
+    )
+    h.require_contains(
+        "bump_and_check",
+        "scripts/lib/grill.py",
+        "grill.py missing bump_and_check",
+    )
+    h.require_contains(
+        "ask-spec",
+        "hooks/hooks.json",
+        "SessionStart missing ask-spec nudge",
+    )
+    h.require_contains(
+        "MISSING_CLASS_DEFAULTS_TINY",
+        "references/mechanical-gates.md",
+        "mechanical-gates missing MISSING_CLASS_DEFAULTS_TINY",
+    )
+    h.require_contains(
+        "MISSING_CLASS_DEFAULTS_TINY",
+        "evals/bakeoff.md",
+        "bakeoff missing MISSING_CLASS_DEFAULTS_TINY",
+    )
+    h.require_contains(
+        "default-tiny-hard-cap-hard-gate",
+        "evals/evals.json",
+        "evals.json missing default-tiny-hard-cap-hard-gate case",
+    )
+    rc, err = h.run_py(
+        "scripts/lib/proportionality.py",
+        "--check-proportionality",
+        "evals/fixtures/ask-spec-proportionality/task-no-class-over",
+    )
+    if rc == 0:
+        h.fail_msg("task-no-class-over should fail tiny cap")
+    elif not h.grep_out(err, r"over-verify|cap"):
+        h.fail_msg(f"task-no-class-over should mention over-verify/cap: {err}")
+    else:
+        h.pass_msg("task-no-class-over rejected under default-tiny")
+    tmp = Path(tempfile.mkdtemp())
+    try:
+        import shutil as _shutil
+        src = root / "evals/fixtures/ask-spec-proportionality/task-no-class"
+        dst = tmp / "thrash"
+        _shutil.copytree(src, dst)
+        rcs = []
+        for _i in range(3):
+            rc, _out = h.run_py(
+                "scripts/lib/critique.py", "--check-critique", str(dst)
+            )
+            rcs.append(rc)
+        if rcs[:2] != [0, 0] or rcs[2] != 1:
+            h.fail_msg(f"critique no-class thrash expected [0,0,1] got {rcs}")
+        else:
+            h.pass_msg("critique no-class thrash hits tiny cap")
+        cycles = dst / "effort-cycles.json"
+        if not cycles.is_file():
+            h.fail_msg("critique thrash did not stamp effort-cycles.json")
+        else:
+            body = cycles.read_text(encoding="utf-8")
+            if '"effort_class": "tiny"' not in body and '"effort_class":"tiny"' not in body:
+                h.fail_msg(f"effort-cycles missing tiny stamp: {body}")
+            else:
+                h.pass_msg("critique thrash stamped effort_class=tiny")
+    finally:
+        shutil.rmtree(tmp, ignore_errors=True)
+    _, pcard = h.run_py("scripts/lib/proportionality.py")
+    if "MISSING_CLASS_DEFAULTS_TINY" not in pcard:
+        h.fail_msg("proportionality card missing MISSING_CLASS_DEFAULTS_TINY")
+    else:
+        h.pass_msg("proportionality card carries MISSING_CLASS_DEFAULTS_TINY")
+    h.pass_msg("default-tiny hard-cap HARD-GATE")
+
+
     # ---- hetero-critique isolation HARD-GATE (Judgment G4 vertical depth) ----
     h.section("hetero-critique-isolation HARD-GATE")
     h.need("scripts/lib/review_pack.py")
@@ -8550,9 +8663,9 @@ def run_evals(root: Path) -> int:
         "bakeoff.md missing reject-unisolated inventory",
     )
     h.require_contains(
-        "0.4.145",
+        "0.4.146",
         "SKILL.md",
-        "SKILL.md not bumped to 0.4.145",
+        "SKILL.md not bumped to 0.4.146",
     )
     _, card = h.run_py("scripts/lib/review_pack.py")
     if "checklist=yes" not in card:
