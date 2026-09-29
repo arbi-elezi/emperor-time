@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.4.145
+
+- Vertical depth: vacuous-PASS honesty peers — extend `check_report.py` `report_check` to activity-scoped forge / review-pack isolation / super-context / ask→spec / proportionality so idle checks emit `SKIP (vacuous — no activity)` (exit 0) instead of bare `PASS`
+- Cores wired: `forge.py`, `review_pack.py`, `context.py`, `ask_spec.py`, `proportionality.py` (Steal/Jail/Holy already wired in v0.4.144)
+- Eval fixtures force the label (`forge-vacuous` / `task-vacuous` → SKIP; `*-ok` → PASS)
+- Doctrine/bakeoff/SKILL honesty lockstep; closes the doctrine table gap where peers were listed activity-scoped but still printed bare PASS
+- Not archaeology; not embeddings; not Nen/museum/k8s growth
+- Plugin, marketplace, and SKILL.md at 0.4.145
+
 ## 0.4.144
 
 - Vertical depth: vacuous-PASS honesty for activity-scoped Steal/Jail/Holy HARD-GATEs — `scripts/lib/check_report.py` (`report_check`) makes idle checks emit `SKIP (vacuous — no activity)` (exit 0) instead of bare `PASS`; exercised green still prints `PASS`

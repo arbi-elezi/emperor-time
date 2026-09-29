@@ -8,11 +8,12 @@ and dumped the entire ledger into PR.md; forge.sh extracted title + G1..G2.
 Always-fail HARD-GATE helpers (forge-PR-specific; Steal owns --reject-no-consent):
   --reject-no-pr-consent   refuse public PR without PR consent
   --check-pr-consent PATH  exit 1 when forge/PR activity lacks consent
-                           (vacuous PASS when no forge/PR activity)
+                           (SKIP vacuous when no forge/PR activity)
 
 Positional <task-dir> still forges. No args prints the FORGE card.
 Thin twins: scripts/forge.sh / scripts/forge.ps1
-G5 in gate.py calls --check-pr-consent (vacuous PASS when no forge markers).
+G5 in gate.py calls --check-pr-consent.
+Activity-scoped: SKIP (vacuous — no activity) when no forge/PR markers.
 
 Env:
   EMPEROR_CONSENT_PR=1  — consent without ledger quote
@@ -28,6 +29,7 @@ import subprocess
 import sys
 from pathlib import Path
 from typing import Sequence
+from check_report import report_check
 
 LEAF = "skills/emperor-forge/SKILL.md"
 
@@ -322,13 +324,11 @@ def main(argv: Sequence[str] | None = None) -> int:
         return 1
 
     if args.check_pr_consent is not None:
-        errs = validate_pr_consent(args.check_pr_consent)
-        if errs:
-            for e in errs:
-                print(f"forge FAIL: {e}", file=sys.stderr)
-            return 1
-        print(f"forge PASS: {args.check_pr_consent}")
-        return 0
+        target = args.check_pr_consent
+        errs = validate_pr_consent(target)
+        text = _combined_text(target) if target.exists() else ""
+        vacuous = target.exists() and not _has_forge_signal(target, text)
+        return report_check("forge", target, errs, vacuous=vacuous)
 
     if args.task_dir is None:
         sys.stdout.write(format_card())
