@@ -4,6 +4,14 @@
 Doctrine: chains/judgment-chain/verdicts-and-breaches.md — one ruling with
 required citations; Breach Register honest (empty OK) or filled (no theater).
 
+Harness-driven citations (HARNESS_DRIVES_G4_CHECKS):
+  ask→spec effort_class → FORCE_TABLE Tools/Optional/Forbidden drives which
+  verdict citation fields are required. Forbidden/unlisted → cite not required
+  (tiny bare Verdict: PASS OK — no museum parenthetical). Tools → cite required
+  and value must name an artifact (critique: absent FAILS). Optional unused →
+  cite not required; Optional used → require non-absent. No plan → legacy
+  always-on (all three fields; hetero: absent still OK).
+
 Always-fail HARD-GATE helpers:
   --reject-hidden-breach   refuse empty/theater breach rows / soft verdict
 
@@ -38,10 +46,22 @@ _DELIVERABLE = re.compile(
 
 _FAIL_VERDICT = re.compile(r"(?is)^\s*FAIL\b")
 
-# Citation fields required on the verdict (doctrine hygiene).
+# Citation fields on the verdict (doctrine hygiene).
+# Harness drives which are required (HARNESS_DRIVES_G4_CHECKS).
 _CITE_CLAIM = re.compile(r"(?i)claim\s*audit")
 _CITE_CRITIQUE = re.compile(r"(?i)\bcritique\b")
 _CITE_HETERO = re.compile(r"(?i)\bhetero(?:-?\s*critique)?\b")
+_CITE_ABSENT = re.compile(
+    r"(?i)^\s*(?:absent|n/?a|skipped?|none|unused|unlisted|forbidden|"
+    r"not\s+run|vacuous|—|-|\.\.\.|…)\s*$"
+)
+# (label, harness tool name, field presence regex)
+_CITE_SPECS: tuple[tuple[str, str, re.Pattern[str]], ...] = (
+    ("claim audit", "claim-audit", _CITE_CLAIM),
+    ("critique", "critique", _CITE_CRITIQUE),
+    ("hetero", "review-pack", _CITE_HETERO),
+)
+IRON_G4 = "HARNESS_DRIVES_G4_CHECKS"
 
 _BREACH_HEADER = re.compile(
     r"(?im)^#{1,6}\s+Breach\s+Register\b|^Breach\s+Register\s*$"
@@ -233,7 +253,40 @@ def _verdict_body(text: str) -> str | None:
     return None
 
 
-def _check_verdict(text: str) -> list[str]:
+
+def _cite_value(clean: str, label: str) -> str | None:
+    """Extract value after 'label:' inside a verdict citation parenthetical."""
+    pat = re.compile(
+        rf"(?i){re.escape(label)}\s*:\s*([^;)]+)"
+    )
+    m = pat.search(clean)
+    if not m:
+        return None
+    return m.group(1).strip()
+
+
+def _citation_required(path: Path, tool: str) -> bool:
+    """Whether harness requires a non-absent citation for *tool*.
+
+    skip → False (forbidden/unlisted — no cite museum)
+    activity + unused → False
+    activity + used / require / always → True
+    Import failure → True (legacy fail-closed on cites)
+    """
+    try:
+        from harness_plan import g4_check_mode, tool_was_used
+    except Exception:
+        return True
+    mode = g4_check_mode(path, tool)
+    if mode == "skip":
+        return False
+    if mode == "activity":
+        root = path if path.is_dir() else path.parent
+        return tool_was_used(root, tool)
+    return True  # require | always
+
+
+def _check_verdict(text: str, path: Path | None = None) -> list[str]:
     errors: list[str] = []
     body = _verdict_body(text)
     if body is None:
@@ -280,19 +333,40 @@ def _check_verdict(text: str) -> list[str]:
                     "(a silent condition is a hidden defect)"
                 )
 
-    # Required citation fields on the verdict line (doctrine hygiene).
+    # Harness-driven citation fields (HARNESS_DRIVES_G4_CHECKS).
+    # No plan / bare file → legacy always-on (all three fields; absent OK).
+    # Plan skip → field not required. Plan require → field + non-absent value.
     missing_cite: list[str] = []
-    if not _CITE_CLAIM.search(clean):
-        missing_cite.append("claim audit")
-    if not _CITE_CRITIQUE.search(clean):
-        missing_cite.append("critique")
-    if not _CITE_HETERO.search(clean):
-        missing_cite.append("hetero")
+    for label, tool, pat in _CITE_SPECS:
+        required = True if path is None else _citation_required(path, tool)
+        if not required:
+            continue
+        if not pat.search(clean):
+            missing_cite.append(label)
+            continue
+        # require/always with a present field: refuse absent theater when
+        # harness selected the tool (require/activity-used). Legacy always
+        # still allows hetero: absent (field present is enough).
+        if path is not None:
+            try:
+                from harness_plan import g4_check_mode
+
+                mode = g4_check_mode(path, tool)
+            except Exception:
+                mode = "always"
+            if mode in ("require", "activity"):
+                val = _cite_value(clean, label)
+                if val is not None and _CITE_ABSENT.match(val):
+                    errors.append(
+                        f"verdict cites {label}: {val!r} but harness requires "
+                        f"{tool} ({IRON_G4} — name the artifact, not absent)"
+                    )
     if missing_cite:
         errors.append(
             "verdict missing required citation fields: "
             + ", ".join(missing_cite)
-            + " — need (claim audit: …; critique: …; hetero: <file|absent>)"
+            + " — need (claim audit: …; critique: …; hetero: <file|absent>) "
+            + f"when harness selects those tools ({IRON_G4})"
         )
     return errors
 
@@ -318,7 +392,7 @@ def validate(path: Path) -> list[str]:
     else:
         errors.extend(_check_breach_register(section))
 
-    errors.extend(_check_verdict(text))
+    errors.extend(_check_verdict(text, path))
 
     seen: set[str] = set()
     out: list[str] = []
@@ -339,8 +413,10 @@ def format_card() -> str:
         "et=Verdict: PASS | PASS-WITH-CONDITIONS (<named>) | FAIL → phase",
         "STEP 1 key='PASS, mostly' is not a verdict; FAIL does not open G5",
         "STEP 2 id=citations name=Verdict cites trial record "
-        "et=(claim audit: …; critique: <file>; hetero: <file|absent>)",
-        "STEP 2 key=A verdict that cannot cite its trial is itself unverified",
+        "et=(claim audit: …; critique: <file>; hetero: <file|absent>) "
+        "when harness selects those tools",
+        f"STEP 2 key={IRON_G4} — tiny SKIP → bare Verdict: PASS OK; "
+        "Tools → refuse *: absent",
         "STEP 3 id=breach-register name=Breach Register present "
         "et=header + honest empty OR filled Stake rows",
         "STEP 3 key=Header-only / '- empty' OK; blank/TBD rows = hidden breach",
@@ -348,11 +424,13 @@ def format_card() -> str:
         "et=Vow | what happened | discovered | remediation | lesson — all filled",
         "STEP 4 key=Theater-only register fails; real rows must not have blanks",
         "",
-        "MUST: Before G5, ledger carries a deliverable Verdict with citations "
-        f"and an honest Breach Register. Open {LEAF}; run "
-        "scripts/emperor verdict <task-dir>. G5 calls this module.",
+        "MUST: Before G5, ledger carries a deliverable Verdict and an honest "
+        f"Breach Register. Citations follow harness plan ({IRON_G4}): skip → "
+        "no cite museum; Tools → name artifacts (not absent). Open {LEAF}; "
+        "run scripts/emperor verdict <task-dir>. G5 calls this module.",
         "MUST-NOT: PASS-substring theater; empty breach rows; TBD-only register; "
-        "silent PASS-WITH-CONDITIONS; FAIL delivered as G5.",
+        "silent PASS-WITH-CONDITIONS; FAIL delivered as G5; critique: absent "
+        "while harness Tools require critique.",
     ]
     return "\n".join(lines) + "\n"
 

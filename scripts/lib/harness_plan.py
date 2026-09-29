@@ -1539,7 +1539,7 @@ def format_card() -> str:
         "STEP 3 key=HARD-GATE --reject-no-plan / --require-plan / --check-harness-plan / --check-forbidden / --reject-forbidden-used / --check-class-tools / --reject-over-class-tools / --check-ask-class / --reject-class-mismatch / --check-class-caps / --reject-over-class-caps",
         "STEP 4 id=drive name=Do-once at proportional scale "
         "et=tiny → few tools + low caps; forbid excavate/sandbox/critique museum",
-        "STEP 4 key=g4_check_mode drives G4 critique/claim-audit (SKIP when not selected; require when in Tools)",
+        "STEP 4 key=g4_check_mode drives G4 critique/claim-audit + G5 verdict cites (SKIP when not selected; require when in Tools)",
         "",
         "MUST: After ask→spec, emit harness plan "
         "(scripts/emperor harness-plan --emit --from <task> --write "

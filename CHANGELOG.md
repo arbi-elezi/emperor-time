@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.4.167
+
+### Added
+- **Harness verdict cites** — `verdict.py` follows `harness_plan.g4_check_mode` / `HARNESS_DRIVES_G4_CHECKS` for G5 citation fields. Ask→spec `effort_class` → FORCE_TABLE Tools/Optional/Forbidden now drives which Verdict citations are required: forbidden/unlisted → bare `Verdict: PASS` OK (no claim-audit/critique/hetero museum parenthetical); Tools → cite required and `*: absent` FAILS; Optional unused → cite not required; no plan → legacy always-on (all three fields; `hetero: absent` still OK). Closes the G5 catch-22 left after v0.4.166: tiny SKIPs critique/claim-audit but G5 still forced citation theater (or medium could cite `critique: absent` while Tools require critique). Fixtures `harness-verdict-cites/`. Distrust spine untouched. Local eval only (Actions stay disabled).
+
 ## 0.4.166
 
 ### Added
