@@ -15,6 +15,8 @@ Always-fail HARD-GATE helpers:
   --reject-forbidden-used   refuse when a plan-forbidden tool was actually used
   --reject-extra-tools      refuse when a tool outside Tools∪Optional was used
   --reject-over-plan-caps   refuse when effort-cycles exceed plan Caps
+  --reject-over-class-tools refuse when plan Tools/Optional/Forbidden
+                            diverge from FORCE_TABLE[effort_class]
 
 Check / require / emit:
   --check-harness-plan PATH activity-scoped idle check (SKIP vacuous when idle)
@@ -29,6 +31,10 @@ Check / require / emit:
                             FAIL when effort-cycles.json exceeds plan Caps
                             (plan Caps bind even when tighter than class table;
                             proportionality still owns EFFORT_CAPS[class])
+  --check-class-tools PATH  activity-scoped: SKIP vacuous when no plan / idle;
+                            FAIL when plan Tools∪Optional exceed FORCE_TABLE
+                            for effort_class, or Forbidden omits a class ban
+                            (agent cannot upgrade tiny→tdd by rewriting the plan)
   --require-plan PATH       always-on when task active: missing/invalid plan FAILS
                             (never vacuous — G0 calls this after ask→spec)
   --emit / --from / --effort-class / --write PATH
@@ -37,7 +43,8 @@ Positional PATH runs --check-harness-plan. No args prints the HARNESS-PLAN card.
 Thin twins: scripts/harness-plan.sh / scripts/harness-plan.ps1
 Alias: tool-force → same core.
 G0 calls --require-plan after ask→spec.
-G4 calls --check-forbidden then --check-allowed then --check-caps after proportionality.
+G4 calls --check-forbidden then --check-allowed then --check-caps then
+--check-class-tools after proportionality.
 """
 from __future__ import annotations
 
@@ -61,6 +68,7 @@ IRON = "HARNESS_OWNS_TOOL_AND_FORCE"
 IRON_FORBID = "FORBIDDEN_TOOLS_NEVER_RUN"
 IRON_ALLOW = "ALLOWED_TOOLS_ONLY"
 IRON_CAPS = "PLAN_CAPS_BIND"
+IRON_CLASS = "CLASS_TOOLS_BIND"
 PLAN_FILENAMES = {
     "harness-plan.md",
     "harness_plan.md",
@@ -530,14 +538,6 @@ def _field_errors(plan: dict[str, Any] | None, expected_class: str | None) -> li
         for k in ("verify", "critique", "gate", "total"):
             if k not in caps:
                 errs.append(f"harness plan caps missing {k}")
-    forbidden = plan.get("forbidden")
-    if forbidden is None or (isinstance(forbidden, list) and len(forbidden) == 0 and cls == "tiny"):
-        # tiny must forbid heavy paths
-        if cls == "tiny":
-            errs.append(
-                "harness plan tiny must list forbidden heavy paths "
-                "(excavate/sandbox/critique/…)"
-            )
     # Cap honesty: declared caps must not exceed class table
     if cls and isinstance(caps, dict) and cls in EFFORT_CAPS:
         table = EFFORT_CAPS[cls]
@@ -550,13 +550,8 @@ def _field_errors(plan: dict[str, Any] | None, expected_class: str | None) -> li
                 errs.append(
                     f"harness plan caps.{k}={n} exceeds {cls} table cap={table[k]}"
                 )
-    # Tiny must not include forbidden heavy tools in tools list
-    if cls == "tiny" and isinstance(tools, list):
-        heavy = set(FORCE_TABLE["tiny"]["forbidden"])
-        for t in tools:
-            name = str(t).split()[0].lower()
-            if name in heavy:
-                errs.append(f"harness plan tiny must not select heavy tool: {name}")
+    # Class tools bind: Tools∪Optional ⊆ FORCE_TABLE; Forbidden ⊇ class bans
+    errs.extend(_class_tools_errors(plan))
     return errs
 
 
@@ -1185,6 +1180,110 @@ def reject_over_plan_caps() -> str:
 
 
 
+def _norm_tool(name: Any) -> str:
+    return str(name).split()[0].lower().strip()
+
+
+def _class_tools_errors(plan: dict[str, Any]) -> list[str]:
+    """Plan Tools/Optional/Forbidden must honor FORCE_TABLE[effort_class].
+
+    Closes force-upgrade soft theater: a tiny plan that lists tdd/work-order
+    under Tools (or omits excavate from Forbidden) can no longer finish green.
+    Returns [] when effort_class is missing/invalid — other validators own that.
+    """
+    cls = plan.get("effort_class")
+    if not isinstance(cls, str) or cls.lower() not in FORCE_TABLE:
+        return []
+    cls = cls.lower()
+    row = FORCE_TABLE[cls]
+    allowed = {
+        _norm_tool(x)
+        for x in list(row.get("tools") or []) + list(row.get("optional") or [])
+        if _norm_tool(x)
+    }
+    errs: list[str] = []
+    for section in ("tools", "optional"):
+        for t in plan.get(section) or []:
+            n = _norm_tool(t)
+            if n and n not in allowed:
+                errs.append(
+                    f"harness plan {cls} must not select over-class tool: {n} "
+                    f"(not in FORCE_TABLE[{cls}] tools∪optional — "
+                    f"{IRON_CLASS}; see {LEAF})"
+                )
+    have = {_norm_tool(x) for x in (plan.get("forbidden") or []) if _norm_tool(x)}
+    for f in row.get("forbidden") or []:
+        fn = _norm_tool(f)
+        if fn and fn not in have:
+            errs.append(
+                f"harness plan {cls} missing forbidden tool: {fn} "
+                f"(FORCE_TABLE[{cls}] forbid must bind — {IRON_CLASS}; see {LEAF})"
+            )
+    return errs
+
+
+def list_class_tools_violations(path: Path) -> list[tuple[str, str]]:
+    """Return (kind, name) for over-class Tools/Optional or missing Forbidden."""
+    root = _task_root(path)
+    plan = _load_plan(root)
+    if plan is None:
+        return []
+    cls = plan.get("effort_class")
+    if not isinstance(cls, str) or cls.lower() not in FORCE_TABLE:
+        return []
+    cls = cls.lower()
+    row = FORCE_TABLE[cls]
+    allowed = {
+        _norm_tool(x)
+        for x in list(row.get("tools") or []) + list(row.get("optional") or [])
+        if _norm_tool(x)
+    }
+    out: list[tuple[str, str]] = []
+    for section in ("tools", "optional"):
+        for t in plan.get(section) or []:
+            n = _norm_tool(t)
+            if n and n not in allowed:
+                out.append(("extra-tool", n))
+    have = {_norm_tool(x) for x in (plan.get("forbidden") or []) if _norm_tool(x)}
+    for f in row.get("forbidden") or []:
+        fn = _norm_tool(f)
+        if fn and fn not in have:
+            out.append(("missing-forbid", fn))
+    return out
+
+
+def validate_class_tools(path: Path) -> list[str]:
+    """Activity-scoped: empty errs when no plan (idle / vacuous).
+
+    When a harness plan exists, FAIL if Tools∪Optional exceed FORCE_TABLE
+    for the plan's effort_class, or Forbidden omits a class-table ban.
+    """
+    if not path.exists():
+        return [f"missing path: {path}"]
+    root = _task_root(path)
+    plan = _load_plan(root)
+    if plan is None:
+        return []
+    cls = plan.get("effort_class")
+    if not isinstance(cls, str) or cls.lower() not in FORCE_TABLE:
+        return [
+            f"harness plan missing effort_class for FORCE_TABLE bind "
+            f"({IRON_CLASS}; see {LEAF})"
+        ]
+    return _class_tools_errors(plan)
+
+
+def reject_over_class_tools() -> str:
+    return (
+        "REJECT OVER CLASS TOOLS: HARD-GATE — harness plan Tools∪Optional/"
+        "Forbidden must honor FORCE_TABLE[effort_class]. Agent cannot upgrade "
+        "force by writing tdd/work-order into a tiny plan or un-forbidding "
+        f"excavate. Open {LEAF}; re-check with --check-class-tools <task-dir>. "
+        f"IRON={IRON_CLASS}\n"
+    )
+
+
+
 def validate(path: Path) -> list[str]:
     """Activity-scoped: empty errs when idle (no plan/ask-spec signal)."""
     if not path.exists():
@@ -1222,7 +1321,7 @@ def format_card() -> str:
         "STEP 2 key=Not agent recall — harness owns tool+force",
         "STEP 3 id=emit name=Write harness-plan.md (+ json) "
         "et=tools / caps / forbidden / notes",
-        "STEP 3 key=HARD-GATE --reject-no-plan / --require-plan / --check-harness-plan / --check-forbidden / --reject-forbidden-used",
+        "STEP 3 key=HARD-GATE --reject-no-plan / --require-plan / --check-harness-plan / --check-forbidden / --reject-forbidden-used / --check-class-tools / --reject-over-class-tools",
         "STEP 4 id=drive name=Do-once at proportional scale "
         "et=tiny → few tools + low caps; forbid excavate/sandbox/critique museum",
         "STEP 4 key=LLM does not choose 20 verifications for a 2-line change",
@@ -1230,16 +1329,23 @@ def format_card() -> str:
         "MUST: After ask→spec, emit harness plan "
         "(scripts/emperor harness-plan --emit --from <task> --write "
         "<task>/harness-plan.md). G0 --require-plan FAILS without a plan. "
-        "G4 --check-forbidden FAILS when a forbidden tool was actually used. G4 --check-allowed FAILS when an unlisted tool outside Tools/Optional ran. G4 --check-caps FAILS when effort-cycles exceed plan Caps.",
+        "G4 --check-forbidden FAILS when a forbidden tool was actually used. "
+        "G4 --check-allowed FAILS when an unlisted tool outside Tools/Optional "
+        "ran. G4 --check-caps FAILS when effort-cycles exceed plan Caps. "
+        "G4 --check-class-tools FAILS when plan Tools/Optional/Forbidden "
+        "diverge from FORCE_TABLE[effort_class].",
         "MUST-NOT: treat tool selection as agent-facing CLI trivia; run heavy "
         "paths (excavate/sandbox/critique/steal) on tiny asks; omit plan so "
-        "the model invents force; write a tiny plan then thrash forbidden tools.",
-        "HONESTY: --check-harness-plan / --check-forbidden / --check-allowed / --check-caps idle SKIP; "
+        "the model invents force; write a tiny plan then thrash forbidden "
+        "tools; rewrite a tiny plan to list tdd/work-order or un-forbid excavate.",
+        "HONESTY: --check-harness-plan / --check-forbidden / --check-allowed / "
+        "--check-caps / --check-class-tools idle SKIP; "
         "G0 --require-plan never vacuous; plan file listing a tool under "
         "Forbidden is not itself 'use' of that tool.",
         f"IRON forbid={IRON_FORBID}",
         f"IRON allow={IRON_ALLOW}",
         f"IRON caps={IRON_CAPS}",
+        f"IRON class={IRON_CLASS}",
     ]
     return "\n".join(lines) + "\n"
 
@@ -1333,6 +1439,24 @@ def main(argv: Sequence[str] | None = None) -> int:
         help="Hard-gate card: refuse when cycles exceed plan Caps (always exit 1)",
     )
     p.add_argument(
+        "--check-class-tools",
+        type=Path,
+        metavar="PATH",
+        default=None,
+        help=(
+            "Class-tools bind: FAIL when plan Tools∪Optional/Forbidden diverge "
+            "from FORCE_TABLE[effort_class]; SKIP vacuous when no plan / idle"
+        ),
+    )
+    p.add_argument(
+        "--reject-over-class-tools",
+        action="store_true",
+        help=(
+            "Hard-gate card: refuse when plan upgrades force past FORCE_TABLE "
+            "(always exit 1)"
+        ),
+    )
+    p.add_argument(
         "--emit",
         action="store_true",
         help="Emit harness plan from effort_class / --from ask-spec task",
@@ -1378,6 +1502,17 @@ def main(argv: Sequence[str] | None = None) -> int:
     if args.reject_over_plan_caps:
         sys.stdout.write(reject_over_plan_caps())
         return 1
+
+    if args.reject_over_class_tools:
+        sys.stdout.write(reject_over_class_tools())
+        return 1
+
+    if args.check_class_tools is not None:
+        target = args.check_class_tools
+        errs = validate_class_tools(target)
+        plan = _load_plan(target) if target.exists() else None
+        vacuous = target.exists() and plan is None and not errs
+        return report_check("harness-class-tools", target, errs, vacuous=vacuous)
 
     if args.check_caps is not None:
         target = args.check_caps

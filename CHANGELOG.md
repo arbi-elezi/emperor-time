@@ -1,5 +1,16 @@
 # Changelog
 
+## 0.4.154
+
+### Added
+- Harness class-tools-bind: `harness_plan.py --check-class-tools` / `--reject-over-class-tools` — plan Tools∪Optional must stay inside FORCE_TABLE[effort_class], and Forbidden must cover class bans. Activity-scoped SKIP when no plan; G4 `_run_harness_class_tools` after `_run_harness_caps`
+- Iron token `CLASS_TOOLS_BIND` (alongside `HARNESS_OWNS_TOOL_AND_FORCE` / `FORBIDDEN_TOOLS_NEVER_RUN` / `ALLOWED_TOOLS_ONLY` / `PLAN_CAPS_BIND`); fixtures `evals/fixtures/harness-class-tools-bind/`
+- Closes plan-rewrite force-upgrade soft theater after v0.4.153 plan-caps-enforce: a tiny plan can no longer list tdd/work-order under Tools (or un-forbid excavate) and still finish green
+- G0 `--require-plan` / `--check-harness-plan` also bind via `_field_errors` (same FORCE_TABLE rules)
+- Not archaeology; not embeddings; not Nen/museum/k8s growth; distrust spine untouched
+- Plugin, marketplace, and SKILL.md at 0.4.154
+
+
 ## 0.4.153
 
 ### Added

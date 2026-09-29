@@ -35,6 +35,7 @@ LEAVES: list[tuple[str, str, tuple[str, ...]]] = [
     ("harness-forbid-enforce", "evals/fixtures/harness-forbid-enforce/README.md", ("harness-forbid-enforce", "check-forbidden", "reject-forbidden-used", "FORBIDDEN_TOOLS_NEVER_RUN")),
     ("harness-allowlist-enforce", "evals/fixtures/harness-allowlist-enforce/README.md", ("harness-allowlist-enforce", "check-allowed", "reject-extra-tools", "ALLOWED_TOOLS_ONLY")),
     ("harness-plan-caps-enforce", "evals/fixtures/harness-plan-caps-enforce/README.md", ("harness-plan-caps-enforce", "check-caps", "reject-over-plan-caps", "PLAN_CAPS_BIND")),
+    ("harness-class-tools-bind", "evals/fixtures/harness-class-tools-bind/README.md", ("harness-class-tools-bind", "check-class-tools", "reject-over-class-tools", "CLASS_TOOLS_BIND")),
     ("sot-artifact-sync", "scripts/lib/super_context.py", ("sot add-plugin", "artifacts sync", "clone --mirror", "sot-artifact-sync", "reject-mutated-sot", "check-sot", "FETCH_ONLY_NEVER_MUTATE_SOT")),
     ("critique", "scripts/lib/critique.py", ("critique", "reject-incomplete-critique", "eight-count", "Checked")),
     ("verdict", "scripts/lib/verdict.py", ("verdict", "reject-hidden-breach", "Breach Register", "claim audit")),
