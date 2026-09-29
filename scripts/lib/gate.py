@@ -29,6 +29,9 @@ G4 also delegates harness forbidden-tool enforce to harness_plan.py
 (--check-forbidden; activity-scoped SKIP when no plan).
 G4 also delegates harness allowlist enforce to harness_plan.py
 (--check-allowed; activity-scoped SKIP when no plan).
+G4 also delegates harness plan-caps enforce to harness_plan.py
+(--check-caps; activity-scoped SKIP when no plan; plan Caps bind
+even when tighter than class-table EFFORT_CAPS).
 (records a gate cycle, then checks caps; SKIP (vacuous) when no
 effort_class / cycle ledger).
 G4 also delegates hetero-critique isolation to review_pack.py
@@ -235,6 +238,16 @@ def _run_harness_allow(gate: str, task: Path) -> None:
         _fail(gate, "harness allowlist-enforce (harness_plan.py --check-allowed)")
 
 
+def _run_harness_caps(gate: str, task: Path) -> None:
+    """Activity-scoped: effort-cycles must honor plan Caps."""
+    py = _root() / "scripts" / "lib" / "harness_plan.py"
+    proc = subprocess.run(
+        [sys.executable, str(py), "--check-caps", str(task)],
+        check=False,
+    )
+    if proc.returncode != 0:
+        _fail(gate, "harness plan-caps-enforce (harness_plan.py --check-caps)")
+
 
 def _run_review_isolation(gate: str, task: Path) -> None:
     py = _root() / "scripts" / "lib" / "review_pack.py"
@@ -419,6 +432,10 @@ def run_gate(gate: str, task: Path) -> None:
         # SKIP (vacuous) when no harness plan; FAIL when extra tool used.
         # Forbid owns named bans; allowlist owns unlisted thrash (tdd/…).
         _run_harness_allow(gate, task)
+        # Harness plan-caps-enforce: effort-cycles must honor plan Caps.
+        # SKIP (vacuous) when no harness plan; FAIL when over plan budget.
+        # Plan Caps bind even when tighter than class-table EFFORT_CAPS.
+        _run_harness_caps(gate, task)
         # Hetero-critique isolation: review-pack has no author diary / CoT.
         # SKIP (vacuous) when no review-pack / no hetero markers.
         _run_review_isolation(gate, task)

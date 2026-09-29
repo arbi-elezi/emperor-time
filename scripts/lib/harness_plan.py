@@ -14,6 +14,7 @@ Always-fail HARD-GATE helpers:
   --reject-no-plan          refuse without a harness plan (card; exit 1)
   --reject-forbidden-used   refuse when a plan-forbidden tool was actually used
   --reject-extra-tools      refuse when a tool outside Tools∪Optional was used
+  --reject-over-plan-caps   refuse when effort-cycles exceed plan Caps
 
 Check / require / emit:
   --check-harness-plan PATH activity-scoped idle check (SKIP vacuous when idle)
@@ -24,6 +25,10 @@ Check / require / emit:
                             FAIL when a watched tool outside Tools∪Optional shows
                             use markers (forbid owns named bans; allowlist owns
                             unlisted thrash like tdd/work-order on tiny)
+  --check-caps PATH         activity-scoped: SKIP vacuous when no plan / idle;
+                            FAIL when effort-cycles.json exceeds plan Caps
+                            (plan Caps bind even when tighter than class table;
+                            proportionality still owns EFFORT_CAPS[class])
   --require-plan PATH       always-on when task active: missing/invalid plan FAILS
                             (never vacuous — G0 calls this after ask→spec)
   --emit / --from / --effort-class / --write PATH
@@ -32,7 +37,7 @@ Positional PATH runs --check-harness-plan. No args prints the HARNESS-PLAN card.
 Thin twins: scripts/harness-plan.sh / scripts/harness-plan.ps1
 Alias: tool-force → same core.
 G0 calls --require-plan after ask→spec.
-G4 calls --check-forbidden then --check-allowed after proportionality.
+G4 calls --check-forbidden then --check-allowed then --check-caps after proportionality.
 """
 from __future__ import annotations
 
@@ -49,12 +54,13 @@ if str(_LIB) not in sys.path:
 
 from ask_spec import parse_effort_class  # noqa: E402
 from check_report import report_check  # noqa: E402
-from proportionality import EFFORT_CAPS  # noqa: E402
+from proportionality import EFFORT_CAPS, _load_cycles  # noqa: E402
 
 LEAF = "references/mechanical-gates.md"
 IRON = "HARNESS_OWNS_TOOL_AND_FORCE"
 IRON_FORBID = "FORBIDDEN_TOOLS_NEVER_RUN"
 IRON_ALLOW = "ALLOWED_TOOLS_ONLY"
+IRON_CAPS = "PLAN_CAPS_BIND"
 PLAN_FILENAMES = {
     "harness-plan.md",
     "harness_plan.md",
@@ -1100,6 +1106,85 @@ def reject_extra_tools() -> str:
     )
 
 
+def list_over_plan_caps(path: Path) -> list[tuple[str, int, int]]:
+    """Return (kind, count, cap) triples where cycles exceed plan Caps.
+
+    Plan Caps are the harness-owned force budget written into harness-plan.
+    They may be tighter than EFFORT_CAPS[effort_class]; when tighter, they win.
+    Proportionality still enforces the class table separately.
+    """
+    root = _task_root(path)
+    plan = _load_plan(root)
+    if plan is None:
+        return []
+    caps = plan.get("caps") or {}
+    if not isinstance(caps, dict):
+        return []
+    counts = _load_cycles(root)
+    over: list[tuple[str, int, int]] = []
+    for kind in ("verify", "critique", "gate", "total"):
+        if kind not in caps:
+            continue
+        try:
+            cap = int(caps[kind])
+        except (TypeError, ValueError):
+            continue
+        n = int(counts.get(kind, 0) or 0)
+        if n > cap:
+            over.append((kind, n, cap))
+    return over
+
+
+def validate_caps(path: Path) -> list[str]:
+    """Activity-scoped: empty errs when no plan (idle / vacuous).
+
+    When a harness plan exists, FAIL if effort-cycles exceed plan Caps.
+    Missing cycle ledger counts as zeros (under any non-negative cap → PASS).
+    Incomplete Caps (missing verify/critique/gate/total) FAIL so plan theater
+    cannot dodge by omitting the budget lines.
+    """
+    if not path.exists():
+        return [f"missing path: {path}"]
+    root = _task_root(path)
+    plan = _load_plan(root)
+    if plan is None:
+        return []
+    caps = plan.get("caps") or {}
+    errs: list[str] = []
+    if not isinstance(caps, dict):
+        return [
+            f"harness plan missing caps "
+            f"(plan Caps bind force — {IRON_CAPS}; see {LEAF})"
+        ]
+    for k in ("verify", "critique", "gate", "total"):
+        if k not in caps:
+            errs.append(
+                f"harness plan caps missing {k} "
+                f"({IRON_CAPS}; see {LEAF})"
+            )
+    if errs:
+        return errs
+    over = list_over_plan_caps(root)
+    for kind, n, cap in over:
+        errs.append(
+            f"plan cap exceeded: {kind}={n} > plan.caps.{kind}={cap} "
+            f"({IRON_CAPS}; see {LEAF})"
+        )
+    return errs
+
+
+def reject_over_plan_caps() -> str:
+    return (
+        "REJECT OVER PLAN CAPS: HARD-GATE — harness plan Caps are the force "
+        "budget, but effort-cycles.json exceeds them (verify/critique/gate/"
+        "total). Class-table proportionality is a separate ceiling; plan Caps "
+        "bind even when tighter (tiny plan verify:1 still FAILS at 2). Open "
+        f"{LEAF}; re-check with --check-caps <task-dir>. "
+        f"IRON={IRON_CAPS}\n"
+    )
+
+
+
 def validate(path: Path) -> list[str]:
     """Activity-scoped: empty errs when idle (no plan/ask-spec signal)."""
     if not path.exists():
@@ -1145,14 +1230,16 @@ def format_card() -> str:
         "MUST: After ask→spec, emit harness plan "
         "(scripts/emperor harness-plan --emit --from <task> --write "
         "<task>/harness-plan.md). G0 --require-plan FAILS without a plan. "
-        "G4 --check-forbidden FAILS when a forbidden tool was actually used. G4 --check-allowed FAILS when an unlisted tool outside Tools/Optional ran.",
+        "G4 --check-forbidden FAILS when a forbidden tool was actually used. G4 --check-allowed FAILS when an unlisted tool outside Tools/Optional ran. G4 --check-caps FAILS when effort-cycles exceed plan Caps.",
         "MUST-NOT: treat tool selection as agent-facing CLI trivia; run heavy "
         "paths (excavate/sandbox/critique/steal) on tiny asks; omit plan so "
         "the model invents force; write a tiny plan then thrash forbidden tools.",
-        "HONESTY: --check-harness-plan / --check-forbidden / --check-allowed idle SKIP; "
+        "HONESTY: --check-harness-plan / --check-forbidden / --check-allowed / --check-caps idle SKIP; "
         "G0 --require-plan never vacuous; plan file listing a tool under "
         "Forbidden is not itself 'use' of that tool.",
         f"IRON forbid={IRON_FORBID}",
+        f"IRON allow={IRON_ALLOW}",
+        f"IRON caps={IRON_CAPS}",
     ]
     return "\n".join(lines) + "\n"
 
@@ -1231,6 +1318,21 @@ def main(argv: Sequence[str] | None = None) -> int:
         help="Hard-gate card: refuse when extra (unlisted) tools were used (always exit 1)",
     )
     p.add_argument(
+        "--check-caps",
+        type=Path,
+        metavar="PATH",
+        default=None,
+        help=(
+            "Plan-caps enforce: FAIL when effort-cycles exceed plan Caps; "
+            "SKIP vacuous when no plan / idle"
+        ),
+    )
+    p.add_argument(
+        "--reject-over-plan-caps",
+        action="store_true",
+        help="Hard-gate card: refuse when cycles exceed plan Caps (always exit 1)",
+    )
+    p.add_argument(
         "--emit",
         action="store_true",
         help="Emit harness plan from effort_class / --from ask-spec task",
@@ -1272,6 +1374,17 @@ def main(argv: Sequence[str] | None = None) -> int:
     if args.reject_extra_tools:
         sys.stdout.write(reject_extra_tools())
         return 1
+
+    if args.reject_over_plan_caps:
+        sys.stdout.write(reject_over_plan_caps())
+        return 1
+
+    if args.check_caps is not None:
+        target = args.check_caps
+        errs = validate_caps(target)
+        plan = _load_plan(target) if target.exists() else None
+        vacuous = target.exists() and plan is None and not errs
+        return report_check("harness-caps", target, errs, vacuous=vacuous)
 
     if args.check_forbidden is not None:
         target = args.check_forbidden

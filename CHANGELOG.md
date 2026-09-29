@@ -1,5 +1,16 @@
 # Changelog
 
+## 0.4.153
+
+### Added
+- Harness plan-caps-enforce: `harness_plan.py --check-caps` / `--reject-over-plan-caps` — effort-cycles must honor plan Caps (verify/critique/gate/total). Activity-scoped SKIP when no plan; G4 `_run_harness_caps` after `_run_harness_allow`
+- Iron token `PLAN_CAPS_BIND` (alongside `HARNESS_OWNS_TOOL_AND_FORCE` / `FORBIDDEN_TOOLS_NEVER_RUN` / `ALLOWED_TOOLS_ONLY`); fixtures `evals/fixtures/harness-plan-caps-enforce/`
+- Closes plan-Caps soft theater after v0.4.152 allowlist-enforce: a tiny plan with verify:1 can no longer thrash to 2 verify cycles (class table allows) and still finish green
+- Proportionality class-table ceiling unchanged; plan Caps bind even when tighter
+- Not archaeology; not embeddings; not Nen/museum/k8s growth; distrust spine untouched
+- Plugin, marketplace, and SKILL.md at 0.4.153
+
+
 ## 0.4.152
 
 ### Added
