@@ -20,8 +20,8 @@ G4 also delegates Steal sign-in / dispatch / swarm to steal_flow.py
 (SKIP (vacuous) when no matching steal-flow activity).
 G4 also delegates Jail pin-and-consent to pin_consent.py
 (SKIP (vacuous) when no captured-skill / pin markers).
-G0 also delegates ask→spec to ask_spec.py
-(SKIP (vacuous) when no ask-spec / effort_class markers).
+G0 also delegates ask→spec to ask_spec.py --require-spec
+(always-on: thrash without a written ask→spec FAILS; never vacuous).
 G4 also delegates proportionality / anti-loop to proportionality.py
 (records a gate cycle, then checks caps; SKIP (vacuous) when no
 effort_class / cycle ledger).
@@ -174,11 +174,11 @@ def _run_pin_consent(gate: str, task: Path) -> None:
 def _run_ask_spec(gate: str, task: Path) -> None:
     py = _root() / "scripts" / "lib" / "ask_spec.py"
     proc = subprocess.run(
-        [sys.executable, str(py), "--check-ask-spec", str(task)],
+        [sys.executable, str(py), "--require-spec", str(task)],
         check=False,
     )
     if proc.returncode != 0:
-        _fail(gate, "ask→spec (ask_spec.py)")
+        _fail(gate, "ask→spec (ask_spec.py --require-spec)")
 
 
 def _run_proportionality(gate: str, task: Path) -> None:
@@ -257,8 +257,8 @@ def run_gate(gate: str, task: Path) -> None:
         # Thoughttrail + super-context: graph/trail when activity claimed.
         # SKIP (vacuous) when no context / thoughttrail markers.
         _run_context(gate, task)
-        # Ask→spec: scoped brief before setup thrash when activity claimed.
-        # SKIP (vacuous) when no ask-spec / effort_class markers.
+        # Ask→spec: always-on scoped brief before setup thrash.
+        # Missing written ask-spec FAILS (never vacuous SKIP).
         _run_ask_spec(gate, task)
         _mark(stamp, gate)
         _ok(gate, str(ledger))

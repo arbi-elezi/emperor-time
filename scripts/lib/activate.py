@@ -103,6 +103,12 @@ def format_card(*, next_skill: str, source: str, utterance: str | None) -> str:
         "Do not wait for the client to say 'emperor time'."
     )
     lines.append(
+        "MUST: Before setup thrash, emit ask→spec "
+        "(scripts/emperor ask-spec --emit \"<ask>\" --write "
+        ".emperor/tasks/<id>/ask-spec.md). G0 "
+        "calls --require-spec — setup without a written spec FAILS."
+    )
+    lines.append(
         "MUST-NOT: load using-superpowers or another master router; "
         "ET remains the orchestrator (see must-route.md)."
     )

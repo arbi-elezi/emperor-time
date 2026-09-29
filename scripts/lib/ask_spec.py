@@ -9,16 +9,18 @@ repeated verifications and never finished a small ask. Ask→spec forces a
 scoped brief first; effort_class feeds proportionality caps.
 
 Always-fail HARD-GATE helpers:
-  --reject-no-spec          refuse task path without an ask→spec brief
+  --reject-no-spec          refuse without an ask→spec brief (card; exit 1)
+  --require-spec PATH       always-on: missing/incomplete written spec FAILS
+                            (never vacuous SKIP — thrash without a spec fails)
 
 Check / emit:
-  --check-ask-spec PATH     task dir / ask-spec.md / ledger (exit 1 on soft)
+  --check-ask-spec PATH     activity-scoped idle check (SKIP vacuous when idle)
   --emit / --ask-file / stdin / positional ask → print or --write PATH
 
-Positional PATH runs the same check. No args prints the ASK-SPEC card.
+Positional PATH runs --check-ask-spec. No args prints the ASK-SPEC card.
 Thin twins: scripts/ask-spec.sh / scripts/ask-spec.ps1
-G0 in gate.py calls --check-ask-spec.
-Activity-scoped: SKIP (vacuous — no activity) when no ask-spec activity.
+G0 calls --require-spec (setup without a written spec FAILS).
+--check-ask-spec stays activity-scoped for idle honesty.
 """
 from __future__ import annotations
 
@@ -234,6 +236,34 @@ def validate(path: Path) -> list[str]:
     return out
 
 
+def require_spec(path: Path) -> list[str]:
+    """Always-on: missing or incomplete ask→spec fails (never vacuous).
+
+    Used by G0 so SessionStart/skill/G0 holes cannot open setup
+    without a written scoped brief.
+    """
+    if not path.exists():
+        return [f"missing path: {path}"]
+
+    text, _sources = _combined_text(path)
+    active = _has_ask_signal(path, text)
+    if not active:
+        return [
+            "missing ask→spec brief (need ask-spec.md with goal: / "
+            "done-when: / out-of-scope: / effort_class: tiny|small|medium|large "
+            f"— emit before setup thrash — see {LEAF})"
+        ]
+
+    errors = _field_errors(text)
+    seen: set[str] = set()
+    out: list[str] = []
+    for e in errors:
+        if e not in seen:
+            seen.add(e)
+            out.append(e)
+    return out
+
+
 def parse_effort_class(path: Path) -> str | None:
     """Return effort_class from ask-spec / ledger, or None."""
     if not path.exists():
@@ -258,7 +288,7 @@ def format_card() -> str:
         "STEP 1 key=Empty ask → refuse emit",
         "STEP 2 id=scope name=Write goal / done-when / out-of-scope "
         "et=ask-spec.md or ledger fields",
-        "STEP 2 key=HARD-GATE --reject-no-spec / --check-ask-spec",
+        "STEP 2 key=HARD-GATE --reject-no-spec / --require-spec / --check-ask-spec",
         "STEP 3 id=class name=Declare effort_class "
         "et=tiny|small|medium|large (feeds proportionality caps)",
         "STEP 3 key=tiny ≈ 1–5 lines / single-file; large = rewrite/migrate",
@@ -271,8 +301,7 @@ def format_card() -> str:
         "scripts/emperor ask-spec --emit \"<ask>\" --write <task>/ask-spec.md.",
         "MUST-NOT: burn token budget on setup+verify loops without a scoped "
         "spec; run ~20 verifications for a tiny ask.",
-        "HONESTY: Idle paths emit SKIP (vacuous — no activity); this HARD-GATE "
-        "is task-path thrash only.",
+        "HONESTY: --check-ask-spec idle SKIP; G0 --require-spec never vacuous — setup without a written spec FAILS.",
     ]
     return "\n".join(lines) + "\n"
 
@@ -311,6 +340,13 @@ def main(argv: Sequence[str] | None = None) -> int:
         "--reject-no-spec",
         action="store_true",
         help="Hard-gate: refuse missing ask→spec (always exit 1)",
+    )
+    p.add_argument(
+        "--require-spec",
+        type=Path,
+        metavar="PATH",
+        default=None,
+        help="Always-on: missing/incomplete written ask→spec FAILS (never vacuous)",
     )
     p.add_argument(
         "--emit",
@@ -355,6 +391,13 @@ def main(argv: Sequence[str] | None = None) -> int:
     if args.reject_no_spec:
         sys.stdout.write(reject_no_spec())
         return 1
+
+    if args.require_spec is not None:
+        errs = require_spec(args.require_spec)
+        # Always-on: never vacuous — missing brief is FAIL.
+        return report_check(
+            "ask-spec", args.require_spec, errs, vacuous=False
+        )
 
     if args.emit or args.write is not None or args.ask_file is not None:
         ask = ""
