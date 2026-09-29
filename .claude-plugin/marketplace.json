@@ -3,13 +3,13 @@
   "owner": {
     "name": "Arbi Elezi"
   },
-  "description": "Emperor Time — tiny by default; tokens become verified value.",
+  "description": "Emperor Time \u2014 tiny by default; tokens become verified value.",
   "plugins": [
     {
       "name": "emperor-time",
       "source": "./",
       "description": "Tiny-default software factory: little asks stay thin; high-stakes verify/forge/secrets escalate through mechanical gates. Thin always-on; doctrine on demand. Not a daily autocomplete skill.",
-      "version": "0.4.172",
+      "version": "0.4.173",
       "author": {
         "name": "Arbi Elezi",
         "url": "https://github.com/arbi-elezi"

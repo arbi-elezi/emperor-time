@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.4.173
+
+### Added
+- **critique.require_eight_count_at / scale_with_effort → g4_check_mode** — fold adjustable-rigor critique knobs into harness G4 selection (real bite, not schema theater). When `critique.scale_with_effort` (default true): effort_class below `require_eight_count_at` softens Tools→require to SKIP (no museum yet); at/above floor promotes Optional→require. `scale_with_effort: false` ignores the floor (pure FORCE_TABLE). Tiny forbidden→SKIP catch-22 stays closed. Helpers `critique_scale_with_effort` + existing `critique_eight_count_floor`. Fixtures `critique-eight-count-floor/`. Freeze `*-hint-bind`. No museum/Nen/k8s/embeddings. Local eval only (Actions stay disabled).
+
+
 ## 0.4.172
 
 ### Added

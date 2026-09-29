@@ -709,6 +709,12 @@ def critique_eight_count_floor(root: Path | None = None) -> str:
     return str(cfg.get("critique", {}).get("require_eight_count_at", "medium"))
 
 
+def critique_scale_with_effort(root: Path | None = None) -> bool:
+    """True when critique.scale_with_effort (below floor may SKIP museum)."""
+    cfg = load_config(root)
+    return bool(cfg.get("critique", {}).get("scale_with_effort", True))
+
+
 def judgment_provider(root: Path | None = None) -> str:
     """judgment.provider: off | openrouter | openai_compat."""
     cfg = load_config(root)
