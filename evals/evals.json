@@ -149,6 +149,11 @@
       "expect": "harness_plan.py --reject-over-class-caps / --check-class-caps; CLASS_CAPS_BIND; inflated Caps past EFFORT_CAPS FAIL; tighter PASS; clean PASS; vacuous SKIP; G4 _run_harness_class_caps; fixtures harness-class-caps-bind/; v0.4.156"
     },
     {
+      "id": "spec-hint-bind-hard-gate",
+      "type": "behavioral-fixture",
+      "expect": "ask_spec.py --reject-over-spec-class / --check-spec-hints; SPEC_HINT_BIND; goal-park tiny hints with effort_class large FAIL; tiny-hint+tiny PASS; no-tiny-hints medium PASS; vacuous SKIP; ask-hints may PASS while spec-hints FAIL; G4 _run_spec_hints; fixtures spec-hint-bind/; v0.4.158"
+    },
+    {
       "id": "ask-hint-bind-hard-gate",
       "expect": "ask_spec.py --reject-over-ask-class / --check-ask-hints; ASK_HINT_BIND; tiny-hint ask with effort_class large FAIL; tiny-hint+tiny PASS; no-tiny-hints medium PASS; vacuous SKIP; G4 _run_ask_hints; fixtures ask-hint-bind/; v0.4.157",
       "type": "hard-gate"

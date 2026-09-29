@@ -23,12 +23,21 @@ Check / emit:
                             writing effort_class:large on a "fix typo" ask
                             can no longer unlock FORCE_TABLE[large] while
                             ASK_CLASS_BIND / CLASS_CAPS_BIND stay green)
+  --reject-over-spec-class  refuse when declared effort_class exceeds the
+                            hint ceiling of Ask(quoted)∪goal∪done-when
+  --check-spec-hints PATH   activity-scoped: SKIP vacuous when no ask→spec;
+                            FAIL when goal/done-when (or Ask quoted) has strong
+                            tiny hints but declared effort_class is above tiny
+                            (SPEC_HINT_BIND — park "fix typo" in goal while
+                            Ask(quoted) stays clean can no longer unlock
+                            FORCE_TABLE[large] while ASK_HINT_BIND stays green)
   --emit / --ask-file / stdin / positional ask → print or --write PATH
 
 Positional PATH runs --check-ask-spec. No args prints the ASK-SPEC card.
 Thin twins: scripts/ask-spec.sh / scripts/ask-spec.ps1
 G0 calls --require-spec (setup without a written spec FAILS).
 G4 calls --check-ask-hints after harness class-caps-bind.
+G4 calls --check-spec-hints after --check-ask-hints.
 --check-ask-spec stays activity-scoped for idle honesty.
 Length-only infer stays advisory; only strong _TINY_HINTS bind the ceiling.
 """
@@ -103,6 +112,7 @@ _SPEC_FILENAMES = {
 }
 
 IRON_ASK_HINT = "ASK_HINT_BIND"
+IRON_SPEC_HINT = "SPEC_HINT_BIND"
 _CLASS_RANK = {"tiny": 0, "small": 1, "medium": 2, "large": 3}
 
 _ASK_QUOTED = re.compile(
@@ -417,6 +427,101 @@ def reject_over_ask_class() -> str:
 
 
 
+def extract_hint_corpus(path: Path) -> str:
+    """Hint corpus for SPEC_HINT_BIND: Ask(quoted) ∪ goal ∪ done-when.
+
+    ASK_HINT_BIND binds Ask(quoted) alone (else goal+done-when). Parking
+    tiny-hint language in goal/done-when while keeping Ask(quoted) clean
+    bypassed ASK_HINT_BIND — this corpus closes that soft theater.
+    """
+    if not path.exists():
+        return ""
+    text_body, _sources = _combined_text(path)
+    root = path if path.is_dir() else path.parent
+    for name in ("ask-spec.md", "ask_spec.md", "task-spec.md", "scoped-spec.md"):
+        candidate = root / name
+        if candidate.is_file():
+            text_body = _read(candidate)
+            break
+    if path.is_file() and path.name.lower() in _SPEC_FILENAMES:
+        text_body = _read(path)
+    parts: list[str] = []
+    qm = _ASK_QUOTED.search(text_body)
+    if qm:
+        parts.append(_strip_md_noise(qm.group(1)))
+    gm = _GOAL_VAL.search(text_body)
+    if gm:
+        parts.append(_strip_md_noise(gm.group(1)))
+    dm = _DONE_VAL.search(text_body)
+    if dm:
+        parts.append(_strip_md_noise(dm.group(1)))
+    return "\n".join(parts).strip()
+
+
+def list_over_spec_class(path: Path) -> list[tuple[str, str]]:
+    """Return (declared, ceiling) when declared exceeds spec-hint ceiling."""
+    if not path.exists():
+        return []
+    text_body, _ = _combined_text(path)
+    if not _has_ask_signal(path, text_body):
+        return []
+    declared = parse_effort_class(path)
+    if declared is None:
+        return []
+    ceiling = hint_ceiling(extract_hint_corpus(path))
+    if ceiling is None:
+        return []
+    if _CLASS_RANK[declared] > _CLASS_RANK[ceiling]:
+        return [(declared, ceiling)]
+    return []
+
+
+def validate_spec_hints(path: Path) -> list[str]:
+    """Activity-scoped: empty errs when no ask→spec (idle / vacuous).
+
+    When ask→spec exists, FAIL if Ask(quoted)∪goal∪done-when has strong
+    tiny hints but declared effort_class is above tiny. Closes goal-park
+    soft theater after ASK_HINT_BIND: parking "fix typo" / "one-line" in
+    goal/done-when while Ask(quoted) stays clean can no longer unlock
+    FORCE_TABLE[large] while ASK_HINT_BIND stays green.
+    Tighter-than-hint class remains allowed. No tiny hints → no bind.
+    """
+    if not path.exists():
+        return [f"missing path: {path}"]
+    text_body, _ = _combined_text(path)
+    if not _has_ask_signal(path, text_body):
+        return []
+    declared = parse_effort_class(path)
+    if declared is None:
+        return [
+            f"missing effort_class for spec-hint bind "
+            f"({IRON_SPEC_HINT}; see {LEAF})"
+        ]
+    corpus = extract_hint_corpus(path)
+    ceiling = hint_ceiling(corpus)
+    if ceiling is None:
+        return []
+    if _CLASS_RANK[declared] > _CLASS_RANK[ceiling]:
+        return [
+            f"ask→spec effort_class={declared} exceeds spec-hint ceiling="
+            f"{ceiling} (goal/done-when/Ask tiny-hint cannot declare "
+            f"{declared} — {IRON_SPEC_HINT}; see {LEAF})"
+        ]
+    return []
+
+
+def reject_over_spec_class() -> str:
+    return (
+        "REJECT OVER SPEC CLASS: HARD-GATE — ask→spec effort_class must not "
+        "exceed the hint ceiling of Ask(quoted)∪goal∪done-when. Agent cannot "
+        "unlock FORCE_TABLE[large] / EFFORT_CAPS[large] by parking tiny-hint "
+        "language in goal/done-when while Ask(quoted) stays clean and "
+        "ASK_HINT_BIND stays green. Tighter-than-hint class remains allowed. "
+        f"Open {LEAF}; re-check with --check-spec-hints <task-dir>. "
+        f"IRON={IRON_SPEC_HINT}\n"
+    )
+
+
 def format_card() -> str:
     lines = [
         "ASK-SPEC checklist=yes",
@@ -431,7 +536,7 @@ def format_card() -> str:
         "STEP 3 id=class name=Declare effort_class "
         "et=tiny|small|medium|large (feeds proportionality caps)",
         "STEP 3 key=tiny ≈ 1–5 lines / single-file; large = rewrite/migrate; "
-        "tiny-hint ask cannot declare medium/large (ASK_HINT_BIND)",
+        "tiny-hint ask cannot declare medium/large (ASK_HINT_BIND); goal/done-when tiny hints also bind (SPEC_HINT_BIND)",
         "STEP 4 id=drive name=Do-once at proportional scale "
         "et=verify/critique cycles capped by class — see proportionality.py",
         "STEP 4 key=No museum of gates for a 2-line change",
@@ -441,10 +546,10 @@ def format_card() -> str:
         "scripts/emperor ask-spec --emit \"<ask>\" --write <task>/ask-spec.md.",
         "MUST-NOT: burn token budget on setup+verify loops without a scoped "
         "spec; run ~20 verifications for a tiny ask; declare effort_class:large "
-        "on a fix-typo / one-line ask (ASK_HINT_BIND).",
+        "on a fix-typo / one-line ask (ASK_HINT_BIND); park tiny language in goal while Ask(quoted) stays clean (SPEC_HINT_BIND).",
         "HONESTY: --check-ask-spec / --check-ask-hints idle SKIP; "
         "G0 --require-spec never vacuous — setup without a written spec FAILS; "
-        f"G4 --check-ask-hints FAILS on tiny-hint inflate (IRON={IRON_ASK_HINT}).",
+        f"G4 --check-ask-hints FAILS on tiny-hint inflate (IRON={IRON_ASK_HINT}); G4 --check-spec-hints FAILS on goal-park inflate (IRON={IRON_SPEC_HINT}).",
     ]
     return "\n".join(lines) + "\n"
 
@@ -510,6 +615,25 @@ def main(argv: Sequence[str] | None = None) -> int:
         ),
     )
     p.add_argument(
+        "--check-spec-hints",
+        type=Path,
+        metavar="PATH",
+        default=None,
+        help=(
+            "Spec-hint bind: FAIL when Ask(quoted)∪goal∪done-when has strong "
+            "tiny hints but declared effort_class is above tiny; SKIP vacuous "
+            "when no ask→spec"
+        ),
+    )
+    p.add_argument(
+        "--reject-over-spec-class",
+        action="store_true",
+        help=(
+            "Hard-gate card: refuse when declared effort_class exceeds "
+            "spec-hint corpus ceiling (goal-park tiny → large)"
+        ),
+    )
+    p.add_argument(
         "--emit",
         action="store_true",
         help="Emit ask→spec from ask text / stdin / --ask-file",
@@ -556,6 +680,17 @@ def main(argv: Sequence[str] | None = None) -> int:
     if args.reject_over_ask_class:
         sys.stdout.write(reject_over_ask_class())
         return 1
+
+    if args.reject_over_spec_class:
+        sys.stdout.write(reject_over_spec_class())
+        return 1
+
+    if args.check_spec_hints is not None:
+        target = args.check_spec_hints
+        errs = validate_spec_hints(target)
+        text_body, _ = _combined_text(target) if target.exists() else ("", [])
+        vacuous = target.exists() and not _has_ask_signal(target, text_body)
+        return report_check("spec-hints", target, errs, vacuous=vacuous)
 
     if args.check_ask_hints is not None:
         target = args.check_ask_hints
