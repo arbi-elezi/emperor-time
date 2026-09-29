@@ -54,6 +54,9 @@ G4 check selection (critique / claim-audit / review-pack):
   Medium Tools include review-pack → G4 --check-isolation requires pack;
   tiny forbids review-pack → SKIP isolation museum. Iron: HARNESS_DRIVES_G4_CHECKS
   (harness chooses which checks / how many).
+  Critique config fold (v0.4.173): when critique.scale_with_effort, 
+  require_eight_count_at floor softens Tools→require below floor to SKIP and
+  promotes Optional→require at/above floor (schema knobs → real bite).
   --require-plan PATH       always-on when task active: missing/invalid plan FAILS
                             (never vacuous — G0 calls this after ask→spec)
   --emit / --from / --effort-class / --write PATH
@@ -1013,6 +1016,48 @@ def tool_was_used(root: Path, tool: str) -> bool:
 
 
 
+def _apply_critique_eight_count_floor(
+    root: Path, plan: dict[str, Any], mode: str
+) -> str:
+    """Fold critique.scale_with_effort / require_eight_count_at into G4 mode.
+
+    When scale_with_effort is false → pure FORCE_TABLE mode (floor ignored).
+    When true:
+      effort_class < floor → Tools require softens to skip (no museum yet)
+      effort_class >= floor → Optional activity promotes to require
+    Forbidden/unlisted stay skip (tiny catch-22 stays closed).
+    """
+    if mode == "skip":
+        return mode
+    try:
+        from config import (
+            EFFORT_CLASSES as _CFG_EFFORT,
+            critique_eight_count_floor,
+            critique_scale_with_effort,
+        )
+    except Exception:
+        return mode
+    try:
+        if not critique_scale_with_effort(root):
+            return mode
+        floor = str(critique_eight_count_floor(root) or "medium").lower().strip()
+    except Exception:
+        return mode
+    cls = str(plan.get("effort_class") or "").lower().strip()
+    if cls not in _CFG_EFFORT or floor not in _CFG_EFFORT:
+        return mode
+    rank = {c: i for i, c in enumerate(_CFG_EFFORT)}
+    if rank[cls] < rank[floor]:
+        # Below floor: do not force eight-count museum even if Tools listed.
+        if mode == "require":
+            return "skip"
+        return mode
+    # At/above floor: optional unused must not dodge the floor.
+    if mode == "activity":
+        return "require"
+    return mode
+
+
 def g4_check_mode(path: Path, tool: str) -> str:
     """How G4 should treat *tool* under the harness plan.
 
@@ -1025,6 +1070,9 @@ def g4_check_mode(path: Path, tool: str) -> str:
     Closes the tiny catch-22: FORCE_TABLE[tiny] forbids critique while G4
     always required eight-count — harness owns which checks run (ask→spec →
     effort_class → which checks / how many). Iron: HARNESS_DRIVES_G4_CHECKS.
+
+    Critique config fold: critique.scale_with_effort + require_eight_count_at
+    adjust require/activity for tool=critique only (schema → real bite).
     """
     root = _task_root(path)
     plan = _load_plan(root)
@@ -1035,13 +1083,15 @@ def g4_check_mode(path: Path, tool: str) -> str:
     optional = {_normalize_tool(t) for t in (plan.get("optional") or []) if t}
     forbidden = {_normalize_tool(t) for t in (plan.get("forbidden") or []) if t}
     if name in tools:
-        return "require"
-    if name in optional:
-        return "activity"
-    # Forbidden or unlisted — G4 must not force the museum; forbid/allow bind use.
-    if name in forbidden or name not in tools.union(optional):
-        return "skip"
-    return "skip"
+        mode = "require"
+    elif name in optional:
+        mode = "activity"
+    else:
+        # Forbidden or unlisted — G4 must not force the museum; forbid/allow bind use.
+        mode = "skip"
+    if name == "critique" and mode != "skip":
+        mode = _apply_critique_eight_count_floor(root, plan, mode)
+    return mode
 
 
 def list_forbidden_used(path: Path) -> list[str]:

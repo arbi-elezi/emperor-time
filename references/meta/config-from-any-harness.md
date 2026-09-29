@@ -42,7 +42,7 @@ Those hit the Python core directly and do not require a host survey. Create `.em
 | `features.sandbox` | bool | cheap read for sandbox paths |
 | `features.sot` | bool | cheap read for SOT paths |
 | `wip.max` | int ≥ 1 | queue WIP ceiling (default 1) |
-| `critique.scale_with_effort` | bool | tiny may SKIP museum |
-| `critique.require_eight_count_at` | effort_class | floor for eight-count |
+| `critique.scale_with_effort` | bool | below floor may SKIP museum; false → pure FORCE_TABLE |
+| `critique.require_eight_count_at` | effort_class | floor for eight-count (folds into `g4_check_mode`) |
 
 Iron gates stay hard. Freeze `*-hint-bind`. No k8s/Nen invention via config.

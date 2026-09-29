@@ -1,0 +1,5 @@
+# scale_with_effort false — floor ignored; FORCE_TABLE medium still REQUIRES
+version: 1
+critique:
+  scale_with_effort: false
+  require_eight_count_at: large

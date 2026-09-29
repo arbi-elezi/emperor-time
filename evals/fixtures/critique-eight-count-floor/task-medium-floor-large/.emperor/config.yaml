@@ -1,0 +1,5 @@
+# Floor raised to large — medium Tools critique must SKIP eight-count museum
+version: 1
+critique:
+  scale_with_effort: true
+  require_eight_count_at: large

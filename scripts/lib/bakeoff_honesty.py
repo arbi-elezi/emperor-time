@@ -296,6 +296,16 @@ LEAVES: list[tuple[str, str, tuple[str, ...]]] = [
         ("adjustable-rigor-config", "config.py", "default_effort_class"),
     ),
     (
+        "critique-eight-count-floor",
+        "evals/fixtures/critique-eight-count-floor/README.md",
+        (
+            "critique-eight-count-floor",
+            "require_eight_count_at",
+            "scale_with_effort",
+            "g4_check_mode",
+        ),
+    ),
+    (
         "ask-spec-harness-plan-emit",
         "evals/fixtures/ask-spec-harness-plan-emit/README.md",
         (

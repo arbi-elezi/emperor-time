@@ -1,19 +1,19 @@
-# This upgrade — ask-spec --write chains harness-plan emit (v0.4.172)
+# This upgrade — critique eight-count floor → g4_check_mode (v0.4.173)
 
-- **Task:** Fold idempotent `harness-plan.md` emit into `ask-spec --emit --write` from stamped `effort_class` (FORCE_TABLE Caps/Forbidden). One mechanical path — SessionStart/MUST need not recall a second `harness-plan --emit` CLI before G0 `--require-plan`. Freeze *-hint-bind (no new HINT_BIND / CAPS_BIND / peer-echo binders). No Nen/museum/k8s/embeddings.
-- **Client quote:** Worthy Spend — ask→spec alone does not bind plan Caps/Forbidden mid-loop; Mac thrash can start before G0 `--require-plan` fires.
+- **Task:** Fold `critique.require_eight_count_at` / `scale_with_effort` into `harness_plan.g4_check_mode` so adjustable-rigor critique knobs have real bite (not schema theater). Freeze *-hint-bind (no new HINT_BIND / CAPS_BIND / peer-echo binders). No Nen/museum/k8s/embeddings.
+- **Client quote:** Worthy Spend — deferred neighbor after ask-spec harness-plan emit; config knobs readable but ignored by G4.
 - **Consent:** Soft-ET continuous improvement standing consent; Worthy Spend; auto-approve continuous ET work (`et-manager/*`).
-- **Queue id:** ask-spec-harness-plan-emit / v0.4.172
-- **Tip at spend:** v0.4.171 @ bcbc14f (branch `et-manager/ask-spec-harness-plan-emit` from origin/main after #188).
+- **Queue id:** critique-eight-count-floor / v0.4.173
+- **Tip at spend:** v0.4.172 @ d6144aa (branch `et-manager/critique-eight-count-floor` from origin/main after #189).
 
 ## Why this leaf (not neighbors)
 
-Optional judgment adapter stub — not always-on LLM loop, not archaeology museum, not *-hint-bind streak, not Nen/k8s. Provider off by default; existing gates decide on soft None.
+critique.require_eight_count_at / scale_with_effort fold into g4_check_mode — not *-hint-bind streak, not Nen/k8s, not claim-audit floor twin. Schema knobs → real G4 bite.
 
 ## Delivery
 
-ask_spec.py --write → harness_plan.write_plan_files (idempotent harness-plan.md + json from stamped effort_class) + activate/hooks/must-route fold to one mechanical path + fixtures ask-spec-harness-plan-emit/ + eval HARD-GATE + version 0.4.172 lockstep.
-judgment.py + config judgment.* + rigor_judge optional ambiguous hook + thin twins judgment.sh/.ps1 + emperor judgment peer + fixtures judgment-adapter-stub/ + bakeoff/honesty + doctrine lockstep on `et-manager/judgment-adapter-stub` (v0.4.171). See git log. Prior leaves retained: 
+harness_plan.g4_check_mode + `_apply_critique_eight_count_floor` folds critique.scale_with_effort / require_eight_count_at (below floor Tools→require softens to SKIP; at/above floor Optional→require; scale=false → pure FORCE_TABLE) + critique_scale_with_effort helper + fixtures critique-eight-count-floor/ + eval HARD-GATE + version 0.4.173 lockstep.
+ask_spec.py --write → harness_plan.write_plan_files (idempotent harness-plan.md + json from stamped effort_class) + activate/hooks/must-route fold to one mechanical path + fixtures ask-spec-harness-plan-emit/ + bakeoff/honesty + doctrine lockstep on `et-manager/ask-spec-harness-plan-emit` (v0.4.172). See git log. Prior leaves retained: judgment.py + config judgment.* + rigor_judge optional ambiguous hook + thin twins judgment.sh/.ps1 + emperor judgment peer + fixtures judgment-adapter-stub/ + bakeoff/honesty + doctrine lockstep on `et-manager/judgment-adapter-stub` (v0.4.171). See git log. Prior leaves retained: 
 rigor_judge.py + ask_spec emit wire + meta pack references/meta/* + skills/meta-rigor + SessionStart activate META paths_only + config features.archaeology_depth/sandbox/sot + wip.max + critique.* + queue wip_max read + fixtures rigor-judge-meta/ + bakeoff/honesty + doctrine lockstep on `et-manager/rigor-judge-meta-skills` (v0.4.170). See git log. Prior leaves retained: 
 config.py schema v1 YAML load/merge (defaults ← `.emperor/config.yaml` ← user overlay) + aliases standard→small / full→large + default tiny + iron always_hard never soft + `emperor config show|get|set|edit` thin twins + ask_spec.emit / proportionality.ensure_effort_class from config + fixtures adjustable-rigor-config/ + bakeoff/honesty + doctrine lockstep on `et-manager/adjustable-rigor-config` (v0.4.169). See git log. Prior leaves retained: 
 review_pack.py harness-driven `--check-isolation` via g4_check_mode / HARNESS_DRIVES_G4_CHECKS (tiny SKIP; medium missing FAIL; medium clean pack PASS; medium dirty FAIL; no-plan vacuous SKIP; no-plan hetero-signal FAIL) + TOOL_ACTIVITY `review-pack/` path detect + fixtures harness-review-pack-checks/ + bakeoff/honesty + doctrine lockstep on `et-manager/harness-review-pack-checks` (v0.4.168). See git log. Prior leaves retained: 
@@ -24,6 +24,8 @@ harness_plan.g4_check_mode / HARNESS_DRIVES_G4_CHECKS + critique.py / claim_audi
 
 | Claim | Status | Evidence |
 |---|---|---|
+| critique-eight-count-floor | TESTED | `g4_check_mode` folds critique.scale_with_effort / require_eight_count_at + fixtures critique-eight-count-floor/ |
+| version 0.4.173 lockstep | TESTED | plugin / marketplace / SKILL / CHANGELOG |
 | ask-spec-harness-plan-emit | TESTED | `ask_spec --write` chains `harness-plan.md` + `write_plan_files` + fixtures ask-spec-harness-plan-emit/ |
 | version 0.4.172 lockstep | TESTED | plugin / marketplace / SKILL / CHANGELOG |
 | judgment-adapter-stub | TESTED | `judgment.py` optional adapter + soft None + tiny-clear skip + fixtures judgment-adapter-stub/ |
@@ -121,6 +123,6 @@ harness_plan.g4_check_mode / HARNESS_DRIVES_G4_CHECKS + critique.py / claim_audi
 
 Iron: USER_OVERRIDE_WINS (rigor_judge). Prior: HARNESS_DRIVES_G4_CHECKS (extended to G5 verdict cites). Prior: DONE_HINT_BIND. Prior iron tokens retained: STATE_HINT_BIND / PLAN_HINT_BIND / NOTES_HINT_BIND / TASK_HINT_BIND / BODY_HINT_BIND / SCOPE_HINT_BIND / SPEC_HINT_BIND / ASK_HINT_BIND / CLASS_CAPS_BIND / ASK_CLASS_BIND / CLASS_TOOLS_BIND / PLAN_CAPS_BIND / ALLOWED_TOOLS_ONLY / FORBIDDEN_TOOLS_NEVER_RUN / HARNESS_OWNS_TOOL_AND_FORCE / FETCH_ONLY_NEVER_MUTATE_SOT / PLAN_BEFORE_SANDBOX_UP / ASK_THEN_SPEC_BEFORE_SETUP / EFFORT_CAP_BY_CLASS / MISSING_CLASS_DEFAULTS_TINY / PIN_THEN_CONSENT_BEFORE_ADAPT / SIGNIN_THEN_DISPATCH_THEN_BOUNDED_SWARM / REGISTER_THEN_REENTER / STOP_SNAPSHOT_BRACKET / FINGERPRINT_THEN_COMBAT / PR_CONSENT_BEFORE_PUBLIC / TRIAD_THEN_POSTMORTEM / REJECT NO CONSENT / REJECT MULTI WIP / CITE_OR_FAIL_REPORT / PATH_AND_STAGE_BEFORE_IMPL / GRAPH_THEN_TRAIL.
 
-Retained tip keywords: v0.4.172 tip; ask-spec-harness-plan-emit; v0.4.171 tip; judgment-adapter-stub; v0.4.170 tip; rigor-judge-meta; v0.4.169 tip; adjustable-rigor-config; v0.4.168 tip; harness-review-pack-checks; v0.4.167 tip; harness-verdict-cites; v0.4.166 tip; harness-g4-class-checks; g4_check_mode; HARNESS_DRIVES_G4_CHECKS; v0.4.164 tip; v0.4.163 tip; v0.4.162 tip; v0.4.161 tip; v0.4.160 tip; v0.4.159 tip; v0.4.158 tip; v0.4.157 tip; v0.4.154 tip; v0.4.153 tip; v0.4.152 tip; v0.4.151 tip; v0.4.150 tip; v0.4.149 tip; v0.4.148 tip; v0.4.147 tip; v0.4.142 tip; state-hint-bind; plan-hint-bind; notes-hint-bind; task-hint-bind; body-hint-bind; scope-hint-bind; spec-hint-bind; ask-hint-bind; check-done-hints; check-state-hints; check-plan-hints; check-notes-hints; check-task-hints; check-body-hints; check-scope-hints; check-spec-hints; check-ask-hints; reject-over-done-class; reject-over-state-class; reject-over-plan-class; reject-over-notes-class; reject-over-task-class; reject-over-body-class; reject-over-scope-class; reject-over-spec-class; reject-over-ask-class; sot-sandbox-hard-gates (v0.4.149); check-readonly-cycles (v0.4.148); retained 0.4.142.
+Retained tip keywords: v0.4.173 tip; critique-eight-count-floor; v0.4.172 tip; ask-spec-harness-plan-emit; v0.4.171 tip; judgment-adapter-stub; v0.4.170 tip; rigor-judge-meta; v0.4.169 tip; adjustable-rigor-config; v0.4.168 tip; harness-review-pack-checks; v0.4.167 tip; harness-verdict-cites; v0.4.166 tip; harness-g4-class-checks; g4_check_mode; HARNESS_DRIVES_G4_CHECKS; v0.4.164 tip; v0.4.163 tip; v0.4.162 tip; v0.4.161 tip; v0.4.160 tip; v0.4.159 tip; v0.4.158 tip; v0.4.157 tip; v0.4.154 tip; v0.4.153 tip; v0.4.152 tip; v0.4.151 tip; v0.4.150 tip; v0.4.149 tip; v0.4.148 tip; v0.4.147 tip; v0.4.142 tip; state-hint-bind; plan-hint-bind; notes-hint-bind; task-hint-bind; body-hint-bind; scope-hint-bind; spec-hint-bind; ask-hint-bind; check-done-hints; check-state-hints; check-plan-hints; check-notes-hints; check-task-hints; check-body-hints; check-scope-hints; check-spec-hints; check-ask-hints; reject-over-done-class; reject-over-state-class; reject-over-plan-class; reject-over-notes-class; reject-over-task-class; reject-over-body-class; reject-over-scope-class; reject-over-spec-class; reject-over-ask-class; sot-sandbox-hard-gates (v0.4.149); check-readonly-cycles (v0.4.148); retained 0.4.142.
 
 Live defect-rate vs Superpowers: **UNVERIFIABLE**.

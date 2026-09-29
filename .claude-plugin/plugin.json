@@ -1,7 +1,7 @@
 {
   "name": "emperor-time",
   "displayName": "Emperor Time",
-  "version": "0.4.172",
+  "version": "0.4.173",
   "description": "Tiny by default, full factory when the ask earns it. Thin always-on (~trigger only); mechanical gates escalate for verify, forge, secrets, and lost trees. Software factory \u2014 not a daily autocomplete skill. Language-agnostic. Host-agnostic.",
   "author": {
     "name": "Arbi Elezi",

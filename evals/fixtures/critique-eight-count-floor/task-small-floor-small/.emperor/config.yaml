@@ -1,0 +1,5 @@
+# Floor lowered to small — optional unused critique must REQUIRE eight-count
+version: 1
+critique:
+  scale_with_effort: true
+  require_eight_count_at: small

@@ -291,6 +291,12 @@
       "prompt": "ask-spec --write chains harness-plan emit",
       "expect": "ask_spec.py --emit --write chains idempotent harness-plan.md (+ json) from stamped effort_class; one mechanical path; no second harness-plan CLI; --require-plan PASS after write; emit-without-write no disk plan; fixtures ask-spec-harness-plan-emit/; freeze *-hint-bind; v0.4.172",
       "type": "behavioral-fixture"
+    },
+    {
+      "id": "critique-eight-count-floor-hard-gate",
+      "prompt": "critique config floor folds into g4_check_mode",
+      "expect": "harness_plan.g4_check_mode folds critique.scale_with_effort / require_eight_count_at; medium+floor=large SKIP; small+floor=small FAIL promote; scale=false ignores floor FAIL; fixtures critique-eight-count-floor/; G4 --check-critique; freeze *-hint-bind; v0.4.173",
+      "type": "behavioral-fixture"
     }
   ]
 }
