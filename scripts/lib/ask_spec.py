@@ -60,6 +60,16 @@ Check / emit:
                             ledger.md / work-order.md while ask-spec.md body
                             stays clean can no longer unlock FORCE_TABLE[large]
                             while BODY_HINT_BIND stays green)
+  --reject-over-notes-class refuse when declared effort_class exceeds the
+                            hint ceiling of notes.md
+  --check-notes-hints PATH  activity-scoped: SKIP vacuous when no ask→spec;
+                            FAIL when notes.md has strong tiny hints but
+                            declared effort_class is above tiny
+                            (NOTES_HINT_BIND — park "fix typo" / "one-line" /
+                            wording / trivial / nit / changelog only in
+                            notes.md while ask-spec+ledger/work-order/brief/
+                            claims stay clean can no longer unlock
+                            FORCE_TABLE[large] while TASK_HINT_BIND stays green)
   --emit / --ask-file / stdin / positional ask → print or --write PATH
 
 Positional PATH runs --check-ask-spec. No args prints the ASK-SPEC card.
@@ -70,6 +80,7 @@ G4 calls --check-spec-hints after --check-ask-hints.
 G4 calls --check-scope-hints after --check-spec-hints.
 G4 calls --check-body-hints after --check-scope-hints.
 G4 calls --check-task-hints after --check-body-hints.
+G4 calls --check-notes-hints after --check-task-hints.
 --check-ask-spec stays activity-scoped for idle honesty.
 Length-only infer stays advisory; only strong _TINY_HINTS bind the ceiling.
 """
@@ -148,6 +159,7 @@ IRON_SPEC_HINT = "SPEC_HINT_BIND"
 IRON_SCOPE_HINT = "SCOPE_HINT_BIND"
 IRON_BODY_HINT = "BODY_HINT_BIND"
 IRON_TASK_HINT = "TASK_HINT_BIND"
+IRON_NOTES_HINT = "NOTES_HINT_BIND"
 _CLASS_RANK = {"tiny": 0, "small": 1, "medium": 2, "large": 3}
 
 _ASK_QUOTED = re.compile(
@@ -848,6 +860,107 @@ def reject_over_task_class() -> str:
     )
 
 
+
+
+def extract_notes_corpus(path: Path) -> str:
+    """Hint corpus for NOTES_HINT_BIND: notes.md prose only.
+
+    TASK_HINT_BIND binds ask-spec + ledger / work-order / brief / claims.
+    Parking tiny-hint language in notes.md while that task corpus stays
+    clean bypassed TASK_HINT_BIND — this corpus closes that soft theater.
+    effort_class declaration lines are stripped so the class token itself
+    never feeds the ceiling.
+    """
+    if not path.exists():
+        return ""
+    raw = ""
+    if path.is_file():
+        if path.name.lower() == "notes.md":
+            raw = _read(path)
+        else:
+            sibling = path.parent / "notes.md"
+            if sibling.is_file():
+                raw = _read(sibling)
+    elif path.is_dir():
+        notes = path / "notes.md"
+        if notes.is_file():
+            raw = _read(notes)
+    if not raw.strip():
+        return ""
+    lines = []
+    for line in raw.splitlines():
+        if _EFFORT.search(line):
+            continue
+        lines.append(line)
+    return _strip_md_noise("\n".join(lines))
+
+
+def list_over_notes_class(path: Path) -> list[tuple[str, str]]:
+    """Return (declared, ceiling) when declared exceeds notes-hint ceiling."""
+    if not path.exists():
+        return []
+    text_body, _ = _combined_text(path)
+    if not _has_ask_signal(path, text_body):
+        return []
+    declared = parse_effort_class(path)
+    if declared is None:
+        return []
+    ceiling = hint_ceiling(extract_notes_corpus(path))
+    if ceiling is None:
+        return []
+    if _CLASS_RANK[declared] > _CLASS_RANK[ceiling]:
+        return [(declared, ceiling)]
+    return []
+
+
+def validate_notes_hints(path: Path) -> list[str]:
+    """Activity-scoped: empty errs when no ask→spec (idle / vacuous).
+
+    When ask→spec exists, FAIL if notes.md has strong tiny hints but declared
+    effort_class is above tiny. Closes notes.md park soft theater after
+    TASK_HINT_BIND: parking "fix typo" / "one-line" / wording / trivial /
+    nit / changelog only in notes.md while ask-spec+ledger/work-order/brief/
+    claims stay clean can no longer unlock FORCE_TABLE[large] while
+    TASK_HINT_BIND stays green.
+    Tighter-than-hint class remains allowed. No tiny hints → no bind.
+    """
+    if not path.exists():
+        return [f"missing path: {path}"]
+    text_body, _ = _combined_text(path)
+    if not _has_ask_signal(path, text_body):
+        return []
+    declared = parse_effort_class(path)
+    if declared is None:
+        return [
+            f"missing effort_class for notes-hint bind "
+            f"({IRON_NOTES_HINT}; see {LEAF})"
+        ]
+    corpus = extract_notes_corpus(path)
+    ceiling = hint_ceiling(corpus)
+    if ceiling is None:
+        return []
+    if _CLASS_RANK[declared] > _CLASS_RANK[ceiling]:
+        return [
+            f"ask→spec effort_class={declared} exceeds notes-hint ceiling="
+            f"{ceiling} (notes.md tiny-hint cannot declare {declared} — "
+            f"{IRON_NOTES_HINT}; see {LEAF})"
+        ]
+    return []
+
+
+def reject_over_notes_class() -> str:
+    return (
+        "REJECT OVER NOTES CLASS: HARD-GATE — ask→spec effort_class must not "
+        "exceed the hint ceiling of notes.md. Agent cannot "
+        "unlock FORCE_TABLE[large] / EFFORT_CAPS[large] by parking tiny-hint "
+        "language in notes.md while ask-spec+ledger/work-order/brief/claims "
+        "stay clean and TASK_HINT_BIND stays "
+        "green. Tighter-than-hint class remains allowed. "
+        f"Open {LEAF}; re-check with --check-notes-hints <task-dir>. "
+        f"IRON={IRON_NOTES_HINT}\n"
+    )
+
+
 def format_card() -> str:
     lines = [
         "ASK-SPEC checklist=yes",
@@ -862,7 +975,7 @@ def format_card() -> str:
         "STEP 3 id=class name=Declare effort_class "
         "et=tiny|small|medium|large (feeds proportionality caps)",
         "STEP 3 key=tiny ≈ 1–5 lines / single-file; large = rewrite/migrate; "
-        "tiny-hint ask cannot declare medium/large (ASK_HINT_BIND); goal/done-when tiny hints also bind (SPEC_HINT_BIND); out-of-scope tiny hints also bind (SCOPE_HINT_BIND); freeform Notes/body tiny hints also bind (BODY_HINT_BIND); ledger/work-order/brief/claims tiny hints also bind (TASK_HINT_BIND)",
+        "tiny-hint ask cannot declare medium/large (ASK_HINT_BIND); goal/done-when tiny hints also bind (SPEC_HINT_BIND); out-of-scope tiny hints also bind (SCOPE_HINT_BIND); freeform Notes/body tiny hints also bind (BODY_HINT_BIND); ledger/work-order/brief/claims tiny hints also bind (TASK_HINT_BIND); notes.md tiny hints also bind (NOTES_HINT_BIND)",
         "STEP 4 id=drive name=Do-once at proportional scale "
         "et=verify/critique cycles capped by class — see proportionality.py",
         "STEP 4 key=No museum of gates for a 2-line change",
@@ -872,10 +985,10 @@ def format_card() -> str:
         "scripts/emperor ask-spec --emit \"<ask>\" --write <task>/ask-spec.md.",
         "MUST-NOT: burn token budget on setup+verify loops without a scoped "
         "spec; run ~20 verifications for a tiny ask; declare effort_class:large "
-        "on a fix-typo / one-line ask (ASK_HINT_BIND); park tiny language in goal while Ask(quoted) stays clean (SPEC_HINT_BIND); park tiny language in out-of-scope while Ask/goal/done-when stay clean (SCOPE_HINT_BIND); park tiny language in ## Notes / freeform body while Ask/goal/done-when/out-of-scope stay clean (BODY_HINT_BIND); park tiny language in ledger.md / work-order.md while ask-spec.md body stays clean (TASK_HINT_BIND).",
+        "on a fix-typo / one-line ask (ASK_HINT_BIND); park tiny language in goal while Ask(quoted) stays clean (SPEC_HINT_BIND); park tiny language in out-of-scope while Ask/goal/done-when stay clean (SCOPE_HINT_BIND); park tiny language in ## Notes / freeform body while Ask/goal/done-when/out-of-scope stay clean (BODY_HINT_BIND); park tiny language in ledger.md / work-order.md while ask-spec.md body stays clean (TASK_HINT_BIND); park tiny language in notes.md while ask-spec+ledger stay clean (NOTES_HINT_BIND).",
         "HONESTY: --check-ask-spec / --check-ask-hints idle SKIP; "
         "G0 --require-spec never vacuous — setup without a written spec FAILS; "
-        f"G4 --check-ask-hints FAILS on tiny-hint inflate (IRON={IRON_ASK_HINT}); G4 --check-spec-hints FAILS on goal-park inflate (IRON={IRON_SPEC_HINT}); G4 --check-scope-hints FAILS on out-of-scope-park inflate (IRON={IRON_SCOPE_HINT}); G4 --check-body-hints FAILS on Notes/freeform-park inflate (IRON={IRON_BODY_HINT}); G4 --check-task-hints FAILS on ledger-park inflate (IRON={IRON_TASK_HINT}).",
+        f"G4 --check-ask-hints FAILS on tiny-hint inflate (IRON={IRON_ASK_HINT}); G4 --check-spec-hints FAILS on goal-park inflate (IRON={IRON_SPEC_HINT}); G4 --check-scope-hints FAILS on out-of-scope-park inflate (IRON={IRON_SCOPE_HINT}); G4 --check-body-hints FAILS on Notes/freeform-park inflate (IRON={IRON_BODY_HINT}); G4 --check-task-hints FAILS on ledger-park inflate (IRON={IRON_TASK_HINT}); G4 --check-notes-hints FAILS on notes.md-park inflate (IRON={IRON_NOTES_HINT}).",
     ]
     return "\n".join(lines) + "\n"
 
@@ -1017,6 +1130,24 @@ def main(argv: Sequence[str] | None = None) -> int:
         ),
     )
     p.add_argument(
+        "--check-notes-hints",
+        type=Path,
+        metavar="PATH",
+        default=None,
+        help=(
+            "Notes-hint bind: FAIL when notes.md has strong tiny hints but "
+            "declared effort_class is above tiny; SKIP vacuous when no ask→spec"
+        ),
+    )
+    p.add_argument(
+        "--reject-over-notes-class",
+        action="store_true",
+        help=(
+            "Hard-gate card: refuse when declared effort_class exceeds "
+            "notes-hint corpus ceiling (notes.md-park tiny → large)"
+        ),
+    )
+    p.add_argument(
         "--emit",
         action="store_true",
         help="Emit ask→spec from ask text / stdin / --ask-file",
@@ -1079,6 +1210,17 @@ def main(argv: Sequence[str] | None = None) -> int:
     if args.reject_over_task_class:
         sys.stdout.write(reject_over_task_class())
         return 1
+
+    if args.reject_over_notes_class:
+        sys.stdout.write(reject_over_notes_class())
+        return 1
+
+    if args.check_notes_hints is not None:
+        target = args.check_notes_hints
+        errs = validate_notes_hints(target)
+        text_body, _ = _combined_text(target) if target.exists() else ("", [])
+        vacuous = target.exists() and not _has_ask_signal(target, text_body)
+        return report_check("notes-hints", target, errs, vacuous=vacuous)
 
     if args.check_task_hints is not None:
         target = args.check_task_hints

@@ -52,6 +52,8 @@ G4 also runs ask_spec.py --check-body-hints
 (full ask→spec body tiny hints bind class — BODY_HINT_BIND).
 G4 also runs ask_spec.py --check-task-hints
 (combined task-dir corpus tiny hints bind class — TASK_HINT_BIND).
+G4 also runs ask_spec.py --check-notes-hints
+(notes.md tiny hints bind class — NOTES_HINT_BIND).
 (records a gate cycle, then checks caps; SKIP (vacuous) when no
 effort_class / cycle ledger).
 G4 also delegates hetero-critique isolation to review_pack.py
@@ -382,6 +384,20 @@ def _run_task_hints(gate: str, task: Path) -> None:
         )
 
 
+def _run_notes_hints(gate: str, task: Path) -> None:
+    """Activity-scoped: ask→spec effort_class must honor notes.md hint corpus."""
+    py = _root() / "scripts" / "lib" / "ask_spec.py"
+    proc = subprocess.run(
+        [sys.executable, str(py), "--check-notes-hints", str(task)],
+        check=False,
+    )
+    if proc.returncode != 0:
+        _fail(
+            gate,
+            "notes-hint-bind (ask_spec.py --check-notes-hints)",
+        )
+
+
 def _run_review_isolation(gate: str, task: Path) -> None:
     py = _root() / "scripts" / "lib" / "review_pack.py"
     proc = subprocess.run(
@@ -606,6 +622,11 @@ def run_gate(gate: str, task: Path) -> None:
         # "fix typo" while ask-spec.md body stays clean (BODY_HINT_BIND
         # green, FORCE_TABLE[large]).
         _run_task_hints(gate, task)
+        # Notes-hint-bind: notes.md tiny hints bind class.
+        # SKIP (vacuous) when no ask→spec; FAIL when notes.md parks
+        # "fix typo" while ask-spec+ledger stay clean (TASK_HINT_BIND
+        # green, FORCE_TABLE[large]).
+        _run_notes_hints(gate, task)
         # Hetero-critique isolation: review-pack has no author diary / CoT.
         # SKIP (vacuous) when no review-pack / no hetero markers.
         _run_review_isolation(gate, task)
