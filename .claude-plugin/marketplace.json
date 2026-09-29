@@ -3,12 +3,12 @@
   "owner": {
     "name": "Arbi Elezi"
   },
-  "description": "Emperor Time \u2014 tokens become verified value.",
+  "description": "Emperor Time — tiny by default; tokens become verified value.",
   "plugins": [
     {
       "name": "emperor-time",
       "source": "./",
-      "description": "Full-rigor harness: mechanical gates, TDD iron law, worktrees, claim ledgers, five chains, consent orchestration, pin+consent capture.",
+      "description": "Tiny-default software factory: little asks stay thin; high-stakes verify/forge/secrets escalate through mechanical gates. Thin always-on; doctrine on demand. Not a daily autocomplete skill.",
       "version": "0.4.171",
       "author": {
         "name": "Arbi Elezi",
@@ -27,7 +27,9 @@
         "multi-agent",
         "agent-skills",
         "software-factory",
-        "software-archaeology"
+        "software-archaeology",
+        "tiny-default",
+        "mechanical-gates"
       ]
     }
   ]

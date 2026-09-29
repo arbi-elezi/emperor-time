@@ -2,69 +2,49 @@
 
 *Dowse. Dig. Verify. Pay in tokens.*
 
-<table>
-<tr>
-<td valign="middle"><img src="assets/crossed-shovels.png" width="180" alt="crossed shovels crest, jolly-roger style"></td>
-<td valign="middle"><pre>█████ █   █ ████  █████ ████   ███  ████
-█     ██ ██ █   █ █     █   █ █   █ █   █
-████  █ █ █ ████  ████  ████  █   █ ████
-█     █   █ █     █     █ █   █   █ █ █
-█████ █   █ █     █████ █  █   ███  █  █
-
-█████ █████ █   █ █████
-  █     █   ██ ██ █
-  █     █   █ █ █ ████
-  █     █   █   █ █
-  █     █   █   █ █████</pre></td>
-</tr>
-</table>
-
-<img src="assets/scarlet-eyes.png" width="660" alt="pixel art: close-up of scarlet eyes under blond bangs, ringed pink irises with star glints">
-
-*The eyes have turned scarlet. Emperor Time is active — every token is paid for.*
-
 # Emperor Time
 
-**A unified coding-harness skill that ironically maximizes token usage — and
-non-ironically maximizes delivered, verified value.**
+**Tiny by default. Full factory when the ask earns it.** Little asks stay
+thin; high-stakes verify, forge, secrets, and lost trees escalate through
+mechanical gates. Resting cost is ~270 always-on tokens (trigger only) —
+doctrine loads one file at a time. **Not a default daily autocomplete skill.**
 
-Named for Kurapika's Specialist ability in *Hunter × Hunter*: when his eyes turn
-scarlet, he gains 100% proficiency in every Nen category, paying one hour of
-lifespan per second of use. This skill does the same to a coding agent: every
-SDLC discipline at full rigor, paid for in tokens. The contract that makes the
-irony safe: **every token spent must convert into verified value** — rigor,
-evidence, critique — never repetition or filler.
+Written in the open **Agent Skills** format (`SKILL.md`). Native on
+**Claude Code** (and Kimi CLI, same skill dirs); adapters cover Codex,
+opencode, Ollama, and friends.
 
-It is written in the open **Agent Skills** format (`SKILL.md`), so it runs
-natively in **Claude Code** and **Kimi CLI** (which share skill directories),
-and deploys to Codex CLI, Copilot CLI, opencode, Ollama, and any open-weight
-model via the adapters.
+## Install — Claude Code (start here)
 
-## The lore → mechanics map
-
-| Hunter × Hunter | Emperor Time (this repo) |
-|---|---|
-| **Emperor Time** — all Nen types at 100%, costs lifespan | All SDLC phases at full rigor per task, costs tokens; spend must buy verified value |
-| **Holy Chain** (thumb) — heals wounds | Recovery: regressions, red builds, corrupted state, derailed process |
-| **Steal Chain** (index) — takes another's ability | Hetero-agent orchestration: enlist Claude Code / Kimi / Codex / Copilot / opencode / Ollama as workers and critics |
-| **Chain Jail** (middle) — binds the target, forces Zetsu | Skill capture: find the closest skill on the net, adapt it to this harness, or author one — then bind (test) it before use |
-| **Dowsing Chain** (ring) — finds things, detects lies | Intuition: discover your own tasks from repo evidence; scan the machine for counterpart agents; flag contradictions |
-| **Judgment Chain** (pinky) — a rule staked into the heart | Process gates: scientific-method fact-checking, mandatory critique; vow breaches are recorded and remediated, never hidden |
-| **Restriction & Pledge** — stricter vow, stronger power | The Six Vows: evidence, phases, ledger, critique, consent, worthy spend |
-
-## Quickstart
-
-### Claude Code plugin (one line, any OS)
-
-This repo is its own plugin marketplace:
+This repo is its own plugin marketplace (self-published — not an Anthropic
+official shelf):
 
 ```
 /plugin marketplace add arbi-elezi/emperor-time
 /plugin install emperor-time@emperor-time
 ```
 
-Costs ~270 tokens of always-on context (just the trigger description); the
-doctrine loads only when a task engages it, one file at a time.
+New session → SessionStart boots MUST-route (activate card). You do not need
+to say "emperor time" for routing to fire.
+
+### When to engage
+
+| Prefer **tiny** / little-ask | Escalate to full factory |
+|---|---|
+| Typo, wording, one-line, changelog-only | High-stakes verify / regulated evidence |
+| Config knob with no blast radius | Forge / public PR, secrets, pin-and-consent |
+| | Brownfield / lost trees; explicit "use full rigor" |
+
+Router: `scripts/emperor rigor-judge --ask "<ask>"` (user override always wins).
+Detail: [`references/meta/when-to-engage.md`](references/meta/when-to-engage.md).
+
+### Cold check (foreign repo, two minutes)
+
+1. Install (commands above) → open a **new** Claude Code session in some other repo.
+2. Confirm the SessionStart activate card / MUST-route — no lore reading required.
+3. Ask a one-line nit ("fix typo in README") → stays **tiny** (no critique museum).
+4. Ask something high-stakes (public PR / secrets / "use full rigor") → a **gate** shows teeth.
+
+That is the product bet on Claude. Lore and alternate installs below.
 
 ### Claude Code (copy install) — also covers Kimi CLI
 
@@ -76,8 +56,8 @@ doctrine loads only when a task engages it, one file at a time.
 .\scripts\install.ps1 -Harness claude-code -Scope project -Project C:\path\to\repo
 ```
 
-Then just say "emperor time" (or describe a task that needs full rigor) in
-Claude Code, or run `/skill:emperor-time` in Kimi CLI.
+Then say "emperor time" (or describe work that needs rigor) in Claude Code, or
+run `/skill:emperor-time` in Kimi CLI.
 
 ### macOS / Linux
 
@@ -119,6 +99,48 @@ distilled into a single system prompt for models that can't load a skill tree.
 ```powershell
 .\scripts\dowse.ps1            # detection only — read-only, touches no credentials
 ```
+
+## Lore (after install)
+
+<table>
+<tr>
+<td valign="middle"><img src="assets/crossed-shovels.png" width="180" alt="crossed shovels crest, jolly-roger style"></td>
+<td valign="middle"><pre>█████ █   █ ████  █████ ████   ███  ████
+█     ██ ██ █   █ █     █   █ █   █ █   █
+████  █ █ █ ████  ████  ████  █   █ ████
+█     █   █ █     █     █ █   █   █ █ █
+█████ █   █ █     █████ █  █   ███  █  █
+
+█████ █████ █   █ █████
+  █     █   ██ ██ █
+  █     █   █ █ █ ████
+  █     █   █   █ █
+  █     █   █   █ █████</pre></td>
+</tr>
+</table>
+
+<img src="assets/scarlet-eyes.png" width="660" alt="pixel art: close-up of scarlet eyes under blond bangs, ringed pink irises with star glints">
+
+*The eyes have turned scarlet. Emperor Time is active — every token is paid for.*
+
+Named for Kurapika's Specialist ability in *Hunter × Hunter*: when his eyes turn
+scarlet, he gains 100% proficiency in every Nen category, paying one hour of
+lifespan per second of use. This skill does the same to a coding agent: every
+SDLC discipline at full rigor, paid for in tokens. The contract that makes the
+irony safe: **every token spent must convert into verified value** — rigor,
+evidence, critique — never repetition or filler.
+
+### The lore → mechanics map
+
+| Hunter × Hunter | Emperor Time (this repo) |
+|---|---|
+| **Emperor Time** — all Nen types at 100%, costs lifespan | All SDLC phases at full rigor per task, costs tokens; spend must buy verified value |
+| **Holy Chain** (thumb) — heals wounds | Recovery: regressions, red builds, corrupted state, derailed process |
+| **Steal Chain** (index) — takes another's ability | Hetero-agent orchestration: enlist Claude Code / Kimi / Codex / Copilot / opencode / Ollama as workers and critics |
+| **Chain Jail** (middle) — binds the target, forces Zetsu | Skill capture: find the closest skill on the net, adapt it to this harness, or author one — then bind (test) it before use |
+| **Dowsing Chain** (ring) — finds things, detects lies | Intuition: discover your own tasks from repo evidence; scan the machine for counterpart agents; flag contradictions |
+| **Judgment Chain** (pinky) — a rule staked into the heart | Process gates: scientific-method fact-checking, mandatory critique; vow breaches are recorded and remediated, never hidden |
+| **Restriction & Pledge** — stricter vow, stronger power | The Six Vows: evidence, phases, ledger, critique, consent, worthy spend |
 
 ## How a task flows
 
