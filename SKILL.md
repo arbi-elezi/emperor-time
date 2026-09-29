@@ -9,7 +9,7 @@ description: >-
   waiting to be told.
 license: MIT
 metadata:
-  version: 0.4.141
+  version: 0.4.142
   homepage: https://github.com/arbi-elezi/emperor-time
   standard: Agent Skills (SKILL.md)
 ---
@@ -94,7 +94,7 @@ client to say "emperor time".
 | Steal Chain | index | `chains/steal-chain/SKILL.md` |
 | Holy Chain | thumb | `chains/holy-chain/SKILL.md` |
 
-Jail extra: no captured skill runs on real work until trial + sha256 pin + quoted client yes (`chains/chain-jail/pin-and-consent.md`).
+Jail extra: no captured skill runs on real work until trial + sha256 pin + quoted client yes (`chains/chain-jail/pin-and-consent.md`; HARD-GATE `emperor pin-and-consent` / `pin_consent.py --reject-unpinned` / `--reject-no-skill-consent` / `--check-pin-consent`).
 
 ## Iron laws that beat a fluent liar
 

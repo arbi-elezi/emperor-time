@@ -1,11 +1,19 @@
 # Changelog
 
+## 0.4.142
+
+- Vertical depth: Jail pin-and-consent HARD-GATE — `scripts/lib/pin_consent.py` card-style `--reject-unpinned` / `--reject-no-skill-consent` / `--check-pin-consent` (source-url+hash provenance pin + named-skill client consent before adaptation; vacuous PASS when no Jail pin activity)
+- Fixtures `evals/fixtures/jail-pin-and-consent/`; thin twins `pin-and-consent.sh`/`.ps1` + `jail-pin` alias; `emperor pin-and-consent`; G4 calls when Jail pin activity present
+- Doctrine/SKILL/mechanical-gates/software-factory/bakeoff honesty lockstep; Steal consent + steal-flow remain separate
+- Not archaeology; not embeddings; closes soft→hard leftover named in v0.4.141; soft→hard backlog closed for named leftovers (no further MD-only HARD-GATE claims clear Worthy Spend)
+- Plugin, marketplace, and SKILL.md at 0.4.142
+
 ## 0.4.141
 
 - Vertical depth: Steal sign-in / dispatch / swarm HARD-GATE — `scripts/lib/steal_flow.py` card-style `--reject-no-signin` / `--reject-no-dispatch-layout` / `--reject-unbounded-swarm` / `--check-signin` / `--check-dispatch` / `--check-swarm` (SIGN-IN HANDOFF + runs layout + bound swarm; vacuous PASS when no matching activity)
 - Fixtures `evals/fixtures/steal-sign-dispatch-swarm/`; thin twins `steal-flow.sh`/`.ps1` + aliases `sign-in-handoff` / `steal-dispatch` / `swarm-emulate`; `emperor steal-flow`; G4 calls when steal-flow activity present
 - Doctrine/SKILL/mechanical-gates/software-factory/bakeoff honesty lockstep; consent + quarantine remain separate
-- Not archaeology; not embeddings; closes soft→hard leftover named in v0.4.140; next soft leftover: Jail pin-and-consent
+- Not archaeology; not embeddings; closes soft→hard leftover named in v0.4.140; next soft leftover: Jail pin-and-consent (shipped v0.4.142)
 - Plugin, marketplace, and SKILL.md at 0.4.141
 
 ## 0.4.140

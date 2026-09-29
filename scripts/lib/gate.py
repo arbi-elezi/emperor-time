@@ -18,6 +18,8 @@ G4 also delegates Steal consent-protocol to consent.py
 (vacuous PASS when no worker runs / no steal markers).
 G4 also delegates Steal sign-in / dispatch / swarm to steal_flow.py
 (vacuous PASS when no matching steal-flow activity).
+G4 also delegates Jail pin-and-consent to pin_consent.py
+(vacuous PASS when no captured-skill / pin markers).
 G4 also delegates hetero-critique isolation to review_pack.py
 (vacuous PASS when no review-pack / no hetero markers).
 G0 also delegates thoughttrail + super-context to context.py
@@ -152,6 +154,16 @@ def _run_steal_flow(gate: str, task: Path) -> None:
         )
         if proc.returncode != 0:
             _fail(gate, f"steal flow ({flag})")
+
+
+def _run_pin_consent(gate: str, task: Path) -> None:
+    py = _root() / "scripts" / "lib" / "pin_consent.py"
+    proc = subprocess.run(
+        [sys.executable, str(py), "--check-pin-consent", str(task)],
+        check=False,
+    )
+    if proc.returncode != 0:
+        _fail(gate, "jail pin-and-consent (pin_consent.py)")
 
 
 def _run_review_isolation(gate: str, task: Path) -> None:
@@ -298,6 +310,9 @@ def run_gate(gate: str, task: Path) -> None:
         # Steal sign-in / dispatch / swarm HARD-GATE (steal_flow.py).
         # Vacuous PASS when no matching activity.
         _run_steal_flow(gate, task)
+        # Jail pin-and-consent HARD-GATE (pin_consent.py).
+        # Vacuous PASS when no captured-skill / pin markers.
+        _run_pin_consent(gate, task)
         # Hetero-critique isolation: review-pack has no author diary / CoT.
         # Vacuous PASS when no review-pack / no hetero markers.
         _run_review_isolation(gate, task)

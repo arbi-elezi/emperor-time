@@ -5972,7 +5972,7 @@ def run_evals(root: Path) -> int:
     h.require_contains("steal-consent", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing steal-consent")
     h.require_contains("consent.py", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing consent.py")
     h.require_contains("0.4.132", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing 0.4.132 tip")
-    h.require_contains("0.4.141", ".claude-plugin/plugin.json", "plugin.json not at 0.4.141")
+    h.require_contains("0.4.142", ".claude-plugin/plugin.json", "plugin.json not at 0.4.142")
     h.require_contains("0.4.137", "CHANGELOG.md", "CHANGELOG missing retained 0.4.137")
     h.require_contains("0.4.136", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing retained 0.4.136")
     h.require_contains("0.4.132", "CHANGELOG.md", "CHANGELOG missing 0.4.132")
@@ -6039,13 +6039,21 @@ def run_evals(root: Path) -> int:
     h.require_contains("steal-sign-dispatch-swarm", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing steal-sign-dispatch-swarm")
     h.require_contains("SIGNIN_THEN_DISPATCH_THEN_BOUNDED_SWARM", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing SIGNIN_THEN_DISPATCH_THEN_BOUNDED_SWARM")
     h.require_contains("steal_flow.py", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing steal_flow.py")
+    h.require_contains("0.4.142", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing 0.4.142 tip")
+    h.require_contains("0.4.142", "CHANGELOG.md", "CHANGELOG missing 0.4.142")
+    h.require_contains("reject-unpinned", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing reject-unpinned")
+    h.require_contains("reject-no-skill-consent", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing reject-no-skill-consent")
+    h.require_contains("check-pin-consent", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing check-pin-consent")
+    h.require_contains("jail-pin-and-consent", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing jail-pin-and-consent")
+    h.require_contains("PIN_THEN_CONSENT_BEFORE_ADAPT", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing PIN_THEN_CONSENT_BEFORE_ADAPT")
+    h.require_contains("pin_consent.py", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing pin_consent.py")
     h.require_contains("PR_CONSENT_BEFORE_PUBLIC", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing PR_CONSENT_BEFORE_PUBLIC")
     h.require_contains("secrets_broker.py", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing secrets_broker.py")
     h.require_contains("workspace_env.py", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing workspace_env.py")
     h.require_contains("blind-secrets-broker", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing blind-secrets-broker")
     h.require_contains("reject-secret-leak", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing reject-secret-leak")
     h.require_contains("check-env-redacted", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing check-env-redacted")
-    h.require_contains("0.4.141", ".claude-plugin/marketplace.json", "marketplace.json not at 0.4.141")
+    h.require_contains("0.4.142", ".claude-plugin/marketplace.json", "marketplace.json not at 0.4.142")
     h.require_contains("finish.py", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing finish.py")
     h.require_contains("reject-red-suite", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing reject-red-suite")
     h.require_contains("require-green", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing require-green")
@@ -7714,6 +7722,216 @@ def run_evals(root: Path) -> int:
         h.pass_msg("emperor steal-flow peer forwards --reject-no-signin")
     h.pass_msg("steal_flow.py thin twins + steal-sign-dispatch-swarm HARD-GATE")
 
+    # ---- Jail pin-and-consent HARD-GATE (Chain Jail vertical depth) ----
+    h.section("jail-pin-and-consent HARD-GATE")
+    h.need("scripts/lib/pin_consent.py")
+    h.need("scripts/pin-and-consent.sh")
+    h.need("scripts/pin-and-consent.ps1")
+    h.need("scripts/jail-pin.sh")
+    h.need("scripts/jail-pin.ps1")
+    h.need("evals/fixtures/jail-pin-and-consent/pin-ok.md")
+    h.need("evals/fixtures/jail-pin-and-consent/pin-unpinned.md")
+    h.need("evals/fixtures/jail-pin-and-consent/pin-no-consent.md")
+    h.need("evals/fixtures/jail-pin-and-consent/pin-incomplete.md")
+    h.need("evals/fixtures/jail-pin-and-consent/pin-vacuous.md")
+    h.need("evals/fixtures/jail-pin-and-consent/task-ok/ledger.md")
+    h.need("evals/fixtures/jail-pin-and-consent/task-unpinned/ledger.md")
+    h.need("evals/fixtures/jail-pin-and-consent/task-no-consent/ledger.md")
+    h.need("evals/fixtures/jail-pin-and-consent/task-incomplete-pin/ledger.md")
+    h.need("evals/fixtures/jail-pin-and-consent/task-vacuous/ledger.md")
+    h.bash_n("scripts/pin-and-consent.sh", "pin-and-consent.sh syntax")
+    h.bash_n("scripts/jail-pin.sh", "jail-pin.sh syntax")
+    h.py_compile("scripts/lib/pin_consent.py", "pin_consent.py compile")
+    h.require_contains(
+        "lib/pin_consent.py",
+        "scripts/pin-and-consent.sh",
+        "pin-and-consent.sh thin twin missing pin_consent.py",
+    )
+    h.require_contains(
+        "lib/pin_consent.py",
+        "scripts/pin-and-consent.ps1",
+        "pin-and-consent.ps1 thin twin missing pin_consent.py",
+    )
+    h.require_contains(
+        "pin-and-consent",
+        "scripts/emperor",
+        "emperor bash peer missing pin-and-consent",
+    )
+    h.require_contains(
+        "jail-pin",
+        "scripts/emperor",
+        "emperor bash peer missing jail-pin",
+    )
+    h.require_contains(
+        "'pin-and-consent'",
+        "scripts/emperor.ps1",
+        "emperor.ps1 missing pin-and-consent",
+    )
+    h.require_contains(
+        "pin-and-consent",
+        "scripts/emperor.cmd",
+        "emperor.cmd missing pin-and-consent",
+    )
+    h.require_contains(
+        "pin-and-consent",
+        "scripts/emperor.zsh",
+        "emperor.zsh missing pin-and-consent",
+    )
+    h.require_contains(
+        "pin_consent.py",
+        "scripts/lib/gate.py",
+        "gate.py does not call pin_consent.py",
+    )
+    h.require_contains(
+        "--check-pin-consent",
+        "scripts/lib/gate.py",
+        "gate.py missing --check-pin-consent wiring",
+    )
+    h.require_contains(
+        "--reject-unpinned",
+        "scripts/lib/pin_consent.py",
+        "pin_consent.py missing --reject-unpinned",
+    )
+    h.require_contains(
+        "--reject-no-skill-consent",
+        "scripts/lib/pin_consent.py",
+        "pin_consent.py missing --reject-no-skill-consent",
+    )
+    h.require_contains(
+        "--check-pin-consent",
+        "scripts/lib/pin_consent.py",
+        "pin_consent.py missing --check-pin-consent",
+    )
+    h.require_contains(
+        "HARD-GATE",
+        "chains/chain-jail/pin-and-consent.md",
+        "pin-and-consent.md missing HARD-GATE mechanical pointer",
+    )
+    h.require_contains(
+        "--reject-unpinned",
+        "skills/emperor-capture/SKILL.md",
+        "emperor-capture skill missing --reject-unpinned",
+    )
+    h.require_contains(
+        "jail-pin-and-consent-hard-gate",
+        "evals/evals.json",
+        "evals.json missing jail-pin-and-consent-hard-gate case",
+    )
+    h.require_contains(
+        "pin-and-consent",
+        "references/mechanical-gates.md",
+        "mechanical-gates missing pin-and-consent row",
+    )
+    h.require_contains(
+        "check-pin-consent",
+        "references/software-factory.md",
+        "software-factory missing check-pin-consent",
+    )
+    h.require_contains(
+        "reject-unpinned",
+        "evals/bakeoff.md",
+        "bakeoff.md missing pin-and-consent reject-unpinned inventory",
+    )
+    _, card = h.run_py("scripts/lib/pin_consent.py")
+    if "checklist=yes" not in card:
+        h.fail_msg("pin-consent card missing checklist=yes")
+    elif "PIN_THEN_CONSENT_BEFORE_ADAPT" not in card:
+        h.fail_msg("pin-consent card missing iron law token")
+    else:
+        h.pass_msg("pin-consent prints PIN-CONSENT card")
+    for flag, needle in (
+        ("--reject-unpinned", "REJECT UNPINNED"),
+        ("--reject-no-skill-consent", "REJECT NO SKILL CONSENT"),
+    ):
+        rc, reject = h.run_py("scripts/lib/pin_consent.py", flag)
+        if rc == 0:
+            h.fail_msg(f"pin-consent {flag} should exit non-zero")
+        elif needle not in reject and "HARD-GATE" not in reject:
+            h.fail_msg(f"pin-consent {flag} missing REJECT text")
+        else:
+            h.pass_msg(f"pin-consent {flag} hard-gates")
+    for name, needle in (
+        ("pin-unpinned.md", r"source-url|source-hash|pin|unpinned"),
+        ("pin-no-consent.md", r"consent|JAIL CONSENT|named"),
+        ("pin-incomplete.md", r"incomplete|captured-at|license|adapter"),
+        ("task-unpinned", r"source-url|source-hash|pin"),
+        ("task-no-consent", r"consent|JAIL CONSENT|named"),
+        ("task-incomplete-pin", r"incomplete|captured-at|license|adapter"),
+    ):
+        target = root / "evals/fixtures/jail-pin-and-consent" / name
+        rc, err = h.run_py(
+            "scripts/lib/pin_consent.py", "--check-pin-consent", str(target)
+        )
+        if rc == 0:
+            h.fail_msg(f"pin-consent {name} should fail --check-pin-consent")
+        elif not h.grep_out(err, needle):
+            h.fail_msg(f"pin-consent {name} should mention {needle}: {err}")
+        else:
+            h.pass_msg(f"pin-consent {name} rejected")
+    for name in (
+        "pin-ok.md",
+        "pin-vacuous.md",
+        "task-ok",
+        "task-vacuous",
+    ):
+        rc, _ = h.run_py(
+            "scripts/lib/pin_consent.py",
+            "--check-pin-consent",
+            str(root / "evals/fixtures/jail-pin-and-consent" / name),
+        )
+        if rc != 0:
+            h.fail_msg(f"pin-consent {name} should pass --check-pin-consent")
+        else:
+            h.pass_msg(f"pin-consent {name} accepted")
+    # G4 wiring
+    tmp = Path(tempfile.mkdtemp())
+    try:
+        import shutil as _shutil
+        for name, expect_fail in (
+            ("task-unpinned", True),
+            ("task-no-consent", True),
+            ("task-incomplete-pin", True),
+            ("task-ok", False),
+            ("task-vacuous", False),
+        ):
+            src = root / "evals/fixtures/jail-pin-and-consent" / name
+            dst = tmp / name
+            _shutil.copytree(src, dst)
+            (dst / ".gates").mkdir(exist_ok=True)
+            stamp = _utc_stamp()
+            for g in ("g0", "g1", "g2", "g3"):
+                (dst / ".gates" / g).write_text(stamp + "\n", encoding="utf-8")
+            # G4 also needs critique/claims/consent peers vacuous — ensure
+            # minimal ledger Verdict already present in fixtures.
+            rc, out = h.run_sh("scripts/gate.sh", "g4", str(dst))
+            if expect_fail:
+                if rc == 0:
+                    h.fail_msg(f"G4 allowed bad jail-pin {name}")
+                else:
+                    h.pass_msg(f"G4 rejects bad jail-pin {name}")
+            else:
+                if rc != 0:
+                    h.fail_msg(f"G4 should accept jail-pin {name}: {out}")
+                else:
+                    h.pass_msg(f"G4 accepts jail-pin {name}")
+    finally:
+        shutil.rmtree(tmp, ignore_errors=True)
+    _, sh_card = h.run_sh("scripts/pin-and-consent.sh")
+    if "checklist=yes" not in sh_card:
+        h.fail_msg("pin-and-consent.sh should print PIN-CONSENT card")
+    else:
+        h.pass_msg("pin-and-consent.sh thin twin prints card")
+    _, emp_out = h.run_sh(
+        "scripts/emperor",
+        "pin-and-consent",
+        "--reject-unpinned",
+    )
+    if "REJECT UNPINNED" not in emp_out:
+        h.fail_msg("emperor pin-and-consent --reject-unpinned should forward REJECT")
+    else:
+        h.pass_msg("emperor pin-and-consent peer forwards --reject-unpinned")
+    h.pass_msg("pin_consent.py thin twins + jail-pin-and-consent HARD-GATE")
+
     # ---- hetero-critique isolation HARD-GATE (Judgment G4 vertical depth) ----
     h.section("hetero-critique-isolation HARD-GATE")
     h.need("scripts/lib/review_pack.py")
@@ -7786,9 +8004,9 @@ def run_evals(root: Path) -> int:
         "bakeoff.md missing reject-unisolated inventory",
     )
     h.require_contains(
-        "0.4.141",
+        "0.4.142",
         "SKILL.md",
-        "SKILL.md not bumped to 0.4.141",
+        "SKILL.md not bumped to 0.4.142",
     )
     _, card = h.run_py("scripts/lib/review_pack.py")
     if "checklist=yes" not in card:

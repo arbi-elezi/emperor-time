@@ -137,6 +137,11 @@
       "id": "holy-process-healing-hard-gate",
       "type": "behavioral-fixture",
       "expect": "process_heal.py --reject-no-register / --reject-no-reentry / --check-process-heal refuses missing register or RE-ENTERED seam when process-healing activity present; accepts register+reentry and vacuous non-process-heal"
+    },
+    {
+      "id": "jail-pin-and-consent-hard-gate",
+      "type": "behavioral-fixture",
+      "expect": "pin_consent.py --reject-unpinned / --reject-no-skill-consent / --check-pin-consent refuses missing provenance pin or named-skill consent when Jail pin activity present; accepts ok+vacuous; G4 calls when Jail pin activity present"
     }
   ]
 }
