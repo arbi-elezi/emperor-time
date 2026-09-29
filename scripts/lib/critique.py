@@ -369,6 +369,8 @@ def main(argv: Sequence[str] | None = None) -> int:
 
     # Proportionality: always count critique on a task dir. Missing
     # effort_class stamps DEFAULT_EFFORT_CLASS=tiny and enforces tiny caps.
+    # Ask→spec always-on is G0 --require-spec (not re-checked here — G4 peers
+    # stamp .gates/g0 without rewriting every fixture ask-spec.md).
     if target.is_dir():
         try:
             from proportionality import bump_and_check

@@ -13,8 +13,8 @@ Prove ask→spec + proportionality HARD-GATEs (`ask_spec.py --reject-no-spec` /
 | `task-no-spec/` | FAIL — ask-spec claimed, fields missing |
 | `task-over-verify/` | FAIL — tiny class, cycles over cap |
 | `task-under-cap/` | PASS — tiny class, cycles under cap |
-| `task-vacuous/` | PASS vacuous — ordinary ledger, no ask-spec activity |
-| `task-no-class/` | bump stamps tiny — critique/finish/grill not unbounded |
+| `task-vacuous/` | `--check-ask-spec` SKIP vacuous; `--require-spec` / G0 FAIL — no written spec |
+| `task-no-class/` | `--require-spec` FAIL; critique thrash still hits default-tiny caps |
 | `task-no-class-over/` | FAIL — cycle ledger without class still hits tiny cap |
 
 Honesty: idle Steal/Jail/Holy vacuous PASS is separate; these fixtures cover task-path thrash only.

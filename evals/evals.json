@@ -81,7 +81,7 @@
     {
       "id": "steal-consent-hard-gate",
       "type": "behavioral-fixture",
-      "expect": "consent.py / gate g4 rejects steal activity lacking CONSENT record / header theater / uncovered enlisted agent; accepts CONSENT + agent \u2192 role / EMPEROR_CONSENT_AGENTS / solo"
+      "expect": "consent.py / gate g4 rejects steal activity lacking CONSENT record / header theater / uncovered enlisted agent; accepts CONSENT + agent → role / EMPEROR_CONSENT_AGENTS / solo"
     },
     {
       "id": "steal-sign-dispatch-swarm-hard-gate",
@@ -146,22 +146,27 @@
     {
       "id": "ask-spec-proportionality-hard-gate",
       "type": "behavioral-fixture",
-      "expect": "ask_spec.py --reject-no-spec / --check-ask-spec / --emit; proportionality.py --reject-over-verify / --check-proportionality / --record-cycle; missing spec fails; tiny ask \u2192 tiny effort_class; over-verify fails; under-cap + vacuous pass; G0 calls ask-spec; G4 calls proportionality"
+      "expect": "ask_spec.py --reject-no-spec / --check-ask-spec / --emit; proportionality.py --reject-over-verify / --check-proportionality / --record-cycle; missing spec fails; tiny ask → tiny effort_class; over-verify fails; under-cap + vacuous pass; G0 calls ask-spec; G4 calls proportionality"
     },
     {
       "id": "vacuous-pass-honesty-hard-gate",
       "type": "behavioral-fixture",
-      "expect": "check_report.py report_check; Steal/Jail/Holy + forge/isolation/context/ask-spec/proportionality activity-scoped --check-* emit SKIP (vacuous \u2014 no activity) when idle and PASS when exercised; fixtures vacuous.md/task-vacuous/forge-vacuous force SKIP; *-ok force PASS; mechanical-gates activity-scoped vs always-on table; vacuous-pass-peers v0.4.145"
+      "expect": "check_report.py report_check; Steal/Jail/Holy + forge/isolation/context/ask-spec/proportionality activity-scoped --check-* emit SKIP (vacuous — no activity) when idle and PASS when exercised; fixtures vacuous.md/task-vacuous/forge-vacuous force SKIP; *-ok force PASS; mechanical-gates activity-scoped vs always-on table; vacuous-pass-peers v0.4.145"
     },
     {
       "id": "vacuous-pass-peers-hard-gate",
       "type": "behavioral-fixture",
-      "expect": "forge.py / review_pack.py / context.py / ask_spec.py / proportionality.py use report_check; idle SKIP (vacuous \u2014 no activity); exercised PASS; eval fixtures force label; vacuous-pass-peers v0.4.145"
+      "expect": "forge.py / review_pack.py / context.py / ask_spec.py / proportionality.py use report_check; idle SKIP (vacuous — no activity); exercised PASS; eval fixtures force label; vacuous-pass-peers v0.4.145"
     },
     {
       "id": "default-tiny-hard-cap-hard-gate",
       "type": "behavioral-fixture",
       "expect": "proportionality.py ensure_effort_class / bump_and_check / MISSING_CLASS_DEFAULTS_TINY; critique/finish/grill stamp tiny when effort_class missing; task-no-class-over fails tiny cap; task-vacuous still vacuous; SessionStart ask-spec nudge"
+    },
+    {
+      "id": "ask-spec-require-before-setup-hard-gate",
+      "type": "behavioral-fixture",
+      "expect": "ask_spec.py --require-spec always-on (never vacuous); G0 refuses without written ask→spec; --check-ask-spec idle still SKIP; SessionStart/activate MUST; v0.4.147"
     }
   ]
 }

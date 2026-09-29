@@ -6008,7 +6008,7 @@ def run_evals(root: Path) -> int:
     h.require_contains("steal-consent", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing steal-consent")
     h.require_contains("consent.py", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing consent.py")
     h.require_contains("0.4.132", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing 0.4.132 tip")
-    h.require_contains("0.4.146", ".claude-plugin/plugin.json", "plugin.json not at 0.4.146")
+    h.require_contains("0.4.147", ".claude-plugin/plugin.json", "plugin.json not at 0.4.147")
     h.require_contains("0.4.137", "CHANGELOG.md", "CHANGELOG missing retained 0.4.137")
     h.require_contains("0.4.136", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing retained 0.4.136")
     h.require_contains("0.4.132", "CHANGELOG.md", "CHANGELOG missing 0.4.132")
@@ -6075,11 +6075,11 @@ def run_evals(root: Path) -> int:
     h.require_contains("steal-sign-dispatch-swarm", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing steal-sign-dispatch-swarm")
     h.require_contains("SIGNIN_THEN_DISPATCH_THEN_BOUNDED_SWARM", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing SIGNIN_THEN_DISPATCH_THEN_BOUNDED_SWARM")
     h.require_contains("steal_flow.py", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing steal_flow.py")
-    h.require_contains("0.4.146", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing 0.4.146 tip")
+    h.require_contains("0.4.147", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing 0.4.147 tip")
     h.require_contains("0.4.145", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing retained 0.4.145")
     h.require_contains("0.4.144", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing retained 0.4.144")
     h.require_contains("0.4.143", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing retained 0.4.143")
-    h.require_contains("0.4.146", "CHANGELOG.md", "CHANGELOG missing 0.4.146")
+    h.require_contains("0.4.147", "CHANGELOG.md", "CHANGELOG missing 0.4.147")
     h.require_contains("0.4.145", "CHANGELOG.md", "CHANGELOG missing retained 0.4.145")
     h.require_contains("0.4.144", "CHANGELOG.md", "CHANGELOG missing retained 0.4.144")
     h.require_contains("0.4.143", "CHANGELOG.md", "CHANGELOG missing retained 0.4.143")
@@ -6093,13 +6093,15 @@ def run_evals(root: Path) -> int:
     h.require_contains("reject-no-spec", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing reject-no-spec")
     h.require_contains("reject-over-verify", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing reject-over-verify")
     h.require_contains("check-ask-spec", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing check-ask-spec")
+    h.require_contains("require-spec", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing require-spec")
+    h.require_contains("require_spec", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing require_spec")
     h.require_contains("check-proportionality", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing check-proportionality")
     h.require_contains("ask-spec-proportionality", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing ask-spec-proportionality")
     h.require_contains("ASK_THEN_SPEC_BEFORE_SETUP", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing ASK_THEN_SPEC_BEFORE_SETUP")
     h.require_contains("EFFORT_CAP_BY_CLASS", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing EFFORT_CAP_BY_CLASS")
     h.require_contains("ask_spec.py", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing ask_spec.py")
     h.require_contains("proportionality.py", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing proportionality.py")
-    h.require_contains("0.4.146", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing 0.4.146 tip keyword")
+    h.require_contains("0.4.147", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing 0.4.147 tip keyword")
     h.require_contains("vacuous-pass-peers", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing vacuous-pass-peers")
     h.require_contains("report_check", "scripts/lib/forge.py", "forge missing report_check")
     h.require_contains("report_check", "scripts/lib/review_pack.py", "review_pack missing report_check")
@@ -6131,7 +6133,7 @@ def run_evals(root: Path) -> int:
     h.require_contains("blind-secrets-broker", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing blind-secrets-broker")
     h.require_contains("reject-secret-leak", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing reject-secret-leak")
     h.require_contains("check-env-redacted", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing check-env-redacted")
-    h.require_contains("0.4.146", ".claude-plugin/marketplace.json", "marketplace.json not at 0.4.146")
+    h.require_contains("0.4.147", ".claude-plugin/marketplace.json", "marketplace.json not at 0.4.147")
     h.require_contains("0.4.142", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing retained 0.4.142")
     h.require_contains("finish.py", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing finish.py")
     h.require_contains("reject-red-suite", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing reject-red-suite")
@@ -8207,9 +8209,14 @@ def run_evals(root: Path) -> int:
         "gate.py does not call ask_spec.py",
     )
     h.require_contains(
-        "--check-ask-spec",
+        "--require-spec",
         "scripts/lib/gate.py",
-        "gate.py missing --check-ask-spec wiring",
+        "gate.py missing --require-spec wiring",
+    )
+    h.require_contains(
+        "--require-spec",
+        "scripts/lib/ask_spec.py",
+        "ask_spec.py missing --require-spec",
     )
     h.require_contains(
         "proportionality.py",
@@ -8412,8 +8419,8 @@ def run_evals(root: Path) -> int:
         import shutil as _shutil
         for name, expect_fail in (
             ("task-no-spec", True),
+            ("task-vacuous", True),  # --require-spec: no written spec FAILS
             ("task-ok", False),
-            ("task-vacuous", False),
         ):
             src = root / "evals/fixtures/ask-spec-proportionality" / name
             dst = tmp / f"g0-{name}"
@@ -8545,6 +8552,31 @@ def run_evals(root: Path) -> int:
         "evals/evals.json",
         "evals.json missing default-tiny-hard-cap-hard-gate case",
     )
+    h.require_contains(
+        "ask-spec-require-before-setup-hard-gate",
+        "evals/evals.json",
+        "evals.json missing ask-spec-require-before-setup-hard-gate case",
+    )
+    h.require_contains(
+        "require-spec",
+        "evals/bakeoff.md",
+        "bakeoff missing require-spec inventory",
+    )
+    h.require_contains(
+        "require-spec",
+        "references/mechanical-gates.md",
+        "mechanical-gates missing require-spec",
+    )
+    h.require_contains(
+        "--require-spec",
+        "skills/emperor-scope/SKILL.md",
+        "emperor-scope skill missing --require-spec",
+    )
+    h.require_contains(
+        "require-spec",
+        "skills/emperor-resume/must-route.md",
+        "must-route missing require-spec",
+    )
     rc, err = h.run_py(
         "scripts/lib/proportionality.py",
         "--check-proportionality",
@@ -8562,6 +8594,14 @@ def run_evals(root: Path) -> int:
         src = root / "evals/fixtures/ask-spec-proportionality/task-no-class"
         dst = tmp / "thrash"
         _shutil.copytree(src, dst)
+        # --require-spec always-on (G0 hole closed); critique still default-tiny
+        rc2, out2 = h.run_py(
+            "scripts/lib/ask_spec.py", "--require-spec", str(dst)
+        )
+        if rc2 == 0:
+            h.fail_msg("ask-spec --require-spec task-no-class should fail")
+        else:
+            h.pass_msg("ask-spec --require-spec rejects task-no-class")
         rcs = []
         for _i in range(3):
             rc, _out = h.run_py(
@@ -8572,6 +8612,30 @@ def run_evals(root: Path) -> int:
             h.fail_msg(f"critique no-class thrash expected [0,0,1] got {rcs}")
         else:
             h.pass_msg("critique no-class thrash hits tiny cap")
+        # idle --check-ask-spec still SKIP vacuous on task-vacuous
+        rc3, out3 = h.run_py(
+            "scripts/lib/ask_spec.py",
+            "--check-ask-spec",
+            str(root / "evals/fixtures/ask-spec-proportionality/task-vacuous"),
+        )
+        if rc3 != 0 or "SKIP (vacuous" not in out3:
+            h.fail_msg(f"task-vacuous --check-ask-spec should SKIP: {out3}")
+        else:
+            h.pass_msg("task-vacuous --check-ask-spec still SKIP vacuous")
+        # activate card MUST ask→spec / require-spec
+        _rc, acard = h.run_py("scripts/lib/activate.py")
+        if "ask→spec" not in acard and "ask-spec" not in acard:
+            h.fail_msg("activate card missing ask→spec MUST")
+        elif "require-spec" not in acard:
+            h.fail_msg("activate card missing require-spec")
+        else:
+            h.pass_msg("activate card MUST ask→spec --require-spec")
+        # SessionStart MUST language
+        h.require_contains(
+            "require-spec",
+            "hooks/hooks.json",
+            "SessionStart missing require-spec MUST",
+        )
         cycles = dst / "effort-cycles.json"
         if not cycles.is_file():
             h.fail_msg("critique thrash did not stamp effort-cycles.json")
@@ -8663,9 +8727,9 @@ def run_evals(root: Path) -> int:
         "bakeoff.md missing reject-unisolated inventory",
     )
     h.require_contains(
-        "0.4.146",
+        "0.4.147",
         "SKILL.md",
-        "SKILL.md not bumped to 0.4.146",
+        "SKILL.md not bumped to 0.4.147",
     )
     _, card = h.run_py("scripts/lib/review_pack.py")
     if "checklist=yes" not in card:

@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.4.147
+
+- Vertical depth: ask→spec require-before-setup — `ask_spec.py --require-spec` always-on (never vacuous SKIP); G0 `--require-spec` refuses open without a written scoped brief (goal / done-when / out-of-scope / effort_class)
+- Closes SessionStart/skill/G0 holes left soft after v0.4.146 nudge + default-tiny: `--check-ask-spec` stays activity-scoped for idle honesty; `--require-spec` is the setup gate
+- SessionStart MUST + activate card + emperor-scope / must-route lockstep; fixtures/eval force G0 fail without written spec; default-tiny caps retained as belt-and-suspenders
+- Doctrine/SKILL/mechanical-gates/software-factory/bakeoff honesty lockstep; not archaeology; not embeddings; not Nen/museum/k8s growth
+- Plugin, marketplace, and SKILL.md at 0.4.147
+
 ## 0.4.146
 
 - Vertical depth: default-tiny hard-cap when effort_class missing — `proportionality.py` (`ensure_effort_class` / `bump_and_check` / `MISSING_CLASS_DEFAULTS_TINY`); critique / finish / grill always record cycles and enforce tiny caps when ask→spec omitted (no more unbounded thrash by skipping the class)
