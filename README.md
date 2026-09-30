@@ -17,6 +17,8 @@ opencode, Ollama, and friends.
 
 **OpenCode adapter is rich** (playbook + QA-SMOKE + config snippet); equal-UX-proven only with an OpenCode-binary foreign receipt — AGENTS.md/scripts alone is not.
 
+**Cursor adapter is rich** (playbook + QA-SMOKE + config snippet at `adapters/cursor/`); structure path documented. Equal-UX **HOLD** (structure PASS ≠ equal-UX); `cursor-agent` Not logged in = **BLOCKED**.
+
 ## Install — Claude Code (start here)
 
 This repo is its own plugin marketplace (self-published — not an Anthropic
@@ -94,7 +96,7 @@ The `.ps1` scripts also run under pwsh on macOS/Linux if you prefer PowerShell.
 
 ### opencode / Ollama / plain open-weight models
 
-See `adapters/opencode/`, `adapters/ollama/`, and `adapters/generic/` —
+See `adapters/cursor/`, `adapters/opencode/`, `adapters/ollama/`, and `adapters/generic/` —
 the last contains `adapters/generic/EMPEROR_TIME.core.md`, the whole doctrine
 distilled into a single system prompt for models that can't load a skill tree.
 
