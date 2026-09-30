@@ -214,7 +214,7 @@ timeout 20 script -q -c 'opencode run -m openrouter/stealth/space-bunny-alpha --
 
 Portability: GNU/util-linux `script -q -c 'cmd' file` vs BSD/Darwin `script -q file cmd` (no `-c`; command after the typescript path). Prefer a real TTY/PTY — the `python3` `pty.spawn` one-liner is the portable recipe.
 
-Structure path (AGENTS.md + `boot`/`activate`/`done`) and direct OpenRouter HTTPS remain valid when the binary lane is pipe-blocked. Direct HTTPS is a **compat/fallback probe**, not **ORI live PASS** (TTY-as-gate — see below). **Equal-UX-proven** still requires a dated **binary** green receipt **and** PO accept of claim language — do not auto-claim from docs or AGENTS-only PASS.
+Structure path (AGENTS.md + `boot`/`activate`/`done`) and direct OpenRouter HTTPS remain valid when the binary lane is pipe-blocked. Direct HTTPS is a **compat/fallback probe**, not **ORI live PASS** (TTY-as-gate — see ### Non-TTY hang workaround (binary lane) above; ORI-REGRESSION.md §3). **Equal-UX-proven** still requires a dated **binary** green receipt **and** PO accept of claim language — do not auto-claim from docs or AGENTS-only PASS.
 
 ---
 
