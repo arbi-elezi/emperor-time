@@ -1,6 +1,9 @@
 # Stranger recipe: Colibrì + Emperor Time (≤1 page)
 
 **Claim:** Colibrì as inference host, integrate-if-you-want.
+**Who this is:** Emperor Time runs in your editor (client side); Colibrì is only
+the local model server that editor talks to. Wiring the two together is your
+call, not a requirement.
 Harness ownership and native equal-UX are out of scope.
 Target: JustVugg/colibri only (AMS name collision is out of scope / stale).
 
@@ -21,7 +24,7 @@ Target: JustVugg/colibri only (AMS name collision is out of scope / stale).
    that base URL and model id. Load ET on the **client** side
    (`AGENTS.md` / OpenCode skill / generic core). Do not expect Colibrì to load
    ET itself. See `README.md` and `config.snippet.yaml`.
-4. **Boot and activate** in the project:
+4. **Boot and activate** in the project (both commands must go green):
 
    ```bash
    bash scripts/boot.sh
