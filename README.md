@@ -13,6 +13,8 @@ Written in the open **Agent Skills** format (`SKILL.md`). Native on
 **Claude Code** (and Kimi CLI, same skill dirs); adapters cover Codex,
 opencode, Ollama, and friends.
 
+**Proven via the Codex/AGENTS.md adapter path** on a foreign tiny ask (silent boot → MUST-route activate/route — not Claude SessionStart; other adapters documented, not equal-UX-proven).
+
 ## Install — Claude Code (start here)
 
 This repo is its own plugin marketplace (self-published — not an Anthropic
