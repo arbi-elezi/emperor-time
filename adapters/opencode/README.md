@@ -235,6 +235,12 @@ worker host lacks the skill install. Consent before enlist.
 
 Repeatable toy smoke without frontier models: **`QA-SMOKE.md`** (this directory).
 
+Pinned stranger ORI agent-regression contract (named slug + tools allowlist +
+foreign tiny ask + triage): **`ORI-REGRESSION.md`** plus filled lab default
+**`ori-regression.example.yaml`** (example locked to
+`openrouter/stealth/space-bunny-alpha`). Not a Bakeoff cell; stay 0.4.174 /
+PIN 0.4.171.
+
 ---
 
 ## Why OpenCode in the roster
