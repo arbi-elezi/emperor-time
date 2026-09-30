@@ -1,0 +1,65 @@
+# ORI agent-regression contract: filled lab default (example artefact)
+# Copy / adapt for a stranger run. Named slug is locked for this example.
+# Secrets stay in the environment (OPENROUTER_API_KEY). Never commit keys.
+# Version posture: stay 0.4.174 / Bakeoff PIN 0.4.171. Not a Bakeoff Run cell.
+
+contract: ori-agent-regression
+version_posture:
+  tip: "0.4.174"
+  bakeoff_pin: "0.4.171"
+  no_version_bump: true
+  no_pin_swap: true
+
+host: OpenCode
+tty_required: true
+tty_recipe: "timeout 90 script -q -c 'opencode run -m <model> --dir . \"<ask>\"' /dev/null"
+
+model: openrouter/stealth/space-bunny-alpha
+no_silent_model_swap: true
+
+tools_allowlist:
+  - read
+  - edit
+  - bash  # bounded probes only; no PR / send / purchase
+
+foreign_ask: >
+  In <foreign-root>, change <one file> so <one observable> holds;
+  do not touch emperor-time or invent a Bakeoff cell.
+
+et_wire:
+  - clone_or_pull_tip
+  - record_tip_sha
+  - copy_AGENTS_md_or_pointer
+  - path_or_symlink_scripts
+  - copy_config_snippet_to_dot_emperor
+  - boot
+  - activate
+  - ask_spec_tiny
+  - done
+
+invariants:
+  - iron_hard
+  - judgment_off_for_smoke
+  - secrets_env_only
+  - no_bakeoff_cell_invention
+  - no_pin_swap
+  - not_astra
+  - not_equal_ux_without_green_binary_and_po_claim_accept
+  - no_silent_model_swap
+  - no_references_lane_edits
+
+triage_labels:
+  - PASS
+  - ET-bug
+  - model-FAIL
+  - blocked
+
+fail_closed:
+  slug_unavailable: "BLOCKED + ask PO (do not substitute)"
+  non_tty_hang_124: "blocked binary lane; use script/pty or structure path"
+  missing_opencode_or_path: "blocked"
+
+receipt:
+  label: "contract exercise / coding toolchain"
+  not: "bakeoff cell"
+  suggest_path: "/workspace/field-receipts/receipts/<date>/bet-l-ori-regression-contract/"
