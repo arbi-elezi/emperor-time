@@ -112,6 +112,16 @@ _FORGE_PATHS = (
 )
 
 
+def _primary_reason(reasons: list[str]) -> str:
+    """Decisive class-changing step: last bump, else sole/last base reason."""
+    bumps = [r for r in reasons if "bump" in r]
+    if bumps:
+        return bumps[-1]
+    if reasons:
+        return reasons[-1]
+    return ""
+
+
 @dataclass
 class Judgment:
     effort_class: str
@@ -119,6 +129,11 @@ class Judgment:
     signals: dict[str, Any] = field(default_factory=dict)
     override: bool = False
     source: str = "heuristics"
+    primary_reason: str = ""
+
+    def __post_init__(self) -> None:
+        if not self.primary_reason:
+            self.primary_reason = _primary_reason(self.reasons)
 
     def to_dict(self) -> dict[str, Any]:
         return asdict(self)
@@ -374,6 +389,7 @@ def _maybe_optional_judgment(
         judgment.effort_class = nudged
         judgment.source = "optional-judgment"
         judgment.signals["recommended"] = nudged
+    judgment.primary_reason = _primary_reason(judgment.reasons)
     return judgment
 
 
@@ -393,7 +409,8 @@ def format_card() -> str:
         "\n"
         "MUST: Recommend before gates when no override; never LLM-loop on tiny.\n"
         "MUST-NOT: invent k8s/Nen/museum; soften iron consent; ignore user class.\n"
-        "HONESTY: judgment provider optional — NOT in this PR.\n"
+        "HONESTY: primary_reason = last class-changing bump (else sole base); "
+        "reasons list kept for full trail.\n"
     )
 
 
@@ -455,8 +472,10 @@ def main(argv: Sequence[str] | None = None) -> int:
         print(f"effort_class: {j.effort_class}")
         print(f"source: {j.source}")
         print(f"override: {'yes' if j.override else 'no'}")
-        for r in j.reasons:
-            print(f"reason: {r}")
+        print(f"reason: {j.primary_reason}")
+        if len(j.reasons) > 1:
+            for r in j.reasons:
+                print(f"detail: {r}")
     return 0
 
 
