@@ -1,7 +1,10 @@
 # Adapter — Kimi CLI (native, shared install)
 
-Kimi CLI supports the open Agent Skills format and — verified against its docs
-2026-07-22 — searches these skill directories:
+**What this pack is:** native `kimi` CLI install + skill discovery paths (Claude-shared install still true — one folder can cover Claude Code and Kimi CLI).
+**What this pack is not:** the live mid-model Kimi route, and **not** native Kimi equal-UX. Native equal-UX is **out of scope / HOLD**.
+**Live mid-model:** see rich pack `adapters/kimi/` — claim language **Kimi model via OpenCode/ORI**. Canonical stranger ORI contract: `adapters/opencode/ORI-REGRESSION.md` (pointer only; do not fork a second contract here).
+
+Kimi CLI supports the open Agent Skills format and — docs snapshot labeled 2026-07-22 (not re-verified this bet — treat paths as possibly stale; re-check `kimi` docs / `--help` before relying) — searches these skill directories:
 
 - user, brand group: `~/.kimi/skills/`, **`~/.claude/skills/`**, `~/.codex/skills/`
 - user, generic group: `~/.config/agents/skills/` (Kimi's recommended neutral path), `~/.agents/skills/`
@@ -19,7 +22,19 @@ placement instead:
 (`merge_all_available_skills` defaults to true, so multiple locations merge —
 avoid installing to several at once or you'll shadow yourself on upgrades.)
 
+## Live Kimi vs this thin pack
+
+| Need | Go here |
+|---|---|
+| Native `kimi` binary install + skill dirs | **This pack** (`adapters/kimi-cli/`) |
+| Live mid-model proof (OpenCode/ORI) | `adapters/kimi/` — host label **Kimi model via OpenCode/ORI** |
+| Canonical ORI stranger contract | `adapters/opencode/ORI-REGRESSION.md` (pointer only) |
+
+Structure / skill install here ≠ equal-UX. Do not claim native Kimi CLI equal-UX from a green skill load alone.
+
 ## Setup (client's terminal — Vow of Consent)
+
+Install URLs below were last labeled 2026-07-22; confirm against Moonshot current docs before client install.
 
 ```powershell
 # Windows
@@ -34,7 +49,7 @@ orchestrator never performs this step.
 
 zsh users: Moonshot also ships an oh-my-zsh plugin —
 `git clone https://github.com/MoonshotAI/zsh-kimi-cli.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/kimi-cli`
-[verified 2026-07-22] — which pairs well with this repo's
+[verified 2026-07-22 — labeled snapshot; re-check at use] — which pairs well with this repo's
 `scripts/emperor-time.plugin.zsh`.
 
 ## Activate
@@ -46,7 +61,7 @@ call `/skill:chain-jail` etc. directly.
 
 ## Kimi as an *enlisted worker*
 
-As of 2026-07-22 the getting-started docs document no headless print flag.
+As of 2026-07-22 (labeled snapshot; re-check at use) the getting-started docs document no headless print flag.
 Options, in order:
 
 1. `kimi --help` at dowse time — check whether a non-interactive mode landed.
@@ -91,4 +106,3 @@ code, open one governing file from the `SKILL.md` tables, or run
 `scripts/emperor route "<utterance>"` / `scripts/emperor activate` and open
 `ACTIVATION next=`. Same bite as Claude SessionStart MUST-route; Emperor Time
 stays the orchestrator (no foreign master router).
-

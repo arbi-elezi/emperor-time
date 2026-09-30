@@ -2,6 +2,8 @@
 
 ## 0.4.174
 
+- **Docs: kimi-cli thin honesty (no version bump)** — Claude-shared install true; native equal-UX HOLD; pointer to `adapters/kimi` ORI live; labeled 2026-07-22 verify dates. Bakeoff pin stays 0.4.171.
+
 - **Docs: Codex AGENTS adapter honesty (no version bump)** — structure-clear claim bar, equal-UX HOLD, rich sibling pointers (opencode/cursor/grok), ORI one-liner to `adapters/opencode/ORI-REGRESSION.md` + kill-hold. Bakeoff pin stays 0.4.171.
 - **Docs: Ollama adapter + generic core honesty (no version bump)** — worker-never-orchestrator, equal-UX HOLD, Colibrì inference pointer, distilled-snapshot tip check. Bakeoff pin stays 0.4.171.
 - **Graph / mid-flash doctrine (docs, no version bump)** — new `references/graph-midflash-doctrine.md`: graph→ET map (micro-waterfall / Steal / claim-audit / structural md_graph), mid-model defaults (`gates.always_hard` never soft; `judgment.provider` off until needed), dual-track footnote (frontier free-the-model vs ET iron), cites Growing Harness / Empirical harness / Replit 09-29; MoA-lite CONJECTURE; kill list (LangGraph/GraphRAG/unguided multi-16B debate/Colibrì-as-harness/Growing-Harness-optimizer/OpenAPPA/native equal-UX). Thin README pointer. Bakeoff pin stays 0.4.171.
