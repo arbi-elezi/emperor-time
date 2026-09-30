@@ -16,6 +16,7 @@ opencode, Grok, Ollama, and friends.
 **Proven via the Codex/AGENTS.md adapter path** on a foreign tiny ask (silent boot → MUST-route activate/route — not Claude SessionStart; other adapters documented, not equal-UX-proven).
 
 **OpenCode adapter is rich** (playbook + QA-SMOKE + config snippet); equal-UX-proven only with an OpenCode-binary foreign receipt — AGENTS.md/scripts alone is not.
+Stranger ORI contract: [`adapters/opencode/ORI-REGRESSION.md`](adapters/opencode/ORI-REGRESSION.md).
 
 **Cursor adapter is rich** (playbook + QA-SMOKE + config snippet at `adapters/cursor/`); structure path documented. When `cursor-agent` Not logged in = **BLOCKED**, **ORI** (OpenRouter via OpenCode/OpenAI-compat, host labeled) is the supported live model route — not Cursor equal-UX. Equal-UX **HOLD**.
 
@@ -59,6 +60,24 @@ Detail: [`references/meta/when-to-engage.md`](references/meta/when-to-engage.md)
 4. Ask something high-stakes (public PR / secrets / "use full rigor") → a **gate** shows teeth.
 
 That is the product bet on Claude. Lore and alternate installs below.
+
+## Mid-model live path — OpenCode / ORI (beside Claude)
+
+Standing live mid/flash route when you are not on Claude SessionStart: OpenCode
++ OpenRouter (host labeled **OpenCode/ORI**). Claude install above stays the
+plugin start-here; this path does not replace it.
+
+1. Install OpenCode skill: `./scripts/install.sh opencode user` (see `adapters/opencode/`).
+2. Stranger contract (clone tip, TTY, named slug, tools allowlist, foreign tiny ask,
+   ET-bug vs model-FAIL, no silent swap): [`adapters/opencode/ORI-REGRESSION.md`](adapters/opencode/ORI-REGRESSION.md)
+3. Scope greed: [`references/kill-hold.md`](references/kill-hold.md) (kill / hold / widen-with-client only)
+
+### Cold check (ORI, two minutes)
+
+1. Real TTY (`script` / PTY). Bare pipe hang is not model-FAIL (**TTY-as-gate**).
+2. Lock one slug (lab default `openrouter/stealth/space-bunny-alpha`); do not silently swap models.
+3. One foreign tiny ask under iron; triage ET-bug vs model-FAIL vs blocked.
+
 
 ### Claude Code (copy install) — also covers Kimi CLI
 

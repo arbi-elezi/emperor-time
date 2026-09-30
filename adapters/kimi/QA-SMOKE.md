@@ -16,6 +16,7 @@ off. Iron hard. Triage **ET-bug | model-FAIL | PASS | blocked**.
    print/commit). Do **not** sell free-catalog toys (`space-bunny`,
    `opencode/*-free`) as Kimi proof. If K3 is unavailable → **blocked** + PO
    ping; one Kimi-family successor OK only with an honest inventory note.
+   Canonical stranger ORI contract: `adapters/opencode/ORI-REGRESSION.md` (do not fork checklists).
 3. **Native Kimi CLI:** out of scope for equal-UX (standing policy). Pointers
    live in `adapters/kimi-cli/`. Absence of `kimi` does **not** block this pack.
 

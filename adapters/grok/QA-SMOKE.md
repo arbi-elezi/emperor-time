@@ -23,6 +23,7 @@ off. Iron hard. Triage **ET-bug | model-FAIL | PASS | blocked**.
    `x-ai/grok-code-fast-1` is **deprecated** on OpenRouter (404; recommends
    Grok 4.3) — record the **live** `x-ai/*` slug you actually invoke. Do not
    sell ORI live as Grok Build equal-UX or as Astra-bridge.
+   Canonical stranger ORI contract: `adapters/opencode/ORI-REGRESSION.md` (do not fork checklists).
 
 ## Prereqs checklist
 
