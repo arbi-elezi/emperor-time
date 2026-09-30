@@ -5564,6 +5564,123 @@ def run_evals(root: Path) -> int:
         h.fail_msg("boot.sh --skip-eval should exit 0")
     else:
         h.pass_msg("boot.sh thin twin runs")
+
+    # Bet J: boot exit honesty: planted EVALS FAILED must surface as exit 1
+    # on boot.py and explicit emperor boot. --skip-eval stays 0. CLI boot exit
+    # matches boot.py (wrappers must not mask with || true + exit 0).
+    h.require_contains(
+        'exit "$rc"',
+        "scripts/emperor",
+        "emperor bash missing boot exit propagation (Bet J)",
+    )
+    h.require_contains(
+        'exit "$rc"',
+        "scripts/emperor.zsh",
+        "emperor.zsh missing boot exit propagation (Bet J)",
+    )
+    h.require_contains(
+        "exit $bootRc",
+        "scripts/emperor.ps1",
+        "emperor.ps1 missing boot exit propagation (Bet J)",
+    )
+    h.require_contains(
+        "exit $LASTEXITCODE",
+        "scripts/boot.ps1",
+        "boot.ps1 must propagate boot.py LASTEXITCODE (Bet J)",
+    )
+    # Intentional overrides stay documented
+    h.require_contains(
+        "Intentional: auto-boot swallows exit",
+        "scripts/emperor",
+        "emperor missing intentional auto-boot comment (Bet J)",
+    )
+    h.require_contains(
+        "Intentional override (like auto-boot)",
+        "scripts/emperor",
+        "emperor missing intentional no-arg identify comment (Bet J)",
+    )
+    with tempfile.TemporaryDirectory(prefix="et-boot-honesty-") as tmp:
+        tmp_p = Path(tmp)
+        # Production ET trees have SKILL.md; structural eval then writes
+        # EVALS FAILED into eval.log and boot.py exits 1. Here we plant that
+        # log directly (no nested full-suite re-run: eval.py always uses its
+        # repo _root and would overwrite the plant if SKILL.md triggered it).
+        emp = tmp_p / ".emperor"
+        emp.mkdir(parents=True, exist_ok=True)
+        (emp / "host.env").write_text("os=linux shell=bash\n", encoding="utf-8")
+        (emp / "eval.log").write_text(
+            "planted fixture\nEVALS FAILED\n", encoding="utf-8"
+        )
+        # ET marker present for documentation of the production scenario;
+        # honesty check itself keys off eval.log when skip_eval is false.
+        (tmp_p / "SKILL.md").write_text(
+            "# fixture ET tree (Bet J boot exit honesty)\n", encoding="utf-8"
+        )
+        # Rename SKILL.md aside for the planted-log probes so boot does not
+        # re-invoke structural eval and wipe the plant.
+        skill = tmp_p / "SKILL.md"
+        skill_aside = tmp_p / "SKILL.md.bet-j-aside"
+        skill.rename(skill_aside)
+        rc_fail, _ = h.run_py(
+            "scripts/lib/boot.py",
+            "--root",
+            str(tmp_p),
+            "--skip-identify",
+        )
+        if rc_fail != 1:
+            h.fail_msg(
+                f"boot.py should exit 1 on planted EVALS FAILED (got {rc_fail})"
+            )
+        else:
+            h.pass_msg("boot.py exits 1 on planted EVALS FAILED")
+        rc_sk, _ = h.run_py(
+            "scripts/lib/boot.py",
+            "--root",
+            str(tmp_p),
+            "--skip-eval",
+            "--skip-identify",
+        )
+        if rc_sk != 0:
+            h.fail_msg(
+                f"boot.py --skip-eval should exit 0 with planted FAIL (got {rc_sk})"
+            )
+        else:
+            h.pass_msg("boot.py --skip-eval exits 0 with planted EVALS FAILED")
+        # Restore ET marker + re-plant fail for CLI parity (emperor boot).
+        skill_aside.rename(skill)
+        (emp / "eval.log").write_text(
+            "planted fixture\nEVALS FAILED\n", encoding="utf-8"
+        )
+        (emp / "host.env").write_text("os=linux shell=bash\n", encoding="utf-8")
+        # Aside again so emperor calling boot.sh does not wipe plant via real eval.
+        skill.rename(skill_aside)
+        rc_cli, _ = h.run(
+            ["bash", str(h.root / "scripts/emperor"), "boot"],
+            cwd=tmp_p,
+        )
+        if rc_cli != 1:
+            h.fail_msg(
+                f"emperor boot should exit 1 on planted EVALS FAILED (got {rc_cli})"
+            )
+        else:
+            h.pass_msg("emperor boot exits 1 on planted EVALS FAILED (CLI parity)")
+        (emp / "eval.log").write_text(
+            "planted fixture\nEVALS FAILED\n", encoding="utf-8"
+        )
+        rc_cli_sk, _ = h.run(
+            ["bash", str(h.root / "scripts/emperor"), "boot"],
+            cwd=tmp_p,
+            env={"EMPEROR_BOOT_SKIP_EVAL": "1"},
+        )
+        if rc_cli_sk != 0:
+            h.fail_msg(
+                f"emperor boot with EMPEROR_BOOT_SKIP_EVAL=1 should exit 0 "
+                f"(got {rc_cli_sk})"
+            )
+        else:
+            h.pass_msg("emperor boot --skip-eval env exits 0")
+        skill_aside.rename(skill)
+
     h.pass_msg("boot.py + host.py thin twins + report + smoke")
 
 

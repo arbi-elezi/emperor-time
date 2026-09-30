@@ -5,6 +5,8 @@ ROOT="$(cd "$(dirname "$0")" && pwd)"
 # shellcheck disable=SC1091
 . "$ROOT/lib/host.sh"
 # Host + survey live on disk. Client is never asked to identify the box.
+# Intentional: auto-boot swallows exit so non-boot tools are not blocked by a red
+# structural eval. Explicit emperor boot/host propagate (Bet J honesty bar).
 if [[ ! -f .emperor/host.env ]]; then
   bash "$ROOT/boot.sh" >/dev/null 2>&1 || true
 fi
@@ -15,9 +17,11 @@ if [[ -z "$TOOL" ]]; then
 fi
 shift || true
 if [[ "$TOOL" == host || "$TOOL" == boot ]]; then
-  bash "$ROOT/boot.sh" >/dev/null 2>&1 || true
+  # Explicit boot/host: propagate boot.py exit (EVALS FAILED becomes 1). Do not mask.
+  rc=0
+  bash "$ROOT/boot.sh" >/dev/null 2>&1 || rc=$?
   [[ "${EMPEROR_BOOT_VERBOSE:-0}" == 1 ]] && cat .emperor/host.env 2>/dev/null || true
-  exit 0
+  exit "$rc"
 fi
 # identify: with a path → survey that tree (archaeology). No args → silent
 # (boot already wrote .emperor/survey.md). Not a user ritual.
@@ -26,6 +30,8 @@ if [[ "$TOOL" == identify ]]; then
   if [[ $# -gt 0 ]]; then
     exec bash "$ROOT/identify.sh" "$@"
   fi
+  # Intentional override (like auto-boot): no-arg identify silent re-boot stays
+  # exit 0. Honesty bar is explicit emperor boot/host only.
   bash "$ROOT/boot.sh" >/dev/null 2>&1 || true
   if [[ "${EMPEROR_BOOT_VERBOSE:-0}" == 1 ]]; then
     cat .emperor/survey.md 2>/dev/null || true
