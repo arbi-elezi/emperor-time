@@ -23,6 +23,8 @@ opencode, Grok, Ollama, and friends.
 
 **Kimi adapter is rich** (playbook + QA-SMOKE + config snippet for OpenCode/ORI live). Live claim wording: **Kimi model via OpenCode/ORI**. Native Kimi CLI equal-UX is out of scope.
 
+**Android NDK/C++ pack is rich** (playbook + QA-SMOKE + config snippet at `adapters/android-ndk-cpp/`). Domain/stack pack — not a vendor CLI host. ORI live via OpenCode/ORI; toolchain BLOCKED if NDK absent. No equal-UX claim.
+
 ## Install — Claude Code (start here)
 
 This repo is its own plugin marketplace (self-published — not an Anthropic
@@ -100,7 +102,7 @@ The `.ps1` scripts also run under pwsh on macOS/Linux if you prefer PowerShell.
 
 ### opencode / Ollama / plain open-weight models
 
-See `adapters/cursor/`, `adapters/opencode/`, `adapters/kimi/`, `adapters/ollama/`, and `adapters/generic/` —
+See `adapters/cursor/`, `adapters/opencode/`, `adapters/kimi/`, `adapters/android-ndk-cpp/`, `adapters/ollama/`, and `adapters/generic/` —
 the last contains `adapters/generic/EMPEROR_TIME.core.md`, the whole doctrine
 distilled into a single system prompt for models that can't load a skill tree.
 
@@ -119,6 +121,13 @@ See `adapters/kimi/` — rich playbook for **Kimi model via OpenCode/ORI**
 (locked OpenRouter `moonshotai/kimi-k3`, TTY preferred; QA-SMOKE + config
 snippet). Native Kimi CLI equal-UX is out of scope; install pointers remain
 in `adapters/kimi-cli/`. Structure PASS ≠ native equal-UX.
+
+### Native Android C++ / NDK (domain pack)
+
+See `adapters/android-ndk-cpp/` — rich playbook for **native Android C++/NDK**
+work (CMake leaf ≠ JNI `.so` ≠ APK ≠ emulator). ORI live via OpenCode
+(`stealth/space-bunny-alpha` lab default); host labeled **OpenCode/ORI**.
+Toolchain **BLOCKED** if NDK absent — honest; no equal-UX chase.
 
 ### Scan your machine for enlistable agents
 
@@ -205,7 +214,7 @@ templates/
   claim-ledger.md                 Claims → experiments → evidence
   critique.md                     Prosecutor checklist + verdict
 adapters/
-  claude-code/  kimi/  kimi-cli/  opencode/  grok/  cursor/  codex/  ollama/  generic/
+  claude-code/  kimi/  kimi-cli/  opencode/  grok/  cursor/  codex/  ollama/  android-ndk-cpp/  generic/
 scripts/
   dowse.ps1  dowse.sh             Read-only machine scan for agent CLIs
   install.py (+ thin sh/ps1)      Deploy the skill into a harness
