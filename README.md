@@ -220,6 +220,7 @@ references/
   micro-waterfall.md              Full phase/gate spec + right-sizing rules
   graph-midflash-doctrine.md      Graph→ET map + mid-flash defaults (iron hard; no runtime)
   kill-hold.md                    Scope refuse: kill / hold / widen-with-client (process, not product)
+  receipt-pr-tip-hygiene.md        On rebase: refresh receipt SHAs + PR body base/head tip before PO/QA ping
   scientific-method.md            Claim lifecycle, tripwires, evidence rules
   agent-registry.md               Detect / sign-in / invoke matrix per agent CLI
   portability.md                  Deploying to other harnesses & open-weight models

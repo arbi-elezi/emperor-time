@@ -39,6 +39,8 @@ models. Triage **ET-bug | model-FAIL | PASS**. Judgment off. Iron hard.
    If binary missing / PATH miss / pipe hang → mark binary lane **blocked**; keep AGENTS+scripts path; do **not** claim equal-UX-proven without PO.
 8. **Receipt:** CONTEXT/BEFORE/AFTER/NOTES/claim under
    `/workspace/field-receipts/receipts/<date>/opencode-hang-equal-ux/` (or toy-lab) with triage label.
+   On rebase / tip move, refresh receipt SHAs + PR body base/head tip before
+   PO/QA ping (see `references/receipt-pr-tip-hygiene.md`).
 
 ## Pass / fail
 
