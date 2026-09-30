@@ -12,11 +12,15 @@ off. Iron hard. Triage **ET-bug | model-FAIL | PASS | blocked**.
    is on PATH **and** the client is authed (`XAI_API_KEY` or `grok login`).
    If the binary is absent or auth is missing → **blocked**. Do not install
    or log in from the orchestrator.
-3. **OpenRouter model note (optional, not Grok Build):**  
-   `opencode run -m openrouter/x-ai/grok-code-fast-1 --dir . "<ask>"`  
-   Label it "Grok **model** via OpenCode". One slug only:
-   `x-ai/grok-code-fast-1`. Never print the key. Do not sell this as Grok
-   Build equal-UX or as Astra-bridge.
+3. **OpenRouter / ORI live route (supported when native `grok` is BLOCKED;
+   still not Grok Build):** Prefer a real TTY (`script` / PTY) — bare pipes
+   can hang (see OpenCode Bet D). Example:
+   `script -q -c 'opencode run -m openrouter/x-ai/grok-4.3 --dir . "<ask>"' /dev/null`
+   Host label mandatory: **Grok model via OpenCode/ORI**. Auth =
+   `OPENROUTER_API_KEY` only (never print/commit). Historical playbook slug
+   `x-ai/grok-code-fast-1` is **deprecated** on OpenRouter (404; recommends
+   Grok 4.3) — record the **live** `x-ai/*` slug you actually invoke. Do not
+   sell ORI live as Grok Build equal-UX or as Astra-bridge.
 
 ## Prereqs checklist
 
@@ -40,8 +44,10 @@ off. Iron hard. Triage **ET-bug | model-FAIL | PASS | blocked**.
 7. **Optional binary:** if `grok` is installed and authed, run the documented
    headless flag from `grok --help` (expected: `grok -p`) with a timeout.
    Missing binary or missing auth → binary lane **blocked**.
-8. **Receipt:** CONTEXT / BEFORE / AFTER / NOTES / claim under
-   `/workspace/field-receipts/receipts/<date>/grok-rich/` with triage label.
+8. **Receipt:** CONTEXT / BEFORE / AFTER / NOTES / claim (+ MATRIX/raw as
+   needed) under `/workspace/field-receipts/receipts/<date>/bet-f-ori-grok/`
+   (or a dated ORI short-name — **not** a native Grok Build claim folder)
+   with triage label and the mandatory OpenCode/ORI host label.
 
 ## Pass / fail
 
@@ -51,8 +57,11 @@ off. Iron hard. Triage **ET-bug | model-FAIL | PASS | blocked**.
 | done FAIL, probes/config wrong | **ET-bug** |
 | done FAIL / nonsense after a correct ET path on a live model | **model-FAIL** |
 | no `grok` binary, or no auth / no `XAI_API_KEY` | **blocked** (binary lane; docs + structure may still ship) |
-| OpenRouter `x-ai/grok-code-fast-1` via OpenCode green or 401 | model-via-other-host only — not Grok Build |
+| OpenRouter `x-ai/*` via OpenCode TTY green (ORI) | **ORI live PASS** — supported when native binary BLOCKED; host = OpenCode/ORI; **not** Grok Build equal-UX |
+| Locked historical `x-ai/grok-code-fast-1` 404/deprecated | model-route inventory — record successor slug; do not invent equal-UX |
+| OpenRouter 401 / timeout on live `x-ai/*` via OpenCode | **blocked** / model-FAIL (route) — not Grok Build evidence |
 
 Do **not** sell a toy or API PASS as Astra-bridge or mid-16B proof.
-Do **not** claim equal-UX from structure PASS. That claim waits on a green
-`grok` binary foreign receipt **and** explicit PO claim ACCEPT.
+Do **not** claim equal-UX from structure PASS or from ORI live PASS. Native
+Grok Build equal-UX waits on a green `grok` binary foreign receipt **and**
+explicit PO claim ACCEPT. ORI live PASS is allowed and distinct.
