@@ -14,7 +14,7 @@ models. Triage **ET-bug | model-FAIL | PASS**. Judgment off. Iron hard.
 ## Prereqs checklist
 
 - [ ] Emperor-Time tip checked out (record SHA / 0.4.174+)
-- [ ] `opencode --version` works **or** mark OpenCode binary **blocked**
+- [ ] `opencode --version` works with `PATH` including `~/.local/bin` (or absolute path) **or** mark OpenCode binary **blocked** / PATH footgun
 - [ ] Toy model available (`ollama list` shows llama3.2:3b / qwen2.5:3b / heavy-quant)
       **or** mark model portion **blocked** (still run AGENTS.md path)
 - [ ] Foreign repo cloned (not bakeoff T1–T4 / not is-buffer redo)
@@ -30,11 +30,14 @@ models. Triage **ET-bug | model-FAIL | PASS**. Judgment off. Iron hard.
 5. **Change:** one wording/one-liner class edit only.
 6. **done:** `done.py` on the task dir — record exit code.
 7. **Optional OpenCode binary:**  
-   `opencode run -m openrouter/stealth/space-bunny-alpha --dir . "<same ask>"`
-   (fallback: `ollama/<toy>` or llama.cpp 1.5B path — see Preferred model path)  
-   If binary or model missing → stop that lane; do not claim equal-UX-proven.
+   Ensure `PATH` includes `~/.local/bin` (or use absolute `~/.local/bin/opencode`).  
+   Under agent/CI **non-TTY**, bare `opencode run` may hang after log `init` → EXIT **124**.  
+   Prefer:  
+   `timeout 20 script -q -c 'opencode run -m openrouter/stealth/space-bunny-alpha --dir . "<same ask>"' /dev/null`  
+   (fallback: `ollama/<toy>` or llama.cpp 1.5B — see Preferred model path)  
+   If binary missing / PATH miss / pipe hang → mark binary lane **blocked**; keep AGENTS+scripts path; do **not** claim equal-UX-proven without PO.
 8. **Receipt:** CONTEXT/BEFORE/AFTER/NOTES/claim under
-   `/workspace/field-receipts/receipts/<date>/opencode-toy-lab/` with triage label.
+   `/workspace/field-receipts/receipts/<date>/opencode-hang-equal-ux/` (or toy-lab) with triage label.
 
 ## Pass / fail
 
@@ -44,5 +47,7 @@ models. Triage **ET-bug | model-FAIL | PASS**. Judgment off. Iron hard.
 | done FAIL, probes/config wrong | **ET-bug** |
 | done FAIL / nonsense after correct ET path | **model-FAIL** |
 | no OpenCode / no toy weights | **blocked** (disclose; docs still ship) |
+| hang after `init` → EXIT 124 (pipe/non-TTY) | **blocked** binary lane — use `script`/`pty` or AGENTS+direct-API; do not claim equal-UX |
 
 Do **not** sell toy PASS as Astra-bridge or mid-16B proof.
+Do **not** auto-claim equal-UX from a green TTY receipt until PO accepts claim language.

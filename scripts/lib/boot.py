@@ -39,7 +39,7 @@ def boot(
     *,
     skip_identify: bool = False,
     skip_eval: bool = False,
-) -> Path:
+) -> tuple[Path, bool]:
     """Run silent boot under root. Returns (host.env path, eval_failed)."""
     emperor = root / ".emperor"
     emperor.mkdir(parents=True, exist_ok=True)
