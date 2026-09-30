@@ -5,8 +5,10 @@ reads standing orders (`AGENTS.md` in the project root).
 
 Then: `scripts/emperor queue next` or hand a loose task.
 
-Same files work for Grok Build, Copilot CLI, Gemini CLI, OpenCode, Cursor
-(as project rules). Do not fork the doctrine per vendor.
+Same files work for Copilot CLI, Gemini CLI, OpenCode, and Cursor
+(as project rules). Grok Build has its own rich playbook: `adapters/grok/`
+(skills under `~/.grok/skills/` and `./.grok/skills/`, plus this AGENTS.md
+path). Do not fork the doctrine per vendor.
 
 ## Session boot (host-agnostic)
 

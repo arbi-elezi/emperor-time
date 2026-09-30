@@ -3790,7 +3790,7 @@ def run_evals(root: Path) -> int:
         "AGENTS missing MUST-route standing order",
     )
     h.require_contains("MUST-route", "hooks/hooks.json", "SessionStart prompt missing MUST-route")
-    for ad in ("cursor", "codex", "kimi-cli", "ollama", "opencode", "generic"):
+    for ad in ("cursor", "codex", "kimi-cli", "ollama", "opencode", "grok", "generic"):
         h.require_contains(
             "MUST-route (before creative work)",
             f"adapters/{ad}/README.md",

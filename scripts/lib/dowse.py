@@ -76,6 +76,14 @@ AGENTS: tuple[AgentDef, ...] = (
         "see `opencode --help` / auth subcommand",
     ),
     AgentDef(
+        "Grok Build",
+        "grok",
+        True,
+        None,
+        'grok -p "<prompt>"  (verify; ACP: grok agent stdio — see adapters/grok/)',
+        "grok login or XAI_API_KEY (client sets; orchestrator never logs in)",
+    ),
+    AgentDef(
         "Ollama",
         "ollama",
         True,

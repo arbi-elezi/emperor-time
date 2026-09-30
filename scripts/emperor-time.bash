@@ -16,7 +16,8 @@ if [ -z "${EMPEROR_TIME_HOME:-}" ]; then
       "$HOME/.agents/skills/emperor-time" \
       "$HOME/.kimi/skills/emperor-time" \
       "$HOME/.codex/skills/emperor-time" \
-      "$HOME/.opencode/skills/emperor-time"; do
+      "$HOME/.opencode/skills/emperor-time" \
+      "$HOME/.grok/skills/emperor-time"; do
       if [ -f "$_et_c/SKILL.md" ]; then
         EMPEROR_TIME_HOME="$_et_c"
         break
@@ -44,7 +45,7 @@ emperor() {
     *)       cat <<'EOF'
 emperor - Emperor Time shell layer
   emperor dowse [--check-auth]          scan this machine for enlistable agents (read-only)
-  emperor install <harness> [scope]     deploy the skill: claude-code|kimi|codex|opencode|generic-agents
+  emperor install <harness> [scope]     deploy the skill: claude-code|kimi|codex|opencode|grok|generic-agents
   emperor core                          print the distilled system prompt (pipe to pbcopy / xclip)
   emperor skill                         print the master SKILL.md
   emperor home                          print the resolved skill path

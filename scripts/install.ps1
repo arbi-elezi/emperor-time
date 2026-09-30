@@ -10,7 +10,7 @@
 [CmdletBinding()]
 param(
     [Parameter(Mandatory = $true)]
-    [ValidateSet('claude-code', 'kimi', 'codex', 'opencode', 'generic-agents')]
+    [ValidateSet('claude-code', 'kimi', 'codex', 'opencode', 'grok', 'generic-agents')]
     [string]$Harness,
 
     [ValidateSet('user', 'project')]

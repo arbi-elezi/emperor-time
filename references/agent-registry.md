@@ -77,6 +77,14 @@ ledger-worthy observation).
 - **Headless invoke:** `opencode run "<prompt>"` (non-interactive); skill-scoped: `opencode run --skill <name>`; server mode: `opencode serve` then `opencode run --attach <url> "<prompt>"` [verified 2026-07-22; flag details verify-at-dowse]
 - **Routing strengths:** open-source harness, provider-flexible (can front many models incl. local); good second-vendor critic.
 
+## Grok Build (xAI) — [verify-at-dowse]
+
+- **Detect:** `grok` on PATH → `grok version` or `grok --version` (flag spelling moves; confirm with `grok --help`)
+- **Skills:** `~/.grok/skills/` and `./.grok/skills/`; also discovers `~/.agents/skills/` [docs; verify-at-dowse]. Instructions: project `AGENTS.md`. Playbook: `adapters/grok/`
+- **Sign-in (client's terminal):** browser OAuth via the CLI login flow, or `XAI_API_KEY`. Orchestrator never logs in and never reads key files.
+- **Headless invoke:** `grok -p "<prompt>"`; ACP `grok agent stdio` if still present. `grok inspect` lists rules/skills found. `grok models` for native ids — do not freeze a catalog here. [verify-at-dowse]
+- **Routing strengths:** xAI terminal coding agent for buyers on the Grok/xAI path. Not the same product as Grok.com chat, raw `xai-sdk`, or Grok Bot inside another editor.
+
 ## Ollama (local models)
 
 - **Detect:** `ollama` on PATH → `ollama --version`
