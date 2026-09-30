@@ -16,7 +16,7 @@ prompt form.
 | **Codex CLI** | `~/.codex/skills/emperor-time/` | Per Codex's skill activation (verify at dowse) |
 | **Copilot CLI** | Supports skills — location per current docs (verify at dowse) | Per its skill mechanism |
 | **opencode** | `~/.opencode/skills/` + an `AGENTS.md` pointer in the repo | `opencode run --skill ...` / AGENTS.md always-on |
-| **Grok Build** | `~/.grok/skills/emperor-time/` (user) or `<repo>/.grok/skills/emperor-time/` (project); also discovers `~/.agents/skills/`. Standing orders: project `AGENTS.md` | `./scripts/install.sh grok user` or `grok project <path>` (manual copy of the same tree is the fallback). Activate via the installed skill / `grok inspect` — verify flags at dowse. See `adapters/grok/` |
+| **Grok Build** | `~/.grok/skills/emperor-time/` (user) or `<repo>/.grok/skills/emperor-time/` (project); also discovers `~/.agents/skills/`. Standing orders: project `AGENTS.md` | `./scripts/install.sh grok user` or `./scripts/install.sh grok project <path>` (manual copy of the same tree is the fallback). Activate via the installed skill / `grok inspect` — verify flags at dowse. See `adapters/grok/` |
 | **Ollama / local** | Bake `adapters/generic/EMPEROR_TIME.core.md` into a Modelfile `SYSTEM` | Always-on persona — see `adapters/ollama/` |
 | **Any open-weight runner** (llama.cpp, LM Studio, vLLM, …) | Paste `adapters/generic/EMPEROR_TIME.core.md` as the system prompt | Always-on |
 
