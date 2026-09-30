@@ -21,6 +21,8 @@ opencode, Grok, Ollama, and friends.
 
 **Grok adapter is rich** (playbook + QA-SMOKE + config snippet for Grok Build + AGENTS.md). Equal-UX claim is **held**: a structure receipt is not Grok Build equal-UX until a `grok` binary foreign receipt is green and claim language is explicitly accepted.
 
+**Kimi adapter is rich** (playbook + QA-SMOKE + config snippet for OpenCode/ORI live). Live claim wording: **Kimi model via OpenCode/ORI**. Native Kimi CLI equal-UX is out of scope.
+
 ## Install — Claude Code (start here)
 
 This repo is its own plugin marketplace (self-published — not an Anthropic
@@ -98,7 +100,7 @@ The `.ps1` scripts also run under pwsh on macOS/Linux if you prefer PowerShell.
 
 ### opencode / Ollama / plain open-weight models
 
-See `adapters/cursor/`, `adapters/opencode/`, `adapters/ollama/`, and `adapters/generic/` —
+See `adapters/cursor/`, `adapters/opencode/`, `adapters/kimi/`, `adapters/ollama/`, and `adapters/generic/` —
 the last contains `adapters/generic/EMPEROR_TIME.core.md`, the whole doctrine
 distilled into a single system prompt for models that can't load a skill tree.
 
@@ -110,6 +112,13 @@ live `x-ai/*` via OpenCode when native `grok` is BLOCKED; current example
 `./scripts/install.sh grok user` → `~/.grok/skills/emperor-time/`
 (project: `.grok/skills/`). Manual copy of that same tree is the fallback.
 Not equal-UX-proven without a green `grok` binary receipt.
+
+### Kimi (ORI live path)
+
+See `adapters/kimi/` — rich playbook for **Kimi model via OpenCode/ORI**
+(locked OpenRouter `moonshotai/kimi-k3`, TTY preferred; QA-SMOKE + config
+snippet). Native Kimi CLI equal-UX is out of scope; install pointers remain
+in `adapters/kimi-cli/`. Structure PASS ≠ native equal-UX.
 
 ### Scan your machine for enlistable agents
 
@@ -196,7 +205,7 @@ templates/
   claim-ledger.md                 Claims → experiments → evidence
   critique.md                     Prosecutor checklist + verdict
 adapters/
-  claude-code/  kimi-cli/  opencode/  grok/  cursor/  codex/  ollama/  generic/
+  claude-code/  kimi/  kimi-cli/  opencode/  grok/  cursor/  codex/  ollama/  generic/
 scripts/
   dowse.ps1  dowse.sh             Read-only machine scan for agent CLIs
   install.py (+ thin sh/ps1)      Deploy the skill into a harness
