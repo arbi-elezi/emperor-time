@@ -1,8 +1,12 @@
 # Adapter — Ollama (local open-weight models)
 
-Ollama runs Emperor Time as a **baked persona**: the distilled doctrine goes
-into a Modelfile `SYSTEM` prompt, producing a named local model that always
-operates under the vows.
+Ollama here is a **local worker persona bake**: paste distilled doctrine into a
+Modelfile `SYSTEM` prompt so a named local model always carries the vows.
+Ollama is **not** an Emperor Time harness and does **not** own orchestration,
+SessionStart, or iron gates. The client-side harness (OpenCode / Cursor /
+Claude / …) + tip scripts stay the orchestrator.
+Native Ollama equal-UX is **HOLD** — a green `ollama run` toy is not
+equal-UX-proven.
 
 ## Build the persona model
 
@@ -33,6 +37,23 @@ An Ollama model is a **worker or critic, never the orchestrator**:
 Small models follow the Vow card imperfectly; that's expected. The
 orchestrator's quarantine-and-judge step (everything returned = CONJECTURE) is
 what makes an imperfect worker safe to use.
+
+**Worker / critic only — never orchestrator.** Quarantine returns as
+CONJECTURE. Do not promote Ollama to master router, silent boot owner, or
+merge authority.
+
+## Local inference vs this bake
+
+- **Equal-UX HOLD.** Structure / Modelfile bake ≠ vendor equal-UX. Do not claim
+  native Ollama equal-UX without an explicit PO-accepted receipt language
+  (none today).
+- **Local inference host:** prefer Colibrì as the integrate-if-you-want model
+  server — see `adapters/colibri/STRANGER.md`. Point the *client* harness at
+  Colibrì; load ET on the client. Colibrì is inference, not a harness; Ollama
+  is not either.
+- **Live mid-model path** for field proof stays OpenCode/ORI (TTY-as-gate) per
+  root README + `adapters/opencode/ORI-REGRESSION.md` — not an Ollama-as-harness
+  lane.
 
 ## Dispatch forms
 
