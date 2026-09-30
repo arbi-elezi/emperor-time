@@ -152,7 +152,11 @@ export PATH="$HOME/.local/bin:$PATH"
 timeout 30 script -q -c \
   'opencode run -m openrouter/stealth/space-bunny-alpha --dir . "<ask>"' \
   /dev/null
+# portable: python3 -c 'import pty,sys; sys.exit(pty.spawn(["opencode","run",...]))'
 ```
+
+*(Darwin/BSD: `script` has no `-c` — use `script -q file cmd` or prefer `pty.spawn`.)*
+**ORI live PASS = TTY-as-gate.**
 
 - **Lab / standing slug:** `stealth/space-bunny-alpha`
 - **OpenCode invocation:** `openrouter/stealth/space-bunny-alpha`
@@ -163,12 +167,15 @@ timeout 30 script -q -c \
 - If the slug is unavailable at dowse, record **blocked** and request a PO
   decision before swapping.
 
-### Direct OpenAI-compat fallback (optional twin)
+### Direct OpenAI-compat fallback (optional twin — **not** ORI live PASS)
 
-Same key, same slug, no OpenCode binary:
+Same key, same slug, no OpenCode binary. Route/inventory only. **Null / short
+content** from this twin does **not** satisfy **ORI live PASS** — fullshape +
+TTY carry the token (TTY-as-gate).
 
 ```bash
 # never print the key; record HTTP status + a short token only
+# Do NOT score this as ORI live PASS even when HTTP 200.
 curl -sS https://openrouter.ai/api/v1/chat/completions \
   -H "Authorization: Bearer $OPENROUTER_API_KEY" \
   -H "Content-Type: application/json" \
@@ -184,6 +191,9 @@ does **not** indict structure or ORI.
 ./scripts/dowse.sh                 # detection only — no credentials
 ./scripts/install.sh opencode user # OpenCode skill dir (ORI host)
 ```
+
+`dowse` scans vendor agent CLIs — it will **not** list `android-ndk-cpp`
+(domain pack, not a CLI host). Discover via `adapters/android-ndk-cpp/` + root README.
 
 ---
 

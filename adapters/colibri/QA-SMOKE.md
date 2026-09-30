@@ -63,3 +63,6 @@ separately.
 
 Do **not** sell structure PASS, toy shape, or ORI toolchain as Colibrì engine
 PASS. Do **not** claim harness ownership or native equal-UX from this pack.
+Receipt MATRIX/SUMMARY must cite the **final ship tip SHA** (ban stale tip
+labels from early drafts). ORI coding-toolchain probes are not Colibrì proof;
+compat-shape (llama.cpp / toy) is never engine PASS and never ORI live PASS.

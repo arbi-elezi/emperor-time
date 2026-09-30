@@ -23,7 +23,9 @@ opencode, Grok, Ollama, and friends.
 
 **Kimi adapter is rich** (playbook + QA-SMOKE + config snippet for OpenCode/ORI live). Live claim wording: **Kimi model via OpenCode/ORI**. Native Kimi CLI equal-UX is out of scope.
 
-**Android NDK/C++ pack is rich** (playbook + QA-SMOKE + config snippet at `adapters/android-ndk-cpp/`). Domain/stack pack — not a vendor CLI host. ORI live via OpenCode/ORI; toolchain BLOCKED if NDK absent. No equal-UX claim.
+**Android NDK/C++ pack is rich** (playbook + QA-SMOKE + config snippet at `adapters/android-ndk-cpp/`). Domain/stack pack — not a vendor CLI host (`dowse` will not list it). ORI live via OpenCode/ORI (**TTY-as-gate**); toolchain BLOCKED if NDK absent. No equal-UX claim.
+
+**Colibrì pack is rich** (integrate-if-you-want inference host at `adapters/colibri/` — see STRANGER.md). Colibrì is the model server; ET stays the orchestrator. Engine live may be BLOCKED without `coli`; structure path still valid. No harness-ownership / equal-UX claim.
 
 ## Install — Claude Code (start here)
 
@@ -102,7 +104,9 @@ The `.ps1` scripts also run under pwsh on macOS/Linux if you prefer PowerShell.
 
 ### opencode / Ollama / plain open-weight models
 
-See `adapters/cursor/`, `adapters/opencode/`, `adapters/kimi/`, `adapters/android-ndk-cpp/`, `adapters/ollama/`, and `adapters/generic/` —
+See `adapters/cursor/`, `adapters/opencode/`, `adapters/kimi/`,
+`adapters/android-ndk-cpp/` **(domain pack)**, `adapters/colibri/`
+**(inference host)**, `adapters/ollama/`, and `adapters/generic/` —
 the last contains `adapters/generic/EMPEROR_TIME.core.md`, the whole doctrine
 distilled into a single system prompt for models that can't load a skill tree.
 
@@ -126,8 +130,16 @@ in `adapters/kimi-cli/`. Structure PASS ≠ native equal-UX.
 
 See `adapters/android-ndk-cpp/` — rich playbook for **native Android C++/NDK**
 work (CMake leaf ≠ JNI `.so` ≠ APK ≠ emulator). ORI live via OpenCode
-(`stealth/space-bunny-alpha` lab default); host labeled **OpenCode/ORI**.
-Toolchain **BLOCKED** if NDK absent — honest; no equal-UX chase.
+(`stealth/space-bunny-alpha` lab default); host labeled **OpenCode/ORI**
+(**TTY-as-gate**). Toolchain **BLOCKED** if NDK absent — honest; no equal-UX
+claim. `dowse` will **not** list this pack (not a vendor CLI).
+
+### Colibrì (inference host, integrate-if-you-want)
+
+See `adapters/colibri/` — stranger recipe in `STRANGER.md`. Point OpenCode /
+Cursor / generic OpenAI-compat at `coli serve`; ET loads on the client.
+Colibrì does **not** own boot/activate. Engine live may be BLOCKED without
+`coli` — structure PASS still valid. No equal-UX / harness-ownership claim.
 
 ### Scan your machine for enlistable agents
 
@@ -214,7 +226,8 @@ templates/
   claim-ledger.md                 Claims → experiments → evidence
   critique.md                     Prosecutor checklist + verdict
 adapters/
-  claude-code/  kimi/  kimi-cli/  opencode/  grok/  cursor/  codex/  ollama/  android-ndk-cpp/  generic/
+  claude-code/  kimi/  kimi-cli/  opencode/  grok/  cursor/  codex/  ollama/
+  android-ndk-cpp/ (domain pack)  colibri/ (inference host)  generic/
 scripts/
   dowse.ps1  dowse.sh             Read-only machine scan for agent CLIs
   install.py (+ thin sh/ps1)      Deploy the skill into a harness

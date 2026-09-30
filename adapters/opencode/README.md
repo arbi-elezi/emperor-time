@@ -1,9 +1,11 @@
 # Adapter — OpenCode (rich playbook)
 
-OpenCode (SST / `opencode-ai` CLI) is a **first-class OSS harness** for Emperor
-Time: multi-provider (OpenRouter mid/flash, local OpenAI-compat, free OpenCode
-catalog models). This playbook is the depth target for Small C — not Claude
-SessionStart parity theater.
+OpenCode (Anomaly / `opencode-ai` CLI; formerly SST) is a **first-class OSS
+harness** for Emperor Time: multi-provider (OpenRouter mid/flash, local
+OpenAI-compat, free OpenCode catalog models). This playbook is the depth target
+for Small C — not Claude SessionStart parity theater. Claude remains a supported
+native path; ORI/OpenCode is the visible stranger mid-model route (not a
+Claude-first reposition).
 
 **Claim bar:** docs + recipe here are **rich**. Equal-UX-proven only when a
 dated field receipt shows the **OpenCode binary** path green on a foreign ask.
@@ -210,7 +212,9 @@ timeout 20 script -q -c 'opencode run -m openrouter/stealth/space-bunny-alpha --
 # or: python3 -c 'import pty,sys; sys.exit(pty.spawn(["opencode","run",...]))'
 ```
 
-Structure path (AGENTS.md + `boot`/`activate`/`done`) and direct OpenRouter HTTPS remain valid when the binary lane is pipe-blocked. **Equal-UX-proven** still requires a dated **binary** green receipt **and** PO accept of claim language — do not auto-claim from docs or AGENTS-only PASS.
+Portability: GNU/util-linux `script -q -c 'cmd' file` vs BSD/Darwin `script -q file cmd` (no `-c`; command after the typescript path). Prefer a real TTY/PTY — the `python3` `pty.spawn` one-liner is the portable recipe.
+
+Structure path (AGENTS.md + `boot`/`activate`/`done`) and direct OpenRouter HTTPS remain valid when the binary lane is pipe-blocked. Direct HTTPS is a **compat/fallback probe**, not **ORI live PASS** (TTY-as-gate — see below). **Equal-UX-proven** still requires a dated **binary** green receipt **and** PO accept of claim language — do not auto-claim from docs or AGENTS-only PASS.
 
 ---
 

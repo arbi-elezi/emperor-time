@@ -34,6 +34,7 @@ models. Triage **ET-bug | model-FAIL | PASS**. Judgment off. Iron hard.
    Under agent/CI **non-TTY**, bare `opencode run` may hang after log `init` → EXIT **124**.  
    Prefer:  
    `timeout 20 script -q -c 'opencode run -m openrouter/stealth/space-bunny-alpha --dir . "<same ask>"' /dev/null`  
+   *(Darwin/BSD: no `script -c` — use `script -q file cmd` or prefer `python3` `pty.spawn`.)*  
    (fallback: `ollama/<toy>` or llama.cpp 1.5B — see Preferred model path)  
    If binary missing / PATH miss / pipe hang → mark binary lane **blocked**; keep AGENTS+scripts path; do **not** claim equal-UX-proven without PO.
 8. **Receipt:** CONTEXT/BEFORE/AFTER/NOTES/claim under
