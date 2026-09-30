@@ -13,9 +13,11 @@ off. Iron hard. Triage **ET-bug | model-FAIL | PASS | blocked**.
    If the binary is absent or auth is missing → **blocked**. Do not install
    or log in from the orchestrator.
 3. **OpenRouter / ORI live route (supported when native `grok` is BLOCKED;
-   still not Grok Build):** Prefer a real TTY (`script` / PTY) — bare pipes
-   can hang (see OpenCode Bet D). Example:
+   still not Grok Build):** **ORI live PASS = TTY-as-gate**. Prefer a real TTY
+   (`script` / PTY) — bare pipes can hang (see OpenCode Bet D). Example:
    `script -q -c 'opencode run -m openrouter/x-ai/grok-4.3 --dir . "<ask>"' /dev/null`
+   *(Darwin/BSD: no `script -c` — use `script -q file cmd` or `python3` `pty.spawn`.)*
+   Direct OpenAI-compat HTTPS is compat/fallback only — not ORI live PASS.
    Host label mandatory: **Grok model via OpenCode/ORI**. Auth =
    `OPENROUTER_API_KEY` only (never print/commit). Historical playbook slug
    `x-ai/grok-code-fast-1` is **deprecated** on OpenRouter (404; recommends

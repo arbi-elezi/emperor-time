@@ -69,7 +69,7 @@ ledger-worthy observation).
 - **Extras:** supports skills, custom agents, MCP servers, TypeScript SDK.
 - **Routing strengths:** GitHub-context work (PRs, issues, Actions), repo Q&A, implementation.
 
-## opencode (SST)
+## opencode (Anomaly; formerly SST)
 
 - **Detect:** `opencode` on PATH → `opencode --version`
 - **Skills:** `~/.opencode/skills/` [verified 2026-07-22]; instructions file: `AGENTS.md` is canonical (reads `CLAUDE.md` as fallback) [verified 2026-07-22]

@@ -148,7 +148,10 @@ export PATH="$HOME/.local/bin:$PATH"
 timeout 30 script -q -c \
   'opencode run -m openrouter/moonshotai/kimi-k3 --dir . "<ask>"' \
   /dev/null
+# portable: python3 -c 'import pty,sys; sys.exit(pty.spawn(["opencode","run",...]))'
 ```
+
+*(Darwin/BSD: `script` has no `-c` — use `script -q file cmd` or prefer `python3 -c 'import pty,sys; sys.exit(pty.spawn([...]))'`.)* **ORI live PASS requires a real TTY/PTY**; bare OpenAI-compat HTTPS is compat/fallback only — not ORI live PASS.
 
 - **Locked OpenRouter model ID:** `moonshotai/kimi-k3`
 - **OpenCode invocation:** `openrouter/moonshotai/kimi-k3`
@@ -159,12 +162,16 @@ timeout 30 script -q -c \
   before swapping. One Moonshot/Kimi-family successor may be accepted with an
   honest inventory note (same pattern as `grok-code-fast-1` → `grok-4.3`).
 
-### Direct OpenAI-compat fallback (optional twin)
+### Direct OpenAI-compat fallback (optional twin — **not** ORI live PASS)
 
-Same key, same slug, no OpenCode binary:
+Same key, same slug, no OpenCode binary. Use for route/inventory smoke only.
+**Null / short content** from this twin does **not** satisfy **ORI live PASS** —
+standing gate is **TTY-as-gate** (OpenCode under `script` / PTY). Fullshape + TTY
+carry the token.
 
 ```bash
 # never print the key; record HTTP status + a short token only
+# Do NOT score this as ORI live PASS even when HTTP 200.
 curl -sS https://openrouter.ai/api/v1/chat/completions \
   -H "Authorization: Bearer $OPENROUTER_API_KEY" \
   -H "Content-Type: application/json" \
@@ -172,8 +179,8 @@ curl -sS https://openrouter.ai/api/v1/chat/completions \
 ```
 
 Structure path (AGENTS.md + `boot`/`activate`/`done`) remains valid when the
-binary lane is pipe-blocked. ORI live PASS still needs a dated **TTY** (or
-compat twin) green receipt with the host label above.
+binary lane is pipe-blocked. **ORI live PASS** needs a dated **TTY/PTY** green
+receipt with the host label above — compat twin alone is insufficient.
 
 ### Dowse / install pointers
 

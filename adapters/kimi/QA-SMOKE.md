@@ -41,6 +41,8 @@ off. Iron hard. Triage **ET-bug | model-FAIL | PASS | blocked**.
 6. **done:** write `DONE.md` probes that match the edit; `done.py` — record exit code.
 7. **ORI live:** ensure `PATH` includes `~/.local/bin`. Prefer:
    `timeout 30 script -q -c 'opencode run -m openrouter/moonshotai/kimi-k3 --dir . "<same ask>"' /dev/null`
+   *(Darwin/BSD: no `script -c` — use `script -q file cmd` or `python3` `pty.spawn`.)*
+   **ORI live PASS = TTY-as-gate**; OpenAI-compat HTTPS twin alone is not ORI live PASS.
    Bare pipe may hang after `init` → EXIT **124** — that is non-TTY, not a
    model-FAIL. Missing binary / missing key / slug 404 → ORI lane **blocked**.
 8. **Receipt:** CONTEXT / BEFORE / AFTER / NOTES / claim under

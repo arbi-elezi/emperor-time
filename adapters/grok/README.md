@@ -170,17 +170,21 @@ paste a second native catalog into this file.
 ### OpenRouter / ORI live route (supported when native binary BLOCKED)
 
 When the host is OpenCode or any OpenAI-compat client — **not** Grok Build.
-Prefer a real TTY (`script` / PTY); bare pipes can hang.
+Prefer a real TTY (`script` / PTY); bare pipes can hang. **ORI live PASS =
+TTY-as-gate** (direct OpenAI-compat HTTPS is compat/fallback only — not ORI live PASS).
 
 ```bash
 # OPENROUTER_API_KEY in the host env / OpenCode auth store — never commit it.
 script -q -c 'opencode run -m openrouter/x-ai/grok-4.3 --dir . "<ask>"' /dev/null
+# portable: python3 -c 'import pty,sys; sys.exit(pty.spawn(["opencode","run",...]))'
 ```
+
+*(Darwin/BSD: `script` has no `-c` — use `script -q file cmd` or prefer `python3 -c 'import pty,sys; sys.exit(pty.spawn([...]))'`.)* **ORI live PASS requires a real TTY/PTY**; bare OpenAI-compat HTTPS is compat/fallback only — not ORI live PASS.
 
 Current example: **`x-ai/grok-4.3`** (OpenRouter-recommended successor after
 `x-ai/grok-code-fast-1` was deprecated). Record the slug you actually invoke.
-Host label: **Grok model via OpenCode/ORI**. ORI live PASS is allowed; do
-**not** sell it as Grok Build equal-UX.
+Host label: **Grok model via OpenCode/ORI**. ORI live PASS is allowed under TTY;
+do **not** sell it as Grok Build equal-UX.
 
 ### xAI API / `xai-sdk` (mention only)
 

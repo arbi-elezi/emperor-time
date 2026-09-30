@@ -5,10 +5,11 @@
 OpenCode TTY + `stealth/space-bunny-alpha` (multi-probe when cheap). Judgment
 off. Iron hard. Triage **ET-bug | model-FAIL | PASS | BLOCKED | HOLD**.
 
-**Toolchain:** Bet H is built with **ET+ORI** (OpenCode +
+**Toolchain:** this pack is built with **ET+ORI** (OpenCode +
 `stealth/space-bunny-alpha`) as the coding toolchain, so each ET pack is the
 recursive build of the next one with the tool itself. Receipts must show
 **real harness utilization** with the host labeled **OpenCode/ORI**.
+MATRIX/SUMMARY must cite the **final ship tip SHA** (no stale tip labels).
 
 ## Preferred paths (label the host honestly)
 
@@ -41,7 +42,7 @@ recursive build of the next one with the tool itself. Receipts must show
 5. **Change:** one wording / one export / one comment class edit only.
 6. **done:** `DONE.md` with `probe:`/`expect:` matching the edit; record exit.
 7. **Toolchain:** record `ANDROID_NDK_HOME` + `ndk-build` raw → BLOCKED if absent.
-8. **ORI live (multi-probe):** `timeout 30 script -q -c 'opencode run -m openrouter/stealth/space-bunny-alpha --dir . "<probe>"' /dev/null` for each MATRIX row. Bare pipe → EXIT 124 is non-TTY, not model-FAIL.
+8. **ORI live (multi-probe):** `timeout 30 script -q -c 'opencode run -m openrouter/stealth/space-bunny-alpha --dir . "<probe>"' /dev/null` for each MATRIX row. *(Darwin/BSD: no `script -c` — use `script -q file cmd` or `python3` `pty.spawn`.)* Bare pipe → EXIT 124 is non-TTY, not model-FAIL. **ORI live PASS = TTY-as-gate.**
 9. **Receipt:** CONTEXT / MATRIX / NOTES / claim + raw/ under
    `/workspace/field-receipts/receipts/<date>/bet-h-android-cpp/`. No secrets.
 
