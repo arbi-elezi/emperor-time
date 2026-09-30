@@ -12,7 +12,7 @@ Thin twins: scripts/boot.sh / scripts/boot.ps1
 CLI: boot.py [--root DIR] [--skip-identify] [--skip-eval]
 Env: EMPEROR_BOOT_VERBOSE=1 prints host.env after write.
      EMPEROR_BOOT_SKIP_EVAL=1 / EMPEROR_BOOT_SKIP_IDENTIFY=1 same as flags.
-Always exits 0 (silent-boot vow — never block the session).
+Exits 0 after host/survey write. When structural eval runs on an Emperor Time tree (SKILL.md present) and the log ends EVALS FAILED, exits 1 (honesty — do not mask red eval). --skip-eval always exits 0.
 """
 from __future__ import annotations
 
@@ -40,7 +40,7 @@ def boot(
     skip_identify: bool = False,
     skip_eval: bool = False,
 ) -> Path:
-    """Run silent boot under root. Returns path to host.env."""
+    """Run silent boot under root. Returns (host.env path, eval_failed)."""
     emperor = root / ".emperor"
     emperor.mkdir(parents=True, exist_ok=True)
 
@@ -82,10 +82,28 @@ def boot(
         except OSError:
             pass
 
+    eval_failed = False
+    # Honesty only when this boot actually ran structural eval (not --skip-eval).
+    # Do not inherit a stale EVALS FAILED from a prior run when skip_eval is set.
+    if not skip_eval:
+        eval_log = emperor / "eval.log"
+        if eval_log.is_file():
+            try:
+                body = eval_log.read_text(encoding="utf-8", errors="replace")
+            except OSError:
+                body = ""
+            if "EVALS FAILED" in body:
+                eval_failed = True
+                if os.environ.get("EMPEROR_BOOT_VERBOSE", "") == "1":
+                    sys.stderr.write(
+                        "[Emperor Time] boot: structural eval FAILED"
+                        " - see .emperor/eval.log\n"
+                    )
+
     if os.environ.get("EMPEROR_BOOT_VERBOSE", "") == "1":
         sys.stdout.write(host_env.read_text(encoding="utf-8"))
 
-    return host_env
+    return host_env, eval_failed
 
 
 def main(argv: list[str] | None = None) -> int:
@@ -114,16 +132,18 @@ def main(argv: list[str] | None = None) -> int:
     ) == "1"
     skip_eval = args.skip_eval or os.environ.get("EMPEROR_BOOT_SKIP_EVAL", "") == "1"
 
+    eval_failed = False
     try:
-        boot(
+        _host_env, eval_failed = boot(
             Path(args.root).resolve(),
             skip_identify=skip_identify,
             skip_eval=skip_eval,
         )
     except OSError:
-        # Silent-boot vow: never block the session.
+        # Still write what we can; do not crash the session wrapper.
         pass
-    return 0
+    # Honesty: red structural eval on an ET tree must not look like a clean boot.
+    return 1 if eval_failed else 0
 
 
 if __name__ == "__main__":

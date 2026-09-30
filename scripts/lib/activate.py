@@ -147,6 +147,12 @@ def main(argv: list[str] | None = None) -> int:
         help="Optional user utterance to route before disk defaults",
     )
     parser.add_argument(
+        "utterance_words",
+        nargs="*",
+        default=[],
+        help="Optional utterance words (positional alias for -u/--utterance)",
+    )
+    parser.add_argument(
         "--triggers",
         default=str(ROOT / "evals" / "triggers.json"),
         help="triggers.json path for utterance routing",
@@ -154,16 +160,20 @@ def main(argv: list[str] | None = None) -> int:
     args = parser.parse_args(argv)
     cwd = Path(args.cwd).resolve()
 
+    utterance = (args.utterance or "").strip()
+    if not utterance and args.utterance_words:
+        utterance = " ".join(args.utterance_words).strip()
+
     source = "disk"
     next_skill = _state_next(cwd)
-    if args.utterance.strip():
-        routed = _route_utterance(args.utterance, Path(args.triggers))
+    if utterance:
+        routed = _route_utterance(utterance, Path(args.triggers))
         if routed:
             next_skill = routed
             source = "utterance"
 
     sys.stdout.write(
-        format_card(next_skill=next_skill, source=source, utterance=args.utterance or None)
+        format_card(next_skill=next_skill, source=source, utterance=utterance or None)
     )
     return 0
 

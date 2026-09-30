@@ -15,6 +15,8 @@ opencode, Ollama, and friends.
 
 **Proven via the Codex/AGENTS.md adapter path** on a foreign tiny ask (silent boot → MUST-route activate/route — not Claude SessionStart; other adapters documented, not equal-UX-proven).
 
+**OpenCode adapter is rich** (playbook + QA-SMOKE + config snippet); equal-UX-proven only with an OpenCode-binary foreign receipt — AGENTS.md/scripts alone is not.
+
 ## Install — Claude Code (start here)
 
 This repo is its own plugin marketplace (self-published — not an Anthropic

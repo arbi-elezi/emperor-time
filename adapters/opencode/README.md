@@ -1,81 +1,217 @@
-# Adapter — opencode
+# Adapter — OpenCode (rich playbook)
 
-opencode (SST's open-source harness) takes Emperor Time two ways; use both.
+OpenCode (SST / `opencode-ai` CLI) is a **first-class OSS harness** for Emperor
+Time: multi-provider (OpenRouter mid/flash, local OpenAI-compat, free OpenCode
+catalog models). This playbook is the depth target for Small C — not Claude
+SessionStart parity theater.
 
-## 1. Skills directory
+**Claim bar:** docs + recipe here are **rich**. Equal-UX-proven only when a
+dated field receipt shows the **OpenCode binary** path green on a foreign ask.
+AGENTS.md+scripts fallback alone is **not** equal-UX-proven.
 
-Copy this repo's contents to `~/.opencode/skills/emperor-time/`
-(`.\scripts\install.ps1 -Harness opencode`). opencode's skill format has its
-own conventions (it documents Handlebars-templated skill files and
-`opencode run --skill <name>`); its tolerance for plain SKILL.md folders vs.
-its native format **must be verified at dowse time** — run
-`opencode --help` and its docs, and if needed, Chain-Jail-adapt: flatten the
-master SKILL.md into opencode's expected skill file shape (frontmatter kept,
-Handlebars params only if you parameterize).
+**Deferred (not this adapter):** Cursor very-rich, Grok, Colibrì *ownership*,
+Android C++, multi-16B graph runtimes. Colibrì = optional **OpenAI-compat
+inference** backend to point OpenCode at later — document pattern only; do not
+own the runtime.
 
-Invoke: `opencode run --skill emperor-time "<task>"` (verify flag spelling).
+---
 
-## 2. AGENTS.md pointer (always-on, canonical for opencode)
+## 0. Prereqs
 
-opencode treats `AGENTS.md` as canonical instructions (CLAUDE.md is fallback
-only). Add to the target repo's `AGENTS.md`:
+```bash
+# OpenCode CLI (verify at install time)
+npm install -g opencode-ai          # bin: opencode
+# or: curl -fsSL https://opencode.ai/install | bash
+opencode --version                  # observed example: 1.18.x
+opencode --help
+```
+
+Local toy / OpenAI-compat (optional for QA smoke):
+
+```bash
+# Ollama example (toy models: llama3.2:3b / qwen2.5:3b / heavy-quant)
+ollama serve                        # default http://127.0.0.1:11434
+ollama pull llama3.2:3b
+```
+
+Iron gates never soften for weak models. Judgment stays **off** for toy smoke
+(see `config.snippet.yaml`).
+
+---
+
+## 1. Install Emperor Time into OpenCode
+
+### 1a. Skills directory
+
+```bash
+# from emperor-time tip
+./scripts/install.sh opencode user
+# → ~/.opencode/skills/emperor-time/
+# Windows: .\scripts\install.ps1 -Harness opencode -Scope user
+```
+
+OpenCode skill format may differ (Handlebars / native skill files). At dowse
+time verify with `opencode --help` and docs; if plain `SKILL.md` folders are
+ignored, Chain-Jail-adapt: flatten master `SKILL.md` into the expected shape
+(frontmatter kept). Do not invent a second doctrine tree.
+
+Invoke (verify flag spelling each release):
+
+```bash
+opencode run --skill emperor-time "<task>"
+# or project-dir form:
+opencode run --dir /path/to/repo "<task>"
+```
+
+### 1b. AGENTS.md (canonical standing orders)
+
+OpenCode treats `AGENTS.md` as canonical project instructions. Drop the
+repo-root `AGENTS.md` from Emperor Time tip into the **target** project (or
+append the short pointer below). Pair with a `scripts/` symlink or absolute
+path to tip scripts so `boot` / `activate` / `done` resolve.
+
+Minimal pointer (if you already installed the skill folder):
 
 ```markdown
 ## Emperor Time discipline
 
-This repo runs under the Emperor Time protocol. Before any task, read
-~/.opencode/skills/emperor-time/SKILL.md and follow it: six vows,
-micro-waterfall G0–G5, claim ledger with prediction-before-test, mandatory
-critique, consent-based agent enlistment. Ledgers go to .emperor/.
-If the skill folder is missing, apply the embedded core rules from
-~/.opencode/skills/emperor-time/adapters/generic/EMPEROR_TIME.core.md.
+This repo runs under Emperor Time. Before creative work: silent boot, then
+MUST-route (`scripts/emperor activate` / `route`), then ask→spec + harness-plan
+at tiny by default. Iron gates never soft. Ledgers → `.emperor/`.
+If the skill folder is missing, apply `adapters/generic/EMPEROR_TIME.core.md`.
 ```
 
-## opencode as an *enlisted worker*
+---
+
+## 2. Session path (boot → activate/route → done)
+
+OpenCode has **no** Claude `SessionStart` hook. Agent (or human) must run:
 
 ```bash
-opencode run "<scoped worker prompt>"
-# long sessions / repeated dispatch:
-opencode serve            # client starts it (occupies a terminal)
-opencode run --attach http://localhost:4096 "<prompt>"
+# cwd = foreign or target project
+bash scripts/boot.sh                 # or: python3 $ET/scripts/lib/boot.py --root .
+# read:
+#   .emperor/host.env
+#   .emperor/survey.md
+#   .emperor/eval.log   # only when this tree *is* Emperor Time
+
+python3 scripts/lib/activate.py --cwd . -u "<ask>"
+# open ACTIVATION next=  (MUST-route before clarifying / exploring / coding)
+
+python3 scripts/lib/route.py "<ask>"   # exit 1 → fall back to SKILL tables
+
+# tiny default — emit ask→spec (chains harness-plan):
+python3 scripts/lib/ask_spec.py --emit --effort-class tiny \
+  --write .emperor/tasks/<id>/ask-spec.md "<ask>"
+
+# …do the smallest change…
+
+python3 scripts/lib/done.py .emperor/tasks/<id>
+# exit 0 = green; else FAIL + ledger (honest)
 ```
 
-Prepend the Vow card (top of `adapters/generic/EMPEROR_TIME.core.md`) to
-worker prompts — opencode workers won't have the skill loaded unless the
-target machine installed it.
-
-## Why opencode matters in the roster
-
-It fronts many providers, including local models — which makes it the easiest
-**different-vendor hetero-critic** to stand up when your orchestrator is
-Claude or Kimi (uncorrelated errors; see Steal Chain routing hints).
-
-## Session boot (host-agnostic)
-
-opencode has no Claude `SessionStart` hook. Do not ask the client their OS,
-shell, or language. After clone (or when `.emperor/` is missing), run silent
-boot once, then read what it wrote:
-
-```bash
-bash scripts/boot.sh   # or: scripts/emperor boot
-# Windows: pwsh -NoProfile -File scripts/boot.ps1
-```
-
-Then open:
-
-- `.emperor/host.env` — os, shell, wsl, encoding
-- `.emperor/survey.md` — artifact classes (do not ask the client their stack)
-- `.emperor/eval.log` — when this tree *is* Emperor Time
-
-Resume from STATE.md / `scripts/emperor queue next`. Do not tell the client
-to run `identify` or `eval`. Those are internals.
+Do not ask the client their OS/shell/language — read `host.env` / `survey.md`.
 Foreign/lost tree: `scripts/emperor identify <path>`.
+
+Config bridge: copy `adapters/opencode/config.snippet.yaml` → project
+`.emperor/config.yaml` (or merge knobs). Prefer `python3 scripts/lib/config.py`
+for config-only smoke so boot does not stall.
+
+---
+
 
 ## MUST-route (before creative work)
 
 Silent boot is not enough. Before clarifying questions, exploring, or writing
 code, open one governing file from the `SKILL.md` tables, or run
-`scripts/emperor route "<utterance>"` / `scripts/emperor activate` and open
-`ACTIVATION next=`. Same bite as Claude SessionStart MUST-route; Emperor Time
-stays the orchestrator (no foreign master router).
+`scripts/emperor route "<utterance>"` / `scripts/emperor activate` (or
+`emperor activate "<utterance>"`) and open `ACTIVATION next=`. Same bite as
+Claude SessionStart MUST-route; Emperor Time stays the orchestrator (no foreign
+master router).
 
+## 3. Providers — OpenRouter mid/flash + local OpenAI-compat
+
+### OpenRouter mid/flash (pattern)
+
+```bash
+# Credentials via OpenCode providers (do not paste secrets into ledgers)
+opencode providers          # aliases: auth
+# Set OPENROUTER_API_KEY in the host env / OpenCode auth store — never commit it.
+
+opencode run -m openrouter/<mid-or-flash-slug> --dir . "<ask>"
+```
+
+Pick **one** mid and **one** flash slug at dowse time (no provider catalog
+sprawl). ET structure (gates, ask→spec, done) is the usefulness thesis when
+tokens are cheap — not token-shave theater.
+
+### Local OpenAI-compat (Ollama / Colibrì-as-inference)
+
+```bash
+# Ollama OpenAI-compatible endpoint (typical):
+#   http://127.0.0.1:11434/v1
+# Point OpenCode / provider config at that base URL with a toy model id
+# (llama3.2:3b | qwen2.5:3b | heavy-quant). Verify with `opencode models`.
+
+opencode run -m ollama/llama3.2:3b --dir . "<tiny ask>"
+```
+
+**Colibrì:** deferred as an owned harness. If present on the host, treat it as
+an OpenAI-compat **inference** endpoint the same way — document base URL +
+model id in NOTES; do not ship Colibrì runtime inside ET.
+
+### Preferred free OpenRouter (P0 lab)
+
+```bash
+# OPENROUTER_API_KEY must be set in the environment (never commit/print).
+opencode run -m openrouter/stealth/space-bunny-alpha --dir . "<tiny ask>"
+```
+
+Local fallback when OpenRouter/OpenCode fails: llama.cpp CPU +
+Qwen2.5-Coder 1.5B Q4_K_M (colibri-toy probe path). Do not block on Ollama.
+
+### Free OpenCode catalog models
+
+`opencode models` may list `opencode/*-free` entries. Useful for connectivity
+smoke; **do not** sell a free-catalog PASS as Astra-bridge / mid-16B proof.
+
+---
+
+## 4. Failure modes (triage)
+
+| Symptom | Likely class | Action |
+|---|---|---|
+| No `.emperor/host.env` / activate never run | **ET-bug** / operator skip | Run boot + activate; do not blame the model |
+| `done` FAIL on probe the model never touched | **ET-bug** (probe/path) | Fix DONE.md / cwd / scripts wiring |
+| Iron gate refuses forge/secrets without consent | **PASS** (iron working) | Expected — do not soften |
+| Model ignores MUST-route / skips ask→spec | **model-FAIL** | Record FAIL; keep iron; try clearer AGENTS.md |
+| OpenCode binary missing | **blocked** | AGENTS.md+scripts fallback only; no equal-UX claim |
+| Toy model missing (no Ollama / no weights) | **blocked** (model portion) | Ship docs + smoke recipe; receipt discloses |
+
+Triage labels for receipts: **ET-bug** | **model-FAIL** | **PASS**.
+
+---
+
+## 5. OpenCode as enlisted worker (Steal Chain)
+
+```bash
+opencode run "<scoped worker prompt>"
+opencode serve
+opencode run --attach http://localhost:4096 "<prompt>"
+```
+
+Prepend the Vow card from `adapters/generic/EMPEROR_TIME.core.md` when the
+worker host lacks the skill install. Consent before enlist.
+
+---
+
+## 6. QA entrypoint
+
+Repeatable toy smoke without frontier models: **`QA-SMOKE.md`** (this directory).
+
+---
+
+## Why OpenCode in the roster
+
+It fronts many providers, including local/OpenRouter mid-flash — the practical
+path for buyers who are not on Claude Code. Rich docs here; proof via receipts.

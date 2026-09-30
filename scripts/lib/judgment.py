@@ -338,11 +338,11 @@ def main(argv: Sequence[str] | None = None) -> int:
         return 0
 
     prompt = args.prompt or args.positional_prompt or ""
+    # Bare invocation (no --prompt / positional / --tiny-clear): always print the
+    # card and exit 0. Never read stdin — non-TTY pipes/tee used to hang forever.
     if not prompt and not args.tiny_clear and args.prompt is None and args.positional_prompt is None:
-        if sys.stdin.isatty():
-            sys.stdout.write(format_card())
-            return 0
-        prompt = sys.stdin.read()
+        sys.stdout.write(format_card())
+        return 0
 
     ctx: dict[str, Any] = {}
     if args.use_case:
