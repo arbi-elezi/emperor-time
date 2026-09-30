@@ -1,0 +1,43 @@
+# Emperor Time: Colibrì (OpenAI-compat inference host) config snippet (schema v1)
+# Copy or merge into the target project's `.emperor/config.yaml`.
+# Tied to tip `.emperor/config.yaml` knobs. Iron NEVER soft.
+#
+# Use when the harness (OpenCode / Cursor / generic) points at Colibrì
+# `coli serve` base URL http://127.0.0.1:8000/v1 (or your local bind).
+# Judgment OFF for toy QA smoke. Colibrì does not own boot/activate/gates.
+version: 1
+rigor:
+  default_effort_class: tiny
+  aliases:
+    standard: small
+    full: large
+  auto_detect_little: true
+gates:
+  always_hard:
+    - forge-pr-consent
+    - pin-and-consent
+    - quarantine
+    - steal-consent
+    - secrets-no-leak
+  scale_with_effort: true
+harness:
+  force_table_source: builtin
+  require_plan: true
+  require_spec: true
+features:
+  archaeology_depth: off
+  sandbox: false
+  sot: false
+wip:
+  max: 1
+critique:
+  scale_with_effort: true
+  require_eight_count_at: medium
+judgment:
+  provider: off
+  model: null
+  timeout_s: 8
+  use_for:
+    - effort_class_dispute
+    - ship_no_ship
+    - critique_conflict
