@@ -2,6 +2,7 @@
 
 ## 0.4.174
 
+- **Docs: Codex AGENTS adapter honesty (no version bump)** — structure-clear claim bar, equal-UX HOLD, rich sibling pointers (opencode/cursor/grok), ORI one-liner to `adapters/opencode/ORI-REGRESSION.md` + kill-hold. Bakeoff pin stays 0.4.171.
 - **Docs: Ollama adapter + generic core honesty (no version bump)** — worker-never-orchestrator, equal-UX HOLD, Colibrì inference pointer, distilled-snapshot tip check. Bakeoff pin stays 0.4.171.
 - **Graph / mid-flash doctrine (docs, no version bump)** — new `references/graph-midflash-doctrine.md`: graph→ET map (micro-waterfall / Steal / claim-audit / structural md_graph), mid-model defaults (`gates.always_hard` never soft; `judgment.provider` off until needed), dual-track footnote (frontier free-the-model vs ET iron), cites Growing Harness / Empirical harness / Replit 09-29; MoA-lite CONJECTURE; kill list (LangGraph/GraphRAG/unguided multi-16B debate/Colibrì-as-harness/Growing-Harness-optimizer/OpenAPPA/native equal-UX). Thin README pointer. Bakeoff pin stays 0.4.171.
 - **Cool-down Tiny (docs/hygiene, no version bump)** — Darwin/`script -q` portability notes across ORI TTY recipes; **ORI live PASS = TTY-as-gate** (compat twin / OpenAI-compat HTTPS alone is not ORI live PASS; null short twin annotated); Bet H soft nits (`this pack`, domain-pack qualifier, `dowse` won't list `android-ndk-cpp`); Colibrì root stranger one-liner + tip-SHA receipt hygiene; OpenCode branding Anomaly (formerly SST); claim-bar wording aligned to standing ORI policy. Bakeoff pin stays 0.4.171.
