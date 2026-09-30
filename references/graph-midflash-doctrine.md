@@ -71,7 +71,7 @@ Do not ship or chase as ET product / runtime:
 | Unguided homogeneous multi-~16B debate | Unrestricted debate often hurts; orchestrator + verify wins |
 | Colibrì-as-harness | Colibrì = OpenAI-compat **inference** only (see `adapters/colibri/`); not a harness to own |
 | Growing-Harness-optimizer | Cite the paper; do not build the optimizer product |
-| OpenAPPA / LLM babysitter product | Oversight is process (kill/hold), not a platform |
+| OpenAPPA / LLM babysitter product | Oversight is process (kill/hold), not a platform; see `kill-hold.md` |
 | Native equal-UX chase | Adapter HOLD until foreign green receipt + explicit claim ACCEPT |
 
 ## Headline for strangers
