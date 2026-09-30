@@ -104,8 +104,9 @@ distilled into a single system prompt for models that can't load a skill tree.
 
 ### Grok Build
 
-See `adapters/grok/` — rich playbook (install/paste, session path, one
-OpenRouter example `x-ai/grok-code-fast-1`, failure modes, QA-SMOKE).
+See `adapters/grok/` — rich playbook (install/paste, session path, ORI
+live `x-ai/*` via OpenCode when native `grok` is BLOCKED; current example
+`x-ai/grok-4.3`, failure modes, QA-SMOKE).
 `./scripts/install.sh grok user` → `~/.grok/skills/emperor-time/`
 (project: `.grok/skills/`). Manual copy of that same tree is the fallback.
 Not equal-UX-proven without a green `grok` binary receipt.

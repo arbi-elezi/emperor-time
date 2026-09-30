@@ -10,7 +10,9 @@ theater, and not a claim that every Grok-branded surface is the same product.
 a dated field receipt shows the **`grok` binary** path green on a foreign ask
 **and** the PO accepts that claim language. AGENTS.md + scripts alone is
 **structure proven, not equal-UX**. An OpenRouter `x-ai/*` call through
-another host (OpenCode, curl) is a **model** note, not Grok Build proof.
+OpenCode/ORI (TTY preferred) is a supported **live model route** when the
+native binary is BLOCKED — label it **Grok model via OpenCode/ORI**; it is
+**ORI live PASS**, not Grok Build equal-UX.
 
 **Surfaces (do not conflate):**
 
@@ -18,7 +20,7 @@ another host (OpenCode, curl) is a **model** note, not Grok Build proof.
 |---|---|
 | **Grok Build CLI (`grok`)** | Primary harness. TUI, headless `-p`, ACP. |
 | **AGENTS.md + `scripts/`** | Canonical fallback. Always ship. Runnable with no `grok` binary. |
-| **OpenRouter `x-ai/grok-code-fast-1`** | One named coding mid/flash **model** example when the host is OpenCode or another OpenAI-compat client. Not a substitute for Grok Build. |
+| **OpenRouter `x-ai/*` (ORI)** | Supported **live model** route via OpenCode/OpenAI-compat when `grok` is BLOCKED. Current example: `x-ai/grok-4.3` (record the live slug). Historical `x-ai/grok-code-fast-1` deprecated on OpenRouter. Not a substitute for Grok Build. |
 | **xAI API / `xai-sdk`** | Mention only. Inference loop ≠ harness. |
 | **Grok.com chat** | Mention only. Paste Core / Vow. No boot/done theater. |
 | **Grok Bot (cloud teammate)** | Pointer only. If it is sitting in a project tree, follow AGENTS.md and this session path. Cursor-host depth stays in `adapters/cursor/` — do not deepen it here. |
@@ -165,18 +167,20 @@ grok --effort <lvl>   # only if --help still documents --effort
 Model ids move. Record the id you actually invoked in the receipt. Do not
 paste a second native catalog into this file.
 
-### OpenRouter mid/flash (one example, other host)
+### OpenRouter / ORI live route (supported when native binary BLOCKED)
 
-When the host is OpenCode or any OpenAI-compat client — **not** Grok Build:
+When the host is OpenCode or any OpenAI-compat client — **not** Grok Build.
+Prefer a real TTY (`script` / PTY); bare pipes can hang.
 
 ```bash
 # OPENROUTER_API_KEY in the host env / OpenCode auth store — never commit it.
-opencode run -m openrouter/x-ai/grok-code-fast-1 --dir . "<ask>"
+script -q -c 'opencode run -m openrouter/x-ai/grok-4.3 --dir . "<ask>"' /dev/null
 ```
 
-Locked example: **`x-ai/grok-code-fast-1`** only. No second slug in this
-playbook. Label the receipt "Grok **model** via OpenCode" (or via curl). Do
-not sell that connectivity as Grok Build equal-UX.
+Current example: **`x-ai/grok-4.3`** (OpenRouter-recommended successor after
+`x-ai/grok-code-fast-1` was deprecated). Record the slug you actually invoke.
+Host label: **Grok model via OpenCode/ORI**. ORI live PASS is allowed; do
+**not** sell it as Grok Build equal-UX.
 
 ### xAI API / `xai-sdk` (mention only)
 
@@ -204,7 +208,8 @@ Do not perform boot/done theater and call it a harness run.
 | `grok` missing on PATH | **blocked** (binary) | AGENTS.md+scripts only; no equal-UX claim |
 | No `XAI_API_KEY` and `grok login` not done | **blocked** (auth) | Client auths; orchestrator does not log in or read keys |
 | `grok inspect` shows no AGENTS.md | **blocked** / operator | Wrong cwd, file not at project root, or CLI did not load rules |
-| OpenRouter 401 / 429 on `x-ai/grok-code-fast-1` via another host | **blocked** (model-via-other-host) | Key/quota; does not indict the AGENTS.md structure path |
+| OpenRouter 401 / 429 / timeout on live `x-ai/*` via OpenCode | **blocked** (ORI route) | Key/quota/model; does not indict AGENTS.md structure; not Grok Build evidence |
+| OpenRouter 404 deprecated on historical `x-ai/grok-code-fast-1` | **blocked** (slug inventory) | Record successor slug (e.g. `x-ai/grok-4.3`); do not claim equal-UX |
 
 Triage labels for receipts: **ET-bug** | **model-FAIL** | **PASS** | **blocked**
 (binary / auth / PATH).
@@ -237,7 +242,8 @@ Repeatable toy smoke without a frontier Grok session: **`QA-SMOKE.md`**
 ## Why Grok in the roster
 
 xAI ships a terminal coding agent with AGENTS.md and skill dirs, and
-OpenRouter carries `x-ai/grok-code-fast-1` for mid/flash buyers who are not
-on Claude Code. Rich docs here; structure can be proven without the binary.
-Equal-UX stays withheld until `grok` itself is green on a foreign ask and
-the PO accepts the claim.
+OpenRouter carries current `x-ai/*` coding models (ORI) for buyers who are
+not on Claude Code — usable via OpenCode when the native `grok` binary is
+BLOCKED. Rich docs here; structure and ORI live can be proven without the
+binary. Equal-UX stays withheld until `grok` itself is green on a foreign
+ask and the PO accepts the claim.

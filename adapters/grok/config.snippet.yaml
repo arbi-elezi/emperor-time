@@ -3,7 +3,7 @@
 # Tied to tip `.emperor/config.yaml` knobs. Iron NEVER soft.
 #
 # Use for: Grok Build CLI, the AGENTS.md+scripts fallback, or an OpenRouter
-# host running x-ai/grok-code-fast-1 (model note only — not Grok Build proof).
+# host running an OpenRouter x-ai/* model via ORI (live model route — not Grok Build proof).
 # Judgment OFF for toy QA smoke.
 version: 1
 rigor:
