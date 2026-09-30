@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.4.174
+
+### Added
+- **Rigor-judge primary_reason (F3 cool-down Tiny)** — clean judge-card reason reporting only. `Judgment.primary_reason` = decisive class-changing step (last reason containing `bump`), else the sole/last base/override reason. CLI / JSON emit `reason: <primary>`; when `len(reasons)>1` also print `detail:` lines for the full trail (`reasons` list kept intact for trace). **No** change to effort_class selection, bump floors, iron gates, or judgment provider hooks. Bakeoff pin stays 0.4.171. Freeze `*-hint-bind`. Fixtures `rigor-judge-meta/oauth-pr-primary/` (+ archaeology/tiny primary asserts). Local eval only (Actions stay disabled).
+
 ## 0.4.173
 
 ### Added

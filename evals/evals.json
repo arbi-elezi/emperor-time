@@ -1,5 +1,5 @@
 {
-  "version": "0.4.173",
+  "version": "0.4.174",
   "harness": "emperor-time",
   "notes": "Structural evals run via scripts/lib/eval.py (thin eval.sh / eval.ps1). Behavioral cases are fixtures for model trials, not executed here.",
   "cases": [
@@ -277,7 +277,7 @@
     {
       "id": "rigor-judge-meta-hard-gate",
       "prompt": "Rigor judge + meta-skills pack + feature knobs",
-      "expect": "rigor_judge.py cheap heuristics; ask_spec emit wire when auto_detect_little; user override wins; meta pack references/meta/*; SessionStart META paths_only; config features.archaeology_depth/sandbox/sot wip.max critique.*; fixtures rigor-judge-meta/; v0.4.170",
+      "expect": "rigor_judge.py cheap heuristics + Judgment.primary_reason (last class-changing bump else sole base); CLI reason:/detail:; ask_spec emit wire when auto_detect_little; user override wins; meta pack references/meta/*; SessionStart META paths_only; config features.archaeology_depth/sandbox/sot wip.max critique.*; fixtures rigor-judge-meta/ (+ oauth-pr-primary); freeze *-hint-bind; no effort_class behavior change; bakeoff pin stays 0.4.171; v0.4.174",
       "type": "behavioral-fixture"
     },
     {
@@ -295,7 +295,7 @@
     {
       "id": "critique-eight-count-floor-hard-gate",
       "prompt": "critique config floor folds into g4_check_mode",
-      "expect": "harness_plan.g4_check_mode folds critique.scale_with_effort / require_eight_count_at; medium+floor=large SKIP; small+floor=small FAIL promote; scale=false ignores floor FAIL; fixtures critique-eight-count-floor/; G4 --check-critique; freeze *-hint-bind; v0.4.173",
+      "expect": "harness_plan.g4_check_mode folds critique.scale_with_effort / require_eight_count_at; medium+floor=large SKIP; small+floor=small FAIL promote; scale=false ignores floor FAIL; fixtures critique-eight-count-floor/; G4 --check-critique; freeze *-hint-bind; v0.4.174",
       "type": "behavioral-fixture"
     }
   ]

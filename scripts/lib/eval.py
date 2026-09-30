@@ -6060,7 +6060,7 @@ def run_evals(root: Path) -> int:
     h.require_contains("steal-consent", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing steal-consent")
     h.require_contains("consent.py", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing consent.py")
     h.require_contains("0.4.132", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing 0.4.132 tip")
-    h.require_contains("0.4.173", ".claude-plugin/plugin.json", "plugin.json not at 0.4.173")
+    h.require_contains("0.4.174", ".claude-plugin/plugin.json", "plugin.json not at 0.4.174")
     h.require_contains("0.4.151", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing retained 0.4.151")
     h.require_contains("0.4.137", "CHANGELOG.md", "CHANGELOG missing retained 0.4.137")
     h.require_contains("0.4.136", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing retained 0.4.136")
@@ -6138,7 +6138,7 @@ def run_evals(root: Path) -> int:
     h.require_contains("0.4.149", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing 0.4.149 tip")
     h.require_contains("0.4.153", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing 0.4.153 tip")
     h.require_contains("0.4.169", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing 0.4.169 tip")
-    h.require_contains("0.4.173", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing 0.4.173 tip")
+    h.require_contains("0.4.174", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing 0.4.174 tip")
     h.require_contains("critique-eight-count-floor", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing critique-eight-count-floor tip")
     h.require_contains("0.4.172", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing 0.4.172 tip")
     h.require_contains("ask-spec-harness-plan-emit", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing ask-spec-harness-plan-emit tip")
@@ -6276,7 +6276,7 @@ def run_evals(root: Path) -> int:
     h.require_contains("blind-secrets-broker", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing blind-secrets-broker")
     h.require_contains("reject-secret-leak", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing reject-secret-leak")
     h.require_contains("check-env-redacted", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing check-env-redacted")
-    h.require_contains("0.4.173", ".claude-plugin/marketplace.json", "marketplace.json not at 0.4.173")
+    h.require_contains("0.4.174", ".claude-plugin/marketplace.json", "marketplace.json not at 0.4.174")
     h.require_contains("0.4.149", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing retained 0.4.149 tip keyword")
     h.require_contains("0.4.142", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing retained 0.4.142")
     h.require_contains("finish.py", "evals/fixtures/this-upgrade.md", "this-upgrade.md missing finish.py")
@@ -8883,9 +8883,9 @@ def run_evals(root: Path) -> int:
         "bakeoff.md missing reject-unisolated inventory",
     )
     h.require_contains(
-        "0.4.173",
+        "0.4.174",
         "SKILL.md",
-        "SKILL.md not at 0.4.173",
+        "SKILL.md not at 0.4.174",
     )
     _, card = h.run_py("scripts/lib/review_pack.py")
     if "checklist=yes" not in card:
@@ -11148,9 +11148,9 @@ def run_evals(root: Path) -> int:
         "SKILL.md missing harness-plan",
     )
     h.require_contains(
-        "0.4.173",
+        "0.4.174",
         "SKILL.md",
-        "SKILL.md not at 0.4.173",
+        "SKILL.md not at 0.4.174",
     )
     rc, out = h.run_py(
         "scripts/lib/harness_plan.py",
@@ -11327,9 +11327,9 @@ def run_evals(root: Path) -> int:
         "SKILL.md missing check-forbidden",
     )
     h.require_contains(
-        "0.4.173",
+        "0.4.174",
         "SKILL.md",
-        "SKILL.md not at 0.4.173 (allowlist-enforce)",
+        "SKILL.md not at 0.4.174 (allowlist-enforce)",
     )
     rc, out = h.run_py(
         "scripts/lib/harness_plan.py",
@@ -11437,9 +11437,9 @@ def run_evals(root: Path) -> int:
         "SKILL.md missing check-allowed",
     )
     h.require_contains(
-        "0.4.173",
+        "0.4.174",
         "SKILL.md",
-        "SKILL.md not at 0.4.173 (allowlist-enforce)",
+        "SKILL.md not at 0.4.174 (allowlist-enforce)",
     )
     rc, out = h.run_py(
         "scripts/lib/harness_plan.py",
@@ -11557,9 +11557,9 @@ def run_evals(root: Path) -> int:
         "SKILL.md missing check-caps",
     )
     h.require_contains(
-        "0.4.173",
+        "0.4.174",
         "SKILL.md",
-        "SKILL.md not at 0.4.173 (plan-caps-enforce)",
+        "SKILL.md not at 0.4.174 (plan-caps-enforce)",
     )
     rc, out = h.run_py(
         "scripts/lib/harness_plan.py",
@@ -11677,9 +11677,9 @@ def run_evals(root: Path) -> int:
         "SKILL.md missing check-class-tools",
     )
     h.require_contains(
-        "0.4.173",
+        "0.4.174",
         "SKILL.md",
-        "SKILL.md not at 0.4.173 (class-tools-bind)",
+        "SKILL.md not at 0.4.174 (class-tools-bind)",
     )
     rc, out = h.run_py(
         "scripts/lib/harness_plan.py",
@@ -11808,9 +11808,9 @@ def run_evals(root: Path) -> int:
         "SKILL.md missing check-ask-class",
     )
     h.require_contains(
-        "0.4.173",
+        "0.4.174",
         "SKILL.md",
-        "SKILL.md not at 0.4.173 (ask-class-bind)",
+        "SKILL.md not at 0.4.174 (ask-class-bind)",
     )
     rc, out = h.run_py(
         "scripts/lib/harness_plan.py",
@@ -11930,9 +11930,9 @@ def run_evals(root: Path) -> int:
         "SKILL.md missing check-class-caps",
     )
     h.require_contains(
-        "0.4.173",
+        "0.4.174",
         "SKILL.md",
-        "SKILL.md not at 0.4.173 (class-caps-bind)",
+        "SKILL.md not at 0.4.174 (class-caps-bind)",
     )
     rc, out = h.run_py(
         "scripts/lib/harness_plan.py",
@@ -12079,9 +12079,9 @@ def run_evals(root: Path) -> int:
         "SKILL.md missing check-ask-hints",
     )
     h.require_contains(
-        "0.4.173",
+        "0.4.174",
         "SKILL.md",
-        "SKILL.md not at 0.4.173 (ask-hint-bind)",
+        "SKILL.md not at 0.4.174 (ask-hint-bind)",
     )
     h.require_contains(
         "ask-hint-bind",
@@ -12210,9 +12210,9 @@ def run_evals(root: Path) -> int:
         "SKILL.md missing check-spec-hints",
     )
     h.require_contains(
-        "0.4.173",
+        "0.4.174",
         "SKILL.md",
-        "SKILL.md not at 0.4.173 (spec-hint-bind)",
+        "SKILL.md not at 0.4.174 (spec-hint-bind)",
     )
     h.require_contains(
         "spec-hint-bind",
@@ -12340,9 +12340,9 @@ def run_evals(root: Path) -> int:
         "SKILL.md missing check-scope-hints",
     )
     h.require_contains(
-        "0.4.173",
+        "0.4.174",
         "SKILL.md",
-        "SKILL.md not at 0.4.173 (scope-hint-bind)",
+        "SKILL.md not at 0.4.174 (scope-hint-bind)",
     )
     h.require_contains(
         "scope-hint-bind",
@@ -12470,9 +12470,9 @@ def run_evals(root: Path) -> int:
         "SKILL.md missing check-body-hints",
     )
     h.require_contains(
-        "0.4.173",
+        "0.4.174",
         "SKILL.md",
-        "SKILL.md not at 0.4.173 (body-hint-bind retained)",
+        "SKILL.md not at 0.4.174 (body-hint-bind retained)",
     )
     h.require_contains(
         "body-hint-bind",
@@ -12601,9 +12601,9 @@ def run_evals(root: Path) -> int:
         "SKILL.md missing check-task-hints",
     )
     h.require_contains(
-        "0.4.173",
+        "0.4.174",
         "SKILL.md",
-        "SKILL.md not at 0.4.173 (task-hint-bind)",
+        "SKILL.md not at 0.4.174 (task-hint-bind)",
     )
     h.require_contains(
         "task-hint-bind",
@@ -12735,9 +12735,9 @@ def run_evals(root: Path) -> int:
         "SKILL.md missing check-notes-hints",
     )
     h.require_contains(
-        "0.4.173",
+        "0.4.174",
         "SKILL.md",
-        "SKILL.md not at 0.4.173 (notes-hint-bind)",
+        "SKILL.md not at 0.4.174 (notes-hint-bind)",
     )
     h.require_contains(
         "notes-hint-bind",
@@ -12870,9 +12870,9 @@ def run_evals(root: Path) -> int:
         "SKILL.md missing check-plan-hints",
     )
     h.require_contains(
-        "0.4.173",
+        "0.4.174",
         "SKILL.md",
-        "SKILL.md not at 0.4.173 (plan-hint-bind)",
+        "SKILL.md not at 0.4.174 (plan-hint-bind)",
     )
     h.require_contains(
         "plan-hint-bind",
@@ -13006,9 +13006,9 @@ def run_evals(root: Path) -> int:
         "SKILL.md missing check-state-hints",
     )
     h.require_contains(
-        "0.4.173",
+        "0.4.174",
         "SKILL.md",
-        "SKILL.md not at 0.4.173 (state-hint-bind)",
+        "SKILL.md not at 0.4.174 (state-hint-bind)",
     )
     h.require_contains(
         "state-hint-bind",
@@ -13134,9 +13134,9 @@ def run_evals(root: Path) -> int:
         "SKILL.md missing check-done-hints",
     )
     h.require_contains(
-        "0.4.173",
+        "0.4.174",
         "SKILL.md",
-        "SKILL.md not at 0.4.173 (done-hint-bind)",
+        "SKILL.md not at 0.4.174 (done-hint-bind)",
     )
     h.require_contains(
         "done-hint-bind",
@@ -13272,9 +13272,9 @@ def run_evals(root: Path) -> int:
         "SKILL.md missing HARNESS_DRIVES_G4_CHECKS",
     )
     h.require_contains(
-        "0.4.173",
+        "0.4.174",
         "SKILL.md",
-        "SKILL.md not at 0.4.173 (harness-review-pack-checks)",
+        "SKILL.md not at 0.4.174 (harness-review-pack-checks)",
     )
     h.require_contains(
         "harness-g4-class-checks",
@@ -13417,9 +13417,9 @@ def run_evals(root: Path) -> int:
         "evals.json missing harness-verdict-cites-hard-gate",
     )
     h.require_contains(
-        "0.4.173",
+        "0.4.174",
         "SKILL.md",
-        "SKILL.md not at 0.4.173 (harness-review-pack-checks)",
+        "SKILL.md not at 0.4.174 (harness-review-pack-checks)",
     )
     h.require_contains(
         "G5 verdict citations",
@@ -13513,24 +13513,24 @@ def run_evals(root: Path) -> int:
         "SKILL.md",
         "SKILL.md missing emperor config",
     )
-    if "0.4.173" not in (root / "SKILL.md").read_text(encoding="utf-8", errors="replace"):
-        h.fail_msg("SKILL.md not at 0.4.173 (adjustable-rigor-config retained)")
+    if "0.4.174" not in (root / "SKILL.md").read_text(encoding="utf-8", errors="replace"):
+        h.fail_msg("SKILL.md not at 0.4.174 (adjustable-rigor-config retained)")
     else:
-        h.pass_msg("SKILL.md version 0.4.173 lockstep")
+        h.pass_msg("SKILL.md version 0.4.174 lockstep")
     h.require_contains(
-        "0.4.173",
+        "0.4.174",
         ".claude-plugin/plugin.json",
-        "plugin.json not at 0.4.173",
+        "plugin.json not at 0.4.174",
     )
     h.require_contains(
-        "0.4.173",
+        "0.4.174",
         ".claude-plugin/marketplace.json",
-        "marketplace.json not at 0.4.173",
+        "marketplace.json not at 0.4.174",
     )
     h.require_contains(
-        "## 0.4.173",
+        "## 0.4.174",
         "CHANGELOG.md",
-        "CHANGELOG missing 0.4.173",
+        "CHANGELOG missing 0.4.174",
     )
     # usage peers mention config
     h.require_contains(
@@ -13675,6 +13675,7 @@ def run_evals(root: Path) -> int:
     h.need("evals/fixtures/rigor-judge-meta/README.md")
     h.need("evals/fixtures/rigor-judge-meta/tiny-ask/ask.txt")
     h.need("evals/fixtures/rigor-judge-meta/secrets-bump/ask.txt")
+    h.need("evals/fixtures/rigor-judge-meta/oauth-pr-primary/ask.txt")
     h.need("evals/fixtures/rigor-judge-meta/archaeology-bump/ask.txt")
     h.need("evals/fixtures/rigor-judge-meta/override-wins/ask-full.txt")
     h.need("evals/fixtures/rigor-judge-meta/features-knobs/.emperor/config.yaml")
@@ -13684,6 +13685,16 @@ def run_evals(root: Path) -> int:
         "recommend_effort_class",
         "scripts/lib/rigor_judge.py",
         "rigor_judge missing recommend_effort_class",
+    )
+    h.require_contains(
+        "primary_reason",
+        "scripts/lib/rigor_judge.py",
+        "rigor_judge missing primary_reason",
+    )
+    h.require_contains(
+        "_primary_reason",
+        "scripts/lib/rigor_judge.py",
+        "rigor_judge missing _primary_reason helper",
     )
     h.require_contains(
         "USER_OVERRIDE_WINS",
@@ -13745,13 +13756,13 @@ def run_evals(root: Path) -> int:
         "scripts/emperor",
         "emperor bash peer missing rigor-judge",
     )
-    if "0.4.173" not in (root / "SKILL.md").read_text(encoding="utf-8", errors="replace"):
-        h.fail_msg("SKILL.md not at 0.4.173 (rigor-judge-meta)")
+    if "0.4.174" not in (root / "SKILL.md").read_text(encoding="utf-8", errors="replace"):
+        h.fail_msg("SKILL.md not at 0.4.174 (rigor-judge-meta)")
     else:
-        h.pass_msg("SKILL.md version 0.4.173 lockstep (rigor-judge-meta)")
-    h.require_contains("0.4.173", ".claude-plugin/plugin.json", "plugin.json not at 0.4.173")
-    h.require_contains("0.4.173", ".claude-plugin/marketplace.json", "marketplace.json not at 0.4.173")
-    h.require_contains("## 0.4.173", "CHANGELOG.md", "CHANGELOG missing 0.4.173")
+        h.pass_msg("SKILL.md version 0.4.174 lockstep (rigor-judge-meta)")
+    h.require_contains("0.4.174", ".claude-plugin/plugin.json", "plugin.json not at 0.4.174")
+    h.require_contains("0.4.174", ".claude-plugin/marketplace.json", "marketplace.json not at 0.4.174")
+    h.require_contains("## 0.4.174", "CHANGELOG.md", "CHANGELOG missing 0.4.174")
     h.require_contains("meta-rigor", ".claude-plugin/plugin.json", "plugin.json missing meta-rigor skill")
 
     import os as _os_rj
@@ -13790,7 +13801,7 @@ def run_evals(root: Path) -> int:
     else:
         h.pass_msg("secrets/forge ask bumps class")
 
-    # archaeology-bump → medium+
+    # archaeology-bump → medium+; primary_reason = archaeology bump
     arch_root = root / "evals/fixtures/rigor-judge-meta/archaeology-bump"
     rc, out = _judge(arch_root / "ask.txt", arch_root)
     lines = [ln for ln in out.splitlines() if ln.startswith("effort_class:")]
@@ -13799,6 +13810,59 @@ def run_evals(root: Path) -> int:
         h.fail_msg(f"archaeology-bump should be medium+: rc={rc} {out!r}")
     else:
         h.pass_msg(f"archaeology-bump → {cls}")
+    rc, out = _judge(arch_root / "ask.txt", arch_root, "--as-json")
+    import json as _json_rj
+    try:
+        arch_j = _json_rj.loads(out)
+    except Exception as exc:
+        arch_j = {}
+        h.fail_msg(f"archaeology-bump JSON parse failed: {exc} {out!r}")
+    else:
+        pr = str(arch_j.get("primary_reason") or "")
+        if "archaeology" not in pr or "bump" not in pr:
+            h.fail_msg(f"archaeology primary_reason should be archaeology bump: {pr!r} reasons={arch_j.get('reasons')!r}")
+        elif "tiny-hint" in pr:
+            h.fail_msg(f"archaeology primary_reason must not be tiny-hint base: {pr!r}")
+        else:
+            h.pass_msg(f"archaeology primary_reason → {pr}")
+
+    # oauth-pr-primary → medium; primary_reason = forge/PR bump (not tiny-hint)
+    oauth_root = root / "evals/fixtures/rigor-judge-meta/oauth-pr-primary"
+    rc, out = _judge(oauth_root / "ask.txt", oauth_root, "--as-json")
+    try:
+        oauth_j = _json_rj.loads(out)
+    except Exception as exc:
+        oauth_j = {}
+        h.fail_msg(f"oauth-pr-primary JSON parse failed: {exc} {out!r}")
+    else:
+        ocls = str(oauth_j.get("effort_class") or "")
+        opr = str(oauth_j.get("primary_reason") or "")
+        if rc != 0 or ocls != "medium":
+            h.fail_msg(f"oauth-pr-primary should be medium: rc={rc} {out!r}")
+        elif "forge/PR bump" not in opr:
+            h.fail_msg(f"oauth-pr primary_reason should be forge/PR bump: {opr!r} reasons={oauth_j.get('reasons')!r}")
+        elif "tiny-hint" in opr:
+            h.fail_msg(f"oauth-pr primary_reason must not be tiny-hint base: {opr!r}")
+        else:
+            h.pass_msg(f"oauth-pr primary_reason → {opr}")
+    # CLI card: reason: primary; detail: when trail > 1
+    rc, out = _judge(oauth_root / "ask.txt", oauth_root)
+    if rc != 0 or "reason: forge/PR bump" not in out:
+        h.fail_msg(f"CLI should print reason: <primary forge/PR>: {out!r}")
+    elif "detail:" not in out:
+        h.fail_msg(f"CLI should print detail: trail when len(reasons)>1: {out!r}")
+    else:
+        h.pass_msg("CLI reason primary + detail trail")
+
+    # tiny-ask primary = sole base (no detail: lines)
+    tiny_root2 = root / "evals/fixtures/rigor-judge-meta/tiny-ask"
+    rc, out = _judge(tiny_root2 / "ask.txt", tiny_root2)
+    if rc != 0 or "reason: tiny-hint" not in out:
+        h.fail_msg(f"tiny-ask CLI primary should be tiny-hint: {out!r}")
+    elif "detail:" in out:
+        h.fail_msg(f"tiny-ask sole reason must not emit detail: {out!r}")
+    else:
+        h.pass_msg("tiny-ask primary sole base (no detail)")
 
     # override: explicit class wins
     ov = root / "evals/fixtures/rigor-judge-meta/override-wins"
@@ -13982,13 +14046,13 @@ def run_evals(root: Path) -> int:
         "scripts/emperor",
         "emperor bash peer missing judgment",
     )
-    if "0.4.173" not in (root / "SKILL.md").read_text(encoding="utf-8", errors="replace"):
-        h.fail_msg("SKILL.md not at 0.4.173 (judgment-adapter-stub)")
+    if "0.4.174" not in (root / "SKILL.md").read_text(encoding="utf-8", errors="replace"):
+        h.fail_msg("SKILL.md not at 0.4.174 (judgment-adapter-stub)")
     else:
-        h.pass_msg("SKILL.md version 0.4.173 lockstep (judgment-adapter-stub)")
-    h.require_contains("0.4.173", ".claude-plugin/plugin.json", "plugin.json not at 0.4.173")
-    h.require_contains("0.4.173", ".claude-plugin/marketplace.json", "marketplace.json not at 0.4.173")
-    h.require_contains("## 0.4.173", "CHANGELOG.md", "CHANGELOG missing 0.4.173")
+        h.pass_msg("SKILL.md version 0.4.174 lockstep (judgment-adapter-stub)")
+    h.require_contains("0.4.174", ".claude-plugin/plugin.json", "plugin.json not at 0.4.174")
+    h.require_contains("0.4.174", ".claude-plugin/marketplace.json", "marketplace.json not at 0.4.174")
+    h.require_contains("## 0.4.174", "CHANGELOG.md", "CHANGELOG missing 0.4.174")
     h.require_contains(
         "provider: off",
         ".emperor/config.yaml",
@@ -14135,17 +14199,17 @@ def run_evals(root: Path) -> int:
         "bakeoff_honesty missing ask-spec-harness-plan-emit leaf",
     )
     h.require_contains(
-        "## 0.4.173",
+        "## 0.4.174",
         "CHANGELOG.md",
-        "CHANGELOG missing 0.4.173",
+        "CHANGELOG missing 0.4.174",
     )
-    if "0.4.173" not in (root / "SKILL.md").read_text(encoding="utf-8", errors="replace"):
-        h.fail_msg("SKILL.md not at 0.4.173 (ask-spec-harness-plan-emit)")
+    if "0.4.174" not in (root / "SKILL.md").read_text(encoding="utf-8", errors="replace"):
+        h.fail_msg("SKILL.md not at 0.4.174 (ask-spec-harness-plan-emit)")
     else:
-        h.pass_msg("SKILL.md version 0.4.173 lockstep (ask-spec-harness-plan-emit)")
-    h.require_contains("0.4.173", ".claude-plugin/plugin.json", "plugin.json not at 0.4.173")
+        h.pass_msg("SKILL.md version 0.4.174 lockstep (ask-spec-harness-plan-emit)")
+    h.require_contains("0.4.174", ".claude-plugin/plugin.json", "plugin.json not at 0.4.174")
     h.require_contains(
-        "0.4.173", ".claude-plugin/marketplace.json", "marketplace.json not at 0.4.173"
+        "0.4.174", ".claude-plugin/marketplace.json", "marketplace.json not at 0.4.174"
     )
 
     import os as _os_chain
@@ -14335,17 +14399,17 @@ def run_evals(root: Path) -> int:
         "bakeoff_honesty missing critique-eight-count-floor leaf",
     )
     h.require_contains(
-        "## 0.4.173",
+        "## 0.4.174",
         "CHANGELOG.md",
-        "CHANGELOG missing 0.4.173",
+        "CHANGELOG missing 0.4.174",
     )
-    if "0.4.173" not in (root / "SKILL.md").read_text(encoding="utf-8", errors="replace"):
-        h.fail_msg("SKILL.md not at 0.4.173 (critique-eight-count-floor)")
+    if "0.4.174" not in (root / "SKILL.md").read_text(encoding="utf-8", errors="replace"):
+        h.fail_msg("SKILL.md not at 0.4.174 (critique-eight-count-floor)")
     else:
-        h.pass_msg("SKILL.md version 0.4.173 lockstep (critique-eight-count-floor)")
-    h.require_contains("0.4.173", ".claude-plugin/plugin.json", "plugin.json not at 0.4.173")
+        h.pass_msg("SKILL.md version 0.4.174 lockstep (critique-eight-count-floor)")
+    h.require_contains("0.4.174", ".claude-plugin/plugin.json", "plugin.json not at 0.4.174")
     h.require_contains(
-        "0.4.173", ".claude-plugin/marketplace.json", "marketplace.json not at 0.4.173"
+        "0.4.174", ".claude-plugin/marketplace.json", "marketplace.json not at 0.4.174"
     )
     h.require_contains(
         "g4_check_mode",
@@ -14486,9 +14550,9 @@ def run_evals(root: Path) -> int:
         "evals.json missing harness-review-pack-checks-hard-gate",
     )
     h.require_contains(
-        "0.4.173",
+        "0.4.174",
         "SKILL.md",
-        "SKILL.md not at 0.4.173 (harness-review-pack-checks)",
+        "SKILL.md not at 0.4.174 (harness-review-pack-checks)",
     )
     h.require_contains(
         "review-pack follow harness plan",
