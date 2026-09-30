@@ -2443,6 +2443,23 @@ def run_evals(root: Path) -> int:
         h.fail_msg("finish --require-green task-red missing REJECT RED SUITE")
     else:
         h.pass_msg("finish --require-green task-red refuses MENU")
+    # End scrub + lock (Bet N): --require-green stamps effort-cycles on
+    # fixtures (incl. task-red FAIL); mirror start scrub and prove clean.
+    for _p in (root / "evals/fixtures/finish-suite-green").glob("*/effort-cycles.json"):
+        try:
+            _p.unlink()
+        except OSError:
+            pass
+    _left = sorted(
+        (root / "evals/fixtures/finish-suite-green").glob("*/effort-cycles.json")
+    )
+    if _left:
+        h.fail_msg(
+            "finish-suite-green must not leave effort-cycles.json after HARD-GATE: "
+            + ", ".join(str(p.relative_to(root)) for p in _left)
+        )
+    else:
+        h.pass_msg("finish-suite-green end-scrub: no effort-cycles left")
     _, fin_out = h.run_sh("scripts/finish.sh")
     if not re.search(r"^ENV kind=", fin_out, re.M):
         h.fail_msg("finish.sh missing ENV kind")
