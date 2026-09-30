@@ -11,10 +11,12 @@ equal-UX-proven. Equal-UX-proven only when PO accepts claim language after a
 dated receipt shows the **Cursor binary / IDE** path green on a foreign ask
 with auth honest. AGENTS.md+scripts fallback alone is **not** equal-UX-proven.
 
-**Deferred (not this adapter):** Grok ownership, Colibrì *ownership*, Android
-C++, multi-16B graph runtimes. **ORI live** (OpenRouter via OpenCode or direct
-OpenAI-compat) is the **supported live model route** when `cursor-agent` is
-Not logged in / binary BLOCKED — host labeled; not Cursor equal-UX.
+**Deferred (not this adapter):** Grok ownership, Colibrì *ownership*
+(inference-host integrate pack lives in `adapters/colibri/`; this adapter does
+not own Colibrì), Android C++, multi-16B graph runtimes. **ORI live**
+(OpenRouter via OpenCode or direct OpenAI-compat) is the **supported live
+model route** when `cursor-agent` is Not logged in / binary BLOCKED. Host
+labeled; not Cursor equal-UX.
 
 ---
 
@@ -191,9 +193,12 @@ thesis when tokens are cheap — not token-shave theater.
 # (llama3.2:3b | qwen2.5:3b | heavy-quant). Verify in Cursor model settings.
 ```
 
-**Colibrì:** deferred as an owned harness. If present on the host, treat it as
-an OpenAI-compat **inference** endpoint the same way — document base URL +
-model id in NOTES; do not ship Colibrì runtime inside ET.
+**Colibrì:** not an owned harness here. Integrate-if-you-want pack:
+`adapters/colibri/` (JustVugg/colibri as OpenAI-compat inference host). If
+present on the host, point Cursor's local provider at
+`http://127.0.0.1:8000/v1` (or your bind), document base URL + model id in
+NOTES, and keep ET loaded on the Cursor side. Do not ship Colibrì runtime
+inside ET.
 
 ### Preferred free OpenRouter (P0 lab)
 

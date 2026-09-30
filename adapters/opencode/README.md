@@ -9,10 +9,11 @@ SessionStart parity theater.
 dated field receipt shows the **OpenCode binary** path green on a foreign ask.
 AGENTS.md+scripts fallback alone is **not** equal-UX-proven.
 
-**Deferred (not this adapter):** Cursor very-rich, Grok, Colibrì *ownership*,
-Android C++, multi-16B graph runtimes. Colibrì = optional **OpenAI-compat
-inference** backend to point OpenCode at later — document pattern only; do not
-own the runtime.
+**Deferred (not this adapter):** Cursor very-rich, Grok, Colibrì
+*ownership* (inference-host integrate pack lives in `adapters/colibri/`; this
+adapter does not own Colibrì), Android C++, multi-16B graph runtimes. Colibrì
+remains an optional **OpenAI-compat inference** backend you can point OpenCode
+at; do not own the runtime here.
 
 ---
 
@@ -158,9 +159,11 @@ tokens are cheap — not token-shave theater.
 opencode run -m ollama/llama3.2:3b --dir . "<tiny ask>"
 ```
 
-**Colibrì:** deferred as an owned harness. If present on the host, treat it as
-an OpenAI-compat **inference** endpoint the same way — document base URL +
-model id in NOTES; do not ship Colibrì runtime inside ET.
+**Colibrì:** not an owned harness here. Integrate-if-you-want pack:
+`adapters/colibri/` (JustVugg/colibri as OpenAI-compat inference host). If
+present on the host, point OpenCode at `http://127.0.0.1:8000/v1` (or your
+bind), document base URL + model id in NOTES, and keep ET loaded on the
+OpenCode side. Do not ship Colibrì runtime inside ET.
 
 ### Preferred free OpenRouter (P0 lab)
 
