@@ -16,6 +16,7 @@ BLOCKED**. Judgment off. Iron hard. Equal-UX HOLD (structure PASS ≠ equal-UX).
    fallback/inventory only and is **not** ORI live PASS. `OPENROUTER_API_KEY` in
    env — never commit/print. Host labeled **OpenCode/ORI**. Score **ORI live PASS**
    separately from **equal-UX HOLD**. Prefer slug `stealth/space-bunny-alpha`.
+   Canonical stranger ORI contract: `adapters/opencode/ORI-REGRESSION.md` (do not fork checklists).
 4. **Local fallback:** llama.cpp CPU + Qwen2.5-Coder 1.5B Q4_K_M if OpenRouter
    fails. Ollama toys optional — do not block on Ollama.
 5. **When Cursor is Logged in (optional):** mid/flash via Cursor provider

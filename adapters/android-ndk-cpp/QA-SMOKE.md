@@ -22,6 +22,7 @@ MATRIX/SUMMARY must cite the **final ship tip SHA** (no stale tip labels).
    `openrouter/stealth/space-bunny-alpha`. Host label: **OpenCode/ORI**. Prefer
    a small MATRIX (≥2–3 cheap probes: token, surface triage, iron refuse) —
    not one token toy only. Auth = `OPENROUTER_API_KEY` only (never print/commit).
+   Canonical stranger ORI contract: `adapters/opencode/ORI-REGRESSION.md` (do not fork checklists).
 4. **Equal-UX / native Android CLI:** out of scope (standing policy).
 
 ## Prereqs checklist
