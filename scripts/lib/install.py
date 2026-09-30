@@ -9,7 +9,7 @@ chain expose, activation tips, and dry-run.
 Thin twins: scripts/install.sh / scripts/install.ps1
 CLI: install.py <harness> [scope] [project-path] [--with-chain-skills] [--dry-run]
 
-Harnesses: claude-code | kimi | codex | opencode | generic-agents
+Harnesses: claude-code | kimi | codex | opencode | grok | generic-agents
 Scope: user (default) | project
 """
 from __future__ import annotations
@@ -25,6 +25,7 @@ HARNESSES: dict[str, tuple[str, str | None]] = {
     "kimi": (".kimi/skills", ".kimi/skills"),
     "codex": (".codex/skills", ".codex/skills"),
     "opencode": (".opencode/skills", None),
+    "grok": (".grok/skills", ".grok/skills"),
     "generic-agents": (".config/agents/skills", ".agents/skills"),
 }
 
@@ -56,6 +57,10 @@ ACTIVATE: dict[str, str] = {
     "opencode": (
         "Activate: opencode run --skill emperor-time "
         "(verify flag; see adapters/opencode/)."
+    ),
+    "grok": (
+        "Activate: grok inspect (rules/skills) — verify flags with "
+        "`grok --help`; see adapters/grok/."
     ),
     "generic-agents": (
         "Activate: any Agent-Skills-compatible harness reading "

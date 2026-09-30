@@ -11,13 +11,15 @@ doctrine loads one file at a time. **Not a default daily autocomplete skill.**
 
 Written in the open **Agent Skills** format (`SKILL.md`). Native on
 **Claude Code** (and Kimi CLI, same skill dirs); adapters cover Codex,
-opencode, Ollama, and friends.
+opencode, Grok, Ollama, and friends.
 
 **Proven via the Codex/AGENTS.md adapter path** on a foreign tiny ask (silent boot → MUST-route activate/route — not Claude SessionStart; other adapters documented, not equal-UX-proven).
 
 **OpenCode adapter is rich** (playbook + QA-SMOKE + config snippet); equal-UX-proven only with an OpenCode-binary foreign receipt — AGENTS.md/scripts alone is not.
 
 **Cursor adapter is rich** (playbook + QA-SMOKE + config snippet at `adapters/cursor/`); structure path documented. Equal-UX **HOLD** (structure PASS ≠ equal-UX); `cursor-agent` Not logged in = **BLOCKED**.
+
+**Grok adapter is rich** (playbook + QA-SMOKE + config snippet for Grok Build + AGENTS.md). Equal-UX claim is **held**: a structure receipt is not Grok Build equal-UX until a `grok` binary foreign receipt is green and claim language is explicitly accepted.
 
 ## Install — Claude Code (start here)
 
@@ -99,6 +101,14 @@ The `.ps1` scripts also run under pwsh on macOS/Linux if you prefer PowerShell.
 See `adapters/cursor/`, `adapters/opencode/`, `adapters/ollama/`, and `adapters/generic/` —
 the last contains `adapters/generic/EMPEROR_TIME.core.md`, the whole doctrine
 distilled into a single system prompt for models that can't load a skill tree.
+
+### Grok Build
+
+See `adapters/grok/` — rich playbook (install/paste, session path, one
+OpenRouter example `x-ai/grok-code-fast-1`, failure modes, QA-SMOKE).
+`./scripts/install.sh grok user` → `~/.grok/skills/emperor-time/`
+(project: `.grok/skills/`). Manual copy of that same tree is the fallback.
+Not equal-UX-proven without a green `grok` binary receipt.
 
 ### Scan your machine for enlistable agents
 
@@ -185,7 +195,7 @@ templates/
   claim-ledger.md                 Claims → experiments → evidence
   critique.md                     Prosecutor checklist + verdict
 adapters/
-  claude-code/  kimi-cli/  opencode/  ollama/  generic/
+  claude-code/  kimi-cli/  opencode/  grok/  cursor/  codex/  ollama/  generic/
 scripts/
   dowse.ps1  dowse.sh             Read-only machine scan for agent CLIs
   install.py (+ thin sh/ps1)      Deploy the skill into a harness

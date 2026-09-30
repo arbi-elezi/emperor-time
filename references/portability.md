@@ -4,7 +4,7 @@ Emperor Time's canonical form is the open **Agent Skills** layout — a folder
 with `SKILL.md` (YAML frontmatter: `name`, `description`) plus supporting files
 loaded on demand. That format is the lingua franca: Claude Code and Kimi CLI
 read it natively (from the *same directories*), Codex reads `~/.codex/skills/`,
-opencode has its own skills dir, and everything else can swallow the distilled
+opencode and Grok Build have their own skills dirs, and everything else can swallow the distilled
 prompt form.
 
 ## Deployment matrix
@@ -16,6 +16,7 @@ prompt form.
 | **Codex CLI** | `~/.codex/skills/emperor-time/` | Per Codex's skill activation (verify at dowse) |
 | **Copilot CLI** | Supports skills — location per current docs (verify at dowse) | Per its skill mechanism |
 | **opencode** | `~/.opencode/skills/` + an `AGENTS.md` pointer in the repo | `opencode run --skill ...` / AGENTS.md always-on |
+| **Grok Build** | `~/.grok/skills/emperor-time/` (user) or `<repo>/.grok/skills/emperor-time/` (project); also discovers `~/.agents/skills/`. Standing orders: project `AGENTS.md` | `./scripts/install.sh grok user` or `grok project <path>` (manual copy of the same tree is the fallback). Activate via the installed skill / `grok inspect` — verify flags at dowse. See `adapters/grok/` |
 | **Ollama / local** | Bake `adapters/generic/EMPEROR_TIME.core.md` into a Modelfile `SYSTEM` | Always-on persona — see `adapters/ollama/` |
 | **Any open-weight runner** (llama.cpp, LM Studio, vLLM, …) | Paste `adapters/generic/EMPEROR_TIME.core.md` as the system prompt | Always-on |
 
