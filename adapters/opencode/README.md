@@ -20,8 +20,10 @@ own the runtime.
 
 ```bash
 # OpenCode CLI (verify at install time)
-npm install -g opencode-ai          # bin: opencode
+npm install -g opencode-ai          # bin: opencode (often lands in ~/.local/bin)
 # or: curl -fsSL https://opencode.ai/install | bash
+export PATH="$HOME/.local/bin:$PATH"   # PATH footgun: fresh shells without this → "No such file"
+# or invoke absolute: ~/.local/bin/opencode  (Linux ELF may be named opencode.exe)
 opencode --version                  # observed example: 1.18.x
 opencode --help
 ```
@@ -164,7 +166,9 @@ model id in NOTES; do not ship Colibrì runtime inside ET.
 
 ```bash
 # OPENROUTER_API_KEY must be set in the environment (never commit/print).
+# Under non-TTY (agent/CI pipe), wrap with script/pty — see Failure modes.
 opencode run -m openrouter/stealth/space-bunny-alpha --dir . "<tiny ask>"
+# timeout 20 script -q -c 'opencode run -m openrouter/stealth/space-bunny-alpha --dir . "<tiny ask>"' /dev/null
 ```
 
 Local fallback when OpenRouter/OpenCode fails: llama.cpp CPU +
@@ -186,9 +190,24 @@ smoke; **do not** sell a free-catalog PASS as Astra-bridge / mid-16B proof.
 | Iron gate refuses forge/secrets without consent | **PASS** (iron working) | Expected — do not soften |
 | Model ignores MUST-route / skips ask→spec | **model-FAIL** | Record FAIL; keep iron; try clearer AGENTS.md |
 | OpenCode binary missing | **blocked** | AGENTS.md+scripts fallback only; no equal-UX claim |
+| `timeout: … No such file` / `opencode` not found | **PATH footgun** | Add `~/.local/bin` to PATH or use absolute `~/.local/bin/opencode` — not the hang |
+| Hang after log `message=init`; timeout → EXIT **124**; empty stdout | **harness hang (non-TTY)** | OpenCode 1.18.x `run` stalls under pipe/non-TTY. Wrap with `script -q -c 'opencode run …'` or python `pty`; keep `timeout` ≤30s while probing |
+| `--format json` / `--interactive` still 124 under pipe | **same hang class** | Those flags do **not** unblock; needs a real TTY |
 | Toy model missing (no Ollama / no weights) | **blocked** (model portion) | Ship docs + smoke recipe; receipt discloses |
 
-Triage labels for receipts: **ET-bug** | **model-FAIL** | **PASS**.
+Triage labels for receipts: **ET-bug** | **model-FAIL** | **PASS** | **blocked** (binary/PATH/hang).
+
+### Non-TTY hang workaround (binary lane)
+
+Agent/CI shells often pipe stdout → OpenCode `run` hangs after `init` (EXIT 124). Prefer:
+
+```bash
+# always bound probes
+timeout 20 script -q -c 'opencode run -m openrouter/stealth/space-bunny-alpha --dir . "<ask>"' /dev/null
+# or: python3 -c 'import pty,sys; sys.exit(pty.spawn(["opencode","run",...]))'
+```
+
+Structure path (AGENTS.md + `boot`/`activate`/`done`) and direct OpenRouter HTTPS remain valid when the binary lane is pipe-blocked. **Equal-UX-proven** still requires a dated **binary** green receipt **and** PO accept of claim language — do not auto-claim from docs or AGENTS-only PASS.
 
 ---
 
