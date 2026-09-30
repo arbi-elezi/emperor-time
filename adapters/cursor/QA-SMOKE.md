@@ -8,12 +8,18 @@ BLOCKED**. Judgment off. Iron hard. Equal-UX HOLD (structure PASS ≠ equal-UX).
 
 1. **Structure lane (required):** tip scripts + `AGENTS.md` paste — no Cursor
    login required.
-2. **OpenRouter free (optional, when Cursor hosts a model):** mid/flash via
-   Cursor provider settings (`OPENROUTER_API_KEY` in env — never commit/print).
-3. **Local fallback:** llama.cpp CPU + Qwen2.5-Coder 1.5B Q4_K_M if OpenRouter
+2. **Binary lane:** `cursor-agent status` — if **Not logged in**, label
+   **BLOCKED**; do **not** chase login.
+3. **ORI live (supported when binary BLOCKED):** OpenRouter via labeled host —
+   preferred OpenCode TTY (`opencode run -m openrouter/stealth/space-bunny-alpha
+   --dir <foreign>` under `script`/`pty` + timeout); fallback direct OpenRouter
+   OpenAI-compat HTTPS. `OPENROUTER_API_KEY` in env — never commit/print. Host
+   labeled (OpenCode or HTTPS). Score **ORI PASS** separately from **equal-UX
+   HOLD**. Prefer slug `stealth/space-bunny-alpha` for free lab.
+4. **Local fallback:** llama.cpp CPU + Qwen2.5-Coder 1.5B Q4_K_M if OpenRouter
    fails. Ollama toys optional — do not block on Ollama.
-4. **Binary lane:** `cursor-agent status` — if **Not logged in**, label
-   **BLOCKED**; do not chase login.
+5. **When Cursor is Logged in (optional):** mid/flash via Cursor provider
+   settings — still never paste keys into git; equal-UX still PO-gated.
 
 ## Prereqs checklist
 
@@ -38,9 +44,14 @@ BLOCKED**. Judgment off. Iron hard. Equal-UX HOLD (structure PASS ≠ equal-UX).
 7. **Binary lane:** `cursor-agent status` → if **Not logged in**, mark **BLOCKED**;
    do not run login flows or paste `CURSOR_API_KEY`. Optional print probe only
    when Logged in and PO asked.
-8. **Receipt:** MATRIX/NOTES + raw/ under
-   `/workspace/field-receipts/receipts/<date>/cursor-very-rich/` with triage
-   labels (structure PASS vs binary BLOCKED vs equal-UX HOLD).
+8. **ORI live (when binary BLOCKED):** run OpenCode TTY smoke with
+   `openrouter/stealth/space-bunny-alpha` (or PO-named slug) on the foreign dir;
+   fallback OpenAI-compat HTTPS if OpenCode flakes. Label host honestly. Score
+   **ORI PASS/FAIL** separately from equal-UX **HOLD**. Do not chase login.
+9. **Receipt:** MATRIX/NOTES + raw/ under
+   `/workspace/field-receipts/receipts/<date>/bet-f-ori-cursor/` (or dated
+   Cursor receipt dir) with triage labels (structure PASS vs binary BLOCKED vs
+   ORI live PASS/FAIL vs equal-UX HOLD).
 
 ## Pass / fail
 
@@ -49,8 +60,10 @@ BLOCKED**. Judgment off. Iron hard. Equal-UX HOLD (structure PASS ≠ equal-UX).
 | done exit 0 + honest probes | **PASS** (structure exercised) |
 | done FAIL, probes/config wrong | **ET-bug** |
 | done FAIL / nonsense after correct ET path | **model-FAIL** |
-| `Not logged in` / no cursor-agent | **BLOCKED** (binary; disclose) |
+| `Not logged in` / no cursor-agent | **BLOCKED** (binary; disclose) — run ORI live next |
+| ORI live green (OpenCode / OpenAI-compat, host labeled) | **PASS** (ORI live) — still not equal-UX |
+| ORI live red (auth/quota/hang) | **FAIL** / **BLOCKED** (model-route; honest) |
 | structure green, no IDE/binary green + PO | **HOLD** equal-UX — do not auto-claim |
 
-Do **not** sell structure PASS as equal-UX-proven.
+Do **not** sell structure PASS or ORI live PASS as equal-UX-proven.
 Do **not** chase Cursor login to unblock a smoke.

@@ -12,8 +12,9 @@ dated receipt shows the **Cursor binary / IDE** path green on a foreign ask
 with auth honest. AGENTS.md+scripts fallback alone is **not** equal-UX-proven.
 
 **Deferred (not this adapter):** Grok ownership, Colibrì *ownership*, Android
-C++, multi-16B graph runtimes. OpenRouter mid/flash when Cursor is the host is
-documented as a provider pattern only.
+C++, multi-16B graph runtimes. **ORI live** (OpenRouter via OpenCode or direct
+OpenAI-compat) is the **supported live model route** when `cursor-agent` is
+Not logged in / binary BLOCKED — host labeled; not Cursor equal-UX.
 
 ---
 
@@ -150,22 +151,36 @@ code, open one governing file from the `SKILL.md` tables, or run
 Claude SessionStart MUST-route; Emperor Time stays the orchestrator (no foreign
 master router).
 
-## 3. Providers — OpenRouter mid/flash when Cursor is host + local OpenAI-compat
+## 3. Providers — ORI live when Cursor binary BLOCKED + local OpenAI-compat
 
-### OpenRouter mid/flash (pattern)
+### ORI live (supported when `cursor-agent` BLOCKED)
 
-When Cursor (IDE or `cursor-agent`) is the **host**, route mid/flash through
-Cursor's model picker / provider settings or the host env — **not** by pasting
-keys into `.emperor/` ledgers or git.
+When `cursor-agent status` is **Not logged in** / binary lane **BLOCKED**, do
+**not** chase Cursor login. The supported **live model route** is **ORI** —
+OpenRouter via a labeled host:
+
+1. **Preferred:** OpenCode TTY — `opencode run -m openrouter/<slug> --dir <foreign>`
+   (use `script`/`pty` + timeout; Bet D: pipes can hang). Prefer free lab slug
+   `stealth/space-bunny-alpha` unless PO names another.
+2. **Fallback:** direct OpenRouter OpenAI-compat HTTPS chat completion with the
+   same `OPENROUTER_API_KEY` if OpenCode flakes.
+
+**Host must be labeled honestly** (OpenCode or HTTPS). This is **not** Cursor
+equal-UX. Equal-UX still requires Cursor binary/IDE green + PO accept.
 
 ```bash
-# Set OPENROUTER_API_KEY in the host environment / Cursor auth store only.
+# Set OPENROUTER_API_KEY in the host environment only.
 # Never commit, print, or paste the key into receipts or rules files.
-# Pick one mid and one flash slug at dowse time (no provider catalog sprawl).
+export PATH="$HOME/.local/bin:$PATH"
+cursor-agent status   # Not logged in → binary BLOCKED; use ORI below
+# Preferred ORI host (OpenCode), PTY-safe:
+# timeout 60 script -q -c 'opencode run -m openrouter/stealth/space-bunny-alpha --dir <foreign> "<tiny ask>"' /tmp/ori.log
 ```
 
-ET structure (gates, ask→spec, done) is the usefulness thesis when tokens are
-cheap — not token-shave theater.
+When Cursor IDE / `cursor-agent` **is** Logged in, mid/flash may also route
+through Cursor's model picker / provider settings — still never paste keys into
+`.emperor/` or git. ET structure (gates, ask→spec, done) remains the usefulness
+thesis when tokens are cheap — not token-shave theater.
 
 ### Local OpenAI-compat (Ollama / Colibrì-as-inference)
 
@@ -182,9 +197,11 @@ model id in NOTES; do not ship Colibrì runtime inside ET.
 
 ### Preferred free OpenRouter (P0 lab)
 
-`OPENROUTER_API_KEY` in env when using OpenRouter through whatever host Cursor
-exposes — never commit/print. Local fallback when OpenRouter fails: llama.cpp
-CPU + Qwen2.5-Coder 1.5B Q4_K_M (colibri-toy probe path). Do not block on Ollama.
+`OPENROUTER_API_KEY` in env for **ORI** (OpenCode or OpenAI-compat) — never
+commit/print. Prefer slug `stealth/space-bunny-alpha` for free lab smokes.
+Local fallback when OpenRouter fails: llama.cpp CPU + Qwen2.5-Coder 1.5B Q4_K_M
+(colibri-toy probe path). Do not block on Ollama. Score ORI PASS separately from
+equal-UX HOLD.
 
 ---
 
@@ -196,7 +213,7 @@ CPU + Qwen2.5-Coder 1.5B Q4_K_M (colibri-toy probe path). Do not block on Ollama
 | `done` FAIL on probe the model never touched | **ET-bug** (probe/path) | Fix DONE.md / cwd / scripts wiring |
 | Iron gate refuses forge/secrets without consent | **PASS** (iron working) | Expected — do not soften |
 | Model ignores MUST-route / skips ask→spec | **model-FAIL** | Record FAIL; keep iron; clarify AGENTS.md / rules |
-| `cursor-agent status` → **Not logged in** | **BLOCKED** (binary) | Structure path OK; do **not** chase login / auth bypass |
+| `cursor-agent status` → **Not logged in** | **BLOCKED** (binary) | Structure path OK; run **ORI live** smoke (OpenCode or OpenAI-compat); host labeled; do **not** chase login; equal-UX stays HOLD |
 | `cursor-agent` / `agent` missing | **PATH / blocked** | Add `~/.local/bin` or absolute path; no equal-UX claim |
 | Rules / AGENTS.md not loaded in IDE | **operator** | Fix `.cursor/rules` pointer; re-open project |
 | Boot skipped; creative work first | **operator / model-FAIL** | Enforce MUST-route; receipt as FAIL if claimed PASS |
@@ -207,9 +224,11 @@ CPU + Qwen2.5-Coder 1.5B Q4_K_M (colibri-toy probe path). Do not block on Ollama
 Triage labels for receipts: **ET-bug** | **model-FAIL** | **PASS** | **BLOCKED** (auth/binary/PATH) | **HOLD** (equal-UX).
 
 Structure path (AGENTS.md + `boot`/`activate`/`done`) remains valid when the
-binary lane is auth-BLOCKED. **Equal-UX-proven** still requires a dated
-**binary/IDE** green receipt **and** PO accept of claim language — do not
-auto-claim from docs or AGENTS-only PASS.
+binary lane is auth-BLOCKED. **ORI live PASS** is claimable after a dated
+receipt with a labeled host (OpenCode / OpenAI-compat) — still **not** Cursor
+equal-UX. **Equal-UX-proven** still requires a dated **binary/IDE** green
+receipt **and** PO accept of claim language — do not auto-claim from docs,
+AGENTS-only PASS, or ORI alone.
 
 ---
 

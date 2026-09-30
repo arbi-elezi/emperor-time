@@ -17,7 +17,7 @@ opencode, Grok, Ollama, and friends.
 
 **OpenCode adapter is rich** (playbook + QA-SMOKE + config snippet); equal-UX-proven only with an OpenCode-binary foreign receipt — AGENTS.md/scripts alone is not.
 
-**Cursor adapter is rich** (playbook + QA-SMOKE + config snippet at `adapters/cursor/`); structure path documented. Equal-UX **HOLD** (structure PASS ≠ equal-UX); `cursor-agent` Not logged in = **BLOCKED**.
+**Cursor adapter is rich** (playbook + QA-SMOKE + config snippet at `adapters/cursor/`); structure path documented. When `cursor-agent` Not logged in = **BLOCKED**, **ORI** (OpenRouter via OpenCode/OpenAI-compat, host labeled) is the supported live model route — not Cursor equal-UX. Equal-UX **HOLD**.
 
 **Grok adapter is rich** (playbook + QA-SMOKE + config snippet for Grok Build + AGENTS.md). Equal-UX claim is **held**: a structure receipt is not Grok Build equal-UX until a `grok` binary foreign receipt is green and claim language is explicitly accepted.
 
