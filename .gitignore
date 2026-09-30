@@ -13,6 +13,12 @@
 !evals/fixtures/**/.emperor/
 !evals/fixtures/**/.emperor/**
 
+# Generated probe effort-cycles under fixtures (Bet N). Intentional committed stamps stay un-ignored:
+evals/fixtures/**/effort-cycles.json
+!evals/fixtures/ask-spec-proportionality/**/effort-cycles.json
+!evals/fixtures/harness-plan-caps-enforce/**/effort-cycles.json
+!evals/fixtures/harness-forbid-enforce/**/effort-cycles.json
+
 # Local Claude Code state from plugin test-installs (never publish)
 .claude/settings.local.json
 
