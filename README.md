@@ -218,6 +218,7 @@ chains/                           Five chains — each a router SKILL.md + one M
   holy-chain/                     triage · reproduce-and-bisect · heal-and-verify · process-healing
 references/
   micro-waterfall.md              Full phase/gate spec + right-sizing rules
+  graph-midflash-doctrine.md      Graph→ET map + mid-flash defaults (iron hard; no runtime)
   scientific-method.md            Claim lifecycle, tripwires, evidence rules
   agent-registry.md               Detect / sign-in / invoke matrix per agent CLI
   portability.md                  Deploying to other harnesses & open-weight models
