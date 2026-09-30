@@ -12,7 +12,9 @@ Thin twins: scripts/boot.sh / scripts/boot.ps1
 CLI: boot.py [--root DIR] [--skip-identify] [--skip-eval]
 Env: EMPEROR_BOOT_VERBOSE=1 prints host.env after write.
      EMPEROR_BOOT_SKIP_EVAL=1 / EMPEROR_BOOT_SKIP_IDENTIFY=1 same as flags.
-Exits 0 after host/survey write. When structural eval runs on an Emperor Time tree (SKILL.md present) and the log ends EVALS FAILED, exits 1 (honesty — do not mask red eval). --skip-eval always exits 0.
+Exits 0 after host/survey write. When structural eval runs on an Emperor Time tree (SKILL.md present) and the log ends EVALS FAILED, exits 1 (honesty: do not mask red eval).
+Explicit emperor boot and emperor host must propagate that EVALS FAILED exit 1 to the caller.
+The --skip-eval flag always exits 0.
 """
 from __future__ import annotations
 

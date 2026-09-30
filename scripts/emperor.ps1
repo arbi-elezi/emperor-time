@@ -80,6 +80,8 @@ try { if ($IsWindows) { $isWin = $true } } catch {}
 $bootPs1 = Join-Path $here 'boot.ps1'
 
 # Host + survey live on disk. Client is never asked to identify the box.
+# Intentional: auto-boot swallows exit so non-boot tools are not blocked by a red
+# structural eval. Explicit emperor boot propagates (Bet J honesty bar).
 if (-not (Test-Path '.emperor/host.env')) {
     if (Test-Path $bootPs1) {
         & $bootPs1 2>$null | Out-Null
@@ -88,15 +90,19 @@ if (-not (Test-Path '.emperor/host.env')) {
 
 if ($Tool -eq 'boot') {
     if (Test-Path $bootPs1) {
+        # Explicit boot: propagate boot.py exit (EVALS FAILED becomes 1). Do not mask.
         & $bootPs1 @ToolArgs
+        $bootRc = if ($null -ne $LASTEXITCODE) { $LASTEXITCODE } else { 0 }
         if ($env:EMPEROR_BOOT_VERBOSE -eq '1' -and (Test-Path '.emperor/host.env')) {
             Get-Content '.emperor/host.env'
         }
-        exit 0
+        exit $bootRc
     }
 }
 
 # identify with no path → silent (boot already wrote survey). Not a user ritual.
+# Intentional override (like auto-boot): no-arg identify stays exit 0. Honesty
+# bar is explicit emperor boot only.
 if ($Tool -eq 'identify' -and (-not $ToolArgs -or $ToolArgs.Count -eq 0)) {
     if (Test-Path $bootPs1) { & $bootPs1 2>$null | Out-Null }
     if ($env:EMPEROR_BOOT_VERBOSE -eq '1' -and (Test-Path '.emperor/survey.md')) {

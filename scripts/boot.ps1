@@ -11,4 +11,4 @@ if (-not $env:EMPEROR_SHELL) {
 }
 $py = Join-Path $root 'scripts/lib/boot.py'
 & python3 $py @Rest
-exit 0
+exit $LASTEXITCODE
