@@ -5559,7 +5559,7 @@ def run_evals(root: Path) -> int:
         str(root),
         env={"EMPEROR_BOOT_SKIP_EVAL": "1"},
     )
-    # boot.sh always exits 0; just ensure it runs
+    # boot.sh --skip-eval exits 0; just ensure it runs
     if rc_sh != 0:
         h.fail_msg("boot.sh --skip-eval should exit 0")
     else:
@@ -14141,6 +14141,32 @@ def run_evals(root: Path) -> int:
     else:
         h.pass_msg("config judgment.provider → off")
 
+
+    # bare judgment non-TTY: must print card + exit 0 (never stdin hang)
+    import subprocess as _sp_bare
+    r_bare = _sp_bare.run(
+        ["python3", str(root / "scripts/lib/judgment.py")],
+        input="",
+        capture_output=True,
+        text=True,
+        cwd=str(root),
+        timeout=5,
+    )
+    if r_bare.returncode != 0:
+        h.fail_msg(f"bare judgment non-TTY should exit 0: rc={r_bare.returncode}")
+    elif "MUST:" not in (r_bare.stdout or "") and "judgment" not in (r_bare.stdout or "").casefold():
+        h.fail_msg(f"bare judgment non-TTY should print card: {(r_bare.stdout or '')!r}")
+    else:
+        h.pass_msg("bare judgment non-TTY → card + exit 0 (no hang)")
+
+    # activate positional utterance alias for -u
+    _rc_pos, act_pos = h.run_py(
+        "scripts/lib/activate.py", "--cwd", str(root), "lost", "pascal", "tree"
+    )
+    if "skills/emperor-excavate/SKILL.md" not in act_pos and "excavate" not in act_pos:
+        h.fail_msg(f"activate positional utterance should route excavate: {act_pos!r}")
+    else:
+        h.pass_msg("activate positional utterance → excavate")
 
     h.pass_msg("judgment-adapter-stub HARD-GATE")
 
