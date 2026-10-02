@@ -20,5 +20,6 @@ $flags = @()
 if ($CheckAuth) { $flags += '--check-auth' }
 if ($AsJson) { $flags += '--as-json' }
 if ($SkipVersions) { $flags += '--skip-versions' }
-& python3 $py @flags
+. (Join-Path $PSScriptRoot 'lib/resolve-emperor-python.ps1')
+Invoke-EmperorPython $py @flags
 exit $LASTEXITCODE

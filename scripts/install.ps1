@@ -28,5 +28,6 @@ $py = Join-Path $root 'scripts/lib/install.py'
 $flags = @($Harness, $Scope, $Project)
 if ($WithChainSkills) { $flags += '--with-chain-skills' }
 if ($DryRun) { $flags += '--dry-run' }
-& python3 $py @flags
+. (Join-Path $PSScriptRoot 'lib/resolve-emperor-python.ps1')
+Invoke-EmperorPython $py @flags
 exit $LASTEXITCODE

@@ -10,5 +10,6 @@ if (-not $env:EMPEROR_SHELL) {
     else { $env:EMPEROR_SHELL = 'powershell' }
 }
 $py = Join-Path $root 'scripts/lib/boot.py'
-& python3 $py @Rest
+. (Join-Path $PSScriptRoot 'lib/resolve-emperor-python.ps1')
+Invoke-EmperorPython $py @Rest
 exit $LASTEXITCODE

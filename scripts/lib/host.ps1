@@ -60,9 +60,15 @@ function Write-EmperorHostReport {
     if (-not (Test-Path $hostPy)) {
         $hostPy = Join-Path (Join-Path $PSScriptRoot 'lib') 'host.py'
     }
-    if ((Test-Path $hostPy) -and (Get-Command python3 -ErrorAction SilentlyContinue)) {
-        & python3 $hostPy --report
-        return
+    . (Join-Path $PSScriptRoot 'resolve-emperor-python.ps1')
+    try {
+        if (Test-Path $hostPy) {
+            $r = Resolve-EmperorPython
+            & $r.Exe @($r.PrefixArgs) $hostPy --report
+            return
+        }
+    } catch {
+        # fall through to pure-PS report line (same as tip when python3 missing)
     }
     $enc = if ($env:EMPEROR_ENCODING) { $env:EMPEROR_ENCODING } else { 'UTF-8' }
     'os={0} shell={1} wsl={2} win_interop={3} encoding={4} mnt={5} win_root={6}' -f `

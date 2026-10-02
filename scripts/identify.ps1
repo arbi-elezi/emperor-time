@@ -15,9 +15,10 @@ $py = Join-Path $repo 'scripts/lib/identify.py'
 $argsList = @()
 if ($Root) { $argsList += $Root }
 if ($Rest) { $argsList += $Rest }
+. (Join-Path $PSScriptRoot 'lib/resolve-emperor-python.ps1')
 if ($argsList.Count -eq 0) {
-    & python3 $py
+    Invoke-EmperorPython $py
 } else {
-    & python3 $py @argsList
+    Invoke-EmperorPython $py @argsList
 }
 exit 0
