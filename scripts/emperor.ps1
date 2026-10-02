@@ -1,7 +1,8 @@
 <#
 .SYNOPSIS
-  Host dispatcher. Picks .ps1 on Windows, .sh elsewhere, with fallback.
-  Silent-boots when .emperor/host.env is missing (twin of scripts/emperor).
+  Host dispatcher. Prefers .ps1 on Windows, under PowerShell Core (pwsh), or when
+  EMPEROR_FORCE_PS1=1; else bash .sh with .ps1 fallback. Same 84 tools as bash /
+  emperor.cmd. Silent-boots when .emperor/host.env is missing (twin of scripts/emperor).
 .EXAMPLE
   .\emperor.ps1 done .emperor/tasks/demo
   .\emperor.ps1 queue next
@@ -12,6 +13,10 @@
   .\emperor.ps1 route "lost pascal tree"
   .\emperor.ps1 excavate .
   .\emperor.ps1 heal
+  .\emperor.ps1 heal-verify
+  .\emperor.ps1 reproduce
+  .\emperor.ps1 triage
+  .\emperor.ps1 process-heal
   .\emperor.ps1 grill
   .\emperor.ps1 tdd
   .\emperor.ps1 work-order
@@ -46,7 +51,7 @@
 [CmdletBinding()]
 param(
     [Parameter(Mandatory = $true, Position = 0)]
-    [ValidateSet('done','gate','eval','review-pack','dowse','install','worktree','queue','forge','finish','activate','boot','identify','route','heal','grill','tdd','iso','review','author','evidence','receive','execute','subagent','parallel','excavate','session-discovery','diagnose','trace','defense','wait','polluter','pressure','good-tests','skill-test','persuasion','sdo','task-brief','task-start','task-done','sdd-workspace','sdd-review-pack','work-order','claim-audit','judgment-audit','quarantine','steal-quarantine','consent','steal-consent','critique','self-critique','verdict','breach','brief','context','thoughttrail','super-context','sandbox','sot','runtime','env','secrets','steal-flow','sign-in-handoff','steal-dispatch','swarm-emulate','pin-and-consent','jail-pin','ask-spec','harness-plan','tool-force','proportionality','anti-loop','config','rigor-judge','judgment')]
+    [ValidateSet('done','gate','eval','review-pack','dowse','install','worktree','queue','forge','finish','activate','boot','identify','route','heal','heal-verify','heal-and-verify','reproduce','reproduce-and-bisect','triage','holy-triage','process-heal','process-healing','grill','tdd','iso','review','author','evidence','receive','execute','subagent','parallel','excavate','session-discovery','diagnose','trace','defense','wait','polluter','pressure','good-tests','skill-test','persuasion','sdo','task-brief','task-start','task-done','sdd-workspace','sdd-review-pack','work-order','claim-audit','judgment-audit','quarantine','steal-quarantine','consent','steal-consent','critique','self-critique','verdict','breach','brief','context','thoughttrail','super-context','sandbox','sot','runtime','env','secrets','steal-flow','sign-in-handoff','steal-dispatch','swarm-emulate','pin-and-consent','jail-pin','ask-spec','harness-plan','tool-force','proportionality','anti-loop','config','rigor-judge','judgment')]
     [string]$Tool,
     [Parameter(ValueFromRemainingArguments = $true)]
     [string[]]$ToolArgs
@@ -111,17 +116,20 @@ if ($Tool -eq 'identify' -and (-not $ToolArgs -or $ToolArgs.Count -eq 0)) {
     exit 0
 }
 
-if ($isWin -and (Test-Path $ps1)) {
+# Prefer .ps1 when: Windows host, OR PowerShell Core (pwsh), OR EMPEROR_FORCE_PS1=1.
+# Windows PowerShell 5.1 stays Desktop edition: $isWin path unchanged.
+# bash scripts/emperor is unchanged (not this dispatcher).
+$forcePs1 = ($env:EMPEROR_FORCE_PS1 -eq '1')
+$preferPs1 = $isWin -or ($PSEdition -eq 'Core') -or $forcePs1
+
+if ($preferPs1 -and (Test-Path $ps1)) {
     & $ps1 @ToolArgs
     exit $LASTEXITCODE
 }
-if (-not $isWin -and (Test-Path $sh)) {
+if ((Get-Command bash -ErrorAction SilentlyContinue) -and (Test-Path $sh)) {
     & bash $sh @ToolArgs
     exit $LASTEXITCODE
 }
 if (Test-Path $ps1) { & $ps1 @ToolArgs; exit $LASTEXITCODE }
-if ((Get-Command bash -ErrorAction SilentlyContinue) -and (Test-Path $sh)) {
-    & bash $sh @ToolArgs; exit $LASTEXITCODE
-}
 Write-Error "emperor: no runtime for $Tool on this host"
 exit 127

@@ -24,7 +24,7 @@ zsh scripts.
   (S12 resolver). Asset regen via `assets/render-pixel-art.ps1` needs
   System.Drawing (PS 5.1+).
 - WSL force today: `EMPEROR_FORCE_WIN` (below). **Core-prefer-`.ps1` /
-  `EMPEROR_FORCE_PS1` behavior docs are Bet T / S13** — not claimed shipped here.
+  `EMPEROR_FORCE_PS1`:** live under Bet T / S13 — see ## pwsh Core on Linux / macOS.
 
 ## Encoding
 
@@ -44,3 +44,24 @@ Detect: `WSL_DISTRO_NAME` / `WSL_INTEROP` / `/proc/version` contains Microsoft.
 
 `scripts/emperor host` / `emperor.ps1 host` / `emperor.cmd host` prints the
 detected os/shell/wsl/interop/encoding line.
+
+## pwsh Core on Linux / macOS
+
+`scripts/emperor.ps1` under PowerShell **Core** (`pwsh`) prefers `$Tool.ps1`
+even when the OS is not Windows. Same prefer when `EMPEROR_FORCE_PS1=1`
+(explicit proof / override).
+
+Fallback order inside `emperor.ps1`:
+1. Prefer `.ps1` when Windows, or `$PSEdition -eq 'Core'`, or `EMPEROR_FORCE_PS1=1`
+2. Else bash `$Tool.sh` if bash + twin exist
+3. Else `.ps1` if present
+4. Else error 127
+
+Symmetric to WSL `EMPEROR_FORCE_WIN=1`. Bash front `scripts/emperor` unchanged.
+Windows PowerShell 5.1 (`Desktop`) still takes `.ps1` via host detect.
+
+ValidateSet on `emperor.ps1` matches bash / `emperor.cmd` tool count (84),
+including heal-verify / reproduce / triage / process-heal (+ aliases).
+
+Structure / twin-exercise bridge only — not equal-UX. Native Windows smoothness
+stays HOLD until a dated receipt (Platforms honesty / Bet S).

@@ -114,10 +114,9 @@ emperor core | pbcopy         # distilled prompt → clipboard (xclip/wl-copy on
 ```
 
 **Preferred stranger shell:** PowerShell Core / `pwsh` (Windows, macOS, Linux)
-runs the `.ps1` twins. See Platforms claim bar below (PS 5.1 HOLD;
-`python3` caveat → S12). Dispatcher preference on non-Windows under Core is
-Bet T / S13 — do not assume `pwsh ./scripts/emperor.ps1 …` already prefers
-`.ps1` over bash on Linux at tip.
+runs the `.ps1` twins. Under Core (or `EMPEROR_FORCE_PS1=1`), `scripts/emperor.ps1`
+prefers `$Tool.ps1` even on Linux/macOS — see `references/runtimes.md`. Platforms
+claim bar below stays (PS 5.1 HOLD; `python3` caveat → S12).
 
 ### Vendor-neutral (any Agent-Skills harness)
 
