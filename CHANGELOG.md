@@ -2,6 +2,8 @@
 
 ## 0.4.174
 
+- **pwsh Core prefer `.ps1` + ValidateSet parity (Bet T, no version bump)** — `scripts/emperor.ps1` prefers `$Tool.ps1` under PowerShell Core or `EMPEROR_FORCE_PS1=1` (WinPS 5.1 / bash `scripts/emperor` unchanged); ValidateSet unlocked to 84 matching bash/`emperor.cmd` (heal-verify / reproduce / triage / process-heal + aliases). `references/runtimes.md` section + README pointer. Bakeoff pin stays 0.4.171.
+
 - **Docs: Windows / Platforms honesty (no version bump)** — thin twins + Python cores; preferred stranger path = pwsh Core; PS 5.1 HOLD equal-smooth; `python3` → S12; System.Drawing asset caveat; sdlc phrasing tightened. Bakeoff pin stays 0.4.171.
 
 - **Docs: kimi-cli thin honesty (no version bump)** — Claude-shared install true; native equal-UX HOLD; pointer to `adapters/kimi` ORI live; labeled 2026-07-22 verify dates. Bakeoff pin stays 0.4.171.
