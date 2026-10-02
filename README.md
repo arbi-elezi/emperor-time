@@ -113,7 +113,11 @@ emperor install kimi user     # deploy
 emperor core | pbcopy         # distilled prompt → clipboard (xclip/wl-copy on Linux)
 ```
 
-The `.ps1` scripts also run under pwsh on macOS/Linux if you prefer PowerShell.
+**Preferred stranger shell:** PowerShell Core / `pwsh` (Windows, macOS, Linux)
+runs the `.ps1` twins. See Platforms claim bar below (PS 5.1 HOLD;
+`python3` caveat → S12). Dispatcher preference on non-Windows under Core is
+Bet T / S13 — do not assume `pwsh ./scripts/emperor.ps1 …` already prefers
+`.ps1` over bash on Linux at tip.
 
 ### Vendor-neutral (any Agent-Skills harness)
 
@@ -281,10 +285,22 @@ scripts/
 - **Untrusted by default:** anything an enlisted agent returns is CONJECTURE
   until the orchestrator verifies it. Hallucination containment applies across
   agents, not just within one.
-- **Platforms:** Windows (PowerShell 5.1+), macOS and Linux (POSIX-lean bash
-  scripts, compatible with macOS's stock bash 3.2; zsh plugin for the macOS
-  default shell). `.gitattributes` pins shell scripts to LF so a Windows-side
-  clone can't break Unix shebangs. pwsh runs the `.ps1` variants anywhere.
+- **Platforms (claim bar):** Structure is thin `.sh` / `.ps1` twins over shared
+  Python cores (`scripts/lib/*.py`). **Preferred stranger path:** PowerShell
+  Core / `pwsh` on Windows, macOS, or Linux (run the `.ps1` twins). macOS and
+  Linux also ship POSIX-lean bash twins (macOS stock bash 3.2 OK; zsh plugin
+  for the macOS default shell). `.gitattributes` pins shell scripts to LF so a
+  Windows-side clone can't break Unix shebangs.
+  - **Native Windows PowerShell 5.1:** structure path only — **HOLD**
+    equal-smooth / equal-UX until a dated native-Windows field receipt.
+  - **Caveat — `python3` on thin `.ps1`:** many twins invoke `python3` today;
+    stock Windows often exposes `py` / `python` instead. Resolver work is
+    upcoming **S12** (`EMPEROR_PYTHON` / Resolve-EmperorPython) — do not claim
+    launcher parity until that ships.
+  - **Caveat — assets:** `assets/render-pixel-art.ps1` needs System.Drawing
+    (labeled Windows PowerShell 5.1+); not a Core/`pwsh`-everywhere asset path.
+  - Detail + WSL notes: `references/portability.md` (OS / shell matrix) and
+    `references/runtimes.md` (four fronts + WSL `EMPEROR_FORCE_WIN`).
 
 ## Publishing
 
