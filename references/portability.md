@@ -32,7 +32,7 @@ Emperor Time is **not** equal-UX native Windows at tip. Honest bar:
 | PowerShell Core / `pwsh` (Windows, macOS, Linux) running `.ps1` twins | **Preferred stranger path** |
 | Native Windows PowerShell 5.1 | **Structure path** — HOLD equal-smooth until a dated field receipt |
 | WSL | Linux tools stay `.sh`; Windows twins via interop; `EMPEROR_FORCE_WIN=1` forces Windows twin from WSL — see `references/runtimes.md` |
-| `python3` hardcode in many thin `.ps1` | **Labeled gap** → upcoming S12 (`EMPEROR_PYTHON` / resolver). Stock Windows often has `py` / `python`, not `python3`. |
+| `python3` hardcode in many thin `.ps1` | **Shipped** — `Resolve-EmperorPython` / `EMPEROR_PYTHON` (Bet U / S12). Stock Windows may still lack `python3`; resolver covers `py` / `python`. |
 | `assets/render-pixel-art.ps1` | System.Drawing / Windows PowerShell 5.1+ — asset regen caveat, not Core-everywhere |
 
 Do **not** invent a dated native-Windows green receipt. Do **not** claim Windows CI. Prefer `pwsh` over promising equal-smooth PS 5.1.

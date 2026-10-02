@@ -10,5 +10,6 @@ param(
 $ErrorActionPreference = 'Stop'
 $root = (Resolve-Path (Join-Path $PSScriptRoot '..')).Path
 $py = Join-Path $root 'scripts/lib/evidence.py'
-& python3 $py @Rest
+. (Join-Path $PSScriptRoot 'lib/resolve-emperor-python.ps1')
+Invoke-EmperorPython $py @Rest
 exit $LASTEXITCODE

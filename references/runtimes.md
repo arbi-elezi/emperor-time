@@ -20,8 +20,9 @@ zsh scripts.
   `pwsh` exercising the `.ps1` twins (Windows, macOS, Linux).
 - Windows PowerShell **5.1** remains a structure path — **HOLD** equal-smooth
   until a dated native-Windows receipt. Do not read “four fronts” as equal-UX.
-- Thin twins call Python cores; many `.ps1` files still hardcode `python3`
-  (S12 resolver). Asset regen via `assets/render-pixel-art.ps1` needs
+- Thin `.ps1` twins resolve Python via `Resolve-EmperorPython`
+  (`scripts/lib/resolve-emperor-python.ps1`): `EMPEROR_PYTHON` → `python3` →
+  `py -3` → `python`. Asset regen via `assets/render-pixel-art.ps1` needs
   System.Drawing (PS 5.1+).
 - WSL force today: `EMPEROR_FORCE_WIN` (below). **Core-prefer-`.ps1` /
   `EMPEROR_FORCE_PS1`:** live under Bet T / S13 — see ## pwsh Core on Linux / macOS.

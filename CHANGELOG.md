@@ -2,6 +2,8 @@
 
 ## 0.4.174
 
+- **EMPEROR_PYTHON / Resolve-EmperorPython for `.ps1` twins (Bet U, no version bump)** — shared `scripts/lib/resolve-emperor-python.ps1` (`EMPEROR_PYTHON` → `python3` → `py -3` → `python`); 61 thin twins + `host.ps1` gate wired through it; runtimes/README/portability claim bar updated (PS 5.1 HOLD unchanged). Bakeoff pin stays 0.4.171.
+
 - **pwsh Core prefer `.ps1` + ValidateSet parity (Bet T, no version bump)** — `scripts/emperor.ps1` prefers `$Tool.ps1` under PowerShell Core or `EMPEROR_FORCE_PS1=1` (WinPS 5.1 / bash `scripts/emperor` unchanged); ValidateSet unlocked to 84 matching bash/`emperor.cmd` (heal-verify / reproduce / triage / process-heal + aliases). `references/runtimes.md` section + README pointer. Bakeoff pin stays 0.4.171.
 
 - **Docs: Windows / Platforms honesty (no version bump)** — thin twins + Python cores; preferred stranger path = pwsh Core; PS 5.1 HOLD equal-smooth; `python3` → S12; System.Drawing asset caveat; sdlc phrasing tightened. Bakeoff pin stays 0.4.171.

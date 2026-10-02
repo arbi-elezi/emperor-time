@@ -54,7 +54,7 @@ Gates are **exit codes** (`scripts/emperor gate …`), not markdown wishes
 - **Multi-shell twins** — `.sh` / `.ps1` (and cmd/zsh entrypoints) so the rite
   has a **structure path** on Windows and Unix. Preferred stranger path is
   PowerShell Core / `pwsh`. Native Windows PowerShell 5.1 equal-smooth is
-  **HOLD** until a dated receipt; thin `.ps1` still hardcode `python3` (S12).
+  **HOLD** until a dated receipt; Python launcher resolver shipped (Bet U).
   See README Platforms + `references/portability.md`.
 - **Evidence vows** — VERIFIED needs a quoted experiment or two independent sources; memory is rumor.
 - **Consent boundary** — no enlist, login, or public PR without explicit client yes.

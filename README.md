@@ -116,7 +116,7 @@ emperor core | pbcopy         # distilled prompt → clipboard (xclip/wl-copy on
 **Preferred stranger shell:** PowerShell Core / `pwsh` (Windows, macOS, Linux)
 runs the `.ps1` twins. Under Core (or `EMPEROR_FORCE_PS1=1`), `scripts/emperor.ps1`
 prefers `$Tool.ps1` even on Linux/macOS — see `references/runtimes.md`. Platforms
-claim bar below stays (PS 5.1 HOLD; `python3` caveat → S12).
+claim bar below stays (PS 5.1 HOLD; Python via `Resolve-EmperorPython` / `EMPEROR_PYTHON`).
 
 ### Vendor-neutral (any Agent-Skills harness)
 
@@ -292,10 +292,10 @@ scripts/
   Windows-side clone can't break Unix shebangs.
   - **Native Windows PowerShell 5.1:** structure path only — **HOLD**
     equal-smooth / equal-UX until a dated native-Windows field receipt.
-  - **Caveat — `python3` on thin `.ps1`:** many twins invoke `python3` today;
-    stock Windows often exposes `py` / `python` instead. Resolver work is
-    upcoming **S12** (`EMPEROR_PYTHON` / Resolve-EmperorPython) — do not claim
-    launcher parity until that ships.
+  - **Python launcher on thin `.ps1`:** twins use `Resolve-EmperorPython`
+    (`EMPEROR_PYTHON` → `python3` → `py -3` → `python`). Override with
+    `EMPEROR_PYTHON` when needed. Native Windows PowerShell **5.1** equal-smooth
+    remains **HOLD** (structure path only).
   - **Caveat — assets:** `assets/render-pixel-art.ps1` needs System.Drawing
     (labeled Windows PowerShell 5.1+); not a Core/`pwsh`-everywhere asset path.
   - Detail + WSL notes: `references/portability.md` (OS / shell matrix) and
