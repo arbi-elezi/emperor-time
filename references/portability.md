@@ -22,6 +22,21 @@ prompt form.
 
 `scripts/lib/install.py` (thin `install.sh` / `install.ps1`) automate the top rows. Silent boot is `scripts/lib/boot.py` + `scripts/lib/host.py` (thin `boot.sh` / `boot.ps1`). Worktree create is `scripts/lib/worktree.py` (thin `worktree.sh` / `worktree.ps1`).
 
+## OS / shell claim bar (Windows, WSL, pwsh)
+
+Emperor Time is **not** equal-UX native Windows at tip. Honest bar:
+
+| Path | Status |
+|---|---|
+| Thin `.sh` / `.ps1` twins + Python cores (`scripts/lib/*.py`) | **Supported structure** |
+| PowerShell Core / `pwsh` (Windows, macOS, Linux) running `.ps1` twins | **Preferred stranger path** |
+| Native Windows PowerShell 5.1 | **Structure path** — HOLD equal-smooth until a dated field receipt |
+| WSL | Linux tools stay `.sh`; Windows twins via interop; `EMPEROR_FORCE_WIN=1` forces Windows twin from WSL — see `references/runtimes.md` |
+| `python3` hardcode in many thin `.ps1` | **Labeled gap** → upcoming S12 (`EMPEROR_PYTHON` / resolver). Stock Windows often has `py` / `python`, not `python3`. |
+| `assets/render-pixel-art.ps1` | System.Drawing / Windows PowerShell 5.1+ — asset regen caveat, not Core-everywhere |
+
+Do **not** invent a dated native-Windows green receipt. Do **not** claim Windows CI. Prefer `pwsh` over promising equal-smooth PS 5.1.
+
 ## The distillation ladder
 
 Context is the scarcest resource on small models. Ship the largest rung the

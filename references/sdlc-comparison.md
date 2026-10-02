@@ -51,7 +51,11 @@ Gates are **exit codes** (`scripts/emperor gate …`), not markdown wishes
 
 - **Mechanical gates** — Vow of Phases enforced by scripts; fluent "done" without `gate`/`done` exit 0 is heresy.
 - **Language-agnostic archaeology** — Pascal, ASM, COBOL, ROM are in-scope; probes are any command, not a favorite test runner.
-- **Multi-shell twins** — `.sh` / `.ps1` (and cmd/zsh entrypoints) so the rite runs on Windows and Unix hosts.
+- **Multi-shell twins** — `.sh` / `.ps1` (and cmd/zsh entrypoints) so the rite
+  has a **structure path** on Windows and Unix. Preferred stranger path is
+  PowerShell Core / `pwsh`. Native Windows PowerShell 5.1 equal-smooth is
+  **HOLD** until a dated receipt; thin `.ps1` still hardcode `python3` (S12).
+  See README Platforms + `references/portability.md`.
 - **Evidence vows** — VERIFIED needs a quoted experiment or two independent sources; memory is rumor.
 - **Consent boundary** — no enlist, login, or public PR without explicit client yes.
 

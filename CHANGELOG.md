@@ -2,6 +2,8 @@
 
 ## 0.4.174
 
+- **Docs: Windows / Platforms honesty (no version bump)** — thin twins + Python cores; preferred stranger path = pwsh Core; PS 5.1 HOLD equal-smooth; `python3` → S12; System.Drawing asset caveat; sdlc phrasing tightened. Bakeoff pin stays 0.4.171.
+
 - **Docs: kimi-cli thin honesty (no version bump)** — Claude-shared install true; native equal-UX HOLD; pointer to `adapters/kimi` ORI live; labeled 2026-07-22 verify dates. Bakeoff pin stays 0.4.171.
 
 - **Docs: Codex AGENTS adapter honesty (no version bump)** — structure-clear claim bar, equal-UX HOLD, rich sibling pointers (opencode/cursor/grok), ORI one-liner to `adapters/opencode/ORI-REGRESSION.md` + kill-hold. Bakeoff pin stays 0.4.171.
