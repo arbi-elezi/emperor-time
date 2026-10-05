@@ -1,0 +1,8 @@
+blank_issues_enabled: true
+contact_links:
+  - name: Security report
+    url: https://github.com/arbi-elezi/emperor-time/security/advisories/new
+    about: Report a vulnerability privately (do not open a public issue).
+  - name: GitHub Sponsors
+    url: https://github.com/sponsors/arbi-elezi
+    about: Support ongoing work on Emperor Time.

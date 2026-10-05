@@ -1,0 +1,42 @@
+name: Feature request
+description: Propose a small, honest improvement
+title: "[feat] "
+labels: ["enhancement"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Prefer tiny, verifiable asks. Do not invent stack or equal-UX claims.
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem
+      description: What is hard or missing today?
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposal
+      description: Concrete change you want (docs, adapter honesty, script, eval)
+    validations:
+      required: true
+  - type: dropdown
+    id: scope
+    attributes:
+      label: Likely scope
+      options:
+        - Docs only
+        - Adapter honesty / playbook
+        - Script hygiene
+        - Eval / fixture
+        - Unsure
+    validations:
+      required: true
+  - type: textarea
+    id: non-goals
+    attributes:
+      label: Non-goals
+      description: What this should not expand into
+    validations:
+      required: false
