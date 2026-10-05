@@ -2,6 +2,10 @@
 
 *Dowse. Dig. Verify. Pay in tokens.*
 
+If this skill earns its keep:
+
+<iframe src="https://github.com/sponsors/arbi-elezi/button" title="Sponsor arbi-elezi" height="32" width="114" style="border: 0; border-radius: 6px;"></iframe>
+
 # Emperor Time
 
 **Tiny by default. Full factory when the ask earns it.** Little asks stay
