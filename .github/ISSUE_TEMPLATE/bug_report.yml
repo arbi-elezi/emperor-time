@@ -1,0 +1,56 @@
+name: Bug report
+description: Something broken in install, routing, scripts, or docs
+title: "[bug] "
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for the report. Keep it factual. No secrets in the body.
+  - type: dropdown
+    id: harness
+    attributes:
+      label: Harness / host
+      description: Where you ran Emperor Time
+      options:
+        - Claude Code
+        - OpenCode / ORI
+        - Cursor
+        - Codex / AGENTS.md
+        - Kimi
+        - Grok
+        - Other / docs only
+    validations:
+      required: true
+  - type: input
+    id: os
+    attributes:
+      label: OS
+      description: e.g. macOS 15, Ubuntu 24.04, Windows 11 + pwsh
+    validations:
+      required: false
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: What happened
+      description: Expected vs actual. Paste short terminal output if useful.
+    validations:
+      required: true
+  - type: textarea
+    id: repro
+    attributes:
+      label: Steps to reproduce
+      description: Minimal steps from a clean install or cold check
+      placeholder: |
+        1. Install …
+        2. Open new session …
+        3. Ask …
+    validations:
+      required: true
+  - type: textarea
+    id: context
+    attributes:
+      label: Extra context
+      description: Branch/tag, script names, related docs links
+    validations:
+      required: false
